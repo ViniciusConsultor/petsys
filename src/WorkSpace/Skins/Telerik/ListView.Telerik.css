@@ -1,0 +1,255 @@
+/*Telerik RadListView Telerik Skin*/
+
+/*global*/
+
+.RadListView_Telerik
+{
+	border:1px solid #828282;
+	background:#fff;
+	color:#000;
+}
+
+.RadListView_Telerik .rlvA
+{
+	background:#f2f2f2;
+}
+
+.RadListView_Telerik .rlvISel
+{
+	background:#a2ea8b;/*#63AC38*/
+}
+
+/*buttons*/
+
+.RadListView_Telerik .rlvBAdd,
+.RadListView_Telerik .rlvBUpdate,
+.RadListView_Telerik .rlvBCancel,
+.RadListView_Telerik .rlvBDel,
+.RadListView_Telerik .rlvBEdit
+{
+	background-image:url('Grid/sprite.gif');
+}
+
+.RadListView_Telerik .rlvBAdd
+{
+	background-position:0 -1650px;
+}
+.RadListView_Telerik .rlvBUpdate
+{
+	background-position:0 -1800px;
+}
+.RadListView_Telerik .rlvBCancel
+{
+	background-position:2px -1848px;
+}
+.RadListView_Telerik .rlvBSel
+{
+	background-image:url('FormDecorator/CheckBoxSprites.gif');
+	background-position:-2px -2px;
+}
+.RadListView_Telerik .rlvISel .rlvBSel
+{
+	background-position:-2px -422px;
+}
+.RadListView_Telerik .rlvBDel
+{
+	background-position:0 -1750px;
+}
+.RadListView_Telerik .rlvBEdit
+{
+	background-position:0 -1700px;
+}
+
+/*flow*/
+
+.RadListView_Telerik div.rlvI,
+.RadListView_Telerik div.rlvIEmpty
+{
+	border-color:#fff;
+}
+
+.RadListView_Telerik div.rlvA
+{
+	border-color:#f2f2f2;
+}
+
+.RadListView_Telerik div.rlvISel
+{
+	border-color:#155800;
+}
+
+.RadListView_Telerik div.rlvIEdit
+{
+	border-color:#333;
+}
+
+/*grid*/
+
+.RadListView_Telerik tr.rlvHeader th
+{
+	border:0;
+	border-bottom:1px solid #828282;
+	background:#f3f3f3 0 -2300px repeat-x url('Grid/sprite.gif');
+	color:#333;
+}
+
+.RadListView_Telerik tr.rlvI td,
+.RadListView_Telerik tr.rlvA td,
+.RadListView_Telerik tr.rlvISel td,
+.RadListView_Telerik tr.rlvIEmpty td
+{
+	border:0;
+	border-bottom:1px solid;
+}
+
+.RadListView_Telerik tr.rlvI td,
+.RadListView_Telerik tr.rlvIEmpty td
+{
+	border-color:#fff;
+}
+
+.RadListView_Telerik tr.rlvA td
+{
+	border-color:#f2f2f2;
+}
+
+.RadListView_Telerik tr.rlvISel td
+{
+	border-color:#155800;
+}
+
+.RadListView_Telerik tr.rlvIEdit td
+{
+	border-color:#333;
+}
+
+/*single row*/
+
+.RadListView_Telerik td.rlvI,
+.RadListView_Telerik td.rlvA,
+.RadListView_Telerik td.rlvISel,
+.RadListView_Telerik td.rlvIEmpty
+{
+	border:0;
+	border-right:1px solid;
+}
+
+.RadListView_Telerik td.rlvI,
+.RadListView_Telerik td.rlvIEmpty
+{
+	border-color:#fff;
+}
+
+.RadListView_Telerik td.rlvA
+{
+	border-color:#f2f2f2;
+}
+
+.RadListView_Telerik td.rlvISel
+{
+	border-color:#155800;
+}
+
+/*pager*/
+
+.RadDataPager_Telerik
+{
+	border:1px solid #828282;
+	background:#eee;
+	color:#000;
+}
+
+.RadDataPager_Telerik .rdpInfoPart
+{
+	color:#8a8a8a;
+}
+
+.RadDataPager_Telerik .rdpInfoPart strong
+{
+	color:#4c4e54;
+}
+
+.RadDataPager_Telerik .rdpPageFirst,
+.RadDataPager_Telerik .rdpPagePrev,
+.RadDataPager_Telerik .rdpPageNext,
+.RadDataPager_Telerik .rdpPageLast
+{
+	background:transparent no-repeat url('Grid/sprite.gif');
+}
+
+.RadDataPager_Telerik .rdpPageFirst
+{
+	background-position:0 -550px;
+}
+.RadDataPager_Telerik .rdpPageFirst:hover
+{
+	background-position:0 -600px;
+}
+.RadDataPager_Telerik .rdpPagePrev
+{
+	background-position:0 -700px;
+}
+.RadDataPager_Telerik .rdpPagePrev:hover
+{
+	background-position:0 -750px;
+}
+.RadDataPager_Telerik .rdpPageNext
+{
+	background-position:0 -850px;
+}
+.RadDataPager_Telerik .rdpPageNext:hover
+{
+	background-position:0 -900px;
+}
+.RadDataPager_Telerik .rdpPageLast
+{
+	background-position:0 -1000px;
+}
+.RadDataPager_Telerik .rdpPageLast:hover
+{
+	background-position:0 -1050px;
+}
+
+.RadDataPager_Telerik .rdpPagerButton
+{
+	border:1px solid;
+	border-color:#d0d0d0 #aeaeae #8b8b8b;
+	background:#eee repeat-x 0 -1550px url('Grid/sprite.gif');
+	color:#000;
+	font:12px/12px "segoe ui",arial,sans-serif;
+}
+
+.RadDataPager_Telerik .rdpNumPart a:hover,
+.RadDataPager_Telerik .rdpNumPart a:hover span,
+.RadDataPager_Telerik .rdpNumPart a.rdpCurrentPage,
+.RadDataPager_Telerik .rdpNumPart a.rdpCurrentPage span
+{
+	background:no-repeat url('Grid/sprite.gif');
+}
+
+.RadDataPager_Telerik .rdpNumPart a
+{
+	color:#000;
+}
+
+.RadDataPager_Telerik .rdpNumPart a:hover
+{
+	background-position:100% -1250px;
+}
+
+.RadDataPager_Telerik .rdpNumPart a:hover span
+{
+	background-position:0 -1150px;
+}
+
+.RadDataPager_Telerik .rdpNumPart a.rdpCurrentPage,
+.RadDataPager_Telerik .rdpNumPart a.rdpCurrentPage:hover
+{
+	background-position:100% -1450px;
+}
+
+.RadDataPager_Telerik .rdpNumPart a.rdpCurrentPage span,
+.RadDataPager_Telerik .rdpNumPart a.rdpCurrentPage:hover span
+{
+	background-position:0 -1350px;
+}

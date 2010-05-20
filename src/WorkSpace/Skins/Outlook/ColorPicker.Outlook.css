@@ -1,0 +1,138 @@
+/* RadColorPicker Outlook skin */
+.RadColorPicker_Outlook .rcpPalette
+{
+	background-color:#f6f6f6;
+	border:solid 1px #002d96;	
+}
+
+.RadColorPicker_Outlook .rcpColorBox
+{
+	border:solid 1px #e4e4e4;
+}
+
+.RadColorPicker_Outlook .rcpSelectedColor,
+.RadColorPicker_Outlook .rcpMillionColorsPalette
+{
+	border:solid 1px #000;
+}
+
+.RadColorPicker_Outlook .rcpColorPreview
+{
+	border:solid 1px #003c74;
+}
+
+.RadColorPicker_Outlook .rcpInput,
+.RadColorPicker_Outlook .rcpHexInput
+{
+    border:solid 1px #a9b1b8;
+}
+
+.RadColorPicker_Outlook .rcpPalette,
+.RadColorPicker_Outlook input,
+.RadColorPicker_Outlook a,
+.RadColorPicker_Outlook .rcpApplyButton:hover span
+{
+    color:#000;
+}
+
+.RadColorPicker_Outlook .rcpEmptyColor,
+.RadColorPicker_Outlook .rcpIcon a,
+.RadColorPicker_Outlook .rcpTabs,
+.RadColorPicker_Outlook .rcpTabs a,
+.RadColorPicker_Outlook .rcpTabs a span,
+.RadColorPicker_Outlook .rcpApplyButton,
+.RadColorPicker_Outlook .rcpApplyButton span,
+.RadColorPicker_Outlook .rcpMillionColorsHandle,
+.RadColorPicker_Outlook div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle
+{
+	background-image:url('ColorPicker/ColorPickerSprites.gif');
+	background-repeat:no-repeat;
+}
+
+/* no color button */
+.RadColorPicker_Outlook .rcpEmptyColor
+{
+	background-position:right -52px;
+}
+
+.RadColorPickerRTL_Outlook .rcpEmptyColor
+{
+    background-position:-1001px -52px;
+}
+
+/* color picker button */
+.RadColorPicker_Outlook .rcpIcon a
+{
+	background-position:0 -52px;
+}
+
+.RadColorPicker_Outlook .rcpIcon a:hover
+{
+	background-position:0 -73px;
+}
+
+.RadColorPicker_Outlook .rcpIcon a:active,
+.RadColorPicker_Outlook .rcpIcon a:focus
+{
+	background-position:0 -94px;
+}
+
+/* color picker tabs */
+.RadColorPicker_Outlook .rcpTabs
+{
+    background:#fff;
+    background-position:0 -169px;
+}
+
+.RadColorPicker_Outlook .rcpTabs ul li a
+{
+    color:#00156e;
+}
+
+.RadColorPicker_Outlook .rcpTabs .rcpSelectedTab a
+{
+    background-position:right -26px;
+}
+
+.RadColorPicker_Outlook .rcpTabs .rcpSelectedTab a span
+{
+    background-position:left -26px;
+}
+
+/* apply color button */
+.RadColorPicker_Outlook .rcpApplyButton
+{
+    background-position:right -115px;
+}
+
+.RadColorPicker_Outlook .rcpApplyButton:hover
+{
+    background-position:right -136px;
+}
+
+.RadColorPicker_Outlook .rcpApplyButton span
+{
+    background-position:0 -115px;
+    color:#00156e;
+}
+
+.RadColorPicker_Outlook .rcpApplyButton:hover span
+{
+    background-position:0 -136px;
+}
+
+/* HSB, HSV palette handle */
+.RadColorPicker_Outlook .rcpMillionColorsHandle
+{
+    background-position:-1009px -73px;
+    background-color:transparent;
+}
+
+/* HSB, HSV slider handle */
+.RadColorPicker_Outlook div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle,
+.RadColorPicker_Outlook div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:hover,
+.RadColorPicker_Outlook div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:focus,
+.RadColorPicker_Outlook div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:active
+{
+    background-position:-1002px -88px;
+}

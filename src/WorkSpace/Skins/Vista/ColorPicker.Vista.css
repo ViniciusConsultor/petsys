@@ -1,0 +1,138 @@
+/* RadColorPicker Vista skin */
+.RadColorPicker_Vista .rcpPalette
+{
+	background-color:#fff;
+	border:solid 1px #979797;	
+}
+
+.RadColorPicker_Vista .rcpColorBox
+{
+	border:solid 1px #e4e4e4;
+}
+
+.RadColorPicker_Vista .rcpSelectedColor,
+.RadColorPicker_Vista .rcpMillionColorsPalette
+{
+	border:solid 1px #000;
+}
+
+.RadColorPicker_Vista .rcpColorPreview
+{
+	border-top:solid 1px #8e8e8e;
+	border-right:solid 1px #b8b8b8;
+	border-bottom:solid 1px #b8b8b8;
+	border-left:solid 1px #8e8e8e;
+}
+
+.RadColorPicker_Vista .rcpInput,
+.RadColorPicker_Vista .rcpHexInput
+{
+    border-top:solid 1px #abadb3;
+	border-right:solid 1px #dbdfe6;
+	border-bottom:solid 1px #e3e9ef;
+	border-left:solid 1px #e2e3ea;
+}
+
+.RadColorPicker_Vista .rcpPalette,
+.RadColorPicker_Vista input,
+.RadColorPicker_Vista a
+{
+	color:#000;
+}
+
+.RadColorPicker_Vista .rcpEmptyColor,
+.RadColorPicker_Vista .rcpIcon a,
+.RadColorPicker_Vista .rcpTabs,
+.RadColorPicker_Vista .rcpTabs a,
+.RadColorPicker_Vista .rcpTabs a span,
+.RadColorPicker_Vista .rcpApplyButton,
+.RadColorPicker_Vista .rcpApplyButton span,
+.RadColorPicker_Vista .rcpMillionColorsHandle,
+.RadColorPicker_Vista div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle
+{
+	background-image:url('ColorPicker/ColorPickerSprites.gif');
+	background-repeat:no-repeat;
+}
+
+/* no color button */
+.RadColorPicker_Vista .rcpEmptyColor
+{
+	background-position:right -52px;
+}
+
+.RadColorPickerRTL_Vista .rcpEmptyColor
+{
+    background-position:-1001px -52px;
+}
+
+/* color picker button */
+.RadColorPicker_Vista .rcpIcon a
+{
+	background-position:0 -52px;
+}
+
+.RadColorPicker_Vista .rcpIcon a:hover
+{
+	background-position:0 -73px;
+}
+
+.RadColorPicker_Vista .rcpIcon a:active,
+.RadColorPicker_Vista .rcpIcon a:focus
+{
+	background-position:0 -94px;
+}
+
+/* color picker tabs */
+.RadColorPicker_Vista .rcpTabs
+{
+    background:#fafafa;
+    background-position:0 -169px;
+}
+
+.RadColorPicker_Vista .rcpTabs .rcpSelectedTab a
+{
+	background-position:right -26px;
+}
+
+.RadColorPicker_Vista .rcpTabs .rcpSelectedTab a span
+{
+    background-position:left -26px;
+}
+
+/* apply color button */
+.RadColorPicker_Vista .rcpApplyButton
+{
+    background-position:right -115px;
+}
+
+.RadColorPicker_Vista .rcpApplyButton:hover
+{
+    background-position:right -136px;
+}
+
+.RadColorPicker_Vista .rcpApplyButton span
+{
+    background-position:0 -115px;
+    color:#434343;
+}
+
+.RadColorPicker_Vista .rcpApplyButton:hover span
+{
+    background-position:0 -136px;
+}
+
+/* HSB, HSV palette handle */
+.RadColorPicker_Vista .rcpMillionColorsHandle
+{
+    background-position:-1009px -73px;
+    background-color:transparent;
+}
+
+/* HSB, HSV slider handle */
+.RadColorPicker_Vista div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle,
+.RadColorPicker_Vista div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:hover,
+.RadColorPicker_Vista div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:focus,
+.RadColorPicker_Vista div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:active
+{
+    background-position:-1002px -89px;
+}

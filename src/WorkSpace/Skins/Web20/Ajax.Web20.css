@@ -1,0 +1,18 @@
+/* Telerik RadAjaxLoadingPanel Web20 Skin */
+
+.RadAjax_Web20 .raDiv
+{
+	background-image:url('Common/loading.gif');
+}
+
+.RadAjax_Web20 .raColor
+{
+	background-color:#fff;
+}
+
+.RadAjax_Web20 .raTransp
+{
+	opacity:0.6;
+	-moz-opacity:0.6;
+	filter:alpha(opacity=60);
+}

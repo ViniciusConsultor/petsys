@@ -1,0 +1,327 @@
+/* <RadMenu / Black> */
+
+.RadMenu_Black .rmRootGroup,
+.RadMenu_Black .rmLink,
+.RadMenu_Black .rmText,
+.RadMenu_Black .rmLeftArrow,
+.RadMenu_Black .rmRightArrow,
+.RadMenu_Black .rmTopArrow,
+.RadMenu_Black .rmBottomArrow
+{
+	background-image: url('Menu/rmSprite.png');
+	background-color: transparent;
+}
+
+.RadMenu_Black .rmRootGroup
+{
+	border: 1px solid #202020;
+	background-repeat: repeat-x;
+	background-color: #161616;
+}
+
+.RadMenu_Black .rmVertical
+{
+	background-position: 0 -408px;
+}
+
+/* <Root items> */
+
+.RadMenu_Black,
+.RadMenu_Black .rmLink
+{
+	font: normal 12px/23px "Segoe UI", Arial, sans-serif;
+	color: #fff;
+	text-decoration: none;
+}
+
+.RadMenu_Black .rmLink:hover
+{
+	color: #9eda29;
+}
+
+.RadMenu_Black .rmLink,
+.RadMenu_Black .rmText
+{
+	background-repeat: no-repeat;
+	background-position: 0 500px;
+}
+
+.RadMenu_Black .rmLink:hover,
+.RadMenu_Black .rmFocused,
+.RadMenu_Black .rmSelected
+{
+	background-position: 0 -72px;
+}
+
+.RadMenu_Black .rmExpanded,
+.RadMenu_Black .rmExpanded:hover
+{
+	background-position: 0 -72px;
+}
+
+.RadMenu_Black .rmExpanded .rmText,
+.RadMenu_Black .rmExpanded:hover .rmText
+{
+	background-position: 100% -96px;
+}
+
+.RadMenu_Black .rmLast .rmExpanded .rmText
+{
+	background-position: 0 500px;
+	background-repeat: no-repeat;
+}
+
+.RadMenu_Black .rmDisabled,
+.RadMenu_Black .rmDisabled:hover
+{
+	color: #7d7d7d;
+	background-position: 0 500px;
+}
+
+/* </Root items> */
+
+
+/* <Submenu items> */
+
+.RadMenu_Black .rmGroup,
+.RadMenu_Black .rmMultiColumn,
+.RadMenu_Black .rmGroup .rmVertical
+{
+	border: 1px solid #080808;
+	background: #4f4f4f url('Menu/rmVSprite.png') repeat-y 0 0;
+}
+
+.RadMenu_Black .rmSlide .rmScrollWrap
+{
+	background-image: none;
+}
+
+.RadMenu_Black_rtl .rmGroup,
+.RadMenu_Black_rtl .rmMultiColumn,
+.RadMenu_Black_rtl .rmGroup .rmVertical
+{
+	background-position: 100% 0;
+}
+
+.RadMenu_Black .rmRootGroup li.rmItem .rmGroup
+{
+	padding-bottom: 0;
+}
+
+.RadMenu_Black .rmGroup li.rmLast
+{
+	padding-bottom: 1px;
+}
+
+.RadMenu_Black .rmRootGroup .rmHorizontal
+{
+	background-image: none;
+}
+
+.RadMenu_Black .rmScrollWrap .rmVertical
+{
+	border: 0;
+}
+
+.RadMenu_Black .rmGroup .rmItem .rmLink,
+.RadMenu_Black .rmGroup .rmItem .rmLink:hover,
+.RadMenu_Black .rmGroup .rmItem .rmFocused,
+.RadMenu_Black .rmGroup .rmItem .rmSelected,
+.RadMenu_Black .rmGroup .rmItem .rmExpanded
+{
+	padding-top: 0;
+	padding-bottom: 0;
+	border: 0;
+}
+
+.RadMenu_Black .rmGroup .rmLast .rmLink,
+.RadMenu_Black .rmGroup .rmLast .rmLink:hover,
+.RadMenu_Black .rmGroup .rmLast .rmFocused,
+.RadMenu_Black .rmGroup .rmLast .rmSelected,
+.RadMenu_Black .rmGroup .rmLast .rmExpanded
+{
+	padding-bottom: 1px;
+}
+
+.RadMenu_Black .rmGroup .rmLink,
+.RadMenu_Black .rmGroup .rmText,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled:hover,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled .rmText,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled:hover .rmText
+{
+	background-position: 0 500px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.RadMenu_Black .rmGroup .rmLink:hover,
+.RadMenu_Black .rmGroup .rmFocused,
+.RadMenu_Black .rmGroup .rmSelected,
+.RadMenu_Black .rmGroup .rmExpanded
+{
+	background-position: 0 -168px;
+}
+
+.RadMenu_Black .rmGroup .rmLink:hover .rmText,
+.RadMenu_Black .rmGroup .rmFocused .rmText,
+.RadMenu_Black .rmGroup .rmSelected .rmText,
+.RadMenu_Black .rmGroup .rmExpanded .rmText
+{
+	background-position: 100% -192px;
+}
+
+/* <expand arrows> */
+
+.RadMenu_Black .rmGroup .rmExpandRight,
+.RadMenu_Black .rmGroup .rmExpandDown,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled .rmExpandRight,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled .rmExpandDown,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled:hover .rmExpandRight,
+.RadMenu_Black .rmGroup .rmItem .rmDisabled:hover .rmExpandDown
+{
+	background-position: 100% -216px;
+}
+
+.RadMenu_Black .rmGroup .rmLink:hover .rmExpandRight,
+.RadMenu_Black .rmGroup .rmFocused .rmExpandRight,
+.RadMenu_Black .rmGroup .rmSelected .rmExpandRight,
+.RadMenu_Black .rmGroup .rmExpanded .rmExpandRight,
+.RadMenu_Black .rmGroup .rmLink:hover .rmExpandDown,
+.RadMenu_Black .rmGroup .rmFocused .rmExpandDown,
+.RadMenu_Black .rmGroup .rmSelected .rmExpandDown,
+.RadMenu_Black .rmGroup .rmExpanded .rmExpandDown
+{
+	background-position: 100% -240px;
+}
+
+.RadMenu_Black .rmGroup .rmDisabled:hover .rmExpandRight,
+.RadMenu_Black .rmGroup .rmDisabled:hover .rmExpandDown
+{
+	background-image: url('Menu/rmSprite.png');
+	background-position: 100% -216px;
+}
+
+/* </expand arrows> */
+
+/* <rtl> */
+
+.RadMenu_Black_rtl .rmVertical .rmExpanded .rmText,
+.RadMenu_Black_rtl .rmVertical .rmExpanded:hover .rmText
+{
+	background-position: 0 500px;
+	background-repeat: no-repeat;
+}
+
+.RadMenu_Black_rtl .rmGroup .rmLink:hover,
+.RadMenu_Black_rtl .rmGroup .rmFocused,
+.RadMenu_Black_rtl .rmGroup .rmSelected,
+.RadMenu_Black_rtl .rmGroup .rmExpanded
+{
+	background-position: 100% -264px;
+}
+
+.RadMenu_Black_rtl .rmGroup .rmLink:hover .rmText,
+.RadMenu_Black_rtl .rmGroup .rmFocused .rmText,
+.RadMenu_Black_rtl .rmGroup .rmSelected .rmText,
+.RadMenu_Black_rtl .rmGroup .rmExpanded .rmText
+{
+	background-position: 0 -288px;
+}
+
+.RadMenu_Black_rtl .rmGroup .rmExpandLeft
+{
+	background-position: 0 -312px;
+}
+
+.RadMenu_Black_rtl .rmGroup .rmLink:hover .rmExpandLeft,
+.RadMenu_Black_rtl .rmGroup .rmFocused .rmExpandLeft,
+.RadMenu_Black_rtl .rmGroup .rmSelected .rmExpandLeft,
+.RadMenu_Black_rtl .rmGroup .rmExpanded .rmExpandLeft
+{
+	background-position: 0 -336px;
+}
+
+/* </rtl> */
+
+/* </Submenu items> */
+
+/* <Submenu offsets (Black - specific, overlapping submenus)> */
+
+.RadMenu_Black .rmSlide
+{
+	margin: 0 0 0 -1px;
+}
+
+.RadMenu_Black .rmVertical .rmSlide,
+.RadMenu_Black .rmSlide .rmSlide,
+.RadMenu_Black_Context .rmGroup .rmSlide
+{
+	margin: 0 0 0 -5px;
+}
+
+.RadMenu_Black_rtl .rmSlide
+{
+	margin: 0 0 0 0;
+}
+
+.RadMenu_Black_rtl .rmFirst .rmSlide
+{
+	margin-left: 1px;
+}
+
+.RadMenu_Black_rtl .rmVertical .rmSlide,
+.RadMenu_Black_rtl .rmSlide .rmSlide,
+.RadMenu_Black_Context_rtl .rmGroup .rmSlide
+{
+	margin: 0 0 0 5px;
+}
+
+/* </Submenu offsets> */
+
+/* <Scrolling arrows> */
+
+.RadMenu_Black .rmLeftArrow,
+.RadMenu_Black .rmRightArrow
+{
+	background-color: #4f4f4f;
+}
+
+.RadMenu_Black .rmLeftArrow { background-position: -8px -312px; border-right: 1px solid #828282; }
+.RadMenu_Black .rmRightArrow { background-position: -482px -216px; border-left: 1px solid #828282; }
+
+.RadMenu_Black .rmTopArrow,
+.RadMenu_Black .rmBottomArrow,
+.RadMenu_Black .rmGroup .rmLeftArrow,
+.RadMenu_Black .rmGroup .rmRightArrow
+{
+	background-color: #4f4f4f;
+}
+
+.RadMenu_Black .rmTopArrow { background-position: 50% -367px; border-bottom: 1px solid #828282; }
+.RadMenu_Black .rmBottomArrow { background-position: 50% -391px; border-top: 1px solid #828282; }
+
+/* </Scrolling arrows> */
+
+/* <Separators> */
+
+.RadMenu_Black .rmHorizontal .rmSeparator .rmText,
+.RadMenu_Black .rmVertical .rmHorizontal .rmSeparator .rmText
+{
+	height: 22px;
+	margin: 1px 0 0;
+	width: 1px;
+	background-color: #000;
+}
+
+.RadMenu_Black_Context .rmSeparator .rmText,
+.RadMenu_Black .rmHorizontal .rmGroup .rmSeparator .rmText,
+.RadMenu_Black .rmVertical .rmHorizontal .rmGroup .rmSeparator .rmText
+{
+	background-color: transparent;
+	background-position: 0 -406px;
+}
+
+/* </Separators> */
+
+/* </RadMenu / Black> */
