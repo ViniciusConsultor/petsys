@@ -1,0 +1,289 @@
+.RadPanelBar_Outlook
+{
+	background: #fff;
+}
+
+.RadPanelBar_Outlook .rpRootGroup
+{
+	border-color: #002d96;
+}
+
+.RadPanelBar_Outlook .rpLink,
+.RadPanelBar_Outlook .rpTemplate
+{
+	color: #000;
+	font: normal 12px/24px "Segoe UI", Arial, sans-serif;
+}
+
+.RadPanelBar_Outlook .rpLink
+{
+	background-color: #7da5e0;
+	background-image: url('PanelBar/RootItemBg.gif');
+	border-color: #89AEE5;
+}
+
+.RadPanelBar_Outlook .rpOut
+{
+	border-color: #89aee5;
+}
+
+.RadPanelBar_Outlook .rpFocused,
+.RadPanelBar_Outlook .rpLink:hover
+{
+	color: #000;
+	border-color: #ffca5e;
+	background-color: #ffca5e;
+}
+
+.RadPanelBar_Outlook .rpFocused .rpOut,
+.RadPanelBar_Outlook .rpLink:hover .rpOut
+{
+	border-color: #ffca5e;
+}
+
+.RadPanelBar_Outlook .rpSelected,
+.RadPanelBar_Outlook .rpSelected:hover
+{
+	border-color: #c3d8f1;
+	background-color: #c3d8f1;
+}
+
+.RadPanelBar_Outlook .rpExpanded
+{
+	border-color: #002D96;
+}
+
+/* <disabled items> */
+.RadPanelBar_Outlook .rpDisabled,
+.RadPanelBar_Outlook .rpDisabled:hover
+{
+	color: #777;
+}
+
+.RadPanelBar_Outlook .rpDisabled:hover
+{
+	border-color: #002d96;
+}
+
+.RadPanelBar_Outlook .rpDisabled .rpOut,
+.RadPanelBar_Outlook .rpDisabled:hover .rpOut
+{
+	border-color: #89aee5;
+}
+
+/* </disabled items> */
+
+/* <expand arrows> */
+.RadPanelBar_Outlook .rpExpandable .rpText,
+.RadPanelBar_Outlook .rpExpanded .rpText
+{
+	background-color: transparent;
+	background-image: url('PanelBar/Expandable.png');
+}
+/* </expand arrows> */
+
+/* <subitems> */
+.RadPanelBar_Outlook .rpGroup
+{
+	background-color: #fff;
+}
+
+.RadPanelBar_Outlook .rpGroup .rpLink,
+.RadPanelBar_Outlook .rpGroup .rpTemplate
+{
+	color: #000;
+	background-color: transparent;
+	background-image: none;
+}
+
+.RadPanelBar_Outlook .rpGroup .rpLink
+{
+	background-color: transparent;
+	background-image: url('PanelBar/SubItemStates.png');
+	background-repeat: no-repeat;
+	
+	padding: 1px;
+	margin: 0 1px;
+	
+	line-height: 20px;
+	min-height: 20px;
+}
+* html .RadPanelBar_Web20 .rpGroup .rpLink { height: 20px; }
+
+.RadPanelBar_Outlook .rpGroup .rpOut
+{
+	border-bottom: 0;
+	margin-right: 3px;
+}
+
+.RadPanelBar_Outlook .rpGroup .rpItem .rpLink:hover
+{
+	color: #000;
+	border: 1px solid #002d96;
+	background-position: 0 0;
+	padding: 0;
+}
+
+.RadPanelBar_Outlook .rpGroup .rpItem .rpSelected,
+.RadPanelBar_Outlook .rpGroup .rpItem .rpSelected:hover
+{
+	background-position: 0 -200px;
+	border: 1px solid #002d96;
+	padding: 0;
+}
+
+
+/* <subitems (disabled)> */
+.RadPanelBar_Outlook .rpGroup .rpItem .rpDisabled,
+.RadPanelBar_Outlook .rpGroup .rpItem .rpDisabled:hover,
+.RadPanelBar_Outlook .rpGroup .rpItem .rpDisabled:hover .rpOut
+{
+	background-image: none;
+}
+
+.RadPanelBar_Outlook .rpGroup .rpItem .rpDisabled,
+.RadPanelBar_Outlook .rpGroup .rpItem .rpDisabled:hover
+{
+	color: #999;
+	text-decoration: none;
+	background-color: #fff;
+	border: 0;
+	padding: 1px;
+}
+
+.RadPanelBar_Outlook .rpGroup .rpItem .rpDisabled:hover .rpOut
+{
+	border-bottom: 0;
+}
+/* </subitems (disabled)> */
+
+/* <subitems> */
+
+/* <background positioning> */
+.RadPanelBar_Outlook .rpLink,
+.RadPanelBar_Outlook .rpExpanded
+{
+	background-position: 0 0;
+}
+
+.RadPanelBar_Outlook .rpFocused,
+.RadPanelBar_Outlook .rpLink:hover,
+.RadPanelBar_Outlook .rpExpanded:hover
+{
+	background-position: 0 -200px;
+}
+
+.RadPanelBar_Outlook .rpSelected,
+.RadPanelBar_Outlook .rpSelected:hover
+{
+	background-position: 0 -400px;
+}
+
+.RadPanelBar_Outlook .rpFirst .rpLink,
+.RadPanelBar_Outlook .rpFirst .rpExpanded
+{
+	background-position: 0 -1px;
+}
+
+.RadPanelBar_Outlook .rpFirst .rpFocused,
+.RadPanelBar_Outlook .rpFirst .rpLink:hover
+{
+	background-position: 0 -201px;
+}
+
+.RadPanelBar_Outlook .rpFirst .rpSelected,
+.RadPanelBar_Outlook .rpFirst .rpSelected:hover
+{
+	background-position: 0 -401px;
+}
+
+/* <root items (disabled)> */
+.RadPanelBar_Outlook .rpDisabled:hover
+{
+	cursor: default;
+}
+
+.RadPanelBar_Outlook .rpDisabled,
+.RadPanelBar_Outlook .rpDisabled:hover,
+.RadPanelBar_Outlook .rpDisabled:hover .rpOut
+{
+	background-position: 0 0;
+}
+/* </root items (disabled)> */
+
+/*      <expand arrows> */
+.RadPanelBar_Outlook .rpExpandable .rpText,
+.RadPanelBar_Outlook .rpExpanded .rpText
+{
+	padding-right: 20px;
+	background-repeat: no-repeat;
+}
+
+.RadPanelBar_Outlook_rtl .rpExpandable .rpText,
+.RadPanelBar_Outlook_rtl .rpExpanded .rpText
+{
+	padding-left: 20px;
+}
+
+.RadPanelBar_Outlook_rtl .rpGroup .rpText
+{
+	padding: 0 10px;
+}
+
+.RadPanelBar_Outlook .rpExpandable .rpText { background-position: 100% 0; }
+.RadPanelBar_Outlook .rpExpanded .rpText { background-position: 100% -176px; }
+.RadPanelBar_Outlook_rtl .rpExpandable .rpText { background-position: 0 0; }
+.RadPanelBar_Outlook_rtl .rpExpanded .rpText { background-position: 0 -176px; }
+
+.RadPanelBar_Outlook .rpExpandable.rpSelected .rpText,
+.RadPanelBar_Outlook .rpExpandable.rpSelected:hover .rpText
+{
+	background-position: 100% -337px;
+}
+
+.RadPanelBar_Outlook .rpExpanded.rpSelected .rpText,
+.RadPanelBar_Outlook .rpExpanded.rpSelected:hover .rpText
+{
+	background-position: 100% -476px;
+}
+
+.RadPanelBar_Outlook_rtl .rpExpandable.rpSelected .rpText,
+.RadPanelBar_Outlook_rtl .rpExpandable.rpSelected:hover .rpText
+{
+	background-position: 0 -337px;
+}
+
+.RadPanelBar_Outlook_rtl .rpExpanded.rpSelected .rpText,
+.RadPanelBar_Outlook_rtl .rpExpanded.rpSelected:hover .rpText
+{
+	background-position: 0 -476px;
+}
+
+/*      </expand arrows> */
+
+.RadPanelBar_Outlook .rpGroup .rpLink,
+.RadPanelBar_Outlook .rpGroup .rpLink .rpOut { background-position: 0 200px; }
+
+.RadPanelBar_Outlook .rpGroup .rpLink:hover,
+.RadPanelBar_Outlook .rpGroup .rpFocused { background-position: 100% -22px; }
+.RadPanelBar_Outlook .rpGroup .rpLink:hover .rpOut,
+.RadPanelBar_Outlook .rpGroup .rpFocused .rpOut { background-position: 0 0; }
+
+/*      <subitems (selected)> */
+.RadPanelBar_Outlook .rpGroup .rpSelected,
+.RadPanelBar_Outlook .rpGroup .rpSelected:hover { background-position: 100% -222px; background-color: transparent; }
+.RadPanelBar_Outlook .rpGroup .rpSelected .rpOut,
+.RadPanelBar_Outlook .rpGroup .rpSelected:hover .rpOut { background-position: 0 -200px; }
+/*      </subitems (selected)> */
+
+/*      <subitems (expand arrows)> */
+.RadPanelBar_Outlook .rpGroup .rpExpandable .rpText,
+.RadPanelBar_Outlook .rpGroup .rpExpandable:hover .rpText { background-position: 100% -938px; }
+.RadPanelBar_Outlook .rpGroup .rpExpanded .rpText,
+.RadPanelBar_Outlook .rpGroup .rpExpanded:hover .rpText { background-position: 100% -1078px; }
+.RadPanelBar_Outlook_rtl .rpGroup .rpExpandable .rpText,
+.RadPanelBar_Outlook_rtl .rpGroup .rpExpandable:hover .rpText { background-position: 0 -938px; }
+.RadPanelBar_Outlook_rtl .rpGroup .rpExpanded .rpText,
+.RadPanelBar_Outlook_rtl .rpGroup .rpExpanded:hover .rpText { background-position: 0 -1078px; }
+/*      </subitems (expand arrows)> */
+/* </background positioning> */

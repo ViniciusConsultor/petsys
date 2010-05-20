@@ -1,0 +1,34 @@
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ctrlMunicipios.ascx.vb"
+    Inherits="WorkSpace.ctrlMunicipios" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<asp:Panel ID="pnlMunicipio" runat="server">
+    <telerik:RadComboBox ID="cboMunicipios" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
+        LoadingMessage="Carregando..." ShowDropDownOnTextboxClick="False" MarkFirstMatch="false"
+        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Height="300px"
+        Skin="Vista" CausesValidation="False" EmptyMessage="Selecione um município">
+        <HeaderTemplate>
+            <table style="width: 400px" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="width: 300px;">
+                        Município
+                    </td>
+                    <td style="width: 100px;">
+                        Estado
+                    </td>
+                </tr>
+            </table>
+        </HeaderTemplate>
+        <ItemTemplate>
+            <table style="width: 400px" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="width: 300px;">
+                        <%# DataBinder.Eval(Container, "Text")%>
+                    </td>
+                    <td style="width: 100px;">
+                        <%#DataBinder.Eval(Container, "Attributes['UF']")%>
+                    </td>
+                </tr>
+            </table>
+        </ItemTemplate>
+    </telerik:RadComboBox>
+</asp:Panel>

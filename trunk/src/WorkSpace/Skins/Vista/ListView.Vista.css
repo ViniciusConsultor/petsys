@@ -1,0 +1,233 @@
+/*Telerik RadListView Vista Skin*/
+
+/*global*/
+
+.RadListView_Vista
+{
+	border:1px solid #9cb6c5;
+	background:#fff;
+	color:#333;
+}
+
+.RadListView_Vista .rlvISel
+{
+	background:#abdbf5;/*#d7f0fc*/
+}
+
+.RadListView_Vista .rlvIEdit
+{
+	background:#6ab5dc;
+}
+
+/*buttons*/
+
+.RadListView_Vista .rlvBAdd,
+.RadListView_Vista .rlvBUpdate,
+.RadListView_Vista .rlvBCancel,
+.RadListView_Vista .rlvBDel,
+.RadListView_Vista .rlvBEdit
+{
+	background-image:url('Grid/sprite.gif');
+}
+
+.RadListView_Vista .rlvBAdd
+{
+	background-position:0 -1650px;
+}
+.RadListView_Vista .rlvBUpdate
+{
+	background-position:0 -1800px;
+}
+.RadListView_Vista .rlvBCancel
+{
+	background-position:2px -1848px;
+}
+.RadListView_Vista .rlvBSel
+{
+	background-image:url('FormDecorator/CheckBoxSprites.gif');
+	background-position:-2px -2px;
+}
+.RadListView_Vista .rlvISel .rlvBSel
+{
+	background-position:-2px -422px;
+}
+.RadListView_Vista .rlvBDel
+{
+	background-position:0 -1750px;
+}
+.RadListView_Vista .rlvBEdit
+{
+	background-position:0 -1700px;
+}
+
+/*flow*/
+
+.RadListView_Vista div.rlvI,
+.RadListView_Vista div.rlvA,
+.RadListView_Vista div.rlvIEmpty,
+.RadListView_Vista div.rlvIEdit
+{
+	border-color:#ededed;
+}
+
+.RadListView_Vista div.rlvISel
+{
+	border-color:#d7f0fc;
+}
+
+/*grid*/
+
+.RadListView_Vista tr.rlvHeader th
+{
+	border:1px solid;
+	border-color:#fff #dcf2fc #3c7fb1 #8bbdde;
+	background:0 -2300px repeat-x #a6d9f4 url('Grid/sprite.gif');
+}
+
+.RadListView_Vista tr.rlvI td,
+.RadListView_Vista tr.rlvA td,
+.RadListView_Vista tr.rlvISel td,
+.RadListView_Vista tr.rlvIEmpty td
+{
+	border:1px solid;
+	border-top:0;
+}
+
+.RadListView_Vista tr.rlvI td,
+.RadListView_Vista tr.rlvA td,
+.RadListView_Vista tr.rlvIEmpty td
+{
+	border-color:#fff #fff #fff #ededed;
+}
+
+.RadListView_Vista tr.rlvISel td
+{
+	border-color:#d7f0fc #abdbf5;
+}
+
+.RadListView_Vista tr.rlvIEdit td
+{
+	border-color:#96cfee #96cfee #ededed #ededed;
+}
+
+/*single row*/
+
+.RadListView_Vista td.rlvI,
+.RadListView_Vista td.rlvA,
+.RadListView_Vista td.rlvISel,
+.RadListView_Vista td.rlvIEmpty,
+.RadListView_Vista td.rlvIEdit
+{
+	border:0;
+	border-right:1px solid #ededed;
+}
+
+.RadListView_Vista td.rlvISel
+{
+	border-color:#d7f0fc;
+}
+
+/*pager*/
+
+.RadDataPager_Vista
+{
+	border:1px solid #9cb6c5;
+	background:#eff7fc;
+	color:#333;
+}
+
+.RadDataPager_Vista .rdpInfoPart
+{
+	color:#8a8a8a;
+}
+
+.RadDataPager_Vista .rdpInfoPart strong
+{
+	color:#4c4e54;
+}
+
+.RadDataPager_Vista .rdpPageFirst,
+.RadDataPager_Vista .rdpPagePrev,
+.RadDataPager_Vista .rdpPageNext,
+.RadDataPager_Vista .rdpPageLast
+{
+	background:transparent no-repeat url('Grid/sprite.gif');
+}
+
+.RadDataPager_Vista .rdpPageFirst
+{
+	background-position:0 -550px;
+}
+.RadDataPager_Vista .rdpPageFirst:hover
+{
+	background-position:0 -600px;
+}
+.RadDataPager_Vista .rdpPagePrev
+{
+	background-position:0 -700px;
+}
+.RadDataPager_Vista .rdpPagePrev:hover
+{
+	background-position:0 -750px;
+}
+.RadDataPager_Vista .rdpPageNext
+{
+	background-position:0 -850px;
+}
+.RadDataPager_Vista .rdpPageNext:hover
+{
+	background-position:0 -900px;
+}
+.RadDataPager_Vista .rdpPageLast
+{
+	background-position:0 -1000px;
+}
+.RadDataPager_Vista .rdpPageLast:hover
+{
+	background-position:0 -1050px;
+}
+
+.RadDataPager_Vista .rdpPagerButton
+{
+	border:1px solid #a6d9f4;
+	background:#cfcfcf repeat-x 0 -1550px url('Grid/sprite.gif');
+	color:#000;
+	font:12px/12px "segoe ui",arial,sans-serif;
+}
+
+.RadDataPager_Vista .rdpNumPart a:hover,
+.RadDataPager_Vista .rdpNumPart a:hover span,
+.RadDataPager_Vista .rdpNumPart a.rdpCurrentPage,
+.RadDataPager_Vista .rdpNumPart a.rdpCurrentPage span
+{
+	background:no-repeat url('Grid/sprite.gif');
+}
+
+.RadDataPager_Vista .rdpNumPart a
+{
+	color:#000;
+}
+
+.RadDataPager_Vista .rdpNumPart a:hover
+{
+	background-position:100% -1250px;
+	color:#06c;
+}
+
+.RadDataPager_Vista .rdpNumPart a:hover span
+{
+	background-position:0 -1150px;
+}
+
+.RadDataPager_Vista .rdpNumPart a.rdpCurrentPage,
+.RadDataPager_Vista .rdpNumPart a.rdpCurrentPage:hover
+{
+	background-position:100% -1450px;
+	color:#000;
+}
+
+.RadDataPager_Vista .rdpNumPart a.rdpCurrentPage span,
+.RadDataPager_Vista .rdpNumPart a.rdpCurrentPage:hover span
+{
+	background-position:0 -1350px;
+}

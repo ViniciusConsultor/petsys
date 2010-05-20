@@ -1,0 +1,406 @@
+/* <RadMenu / Simple> */
+
+.RadMenu_Sitefinity ul.rmRootGroup,
+.RadMenu_Sitefinity div.rmRootGroup
+{
+	border: 1px solid #ccc;
+	background-color: #eff0f1;
+}
+
+/* <Root items> */
+
+.RadMenu_Sitefinity,
+.RadMenu_Sitefinity .rmLink
+{
+	font: normal 12px/19px Arial, Helvetica, sans-serif;
+	color: #667;
+	text-decoration: none;
+}
+
+.RadMenu_Sitefinity .rmItem .rmLink
+{
+	padding: 1px 0 1px 12px;
+}
+
+.RadMenu_Sitefinity .rmHorizontal .rmItem
+{
+	padding: 2px 0;
+}
+
+.RadMenu_Sitefinity_rtl .rmItem .rmLink
+{
+	padding: 1px 12px 1px 0;
+}
+
+.RadMenu_Sitefinity .rmVertical .rmItem .rmLink
+{
+	padding: 1px 12px;
+}
+
+div.RadMenu_Sitefinity_rtl .rmHorizontal .rmText
+{
+	padding: 0 0 1px 12px;
+}
+
+.RadMenu_Sitefinity .rmVertical .rmItem .rmLink .rmText
+{
+	border-bottom: 1px solid #CCC;
+	border-right: 0;
+}
+
+.RadMenu_Sitefinity .rmHorizontal .rmItem .rmLink .rmText
+{
+	border-bottom: 0;
+	border-right: 1px solid #CCC;
+}
+
+.RadMenu_Sitefinity_rtl .rmHorizontal .rmItem .rmLink .rmText
+{
+	border-bottom: 0;
+	border-right: 0;
+	border-left: 1px solid #CCC;
+}
+
+.RadMenu_Sitefinity .rmVertical .rmLast .rmLink .rmText
+{
+	border-bottom: 0;
+	border-right: 0;
+	padding-bottom: 1px;
+}
+
+.RadMenu_Sitefinity .rmHorizontal .rmLast .rmLink .rmText
+{
+	border-right: 0;
+	border-bottom: 0;
+}
+
+.RadMenu_Sitefinity_rtl .rmHorizontal .rmLast .rmLink .rmText
+{
+	border-left: 0;
+	border-bottom: 0;
+}
+
+.RadMenu_Sitefinity .rmItem .rmLink:hover,
+.RadMenu_Sitefinity .rmItem .rmFocused,
+.RadMenu_Sitefinity .rmItem .rmSelected,
+.RadMenu_Sitefinity .rmItem .rmExpanded,
+.RadMenu_Sitefinity .rmItem .rmExpanded:hover
+{
+	color: #000;
+}
+
+.RadMenu_Sitefinity .rmItem .rmDisabled,
+.RadMenu_Sitefinity .rmItem .rmDisabled:hover
+{
+	color: #BBB;
+	background-color: transparent;
+	border: 0;
+}
+
+.RadMenu_Sitefinity img.rmLeftImage
+{
+	margin: 2px 2px 0 0;
+	padding-bottom: 1px;
+}
+
+/* </Root items> */
+
+
+/* <Submenu items> */
+
+div.RadMenu .rmRootGroup .rmItem .rmGroup
+{
+	padding-bottom: 0;
+}
+
+div.RadMenu .rmRootGroup .rmItem .rmVertical
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.RadMenu_Sitefinity .rmGroup,
+.RadMenu_Sitefinity .rmMultiColumn,
+.RadMenu_Sitefinity .rmGroup .rmVertical
+{
+	border: 1px solid #c4c4c4;
+	background: #fff;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmHorizontal
+{
+	background: #fff;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmItem .rmLink
+{
+	padding: 1px;
+	margin: 1px 2px;
+	line-height: 16px;
+}
+
+.RadMenu .rmGroup .rmItem .rmLeftImage
+{
+	margin: 2px 0 0 6px;
+}
+
+* html .RadMenu .rmGroup .rmItem .rmLeftImage { margin: 2px 0 0 3px; }
+*+html .RadMenu .rmGroup .rmItem .rmLeftImage { margin: 2px 0 0 3px; }
+
+.RadMenu_Sitefinity .rmGroup .rmItem .rmLink
+{
+	color: #105cb6;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmItem .rmLink:hover
+{
+	color: #002bb8;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmItem .rmFocused,
+.RadMenu_Sitefinity .rmGroup .rmItem .rmFocused:hover,
+.RadMenu_Sitefinity .rmGroup .rmItem .rmSelected,
+.RadMenu_Sitefinity .rmGroup .rmItem .rmSelected:hover,
+.RadMenu_Sitefinity .rmGroup .rmItem .rmExpanded,
+.RadMenu_Sitefinity .rmGroup .rmItem .rmExpanded:hover
+{
+	color: #000;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmItem .rmDisabled,
+.RadMenu_Sitefinity .rmGroup .rmItem .rmDisabled:hover
+{
+	color: #BBB;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmItem .rmLink .rmText
+{
+	padding-right: 53px;
+	border: 0;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmHorizontal .rmLink .rmText
+{
+	padding-right: 20px;
+	border-right: 1px solid #CCC;
+}
+
+div.RadMenu_Sitefinity_rtl .rmGroup .rmHorizontal .rmLink .rmText
+{
+	padding-right: 10px;
+	padding-left: 20px;
+	border-right: 0;
+	border-left: 1px solid #CCC;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmHorizontal .rmLast .rmLink .rmText
+{
+	border-right: 0;
+}
+
+.RadMenu_Sitefinity_rtl .rmGroup .rmHorizontal .rmLast .rmLink .rmText
+{
+	border-left: 0;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmExpandRight,
+.RadMenu_Sitefinity .rmGroup .rmExpandLeft,
+.RadMenu_Sitefinity .rmTopArrow,
+.RadMenu_Sitefinity .rmBottomArrow,
+.RadMenu_Sitefinity .rmLeftArrow,
+.RadMenu_Sitefinity .rmRightArrow
+{
+	background: transparent url('Menu/rmExpandArrows.png') no-repeat;
+}
+
+.RadMenu_Sitefinity .rmGroup .rmExpandRight { background-position: 100% -2px; }
+.RadMenu_Sitefinity .rmGroup .rmExpandLeft { background-position: 0 -50px; }
+.RadMenu_Sitefinity .rmLink:hover .rmExpandRight,
+.RadMenu_Sitefinity .rmFocused .rmExpandRight,
+.RadMenu_Sitefinity .rmSelected .rmExpandRight,
+.RadMenu_Sitefinity .rmExpanded .rmExpandRight { background-position: 100% -26px; }
+.RadMenu_Sitefinity .rmLink:hover .rmExpandLeft,
+.RadMenu_Sitefinity .rmFocused .rmExpandLeft,
+.RadMenu_Sitefinity .rmSelected .rmExpandLeft,
+.RadMenu_Sitefinity .rmExpanded .rmExpandLeft { background-position: 0 -74px; }
+
+.RadMenu_Sitefinity .rmTopArrow,
+.RadMenu_Sitefinity .rmBottomArrow,
+.RadMenu_Sitefinity .rmLeftArrow,
+.RadMenu_Sitefinity .rmRightArrow
+{
+	background-color: #fff;
+}
+
+.RadMenu_Sitefinity .rmTopArrow
+{
+	border-bottom: 1px solid #CCC;
+	background-position: 50% -95px;
+}
+
+.RadMenu_Sitefinity .rmBottomArrow
+{
+	border-top: 1px solid #CCC;
+	background-position: 50% -109px;
+}
+
+.RadMenu_Sitefinity .rmLeftArrow
+{
+	border-right: 1px solid #CCC;
+	background-position: 50% -48px;
+}
+
+.RadMenu_Sitefinity .rmRightArrow
+{
+	border-left: 1px solid #CCC;
+	background-position: 50% 1px;
+}
+
+div.RadMenu_Sitefinity .rmHorizontal .rmSeparator,
+div.RadMenu_Sitefinity .rmSeparator .rmText
+{
+	padding: 0;
+}
+
+div.RadMenu_Sitefinity .rmHorizontal .rmSeparator .rmText
+{
+	padding: 3px 0;
+	margin: 0;
+}
+
+.RadMenu_Sitefinity .rmHorizontal .rmVertical .rmSeparator .rmText
+{
+	padding: 0;
+}
+
+div.RadMenu_Sitefinity .rmVertical li.rmSeparator .rmText,
+div.RadMenu_Sitefinity .rmHorizontal .rmVertical li.rmSeparator .rmText
+{
+	background: #CCC;
+	padding-bottom: 1px;
+	margin: 1px 0;
+}
+
+*+html div.RadMenu_Sitefinity .rmVertical li.rmSeparator .rmText,
+*+html div.RadMenu_Sitefinity .rmHorizontal .rmVertical li.rmSeparator .rmText
+{
+	background: transparent;
+	padding-bottom: 0;
+	border-bottom: 1px solid #CCC;
+	margin: 0;
+}
+
+* html div.RadMenu_Sitefinity .rmVertical li.rmSeparator .rmText,
+* html div.RadMenu_Sitefinity .rmHorizontal .rmVertical li.rmSeparator .rmText
+{
+	padding-top: 1px;
+	padding-bottom: 0;
+	margin: 0;
+}
+
+.RadMenu_Sitefinity .rmVertical .rmSeparator
+{
+	margin-top: -3px;
+	background-color: #eff0f1;
+	z-index: 6;
+	position: relative;
+	line-height: 0;
+	font-size: 0;
+}
+
+*+html .RadMenu_Sitefinity .rmVertical .rmSeparator
+{
+	margin-top: -2px;
+}
+
+* html .RadMenu_Sitefinity .rmVertical .rmSeparator
+{
+	margin-top: -2px;
+}
+
+.RadMenu_Sitefinity .rmRootGroup .rmVertical .rmSeparator
+{
+	margin-top: auto;
+	background-color: transparent;
+	position: static;
+}
+
+.RadMenu_Sitefinity .rmHorizontal .rmSeparator
+{
+	margin-left: -2px;
+	background-color: #eff0f1;
+	z-index: 6;
+	position: relative;
+}
+
+.RadMenu_Sitefinity_rtl .rmHorizontal .rmSeparator
+{
+	margin-left: auto;
+	margin-right: -2px;
+}
+
+.RadMenu_Sitefinity .rmHorizontal .rmVertical .rmSeparator
+{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.RadMenu_Sitefinity_Context .rmGroup .rmSeparator
+{
+	background: transparent;
+	margin-top: 0;
+}
+
+.RadMenu_Sitefinity .rmHorizontal li.rmSeparator .rmText,
+.RadMenu_Sitefinity .rmVertical .rmHorizontal li.rmSeparator .rmText
+{
+	background: #CCC;
+	width: 1px;
+	margin-left: 1px;
+}
+
+.RadMenu_Sitefinity .rmVertical .rmVertical li.rmSeparator .rmText,
+.RadMenu_Sitefinity .rmHorizontal .rmVertical li.rmSeparator .rmText
+{
+	background: #dee2e7;
+	margin: 0 2px 0 7px;
+}
+
+*+html .RadMenu_Sitefinity .rmVertical .rmVertical li.rmSeparator .rmText,
+*+html .RadMenu_Sitefinity .rmHorizontal .rmVertical li.rmSeparator .rmText
+{
+	background: transparent;
+	border-bottom: #dee2e7;
+	margin: 0 2px 0 7px;
+}
+
+.RadMenu_Sitefinity .rmHorizontal .rmHorizontal li.rmSeparator .rmText,
+.RadMenu_Sitefinity .rmVertical .rmHorizontal li.rmSeparator .rmText
+{
+	background: #dee2e7;
+	width: 1px;
+	margin-left: 1px;
+}
+
+/* <rtl> */
+
+.RadMenu_Sitefinity_rtl .rmGroup .rmItem .rmLink .rmText
+{
+	padding-left: 53px;
+	padding-right: 27px;
+}
+
+.RadMenu_Sitefinity_rtl .rmGroup .rmHorizontal .rmLink .rmText
+{
+	padding-left: 10px;
+	padding-right: 9px;
+}
+
+/* </rtl> */
+
+.RadMenu_Sitefinity .rmScrollWrap .rmVertical
+{
+	border: 0;
+}
+
+/* </RadMenu / Simple> */

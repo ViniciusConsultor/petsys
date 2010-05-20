@@ -1,0 +1,243 @@
+.RadPanelBar_Office2007
+{
+	background: #fff;
+}
+
+.RadPanelBar_Office2007 .rpRootGroup
+{
+	border-color: #688caf;
+}
+
+.RadPanelBar_Office2007 .rpLink,
+.RadPanelBar_Office2007 .rpTemplate
+{
+	color: #00156e;
+	font: normal 12px/24px "Segoe UI", Arial, sans-serif;
+}
+
+.RadPanelBar_Office2007 .rpLink
+{
+	background-color: #a6d9f4;
+	background-image: url('PanelBar/RootItemBg.gif');
+	border-color: #C3D9F1;
+}
+
+.RadPanelBar_Office2007 .rpOut
+{
+	border-color: #C3D9F1;
+}
+
+.RadPanelBar_Office2007 .rpLink:hover
+{
+	color: #000;
+	background-color: #ffca5e;
+	border-color: #ff9b35;
+}
+
+.RadPanelBar_Office2007 .rpFocused,
+.RadPanelBar_Office2007 .rpExpanded,
+.RadPanelBar_Office2007 .rpSelected,
+.RadPanelBar_Office2007 .rpSelected:hover
+{
+	background-color: #c3d8f1;
+	border-color: #c3d8f1;
+}
+
+/* <disabled items> */
+.RadPanelBar_Office2007 .rpDisabled,
+.RadPanelBar_Office2007 .rpDisabled:hover
+{
+	color: #bbb;
+}
+
+.RadPanelBar_Office2007 .rpDisabled:hover .rpOut
+{
+	border-color: #e8f5fc;
+}
+/* </disabled items> */
+
+/* <expand arrows> */
+.RadPanelBar_Office2007 .rpExpandable .rpText,
+.RadPanelBar_Office2007 .rpExpanded .rpText
+{
+	background-color: transparent;
+	background-image: url('PanelBar/Expandable.png');
+	background-repeat: no-repeat;
+}
+/* </expand arrows> */
+
+/* <subitems> */
+.RadPanelBar_Office2007 .rpGroup
+{
+	background-color: #fff;
+}
+
+.RadPanelBar_Office2007 .rpGroup .rpLink,
+.RadPanelBar_Office2007 .rpGroup .rpTemplate
+{
+	color: #000;
+	background-color: transparent;
+	background-image: none;
+}
+
+.RadPanelBar_Office2007 .rpGroup .rpLink:hover
+{
+	color: #000;
+}
+
+.RadPanelBar_Office2007 .rpGroup .rpLink,
+.RadPanelBar_Office2007 .rpGroup .rpOut
+{
+	background-color: transparent;
+	background-image: url('PanelBar/SubItemStates.png');
+	background-repeat: no-repeat;
+}
+
+
+/* <subitems (disabled)> */
+.RadPanelBar_Office2007 .rpGroup .rpDisabled,
+.RadPanelBar_Office2007 .rpGroup .rpDisabled:hover,
+.RadPanelBar_Office2007 .rpGroup .rpDisabled:hover .rpOut
+{
+	background-image: none;
+}
+
+.RadPanelBar_Office2007 .rpGroup .rpDisabled,
+.RadPanelBar_Office2007 .rpGroup .rpDisabled:hover
+{
+	color: #bbb;
+	text-decoration: none;
+	background-color: #fff;
+}
+/* </subitems (disabled)> */
+
+/* <subitems> */
+
+/* <background positioning> */
+.RadPanelBar_Office2007 .rpLink,
+.RadPanelBar_Office2007 .rpExpanded
+{
+	background-position: 0 0;
+}
+
+.RadPanelBar_Office2007 .rpFocused,
+.RadPanelBar_Office2007 .rpLink:hover,
+.RadPanelBar_Office2007 .rpExpanded:hover
+{
+	background-position: 0 -200px;
+}
+
+.RadPanelBar_Office2007 .rpSelected,
+.RadPanelBar_Office2007 .rpSelected:hover
+{
+	background-position: 0 -400px;
+}
+
+.RadPanelBar_Office2007 .rpFirst .rpLink,
+.RadPanelBar_Office2007 .rpFirst .rpExpanded
+{
+	background-position: 0 -1px;
+}
+
+.RadPanelBar_Office2007 .rpFirst .rpFocused,
+.RadPanelBar_Office2007 .rpFirst .rpLink:hover
+{
+	background-position: 0 -201px;
+}
+
+.RadPanelBar_Office2007 .rpFirst .rpSelected,
+.RadPanelBar_Office2007 .rpFirst .rpSelected:hover
+{
+	background-position: 0 -401px;
+}
+
+/* <root items (disabled)> */
+.RadPanelBar_Office2007 .rpDisabled:hover
+{
+	cursor: default;
+}
+
+.RadPanelBar_Office2007 .rpDisabled,
+.RadPanelBar_Office2007 .rpDisabled:hover,
+.RadPanelBar_Office2007 .rpDisabled:hover .rpOut
+{
+	background-position: 0 0;
+}
+/* </root items (disabled)> */
+
+/*      <expand arrows> */
+.RadPanelBar_Office2007 .rpExpandable .rpText,
+.RadPanelBar_Office2007 .rpExpanded .rpText
+{
+	padding-right: 20px;
+	background-repeat: no-repeat;
+}
+
+.RadPanelBar_Office2007_rtl .rpExpandable .rpText,
+.RadPanelBar_Office2007_rtl .rpExpanded .rpText
+{
+	padding-left: 20px;
+}
+
+.RadPanelBar_Office2007_rtl .rpGroup .rpText
+{
+	padding: 0 10px;
+}
+
+.RadPanelBar_Office2007 .rpExpandable .rpText { background-position: 100% 0; }
+.RadPanelBar_Office2007 .rpExpanded .rpText { background-position: 100% -176px; }
+.RadPanelBar_Office2007_rtl .rpExpandable .rpText { background-position: 0 0; }
+.RadPanelBar_Office2007_rtl .rpExpanded .rpText { background-position: 0 -176px; }
+
+.RadPanelBar_Office2007 .rpExpandable.rpSelected .rpText,
+.RadPanelBar_Office2007 .rpExpandable.rpSelected:hover .rpText
+{
+	background-position: 100% -337px;
+}
+
+.RadPanelBar_Office2007 .rpExpanded.rpSelected .rpText,
+.RadPanelBar_Office2007 .rpExpanded.rpSelected:hover .rpText
+{
+	background-position: 100% -476px;
+}
+
+.RadPanelBar_Office2007_rtl .rpExpandable.rpSelected .rpText,
+.RadPanelBar_Office2007_rtl .rpExpandable.rpSelected:hover .rpText
+{
+	background-position: 0 -337px;
+}
+
+.RadPanelBar_Office2007_rtl .rpExpanded.rpSelected .rpText,
+.RadPanelBar_Office2007_rtl .rpExpanded.rpSelected:hover .rpText
+{
+	background-position: 0 -476px;
+}
+
+/*      </expand arrows> */
+
+.RadPanelBar_Office2007 .rpGroup .rpLink,
+.RadPanelBar_Office2007 .rpGroup .rpLink .rpOut { background-position: 0 200px; }
+
+.RadPanelBar_Office2007 .rpGroup .rpLink:hover,
+.RadPanelBar_Office2007 .rpGroup .rpFocused { background-position: 100% -22px; }
+.RadPanelBar_Office2007 .rpGroup .rpLink:hover .rpOut,
+.RadPanelBar_Office2007 .rpGroup .rpFocused .rpOut { background-position: 0 0; }
+
+/*      <subitems (selected)> */
+.RadPanelBar_Office2007 .rpGroup .rpSelected,
+.RadPanelBar_Office2007 .rpGroup .rpSelected:hover { background-position: 100% -222px; background-color: transparent; }
+.RadPanelBar_Office2007 .rpGroup .rpSelected .rpOut,
+.RadPanelBar_Office2007 .rpGroup .rpSelected:hover .rpOut { background-position: 0 -200px; }
+/*      </subitems (selected)> */
+
+/*      <subitems (expand arrows)> */
+.RadPanelBar_Office2007 .rpGroup .rpExpandable .rpText,
+.RadPanelBar_Office2007 .rpGroup .rpExpandable:hover .rpText { background-position: 100% -938px; }
+.RadPanelBar_Office2007 .rpGroup .rpExpanded .rpText,
+.RadPanelBar_Office2007 .rpGroup .rpExpanded:hover .rpText { background-position: 100% -1078px; }
+.RadPanelBar_Office2007_rtl .rpGroup .rpExpandable .rpText,
+.RadPanelBar_Office2007_rtl .rpGroup .rpExpandable:hover .rpText { background-position: 0 -938px; }
+.RadPanelBar_Office2007_rtl .rpGroup .rpExpanded .rpText,
+.RadPanelBar_Office2007_rtl .rpGroup .rpExpanded:hover .rpText { background-position: 0 -1078px; }
+/*      </subitems (expand arrows)> */
+/* </background positioning> */

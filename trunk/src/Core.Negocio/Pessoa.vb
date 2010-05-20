@@ -1,0 +1,98 @@
+﻿Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio.Documento
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
+Imports Compartilhados
+
+<Serializable()> _
+Public MustInherit Class Pessoa
+    Implements IPessoa
+
+    Private _ID As Nullable(Of Long)
+    Private _Nome As String
+    Private _EnderecoDeEmail As EnderecoDeEmail
+    Private _Telefones As IList(Of ITelefone)
+    Private _Documentos As IDictionary(Of TipoDeDocumento, IDocumento)
+    Private _Endereco As IEndereco
+
+    Protected Sub New()
+        _Documentos = New Dictionary(Of TipoDeDocumento, IDocumento)
+        _Telefones = New List(Of ITelefone)
+    End Sub
+
+    Public Property Nome() As String Implements IPessoa.Nome
+        Get
+            Return _Nome
+        End Get
+        Set(ByVal value As String)
+            _Nome = value
+        End Set
+    End Property
+
+    Public Property ID() As Long? Implements IPessoa.ID
+        Get
+            Return _ID
+        End Get
+        Set(ByVal value As Long?)
+            _ID = value
+        End Set
+    End Property
+
+    Public MustOverride ReadOnly Property Tipo() As TipoDePessoa Implements IPessoa.Tipo
+
+    Public Sub AdicioneDocumento(ByVal Documento As IDocumento) Implements IPessoa.AdicioneDocumento
+        If _Documentos.ContainsKey(Documento.Tipo) Then
+            _Documentos(Documento.Tipo) = Documento
+            Exit Sub
+        End If
+
+        _Documentos.Add(Documento.Tipo, Documento)
+    End Sub
+
+    Public ReadOnly Property Documentos() As IList(Of IDocumento) Implements IPessoa.Documentos
+        Get
+            Return CType(_Documentos.Values, IList(Of IDocumento))
+        End Get
+    End Property
+
+    Public Function ObtenhaDocumento(ByVal TipoDocumento As TipoDeDocumento) As IDocumento Implements IPessoa.ObtenhaDocumento
+        Dim Documento As IDocumento = Nothing
+
+        _Documentos.TryGetValue(TipoDocumento, Documento)
+
+        Return Documento
+    End Function
+
+    Public Property Endereco() As IEndereco Implements IPessoa.Endereco
+        Get
+            Return _Endereco
+        End Get
+        Set(ByVal value As IEndereco)
+            _Endereco = value
+        End Set
+    End Property
+
+    Public Sub AdicioneTelefone(ByVal Telefone As ITelefone) Implements IPessoa.AdicioneTelefone
+        If _Telefones.Contains(Telefone) Then
+            _Telefones(_Telefones.IndexOf(Telefone)) = Telefone
+            Exit Sub
+        End If
+
+        _Telefones.Add(Telefone)
+    End Sub
+
+    Public ReadOnly Property Telefones() As IList(Of ITelefone) Implements IPessoa.Telefones
+        Get
+            Return _Telefones
+        End Get
+    End Property
+
+    Public Property EnderecoDeEmail() As EnderecoDeEmail Implements IPessoa.EnderecoDeEmail
+        Get
+            Return _EnderecoDeEmail
+        End Get
+        Set(ByVal value As EnderecoDeEmail)
+            _EnderecoDeEmail = value
+        End Set
+    End Property
+
+End Class

@@ -1,0 +1,128 @@
+/* RadColorPicker Default skin */
+.RadColorPicker_Default .rcpPalette
+{
+	background-color:#fff;
+	border:solid 1px #828282;
+}
+
+.RadColorPicker_Default .rcpColorBox
+{
+	border:solid 1px #e4e4e4;
+}
+
+.RadColorPicker_Default .rcpSelectedColor,
+.RadColorPicker_Default .rcpMillionColorsPalette
+{
+	border:solid 1px #000;
+}
+
+.RadColorPicker_Default .rcpColorPreview,
+.RadColorPicker_Default .rcpInput,
+.RadColorPicker_Default .rcpHexInput
+{
+	border:solid 1px #b8b8b8;
+	border-top-color:#8e8e8e;
+}
+
+.RadColorPicker_Default .rcpPalette,
+.RadColorPicker_Default input,
+.RadColorPicker_Default a
+{
+	color:#000;
+}
+
+.RadColorPicker_Default .rcpEmptyColor,
+.RadColorPicker_Default .rcpIcon a,
+.RadColorPicker_Default .rcpTabs,
+.RadColorPicker_Default .rcpTabs a,
+.RadColorPicker_Default .rcpTabs a span,
+.RadColorPicker_Default .rcpApplyButton,
+.RadColorPicker_Default .rcpApplyButton span,
+.RadColorPicker_Default .rcpMillionColorsHandle,
+.RadColorPicker_Default div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle
+{
+	background-image:url('ColorPicker/ColorPickerSprites.gif');
+	background-repeat:no-repeat;
+}
+
+/* no color button */
+.RadColorPicker_Default .rcpEmptyColor
+{
+	background-position:right -52px;
+}
+
+.RadColorPickerRTL_Default .rcpEmptyColor
+{
+    background-position:-1001px -52px;
+}
+
+/* color picker button */
+.RadColorPicker_Default .rcpIcon a
+{
+	background-position:0 -52px;
+}
+
+.RadColorPicker_Default .rcpIcon a:hover
+{
+	background-position:0 -73px;
+}
+
+.RadColorPicker_Default .rcpIcon a:active,
+.RadColorPicker_Default .rcpIcon a:focus
+{
+	background-position:0 -94px;
+}
+
+/* color picker tabs */
+.RadColorPicker_Default .rcpTabs
+{
+    background-color:#fafafa;
+    background-position:0 -169px;
+}
+
+.RadColorPicker_Default .rcpTabs .rcpSelectedTab a
+{
+    background-position:right -26px;
+}
+
+.RadColorPicker_Default .rcpTabs .rcpSelectedTab a span
+{
+    background-position:left -26px;
+}
+
+/* apply color button */
+.RadColorPicker_Default .rcpApplyButton
+{
+    background-position:right -115px;
+}
+
+.RadColorPicker_Default .rcpApplyButton:hover
+{
+    background-position:right -136px;
+}
+
+.RadColorPicker_Default .rcpApplyButton span
+{
+    background-position:0 -115px;
+}
+
+.RadColorPicker_Default .rcpApplyButton:hover span
+{
+    background-position:0 -136px;
+}
+
+/* HSB, HSV palette handle */
+.RadColorPicker_Default .rcpMillionColorsHandle
+{
+	background-position:-1009px -73px;
+	background-color:transparent;
+}
+
+/* HSB, HSV slider handle */
+.RadColorPicker_Default div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle,
+.RadColorPicker_Default div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:hover,
+.RadColorPicker_Default div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:focus,
+.RadColorPicker_Default div.rcpMillionColorsSlider div.rslVertical a.rslDraghandle:active
+{
+	background-position:-1002px -88px;
+}

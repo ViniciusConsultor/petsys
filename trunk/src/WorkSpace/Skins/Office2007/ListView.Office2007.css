@@ -1,0 +1,235 @@
+/*Telerik RadListView Office2007 Skin*/
+
+/*global*/
+
+.RadListView_Office2007
+{
+	border:1px solid #688caf;
+	background:#fff;
+	color:#333;
+}
+
+.RadListView_Office2007 .rlvA
+{
+	/*background:#ecf4ff;*/
+}
+
+.RadListView_Office2007 .rlvISel
+{
+	background:#ffcb60;
+}
+
+.RadListView_Office2007 .rlvIEdit
+{
+	background:#ffe5ad;
+}
+
+/*buttons*/
+
+.RadListView_Office2007 .rlvBAdd,
+.RadListView_Office2007 .rlvBUpdate,
+.RadListView_Office2007 .rlvBCancel,
+.RadListView_Office2007 .rlvBDel,
+.RadListView_Office2007 .rlvBEdit
+{
+	background-image:url('Grid/sprite.gif');
+}
+
+.RadListView_Office2007 .rlvBAdd
+{
+	background-position:0 -1650px;
+}
+.RadListView_Office2007 .rlvBUpdate
+{
+	background-position:0 -1800px;
+}
+.RadListView_Office2007 .rlvBCancel
+{
+	background-position:2px -1848px;
+}
+.RadListView_Office2007 .rlvBSel
+{
+	background-image:url('FormDecorator/CheckBoxSprites.gif');
+	background-position:-2px -2px;
+}
+.RadListView_Office2007 .rlvISel .rlvBSel
+{
+	background-position:-2px -422px;
+}
+.RadListView_Office2007 .rlvBDel
+{
+	background-position:0 -1750px;
+}
+.RadListView_Office2007 .rlvBEdit
+{
+	background-position:0 -1700px;
+}
+
+/*flow*/
+
+.RadListView_Office2007 div.rlvI,
+.RadListView_Office2007 div.rlvA,
+.RadListView_Office2007 div.rlvIEmpty,
+.RadListView_Office2007 div.rlvIEdit
+{
+	border-color:#d0d7e5;
+}
+
+.RadListView_Office2007 div.rlvISel
+{
+	border-color:#ff9b35;
+}
+
+/*grid*/
+
+.RadListView_Office2007 tr.rlvHeader th
+{
+	border:solid #5d8cc9;
+	border-width:0 0 1px 1px;
+	background:0 -2300px repeat-x #c3d8f1 url('Grid/sprite.gif');
+	color:#00156e;
+}
+
+.RadListView_Office2007 tr.rlvI td,
+.RadListView_Office2007 tr.rlvA td,
+.RadListView_Office2007 tr.rlvISel td,
+.RadListView_Office2007 tr.rlvIEmpty td,
+.RadListView_Office2007 tr.rlvIEdit td
+{
+	border:1px solid;
+	border-top:0;
+	border-right:0;
+}
+
+.RadListView_Office2007 tr.rlvI td,
+.RadListView_Office2007 tr.rlvA td,
+.RadListView_Office2007 tr.rlvIEmpty td,
+.RadListView_Office2007 tr.rlvIEdit td
+{
+	border-color:#d0d7e5;
+}
+
+.RadListView_Office2007 tr.rlvISel td
+{
+	border-color:#ff9b35;
+}
+
+/*single row*/
+
+.RadListView_Office2007 td.rlvI,
+.RadListView_Office2007 td.rlvA,
+.RadListView_Office2007 td.rlvISel,
+.RadListView_Office2007 td.rlvIEmpty,
+.RadListView_Office2007 td.rlvIEdit
+{
+	border:0;
+	border-right:1px solid #d0d7e5;
+}
+
+.RadListView_Office2007 td.rlvISel
+{
+	border-color:#ff9b35;
+}
+
+/*pager*/
+
+.RadDataPager_Office2007
+{
+	border:1px solid #688caf;
+	background:#ecf3fc 0 -7000px repeat-x url('Grid/sprite.gif');
+	color:#333;
+}
+
+.RadDataPager_Office2007 .rdpInfoPart strong
+{
+	color:#000;
+}
+
+.RadDataPager_Office2007 .rdpPageFirst,
+.RadDataPager_Office2007 .rdpPagePrev,
+.RadDataPager_Office2007 .rdpPageNext,
+.RadDataPager_Office2007 .rdpPageLast
+{
+	width:17px;
+	background:transparent no-repeat url('Grid/sprite.gif');
+}
+
+.RadDataPager_Office2007 .rdpPageFirst
+{
+	margin:0 3px 0 0;
+	background-position:0 -548px;
+}
+.RadDataPager_Office2007 .rdpPageFirst:hover
+{
+	background-position:0 -598px;
+}
+.RadDataPager_Office2007 .rdpPagePrev
+{
+	margin:0 3px 0 0;
+	background-position:0 -698px;
+}
+.RadDataPager_Office2007 .rdpPagePrev:hover
+{
+	background-position:0 -748px;
+}
+.RadDataPager_Office2007 .rdpPageNext
+{
+	margin:0 0 0 3px;
+	background-position:0 -848px;
+}
+.RadDataPager_Office2007 .rdpPageNext:hover
+{
+	background-position:0 -898px;
+}
+.RadDataPager_Office2007 .rdpPageLast
+{
+	margin:0 0 0 3px;
+	background-position:0 -998px;
+}
+.RadDataPager_Office2007 .rdpPageLast:hover
+{
+	background-position:0 -1048px;
+}
+
+.RadDataPager_Office2007 .rdpPagerButton
+{
+	border:1px solid #7793b9;
+	background:#e8f1fc repeat-x 0 -1550px url('Grid/sprite.gif');
+	color:#00156e;
+	font:12px/12px "segoe ui",arial,sans-serif;
+}
+
+.RadDataPager_Office2007 .rdpNumPart a:hover,
+.RadDataPager_Office2007 .rdpNumPart a:hover span,
+.RadDataPager_Office2007 .rdpNumPart a.rdpCurrentPage,
+.RadDataPager_Office2007 .rdpNumPart a.rdpCurrentPage span
+{
+	background:no-repeat url('Grid/sprite.gif');
+}
+
+.RadDataPager_Office2007 .rdpNumPart a
+{
+	color:#00156e;
+}
+
+.RadDataPager_Office2007 .rdpNumPart a:hover
+{
+	background-position:100% -1250px;
+}
+
+.RadDataPager_Office2007 .rdpNumPart a:hover span
+{
+	background-position:0 -1150px;
+}
+
+.RadDataPager_Office2007 .rdpNumPart a.rdpCurrentPage,
+.RadDataPager_Office2007 .rdpNumPart a.rdpCurrentPage:hover
+{
+	background-position:100% -1450px;
+}
+
+.RadDataPager_Office2007 .rdpNumPart a.rdpCurrentPage span,
+.RadDataPager_Office2007 .rdpNumPart a.rdpCurrentPage:hover span
+{
+	background-position:0 -1350px;
+}

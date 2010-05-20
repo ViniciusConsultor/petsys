@@ -1,0 +1,225 @@
+.RadPanelBar_Simple
+{
+	background: #fff;
+}
+
+.RadPanelBar_Simple .rpRootGroup
+{
+	border-color: #999;
+}
+
+.RadPanelBar_Simple .rpLink,
+.RadPanelBar_Simple .rpTemplate
+{
+	color: #000;
+	font: normal 12px/24px "Segoe UI", Arial, sans-serif;
+}
+
+.RadPanelBar_Simple .rpLink
+{
+	background-color: #e4e4e4;
+	border-color: #999;
+}
+
+/* compensate for borders */
+
+.RadPanelBar_Simple .rpOut
+{
+	border-color: #e4e4e4;
+}
+
+.RadPanelBar_Simple .rpExpanded
+{
+	border-color: #3d556c;
+}
+
+.RadPanelBar_Simple .rpLink:hover,
+.RadPanelBar_Simple .rpFocused,
+.RadPanelBar_Simple .rpSelected
+{
+	color: #892500;
+}
+
+.RadPanelBar_Simple .rpLink:hover,
+.RadPanelBar_Simple .rpFocused
+{
+	background-color: #ffe79c;
+	border-color: #c98400;
+}
+
+.RadPanelBar_Simple .rpSelected,
+.RadPanelBar_Simple .rpSelected:hover
+{
+	background-color: #ffa517;
+	border-color: #ca4b0c;
+}
+
+div.RadPanelBar_Simple .rpLink .rpOut,
+div.RadPanelBar_Simple .rpFocused .rpOut, 
+div.RadPanelBar_Simple .rpLink:hover .rpOut, 
+div.RadPanelBar_Simple .rpSelected .rpOut, 
+div.RadPanelBar_Simple .rpSelected:hover .rpOut
+{
+	padding-bottom: 1px;
+	border: 0;
+}
+
+/* <disabled items> */
+.RadPanelBar_Simple .rpDisabled,
+.RadPanelBar_Simple .rpDisabled:hover
+{
+	color: #bbb;
+	background-color: #e4e4e4;
+	border-color: #999;
+	cursor: default;
+}
+
+.RadPanelBar_Simple .rpDisabled:hover .rpOut
+{
+	border-color: #e4e4e4;
+}
+/* </disabled items> */
+
+/* <expand arrows> */
+.RadPanelBar_Simple .rpExpandable .rpText,
+.RadPanelBar_Simple .rpExpanded .rpText
+{
+	background-color: transparent;
+	background-image: url('PanelBar/Expandable.png');
+	background-repeat: no-repeat;
+}
+/* </expand arrows> */
+
+/* <subitems> */
+.RadPanelBar_Simple .rpGroup
+{
+	background-color: #fff;
+}
+
+div.RadPanelBar_Simple .rpGroup .rpLink,
+div.RadPanelBar_Simple .rpGroup .rpTemplate
+{
+	color: #000;
+	background-color: transparent;
+	background-image: none;
+	border: 0;
+	margin: 0 2px;
+	padding: 1px;
+}
+
+div.RadPanelBar_Simple .rpGroup .rpLink:hover,
+div.RadPanelBar_Simple .rpGroup .rpFocused,
+div.RadPanelBar_Simple .rpGroup .rpSelected,
+div.RadPanelBar_Simple .rpGroup .rpSelected:hover
+{
+	color: #892500;
+	border: 1px solid #c98400;
+	background-color: #ffe79c;
+	padding: 0;
+}
+
+div.RadPanelBar_Simple .rpGroup .rpSelected
+{
+	background-color: #ffa517;
+	border-color: #ca4b0c;
+}
+
+/* <subitems (disabled)> */
+div.RadPanelBar_Simple .rpGroup .rpDisabled,
+div.RadPanelBar_Simple .rpGroup .rpDisabled:hover
+{
+	color: #bbb;
+	text-decoration: none;
+	background-color: #fff;
+	border: 0;
+	padding: 1px;
+}
+/* </subitems (disabled)> */
+
+/* <subitems> */
+
+/* <background positioning> */
+.RadPanelBar_Simple .rpLink,
+.RadPanelBar_Simple .rpExpanded
+{
+	background-position: 0 0;
+}
+
+.RadPanelBar_Simple .rpFocused,
+.RadPanelBar_Simple .rpLink:hover,
+.RadPanelBar_Simple .rpExpanded:hover
+{
+	background-position: 0 -200px;
+}
+
+.RadPanelBar_Simple .rpSelected,
+.RadPanelBar_Simple .rpSelected:hover
+{
+	background-position: 0 -400px;
+}
+
+.RadPanelBar_Simple .rpFirst .rpLink,
+.RadPanelBar_Simple .rpFirst .rpExpanded
+{
+	background-position: 0 -1px;
+}
+
+.RadPanelBar_Simple .rpFirst .rpFocused,
+.RadPanelBar_Simple .rpFirst .rpLink:hover
+{
+	background-position: 0 -201px;
+}
+
+.RadPanelBar_Simple .rpFirst .rpSelected,
+.RadPanelBar_Simple .rpFirst .rpSelected:hover
+{
+	background-position: 0 -401px;
+}
+
+/*      <expand arrows> */
+.RadPanelBar_Simple .rpExpandable .rpText,
+.RadPanelBar_Simple .rpExpanded .rpText
+{
+	padding-right: 20px;
+	background-repeat: no-repeat;
+}
+
+.RadPanelBar_Simple_rtl .rpExpandable .rpText,
+.RadPanelBar_Simple_rtl .rpExpanded .rpText
+{
+	padding-left: 20px;
+}
+
+.RadPanelBar_Simple_rtl .rpGroup .rpText
+{
+	padding: 0 10px;
+}
+
+.RadPanelBar_Simple .rpExpandable .rpText { background-position: 100% 0; }
+.RadPanelBar_Simple .rpExpanded .rpText { background-position: 100% -176px; }
+.RadPanelBar_Simple_rtl .rpExpandable .rpText { background-position: 0 0; }
+.RadPanelBar_Simple_rtl .rpExpanded .rpText { background-position: 0 -176px; }
+
+.RadPanelBar_Simple .rpGroup .rpExpandable .rpText { background-position: 100% -338px; }
+.RadPanelBar_Simple .rpGroup .rpExpanded .rpText { background-position: 100% -477px; }
+.RadPanelBar_Simple_rtl .rpGroup .rpExpandable .rpText { background-position: 0 -338px; }
+.RadPanelBar_Simple_rtl .rpGroup .rpExpanded .rpText { background-position: 0 -477px; }
+
+/*      </expand arrows> */
+
+.RadPanelBar_Simple .rpGroup .rpLink,
+.RadPanelBar_Simple .rpGroup .rpLink .rpOut { background-position: 0 200px; }
+
+.RadPanelBar_Simple .rpGroup .rpLink:hover,
+.RadPanelBar_Simple .rpGroup .rpFocused { background-position: 100% -22px; }
+.RadPanelBar_Simple .rpGroup .rpLink:hover .rpOut,
+.RadPanelBar_Simple .rpGroup .rpFocused .rpOut { background-position: 0 0; }
+
+/*      <subitems (selected)> */
+.RadPanelBar_Simple .rpGroup .rpSelected,
+.RadPanelBar_Simple .rpGroup .rpSelected:hover { background-position: 100% -222px; background-color: transparent; }
+.RadPanelBar_Simple .rpGroup .rpSelected .rpOut,
+.RadPanelBar_Simple .rpGroup .rpSelected:hover .rpOut { background-position: 0 -200px; }
+/*      </subitems (selected)> */
+
+/* </background positioning> */
