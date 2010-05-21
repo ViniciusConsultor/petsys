@@ -106,16 +106,33 @@ EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "T13.Setup", "T13.Setup\T13.Setup.vdproj", "{B1C7AC0F-CDBC-41D0-886D-2F14F0FE5304}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9CFCF355-FDFB-4CD9-A4EA-FA104D8A1336}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Estoque\SQL Server\INSERT.SQL = ..\doc\Banco de dados\Estoque\SQL Server\INSERT.SQL
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{E5791C36-89F5-47A8-B314-9E714785C189}"
 	ProjectSection(SolutionItems) = preProject
 		..\doc\Banco de dados\Estoque\SQL Server\CREATE.SQL = ..\doc\Banco de dados\Estoque\SQL Server\CREATE.SQL
-		..\doc\Banco de dados\Estoque\SQL Server\INSERT.SQL = ..\doc\Banco de dados\Estoque\SQL Server\INSERT.SQL
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1152A593-8F96-4755-AA7C-8248098EE64E}"
 	ProjectSection(SolutionItems) = preProject
 		..\bin\municipios.sql = ..\bin\municipios.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLITE", "SQLITE", "{D37D7E80-4567-48DB-831E-972E80AA1A55}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Nucleo\SQLITE\CREATE_NCL.sql = ..\doc\Banco de dados\Nucleo\SQLITE\CREATE_NCL.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{3C1DBD5E-0217-4312-89A9-10A726C52A40}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Estoque\SQLite\CREATE.SQL = ..\doc\Banco de dados\Estoque\SQLite\CREATE.SQL
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{EC4AA39D-F192-4CEA-B548-82ECD7292782}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\PetSys\SQLite\CREATE_PET.sql = ..\doc\Banco de dados\PetSys\SQLite\CREATE_PET.sql
 	EndProjectSection
 EndProject
 Global
@@ -245,9 +262,12 @@ Global
 		{0409B1D2-49EF-4142-BF70-F9E4385E192D} = {A97F6B98-66C7-45C9-BAE8-A04FAC2F0B5E}
 		{F23DED54-6076-4198-9E49-11F4EF708507} = {A97F6B98-66C7-45C9-BAE8-A04FAC2F0B5E}
 		{57013615-97AA-4447-A18A-A850DBA9243E} = {A97F6B98-66C7-45C9-BAE8-A04FAC2F0B5E}
+		{EC4AA39D-F192-4CEA-B548-82ECD7292782} = {A97F6B98-66C7-45C9-BAE8-A04FAC2F0B5E}
 		{F2A78F6E-566F-4E74-A1E3-8F756C7512B7} = {2373746D-18C4-4425-B1E5-E80C1D9FCB6B}
 		{24CE9EE7-E5CF-41EB-B8C1-FC9FC2DD90B2} = {2373746D-18C4-4425-B1E5-E80C1D9FCB6B}
 		{3EB1AF7B-A54A-48B5-A8FE-50167E3670E0} = {2373746D-18C4-4425-B1E5-E80C1D9FCB6B}
+		{D37D7E80-4567-48DB-831E-972E80AA1A55} = {2373746D-18C4-4425-B1E5-E80C1D9FCB6B}
 		{E5791C36-89F5-47A8-B314-9E714785C189} = {9CFCF355-FDFB-4CD9-A4EA-FA104D8A1336}
+		{3C1DBD5E-0217-4312-89A9-10A726C52A40} = {9CFCF355-FDFB-4CD9-A4EA-FA104D8A1336}
 	EndGlobalSection
 EndGlobal

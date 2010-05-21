@@ -1,4 +1,4 @@
-﻿'Imports System.Data.SQLite
+﻿Imports System.Data.SQLite
 Imports System.Data.Common
 
 Namespace DBHelper
@@ -11,15 +11,14 @@ Namespace DBHelper
         End Sub
 
         Protected Overrides Function CrieConexao(ByVal StringDeConexao As String) As IDbConnection
-            '    Dim cConexao As IDbConnection = New SQLiteConnection(StringDeConexao)
-            '    cConexao.Open()
-            '    Return cConexao
+            Dim cConexao As IDbConnection = New SQLiteConnection(StringDeConexao)
+            cConexao.Open()
+            Return cConexao
             Return Nothing
         End Function
 
         Protected Overrides Function CrieDataAdapter(ByVal Comando As IDbCommand) As DbDataAdapter
-            'Return New SQLiteDataAdapter(CType(Comando, SQLiteCommand))
-            Return Nothing
+            Return New SQLiteDataAdapter(CType(Comando, SQLiteCommand))
         End Function
 
     End Class
