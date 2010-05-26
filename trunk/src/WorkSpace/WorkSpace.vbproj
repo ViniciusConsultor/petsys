@@ -321,6 +321,34 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custos\frmConfiguracoes.aspx.designer.vb">
+      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Custos\frmConfiguracoes.aspx.vb">
+      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Custos\frmFormacaoDePreco.aspx.designer.vb">
+      <DependentUpon>frmFormacaoDePreco.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Custos\frmFormacaoDePreco.aspx.vb">
+      <DependentUpon>frmFormacaoDePreco.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Custos\frmReajusteDePrecos.aspx.designer.vb">
+      <DependentUpon>frmReajusteDePrecos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Custos\frmReajusteDePrecos.aspx.vb">
+      <DependentUpon>frmReajusteDePrecos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Custos\frmTabelaDeCustos.aspx.designer.vb">
+      <DependentUpon>frmTabelaDeCustos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Custos\frmTabelaDeCustos.aspx.vb">
+      <DependentUpon>frmTabelaDeCustos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Erro.aspx.designer.vb">
       <DependentUpon>Erro.aspx</DependentUpon>
     </Compile>
@@ -348,6 +376,69 @@
     <Compile Include="Estoque\cdProduto.aspx.vb">
       <DependentUpon>cdProduto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmBoletosTitulos.aspx.designer.vb">
+      <DependentUpon>frmBoletosTitulos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmBoletosTitulos.aspx.vb">
+      <DependentUpon>frmBoletosTitulos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmCobrancaEletronica.aspx.designer.vb">
+      <DependentUpon>frmCobrancaEletronica.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmCobrancaEletronica.aspx.vb">
+      <DependentUpon>frmCobrancaEletronica.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmConciliacaoBancaria.aspx.designer.vb">
+      <DependentUpon>frmConciliacaoBancaria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmConciliacaoBancaria.aspx.vb">
+      <DependentUpon>frmConciliacaoBancaria.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmConfiguracoes.aspx.designer.vb">
+      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmConfiguracoes.aspx.vb">
+      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmContasAPagar.aspx.designer.vb">
+      <DependentUpon>frmContasAPagar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmContasAPagar.aspx.vb">
+      <DependentUpon>frmContasAPagar.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmEmissaoDeCheques.aspx.designer.vb">
+      <DependentUpon>frmEmissaoDeCheques.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmEmissaoDeCheques.aspx.vb">
+      <DependentUpon>frmEmissaoDeCheques.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmEmissaoDeDuplicatas.aspx.designer.vb">
+      <DependentUpon>frmEmissaoDeDuplicatas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmEmissaoDeDuplicatas.aspx.vb">
+      <DependentUpon>frmEmissaoDeDuplicatas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmFluxoDeCaixa.aspx.designer.vb">
+      <DependentUpon>frmFluxoDeCaixa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmFluxoDeCaixa.aspx.vb">
+      <DependentUpon>frmFluxoDeCaixa.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Financeiro\frmRecibos.aspx.designer.vb">
+      <DependentUpon>frmRecibos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Financeiro\frmRecibos.aspx.vb">
+      <DependentUpon>frmRecibos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>
@@ -579,10 +670,23 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Custos\frmConfiguracoes.aspx" />
+    <Content Include="Custos\frmFormacaoDePreco.aspx" />
+    <Content Include="Custos\frmReajusteDePrecos.aspx" />
+    <Content Include="Custos\frmTabelaDeCustos.aspx" />
     <Content Include="Erro.aspx" />
     <Content Include="Estoque\cdGrupoDeProduto.aspx" />
     <Content Include="Estoque\cdMarca.aspx" />
     <Content Include="Estoque\cdProduto.aspx" />
+    <Content Include="Financeiro\frmBoletosTitulos.aspx" />
+    <Content Include="Financeiro\frmCobrancaEletronica.aspx" />
+    <Content Include="Financeiro\frmConciliacaoBancaria.aspx" />
+    <Content Include="Financeiro\frmConfiguracoes.aspx" />
+    <Content Include="Financeiro\frmContasAPagar.aspx" />
+    <Content Include="Financeiro\frmEmissaoDeCheques.aspx" />
+    <Content Include="Financeiro\frmEmissaoDeDuplicatas.aspx" />
+    <Content Include="Financeiro\frmFluxoDeCaixa.aspx" />
+    <Content Include="Financeiro\frmRecibos.aspx" />
     <Content Include="imagens\wallpapers\13-daylight_planet_wallpaper_by_janedoe873.jpg" />
     <Content Include="imagens\wallpapers\desktop.gif" />
     <Content Include="imagens\wallpapers\desktop3.jpg" />

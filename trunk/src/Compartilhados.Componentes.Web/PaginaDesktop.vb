@@ -37,7 +37,9 @@ Public MustInherit Class PaginaDesktop
             FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil = Servico.Obtenha(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario)
         End Using
 
-        Dim myCss As String = "body { background:#3d71b8 url(" & FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.ImagemDesktop & ") no-repeat left top; }"
+        'Dim myCss As String = "body { background:#3d71b8 url(" & FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.ImagemDesktop & ") no-repeat left top; }"
+
+        Dim myCss As String = "body { background:#3d71b8 url(" & FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.ImagemDesktop & ") repeat-x; }"
 
         Dim cssStyle As String = "<style type=""text/css"">" & myCss & "</style>"
 

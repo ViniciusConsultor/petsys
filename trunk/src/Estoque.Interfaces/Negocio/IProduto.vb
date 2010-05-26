@@ -9,10 +9,10 @@
         Property Marca() As IMarcaDeProduto
         ReadOnly Property QuantidadeEmEstoque() As Integer
         Property QuantidadeMinimaEmEstoque() As Integer
-        Property ValorDeCusto() As Double
+        Property ValorDeCusto() As Nullable(Of Double)
         Property ValorMinimo() As Double
-        Property PorcentagemDeLucro() As Double
-        Property ValorDeVenda() As Double
+        Property PorcentagemDeLucro() As Nullable(Of Double)
+        ReadOnly Property ValorDeVenda() As Double
         Property GrupoDeProduto() As IGrupoDeProduto
         Property Observacoes() As String
 

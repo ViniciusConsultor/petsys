@@ -101,4 +101,28 @@ Public Class ServicoDeProdutoLocal
         End Try
     End Sub
 
+    Public Sub AtualizarProduto(ByVal Produto As IProduto) Implements IServicoDeProduto.AtualizarProduto
+
+    End Sub
+
+    Public Sub InserirProduto(ByVal Produto As IProduto) Implements IServicoDeProduto.InserirProduto
+
+    End Sub
+
+    Public Function ObtenhaProduto(ByVal ID As Long) As IProduto Implements IServicoDeProduto.ObtenhaProduto
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaProduto(ByVal CodigoDeBarras As String) As IProduto Implements IServicoDeProduto.ObtenhaProduto
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaProdutos(ByVal Nome As String, ByVal QuantidadeDeRegistros As Integer) As IList(Of IProduto) Implements IServicoDeProduto.ObtenhaProdutos
+        Return Nothing
+    End Function
+
+    Public Sub RemoverProduto(ByVal ID As Long) Implements IServicoDeProduto.RemoverProduto
+
+    End Sub
+
 End Class
