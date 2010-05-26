@@ -222,6 +222,10 @@ Public Class UtilidadesWeb
             DirectCast(Componente, RadDatePicker).SelectedDate = Nothing
         End If
 
+        If TypeOf Componente Is RadGrid Then
+            DirectCast(Componente, RadGrid).MasterTableView.NoMasterRecordsText = "Sem registros"
+        End If
+
     End Sub
 
     Public Shared Sub RedirecionaPaginaPorJScript(ByRef PaginaOrigem As Page, _

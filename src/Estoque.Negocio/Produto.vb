@@ -64,16 +64,6 @@ Public Class Produto
         End Set
     End Property
 
-    Private _PorcentagemDeLucro As Double
-    Public Property PorcentagemDeLucro() As Double Implements IProduto.PorcentagemDeLucro
-        Get
-            Return _PorcentagemDeLucro
-        End Get
-        Set(ByVal value As Double)
-            _PorcentagemDeLucro = value
-        End Set
-    End Property
-
     Public ReadOnly Property QuantidadeEmEstoque() As Integer Implements IProduto.QuantidadeEmEstoque
         Get
 
@@ -100,16 +90,6 @@ Public Class Produto
         End Set
     End Property
 
-    Private _ValorDeCusto As Double
-    Public Property ValorDeCusto() As Double Implements IProduto.ValorDeCusto
-        Get
-            Return _ValorDeCusto
-        End Get
-        Set(ByVal value As Double)
-            _ValorDeCusto = value
-        End Set
-    End Property
-
     Private _ValorMinimo As Double
     Public Property ValorMinimo() As Double Implements IProduto.ValorMinimo
         Get
@@ -120,13 +100,41 @@ Public Class Produto
         End Set
     End Property
 
-    Private _ValorDeVenda As Double
-    Public Property ValorDeVenda() As Double Implements IProduto.ValorDeVenda
+    ''' <summary>
+    ''' Calcula o valor de venda do produto
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns>Valor de venda dado o valor de custo e porcentagem de lucro</returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property ValorDeVenda() As Double Implements IProduto.ValorDeVenda
         Get
-            Return _ValorDeVenda
+            Dim Valor As Double = 0
+
+            If Not Me.ValorDeCusto Is Nothing AndAlso Not Me.PorcentagemDeLucro Is Nothing Then
+                Valor = (ValorDeCusto.Value * (Me.PorcentagemDeLucro.Value / 100)) + ValorDeCusto.Value
+            End If
+
+            Return Valor
         End Get
-        Set(ByVal value As Double)
-            _ValorDeVenda = value
+    End Property
+
+    Private _ValorDeCusto As Double?
+    Public Property ValorDeCusto() As Double? Implements IProduto.ValorDeCusto
+        Get
+            Return _ValorDeCusto
+        End Get
+        Set(ByVal value As Double?)
+            _ValorDeCusto = value
+        End Set
+    End Property
+
+    Private _PorcentagemDeLucro As Double?
+    Public Property PorcentagemDeLucro() As Double? Implements IProduto.PorcentagemDeLucro
+        Get
+            Return _PorcentagemDeLucro
+        End Get
+        Set(ByVal value As Double?)
+            _PorcentagemDeLucro = value
         End Set
     End Property
 

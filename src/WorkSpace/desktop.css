@@ -18,26 +18,6 @@ html, body {
 	background-image: url(imagens/bogus.png );
 }
 
-.nucleo 
-{
-	background-image: url(imagens/nucleo.png );
-}
-
-.cadastro_municipios 
-{
-	background-image: url(imagens/cadastro_municipios.png );
-}
-
-.cadastro_grupo 
-{
-	background-image: url(imagens/cadastro_grupos.png);
-}
-		
-.autorizacao 
-{
-	background-image: url(imagens/autorizacao.png);
-}
-
 .logout 
 {
 	background-image: url(imagens/logout.gif );
