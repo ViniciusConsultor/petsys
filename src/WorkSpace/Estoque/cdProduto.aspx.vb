@@ -17,7 +17,7 @@ Partial Public Class cdProduto
     End Enum
 
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO"
-    Private CHAVE_ID_PRODUTO As String = "CHAVE_ID_PRODUTO"
+    Private CHAVE_OBJETO As String = "CHAVE_OBJETO_PRODUTO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -42,10 +42,12 @@ Partial Public Class cdProduto
         ViewState(CHAVE_ESTADO) = Estado.Inicial
         cboProduto.EmptyMessage = "Selecione um produto"
         txtCodigo.EmptyMessage = "Informe o código"
+        Session(CHAVE_OBJETO) = Nothing
     End Sub
 
     Protected Sub btnNovo_Click()
         ExibaTelaNovo()
+        Session(CHAVE_OBJETO) = FabricaGenerica.GetInstancia.CrieObjeto(Of IProduto)()
     End Sub
 
     Private Sub ExibaTelaNovo()
@@ -110,55 +112,69 @@ Partial Public Class cdProduto
         ExibaTelaInicial()
     End Sub
 
-    'Private Sub btnSalva_Click()
-    '    Dim GrupoDeProduto As IGrupoDeProduto = Nothing
-    '    Dim Mensagem As String
+    Private Sub btnSalva_Click()
+        Dim Produto As IProduto = Nothing
+        Dim Mensagem As String
 
-    '    GrupoDeProduto = MontaObjeto()
+        Produto = MontaObjeto()
 
-    '    Try
-    '        Using Servico As IServicoDeGrupoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeProduto)()
-    '            If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
-    '                Servico.Inserir(GrupoDeProduto)
-    '                Mensagem = "Grupo de produto cadastrado com sucesso."
-    '            Else
-    '                Servico.Atualizar(GrupoDeProduto)
-    '                Mensagem = "Grupo de produto modificado com sucesso."
-    '            End If
+        Try
+            Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
+                    Servico.InserirProduto(Produto)
+                    Mensagem = "Produto cadastrado com sucesso."
+                Else
+                    Servico.AtualizarProduto(Produto)
+                    Mensagem = "Produto modificado com sucesso."
+                End If
 
-    '        End Using
+            End Using
 
-    '        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
-    '        ExibaTelaInicial()
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
+            ExibaTelaInicial()
 
-    '    Catch ex As BussinesException
-    '        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-    '    End Try
-    'End Sub
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
+    End Sub
 
-    'Private Function MontaObjeto() As IGrupoDeProduto
-    '    Dim Grupo As IGrupoDeProduto
+    Private Function MontaObjeto() As IProduto
+        Dim Produto As IProduto
 
-    '    Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupoDeProduto)()
+        Produto = CType(Session(CHAVE_OBJETO), IProduto)
 
-    '    If CByte(ViewState(CHAVE_ESTADO)) <> Estado.Novo Then
-    '        Grupo.ID = CLng(ViewState(CHAVE_ID_GRUPOS_DE_PRODUTO))
-    '    End If
+        Produto.CodigoDeBarras = txtCodigo.Text
+        Produto.Nome = cboProduto.Text
+        Produto.Observacoes = txtObservacoes.Text
+        Produto.PorcentagemDeLucro = txtPorcentagemDeLucro.Value
+        Produto.QuantidadeMinimaEmEstoque = txtQtdEstoqueMinimo.Value
+        Produto.Unidade = txtUnidade.Text
+        Produto.ValorDeCusto = txtValorDeCusto.Value
+        Produto.ValorDeVendaMinimo = txtValorDeVendaMinimo.Value
 
-    '    Grupo.Nome = cboGruposDeProduto.Text
-    '    Grupo.PorcentagemDeComissao = CDbl(txtPorcentagemDeComissao.Value)
-
-    '    Return Grupo
-    'End Function
+        Return Produto
+    End Function
 
     Private Sub ExibaProduto(ByVal Produto As IProduto)
+        Session(CHAVE_OBJETO) = Produto
+
         txtCodigo.Text = Produto.CodigoDeBarras
         cboProduto.Text = Produto.Nome
         cboGrupoDeProduto.SelectedValue = Produto.GrupoDeProduto.ID.Value.ToString
         cboGrupoDeProduto.Text = Produto.GrupoDeProduto.Nome
-        cboMarca.SelectedValue = Produto.Marca.ID.Value.ToString
-        cboMarca.Text = Produto.Marca.Nome
-        ViewState(CHAVE_ID_PRODUTO) = Produto.ID
+
+        If Not Produto.Marca Is Nothing Then
+            cboMarca.SelectedValue = Produto.Marca.ID.Value.ToString
+            cboMarca.Text = Produto.Marca.Nome
+        End If
+
+        txtObservacoes.Text = Produto.Observacoes
+        txtPorcentagemDeLucro.Value = Produto.PorcentagemDeLucro
+        txtQtdEstoqueMinimo.Value = Produto.QuantidadeMinimaEmEstoque
+        txtUnidade.Text = Produto.Unidade
+        txtValorDeCusto.Value = Produto.ValorDeCusto
+        txtValorDeVendaMinimo.Value = Produto.ValorDeVendaMinimo
+        txtValorDeVenda.Value = Produto.ValorDeVendaMinimo
     End Sub
 
     Private Sub btnModificar_Click()
@@ -173,19 +189,22 @@ Partial Public Class cdProduto
         Me.ExibaTelaInicial()
     End Sub
 
-    'Private Sub btnSim_Click()
-    '    Try
-    '        Using Servico As IServicoDeGrupoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeProduto)()
-    '            Servico.Remover(CLng(ViewState(CHAVE_ID_GRUPOS_DE_PRODUTO)))
-    '        End Using
+    Private Sub btnSim_Click()
+        Dim Produto As IProduto
 
-    '        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Grupo de produto excluído com sucesso."), False)
-    '        ExibaTelaInicial()
+        Produto = CType(Session(CHAVE_OBJETO), IProduto)
+        Try
+            Using Servico As IServicoDeGrupoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeProduto)()
+                Servico.Remover(Produto.ID.Value)
+            End Using
 
-    '    Catch ex As BussinesException
-    '        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-    '    End Try
-    'End Sub
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Produto excluído com sucesso."), False)
+            ExibaTelaInicial()
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
+    End Sub
 
     Protected Overrides Function ObtenhaIdFuncao() As String
         Return "FUN.ETQ.002"
@@ -200,11 +219,11 @@ Partial Public Class cdProduto
             Case "btnExcluir"
                 Call btnExclui_Click()
             Case "btnSalvar"
-                ' Call btnSalva_Click()
+                Call btnSalva_Click()
             Case "btnCancelar"
                 Call btnCancela_Click()
             Case "btnSim"
-                'Call btnSim_Click()
+                Call btnSim_Click()
             Case "btnNao"
                 Call btnNao_Click()
         End Select
@@ -270,14 +289,17 @@ Partial Public Class cdProduto
     Private Sub txtCodigo_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtCodigo.TextChanged
         If String.IsNullOrEmpty(txtCodigo.Text) Then Exit Sub
 
-        Dim Produto As IProduto
+        If CByte(ViewState(CHAVE_ESTADO)) = Estado.Inicial Then
+            Dim Produto As IProduto
 
-        Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
-            Produto = Servico.ObtenhaProduto(txtCodigo.Text)
-        End Using
+            Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
+                Produto = Servico.ObtenhaProduto(txtCodigo.Text)
+            End Using
 
-        If Produto Is Nothing Then Exit Sub
+            If Produto Is Nothing Then Exit Sub
 
+            Me.ExibaProduto(Produto)
+        End If
     End Sub
 
     Private Sub cboGrupoDeProduto_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboGrupoDeProduto.ItemsRequested
@@ -306,6 +328,46 @@ Partial Public Class cdProduto
                 Next
             End If
         End Using
+    End Sub
+
+    Private Sub cboGrupoDeProduto_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboGrupoDeProduto.SelectedIndexChanged
+        Dim Grupo As IGrupoDeProduto
+        Dim Valor As String
+
+        Valor = DirectCast(o, RadComboBox).SelectedValue
+        If String.IsNullOrEmpty(Valor) Then Return
+
+        Using Servico As IServicoDeGrupoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeProduto)()
+            Grupo = Servico.ObtenhaGrupoDeProdutos(CLng(Valor))
+        End Using
+
+        If Not Grupo Is Nothing Then
+            Dim Produto As IProduto
+
+            Produto = CType(Session(CHAVE_OBJETO), IProduto)
+            Produto.GrupoDeProduto = Grupo
+            Session(CHAVE_OBJETO) = Produto
+        End If
+    End Sub
+
+    Private Sub cboMarca_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboMarca.SelectedIndexChanged
+        Dim Marca As IMarcaDeProduto
+        Dim Valor As String
+
+        Valor = DirectCast(o, RadComboBox).SelectedValue
+        If String.IsNullOrEmpty(Valor) Then Return
+
+        Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
+            Marca = Servico.ObtenhaMarcaDeProduto(CLng(Valor))
+        End Using
+
+        If Not Marca Is Nothing Then
+            Dim Produto As IProduto
+
+            Produto = CType(Session(CHAVE_OBJETO), IProduto)
+            Produto.Marca = Marca
+            Session(CHAVE_OBJETO) = Produto
+        End If
     End Sub
 
 End Class
