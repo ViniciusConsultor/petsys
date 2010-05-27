@@ -96,4 +96,266 @@ Public Class MapeadorDeProduto
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
+    Public Sub AtualizarProduto(ByVal Produto As IProduto) Implements IMapeadorDeProduto.AtualizarProduto
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("UPDATE ETQ_PRODUTO SET")
+
+        If String.IsNullOrEmpty(Produto.CodigoDeBarras) Then
+            Sql.Append(" CODIGOBARRAS = NULL,")
+        Else
+            Sql.Append(String.Concat(" CODIGOBARRAS = '", UtilidadesDePersistencia.FiltraApostrofe(Produto.CodigoDeBarras), "',"))
+        End If
+
+        Sql.Append(String.Concat(" NOME = '", UtilidadesDePersistencia.FiltraApostrofe(Produto.Nome), "',"))
+
+        If String.IsNullOrEmpty(Produto.Unidade) Then
+            Sql.Append(" UNIDADE = NULL,")
+        Else
+            Sql.Append(String.Concat(" UNIDADE = '", UtilidadesDePersistencia.FiltraApostrofe(Produto.Unidade), "',"))
+        End If
+
+        If Produto.Marca Is Nothing Then
+            Sql.Append(" IDMARCA = NULL,")
+        Else
+            Sql.Append(String.Concat(" IDMARCA = ", Produto.Marca.ID.Value, ","))
+        End If
+
+        If Produto.QuantidadeMinimaEmEstoque Is Nothing Then
+            Sql.Append(" QTDMINESTOQUE = NULL,")
+        Else
+            Sql.Append(String.Concat(" QTDMINESTOQUE = ", UtilidadesDePersistencia.TPVd(Produto.QuantidadeMinimaEmEstoque.Value), ","))
+        End If
+
+        If Produto.ValorDeCusto Is Nothing Then
+            Sql.Append(" VALORDECUSTO = NULL,")
+        Else
+            Sql.Append(String.Concat(" VALORDECUSTO = ", UtilidadesDePersistencia.TPVd(Produto.ValorDeCusto.Value), ","))
+        End If
+
+        If Produto.ValorDeVendaMinimo Is Nothing Then
+            Sql.Append(" VALORVENDAMIN = NULL,")
+        Else
+            Sql.Append(String.Concat(" VALORVENDAMIN = ", UtilidadesDePersistencia.TPVd(Produto.ValorDeVendaMinimo.Value), ","))
+        End If
+
+        If Produto.PorcentagemDeLucro Is Nothing Then
+            Sql.Append(" PORCLUCRO = NULL,")
+        Else
+            Sql.Append(String.Concat(" PORCLUCRO = ", UtilidadesDePersistencia.TPVd(Produto.PorcentagemDeLucro.Value), ","))
+        End If
+
+        Sql.Append(String.Concat(Produto.GrupoDeProduto.ID.Value.ToString, ", "))
+
+        If String.IsNullOrEmpty(Produto.Observacoes) Then
+            Sql.Append("NULL)")
+        Else
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.Observacoes), "')"))
+        End If
+        Sql.Append(String.Concat(" WHERE ID = ", Produto.ID.Value.ToString))
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
+    Public Sub InserirProduto(ByVal Produto As IProduto) Implements IMapeadorDeProduto.InserirProduto
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Produto.ID = GeradorDeID.getInstancia.getProximoID
+
+        Sql.Append("INSERT INTO ETQ_PRODUTO (")
+        Sql.Append("ID, CODIGOBARRAS, NOME, UNIDADE, IDMARCA, QTDMINESTOQUE, VALORDECUSTO, VALORVENDAMIN, PORCLUCRO, IDGRPPROD, OBSERVACOES)")
+        Sql.Append(" VALUES (")
+        Sql.Append(String.Concat(Produto.ID.Value.ToString, ", "))
+
+        If String.IsNullOrEmpty(Produto.CodigoDeBarras) Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.CodigoDeBarras), "', "))
+        End If
+
+        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.Nome), "', "))
+
+        If String.IsNullOrEmpty(Produto.Unidade) Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.Unidade), "', "))
+        End If
+
+        If Produto.Marca Is Nothing Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(Produto.Marca.ID.Value, ", "))
+        End If
+
+        If Produto.QuantidadeMinimaEmEstoque Is Nothing Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Produto.QuantidadeMinimaEmEstoque.Value), ", "))
+        End If
+
+        If Produto.ValorDeCusto Is Nothing Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Produto.ValorDeCusto.Value), ", "))
+        End If
+
+        If Produto.ValorDeVendaMinimo Is Nothing Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Produto.ValorDeVendaMinimo.Value), ", "))
+        End If
+
+        If Produto.PorcentagemDeLucro Is Nothing Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Produto.PorcentagemDeLucro.Value), ", "))
+        End If
+
+        Sql.Append(String.Concat(Produto.GrupoDeProduto.ID.Value.ToString, ", "))
+
+        If String.IsNullOrEmpty(Produto.Observacoes) Then
+            Sql.Append("NULL)")
+        Else
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.Observacoes), "')"))
+        End If
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
+    Public Function ObtenhaProduto(ByVal ID As Long) As IProduto Implements IMapeadorDeProduto.ObtenhaProduto
+        Dim SQL As New StringBuilder
+        Dim Produtos As IList(Of IProduto)
+
+        SQL.Append("SELECT ETQ_PRODUTO.ID AS IDPRODUTO, CODIGOBARRAS, ETQ_PRODUTO.NOME AS NOMEPRODUTO, UNIDADE, IDMARCA, QTDMINESTOQUE, VALORDECUSTO, VALORVENDAMIN, PORCLUCRO, IDGRPPROD, OBSERVACOES,")
+        SQL.Append(" ETQ_GRPPRODUTO.ID AS IDGRPPRODUTO, ETQ_GRPPRODUTO.NOME AS NOMEGRPPRODUTO, PRCCOMISSAO,")
+        SQL.Append(" ETQ_MARCAPRODUTO.ID AS ID_MARCA, ETQ_MARCAPRODUTO.NOME AS NOMEMARCA")
+        SQL.Append(" FROM ETQ_PRODUTO")
+        SQL.Append(" INNER JOIN ETQ_GRPPRODUTO ON IDGRPPROD = ETQ_GRPPRODUTO.ID")
+        SQL.Append(" LEFT JOIN ETQ_MARCAPRODUTO ON IDMARCA = ETQ_MARCAPRODUTO.ID")
+        SQL.Append(String.Concat(" WHERE ETQ_PRODUTO.ID = ", ID.ToString))
+
+        Produtos = ObtenhaEMonteProdutos(SQL.ToString, 1)
+
+        If Not Produtos.Count = 0 Then Return Produtos.Item(0)
+
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaProduto(ByVal CodigoDeBarras As String) As IProduto Implements IMapeadorDeProduto.ObtenhaProduto
+        Dim SQL As New StringBuilder
+        Dim Produtos As IList(Of IProduto)
+
+        SQL.Append("SELECT ETQ_PRODUTO.ID AS IDPRODUTO, CODIGOBARRAS, ETQ_PRODUTO.NOME AS NOMEPRODUTO, UNIDADE, IDMARCA, QTDMINESTOQUE, VALORDECUSTO, VALORVENDAMIN, PORCLUCRO, IDGRPPROD, OBSERVACOES,")
+        SQL.Append(" ETQ_GRPPRODUTO.ID AS IDGRPPRODUTO, ETQ_GRPPRODUTO.NOME AS NOMEGRPPRODUTO, PRCCOMISSAO,")
+        SQL.Append(" ETQ_MARCAPRODUTO.ID AS ID_MARCA, ETQ_MARCAPRODUTO.NOME AS NOMEMARCA")
+        SQL.Append(" FROM ETQ_PRODUTO")
+        SQL.Append(" INNER JOIN ETQ_GRPPRODUTO ON IDGRPPROD = ETQ_GRPPRODUTO.ID")
+        SQL.Append(" LEFT JOIN ETQ_MARCAPRODUTO ON IDMARCA = ETQ_MARCAPRODUTO.ID")
+        SQL.Append(String.Concat(" WHERE CODIGOBARRAS = '", UtilidadesDePersistencia.FiltraApostrofe(CodigoDeBarras), "'"))
+
+        Produtos = ObtenhaEMonteProdutos(SQL.ToString, 1)
+
+        If Not Produtos.Count = 0 Then Return Produtos.Item(0)
+
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaProdutos(ByVal Nome As String, ByVal QuantidadeDeRegistros As Integer) As IList(Of IProduto) Implements IMapeadorDeProduto.ObtenhaProdutos
+        Dim SQL As New StringBuilder
+
+        SQL.Append("SELECT ETQ_PRODUTO.ID AS IDPRODUTO, CODIGOBARRAS, ETQ_PRODUTO.NOME AS NOMEPRODUTO, UNIDADE, IDMARCA, QTDMINESTOQUE, VALORDECUSTO, VALORVENDAMIN, PORCLUCRO, IDGRPPROD, OBSERVACOES,")
+        SQL.Append(" ETQ_GRPPRODUTO.ID AS IDGRPPRODUTO, ETQ_GRPPRODUTO.NOME AS NOMEGRPPRODUTO, PRCCOMISSAO,")
+        SQL.Append(" ETQ_MARCAPRODUTO.ID AS ID_MARCA, ETQ_MARCAPRODUTO.NOME AS NOMEMARCA")
+        SQL.Append(" FROM ETQ_PRODUTO")
+        SQL.Append(" INNER JOIN ETQ_GRPPRODUTO ON IDGRPPROD = ETQ_GRPPRODUTO.ID")
+        SQL.Append(" LEFT JOIN ETQ_MARCAPRODUTO ON IDMARCA = ETQ_MARCAPRODUTO.ID")
+
+        If Not String.IsNullOrEmpty(Nome) Then
+            SQL.Append(String.Concat(" WHERE ETQ_PRODUTO.NOME LIKE '", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
+        End If
+
+        Return ObtenhaEMonteProdutos(SQL.ToString, QuantidadeDeRegistros)
+    End Function
+
+    Private Function ObtenhaEMonteGrupoDeProduto(ByVal Leitor As IDataReader) As IGrupoDeProduto
+        Dim GrupoDeProduto As IGrupoDeProduto
+
+        GrupoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupoDeProduto)()
+
+        GrupoDeProduto.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDGRPPRODUTO")
+        GrupoDeProduto.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEGRPPRODUTO")
+        GrupoDeProduto.PorcentagemDeComissao = UtilidadesDePersistencia.getValorDouble(Leitor, "PRCCOMISSAO")
+
+        Return GrupoDeProduto
+    End Function
+
+    Private Function ObtenhaEMonteMarcaDeProduto(ByVal Leitor As IDataReader) As IMarcaDeProduto
+        Dim MarcaDeProduto As IMarcaDeProduto = Nothing
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDMARCA") Then
+            MarcaDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IMarcaDeProduto)()
+
+            MarcaDeProduto.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID_MARCA")
+            MarcaDeProduto.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEMARCA")
+        End If
+
+        Return MarcaDeProduto
+    End Function
+
+    Private Function ObtenhaEMonteProdutos(ByVal SQL As String, _
+                                           ByVal QuantidadeDeRegistros As Integer) As IList(Of IProduto)
+        Dim DBHelper As IDBHelper = ServerUtils.criarNovoDbHelper
+        Dim Produtos As IList(Of IProduto)
+        Dim Produto As IProduto
+
+        Produtos = New List(Of IProduto)
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
+            While Leitor.Read AndAlso Produtos.Count < QuantidadeDeRegistros
+                Produto = FabricaGenerica.GetInstancia.CrieObjeto(Of IProduto)()
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "CODIGOBARRAS") Then Produto.CodigoDeBarras = UtilidadesDePersistencia.GetValorString(Leitor, "CODIGOBARRAS")
+
+                Produto.GrupoDeProduto = Me.ObtenhaEMonteGrupoDeProduto(Leitor)
+                Produto.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDPRODUTO")
+                Produto.Marca = Me.ObtenhaEMonteMarcaDeProduto(Leitor)
+                Produto.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPRODUTO")
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "OBSERVACOES") Then Produto.Observacoes = UtilidadesDePersistencia.GetValorString(Leitor, "OBSERVACOES")
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "PORCLUCRO") Then Produto.PorcentagemDeLucro = UtilidadesDePersistencia.getValorDouble(Leitor, "PORCLUCRO")
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "QTDMINESTOQUE") Then Produto.QuantidadeMinimaEmEstoque = UtilidadesDePersistencia.getValorDouble(Leitor, "QTDMINESTOQUE")
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "UNIDADE") Then Produto.Unidade = UtilidadesDePersistencia.GetValorString(Leitor, "UNIDADE")
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "VALORDECUSTO") Then Produto.ValorDeCusto = UtilidadesDePersistencia.getValorDouble(Leitor, "VALORDECUSTO")
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "VALORVENDAMIN") Then Produto.ValorDeVendaMinimo = UtilidadesDePersistencia.getValorDouble(Leitor, "VALORVENDAMIN")
+
+                Produtos.Add(Produto)
+            End While
+        End Using
+
+        Return Produtos
+    End Function
+
+    Public Sub RemoverProduto(ByVal ID As Long) Implements IMapeadorDeProduto.RemoverProduto
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("DELETE FROM ETQ_PRODUTO")
+        Sql.Append(String.Concat(" WHERE ID = ", ID.ToString))
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
 End Class

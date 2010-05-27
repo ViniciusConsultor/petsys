@@ -70,16 +70,6 @@ Public Class Produto
         End Get
     End Property
 
-    Private _QuantidadeMinimaEmEstoque As Integer
-    Public Property QuantidadeMinimaEmEstoque() As Integer Implements IProduto.QuantidadeMinimaEmEstoque
-        Get
-            Return _QuantidadeMinimaEmEstoque
-        End Get
-        Set(ByVal value As Integer)
-            _QuantidadeMinimaEmEstoque = value
-        End Set
-    End Property
-
     Private _Unidade As String
     Public Property Unidade() As String Implements IProduto.Unidade
         Get
@@ -87,16 +77,6 @@ Public Class Produto
         End Get
         Set(ByVal value As String)
             _Unidade = value
-        End Set
-    End Property
-
-    Private _ValorMinimo As Double
-    Public Property ValorMinimo() As Double Implements IProduto.ValorMinimo
-        Get
-            Return _ValorMinimo
-        End Get
-        Set(ByVal value As Double)
-            _ValorMinimo = value
         End Set
     End Property
 
@@ -109,6 +89,10 @@ Public Class Produto
     Public ReadOnly Property ValorDeVenda() As Double Implements IProduto.ValorDeVenda
         Get
             Dim Valor As Double = 0
+
+            If Not Me.ValorDeCusto Is Nothing AndAlso Me.PorcentagemDeLucro Is Nothing Then
+                Return ValorDeCusto.Value
+            End If
 
             If Not Me.ValorDeCusto Is Nothing AndAlso Not Me.PorcentagemDeLucro Is Nothing Then
                 Valor = (ValorDeCusto.Value * (Me.PorcentagemDeLucro.Value / 100)) + ValorDeCusto.Value
@@ -135,6 +119,26 @@ Public Class Produto
         End Get
         Set(ByVal value As Double?)
             _PorcentagemDeLucro = value
+        End Set
+    End Property
+
+    Private _QuantidadeMinimaEmEstoque As Double?
+    Public Property QuantidadeMinimaEmEstoque() As Double? Implements IProduto.QuantidadeMinimaEmEstoque
+        Get
+            Return _QuantidadeMinimaEmEstoque
+        End Get
+        Set(ByVal value As Double?)
+            _QuantidadeMinimaEmEstoque = value
+        End Set
+    End Property
+
+    Private _ValorDeVendaMinimo As Double?
+    Public Property ValorDeVendaMinimo() As Double? Implements IProduto.ValorDeVendaMinimo
+        Get
+            Return _ValorDeVendaMinimo
+        End Get
+        Set(ByVal value As Double?)
+            _ValorDeVendaMinimo = value
         End Set
     End Property
 

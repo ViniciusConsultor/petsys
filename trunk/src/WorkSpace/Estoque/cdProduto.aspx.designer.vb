@@ -151,13 +151,13 @@ Partial Public Class cdProduto
     Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''RadTextBox2 control.
+    '''txtUnidade control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadTextBox2 As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents txtUnidade As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
     '''Label2 control.
@@ -340,13 +340,13 @@ Partial Public Class cdProduto
     Protected WithEvents Label13 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtPorcentagemMaximaDeDesconto control.
+    '''txtValorDeVendaMinimo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtPorcentagemMaximaDeDesconto As Global.Telerik.Web.UI.RadNumericTextBox
+    Protected WithEvents txtValorDeVendaMinimo As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
     '''RadDock4 control.
@@ -365,4 +365,22 @@ Partial Public Class cdProduto
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Panel1 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label14 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label14 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtObservacoes control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtObservacoes As Global.Telerik.Web.UI.RadTextBox
 End Class
