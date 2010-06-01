@@ -148,12 +148,12 @@ Public Class MapeadorDeProduto
             Sql.Append(String.Concat(" PORCLUCRO = ", UtilidadesDePersistencia.TPVd(Produto.PorcentagemDeLucro.Value), ","))
         End If
 
-        Sql.Append(String.Concat(Produto.GrupoDeProduto.ID.Value.ToString, ", "))
+        Sql.Append(String.Concat(" IDGRPPROD = ", Produto.GrupoDeProduto.ID.Value.ToString, ","))
 
         If String.IsNullOrEmpty(Produto.Observacoes) Then
-            Sql.Append("NULL)")
+            Sql.Append(" OBSERVACOES = NULL")
         Else
-            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.Observacoes), "')"))
+            Sql.Append(String.Concat(" OBSERVACOES = '", UtilidadesDePersistencia.FiltraApostrofe(Produto.Observacoes), "'"))
         End If
         Sql.Append(String.Concat(" WHERE ID = ", Produto.ID.Value.ToString))
 

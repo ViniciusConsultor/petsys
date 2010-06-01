@@ -370,4 +370,25 @@ Partial Public Class cdProduto
         End If
     End Sub
 
+    Private Sub txtPorcentagemDeLucro_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtPorcentagemDeLucro.TextChanged
+        Dim Produto As IProduto
+
+        Produto = CType(Session(CHAVE_OBJETO), IProduto)
+
+        If Produto Is Nothing Then Exit Sub
+
+        Produto.PorcentagemDeLucro = txtPorcentagemDeLucro.Value
+        txtValorDeVenda.Value = Produto.ValorDeVenda
+    End Sub
+
+    Private Sub txtValorDeCusto_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtValorDeCusto.TextChanged
+        Dim Produto As IProduto
+
+        Produto = CType(Session(CHAVE_OBJETO), IProduto)
+
+        If Produto Is Nothing Then Exit Sub
+
+        Produto.ValorDeCusto = txtValorDeCusto.Value
+        txtValorDeVenda.Value = Produto.ValorDeVenda
+    End Sub
 End Class

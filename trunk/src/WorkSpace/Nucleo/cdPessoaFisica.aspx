@@ -48,6 +48,8 @@
                             </telerik:RadTab>
                             <telerik:RadTab Text="Contatos">
                             </telerik:RadTab>
+                             <telerik:RadTab Text="Informações bancárias">
+                            </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
                     <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0">
@@ -309,6 +311,42 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtEmail" runat="server" MaxLength="255" Skin="Vista" Width="300px"
+                                                SelectionOnFocus="CaretToBeginning">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label25" runat="server" Text="Site"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtSite" runat="server" MaxLength="255" Skin="Vista" Width="300px"
+                                                SelectionOnFocus="CaretToBeginning">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </asp:Panel>
+                        </telerik:RadPageView>
+                         <telerik:RadPageView ID="RadPageView5" runat="server" SkinID="Vista">
+                            <asp:Panel ID="Panel1" runat="server">
+                                <table class="tabela">
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label26" runat="server" Text="E-mail"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="RadTextBox1" runat="server" MaxLength="255" Skin="Vista" Width="300px"
+                                                SelectionOnFocus="CaretToBeginning">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label27" runat="server" Text="Site"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="RadTextBox2" runat="server" MaxLength="255" Skin="Vista" Width="300px"
                                                 SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>

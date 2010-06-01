@@ -15,6 +15,9 @@ Namespace Core.Negocio
         Sub AdicioneDocumento(ByVal Documento As IDocumento)
         Property Endereco() As IEndereco
         Sub AdicioneTelefone(ByVal Telefone As ITelefone)
+        Sub AdicioneDadoBancario(ByVal DadoBancario As IDadoBancario)
+        Function ObtenhaDadosBancarios() As IList(Of IDadoBancario)
+        Property Site() As String
 
     End Interface
 
