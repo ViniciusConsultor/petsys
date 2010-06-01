@@ -77,6 +77,8 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Negocio\IAgencia.vb" />
+    <Compile Include="Core\Negocio\IBanco.vb" />
     <Compile Include="Core\Negocio\CEP.vb" />
     <Compile Include="Core\Negocio\DiaDaSemana.vb" />
     <Compile Include="Core\Negocio\Documento\ICNPJ.vb" />
@@ -87,7 +89,10 @@
     <Compile Include="Core\Negocio\ICliente.vb" />
     <Compile Include="Core\Negocio\Documento\ICPF.vb" />
     <Compile Include="Core\Negocio\Documento\IDocumento.vb" />
+    <Compile Include="Core\Negocio\IContaBancaria.vb" />
+    <Compile Include="Core\Negocio\IDadoBancario.vb" />
     <Compile Include="Core\Negocio\IEndereco.vb" />
+    <Compile Include="Core\Negocio\IFornecedor.vb" />
     <Compile Include="Core\Negocio\IGrupo.vb" />
     <Compile Include="Core\Negocio\IMunicipio.vb" />
     <Compile Include="Core\Negocio\IOperador.vb" />
@@ -97,6 +102,7 @@
     <Compile Include="Core\Negocio\IPessoaJuridica.vb" />
     <Compile Include="Core\Negocio\Documento\IRG.vb" />
     <Compile Include="Core\Negocio\EnderecoDeEmail.vb" />
+    <Compile Include="Core\Negocio\IVendedor.vb" />
     <Compile Include="Core\Negocio\Telefone\ITelefone.vb" />
     <Compile Include="Core\Negocio\Nacionalidade.vb" />
     <Compile Include="Core\Negocio\Raca.vb" />

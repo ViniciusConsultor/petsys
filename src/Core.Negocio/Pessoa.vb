@@ -13,10 +13,13 @@ Public MustInherit Class Pessoa
     Private _Telefones As IList(Of ITelefone)
     Private _Documentos As IDictionary(Of TipoDeDocumento, IDocumento)
     Private _Endereco As IEndereco
+    Private _DadosBancarios As IList(Of IDadoBancario)
+    Private _Site As String
 
     Protected Sub New()
         _Documentos = New Dictionary(Of TipoDeDocumento, IDocumento)
         _Telefones = New List(Of ITelefone)
+        _DadosBancarios = New List(Of IDadoBancario)
     End Sub
 
     Public Property Nome() As String Implements IPessoa.Nome
@@ -92,6 +95,28 @@ Public MustInherit Class Pessoa
         End Get
         Set(ByVal value As EnderecoDeEmail)
             _EnderecoDeEmail = value
+        End Set
+    End Property
+
+    Public Sub AdicioneDadoBancario(ByVal DadoBancario As IDadoBancario) Implements IPessoa.AdicioneDadoBancario
+        If _DadosBancarios.Contains(DadoBancario) Then
+            _DadosBancarios(_DadosBancarios.IndexOf(DadoBancario)) = DadoBancario
+            Exit Sub
+        End If
+
+        _DadosBancarios.Add(DadoBancario)
+    End Sub
+
+    Public Function ObtenhaDadosBancarios() As IList(Of IDadoBancario) Implements IPessoa.ObtenhaDadosBancarios
+        Return _DadosBancarios
+    End Function
+
+    Public Property Site() As String Implements IPessoa.Site
+        Get
+            Return _Site
+        End Get
+        Set(ByVal value As String)
+            _Site = value
         End Set
     End Property
 

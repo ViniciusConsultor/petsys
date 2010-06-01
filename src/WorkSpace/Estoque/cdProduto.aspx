@@ -123,7 +123,7 @@
                                     <asp:Label ID="Label6" runat="server" Text="Valor de custo"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtValorDeCusto" runat="server">
+                                    <telerik:RadNumericTextBox ID="txtValorDeCusto" runat="server" AutoPostBack="true">
                                     </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
@@ -150,7 +150,7 @@
                                     <asp:Label ID="Label9" runat="server" Text="% Lucro"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtPorcentagemDeLucro" runat="server">
+                                    <telerik:RadNumericTextBox ID="txtPorcentagemDeLucro" runat="server" AutoPostBack="true">
                                     </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
