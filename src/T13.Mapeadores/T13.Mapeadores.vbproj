@@ -18,6 +18,8 @@
     <OptionInfer>On</OptionInfer>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>T13.Mapeadores.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -102,6 +104,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="T13.Mapeadores.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compartilhados.Interfaces\Compartilhados.Interfaces.vbproj">
