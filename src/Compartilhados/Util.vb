@@ -23,7 +23,7 @@ Public Class Util
     End Function
 
     Private Shared Function ObtenhaPastaConfiguradaPorVariavelDeAmbiente() As String
-        Dim environmentVariable As String = Environment.GetEnvironmentVariable("CONFIG_PATH", EnvironmentVariableTarget.Machine)
+        Dim environmentVariable As String = Environment.GetEnvironmentVariable("SIMPLE_PATH", EnvironmentVariableTarget.Machine)
 
         If (environmentVariable Is Nothing) Then
             Throw New ApplicationException("O caminho dos arquivos de configuração não foi configurado corretamente.")
@@ -39,7 +39,7 @@ Public Class Util
         If ExecutandoServidorWeb() Then
             Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
         Else
-            Caminho = AppDomain.CurrentDomain.BaseDirectory
+            Caminho = ObtenhaPastaConfiguradaPorVariavelDeAmbiente()
         End If
 
         Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("Provider")
@@ -55,7 +55,7 @@ Public Class Util
         If ExecutandoServidorWeb() Then
             Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
         Else
-            Caminho = AppDomain.CurrentDomain.BaseDirectory
+            Caminho = ObtenhaPastaConfiguradaPorVariavelDeAmbiente()
         End If
 
         Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("Conexao")
@@ -80,7 +80,7 @@ Public Class Util
         If ExecutandoServidorWeb() Then
             Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
         Else
-            Caminho = AppDomain.CurrentDomain.BaseDirectory
+            Caminho = ObtenhaPastaConfiguradaPorVariavelDeAmbiente()
         End If
 
         Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("SkinPadrao")
@@ -94,7 +94,7 @@ Public Class Util
         If ExecutandoServidorWeb() Then
             Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
         Else
-            Caminho = AppDomain.CurrentDomain.BaseDirectory
+            Caminho = ObtenhaPastaConfiguradaPorVariavelDeAmbiente()
         End If
 
         Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("ImagemPadrao")

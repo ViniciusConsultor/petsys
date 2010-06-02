@@ -1,5 +1,6 @@
 ﻿Imports Core.Interfaces.Negocio
 
+<Serializable()> _
 Public Class MenuAbstrato
     Implements IMenuAbstrato
 
