@@ -21,6 +21,16 @@
     End Property
 
     Public Overrides Function RecupereContexto() As Principal
+
+        If _Contexto.Conexao Is Nothing OrElse _Contexto.Perfil Is Nothing OrElse _Contexto.Usuario Is Nothing Then
+            Dim Credencial As ICredencial = ServerUtils.getCredencial
+
+            If Not Credencial Is Nothing Then
+                _Contexto.Conexao = Credencial.Conexao
+                _Contexto.Usuario = Credencial.Usuario
+            End If
+        End If
+        
         Return _Contexto
     End Function
 

@@ -41,7 +41,7 @@ Namespace Fabricas
             If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
                 Dim Asse As Assembly
 
-                Asse = Assembly.Load(NomeDoAssembly)
+                Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
                 DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
             End If
 
