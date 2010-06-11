@@ -1,11 +1,10 @@
-﻿Public Class Dezena
+﻿Imports Lotofacil.Interfaces.Negocio
 
-    Private _Numero As Short
-    Public ReadOnly Property Numero() As Short
-        Get
-            Return _Numero
-        End Get
-    End Property
+<Serializable()> _
+Public Class Dezena
+    Implements IDezena
+
+    Private _Numero As Byte
 
     Public Overrides Function GetHashCode() As Integer
         Return _Numero.GetHashCode
@@ -15,8 +14,14 @@
         Return CType(obj, Dezena).Numero = Numero
     End Function
 
-    Public Sub New(ByVal Numero As Short)
+    Public Sub New(ByVal Numero As Byte)
         _Numero = Numero
     End Sub
+
+    Public ReadOnly Property Numero() As Byte Implements IDezena.Numero
+        Get
+            Return _Numero
+        End Get
+    End Property
 
 End Class

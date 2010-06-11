@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("LotoFacil.Facade")> 
+<Assembly: AssemblyTitle("LotoFacil.Servicos.Local")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("LG")> 
-<Assembly: AssemblyProduct("LotoFacil.Facade")> 
+<Assembly: AssemblyProduct("LotoFacil.Servicos.Local")> 
 <Assembly: AssemblyCopyright("Copyright © LG 2010")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("25f6b3d8-4f10-492e-bb20-e8c78dbff203")> 
+<Assembly: Guid("63525b47-489c-4df0-883c-628fa692e71a")> 
 
 ' Version information for an assembly consists of the following four values:
 '

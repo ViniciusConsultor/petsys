@@ -34,6 +34,13 @@ Public Class frmNovaAposta
     End Sub
 
     Private Sub ExibaTelaInicial()
+        Me.btnModificar.Visible = False
+        Me.btnExcluir.Visible = False
+        Me.btnNovo.Visible = True
+        Me.btnImprimir.Visible = False
+    End Sub
+
+    Private Sub btnModificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnModificar.Click
 
     End Sub
 End Class

@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.Lotofacil.Persistencia.My.MySettings
+        Friend ReadOnly Property Settings() As Global.LotoFacil.Mapeadores.My.MySettings
             Get
-                Return Global.Lotofacil.Persistencia.My.MySettings.Default
+                Return Global.LotoFacil.Mapeadores.My.MySettings.Default
             End Get
         End Property
     End Module

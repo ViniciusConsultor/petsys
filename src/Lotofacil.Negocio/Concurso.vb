@@ -1,4 +1,11 @@
-﻿Public Class Concurso
+﻿Imports Lotofacil.Interfaces.Negocio
+
+<Serializable()> _
+Public Class Concurso
+    Implements IConcurso
+
+    Private _Data As Date
+    Private _Numero As Integer
 
     Public Sub New(ByVal Numero As Integer, _
                    ByVal Data As Date)
@@ -6,17 +13,15 @@
         _Data = Data
     End Sub
 
-    Private _Data As Date
-    Public ReadOnly Property Data() As Date
+    Public ReadOnly Property Data() As Date Implements IConcurso.Data
         Get
             Return _Data
         End Get
     End Property
 
-    Private _Numero As Integer
-    Public ReadOnly Property Numero() As Integer
+    Public ReadOnly Property Numero() As Integer Implements IConcurso.Numero
         Get
-            Return _numero
+            Return _Numero
         End Get
     End Property
 

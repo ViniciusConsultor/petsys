@@ -103,6 +103,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LotoFacil.Interfaces\LotoFacil.Interfaces.vbproj">
+      <Project>{BD926E86-61F6-46E9-995A-5C93914C631A}</Project>
+      <Name>LotoFacil.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

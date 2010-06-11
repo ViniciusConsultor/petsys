@@ -5,17 +5,19 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7D3CDD50-A1B0-40D8-99E1-62C7AE3B5DD4}</ProjectGuid>
+    <ProjectGuid>{BD926E86-61F6-46E9-995A-5C93914C631A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>LotoFacil.Facade</RootNamespace>
-    <AssemblyName>LotoFacil.Facade</AssemblyName>
+    <RootNamespace>LotoFacil.Interfaces</RootNamespace>
+    <AssemblyName>LotoFacil.Interfaces</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
     <OptionInfer>On</OptionInfer>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Lotofacil.Interfaces.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +25,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\bin\</OutputPath>
-    <DocumentationFile>LotoFacil.Facade.xml</DocumentationFile>
+    <DocumentationFile>LotoFacil.Interfaces.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41998,41999,42004,42016,42017,42018,42019,42020,42021,42022,42024,42025,42026,42029,42030,42031,42032,42036,42099,42104,42105,42106,42107,42108,42109</WarningsAsErrors>
@@ -34,7 +36,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\..\bin\</OutputPath>
-    <DocumentationFile>LotoFacil.Facade.xml</DocumentationFile>
+    <DocumentationFile>LotoFacil.Interfaces.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41998,41999,42004,42016,42017,42018,42019,42020,42021,42022,42024,42025,42026,42029,42030,42031,42032,42036,42099,42104,42105,42106,42107,42108,42109</WarningsAsErrors>
@@ -43,15 +45,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -60,12 +53,8 @@
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FacadeDeAposta.vb" />
-    <Compile Include="FacadeGeradorDeJogos.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -81,6 +70,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Negocio\FabricaDeAposta.vb" />
+    <Compile Include="Negocio\FabricaDeConcurso.vb" />
+    <Compile Include="Negocio\FabricaDeDezena.vb" />
+    <Compile Include="Negocio\FabricaDeJogo.vb" />
+    <Compile Include="Negocio\IAposta.vb" />
+    <Compile Include="Negocio\IConcurso.vb" />
+    <Compile Include="Negocio\IDezena.vb" />
+    <Compile Include="Negocio\IJogo.vb" />
+    <Compile Include="Servicos\IServicoDeAposta.vb" />
+    <Compile Include="Servicos\IServicoDeDezenas.vb" />
+    <Compile Include="Servicos\IServicoDeJogos.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -91,6 +91,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Lotofacil.Interfaces.snk" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -102,13 +103,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lotofacil.Negocio\Lotofacil.Negocio.vbproj">
-      <Project>{FF634981-DC0A-46D3-8AF9-193E66EB87BA}</Project>
-      <Name>Lotofacil.Negocio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lotofacil.Persistencia\Lotofacil.Persistencia.vbproj">
-      <Project>{772B7D84-FB33-42BE-B980-8E5D975B6553}</Project>
-      <Name>Lotofacil.Persistencia</Name>
+    <ProjectReference Include="..\Compartilhados\Compartilhados.vbproj">
+      <Project>{06F3AE73-7806-44D1-9DAD-7C227869B4B8}</Project>
+      <Name>Compartilhados</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

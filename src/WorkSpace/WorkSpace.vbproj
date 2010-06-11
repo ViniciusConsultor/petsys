@@ -440,6 +440,13 @@
       <DependentUpon>frmRecibos.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="LotoFacil\frmAposta.aspx.designer.vb">
+      <DependentUpon>frmAposta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LotoFacil\frmAposta.aspx.vb">
+      <DependentUpon>frmAposta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>
     </Compile>
@@ -687,6 +694,7 @@
     <Content Include="Financeiro\frmEmissaoDeDuplicatas.aspx" />
     <Content Include="Financeiro\frmFluxoDeCaixa.aspx" />
     <Content Include="Financeiro\frmRecibos.aspx" />
+    <Content Include="imagens\system-run.png" />
     <Content Include="imagens\wallpapers\13-daylight_planet_wallpaper_by_janedoe873.jpg" />
     <Content Include="imagens\wallpapers\desktop.gif" />
     <Content Include="imagens\wallpapers\desktop3.jpg" />
@@ -694,6 +702,7 @@
     <Content Include="imagens\wallpapers\lightning_at_sunset.jpg" />
     <Content Include="imagens\wallpapers\outono_wallpaper_by_black_energy.jpg" />
     <Content Include="imagens\wallpapers\twip_100325_00.ss_full.jpg" />
+    <Content Include="LotoFacil\frmAposta.aspx" />
     <Content Include="Nucleo\frmAtalhos.aspx" />
     <Content Include="Nucleo\frmPainelDeControle.aspx" />
     <Content Include="PetSys\cdAnimal.aspx" />
@@ -2999,6 +3008,10 @@
     <ProjectReference Include="..\Estoque.Interfaces\Estoque.Interfaces.vbproj">
       <Project>{F7E08A53-2F27-43C8-8C67-B39200BBC1A0}</Project>
       <Name>Estoque.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LotoFacil.Interfaces\LotoFacil.Interfaces.vbproj">
+      <Project>{BD926E86-61F6-46E9-995A-5C93914C631A}</Project>
+      <Name>LotoFacil.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\PetSys.Interfaces\PetSys.Interfaces.vbproj">
       <Project>{3B0594C1-F788-45D1-8C69-704701DFD63B}</Project>
