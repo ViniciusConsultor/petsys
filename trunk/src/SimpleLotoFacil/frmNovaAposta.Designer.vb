@@ -26,13 +26,13 @@ Partial Class frmNovaAposta
         Me.chkDezenasEscolhidas = New System.Windows.Forms.CheckedListBox
         Me.btnNovo = New System.Windows.Forms.Button
         Me.pnlDadosDoConcurso = New System.Windows.Forms.GroupBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.MaskedTextBox1 = New System.Windows.Forms.MaskedTextBox
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker
         Me.Label2 = New System.Windows.Forms.Label
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker
+        Me.MaskedTextBox1 = New System.Windows.Forms.MaskedTextBox
+        Me.Label1 = New System.Windows.Forms.Label
         Me.pnlDadosDaAposta = New System.Windows.Forms.GroupBox
-        Me.Label3 = New System.Windows.Forms.Label
         Me.ComboBox1 = New System.Windows.Forms.ComboBox
+        Me.Label3 = New System.Windows.Forms.Label
         Me.btnExcluir = New System.Windows.Forms.Button
         Me.btnModificar = New System.Windows.Forms.Button
         Me.btnImprimir = New System.Windows.Forms.Button
@@ -87,29 +87,6 @@ Partial Class frmNovaAposta
         Me.pnlDadosDoConcurso.TabStop = False
         Me.pnlDadosDoConcurso.Text = "Dados do concurso"
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(7, 20)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(44, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Número"
-        '
-        'MaskedTextBox1
-        '
-        Me.MaskedTextBox1.Location = New System.Drawing.Point(10, 37)
-        Me.MaskedTextBox1.Name = "MaskedTextBox1"
-        Me.MaskedTextBox1.Size = New System.Drawing.Size(158, 20)
-        Me.MaskedTextBox1.TabIndex = 1
-        '
-        'DateTimePicker1
-        '
-        Me.DateTimePicker1.Location = New System.Drawing.Point(10, 76)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(231, 20)
-        Me.DateTimePicker1.TabIndex = 2
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -118,6 +95,29 @@ Partial Class frmNovaAposta
         Me.Label2.Size = New System.Drawing.Size(30, 13)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Data"
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Location = New System.Drawing.Point(10, 76)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(231, 20)
+        Me.DateTimePicker1.TabIndex = 2
+        '
+        'MaskedTextBox1
+        '
+        Me.MaskedTextBox1.Location = New System.Drawing.Point(10, 37)
+        Me.MaskedTextBox1.Name = "MaskedTextBox1"
+        Me.MaskedTextBox1.Size = New System.Drawing.Size(158, 20)
+        Me.MaskedTextBox1.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(7, 20)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(44, 13)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Número"
         '
         'pnlDadosDaAposta
         '
@@ -130,6 +130,14 @@ Partial Class frmNovaAposta
         Me.pnlDadosDaAposta.TabStop = False
         Me.pnlDadosDaAposta.Text = "Dados da aposta"
         '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(10, 37)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(253, 21)
+        Me.ComboBox1.TabIndex = 1
+        '
         'Label3
         '
         Me.Label3.AutoSize = True
@@ -138,14 +146,6 @@ Partial Class frmNovaAposta
         Me.Label3.Size = New System.Drawing.Size(35, 13)
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "Nome"
-        '
-        'ComboBox1
-        '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(10, 37)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(253, 21)
-        Me.ComboBox1.TabIndex = 1
         '
         'btnExcluir
         '
