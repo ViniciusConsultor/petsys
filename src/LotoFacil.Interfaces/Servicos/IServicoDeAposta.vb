@@ -12,7 +12,7 @@ Namespace Servicos
                                 ByVal DezenasSorteadas As IList(Of IDezena)) As IDictionary(Of IAposta, IDictionary(Of IJogo, Short))
         Function GereJogos(ByVal DezenasEscolhidas As IList(Of IDezena)) As IList(Of IJogo)
         Function ObtenhaTempoGastoParaGerarOsJogos() As String
-        Sub GraveAposta(ByVal Aposta As IAposta)
+        Function GraveAposta(ByVal Aposta As IAposta) As String
     End Interface
 
 End Namespace

@@ -106,7 +106,7 @@ Public Class ServicoDeApostaLocal
         Return TempoParaGerarOsJogos
     End Function
 
-    Public Sub GraveAposta(ByVal Aposta As IAposta) Implements IServicoDeAposta.GraveAposta
+    Public Function GraveAposta(ByVal Aposta As IAposta) As String Implements IServicoDeAposta.GraveAposta
         Dim Mapeador As IMapeadorDeAposta
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -123,6 +123,5 @@ Public Class ServicoDeApostaLocal
         Finally
             ServerUtils.libereRecursos()
         End Try
-    End Sub
-
+    End Function
 End Class
