@@ -118,6 +118,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="TipoDeServidorDeEmail.vb" />
+    <Compile Include="ValidacaoException.vb" />
     <Compile Include="Visual\Atalho.vb" />
     <Compile Include="Visual\AtalhoExterno.vb" />
     <Compile Include="Visual\AtalhoSistema.vb" />

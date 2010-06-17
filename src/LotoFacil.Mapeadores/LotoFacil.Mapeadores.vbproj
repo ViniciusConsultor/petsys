@@ -11,7 +11,7 @@
     <AssemblyName>LotoFacil.Mapeadores</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
@@ -41,6 +41,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -51,8 +54,10 @@
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapeadorDeAposta.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -87,6 +92,20 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Compartilhados.Interfaces\Compartilhados.Interfaces.vbproj">
+      <Project>{FE5690EE-7C9F-40EA-A41A-C4137EEB58AB}</Project>
+      <Name>Compartilhados.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compartilhados\Compartilhados.vbproj">
+      <Project>{06F3AE73-7806-44D1-9DAD-7C227869B4B8}</Project>
+      <Name>Compartilhados</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LotoFacil.Interfaces\LotoFacil.Interfaces.vbproj">
+      <Project>{BD926E86-61F6-46E9-995A-5C93914C631A}</Project>
+      <Name>LotoFacil.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

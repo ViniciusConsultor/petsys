@@ -3,6 +3,7 @@ Imports Telerik.Web.UI
 Imports LotoFacil.Interfaces.Negocio
 Imports LotoFacil.Interfaces.Servicos
 Imports Compartilhados.Fabricas
+Imports Compartilhados
 
 Partial Public Class frmAposta
     Inherits SuperPagina
@@ -38,6 +39,7 @@ Partial Public Class frmAposta
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAposta, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlJogosDaAposta, Control), False)
         Session(CHAVE_ESTADO) = Estado.Inicial
+        Session(CHAVE_JOGOS_DA_APOSTA) = Nothing
     End Sub
 
     Private Sub ExibaTelaNovo()
@@ -49,6 +51,7 @@ Partial Public Class frmAposta
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         Session(CHAVE_ESTADO) = Estado.Novo
+        Session(CHAVE_JOGOS_DA_APOSTA) = Nothing
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -108,35 +111,46 @@ Partial Public Class frmAposta
         Return Aposta
     End Function
 
-    Private Sub ExibaMunicipio(ByVal Aposta As IAposta)
+    Private Sub ExibaAposta(ByVal Aposta As IAposta)
         cboApostas.Text = Aposta.Nome
         txtDataDoConcurso.SelectedDate = Aposta.Concurso.Data
         txtNumeroDoConcurso.Value = Aposta.Concurso.Numero
     End Sub
 
     Private Sub btnSalva_Click()
-        'Dim Municipio As IMunicipio = Nothing
+        Dim Aposta As IAposta
 
-        'Municipio = MontaObjeto()
+        Try
+            ValidaDadosObrigatorios()
+        Catch ex As ValidacaoException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+            Exit Sub
+        End Try
 
-        'Try
-        '    Using Servico As IServicoDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMunicipio)()
+        Aposta = MontaObjeto()
 
-        '        If CByte(Session(CHAVE_ESTADO_CD_MUNICIPIO)) = Estado.Novo Then
-        '            Servico.Inserir(Municipio)
-        '        Else
-        '            Servico.Modificar(Municipio)
-        '        End If
+        Try
+            Using Servico As IServicoDeAposta = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAposta)()
+                Servico.GraveAposta(Aposta)
+            End Using
 
-        '    End Using
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
+    End Sub
 
-        '    ExibaTelaInicial()
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Município cadastrado com sucesso."), False)
+    Private Sub ValidaDadosObrigatorios()
+        If String.IsNullOrEmpty(txtNumeroDoConcurso.Text) Then
+            Throw New ValidacaoException("O número do concurso é obrigatório")
+        End If
 
-        'Catch ex As BussinesException
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-        'End Try
+        If Not txtDataDoConcurso.SelectedDate.HasValue Then
+            Throw New ValidacaoException("A data do concurso é obrigatória")
+        End If
 
+        If Session(CHAVE_JOGOS_DA_APOSTA) Is Nothing Then
+            Throw New ValidacaoException("Não existem jogos criados para esta aposta. Acesse a função Gerar dezenas para que os jogos sejam gerados.")
+        End If
     End Sub
 
     Private Sub btnExclui_Click()
@@ -148,7 +162,7 @@ Partial Public Class frmAposta
     End Sub
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.NCL.001"
+        Return "FUN.LTF.001"
     End Function
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -175,6 +189,7 @@ Partial Public Class frmAposta
     Private Sub btnGerarAposta_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnGerarAposta.Click
         Dim JogosDaAposta As IList(Of IJogo)
         Dim TempoDeGeracao As String = ""
+        Dim Aposta As IAposta = Nothing
 
         Using Servico As IServicoDeAposta = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAposta)()
             JogosDaAposta = Servico.GereJogos(ObtenhaDezenasEscolhidas)
@@ -183,8 +198,7 @@ Partial Public Class frmAposta
 
         UtilidadesWeb.MostraMensagemDeInformacao(TempoDeGeracao)
 
-        grdJogosDaAposta.DataSource = JogosDaAposta
-        grdJogosDaAposta.DataBind()
+        Session(CHAVE_JOGOS_DA_APOSTA) = JogosDaAposta
     End Sub
 
     Private Function ObtenhaDezenasEscolhidas() As IList(Of IDezena)

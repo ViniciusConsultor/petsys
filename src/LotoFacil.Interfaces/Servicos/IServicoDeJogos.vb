@@ -1,3 +1,7 @@
-﻿Public Class IServicoDeJogos
+﻿Namespace Servicos
 
-End Class
+    Public Interface IServicoDeJogos
+
+    End Interface
+
+End Namespace

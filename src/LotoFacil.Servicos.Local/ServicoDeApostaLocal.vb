@@ -1,6 +1,8 @@
 ﻿Imports Compartilhados
 Imports LotoFacil.Interfaces.Servicos
 Imports LotoFacil.Interfaces.Negocio
+Imports LotoFacil.Interfaces.Mapeadores
+Imports Compartilhados.Fabricas
 
 Public Class ServicoDeApostaLocal
     Inherits Servico
@@ -74,17 +76,14 @@ Public Class ServicoDeApostaLocal
                                ByVal QuantidadeDeDezenasDoJogo As Integer)
         If Profundidade + 1 >= QuantidadeDeDezenasDoJogo Then
             For x As Integer = Inicio To Fim
-                'ResultadoCombinado(Profundidade) = DezenasEscolhidas.Item(x).Numero
                 ResultadoCombinado(Profundidade) = DezenasEscolhidas.Item(x)
                 Dim Jogo As IJogo = DirectCast(JogoClonavel.Clone, IJogo)
 
-                ' Jogo = FabricaDeJogo.CrieObjeto(ResultadoCombinado)
                 Jogo.AdicionaDezenas(ResultadoCombinado)
                 Me.Jogos.Add(Jogo)
             Next
         Else
             For x As Integer = Inicio To Fim
-                'ResultadoCombinado(Profundidade) = DezenasEscolhidas.Item(x).Numero
                 ResultadoCombinado(Profundidade) = DezenasEscolhidas.Item(x)
                 FacaCombinacao(x + 1, Fim + 1, Profundidade + 1, QuantidadeDeDezenasDoJogo)
             Next
@@ -106,5 +105,24 @@ Public Class ServicoDeApostaLocal
     Public Function ObtenhaTempoGastoParaGerarOsJogos() As String Implements IServicoDeAposta.ObtenhaTempoGastoParaGerarOsJogos
         Return TempoParaGerarOsJogos
     End Function
+
+    Public Sub GraveAposta(ByVal Aposta As IAposta) Implements IServicoDeAposta.GraveAposta
+        Dim Mapeador As IMapeadorDeAposta
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAposta)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.GraveAposta(Aposta)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
 
 End Class
