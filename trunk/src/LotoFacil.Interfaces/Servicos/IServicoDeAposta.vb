@@ -8,13 +8,11 @@ Namespace Servicos
 
         Function ConfiraAposta(ByVal Aposta As IAposta, _
                                ByVal DezenasSorteadas As IList(Of IDezena)) As IDictionary(Of IJogo, Short)
-
         Function ConfiraApostas(ByVal Apostas As IList(Of IAposta), _
                                 ByVal DezenasSorteadas As IList(Of IDezena)) As IDictionary(Of IAposta, IDictionary(Of IJogo, Short))
-
         Function GereJogos(ByVal DezenasEscolhidas As IList(Of IDezena)) As IList(Of IJogo)
-
         Function ObtenhaTempoGastoParaGerarOsJogos() As String
+        Sub GraveAposta(ByVal Aposta As IAposta)
     End Interface
 
 End Namespace

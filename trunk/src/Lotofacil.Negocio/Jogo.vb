@@ -54,7 +54,7 @@ Public Class Jogo
             Dim DezenasEmString As New StringBuilder
 
             For Each Dezena As IDezena In Me.ObtenhaDezenas
-                DezenasEmString.Append(String.Concat(Dezena, " - "))
+                DezenasEmString.Append(String.Concat(Dezena.Numero.ToString, " - "))
             Next
 
             If Not DezenasEmString.Length = 0 Then
