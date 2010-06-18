@@ -6,6 +6,7 @@ Public Class Jogo
     Implements IJogo
 
     Private _Dezenas As IList(Of IDezena)
+    Private _ID As Nullable(Of Long)
 
     Public Sub New()
         _Dezenas = New List(Of IDezena)
@@ -65,4 +66,25 @@ Public Class Jogo
 
         End Get
     End Property
+
+    Public Property ID() As Long? Implements IJogo.ID
+        Get
+            Return _ID
+        End Get
+        Set(ByVal value As Long?)
+            _ID = value
+        End Set
+    End Property
+
+    Public Sub AdicionaDezenas(ByVal Dezenas As String) Implements Interfaces.Negocio.IJogo.AdicionaDezenas
+        Dim ArrayDeDezenas() As String
+
+        ArrayDeDezenas = Dezenas.Split("-"c)
+
+        For Each Dezena As String In ArrayDeDezenas
+            _Dezenas.Add(FabricaDeDezena.CrieObjeto(CByte(Dezena.Trim)))
+        Next
+
+    End Sub
+
 End Class

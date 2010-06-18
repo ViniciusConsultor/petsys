@@ -22,6 +22,8 @@
                 CommandName="btnSim" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Não"
                 CommandName="btnNao" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Conferir aposta"
+                CommandName="btnConferir" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -77,7 +79,7 @@
                                 </td>
                                 <td class="td">
                                     <asp:CheckBoxList ID="cklDezenas" runat="server" EnableTheming="True" RepeatColumns="4"
-                                        RepeatDirection="Horizontal" CellPadding="0" CellSpacing="0" Width="60%" >
+                                        RepeatDirection="Horizontal" CellPadding="0" CellSpacing="0" Width="60%">
                                         <asp:ListItem>01</asp:ListItem>
                                         <asp:ListItem>02</asp:ListItem>
                                         <asp:ListItem>03</asp:ListItem>
@@ -113,34 +115,6 @@
                                 </td>
                                 <td class="td">
                                     <asp:ImageButton ID="btnGerarAposta" runat="server" ImageUrl="~/imagens/system-run.png" />
-                                </td>
-                            </tr>
-                        </table>
-                    </asp:Panel>
-                </ContentTemplate>
-            </telerik:RadDock>
-            <telerik:RadDock ID="RadDock3" runat="server" Title="Jogos" DefaultCommands="ExpandCollapse"
-                EnableAnimation="True" Skin="Vista" DockMode="Docked">
-                <ContentTemplate>
-                    <asp:Panel ID="pnlJogosDaAposta" runat="server">
-                        <table class="tabela">
-                            <tr>
-                                <td colspan="2">
-                                    <telerik:RadGrid ID="grdJogosDaAposta" runat="server" AutoGenerateColumns="False"
-                                        GridLines="None" Skin="Vista">
-                                        <MasterTableView GridLines="Both">
-                                            <RowIndicatorColumn>
-                                                <HeaderStyle Width="20px" />
-                                            </RowIndicatorColumn>
-                                            <ExpandCollapseColumn>
-                                                <HeaderStyle Width="20px" />
-                                            </ExpandCollapseColumn>
-                                            <Columns>
-                                                <telerik:GridBoundColumn DataField="Jogo.DezenasToString" UniqueName="column" Visible="true" HeaderText="Dezenas">
-                                                </telerik:GridBoundColumn>
-                                            </Columns>
-                                        </MasterTableView>
-                                    </telerik:RadGrid>
                                 </td>
                             </tr>
                         </table>
