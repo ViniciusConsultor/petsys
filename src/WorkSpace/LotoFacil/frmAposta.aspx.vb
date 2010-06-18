@@ -18,6 +18,7 @@ Partial Public Class frmAposta
 
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_FRM_APOSTA"
     Private CHAVE_JOGOS_DA_APOSTA As String = "CHAVE_JOGOS_DA_APOSTA"
+    Private CHAVE_ID_DA_APOSTA As String = "CHAVE_ID_DA_APOSTA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -34,10 +35,8 @@ Partial Public Class frmAposta
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(pnlAposta, Control))
         UtilidadesWeb.LimparComponente(CType(pnlDadosDaAposta, Control))
-        UtilidadesWeb.LimparComponente(CType(pnlJogosDaAposta, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlAposta, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAposta, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlJogosDaAposta, Control), False)
         Session(CHAVE_ESTADO) = Estado.Inicial
         Session(CHAVE_JOGOS_DA_APOSTA) = Nothing
     End Sub
@@ -56,7 +55,6 @@ Partial Public Class frmAposta
 
     Private Sub ExibaTelaExcluir()
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
@@ -68,7 +66,6 @@ Partial Public Class frmAposta
 
     Private Sub ExibaTelaConsultar()
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
@@ -107,6 +104,7 @@ Partial Public Class frmAposta
         JogosDaAposta = CType(Session(CHAVE_JOGOS_DA_APOSTA), IList(Of IJogo))
 
         Aposta = FabricaDeAposta.CrieObjeto(Concurso, JogosDaAposta)
+        Aposta.Nome = cboApostas.Text
 
         Return Aposta
     End Function
@@ -115,6 +113,8 @@ Partial Public Class frmAposta
         cboApostas.Text = Aposta.Nome
         txtDataDoConcurso.SelectedDate = Aposta.Concurso.Data
         txtNumeroDoConcurso.Value = Aposta.Concurso.Numero
+        Session(CHAVE_ID_DA_APOSTA) = Aposta.ID
+        Session(CHAVE_JOGOS_DA_APOSTA) = Aposta.Jogos
     End Sub
 
     Private Sub btnSalva_Click()
@@ -127,12 +127,16 @@ Partial Public Class frmAposta
             Exit Sub
         End Try
 
+        Dim Mensagem As String
+
         Aposta = MontaObjeto()
 
         Try
             Using Servico As IServicoDeAposta = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAposta)()
-                Servico.GraveAposta(Aposta)
+                Mensagem = Servico.GraveAposta(Aposta)
             End Using
+
+            UtilidadesWeb.MostraMensagemDeInformacao(Mensagem)
 
         Catch ex As BussinesException
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
@@ -140,12 +144,16 @@ Partial Public Class frmAposta
     End Sub
 
     Private Sub ValidaDadosObrigatorios()
+        If String.IsNullOrEmpty(cboApostas.Text) Then
+            Throw New ValidacaoException("O nome da aposta deve ser informado.")
+        End If
+
         If String.IsNullOrEmpty(txtNumeroDoConcurso.Text) Then
-            Throw New ValidacaoException("O número do concurso é obrigatório")
+            Throw New ValidacaoException("O número do concurso deve ser informado.")
         End If
 
         If Not txtDataDoConcurso.SelectedDate.HasValue Then
-            Throw New ValidacaoException("A data do concurso é obrigatória")
+            Throw New ValidacaoException("A data do concurso deve ser informada.")
         End If
 
         If Session(CHAVE_JOGOS_DA_APOSTA) Is Nothing Then
@@ -196,9 +204,8 @@ Partial Public Class frmAposta
             TempoDeGeracao = Servico.ObtenhaTempoGastoParaGerarOsJogos
         End Using
 
-        UtilidadesWeb.MostraMensagemDeInformacao(TempoDeGeracao)
-
         Session(CHAVE_JOGOS_DA_APOSTA) = JogosDaAposta
+        UtilidadesWeb.MostraMensagemDeInformacao(TempoDeGeracao)
     End Sub
 
     Private Function ObtenhaDezenasEscolhidas() As IList(Of IDezena)
@@ -215,4 +222,32 @@ Partial Public Class frmAposta
         Return DezenasEscolhidas
     End Function
 
+    Private Sub cboApostas_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboApostas.ItemsRequested
+        Dim Apostas As IList(Of IAposta)
+
+        Using Servico As IServicoDeAposta = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAposta)()
+            Apostas = Servico.ObtenhaApostas(e.Text, 50)
+        End Using
+
+        If Not Apostas Is Nothing Then
+            For Each Aposta As IAposta In Apostas
+                cboApostas.Items.Add(New RadComboBoxItem(Aposta.Nome, Aposta.ID.ToString))
+            Next
+        End If
+    End Sub
+
+    Private Sub cboApostas_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboApostas.SelectedIndexChanged
+        Dim Aposta As IAposta
+        Dim Valor As String
+
+        Valor = DirectCast(o, RadComboBox).SelectedValue
+        If String.IsNullOrEmpty(Valor) Then Return
+
+        Using Servico As IServicoDeAposta = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAposta)()
+            Aposta = Servico.ObtenhaAposta(CLng(Valor))
+        End Using
+
+        Me.ExibaAposta(Aposta)
+        Me.ExibaTelaConsultar()
+    End Sub
 End Class

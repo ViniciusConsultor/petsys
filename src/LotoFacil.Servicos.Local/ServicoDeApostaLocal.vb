@@ -123,5 +123,47 @@ Public Class ServicoDeApostaLocal
         Finally
             ServerUtils.libereRecursos()
         End Try
+
+        Return "Aposta gravada com sucesso."
     End Function
+
+    Public Function ObtenhaAposta(ByVal NumeroDoConcurso As Integer) As IAposta Implements IServicoDeAposta.ObtenhaAposta
+        Dim Mapeador As IMapeadorDeAposta
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAposta)()
+
+        Try
+            Return Mapeador.ObtenhaAposta(NumeroDoConcurso)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Function ObtenhaAposta(ByVal ID As Long) As IAposta Implements IServicoDeAposta.ObtenhaAposta
+        Dim Mapeador As IMapeadorDeAposta
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAposta)()
+
+        Try
+            Return Mapeador.ObtenhaAposta(ID)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Function ObtenhaApostas(ByVal NomeAposta As String, ByVal QuantidadeDeItens As Integer) As IList(Of IAposta) Implements IServicoDeAposta.ObtenhaApostas
+        Dim Mapeador As IMapeadorDeAposta
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAposta)()
+
+        Try
+            Return Mapeador.ObtenhaApostas(NomeAposta, QuantidadeDeItens)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
 End Class
