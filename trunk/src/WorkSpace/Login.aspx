@@ -35,9 +35,9 @@
             </td>
         </tr>
     </table>
-    <div class="esqueci">
+   <%-- <div class="esqueci">
         <asp:LinkButton ID="btnEsqueceuASenha" runat="server" CausesValidation="False">Esqueceu sua senha?</asp:LinkButton>
-    </div>
+    </div>--%>
     <div>
         <asp:Button ID="btnEntrar" runat="server" CssClass="botao" Text="Entrar" />
     </div>

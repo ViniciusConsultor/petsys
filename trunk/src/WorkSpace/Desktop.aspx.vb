@@ -14,6 +14,7 @@ Partial Public Class Desktop
 
             Me.ClientScript.RegisterStartupScript(Me.GetType(), "jsmenu", Fabrica.ObtenhaMenu)
             Me.MontaAtalhos()
+            Me.ExibaNotifacoes()
         End If
 
     End Sub
@@ -76,6 +77,10 @@ Partial Public Class Desktop
         Next
 
         Me.shortcuts.Controls.Add(Tabela)
+    End Sub
+
+    Private Sub ExibaNotifacoes()
+
     End Sub
 
 End Class
