@@ -1,7 +1,6 @@
 ﻿Imports Compartilhados.Componentes.Web
 Imports Telerik.Web.UI
 Imports Compartilhados
-Imports Core.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports PetSys.Interfaces.Negocio
