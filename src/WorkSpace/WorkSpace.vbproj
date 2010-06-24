@@ -321,131 +321,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Custos\frmConfiguracoes.aspx.designer.vb">
-      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Custos\frmConfiguracoes.aspx.vb">
-      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Custos\frmFormacaoDePreco.aspx.designer.vb">
-      <DependentUpon>frmFormacaoDePreco.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Custos\frmFormacaoDePreco.aspx.vb">
-      <DependentUpon>frmFormacaoDePreco.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Custos\frmReajusteDePrecos.aspx.designer.vb">
-      <DependentUpon>frmReajusteDePrecos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Custos\frmReajusteDePrecos.aspx.vb">
-      <DependentUpon>frmReajusteDePrecos.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Custos\frmTabelaDeCustos.aspx.designer.vb">
-      <DependentUpon>frmTabelaDeCustos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Custos\frmTabelaDeCustos.aspx.vb">
-      <DependentUpon>frmTabelaDeCustos.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="Erro.aspx.designer.vb">
       <DependentUpon>Erro.aspx</DependentUpon>
     </Compile>
     <Compile Include="Erro.aspx.vb">
       <DependentUpon>Erro.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Estoque\cdGrupoDeProduto.aspx.designer.vb">
-      <DependentUpon>cdGrupoDeProduto.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Estoque\cdGrupoDeProduto.aspx.vb">
-      <DependentUpon>cdGrupoDeProduto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Estoque\cdMarca.aspx.designer.vb">
-      <DependentUpon>cdMarca.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Estoque\cdMarca.aspx.vb">
-      <DependentUpon>cdMarca.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Estoque\cdProduto.aspx.designer.vb">
-      <DependentUpon>cdProduto.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Estoque\cdProduto.aspx.vb">
-      <DependentUpon>cdProduto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmBoletosTitulos.aspx.designer.vb">
-      <DependentUpon>frmBoletosTitulos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmBoletosTitulos.aspx.vb">
-      <DependentUpon>frmBoletosTitulos.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmCobrancaEletronica.aspx.designer.vb">
-      <DependentUpon>frmCobrancaEletronica.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmCobrancaEletronica.aspx.vb">
-      <DependentUpon>frmCobrancaEletronica.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmConciliacaoBancaria.aspx.designer.vb">
-      <DependentUpon>frmConciliacaoBancaria.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmConciliacaoBancaria.aspx.vb">
-      <DependentUpon>frmConciliacaoBancaria.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmConfiguracoes.aspx.designer.vb">
-      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmConfiguracoes.aspx.vb">
-      <DependentUpon>frmConfiguracoes.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmContasAPagar.aspx.designer.vb">
-      <DependentUpon>frmContasAPagar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmContasAPagar.aspx.vb">
-      <DependentUpon>frmContasAPagar.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmEmissaoDeCheques.aspx.designer.vb">
-      <DependentUpon>frmEmissaoDeCheques.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmEmissaoDeCheques.aspx.vb">
-      <DependentUpon>frmEmissaoDeCheques.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmEmissaoDeDuplicatas.aspx.designer.vb">
-      <DependentUpon>frmEmissaoDeDuplicatas.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmEmissaoDeDuplicatas.aspx.vb">
-      <DependentUpon>frmEmissaoDeDuplicatas.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmFluxoDeCaixa.aspx.designer.vb">
-      <DependentUpon>frmFluxoDeCaixa.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmFluxoDeCaixa.aspx.vb">
-      <DependentUpon>frmFluxoDeCaixa.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Financeiro\frmRecibos.aspx.designer.vb">
-      <DependentUpon>frmRecibos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Financeiro\frmRecibos.aspx.vb">
-      <DependentUpon>frmRecibos.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="LotoFacil\frmAposta.aspx.designer.vb">
-      <DependentUpon>frmAposta.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="LotoFacil\frmAposta.aspx.vb">
-      <DependentUpon>frmAposta.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>
@@ -459,13 +340,6 @@
     </Compile>
     <Compile Include="Nucleo\frmPainelDeControle.aspx.vb">
       <DependentUpon>frmPainelDeControle.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PetSys\cdAnimal.aspx.designer.vb">
-      <DependentUpon>cdAnimal.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\cdAnimal.aspx.vb">
-      <DependentUpon>cdAnimal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdCliente.aspx.designer.vb">
@@ -487,28 +361,13 @@
     </Compile>
     <Compile Include="Nucleo\cdPessoaFisica.aspx.vb">
       <DependentUpon>cdPessoaFisica.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdPessoaJuridica.aspx.designer.vb">
       <DependentUpon>cdPessoaJuridica.aspx</DependentUpon>
     </Compile>
     <Compile Include="Nucleo\cdPessoaJuridica.aspx.vb">
       <DependentUpon>cdPessoaJuridica.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="T13\cdServicos.aspx.designer.vb">
-      <DependentUpon>cdServicos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="T13\cdServicos.aspx.vb">
-      <DependentUpon>cdServicos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="T13\CriadorDeRelatorio.vb" />
-    <Compile Include="PetSys\crtlAnimal.ascx.designer.vb">
-      <DependentUpon>crtlAnimal.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\crtlAnimal.ascx.vb">
-      <DependentUpon>crtlAnimal.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ctrlGrupo.ascx.designer.vb">
@@ -558,20 +417,13 @@
     </Compile>
     <Compile Include="Desktop.aspx.vb">
       <DependentUpon>Desktop.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmAlterarPapelDeParede.aspx.designer.vb">
       <DependentUpon>frmAlterarPapelDeParede.aspx</DependentUpon>
     </Compile>
     <Compile Include="Nucleo\frmAlterarPapelDeParede.aspx.vb">
       <DependentUpon>frmAlterarPapelDeParede.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="PetSys\frmAtendimentoAnimal.aspx.designer.vb">
-      <DependentUpon>frmAtendimentoAnimal.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\frmAtendimentoAnimal.aspx.vb">
-      <DependentUpon>frmAtendimentoAnimal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmAutorizacao.aspx.designer.vb">
@@ -588,27 +440,6 @@
       <DependentUpon>frmConfiguracaoAgenda.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="T13\frmImpressaoLancamentos.aspx.designer.vb">
-      <DependentUpon>frmImpressaoLancamentos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="T13\frmImpressaoLancamentos.aspx.vb">
-      <DependentUpon>frmImpressaoLancamentos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="T13\frmLancamentoDeServicosPrestados.aspx.designer.vb">
-      <DependentUpon>frmLancamentoDeServicosPrestados.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="T13\frmLancamentoDeServicosPrestados.aspx.vb">
-      <DependentUpon>frmLancamentoDeServicosPrestados.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PetSys\frmVacinasDoAnimal.aspx.designer.vb">
-      <DependentUpon>frmVacinasDoAnimal.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\frmVacinasDoAnimal.aspx.vb">
-      <DependentUpon>frmVacinasDoAnimal.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -624,13 +455,6 @@
     </Compile>
     <Compile Include="Login.Master.vb">
       <DependentUpon>Login.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PetSys\cdVeterinario.aspx.designer.vb">
-      <DependentUpon>cdVeterinario.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\cdVeterinario.aspx.vb">
-      <DependentUpon>cdVeterinario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Logout.aspx.designer.vb">
@@ -677,23 +501,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Custos\frmConfiguracoes.aspx" />
-    <Content Include="Custos\frmFormacaoDePreco.aspx" />
-    <Content Include="Custos\frmReajusteDePrecos.aspx" />
-    <Content Include="Custos\frmTabelaDeCustos.aspx" />
     <Content Include="Erro.aspx" />
-    <Content Include="Estoque\cdGrupoDeProduto.aspx" />
-    <Content Include="Estoque\cdMarca.aspx" />
-    <Content Include="Estoque\cdProduto.aspx" />
-    <Content Include="Financeiro\frmBoletosTitulos.aspx" />
-    <Content Include="Financeiro\frmCobrancaEletronica.aspx" />
-    <Content Include="Financeiro\frmConciliacaoBancaria.aspx" />
-    <Content Include="Financeiro\frmConfiguracoes.aspx" />
-    <Content Include="Financeiro\frmContasAPagar.aspx" />
-    <Content Include="Financeiro\frmEmissaoDeCheques.aspx" />
-    <Content Include="Financeiro\frmEmissaoDeDuplicatas.aspx" />
-    <Content Include="Financeiro\frmFluxoDeCaixa.aspx" />
-    <Content Include="Financeiro\frmRecibos.aspx" />
     <Content Include="imagens\system-run.png" />
     <Content Include="imagens\wallpapers\13-daylight_planet_wallpaper_by_janedoe873.jpg" />
     <Content Include="imagens\wallpapers\desktop.gif" />
@@ -702,28 +510,20 @@
     <Content Include="imagens\wallpapers\lightning_at_sunset.jpg" />
     <Content Include="imagens\wallpapers\outono_wallpaper_by_black_energy.jpg" />
     <Content Include="imagens\wallpapers\twip_100325_00.ss_full.jpg" />
-    <Content Include="LotoFacil\frmAposta.aspx" />
     <Content Include="Nucleo\frmAtalhos.aspx" />
     <Content Include="Nucleo\frmPainelDeControle.aspx" />
-    <Content Include="PetSys\cdAnimal.aspx" />
     <Content Include="Nucleo\cdCliente.aspx" />
     <Content Include="Nucleo\cdOperador.aspx" />
     <Content Include="Nucleo\cdPessoaFisica.aspx" />
     <Content Include="Nucleo\cdPessoaJuridica.aspx" />
-    <Content Include="T13\cdServicos.aspx" />
-    <Content Include="PetSys\crtlAnimal.ascx" />
     <Content Include="ctrlGrupo.ascx" />
     <Content Include="ctrlMunicipios.ascx" />
     <Content Include="ctrlPessoa.ascx" />
     <Content Include="Nucleo\frmAlterarSenha.aspx" />
     <Content Include="Nucleo\cdGrupo.aspx" />
     <Content Include="Nucleo\frmAlterarPapelDeParede.aspx" />
-    <Content Include="PetSys\frmAtendimentoAnimal.aspx" />
     <Content Include="Nucleo\frmAutorizacao.aspx" />
     <Content Include="Nucleo\frmConfiguracaoAgenda.aspx" />
-    <Content Include="T13\frmImpressaoLancamentos.aspx" />
-    <Content Include="T13\frmLancamentoDeServicosPrestados.aspx" />
-    <Content Include="PetSys\frmVacinasDoAnimal.aspx" />
     <Content Include="Global.asax" />
     <Content Include="imagens\agent.png" />
     <Content Include="imagens\aguarde.gif" />
@@ -763,7 +563,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <Content Include="Nucleo\cdMunicipio.aspx" />
-    <Content Include="PetSys\cdVeterinario.aspx" />
     <None Include="WorkSpace.snk" />
     <Content Include="Skins\Ajax.css" />
     <Content Include="Skins\Black\Ajax.Black.css" />
@@ -3004,22 +2803,6 @@
     <ProjectReference Include="..\Core.Interfaces\Core.Interfaces.vbproj">
       <Project>{27EDA738-8B31-4FF6-88C1-54E6290B4CFE}</Project>
       <Name>Core.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Estoque.Interfaces\Estoque.Interfaces.vbproj">
-      <Project>{F7E08A53-2F27-43C8-8C67-B39200BBC1A0}</Project>
-      <Name>Estoque.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LotoFacil.Interfaces\LotoFacil.Interfaces.vbproj">
-      <Project>{BD926E86-61F6-46E9-995A-5C93914C631A}</Project>
-      <Name>LotoFacil.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PetSys.Interfaces\PetSys.Interfaces.vbproj">
-      <Project>{3B0594C1-F788-45D1-8C69-704701DFD63B}</Project>
-      <Name>PetSys.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\T13.Interfaces\T13.Interfaces.vbproj">
-      <Project>{6E50B929-7BCF-45C3-A536-9CE6DE1F7835}</Project>
-      <Name>T13.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -44,6 +44,8 @@
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Compartilhados, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00532d988ee8a0bc, processorArchitecture=MSIL" />
+    <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -110,16 +112,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="T13.Interfaces.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Compartilhados.Interfaces\Compartilhados.Interfaces.vbproj">
-      <Project>{FE5690EE-7C9F-40EA-A41A-C4137EEB58AB}</Project>
-      <Name>Compartilhados.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compartilhados\Compartilhados.vbproj">
-      <Project>{06F3AE73-7806-44D1-9DAD-7C227869B4B8}</Project>
-      <Name>Compartilhados</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

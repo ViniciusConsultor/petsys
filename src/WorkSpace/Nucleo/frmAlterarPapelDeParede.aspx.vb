@@ -27,10 +27,6 @@ Partial Public Class frmAlterarPapelDeParede
         Return "FUN.NCL.004"
     End Function
 
-    Private Sub ExibaTelaInicial()
-
-    End Sub
-
     Private Sub btnSalvar_Click()
         Dim Perfil As Perfil
         Dim Usuario As Usuario

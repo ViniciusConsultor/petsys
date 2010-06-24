@@ -40,6 +40,8 @@
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Compartilhados, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00532d988ee8a0bc, processorArchitecture=MSIL" />
+    <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -102,14 +104,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Compartilhados.Interfaces\Compartilhados.Interfaces.vbproj">
-      <Project>{FE5690EE-7C9F-40EA-A41A-C4137EEB58AB}</Project>
-      <Name>Compartilhados.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compartilhados\Compartilhados.vbproj">
-      <Project>{06F3AE73-7806-44D1-9DAD-7C227869B4B8}</Project>
-      <Name>Compartilhados</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Estoque.Interfaces\Estoque.Interfaces.vbproj">
       <Project>{F7E08A53-2F27-43C8-8C67-B39200BBC1A0}</Project>
       <Name>Estoque.Interfaces</Name>
