@@ -180,12 +180,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51164</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/Estoque.Client</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -195,4 +194,21 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(SolutionDir)WorkSpace\js $(ProjectDir)js /S /I /F
+xcopy $(SolutionDir)WorkSpace\imagens $(ProjectDir)imagens /S /I /F
+xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
+xcopy $(SolutionDir)WorkSpace\Nucleo $(ProjectDir)Nucleo /S /I /F
+xcopy $(SolutionDir)WorkSpace\Skins $(ProjectDir)Skins /S /I /F
+copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.ascx $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.css $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.Master $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.html $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.config $(ProjectDir)
+copy $(TargetDir)*.dll $(ProjectDir)bin\
+copy $(TargetDir)*.pdb $(ProjectDir)bin\
+copy $(TargetDir)*.config $(ProjectDir)bin\
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>
