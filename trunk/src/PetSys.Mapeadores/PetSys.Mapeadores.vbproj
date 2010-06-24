@@ -48,6 +48,9 @@
     <WarningsAsErrors>41998,41999,42004,42016,42017,42018,42019,42020,42021,42022,42024,42025,42026,42029,42030,42031,42032,42036,42099,42104,42105,42106,42107,42108,42109</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Compartilhados, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00532d988ee8a0bc, processorArchitecture=MSIL" />
+    <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
+    <Reference Include="Core.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e1e9fd483115ebd, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -111,18 +114,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Compartilhados.Interfaces\Compartilhados.Interfaces.vbproj">
-      <Project>{FE5690EE-7C9F-40EA-A41A-C4137EEB58AB}</Project>
-      <Name>Compartilhados.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compartilhados\Compartilhados.vbproj">
-      <Project>{06F3AE73-7806-44D1-9DAD-7C227869B4B8}</Project>
-      <Name>Compartilhados</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core.Interfaces\Core.Interfaces.vbproj">
-      <Project>{27EDA738-8B31-4FF6-88C1-54E6290B4CFE}</Project>
-      <Name>Core.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PetSys.Interfaces\PetSys.Interfaces.vbproj">
       <Project>{3B0594C1-F788-45D1-8C69-704701DFD63B}</Project>
       <Name>PetSys.Interfaces</Name>

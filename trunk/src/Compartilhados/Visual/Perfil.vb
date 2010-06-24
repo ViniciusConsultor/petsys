@@ -44,6 +44,38 @@
             End If
         End Sub
 
+        Public Function ObtenhaAtalhosDoSistema() As IList(Of Atalho)
+            Dim AtalhosSistema As IList(Of Atalho)
+
+            AtalhosSistema = New List(Of Atalho)
+
+            For Each Atalho As Atalho In Atalhos
+                If Atalho.Tipo.Equals(TipoAtalho.Sistema) Then
+                    AtalhosSistema.Add(Atalho)
+                End If
+            Next
+
+            Return AtalhosSistema
+        End Function
+
+        Public Function ObtenhaAtalhosExternos() As IList(Of Atalho)
+            Dim AtalhosExternos As IList(Of Atalho)
+
+            AtalhosExternos = New List(Of Atalho)
+
+            For Each Atalho As Atalho In Atalhos
+                If Atalho.Tipo.Equals(TipoAtalho.Externo) Then
+                    AtalhosExternos.Add(Atalho)
+                End If
+            Next
+
+            Return AtalhosExternos
+        End Function
+
+        Public Function UsuarioTemAtalhos() As Boolean
+            Return Atalhos.Count > 0
+        End Function
+
         Public MustOverride ReadOnly Property Tipo() As TipoDePerfil
 
     End Class

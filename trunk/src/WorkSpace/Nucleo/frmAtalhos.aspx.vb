@@ -24,6 +24,10 @@ Partial Public Class frmAtalhos
         ApresenteMenuParaEscolhaDosAtalhos()
         LimpaCamposDoAtalhoExterno()
         ExibaAtalhosExternos(New List(Of Atalho))
+
+        If FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.UsuarioTemAtalhos Then
+            ExibaAtalhos()
+        End If
     End Sub
 
     Private Sub ApresenteMenuParaEscolhaDosAtalhos()
@@ -45,6 +49,12 @@ Partial Public Class frmAtalhos
                 Me.trwMenuDoUsuario.Nodes.Add(NodeModulo)
             End If
         Next
+    End Sub
+
+    Private Sub ExibaAtalhos()
+        ExibaAtalhosExternos(FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.ObtenhaAtalhosExternos)
+
+
     End Sub
 
     Private Sub PreenchaMenuFuncionalidadesDoModulo(ByVal MenuModulo As IMenuComposto, _
@@ -118,7 +128,7 @@ Partial Public Class frmAtalhos
                 Servico.SalveAtalhos(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario, Atalhos)
             End Using
 
-            'ExibaTelaInicial()
+            ExibaTelaInicial()
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Atalhos modificados com sucesso."), False)
 
         Catch ex As BussinesException
@@ -142,11 +152,11 @@ Partial Public Class frmAtalhos
         AtalhoASerInserido = CriaAtalhoExterno()
         AtalhosExternos.Add(AtalhoASerInserido)
         ExibaAtalhosExternos(AtalhosExternos)
-        Session(CHAVE_ATALHOS_EXTERNOS) = AtalhosExternos
         LimpaCamposDoAtalhoExterno()
     End Sub
 
     Private Sub ExibaAtalhosExternos(ByVal Atalhos As IList(Of Atalho))
+        Session(CHAVE_ATALHOS_EXTERNOS) = Atalhos
         grdAtalhosExternos.DataSource = Atalhos
         grdAtalhosExternos.DataBind()
     End Sub
