@@ -53,8 +53,21 @@ Partial Public Class frmAtalhos
 
     Private Sub ExibaAtalhos()
         ExibaAtalhosExternos(FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.ObtenhaAtalhosExternos)
+        ExibaAtalhosDoSistema(FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.ObtenhaAtalhosDoSistema)
+    End Sub
 
+    Private Sub ExibaAtalhosDoSistema(ByVal AtalhosDoSistema As IList(Of Atalho))
+        For Each Atalho As Atalho In AtalhosDoSistema
+            Dim No As RadTreeNode
+            Dim IDAtalho As String = String.Concat(Atalho.ID.ToString, "|", Atalho.Imagem, "|", Atalho.URL)
 
+            No = trwMenuDoUsuario.FindNodeByValue(IDAtalho)
+            No.Expanded = True
+
+            If Not No.ParentNode Is Nothing AndAlso Not No.Nodes Is Nothing AndAlso No.Nodes.Count = 0 Then
+                No.Checked = True
+            End If
+        Next
     End Sub
 
     Private Sub PreenchaMenuFuncionalidadesDoModulo(ByVal MenuModulo As IMenuComposto, _

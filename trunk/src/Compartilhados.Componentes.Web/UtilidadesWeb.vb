@@ -37,15 +37,11 @@ Public Class UtilidadesWeb
 
         Skin = FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.Skin
 
-        If String.IsNullOrEmpty(CType(Pagina, SuperPagina).Skin) OrElse _
-                                Not CType(Pagina, SuperPagina).Skin.Equals(Skin) Then
-            For Each Componente As Control In Pagina.Controls
-                SetaSkinNoComponente(Componente, Skin)
-            Next
+        For Each Componente As Control In Pagina.Controls
+            SetaSkinNoComponente(Componente, Skin)
+        Next
 
-            CType(Pagina, SuperPagina).Skin = Skin
-        End If
-
+        CType(Pagina, SuperPagina).Skin = Skin
     End Sub
 
     Private Shared Sub SetaSkinNoComponente(ByVal Componente As Control, _
