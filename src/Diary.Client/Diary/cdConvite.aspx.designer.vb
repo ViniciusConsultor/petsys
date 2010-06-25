@@ -13,5 +13,5 @@ Option Explicit On
 
 
 
-Partial Public Class frmReajusteDePrecos
+Partial Public Class cdConvite
 End Class
