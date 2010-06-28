@@ -1,12 +1,12 @@
 ﻿Imports Compartilhados.Componentes.Web
 Imports Telerik.Web.UI
 
-Partial Public Class cdAudiencia
+Partial Public Class frmSolicitacoesDeAudiencia
     Inherits SuperPagina
 
-    Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_SOLICITACAO"
-
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ' AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ObtenhaContato
+
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If
@@ -17,7 +17,7 @@ Partial Public Class cdAudiencia
     End Function
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.DRY.001"
+        Return "FUN.DRY.003"
     End Function
 
     Private Enum Estado As Byte
@@ -30,20 +30,10 @@ Partial Public Class cdAudiencia
 
     Private Sub ExibaTelaInicial()
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
 
-        ctrlPessoa1.Inicializa()
-        ctrlPessoa1.BotaoDetalharEhVisivel = False
-        ctrlPessoa1.BotaoNovoEhVisivel = True
+        UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
 
-        UtilidadesWeb.LimparComponente(CType(pnlDadosDoContato, Control))
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
-        Session(CHAVE_ESTADO) = Estado.Inicial
+        Using Servico As iservicodesolcii
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -204,5 +194,6 @@ Partial Public Class cdAudiencia
         txtCargo.Text = Contato.Cargo
         txtObservacoes.Text = Contato.Observacoes
     End Sub
+
 
 End Class

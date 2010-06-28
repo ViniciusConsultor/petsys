@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="cdContato.aspx.vb" Inherits="Diary.Client.cdContato" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+    CodeBehind="cdContato.aspx.vb" Inherits="Diary.Client.cdContato" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
     TagPrefix="cc1" %>
@@ -25,10 +27,38 @@
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Cliente" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Contato" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
+                </ContentTemplate>
+            </telerik:RadDock>
+            <telerik:RadDock ID="RadDock2" runat="server" Title="Dados do contato" DefaultCommands="ExpandCollapse"
+                EnableAnimation="True" Skin="Vista" DockMode="Docked">
+                <ContentTemplate>
+                    <asp:Panel ID="pnlDadosDoContato" runat="server">
+                        <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label7" runat="server" Text="Cargo"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtCargo" runat="server" MaxLength="255" Width="400px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="Observações"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtObservacoes" runat="server" MaxLength="500" Rows="10" TextMode="MultiLine"
+                                        Width="400px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>
