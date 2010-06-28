@@ -13,7 +13,16 @@ Option Explicit On
 
 
 
-Partial Public Class cdContato
+Partial Public Class frmSolicitacoesDeAudiencia
+
+    '''<summary>
+    '''RadAjaxLoadingPanel1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
 
     '''<summary>
     '''rtbToolBar control.
@@ -43,40 +52,22 @@ Partial Public Class cdContato
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock1 control.
+    '''RadDock3 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents RadDock3 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''ctrlPessoa1 control.
+    '''pnlFiltro control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
-
-    '''<summary>
-    '''RadDock2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
-    '''pnlDadosDoContato control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pnlDadosDoContato As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlFiltro As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''Label7 control.
@@ -88,29 +79,56 @@ Partial Public Class cdContato
     Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtCargo control.
+    '''txtDataInicial control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCargo As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents txtDataInicial As Global.Telerik.Web.UI.RadDatePicker
 
     '''<summary>
-    '''Label8 control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtObservacoes control.
+    '''txtDataFinal control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtObservacoes As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents txtDataFinal As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''btnPesquisar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPesquisar As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''rdkLancamentos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rdkLancamentos As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
+    '''grdItensLancados control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdItensLancados As Global.Telerik.Web.UI.RadGrid
 End Class

@@ -1,8 +1,10 @@
 ﻿Imports Compartilhados.Componentes.Web
-Imports Compartilhados.Interfaces.Core.Negocio
 Imports Telerik.Web.UI
 Imports Compartilhados
 Imports Compartilhados.Fabricas
+Imports Diary.Interfaces.Negocio
+Imports Diary.Interfaces.Servicos
+Imports Compartilhados.Interfaces.Core.Negocio
 
 Partial Public Class cdContato
     Inherits SuperPagina
@@ -45,6 +47,9 @@ Partial Public Class cdContato
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
+
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDoContato, Control))
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
         Session(CHAVE_ESTADO) = Estado.Inicial
     End Sub
 
@@ -60,6 +65,8 @@ Partial Public Class cdContato
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDoContato, Control))
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), True)
         Session(CHAVE_ESTADO) = Estado.Novo
     End Sub
 
@@ -71,6 +78,7 @@ Partial Public Class cdContato
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
         Session(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
@@ -93,38 +101,40 @@ Partial Public Class cdContato
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
     End Sub
 
     Protected Sub btnCancela_Click()
         ExibaTelaInicial()
     End Sub
 
-    Private Function MontaObjetoCliente() As ICliente
-        Dim Cliente As ICliente
+    Private Function MontaObjetoContato() As IContato
+        Dim Contato As IContato
         Dim Pessoa As IPessoa
 
         Pessoa = ctrlPessoa1.PessoaSelecionada
-        Cliente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICliente)((New Object() {Pessoa}))
-        Cliente.DataDoCadastro = Now
+        Contato = FabricaGenerica.GetInstancia.CrieObjeto(Of IContato)((New Object() {Pessoa}))
+        Contato.Cargo = txtCargo.Text
+        Contato.Observacoes = txtObservacoes.Text
 
-        Return Cliente
+        Return Contato
     End Function
 
     Private Sub btnSalva_Click()
         Dim Mensagem As String = ""
-        Dim Cliente As ICliente = MontaObjetoCliente()
+        Dim Contato As IContato = MontaObjetoContato()
 
         Try
-            'Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
-            '    If CByte(Session(CHAVE_ESTADO_CD_CLIENTE)) = Estado.Novo Then
-            '        Servico.Inserir(Cliente)
-            '        Mensagem = "Cliente cadastrado com sucesso."
-            '    Else
-            '        Servico.Modificar(Cliente)
-            '        Mensagem = "Cliente modificado com sucesso."
-            '    End If
+            Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
+                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                    Servico.Inserir(Contato)
+                    Mensagem = "Contato cadastrado com sucesso."
+                Else
+                    Servico.Modificar(Contato)
+                    Mensagem = "Contato modificado com sucesso."
+                End If
 
-            'End Using
+            End Using
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
             ExibaTelaInicial()
@@ -148,11 +158,11 @@ Partial Public Class cdContato
 
     Private Sub btnSim_Click()
         Try
-            'Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
-            '    Servico.Remover(ctrlPessoa1.PessoaSelecionada.ID.Value)
-            'End Using
+            Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
+                Servico.Remover(ctrlPessoa1.PessoaSelecionada.ID.Value)
+            End Using
 
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Cliente excluido com sucesso."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Contato excluido com sucesso."), False)
             ExibaTelaInicial()
 
         Catch ex As BussinesException
@@ -180,26 +190,26 @@ Partial Public Class cdContato
     End Sub
 
     Private Sub ObtenhaContato(ByVal Pessoa As IPessoa)
-        Dim Cliente As ICliente = Nothing
+        Dim Contato As IContato = Nothing
 
         ctrlPessoa1.BotaoDetalharEhVisivel = True
 
-        'Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
-        '    Cliente = Servico.Obtenha(Pessoa)
-        'End Using
+        Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
+            Contato = Servico.Obtenha(Pessoa)
+        End Using
 
-        'If Cliente Is Nothing Then
-        '    CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
-        '    Exit Sub
-        'End If
+        If Contato Is Nothing Then
+            CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
+            Exit Sub
+        End If
 
-        MostreContato(Cliente)
+        MostreContato(Contato)
         ExibaTelaConsultar()
     End Sub
 
-    Private Sub MostreContato(ByVal Cliente As ICliente)
-        'Me.txtCRMV.Text = Veterinario.CRMV
-        'Me.cboUF.SelectedValue = Veterinario.UF.ID.ToString
+    Private Sub MostreContato(ByVal Contato As IContato)
+        txtCargo.Text = Contato.Cargo
+        txtObservacoes.Text = Contato.Observacoes
     End Sub
 
 End Class

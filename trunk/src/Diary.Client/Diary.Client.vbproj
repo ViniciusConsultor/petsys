@@ -99,7 +99,7 @@
     </Compile>
     <Compile Include="Diary\cdAudiencia.aspx.vb">
       <DependentUpon>cdAudiencia.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Diary\cdContato.aspx.designer.vb">
       <DependentUpon>cdContato.aspx</DependentUpon>
@@ -115,26 +115,12 @@
       <DependentUpon>cdConvite.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Diary\cdRepresentante.aspx.designer.vb">
-      <DependentUpon>cdRepresentante.aspx</DependentUpon>
+    <Compile Include="Diary\frmSolicitacoesDeAudiencia.aspx.designer.vb">
+      <DependentUpon>frmSolicitacoesDeAudiencia.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Diary\cdRepresentante.aspx.vb">
-      <DependentUpon>cdRepresentante.aspx</DependentUpon>
+    <Compile Include="Diary\frmSolicitacoesDeAudiencia.aspx.vb">
+      <DependentUpon>frmSolicitacoesDeAudiencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Diary\frmAgenda.aspx.designer.vb">
-      <DependentUpon>frmAgenda.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Diary\frmAgenda.aspx.vb">
-      <DependentUpon>frmAgenda.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Diary\frmCompromissosPendentes.aspx.designer.vb">
-      <DependentUpon>frmCompromissosPendentes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Diary\frmCompromissosPendentes.aspx.vb">
-      <DependentUpon>frmCompromissosPendentes.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -174,12 +160,11 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Diary\frmSolicitacoesDeAudiencia.aspx" />
+    <Content Include="Web.config" />
     <Content Include="Diary\cdAudiencia.aspx" />
     <Content Include="Diary\cdContato.aspx" />
     <Content Include="Diary\cdConvite.aspx" />
-    <Content Include="Diary\cdRepresentante.aspx" />
-    <Content Include="Diary\frmAgenda.aspx" />
-    <Content Include="Diary\frmCompromissosPendentes.aspx" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -204,12 +189,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50490</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/Diary.Client</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
