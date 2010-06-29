@@ -13,5 +13,5 @@ Option Explicit On
 
 
 
-Partial Public Class cdConvite
+Partial Public Class frmSolicitacoesDeConvite
 End Class

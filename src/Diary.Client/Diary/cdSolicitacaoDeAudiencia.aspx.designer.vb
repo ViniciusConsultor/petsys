@@ -13,7 +13,7 @@ Option Explicit On
 
 
 
-Partial Public Class cdAudiencia
+Partial Public Class cdSolicitacaoDeAudiencia
 
     '''<summary>
     '''rtbToolBar control.
@@ -43,13 +43,13 @@ Partial Public Class cdAudiencia
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock3 control.
+    '''RadDock1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock3 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
     '''pnlContato control.
