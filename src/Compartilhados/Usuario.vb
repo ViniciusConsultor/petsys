@@ -6,9 +6,13 @@ Public Class Usuario
     Private _Autorizacoes As IList(Of String)
     Private _Sexo As Char
 
-    Public Sub New(ByVal ID As Long, ByVal Nome As String, ByVal Autorizacoes As IList(Of String), ByVal Sexo As Char)
+    Public Sub New(ByVal ID As Long, ByVal Nome As String)
         _ID = ID
         _Nome = Nome
+    End Sub
+
+    Public Sub New(ByVal ID As Long, ByVal Nome As String, ByVal Autorizacoes As IList(Of String), ByVal Sexo As Char)
+        Me.New(ID, Nome)
         'garante que a lista de autorizações não está nula
         If Autorizacoes Is Nothing Then Autorizacoes = New List(Of String)
         _Autorizacoes = Autorizacoes

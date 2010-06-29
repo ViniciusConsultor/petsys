@@ -1,4 +1,6 @@
-﻿Namespace Negocio
+﻿Imports Compartilhados
+
+Namespace Negocio
 
     Public Interface ISolicitacaoDeAudiencia
 
@@ -8,6 +10,7 @@
         Property DataDaSolicitacao() As Date
         Property Ativa() As Boolean
         Property ID() As Nullable(Of Long)
+        Property UsuarioQueCadastrou() As Usuario
 
     End Interface
 

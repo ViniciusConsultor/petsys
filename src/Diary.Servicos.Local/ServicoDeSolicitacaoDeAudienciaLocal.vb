@@ -2,6 +2,7 @@
 Imports Diary.Interfaces.Servicos
 Imports Diary.Interfaces.Negocio
 Imports Compartilhados.Fabricas
+Imports Diary.Interfaces.Mapeadores
 
 Public Class ServicoDeSolicitacaoDeAudienciaLocal
     Inherits Servico
@@ -12,7 +13,22 @@ Public Class ServicoDeSolicitacaoDeAudienciaLocal
     End Sub
 
     Public Sub Inserir(ByVal SolicitacaoDeAudiencia As ISolicitacaoDeAudiencia) Implements IServicoDeSolicitacaoDeAudiencia.Inserir
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
 
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.Inserir(SolicitacaoDeAudiencia)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Sub
 
     Public Sub Modificar(ByVal SolicitacaoDeAudiencia As ISolicitacaoDeAudiencia) Implements IServicoDeSolicitacaoDeAudiencia.Modificar
@@ -20,75 +36,81 @@ Public Class ServicoDeSolicitacaoDeAudienciaLocal
     End Sub
 
     Public Function ObtenhaSolicitacaoDeAudiencia(ByVal ID As Long) As ISolicitacaoDeAudiencia Implements IServicoDeSolicitacaoDeAudiencia.ObtenhaSolicitacaoDeAudiencia
-        Return Nothing
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        Try
+            Return Mapeador.ObtenhaSolicitacaoDeAudiencia(ID)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
     Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean) As IList(Of ISolicitacaoDeAudiencia) Implements IServicoDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
-        Dim Contato As IContato
-        Dim SolicitacaoDeAudiencia As ISolicitacaoDeAudiencia
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
 
-        Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-            Contato = Servico.Obtenha(30001)
-        End Using
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
 
-        SolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of ISolicitacaoDeAudiencia)()
-        SolicitacaoDeAudiencia.Assunto = "ASSUNTO"
-        SolicitacaoDeAudiencia.Ativa = True
-        SolicitacaoDeAudiencia.Contato = Contato
-        SolicitacaoDeAudiencia.DataDaSolicitacao = Now
-        SolicitacaoDeAudiencia.Descricao = "DESCRICAO"
-        SolicitacaoDeAudiencia.ID = 1234
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-        Solicitacoes.Add(SolicitacaoDeAudiencia)
-
-        Return Solicitacoes
+        Try
+            Return Mapeador.ObtenhaSolicitacoesDeAudiencia(TrazApenasAtivas)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
-    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, ByVal DataInicio As Date, ByVal DataFim As Date) As System.Collections.Generic.IList(Of Interfaces.Negocio.ISolicitacaoDeAudiencia) Implements Interfaces.Servicos.IServicoDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
-        Return Nothing
+    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, _
+                                                   ByVal DataInicio As Date, _
+                                                   ByVal DataFim As Date) As IList(Of ISolicitacaoDeAudiencia) Implements IServicoDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        Try
+            Return Mapeador.ObtenhaSolicitacoesDeAudiencia(TrazApenasAtivas, DataInicio, DataFim)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
-    Public Sub Remover(ByVal ID As Long) Implements Interfaces.Servicos.IServicoDeSolicitacaoDeAudiencia.Remover
+    Public Sub Remover(ByVal ID As Long) Implements IServicoDeSolicitacaoDeAudiencia.Remover
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
 
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.Remover(ID)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
+    Public Sub Finalizar(ByVal ID As Long) Implements IServicoDeSolicitacaoDeAudiencia.Finalizar
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.Finalizar(ID)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Sub
 End Class
