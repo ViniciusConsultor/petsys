@@ -1,4 +1,5 @@
 ﻿Imports Diary.Interfaces.Negocio
+Imports Compartilhados
 
 <Serializable()> _
 Public Class SolicitacaoDeAudiencia
@@ -64,4 +65,13 @@ Public Class SolicitacaoDeAudiencia
         End Set
     End Property
 
+    Private _UsuarioQueCadastro As Usuario
+    Public Property UsuarioQueCadastrou() As Usuario Implements ISolicitacaoDeAudiencia.UsuarioQueCadastrou
+        Get
+            Return _UsuarioQueCadastro
+        End Get
+        Set(ByVal value As Compartilhados.Usuario)
+            _UsuarioQueCadastro = value
+        End Set
+    End Property
 End Class

@@ -64,11 +64,11 @@ Partial Public Class frmSolicitacoesDeAudiencia
     End Sub
 
     Private Sub grdItensLancados_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdItensLancados.ItemCommand
-        If e.CommandName = "Excluir" Then
-            Dim ID As Long = CLng(e.Item.Cells(4).Text)
-            Dim IndiceSelecionado As Integer = e.Item().ItemIndex
-            Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
+        Dim ID As Long = CLng(e.Item.Cells(4).Text)
+        Dim IndiceSelecionado As Integer = e.Item().ItemIndex
 
+        If e.CommandName = "Excluir" Then
+            Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
             Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
             Solicitacoes.RemoveAt(IndiceSelecionado)
             ExibaSolicitacoes(Solicitacoes)
@@ -76,11 +76,20 @@ Partial Public Class frmSolicitacoesDeAudiencia
             Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
                 Servico.Remover(ID)
             End Using
+        ElseIf e.CommandName = "Modificar" Then
+            Dim URL As String
 
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeAudiencia.aspx", "?Id=", ID)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência"), False)
+
+        ElseIf e.CommandName = "Finalizar" Then
+            Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+                Servico.Finalizar(ID)
+            End Using
         ElseIf e.CommandName = "Despachar" Then
             Dim URL As String
 
-            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespacharSolicitacaoDeAudiencia.aspx")
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespacharSolicitacaoDeAudiencia.aspx", "?Id=", ID)
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência"), False)
         End If
     End Sub

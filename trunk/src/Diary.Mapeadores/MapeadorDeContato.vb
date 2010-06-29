@@ -37,7 +37,29 @@ Public Class MapeadorDeContato
     End Sub
 
     Public Sub Modificar(ByVal Contato As IContato) Implements IMapeadorDeContato.Modificar
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
 
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("UPDATE DRY_CONTATO SET")
+
+        If String.IsNullOrEmpty(Contato.Cargo) Then
+            Sql.Append(" CARGO = NULL, ")
+        Else
+            Sql.Append(String.Concat(" CARGO = '", Contato.Cargo, "', "))
+        End If
+
+        If String.IsNullOrEmpty(Contato.Observacoes) Then
+            Sql.Append(" OBSERVACOES = NULL")
+        Else
+            Sql.Append(String.Concat(" OBSERVACOES = '", Contato.Observacoes, "'"))
+        End If
+
+        Sql.Append(String.Concat(" WHERE IDPESSOA = ", Contato.Pessoa.ID.Value))
+
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
     Public Function Obtenha(ByVal Pessoa As IPessoa) As IContato Implements IMapeadorDeContato.Obtenha
