@@ -94,13 +94,6 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diary\cdAudiencia.aspx.designer.vb">
-      <DependentUpon>cdAudiencia.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Diary\cdAudiencia.aspx.vb">
-      <DependentUpon>cdAudiencia.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Diary\cdContato.aspx.designer.vb">
       <DependentUpon>cdContato.aspx</DependentUpon>
     </Compile>
@@ -108,11 +101,18 @@
       <DependentUpon>cdContato.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Diary\cdConvite.aspx.designer.vb">
-      <DependentUpon>cdConvite.aspx</DependentUpon>
+    <Compile Include="Diary\cdSolicitacaoDeAudiencia.aspx.designer.vb">
+      <DependentUpon>cdSolicitacaoDeAudiencia.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Diary\cdConvite.aspx.vb">
-      <DependentUpon>cdConvite.aspx</DependentUpon>
+    <Compile Include="Diary\cdSolicitacaoDeAudiencia.aspx.vb">
+      <DependentUpon>cdSolicitacaoDeAudiencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Diary\frmDespacharSolicitacaoDeAudiencia.aspx.designer.vb">
+      <DependentUpon>frmDespacharSolicitacaoDeAudiencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\frmDespacharSolicitacaoDeAudiencia.aspx.vb">
+      <DependentUpon>frmDespacharSolicitacaoDeAudiencia.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Diary\frmSolicitacoesDeAudiencia.aspx.designer.vb">
@@ -121,6 +121,13 @@
     <Compile Include="Diary\frmSolicitacoesDeAudiencia.aspx.vb">
       <DependentUpon>frmSolicitacoesDeAudiencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Diary\frmSolicitacoesDeConvite.aspx.designer.vb">
+      <DependentUpon>frmSolicitacoesDeConvite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\frmSolicitacoesDeConvite.aspx.vb">
+      <DependentUpon>frmSolicitacoesDeConvite.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -160,11 +167,12 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Diary\cdSolicitacaoDeAudiencia.aspx" />
+    <Content Include="Diary\frmDespacharSolicitacaoDeAudiencia.aspx" />
     <Content Include="Diary\frmSolicitacoesDeAudiencia.aspx" />
+    <Content Include="Diary\frmSolicitacoesDeConvite.aspx" />
     <Content Include="Web.config" />
-    <Content Include="Diary\cdAudiencia.aspx" />
     <Content Include="Diary\cdContato.aspx" />
-    <Content Include="Diary\cdConvite.aspx" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
   <ItemGroup>

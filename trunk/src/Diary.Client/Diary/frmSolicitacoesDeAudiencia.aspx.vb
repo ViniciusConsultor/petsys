@@ -1,12 +1,16 @@
 ﻿Imports Compartilhados.Componentes.Web
 Imports Telerik.Web.UI
+Imports Diary.Interfaces.Servicos
+Imports Compartilhados.Fabricas
+Imports Diary.Interfaces.Negocio
+Imports Compartilhados
 
 Partial Public Class frmSolicitacoesDeAudiencia
     Inherits SuperPagina
 
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        ' AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ObtenhaContato
+    Private Const CHAVE_SOLICITACOES As String = "CHAVE_SOLICITACOES"
 
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If
@@ -17,183 +21,89 @@ Partial Public Class frmSolicitacoesDeAudiencia
     End Function
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.DRY.003"
+        Return "FUN.DRY.002"
     End Function
 
-    Private Enum Estado As Byte
-        Inicial = 1
-        Novo
-        Consulta
-        Modifica
-        Remove
-    End Enum
-
     Private Sub ExibaTelaInicial()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
+
+        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
 
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
+        UtilidadesWeb.LimparComponente(CType(rdkLancamentos, Control))
 
-        Using Servico As iservicodesolcii
+        Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(True)
+        End Using
+
+        ExibaSolicitacoes(Solicitacoes)
+    End Sub
+
+    Private Sub ExibaSolicitacoes(ByVal Solicitacoes As IList(Of ISolicitacaoDeAudiencia))
+        Session(CHAVE_SOLICITACOES) = Solicitacoes
+        Me.grdItensLancados.DataSource = Solicitacoes
+        Me.grdItensLancados.DataBind()
     End Sub
 
     Protected Sub btnNovo_Click()
-        ExibaTelaNovo()
+        Dim URL As String
+
+        URL = ObtenhaURL()
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de audiência"), False)
     End Sub
 
-    Private Sub ExibaTelaNovo()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        UtilidadesWeb.LimparComponente(CType(pnlDadosDoContato, Control))
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), True)
-        Session(CHAVE_ESTADO) = Estado.Novo
-    End Sub
-
-    Private Sub ExibaTelaModificar()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
-        Session(CHAVE_ESTADO) = Estado.Modifica
-    End Sub
-
-    Private Sub ExibaTelaExcluir()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO) = Estado.Remove
-    End Sub
-
-    Private Sub ExibaTelaConsultar()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
-    End Sub
-
-    Protected Sub btnCancela_Click()
-        ExibaTelaInicial()
-    End Sub
-
-    Private Function MontaObjetoContato() As IContato
-        Dim Contato As IContato
-        Dim Pessoa As IPessoa
-
-        Pessoa = ctrlPessoa1.PessoaSelecionada
-        Contato = FabricaGenerica.GetInstancia.CrieObjeto(Of IContato)((New Object() {Pessoa}))
-        Contato.Cargo = txtCargo.Text
-        Contato.Observacoes = txtObservacoes.Text
-
-        Return Contato
+    Private Function ObtenhaURL() As String
+        Return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeAudiencia.aspx")
     End Function
-
-    Private Sub btnSalva_Click()
-        Dim Mensagem As String = ""
-        Dim Contato As IContato = MontaObjetoContato()
-
-        Try
-            Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
-                    Servico.Inserir(Contato)
-                    Mensagem = "Contato cadastrado com sucesso."
-                Else
-                    Servico.Modificar(Contato)
-                    Mensagem = "Contato modificado com sucesso."
-                End If
-
-            End Using
-
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
-            ExibaTelaInicial()
-
-        Catch ex As BussinesException
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-        End Try
-    End Sub
-
-    Private Sub btnModificar_Click()
-        ExibaTelaModificar()
-    End Sub
-
-    Private Sub btnExclui_Click()
-        ExibaTelaExcluir()
-    End Sub
-
-    Private Sub btnNao_Click()
-        Me.ExibaTelaInicial()
-    End Sub
-
-    Private Sub btnSim_Click()
-        Try
-            Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-                Servico.Remover(ctrlPessoa1.PessoaSelecionada.ID.Value)
-            End Using
-
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Contato excluido com sucesso."), False)
-            ExibaTelaInicial()
-
-        Catch ex As BussinesException
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-        End Try
-    End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovo"
                 Call btnNovo_Click()
-            Case "btnModificar"
-                Call btnModificar_Click()
-            Case "btnExcluir"
-                Call btnExclui_Click()
-            Case "btnSalvar"
-                Call btnSalva_Click()
-            Case "btnCancelar"
-                Call btnCancela_Click()
-            Case "btnSim"
-                Call btnSim_Click()
-            Case "btnNao"
-                Call btnNao_Click()
         End Select
     End Sub
 
-    Private Sub ObtenhaContato(ByVal Pessoa As IPessoa)
-        Dim Contato As IContato = Nothing
+    Private Sub grdItensLancados_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdItensLancados.ItemCommand
+        If e.CommandName = "Excluir" Then
+            Dim ID As Long = CLng(e.Item.Cells(4).Text)
+            Dim IndiceSelecionado As Integer = e.Item().ItemIndex
+            Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
 
-        ctrlPessoa1.BotaoDetalharEhVisivel = True
+            Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
+            Solicitacoes.RemoveAt(IndiceSelecionado)
+            ExibaSolicitacoes(Solicitacoes)
 
-        Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-            Contato = Servico.Obtenha(Pessoa)
-        End Using
+            Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+                Servico.Remover(ID)
+            End Using
 
-        If Contato Is Nothing Then
-            CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
-            Exit Sub
+        ElseIf e.CommandName = "Despachar" Then
+            Dim URL As String
+
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespacharSolicitacaoDeAudiencia.aspx")
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência"), False)
         End If
-
-        MostreContato(Contato)
-        ExibaTelaConsultar()
     End Sub
 
-    Private Sub MostreContato(ByVal Contato As IContato)
-        txtCargo.Text = Contato.Cargo
-        txtObservacoes.Text = Contato.Observacoes
+    Private Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
+        Dim Principal As Compartilhados.Principal
+
+        Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
+
+        'Coluna com botão modificar
+        grdItensLancados.Columns(0).Visible = Principal.EstaAutorizado("OPE.DRY.002.0002")
+
+        'Coluna com botão excluir
+        grdItensLancados.Columns(1).Visible = Principal.EstaAutorizado("OPE.DRY.002.0003")
+
+        'Coluna com botão despachar
+        grdItensLancados.Columns(7).Visible = Principal.EstaAutorizado("OPE.DRY.002.0004")
+
+        'Coluna com botão finalizar
+        grdItensLancados.Columns(8).Visible = Principal.EstaAutorizado("OPE.DRY.002.0005")
+
     End Sub
 
-
+    Private Sub grdItensLancados_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdItensLancados.PageIndexChanged
+    End Sub
 End Class
