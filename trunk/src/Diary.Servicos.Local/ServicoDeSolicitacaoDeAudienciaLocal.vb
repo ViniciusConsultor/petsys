@@ -32,7 +32,22 @@ Public Class ServicoDeSolicitacaoDeAudienciaLocal
     End Sub
 
     Public Sub Modificar(ByVal SolicitacaoDeAudiencia As ISolicitacaoDeAudiencia) Implements IServicoDeSolicitacaoDeAudiencia.Modificar
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
 
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.Modificar(SolicitacaoDeAudiencia)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Sub
 
     Public Function ObtenhaSolicitacaoDeAudiencia(ByVal ID As Long) As ISolicitacaoDeAudiencia Implements IServicoDeSolicitacaoDeAudiencia.ObtenhaSolicitacaoDeAudiencia
@@ -113,4 +128,18 @@ Public Class ServicoDeSolicitacaoDeAudienciaLocal
             ServerUtils.libereRecursos()
         End Try
     End Sub
+
+    Public Function ObtenhaSolicitacaoPorCodigo(ByVal Codigo As Long) As ISolicitacaoDeAudiencia Implements IServicoDeSolicitacaoDeAudiencia.ObtenhaSolicitacaoPorCodigo
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        Try
+            Return Mapeador.ObtenhaSolicitacaoPorCodigo(Codigo)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
 End Class

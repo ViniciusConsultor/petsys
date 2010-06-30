@@ -24,6 +24,15 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
+                                    <asp:Label ID="Label2" runat="server" Text="Opção de filtro"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rblOpcaoFiltro" runat="server" AutoPostBack="True" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlEntreDadas">
+                                <td class="th3">
                                     <asp:Label ID="Label7" runat="server" Text="Data de cadastro"></asp:Label>
                                 </td>
                                 <td class="td">
@@ -33,6 +42,25 @@
                                     <telerik:RadDatePicker ID="txtDataFinal" runat="server">
                                     </telerik:RadDatePicker>
                                     <asp:ImageButton ID="btnPesquisar" runat="server" ImageUrl="~/imagens/find.gif" />
+                                </td>
+                            </tr>
+                              <tr runat="server" id="pnlCodigoDaSolicitacao">
+                                <td class="th3">
+                                    <asp:Label ID="Label3" runat="server" Text="Código da solicitação"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadNumericTextBox ID="txtCodigoDaSolicitacao" runat="server" 
+                                        DataType="System.Int64" AllowOutOfRangeAutoCorrect="False">
+                                    </telerik:RadNumericTextBox>
+                                    <asp:ImageButton ID="btnPesquisarPorCodigo" runat="server" ImageUrl="~/imagens/find.gif" />
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label4" runat="server" Text="Considerar solicitações finalizadas?"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:CheckBox ID="chkConsiderarSolicitacoesFinalizadas" runat="server" />
                                 </td>
                             </tr>
                         </table>
@@ -45,8 +73,10 @@
                     <table class="tabela">
                         <tr>
                             <td colspan="2">
-                                <telerik:RadGrid ID="grdItensLancados" runat="server" AutoGenerateColumns="False" AllowPaging="true" PageSize="10"
+                                <telerik:RadGrid ID="grdItensLancados" runat="server" 
+                                    AutoGenerateColumns="False" AllowPaging="True" PageSize="10"
                                     GridLines="None" Skin="Vista">
+                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
                                             <HeaderStyle Width="20px" />
@@ -55,30 +85,41 @@
                                             <HeaderStyle Width="20px" />
                                         </ExpandCollapseColumn>
                                         <Columns>
-                                            <telerik:GridButtonColumn HeaderTooltip="Modificar" FilterImageToolTip="Modificar"
-                                                ButtonType="ImageButton"  CommandName="Modificar" UniqueName="column10" ImageUrl="~/imagens/edit.gif">
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" 
+                                                FilterImageToolTip="Modificar" HeaderTooltip="Modificar" 
+                                                ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn HeaderTooltip="Excluir" FilterImageToolTip="Excluir" ButtonType="ImageButton"
-                                                CommandName="Excluir" UniqueName="column8" ImageUrl="~/imagens/delete.gif">
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" 
+                                                FilterImageToolTip="Excluir" HeaderTooltip="Excluir" 
+                                                ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn  DataField="ID" UniqueName="column" Visible="False" HeaderText="ID">
+                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" 
+                                                Visible="False">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDaSolicitacao" UniqueName="column1" Visible="True"
-                                                HeaderText="Data da solicitação">
+                                            <telerik:GridBoundColumn DataField="Codigo" HeaderText="Código" 
+                                                UniqueName="column30">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Contato.Pessoa.Nome" UniqueName="column2" Visible="True"
-                                                HeaderText="Contato">
+                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" 
+                                                UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Assunto" UniqueName="column3" HeaderText="Assunto">
+                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" 
+                                                UniqueName="column6">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Descricao" UniqueName="column6" HeaderText="Descrição">
+                                            <telerik:GridBoundColumn DataField="DataDaSolicitacao" 
+                                                HeaderText="Data da solicitação" UniqueName="column1" Visible="True">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridButtonColumn HeaderTooltip="Despachar" FilterImageToolTip="Despachar"
-                                                ButtonType="ImageButton" CommandName="Despachar" UniqueName="column7" ImageUrl="~/imagens/accordian.gif">
+                                            <telerik:GridBoundColumn DataField="Contato.Pessoa.Nome" HeaderText="Contato" 
+                                                UniqueName="column2" Visible="True">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Despachar" 
+                                                FilterImageToolTip="Despachar" HeaderTooltip="Despachar" 
+                                                ImageUrl="~/imagens/accordian.gif" UniqueName="column7">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn HeaderTooltip="Finalizar" FilterImageToolTip="Finalizar"
-                                                ButtonType="ImageButton" CommandName="Finalizar"  UniqueName="column9" ImageUrl="~/imagens/yes.gif">
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Finalizar" 
+                                                FilterImageToolTip="Finalizar" HeaderTooltip="Finalizar" 
+                                                ImageUrl="~/imagens/yes.gif" UniqueName="column9">
                                             </telerik:GridButtonColumn>
+                                          
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

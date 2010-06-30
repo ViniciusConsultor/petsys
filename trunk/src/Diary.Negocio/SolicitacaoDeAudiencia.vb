@@ -74,4 +74,15 @@ Public Class SolicitacaoDeAudiencia
             _UsuarioQueCadastro = value
         End Set
     End Property
+
+    Private _Codigo As Long
+    Public Property Codigo() As Long Implements ISolicitacaoDeAudiencia.Codigo
+        Get
+            Return _Codigo
+        End Get
+        Set(ByVal value As Long)
+            _Codigo = value
+        End Set
+    End Property
+
 End Class

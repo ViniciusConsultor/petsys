@@ -220,6 +220,9 @@ Public Class UtilidadesWeb
 
         If TypeOf Componente Is RadGrid Then
             DirectCast(Componente, RadGrid).MasterTableView.NoMasterRecordsText = "Sem registros"
+            DirectCast(Componente, RadGrid).PagerStyle.PagerTextFormat = "Change page: {4} &nbsp;Página <strong>{0}</strong> de <strong>{1}</strong>, itens <strong>{2}</strong> a <strong>{3}</strong> de <strong>{5}</strong>."
+            DirectCast(Componente, RadGrid).PagerStyle.AlwaysVisible = True
+            DirectCast(Componente, RadGrid).PagerStyle.Mode = GridPagerMode.NumericPages
         End If
 
     End Sub
@@ -251,7 +254,6 @@ Public Class UtilidadesWeb
 
         Return URL.Substring(0, URL.LastIndexOf("/") + 1)
     End Function
-
 
     Public Shared Sub redimensionaImagem(ByVal diretorio As String, _
                                          ByVal nomeImagem As String, _
@@ -299,6 +301,23 @@ Public Class UtilidadesWeb
             End If
             arquivo.Dispose()
         End If
+    End Sub
+
+    Public Shared Sub PaginacaoDataGrid(ByRef Grid As RadGrid, ByVal Dados As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs)
+        If e.NewPageIndex >= 0 Then
+            Grid.CurrentPageIndex = e.NewPageIndex
+            Grid.DataSource = Dados
+            Grid.DataBind()
+        End If
+    End Sub
+
+    Public Shared Sub ExibaUltimaPaginaDoDataGrid(ByVal DataGrid As DataGrid)
+        Dim UltimaPagina As Integer = DataGrid.PageCount - 1
+
+        If UltimaPagina = -1 Then Exit Sub
+
+        DataGrid.CurrentPageIndex = UltimaPagina
+        DataGrid.DataBind()
     End Sub
 
 End Class
