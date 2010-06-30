@@ -70,6 +70,33 @@ Partial Public Class frmSolicitacoesDeAudiencia
     Protected WithEvents pnlFiltro As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''rblOpcaoFiltro control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rblOpcaoFiltro As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''pnlEntreDadas control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlEntreDadas As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
     '''Label7 control.
     '''</summary>
     '''<remarks>
@@ -113,6 +140,60 @@ Partial Public Class frmSolicitacoesDeAudiencia
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnPesquisar As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''pnlCodigoDaSolicitacao control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlCodigoDaSolicitacao As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtCodigoDaSolicitacao control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCodigoDaSolicitacao As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''btnPesquisarPorCodigo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPesquisarPorCodigo As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''chkConsiderarSolicitacoesFinalizadas control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkConsiderarSolicitacoesFinalizadas As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''rdkLancamentos control.

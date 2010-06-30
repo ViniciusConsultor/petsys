@@ -9,6 +9,7 @@ Namespace Mapeadores
         Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean) As IList(Of ISolicitacaoDeAudiencia)
         Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, ByVal DataInicio As Date, ByVal DataFim As Date) As IList(Of ISolicitacaoDeAudiencia)
         Function ObtenhaSolicitacaoDeAudiencia(ByVal ID As Long) As ISolicitacaoDeAudiencia
+        Function ObtenhaSolicitacaoPorCodigo(ByVal Codigo As Long) As ISolicitacaoDeAudiencia
         Sub Remover(ByVal ID As Long)
         Sub Finalizar(ByVal ID As Long)
 

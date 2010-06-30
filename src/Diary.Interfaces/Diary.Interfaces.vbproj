@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Negocio\IContato.vb" />
     <Compile Include="Negocio\ISolicitacaoDeAudiencia.vb" />
+    <Compile Include="Negocio\TipoDeDespacho.vb" />
     <Compile Include="Servicos\IServicoDeContato.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeAudiencia.vb" />
   </ItemGroup>

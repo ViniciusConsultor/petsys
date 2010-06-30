@@ -15,7 +15,7 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         Sql.Append("SELECT PESSOA_CONTATO.ID AS ID_PESSOA_CONTATO, PESSOA_CONTATO.NOME AS NOME_PESSOA_CONTATO, PESSOA_CONTATO.TIPO AS TIPO_PESSOA_CONTATO,")
         Sql.Append(" DRY_CONTATO.IDPESSOA, DRY_CONTATO.TIPOPESSOA, DRY_CONTATO.CARGO, DRY_CONTATO.OBSERVACOES,")
-        Sql.Append(" DRY_SOLICAUDI.ID AS ID_SOLICITACAO, DRY_SOLICAUDI.IDCONTATO, DRY_SOLICAUDI.ASSUNTO, DRY_SOLICAUDI.DESCRICAO,")
+        Sql.Append(" DRY_SOLICAUDI.ID AS ID_SOLICITACAO, DRY_SOLICAUDI.IDCONTATO, DRY_SOLICAUDI.ASSUNTO, DRY_SOLICAUDI.DESCRICAO, DRY_SOLICAUDI.CODIGO,")
         Sql.Append(" DRY_SOLICAUDI.DATADECADASTRO, DRY_SOLICAUDI.ESTAATIVA, DRY_SOLICAUDI.IDUSUARIOCAD, PESSOA_USUARIO.ID AS ID_USUARIO, PESSOA_USUARIO.NOME AS NOME_USUARIO")
         Sql.Append(" FROM NCL_PESSOA AS PESSOA_CONTATO, DRY_CONTATO, DRY_SOLICAUDI, NCL_PESSOA AS PESSOA_USUARIO")
         Sql.Append(" WHERE DRY_CONTATO.IDPESSOA = PESSOA_CONTATO.ID")
@@ -32,11 +32,13 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         DBHelper = ServerUtils.getDBHelper
 
         SolicitacaoDeAudiencia.ID = GeradorDeID.getInstancia.getProximoID()
+        SolicitacaoDeAudiencia.Codigo = Me.ObtenhaProximoCodigoDisponivel
 
         Sql.Append("INSERT INTO DRY_SOLICAUDI (")
-        Sql.Append("ID, IDCONTATO, ASSUNTO, DESCRICAO, DATADECADASTRO, ESTAATIVA, IDUSUARIOCAD)")
+        Sql.Append("ID, CODIGO, IDCONTATO, ASSUNTO, DESCRICAO, DATADECADASTRO, ESTAATIVA, IDUSUARIOCAD)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(SolicitacaoDeAudiencia.ID.Value.ToString, ", "))
+        Sql.Append(String.Concat(SolicitacaoDeAudiencia.Codigo, ", "))
         Sql.Append(String.Concat(SolicitacaoDeAudiencia.Contato.Pessoa.ID.Value.ToString, ", "))
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Assunto), "', "))
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Descricao), "', "))
@@ -120,6 +122,7 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         SolicitacaoDeAudiencia.DataDaSolicitacao = UtilidadesDePersistencia.getValorDateHourSec(Leitor, "DATADECADASTRO").Value
         SolicitacaoDeAudiencia.Descricao = UtilidadesDePersistencia.GetValorString(Leitor, "DESCRICAO")
         SolicitacaoDeAudiencia.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID_SOLICITACAO")
+        SolicitacaoDeAudiencia.Codigo = UtilidadesDePersistencia.GetValorLong(Leitor, "CODIGO")
         SolicitacaoDeAudiencia.UsuarioQueCadastrou = Usuario
 
         Return SolicitacaoDeAudiencia
@@ -190,5 +193,43 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Sql.Append(String.Concat(" WHERE ID = ", ID.ToString))
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
+
+    Private Function ObtenhaProximoCodigoDisponivel() As Long
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim CodigoMaximo As Long
+
+        Sql.Append("SELECT MAX(CODIGO) AS CODIGOMAXIMO ")
+        Sql.Append("FROM DRY_SOLICAUDI ")
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            If Leitor.Read Then
+                CodigoMaximo = UtilidadesDePersistencia.GetValorLong(Leitor, "CODIGOMAXIMO") + 1
+            End If
+        End Using
+
+        Return CodigoMaximo
+    End Function
+
+    Public Function ObtenhaSolicitacaoPorCodigo(ByVal Codigo As Long) As ISolicitacaoDeAudiencia Implements IMapeadorDeSolicitacaoDeAudiencia.ObtenhaSolicitacaoPorCodigo
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim SolicitacaoDeAudiencia As ISolicitacaoDeAudiencia = Nothing
+
+        Sql.Append(Me.ObtenhaSQL)
+        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.CODIGO = ", Codigo.ToString))
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            If Leitor.Read Then
+                SolicitacaoDeAudiencia = Me.MontaObjeto(Leitor)
+            End If
+        End Using
+
+        Return SolicitacaoDeAudiencia
+    End Function
 
 End Class

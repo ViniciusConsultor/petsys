@@ -32,11 +32,26 @@ Partial Public Class frmSolicitacoesDeAudiencia
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         UtilidadesWeb.LimparComponente(CType(rdkLancamentos, Control))
 
+        CarregaOpcoesDeFiltro()
+        pnlCodigoDaSolicitacao.Visible = False
+        pnlEntreDadas.Visible = True
+        chkConsiderarSolicitacoesFinalizadas.Checked = False
+
         Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(True)
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(Not chkConsiderarSolicitacoesFinalizadas.Checked)
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
+    End Sub
+
+    Private Sub CarregaOpcoesDeFiltro()
+        rblOpcaoFiltro.Items.Clear()
+
+        rblOpcaoFiltro.Items.Add(New ListItem("Por código", "1"))
+        rblOpcaoFiltro.Items.Add(New ListItem("Entre datas", "2"))
+
+        'Seta o valor entre datas como inicial
+        rblOpcaoFiltro.SelectedValue = "2"
     End Sub
 
     Private Sub ExibaSolicitacoes(ByVal Solicitacoes As IList(Of ISolicitacaoDeAudiencia))
@@ -64,9 +79,14 @@ Partial Public Class frmSolicitacoesDeAudiencia
     End Sub
 
     Private Sub grdItensLancados_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdItensLancados.ItemCommand
-        Dim ID As Long = CLng(e.Item.Cells(4).Text)
-        Dim IndiceSelecionado As Integer = e.Item().ItemIndex
+        Dim ID As Long
+        Dim IndiceSelecionado As Integer
 
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            ID = CLng(e.Item.Cells(4).Text)
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+        
         If e.CommandName = "Excluir" Then
             Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
             Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
@@ -114,5 +134,60 @@ Partial Public Class frmSolicitacoesDeAudiencia
     End Sub
 
     Private Sub grdItensLancados_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdItensLancados.PageIndexChanged
+        UtilidadesWeb.PaginacaoDataGrid(grdItensLancados, Session(CHAVE_SOLICITACOES), e)
+    End Sub
+
+    Protected Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
+        If txtDataInicial.IsEmpty Then
+            UtilidadesWeb.MostraMensagemDeInconsitencia("O data inicial da solicitação de audiência deve ser informada.")
+            Exit Sub
+        End If
+
+        If txtDataFinal.IsEmpty Then
+            UtilidadesWeb.MostraMensagemDeInconsitencia("O data final da solicitação de audiência deve ser informada.")
+            Exit Sub
+        End If
+
+        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
+
+        Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(Not chkConsiderarSolicitacoesFinalizadas.Checked, _
+                                                                  txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate.Value)
+        End Using
+
+        ExibaSolicitacoes(Solicitacoes)
+    End Sub
+
+    Private Sub rblOpcaoFiltro_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles rblOpcaoFiltro.SelectedIndexChanged
+        Dim ValorSelecionado As String
+
+        ValorSelecionado = rblOpcaoFiltro.SelectedValue
+
+        If ValorSelecionado = "1" Then
+            pnlCodigoDaSolicitacao.Visible = True
+            pnlEntreDadas.Visible = False
+        Else
+            pnlCodigoDaSolicitacao.Visible = False
+            pnlEntreDadas.Visible = True
+        End If
+    End Sub
+
+    Protected Sub btnPesquisarPorCodigo_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorCodigo.Click
+        If String.IsNullOrEmpty(txtCodigoDaSolicitacao.Text) Then
+            UtilidadesWeb.MostraMensagemDeInconsitencia("O código da solicitação de audiência deve ser informado.")
+            Exit Sub
+        End If
+
+        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
+
+        Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+            Dim Solicitacao As ISolicitacaoDeAudiencia
+
+            Solicitacao = Servico.ObtenhaSolicitacaoPorCodigo(CLng(txtCodigoDaSolicitacao.Value))
+            If Not Solicitacao Is Nothing Then Solicitacoes.Add(Solicitacao)
+        End Using
+
+        ExibaSolicitacoes(Solicitacoes)
     End Sub
 End Class

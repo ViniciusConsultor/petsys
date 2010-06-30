@@ -4,6 +4,7 @@ Namespace Negocio
 
     Public Interface ISolicitacaoDeAudiencia
 
+        Property Codigo() As Long
         Property Contato() As IContato
         Property Assunto() As String
         Property Descricao() As String
