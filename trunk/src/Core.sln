@@ -21,6 +21,16 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WorkSpace", "WorkSpace\Work
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "InicializaBD", "InicializaBD\InicializaBD.vbproj", "{77A40243-C406-43FB-B680-DF45171A978E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B705C844-764A-4A51-8676-1ECF6EB28500}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Nucleo\INSERT.sql = ..\doc\Banco de dados\Nucleo\INSERT.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{E2867623-7BBE-43EA-833F-7AFB15203909}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Nucleo\SQL Server\CREATE_NCL.sql = ..\doc\Banco de dados\Nucleo\SQL Server\CREATE_NCL.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,5 +80,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E2867623-7BBE-43EA-833F-7AFB15203909} = {B705C844-764A-4A51-8676-1ECF6EB28500}
 	EndGlobalSection
 EndGlobal

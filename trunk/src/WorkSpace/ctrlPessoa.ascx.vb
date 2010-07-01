@@ -78,7 +78,6 @@ Partial Public Class ctrlPessoa
         Dim URL As String
 
         URL = ObtenhaURL()
-        'ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de pessoas"), False)
         ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de pessoas"), False)
     End Sub
 
@@ -249,6 +248,10 @@ Partial Public Class ctrlPessoa
 
         PessoaSelecionada = Pessoa
         RaiseEvent PessoaFoiSelecionada(Pessoa)
+    End Sub
+
+    Public Sub SetaTipoDePessoaPadrao(ByVal Tipo As TipoDePessoa)
+        TipoDaPessoa = Tipo
     End Sub
 
 End Class

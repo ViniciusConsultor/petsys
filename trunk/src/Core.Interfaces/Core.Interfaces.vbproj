@@ -79,7 +79,6 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeAutorizacao.vb" />
     <Compile Include="Mapeadores\IMapeadorDeCliente.vb" />
-    <Compile Include="Mapeadores\IMapeadorDeConfiguracaoDeAgenda.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGeracaoDeID.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGrupo.vb" />
     <Compile Include="Mapeadores\IMapeadorDeMenu.vb" />
@@ -110,7 +109,6 @@
     <Compile Include="Negocio\IConexaoOracle.vb" />
     <Compile Include="Negocio\IConexaoSQLite.vb" />
     <Compile Include="Negocio\IConexaoSQLServer.vb" />
-    <Compile Include="Negocio\IConfiguracaoDeAgenda.vb" />
     <Compile Include="Negocio\IConfiguracaoDeEmailDoSistema.vb" />
     <Compile Include="Negocio\IConfiguracaoDoSistema.vb" />
     <Compile Include="Negocio\IDiretivaDeSeguranca.vb" />
@@ -125,7 +123,6 @@
     <Compile Include="Servicos\IServicoDeAutorizacao.vb" />
     <Compile Include="Servicos\IServicoDeCliente.vb" />
     <Compile Include="Servicos\IServicoDeConexao.vb" />
-    <Compile Include="Servicos\IServicoDeConfiguracaoDeAgenda.vb" />
     <Compile Include="Servicos\IServicoDeConfiguracoesDoSistema.vb" />
     <Compile Include="Servicos\IServicoDeGrupo.vb" />
     <Compile Include="Servicos\IServicoDeMenu.vb" />

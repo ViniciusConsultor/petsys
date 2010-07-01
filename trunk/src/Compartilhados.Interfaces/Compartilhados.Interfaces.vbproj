@@ -102,6 +102,7 @@
     <Compile Include="Core\Negocio\IPessoaJuridica.vb" />
     <Compile Include="Core\Negocio\Documento\IRG.vb" />
     <Compile Include="Core\Negocio\EnderecoDeEmail.vb" />
+    <Compile Include="Core\Negocio\IProprietarioDeAgenda.vb" />
     <Compile Include="Core\Negocio\IVendedor.vb" />
     <Compile Include="Core\Negocio\Telefone\ITelefone.vb" />
     <Compile Include="Core\Negocio\Nacionalidade.vb" />

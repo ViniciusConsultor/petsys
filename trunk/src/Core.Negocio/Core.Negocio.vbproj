@@ -84,7 +84,6 @@
     <Compile Include="ConexaoOracle.vb" />
     <Compile Include="ConexaoSQLite.vb" />
     <Compile Include="ConexaoSQLServer.vb" />
-    <Compile Include="ConfiguracaoDeAgenda.vb" />
     <Compile Include="ConfiguracaoDeEmailDoSistema.vb" />
     <Compile Include="ConfiguracaoDoSistema.vb" />
     <Compile Include="DiretivaDeSeguranca.vb" />
