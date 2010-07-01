@@ -328,6 +328,13 @@
       <DependentUpon>Erro.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Nucleo\cdAgenda.aspx.designer.vb">
+      <DependentUpon>cdAgenda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdAgenda.aspx.vb">
+      <DependentUpon>cdAgenda.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>
     </Compile>
@@ -433,13 +440,6 @@
       <DependentUpon>frmAutorizacao.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Nucleo\frmConfiguracaoAgenda.aspx.designer.vb">
-      <DependentUpon>frmConfiguracaoAgenda.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Nucleo\frmConfiguracaoAgenda.aspx.vb">
-      <DependentUpon>frmConfiguracaoAgenda.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -510,6 +510,7 @@
     <Content Include="imagens\wallpapers\lightning_at_sunset.jpg" />
     <Content Include="imagens\wallpapers\outono_wallpaper_by_black_energy.jpg" />
     <Content Include="imagens\wallpapers\twip_100325_00.ss_full.jpg" />
+    <Content Include="Nucleo\cdAgenda.aspx" />
     <Content Include="Nucleo\frmAtalhos.aspx" />
     <Content Include="Nucleo\frmPainelDeControle.aspx" />
     <Content Include="Nucleo\cdCliente.aspx" />
@@ -523,7 +524,6 @@
     <Content Include="Nucleo\cdGrupo.aspx" />
     <Content Include="Nucleo\frmAlterarPapelDeParede.aspx" />
     <Content Include="Nucleo\frmAutorizacao.aspx" />
-    <Content Include="Nucleo\frmConfiguracaoAgenda.aspx" />
     <Content Include="Global.asax" />
     <Content Include="imagens\agent.png" />
     <Content Include="imagens\aguarde.gif" />

@@ -117,6 +117,7 @@
     <Compile Include="Core\Negocio\TipoDePessoa.vb" />
     <Compile Include="Core\Negocio\TipoDeTelefone.vb" />
     <Compile Include="Core\Negocio\UF.vb" />
+    <Compile Include="Core\Servicos\IServicoDeAgenda.vb" />
     <Compile Include="Core\Servicos\IServicoDeGeracaoDeID.vb" />
     <Compile Include="Core\Servicos\IServicoDeMunicipio.vb" />
     <Compile Include="Core\Servicos\IServicoDePerfil.vb" />
