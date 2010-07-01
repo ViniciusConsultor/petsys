@@ -99,7 +99,6 @@
     <Compile Include="ServicoDeAutorizacaoRemotoCOM.vb" />
     <Compile Include="ServicoDeClienteRemotoCOM.vb" />
     <Compile Include="ServicoDeConexaoRemotoCOM.vb" />
-    <Compile Include="ServicoDeConfiguracaoDeAgendaRemotoCOM.vb" />
     <Compile Include="ServicoDeConfiguracoesDoSistemaRemotoCOM.vb" />
     <Compile Include="ServicoDeGeracaoDeIDRemotoCOM.vb" />
     <Compile Include="ServicoDeGrupoRemotoCOM.vb" />

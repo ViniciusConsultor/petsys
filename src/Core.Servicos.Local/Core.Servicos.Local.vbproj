@@ -96,7 +96,6 @@
     <Compile Include="ServicoDeAutorizacaoLocal.vb" />
     <Compile Include="ServicoDeClienteLocal.vb" />
     <Compile Include="ServicoDeConexaoLocal.vb" />
-    <Compile Include="ServicoDeConfiguracaoDeAgendaLocal.vb" />
     <Compile Include="ServicoDeConfiguracoesDoSistemaLocal.vb" />
     <Compile Include="ServicoDeGeracaoDeIDLocal.vb" />
     <Compile Include="ServicoDeGrupoLocal.vb" />

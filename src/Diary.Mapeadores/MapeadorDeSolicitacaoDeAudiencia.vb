@@ -25,6 +25,10 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Return Sql.ToString
     End Function
 
+    Private Function ObtenhaOrderBy() As String
+        Return " ORDER BY DRY_SOLICAUDI.DATADECADASTRO DESC"
+    End Function
+
     Public Sub Inserir(ByVal SolicitacaoDeAudiencia As ISolicitacaoDeAudiencia) Implements IMapeadorDeSolicitacaoDeAudiencia.Inserir
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
@@ -134,7 +138,12 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
 
         Sql.Append(Me.ObtenhaSQL)
-        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.ESTAATIVA = '", IIf(TrazApenasAtivas, "S", "N"), "'"))
+
+        If TrazApenasAtivas Then
+            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
+        End If
+
+        Sql.Append(Me.ObtenhaOrderBy)
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
@@ -156,9 +165,15 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
 
         Sql.Append(Me.ObtenhaSQL)
-        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.ESTAATIVA = '", IIf(TrazApenasAtivas, "S", "N"), "'"))
+
+        If TrazApenasAtivas Then
+            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
+        End If
+
         Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
         Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO <= '", DataFim.ToString("yyyyMMddHHmmss"), "'"))
+
+        Sql.Append(Me.ObtenhaOrderBy)
 
         DBHelper = ServerUtils.criarNovoDbHelper
 

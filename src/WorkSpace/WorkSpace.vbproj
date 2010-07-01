@@ -333,6 +333,27 @@
     </Compile>
     <Compile Include="Nucleo\cdAgenda.aspx.vb">
       <DependentUpon>cdAgenda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\ctrlAgenda.ascx.designer.vb">
+      <DependentUpon>ctrlAgenda.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\ctrlAgenda.ascx.vb">
+      <DependentUpon>ctrlAgenda.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\frmAgendamento.aspx.designer.vb">
+      <DependentUpon>frmAgendamento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmAgendamento.aspx.vb">
+      <DependentUpon>frmAgendamento.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\frmAgendaPessoal.aspx.designer.vb">
+      <DependentUpon>frmAgendaPessoal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmAgendaPessoal.aspx.vb">
+      <DependentUpon>frmAgendaPessoal.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
@@ -511,6 +532,9 @@
     <Content Include="imagens\wallpapers\outono_wallpaper_by_black_energy.jpg" />
     <Content Include="imagens\wallpapers\twip_100325_00.ss_full.jpg" />
     <Content Include="Nucleo\cdAgenda.aspx" />
+    <Content Include="Nucleo\ctrlAgenda.ascx" />
+    <Content Include="Nucleo\frmAgendamento.aspx" />
+    <Content Include="Nucleo\frmAgendaPessoal.aspx" />
     <Content Include="Nucleo\frmAtalhos.aspx" />
     <Content Include="Nucleo\frmPainelDeControle.aspx" />
     <Content Include="Nucleo\cdCliente.aspx" />
