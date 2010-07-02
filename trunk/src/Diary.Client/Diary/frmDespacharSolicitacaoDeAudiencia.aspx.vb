@@ -8,6 +8,8 @@ Partial Public Class frmDespacharSolicitacaoDeAudiencia
     Private Const CHAVE_ID_SOLICITACAO As String = "CHAVE_ID_SOLICITACAO_FRMDESPACHO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        AddHandler ClasseEstatica.RecarreSolicitacoes, AddressOf RecarregaSolicitacoes
+
         If Not IsPostBack Then
             Dim Id As Nullable(Of Long)
 
@@ -20,6 +22,10 @@ Partial Public Class frmDespacharSolicitacaoDeAudiencia
                 CarregaDados()
             End If
         End If
+    End Sub
+
+    Private Sub RecarregaSolicitacoes()
+
     End Sub
 
     Private Sub CarregaDados()
@@ -41,7 +47,6 @@ Partial Public Class frmDespacharSolicitacaoDeAudiencia
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnSalvar"
-
         End Select
     End Sub
 
