@@ -16,11 +16,11 @@ Option Explicit On
 Partial Public Class ctrlAgenda
 
     '''<summary>
-    '''shlAgenda control.
+    '''RadScheduler1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents shlAgenda As Global.Telerik.Web.UI.RadScheduler
+    Protected WithEvents RadScheduler1 As Global.Telerik.Web.UI.RadScheduler
 End Class

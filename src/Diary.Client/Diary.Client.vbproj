@@ -108,6 +108,7 @@
       <DependentUpon>cdSolicitacaoDeAudiencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Diary\ClasseEstatica.vb" />
     <Compile Include="Diary\frmDespacharSolicitacaoDeAudiencia.aspx.designer.vb">
       <DependentUpon>frmDespacharSolicitacaoDeAudiencia.aspx</DependentUpon>
     </Compile>

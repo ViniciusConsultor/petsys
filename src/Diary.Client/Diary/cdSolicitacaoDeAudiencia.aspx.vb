@@ -105,6 +105,7 @@ Partial Public Class cdSolicitacaoDeAudiencia
                     Servico.Modificar(Solicitacao)
                     Mensagem = "Solicitação de audiência modificada com sucesso."
                 End If
+
             End Using
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
