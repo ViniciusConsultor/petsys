@@ -59,8 +59,6 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         DBHelper = ServerUtils.getDBHelper
 
-        SolicitacaoDeAudiencia.ID = GeradorDeID.getInstancia.getProximoID()
-
         Sql.Append("UPDATE DRY_SOLICAUDI SET =")
         Sql.Append(String.Concat(" ASSUNTO = '", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Assunto), "',"))
         Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Descricao), "'"))

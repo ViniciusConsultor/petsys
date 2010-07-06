@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
     TagPrefix="cc1" %>
+
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Vista">
     </telerik:RadAjaxLoadingPanel>
@@ -12,8 +13,11 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.DRY.002.0001" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
+                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.DRY.002.0006" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
+     
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">

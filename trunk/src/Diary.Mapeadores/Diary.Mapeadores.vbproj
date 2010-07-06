@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="MapeadorDeContato.vb" />
     <Compile Include="MapeadorDeSolicitacaoDeAudiencia.vb" />
+    <Compile Include="MapeadorDeSolicitacaoDeConvite.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

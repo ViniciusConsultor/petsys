@@ -250,13 +250,6 @@ Partial Public Class frmLancamentoDeServicosPrestados
         Lancamento = CType(Session(CHAVE_LANCAMENTO_SERVICOS_PRESTADOS), ILacamentoDeServicosPrestados)
         Lancamentos.Add(Lancamento)
 
-        Lancamentos.Add(Lancamento)
-        Lancamentos.Add(Lancamento)
-        Lancamentos.Add(Lancamento)
-        Lancamentos.Add(Lancamento)
-        Lancamentos.Add(Lancamento)
-        Lancamentos.Add(Lancamento)
-
         Gerador = New CriadorDeRelatorio(Lancamentos)
         NomeDoArquivo = Gerador.GereNotaFiscal()
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo

@@ -48,7 +48,6 @@
                             </telerik:RadTab>
                             <telerik:RadTab Text="Contatos">
                             </telerik:RadTab>
-                           
                         </Tabs>
                     </telerik:RadTabStrip>
                     <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0">
@@ -321,6 +320,47 @@
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtSite" runat="server" MaxLength="255" Skin="Vista" Width="300px"
                                                 SelectionOnFocus="CaretToBeginning">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label26" runat="server" Text="Telefone"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label27" runat="server" Text="Tipo"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadComboBox ID="cboTipoTelefone" runat="server" Skin="Vista">
+                                            </telerik:RadComboBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label28" runat="server" Text="DDD"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadNumericTextBox ID="txtDDD" runat="server">
+                                            </telerik:RadNumericTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label29" runat="server" Text="Número"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                          <telerik:RadNumericTextBox ID="txtNumero" runat="server">
+                                            </telerik:RadNumericTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr runat="server" id="lnhRamal">
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label30" runat="server" Text="Ramal"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtRamal" runat="server">
                                             </telerik:RadTextBox>
                                         </td>
                                     </tr>
