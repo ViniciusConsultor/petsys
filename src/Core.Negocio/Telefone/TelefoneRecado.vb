@@ -12,7 +12,7 @@ Namespace Telefone
 
         Public Overrides ReadOnly Property Tipo() As TipoDeTelefone
             Get
-                Return TipoDeTelefone.Residencial
+                Return TipoDeTelefone.Recado
             End Get
         End Property
 

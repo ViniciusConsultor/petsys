@@ -43,6 +43,10 @@
     <Reference Include="Compartilhados, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00532d988ee8a0bc, processorArchitecture=MSIL" />
     <Reference Include="Compartilhados.Componentes.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ef9a14a1e9ced6a8, processorArchitecture=MSIL" />
     <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
+    <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -108,7 +112,21 @@
       <DependentUpon>cdSolicitacaoDeAudiencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Diary\ClasseEstatica.vb" />
+    <Compile Include="Diary\cdSolicitacaoDeConvite.aspx.designer.vb">
+      <DependentUpon>cdSolicitacaoDeConvite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\cdSolicitacaoDeConvite.aspx.vb">
+      <DependentUpon>cdSolicitacaoDeConvite.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Diary\frmDespacharSolicitacaoDeConvite.aspx.designer.vb">
+      <DependentUpon>frmDespacharSolicitacaoDeConvite.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\frmDespacharSolicitacaoDeConvite.aspx.vb">
+      <DependentUpon>frmDespacharSolicitacaoDeConvite.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Diary\GeradorDeSolicitacoesEmPDF.vb" />
     <Compile Include="Diary\frmDespacharSolicitacaoDeAudiencia.aspx.designer.vb">
       <DependentUpon>frmDespacharSolicitacaoDeAudiencia.aspx</DependentUpon>
     </Compile>
@@ -128,7 +146,7 @@
     </Compile>
     <Compile Include="Diary\frmSolicitacoesDeConvite.aspx.vb">
       <DependentUpon>frmSolicitacoesDeConvite.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -169,7 +187,9 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <Content Include="Diary\cdSolicitacaoDeAudiencia.aspx" />
+    <Content Include="Diary\cdSolicitacaoDeConvite.aspx" />
     <Content Include="Diary\frmDespacharSolicitacaoDeAudiencia.aspx" />
+    <Content Include="Diary\frmDespacharSolicitacaoDeConvite.aspx" />
     <Content Include="Diary\frmSolicitacoesDeAudiencia.aspx" />
     <Content Include="Diary\frmSolicitacoesDeConvite.aspx" />
     <Content Include="Web.config" />

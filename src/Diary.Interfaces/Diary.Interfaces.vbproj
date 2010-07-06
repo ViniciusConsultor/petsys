@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeContato.vb" />
     <Compile Include="Mapeadores\IMapeadorDeSolicitacaoDeAudiencia.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeSolicitacaoDeConvite.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -85,9 +86,11 @@
     </Compile>
     <Compile Include="Negocio\IContato.vb" />
     <Compile Include="Negocio\ISolicitacaoDeAudiencia.vb" />
+    <Compile Include="Negocio\ISolicitacaoDeConvite.vb" />
     <Compile Include="Negocio\TipoDeDespacho.vb" />
     <Compile Include="Servicos\IServicoDeContato.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeAudiencia.vb" />
+    <Compile Include="Servicos\IServicoDeSolicitacaoDeConvite.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
