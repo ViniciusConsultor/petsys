@@ -126,6 +126,7 @@
       <DependentUpon>frmDespacharSolicitacaoDeConvite.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Diary\GeradorDeSolicitacoesDeConviteEmPDF.vb" />
     <Compile Include="Diary\GeradorDeSolicitacoesEmPDF.vb" />
     <Compile Include="Diary\frmDespacharSolicitacaoDeAudiencia.aspx.designer.vb">
       <DependentUpon>frmDespacharSolicitacaoDeAudiencia.aspx</DependentUpon>

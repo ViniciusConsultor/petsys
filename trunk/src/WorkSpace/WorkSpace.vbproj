@@ -354,7 +354,7 @@
     </Compile>
     <Compile Include="Nucleo\frmAgendaPessoal.aspx.vb">
       <DependentUpon>frmAgendaPessoal.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>

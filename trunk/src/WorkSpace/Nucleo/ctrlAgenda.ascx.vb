@@ -182,4 +182,16 @@ Partial Public Class ctrlAgenda
 
         Return Nothing
     End Function
+
+    Public WriteOnly Property HoraInicio() As Date
+        Set(ByVal value As Date)
+            RadScheduler1.WorkDayStartTime = value.TimeOfDay
+        End Set
+    End Property
+
+    Public WriteOnly Property HoraFim() As Date
+        Set(ByVal value As Date)
+            RadScheduler1.WorkDayStartTime = value.TimeOfDay
+        End Set
+    End Property
 End Class

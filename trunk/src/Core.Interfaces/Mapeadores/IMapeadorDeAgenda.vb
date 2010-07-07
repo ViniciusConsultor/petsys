@@ -1,9 +1,9 @@
-﻿Imports Compartilhados.Interfaces.Core.Negocio
+﻿Imports Core.Interfaces.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio
 
-Namespace Core.Servicos
+Namespace Mapeadores
 
-    Public Interface IServicoDeAgenda
-        Inherits IServico
+    Public Interface IMapeadorDeAgenda
 
         Sub Insira(ByVal Agenda As IAgenda)
         Sub Modifique(ByVal Agenda As IAgenda)
