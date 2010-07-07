@@ -31,6 +31,33 @@
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
                 </ContentTemplate>
             </telerik:RadDock>
+              <telerik:RadDock ID="RadDock2" runat="server" Title="Dados da agenda" DefaultCommands="ExpandCollapse"
+                EnableAnimation="True" Skin="Vista" DockMode="Docked">
+                <ContentTemplate>
+                    <asp:Panel ID="pnlDadosDaAgenda" runat="server">
+                        <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label1" runat="server" Text="Horário de início"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTimePicker ID="txtHorarioDeInicio" runat="server">
+                                    </telerik:RadTimePicker>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label2" runat="server" Text="Horário final"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTimePicker ID="txtHorarioFinal" runat="server">
+                                    </telerik:RadTimePicker>
+                                </td>
+                            </tr>
+                        </table>
+                    </asp:Panel>
+                </ContentTemplate>
+            </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
 </asp:Content>

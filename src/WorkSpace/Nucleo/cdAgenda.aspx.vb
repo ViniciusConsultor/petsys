@@ -4,6 +4,7 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados
 Imports Core.Interfaces.Servicos
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Partial Public Class cdAgenda
     Inherits SuperPagina
@@ -11,7 +12,7 @@ Partial Public Class cdAgenda
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_AGENDA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ObtenhaCliente
+        AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ObtenhaAgenda
 
         If Not IsPostBack Then
             ExibaTelaInicial()
@@ -50,7 +51,6 @@ Partial Public Class cdAgenda
 
         ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
-
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -104,29 +104,47 @@ Partial Public Class cdAgenda
         ExibaTelaInicial()
     End Sub
 
-    Private Function MontaObjetoCliente() As ICliente
-        Dim Cliente As ICliente
+    Private Function ConsisteDados() As String
+        If ctrlPessoa1.PessoaSelecionada Is Nothing Then Return "Proprietário da agenda deve ser selecionado."
+        If Not txtHorarioDeInicio.SelectedDate.HasValue Then Return "O horário de início deve ser informado."
+        If Not txtHorarioFinal.SelectedDate.HasValue Then Return "O horário final deve ser informado."
+        Return String.Empty
+    End Function
+
+    Private Function MontaObjeto() As IAgenda
         Dim Pessoa As IPessoa
+        Dim Agenda As IAgenda
 
         Pessoa = ctrlPessoa1.PessoaSelecionada
-        Cliente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICliente)((New Object() {Pessoa}))
-        Cliente.DataDoCadastro = Now
-
-        Return Cliente
+        Agenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgenda)()
+        Agenda.Pessoa = Pessoa
+        Agenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
+        Agenda.HorarioDeTermino = txtHorarioFinal.SelectedDate.Value
+        Return Agenda
     End Function
 
     Private Sub btnSalva_Click()
         Dim Mensagem As String
-        Dim Cliente As ICliente = MontaObjetoCliente()
+        Dim Agenda As IAgenda
+        Dim Inconsistencia As String
+
+        Inconsistencia = ConsisteDados()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
+
+        Agenda = MontaObjeto()
 
         Try
-            Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
+            Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
                 If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
-                    Servico.Inserir(Cliente)
-                    Mensagem = "Cliente cadastrado com sucesso."
+                    Servico.Insira(Agenda)
+                    Mensagem = "Agenda cadastrada com sucesso."
                 Else
-                    Servico.Modificar(Cliente)
-                    Mensagem = "Cliente modificado com sucesso."
+                    Servico.Modifique(Agenda)
+                    Mensagem = "Agenda modificada com sucesso."
                 End If
 
             End Using
@@ -184,27 +202,27 @@ Partial Public Class cdAgenda
         End Select
     End Sub
 
-    Private Sub ObtenhaCliente(ByVal Pessoa As IPessoa)
-        Dim Cliente As ICliente
+    Private Sub ObtenhaAgenda(ByVal Pessoa As IPessoa)
+        Dim Agenda As IAgenda
 
         ctrlPessoa1.BotaoDetalharEhVisivel = True
 
-        Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
-            Cliente = Servico.Obtenha(Pessoa)
+        Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+            Agenda = Servico.ObtenhaAgenda(Pessoa)
         End Using
 
-        If Cliente Is Nothing Then
+        If Agenda Is Nothing Then
             CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
             Exit Sub
         End If
 
-        MostreCliente(Cliente)
+        Mostre(Agenda)
         ExibaTelaConsultar()
     End Sub
 
-    Private Sub MostreCliente(ByVal Cliente As ICliente)
-        'Me.txtCRMV.Text = Veterinario.CRMV
-        'Me.cboUF.SelectedValue = Veterinario.UF.ID.ToString
+    Private Sub Mostre(ByVal Agenda As IAgenda)
+        txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
+        txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
     End Sub
 
 End Class

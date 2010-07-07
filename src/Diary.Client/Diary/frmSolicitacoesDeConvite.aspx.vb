@@ -75,6 +75,8 @@ Partial Public Class frmSolicitacoesDeConvite
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovo"
                 Call btnNovo_Click()
+            Case "btnImprimir"
+                btnImprir_Click()
         End Select
     End Sub
 
@@ -193,13 +195,13 @@ Partial Public Class frmSolicitacoesDeConvite
 
     Private Sub btnImprir_Click()
         Dim NomeDoArquivo As String
-        Dim Gerador As GeradorDeSolicitacoesEmPDF
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
+        Dim Gerador As GeradorDeSolicitacoesDeConviteEmPDF
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
         Dim URL As String
 
-        Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
+        Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeConvite))
 
-        Gerador = New GeradorDeSolicitacoesEmPDF(Solicitacoes)
+        Gerador = New GeradorDeSolicitacoesDeConviteEmPDF(Solicitacoes)
         NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)

@@ -92,6 +92,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ServicoDeAgendaLocal.vb" />
     <Compile Include="ServicoDeAutenticacaoLocal.vb" />
     <Compile Include="ServicoDeAutorizacaoLocal.vb" />
     <Compile Include="ServicoDeClienteLocal.vb" />

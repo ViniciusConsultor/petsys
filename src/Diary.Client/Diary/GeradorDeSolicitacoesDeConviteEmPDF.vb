@@ -5,16 +5,16 @@ Imports System.IO
 Imports Compartilhados.Componentes.Web
 Imports Compartilhados.Fabricas
 
-Public Class GeradorDeSolicitacoesEmPDF
+Public Class GeradorDeSolicitacoesDeConviteEmPDF
 
     Private _documento As Document
     Private _Fonte1 As Font
     Private _Fonte2 As Font
     Private _Fonte3 As Font
     Private _PaginaAtual As Integer = 0
-    Private _Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
+    Private _Solicitacoes As IList(Of ISolicitacaoDeConvite)
 
-    Public Sub New(ByVal Solicitacoes As IList(Of ISolicitacaoDeAudiencia))
+    Public Sub New(ByVal Solicitacoes As IList(Of ISolicitacaoDeConvite))
         _Solicitacoes = Solicitacoes
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
         _Fonte2 = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
@@ -85,23 +85,27 @@ Public Class GeradorDeSolicitacoesEmPDF
     End Function
 
     Private Sub EscrevaSolicitacoes()
-        Dim Tabela As Table = New Table(5)
+        Dim Tabela As Table = New Table(7)
 
         Tabela.Padding = 1
         Tabela.Spacing = 1
 
         Tabela.AddCell(Me.CrieCelula("Código", _Fonte1, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Data", _Fonte1, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Assunto", _Fonte1, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Data e hora", _Fonte1, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Local", _Fonte1, Cell.ALIGN_LEFT, 13, True))
         Tabela.AddCell(Me.CrieCelula("Descrição", _Fonte1, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Observação", _Fonte1, Cell.ALIGN_LEFT, 13, True))
         Tabela.AddCell(Me.CrieCelula("Contato", _Fonte1, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Data da solicitação", _Fonte1, Cell.ALIGN_LEFT, 13, True))
 
-        For Each Solicitacao As ISolicitacaoDeAudiencia In _Solicitacoes
+        For Each Solicitacao As ISolicitacaoDeConvite In _Solicitacoes
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Codigo.ToString, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Solicitacao.DataDaSolicitacao.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Solicitacao.Assunto, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(Me.CrieCelula(Solicitacao.DataEHorario.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(Me.CrieCelula(Solicitacao.Local, _Fonte1, Cell.ALIGN_LEFT, 13, False))
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Descricao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(Me.CrieCelula(Solicitacao.Observacao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Contato.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(Me.CrieCelula(Solicitacao.DataDaSolicitacao.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_LEFT, 13, False))
         Next
 
         _documento.Add(Tabela)
