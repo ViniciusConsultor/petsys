@@ -99,11 +99,11 @@ Partial Public Class cdPessoaFisica
     End Sub
 
     Private Sub CarregaTiposDeTelefone()
-        cboTipoTelefone.Items.Clear()
+        '    cboTipoTelefone.Items.Clear()
 
-        For Each Tipo As TipoDeTelefone In TipoDeTelefone.ObtenhaTodos
-            cboTipoTelefone.Items.Add(New RadComboBoxItem(Tipo.Descricao, Tipo.ID.ToString))
-        Next
+        '    For Each Tipo As TipoDeTelefone In TipoDeTelefone.ObtenhaTodos
+        '        cboTipoTelefone.Items.Add(New RadComboBoxItem(Tipo.Descricao, Tipo.ID.ToString))
+        '    Next
     End Sub
 
     Private Sub CarregueSexo()
