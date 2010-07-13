@@ -13,5 +13,5 @@ Option Explicit On
 
 
 
-Partial Public Class frmDespacharSolicitacaoDeConvite
+Partial Public Class ctrlDespachoTarefa
 End Class

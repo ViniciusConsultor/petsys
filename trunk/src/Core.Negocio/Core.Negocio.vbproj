@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Agenda.vb" />
     <Compile Include="Cliente.vb" />
+    <Compile Include="Compromisso.vb" />
     <Compile Include="Conexao.vb" />
     <Compile Include="ConexaoODBC.vb" />
     <Compile Include="ConexaoOLEDB.vb" />
@@ -122,8 +123,10 @@
     <Compile Include="PapelPessoa.vb" />
     <Compile Include="Pessoa.vb" />
     <Compile Include="PessoaFisica.vb" />
+    <Compile Include="PessoaFisicaLazyLoad.vb" />
     <Compile Include="PessoaJuridica.vb" />
     <Compile Include="Senha.vb" />
+    <Compile Include="Tarefa.vb" />
     <Compile Include="Telefone\Telefone.vb" />
     <Compile Include="Telefone\TelefoneCelular.vb" />
     <Compile Include="Telefone\TelefoneComercial.vb" />

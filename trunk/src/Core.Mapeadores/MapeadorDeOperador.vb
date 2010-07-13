@@ -78,20 +78,11 @@ Public Class MapeadorDeOperador
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
-        Dim MapeadorDePessoa As IMapeadorDePessoaFisica
-
-        MapeadorDePessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDePessoaFisica)()
-
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
             If Leitor.Read Then
-                Dim Pessoa As IPessoa
+                Dim Pessoa As IPessoaFisica
 
-                TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPOPESSOA"))
-                'Using ServicoDePessoa As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
-                '    Pessoa = ServicoDePessoa.ObtenhaPessoa(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
-                'End Using
-                Pessoa = MapeadorDePessoa.Obtenha(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
-
+                Pessoa = FabricaDePessoaFisicaLazyLoad.Crie(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
                 Operador = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperador)(New Object() {Pessoa})
                 Operador.Login = UtilidadesDePersistencia.GetValorString(Leitor, "LOGIN")
                 Operador.Status = StatusDoOperador.ObtenhaStatus(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))

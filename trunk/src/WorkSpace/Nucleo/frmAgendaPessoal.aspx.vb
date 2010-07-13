@@ -52,9 +52,17 @@ Partial Public Class frmAgendaPessoal
         End Using
 
         If Agenda Is Nothing Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("Agenda ainda não configurada. Para configurar a agenda acesse o cadastro de agenda.")
+            ctrlAgenda1.Visible = False
+            lblInconsistencia.Visible = True
+
+            lblInconsistencia.Text = "Agenda ainda não configurada. Para configurar a agenda acesse o cadastro de agenda."
             Exit Sub
         End If
+        lblInconsistencia.Visible = False
+        ctrlAgenda1.Visible = True
+        ctrlAgenda1.IDProprietario = UsuarioLogado.ID
+        ctrlAgenda1.HoraInicio = Agenda.HorarioDeInicio
+        ctrlAgenda1.HoraFim = Agenda.HorarioDeTermino
 
     End Sub
 
@@ -109,6 +117,10 @@ Partial Public Class frmAgendaPessoal
         Select Case CType(e.Item, RadToolBarButton).CommandName
 
         End Select
+    End Sub
+
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        ctrlAgenda1.CarregaAgenda()
     End Sub
 
 End Class

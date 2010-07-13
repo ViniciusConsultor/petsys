@@ -1,14 +1,13 @@
 ﻿Namespace Core.Negocio
 
-    Public Interface ICompromisso
+    Public Interface ITarefa
 
-        Property Inicio() As DateTime
-        Property Fim() As DateTime
         Property Assunto() As String
-        Property Local() As String
+        Property DataDeInicio() As DateTime
+        Property DataDeConclusao() As DateTime
+        Property Prioridade() As PrioridadeDaTarefa
         Property Descricao() As String
         Property Proprietario() As IPessoaFisica
-        Property ID() As Nullable(Of Long)
 
     End Interface
 

@@ -3,47 +3,8 @@ Imports Compartilhados
 
 <Serializable()> _
 Public Class SolicitacaoDeConvite
+    Inherits Solicitacao
     Implements ISolicitacaoDeConvite
-
-    Private _Ativa As Boolean
-    Public Property Ativa() As Boolean Implements ISolicitacaoDeConvite.Ativa
-        Get
-            Return _Ativa
-        End Get
-        Set(ByVal value As Boolean)
-            _Ativa = value
-        End Set
-    End Property
-
-    Private _Codigo As Long
-    Public Property Codigo() As Long Implements ISolicitacaoDeConvite.Codigo
-        Get
-            Return _Codigo
-        End Get
-        Set(ByVal value As Long)
-            _Codigo = value
-        End Set
-    End Property
-
-    Private _Contato As IContato
-    Public Property Contato() As IContato Implements ISolicitacaoDeConvite.Contato
-        Get
-            Return _Contato
-        End Get
-        Set(ByVal value As IContato)
-            _Contato = value
-        End Set
-    End Property
-
-    Private _DataDaSolicitacao As Date
-    Public Property DataDaSolicitacao() As Date Implements ISolicitacaoDeConvite.DataDaSolicitacao
-        Get
-            Return _DataDaSolicitacao
-        End Get
-        Set(ByVal value As Date)
-            _DataDaSolicitacao = value
-        End Set
-    End Property
 
     Private _DataEHorario As Date
     Public Property DataEHorario() As Date Implements ISolicitacaoDeConvite.DataEHorario
@@ -52,26 +13,6 @@ Public Class SolicitacaoDeConvite
         End Get
         Set(ByVal value As Date)
             _DataEHorario = value
-        End Set
-    End Property
-
-    Private _Descricao As String
-    Public Property Descricao() As String Implements ISolicitacaoDeConvite.Descricao
-        Get
-            Return _Descricao
-        End Get
-        Set(ByVal value As String)
-            _Descricao = value
-        End Set
-    End Property
-
-    Private _ID As Nullable(Of Long)
-    Public Property ID() As Long? Implements ISolicitacaoDeConvite.ID
-        Get
-            Return _ID
-        End Get
-        Set(ByVal value As Long?)
-            _ID = value
         End Set
     End Property
 
@@ -95,14 +36,10 @@ Public Class SolicitacaoDeConvite
         End Set
     End Property
 
-    Private _UsuarioQueCadastrou As Usuario
-    Public Property UsuarioQueCadastrou() As Usuario Implements ISolicitacaoDeConvite.UsuarioQueCadastrou
+    Public Overrides ReadOnly Property Tipo() As TipoDeSolicitacao
         Get
-            Return _UsuarioQueCadastrou
+            Return TipoDeSolicitacao.Convite
         End Get
-        Set(ByVal value As Usuario)
-            _UsuarioQueCadastrou = value
-        End Set
     End Property
 
 End Class

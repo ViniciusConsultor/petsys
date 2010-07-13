@@ -1,8 +1,7 @@
-﻿Imports Compartilhados.Componentes.Web
+﻿Imports Telerik.Web.UI
 Imports Diary.Interfaces.Negocio
-Imports Telerik.Web.UI
 
-Partial Public Class frmDespacharSolicitacaoDeAudiencia
+Partial Public Class frmDespachoDeSolicitacao
     Inherits System.Web.UI.Page
 
     Private Const CHAVE_ID_SOLICITACAO As String = "CHAVE_ID_SOLICITACAO_FRMDESPACHO"
@@ -35,7 +34,7 @@ Partial Public Class frmDespacharSolicitacaoDeAudiencia
     End Sub
 
     Private Sub LimpaDados()
-        UtilidadesWeb.LimparComponente(CType(pnlDadosDaSolicitacao, Control))
+        'UtilidadesWeb.LimparComponente(CType(pnlDadosDaSolicitacao, Control))
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -44,5 +43,5 @@ Partial Public Class frmDespacharSolicitacaoDeAudiencia
         End Select
     End Sub
 
-   
+
 End Class

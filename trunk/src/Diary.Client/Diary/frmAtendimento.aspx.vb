@@ -1,14 +1,14 @@
 ﻿Imports Compartilhados.Componentes.Web
 Imports Telerik.Web.UI
+Imports Diary.Interfaces.Negocio
 Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Fabricas
-Imports Diary.Interfaces.Negocio
 Imports Compartilhados
 
-Partial Public Class frmSolicitacoesDeAudiencia
+Partial Public Class frmAtendimento
     Inherits SuperPagina
 
-    Private Const CHAVE_SOLICITACOES As String = "CHAVE_SOLICITACOES_AUDIENCIA"
+    Private Const CHAVE_ITENS_DE_ATENDIMENTO As String = "CHAVE_ITENS_DE_ATENDIMENTO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -21,13 +21,13 @@ Partial Public Class frmSolicitacoesDeAudiencia
     End Function
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.DRY.002"
+        Return "FUN.DRY.003"
     End Function
 
     Private Sub ExibaTelaInicial()
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
 
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
 
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         UtilidadesWeb.LimparComponente(CType(rdkLancamentos, Control))
@@ -37,8 +37,8 @@ Partial Public Class frmSolicitacoesDeAudiencia
         pnlEntreDadas.Visible = True
         chkConsiderarSolicitacoesFinalizadas.Checked = False
 
-        Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(Not chkConsiderarSolicitacoesFinalizadas.Checked)
+        Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(Not chkConsiderarSolicitacoesFinalizadas.Checked)
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
@@ -54,8 +54,8 @@ Partial Public Class frmSolicitacoesDeAudiencia
         rblOpcaoFiltro.SelectedValue = "2"
     End Sub
 
-    Private Sub ExibaSolicitacoes(ByVal Solicitacoes As IList(Of ISolicitacaoDeAudiencia))
-        Session(CHAVE_SOLICITACOES) = Solicitacoes
+    Private Sub ExibaSolicitacoes(ByVal Solicitacoes As IList(Of ISolicitacaoDeConvite))
+        Session(CHAVE_ITENS_DE_ATENDIMENTO) = Solicitacoes
         Me.grdItensLancados.DataSource = Solicitacoes
         Me.grdItensLancados.DataBind()
     End Sub
@@ -64,11 +64,11 @@ Partial Public Class frmSolicitacoesDeAudiencia
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de audiência"), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de convite"), False)
     End Sub
 
     Private Function ObtenhaURL() As String
-        Return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeAudiencia.aspx")
+        Return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeConvite.aspx")
     End Function
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -88,31 +88,31 @@ Partial Public Class frmSolicitacoesDeAudiencia
             ID = CLng(e.Item.Cells(4).Text)
             IndiceSelecionado = e.Item().ItemIndex
         End If
-        
+
         If e.CommandName = "Excluir" Then
-            Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
-            Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
+            Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
+            Solicitacoes = CType(Session(CHAVE_ITENS_DE_ATENDIMENTO), IList(Of ISolicitacaoDeConvite))
             Solicitacoes.RemoveAt(IndiceSelecionado)
             ExibaSolicitacoes(Solicitacoes)
 
-            Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+            Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
                 Servico.Remover(ID)
             End Using
         ElseIf e.CommandName = "Modificar" Then
             Dim URL As String
 
-            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeAudiencia.aspx", "?Id=", ID)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência"), False)
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeConvite.aspx", "?Id=", ID)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de convite"), False)
 
         ElseIf e.CommandName = "Finalizar" Then
-            Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+            Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
                 Servico.Finalizar(ID)
             End Using
         ElseIf e.CommandName = "Despachar" Then
             Dim URL As String
 
-            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespacharSolicitacaoDeAudiencia.aspx", "?Id=", ID)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência"), False)
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespacharSolicitacaoDeConvite.aspx", "?Id=", ID)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de convite"), False)
         End If
     End Sub
 
@@ -122,40 +122,40 @@ Partial Public Class frmSolicitacoesDeAudiencia
         Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
 
         'Coluna com botão modificar
-        grdItensLancados.Columns(0).Visible = Principal.EstaAutorizado("OPE.DRY.002.0002")
+        grdItensLancados.Columns(0).Visible = Principal.EstaAutorizado("OPE.DRY.003.0002")
 
         'Coluna com botão excluir
-        grdItensLancados.Columns(1).Visible = Principal.EstaAutorizado("OPE.DRY.002.0003")
+        grdItensLancados.Columns(1).Visible = Principal.EstaAutorizado("OPE.DRY.003.0003")
 
         'Coluna com botão despachar
-        grdItensLancados.Columns(7).Visible = Principal.EstaAutorizado("OPE.DRY.002.0004")
+        grdItensLancados.Columns(7).Visible = Principal.EstaAutorizado("OPE.DRY.003.0004")
 
         'Coluna com botão finalizar
-        grdItensLancados.Columns(8).Visible = Principal.EstaAutorizado("OPE.DRY.002.0005")
+        grdItensLancados.Columns(8).Visible = Principal.EstaAutorizado("OPE.DRY.003.0005")
 
     End Sub
 
     Private Sub grdItensLancados_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdItensLancados.PageIndexChanged
-        UtilidadesWeb.PaginacaoDataGrid(grdItensLancados, Session(CHAVE_SOLICITACOES), e)
+        UtilidadesWeb.PaginacaoDataGrid(grdItensLancados, Session(CHAVE_ITENS_DE_ATENDIMENTO), e)
     End Sub
 
     Protected Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
         If txtDataInicial.IsEmpty Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O data inicial da solicitação de audiência deve ser informada.")
+            UtilidadesWeb.MostraMensagemDeInconsitencia("O data inicial da solicitação de convite deve ser informada.")
             Exit Sub
         End If
 
         If txtDataFinal.IsEmpty Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O data final da solicitação de audiência deve ser informada.")
+            UtilidadesWeb.MostraMensagemDeInconsitencia("O data final da solicitação de convite deve ser informada.")
             Exit Sub
         End If
 
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
 
-        Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
+        Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
 
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(Not chkConsiderarSolicitacoesFinalizadas.Checked, _
-                                                                  txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate.Value)
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(Not chkConsiderarSolicitacoesFinalizadas.Checked, _
+                                                                txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate.Value)
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
@@ -177,14 +177,14 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
     Protected Sub btnPesquisarPorCodigo_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorCodigo.Click
         If String.IsNullOrEmpty(txtCodigoDaSolicitacao.Text) Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O código da solicitação de audiência deve ser informado.")
+            UtilidadesWeb.MostraMensagemDeInconsitencia("O código da solicitação de convite deve ser informado.")
             Exit Sub
         End If
 
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite) = New List(Of ISolicitacaoDeConvite)
 
-        Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
-            Dim Solicitacao As ISolicitacaoDeAudiencia
+        Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
+            Dim Solicitacao As ISolicitacaoDeConvite
 
             Solicitacao = Servico.ObtenhaSolicitacaoPorCodigo(CLng(txtCodigoDaSolicitacao.Value))
             If Not Solicitacao Is Nothing Then Solicitacoes.Add(Solicitacao)
@@ -195,16 +195,17 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
     Private Sub btnImprir_Click()
         Dim NomeDoArquivo As String
-        Dim Gerador As GeradorDeSolicitacoesEmPDF
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
+        Dim Gerador As GeradorDeSolicitacoesDeConviteEmPDF
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
         Dim URL As String
 
-        Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
+        Solicitacoes = CType(Session(CHAVE_ITENS_DE_ATENDIMENTO), IList(Of ISolicitacaoDeConvite))
 
-        Gerador = New GeradorDeSolicitacoesEmPDF(Solicitacoes)
+        Gerador = New GeradorDeSolicitacoesDeConviteEmPDF(Solicitacoes)
         NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
     End Sub
+
 
 End Class

@@ -25,33 +25,6 @@ Partial Public Class frmAgendaPessoal
     Protected WithEvents rtbToolBar As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
-    '''RadDockLayout1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDockLayout1 As Global.Telerik.Web.UI.RadDockLayout
-
-    '''<summary>
-    '''RadDockZone1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
-
-    '''<summary>
-    '''RadDock1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
     '''ctrlAgenda1 control.
     '''</summary>
     '''<remarks>
@@ -59,4 +32,22 @@ Partial Public Class frmAgendaPessoal
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ctrlAgenda1 As Global.WorkSpace.ctrlAgenda
+
+    '''<summary>
+    '''Timer1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Timer1 As Global.System.Web.UI.Timer
+
+    '''<summary>
+    '''lblInconsistencia control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblInconsistencia As Global.System.Web.UI.WebControls.Label
 End Class
