@@ -85,9 +85,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Negocio\IContato.vb" />
+    <Compile Include="Negocio\IDespacho.vb" />
+    <Compile Include="Negocio\IDespachoAgenda.vb" />
+    <Compile Include="Negocio\IDespachoTarefa.vb" />
+    <Compile Include="Negocio\ISolicitacao.vb" />
     <Compile Include="Negocio\ISolicitacaoDeAudiencia.vb" />
     <Compile Include="Negocio\ISolicitacaoDeConvite.vb" />
     <Compile Include="Negocio\TipoDeDespacho.vb" />
+    <Compile Include="Negocio\TipoDeSolicitacao.vb" />
     <Compile Include="Servicos\IServicoDeContato.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeAudiencia.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeConvite.vb" />

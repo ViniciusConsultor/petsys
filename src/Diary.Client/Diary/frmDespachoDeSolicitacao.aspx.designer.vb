@@ -13,7 +13,7 @@ Option Explicit On
 
 
 
-Partial Public Class frmDespacharSolicitacaoDeAudiencia
+Partial Public Class frmDespachoDeSolicitacao
 
     '''<summary>
     '''rtbToolBar control.
@@ -79,6 +79,15 @@ Partial Public Class frmDespacharSolicitacaoDeAudiencia
     Protected WithEvents cboDespacho As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
+    '''pnlComponenteDespacho control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlComponenteDespacho As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''RadDock2 control.
     '''</summary>
     '''<remarks>
@@ -88,47 +97,11 @@ Partial Public Class frmDespacharSolicitacaoDeAudiencia
     Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''pnlDadosDaSolicitacao control.
+    '''grdDespachos control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlDadosDaSolicitacao As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''Label7 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtAssunto control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtAssunto As Global.Telerik.Web.UI.RadTextBox
-
-    '''<summary>
-    '''Label8 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtDescricao control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtDescricao As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents grdDespachos As Global.Telerik.Web.UI.RadGrid
 End Class

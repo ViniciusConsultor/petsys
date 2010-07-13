@@ -16,11 +16,74 @@ Option Explicit On
 Partial Public Class ctrlAgenda
 
     '''<summary>
-    '''RadScheduler1 control.
+    '''RadDockLayout1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadScheduler1 As Global.Telerik.Web.UI.RadScheduler
+    Protected WithEvents RadDockLayout1 As Global.Telerik.Web.UI.RadDockLayout
+
+    '''<summary>
+    '''RadDockZone1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
+
+    '''<summary>
+    '''RadDock1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
+    '''RadToolBar1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadToolBar1 As Global.Telerik.Web.UI.RadToolBar
+
+    '''<summary>
+    '''schCompromissos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents schCompromissos As Global.Telerik.Web.UI.RadScheduler
+
+    '''<summary>
+    '''RadDock2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
+    '''rtbToolBar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rtbToolBar As Global.Telerik.Web.UI.RadToolBar
+
+    '''<summary>
+    '''grdTarefas control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdTarefas As Global.Telerik.Web.UI.RadGrid
 End Class

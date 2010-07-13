@@ -1,5 +1,5 @@
-﻿Public Partial Class frmDespacharSolicitacaoDeConvite
-    Inherits System.Web.UI.Page
+﻿Public Partial Class ctrlDespachoTarefa
+    Inherits System.Web.UI.UserControl
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 

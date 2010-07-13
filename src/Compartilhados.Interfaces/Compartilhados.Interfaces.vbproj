@@ -77,6 +77,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Negocio\FabricaDePessoaFisicaLazyLoad.vb" />
     <Compile Include="Core\Negocio\IAgencia.vb" />
     <Compile Include="Core\Negocio\IAgenda.vb" />
     <Compile Include="Core\Negocio\IBanco.vb" />
@@ -101,10 +102,14 @@
     <Compile Include="Core\Negocio\IPapelPessoa.vb" />
     <Compile Include="Core\Negocio\IPessoa.vb" />
     <Compile Include="Core\Negocio\IPessoaFisica.vb" />
+    <Compile Include="Core\Negocio\IPessoaFisicaLazyLoad.vb" />
     <Compile Include="Core\Negocio\IPessoaJuridica.vb" />
     <Compile Include="Core\Negocio\Documento\IRG.vb" />
     <Compile Include="Core\Negocio\EnderecoDeEmail.vb" />
+    <Compile Include="Core\Negocio\ITarefa.vb" />
     <Compile Include="Core\Negocio\IVendedor.vb" />
+    <Compile Include="Core\Negocio\PrioridadeDaTarefa.vb" />
+    <Compile Include="Core\Negocio\StatusDaTarefa.vb" />
     <Compile Include="Core\Negocio\Telefone\ITelefone.vb" />
     <Compile Include="Core\Negocio\Nacionalidade.vb" />
     <Compile Include="Core\Negocio\Raca.vb" />

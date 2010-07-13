@@ -8,7 +8,7 @@ Imports Compartilhados
 Partial Public Class frmSolicitacoesDeConvite
     Inherits SuperPagina
 
-    Private Const CHAVE_SOLICITACOES As String = "CHAVE_SOLICITACOES"
+    Private Const CHAVE_SOLICITACOES As String = "CHAVE_SOLICITACOES_CONVITE"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
