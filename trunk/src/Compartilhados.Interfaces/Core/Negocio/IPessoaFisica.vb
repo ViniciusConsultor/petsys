@@ -5,7 +5,7 @@
 
         Property Foto() As String
         Property Sexo() As Sexo
-        Property DataDeNascimento() As Date
+        Property DataDeNascimento() As Nullable(Of Date)
         Property Nacionalidade() As Nacionalidade
         Property EstadoCivil() As EstadoCivil
         Property Raca() As Raca

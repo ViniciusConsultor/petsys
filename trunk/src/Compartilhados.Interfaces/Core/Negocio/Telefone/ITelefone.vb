@@ -2,9 +2,10 @@
 
     Public Interface ITelefone
 
+        Property ID() As Nullable(Of Long)
         Property DDD() As Short
         Property Numero() As Long
-        ReadOnly Property Tipo() As TipoDeTelefone
+        Property Tipo() As TipoDeTelefone
 
     End Interface
 

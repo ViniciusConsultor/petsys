@@ -18,6 +18,12 @@ Namespace Mapeadores
         Function ObtenhaCompromisso(ByVal ID As Long) As ICompromisso
         Function ObtenhaCompromissos(ByVal IDProprieatario As Long) As IList(Of ICompromisso)
 
+        Sub InsiraTarefa(ByVal Tarefa As ITarefa)
+        Sub ModifiqueTarefa(ByVal Tarefa As ITarefa)
+        Sub RemovaTarefa(ByVal ID As Long)
+        Function ObtenhaTarefa(ByVal ID As Long) As ITarefa
+        Function ObtenhaTarefas(ByVal IDProprietario As Long) As IList(Of ITarefa)
+
     End Interface
 
 End Namespace

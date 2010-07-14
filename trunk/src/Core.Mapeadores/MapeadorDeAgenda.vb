@@ -139,7 +139,6 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
 
         DBHelper = ServerUtils.getDBHelper
-        Compromisso.ID = GeradorDeID.getInstancia.getProximoID
 
         Sql.Append("UPDATE NCL_COMPROMISSO SET ")
         Sql.Append(String.Concat(" INICIO = ", Compromisso.Inicio.ToString("yyyyMMddHHmmss"), ", "))
@@ -230,6 +229,122 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("DELETE FROM NCL_COMPROMISSO")
+        Sql.Append(" WHERE ID = " & ID.ToString)
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
+    Public Sub InsiraTarefa(ByVal Tarefa As ITarefa) Implements IMapeadorDeAgenda.InsiraTarefa
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+        Tarefa.ID = GeradorDeID.getInstancia.getProximoID
+
+        Sql.Append("INSERT INTO NCL_TAREFA (")
+        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO)")
+        Sql.Append(" VALUES (")
+        Sql.Append(String.Concat(Tarefa.ID.Value.ToString, ", "))
+        Sql.Append(String.Concat(Tarefa.Proprietario.ID.ToString, ", "))
+        Sql.Append(String.Concat(Tarefa.DataDeInicio.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat(Tarefa.DataDeConclusao.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Assunto), "', "))
+        Sql.Append(String.Concat("'", Tarefa.Prioridade.ID.ToString, "', "))
+
+        If Not String.IsNullOrEmpty(Tarefa.Descricao) Then
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Descricao), "')"))
+        Else
+            Sql.Append("NULL)")
+        End If
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
+    Public Sub ModifiqueTarefa(ByVal Tarefa As ITarefa) Implements IMapeadorDeAgenda.ModifiqueTarefa
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("UPDATE NCL_COMPROMISSO SET ")
+        Sql.Append(String.Concat(" INICIO = ", Tarefa.DataDeInicio.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat(" FIM = ", Tarefa.DataDeConclusao.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat(" ASSUNTO = '", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Assunto), "', "))
+        Sql.Append(String.Concat(" PRIORIDADE = '", Tarefa.Prioridade.ID.ToString, "', "))
+
+        If Not String.IsNullOrEmpty(Tarefa.Descricao) Then
+            Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Descricao), "')"))
+        Else
+            Sql.Append(" DESCRICAO = NULL)")
+        End If
+
+        Sql.Append(String.Concat(" WHERE ID = ", Tarefa.ID.Value.ToString))
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
+    Private Function MontaObjetoTarefa(ByVal Leitor As IDataReader) As ITarefa
+        Dim Tarefa As ITarefa
+
+        Tarefa = FabricaGenerica.GetInstancia.CrieObjeto(Of ITarefa)()
+        Tarefa.Assunto = UtilidadesDePersistencia.GetValorString(Leitor, "ASSUNTO")
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "DESCRICAO") Then
+            Tarefa.Descricao = UtilidadesDePersistencia.GetValorString(Leitor, "DESCRICAO")
+        End If
+
+        Tarefa.DataDeConclusao = UtilidadesDePersistencia.getValorDateHourSec(Leitor, "FIM").Value
+        Tarefa.DataDeInicio = UtilidadesDePersistencia.getValorDateHourSec(Leitor, "INICIO").Value
+        Tarefa.Prioridade = PrioridadeDaTarefa.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "PRIORIDADE"))
+        Tarefa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+        Tarefa.Proprietario = FabricaDePessoaFisicaLazyLoad.Crie(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+
+        Return Tarefa
+    End Function
+
+    Public Function ObtenhaTarefa(ByVal ID As Long) As ITarefa Implements IMapeadorDeAgenda.ObtenhaTarefa
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO FROM NCL_TAREFA WHERE ")
+        Sql.Append(String.Concat("ID = ", ID.ToString))
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            If Leitor.Read Then
+                Return MontaObjetoTarefa(Leitor)
+            End If
+        End Using
+
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaTarefas(ByVal IDProprietario As Long) As IList(Of ITarefa) Implements IMapeadorDeAgenda.ObtenhaTarefas
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Tarefas As IList(Of ITarefa) = New List(Of ITarefa)
+
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO FROM NCL_TAREFA WHERE ")
+        Sql.Append(String.Concat("IDPESSOA = ", IDProprietario.ToString))
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Tarefas.Add(MontaObjetoTarefa(Leitor))
+            End While
+        End Using
+
+        Return TAREFAS
+    End Function
+
+    Public Sub RemovaTarefa(ByVal ID As Long) Implements IMapeadorDeAgenda.RemovaTarefa
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("DELETE FROM NCL_TAREFA")
         Sql.Append(" WHERE ID = " & ID.ToString)
 
         DBHelper.ExecuteNonQuery(Sql.ToString)

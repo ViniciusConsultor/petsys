@@ -4,7 +4,7 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Namespace Telefone
 
     <Serializable()> _
-    Public MustInherit Class Telefone
+    Public Class Telefone
         Implements ITelefone
 
         Private _DDD As Short
@@ -28,7 +28,15 @@ Namespace Telefone
             End Set
         End Property
 
-        Public MustOverride ReadOnly Property Tipo() As TipoDeTelefone Implements ITelefone.Tipo
+        Private _Tipo As TipoDeTelefone
+        Public Property Tipo() As TipoDeTelefone Implements ITelefone.Tipo
+            Get
+                Return _Tipo
+            End Get
+            Set(ByVal value As TipoDeTelefone)
+                _Tipo = value
+            End Set
+        End Property
 
     End Class
 
