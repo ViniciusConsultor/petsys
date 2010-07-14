@@ -120,4 +120,10 @@ Public MustInherit Class Pessoa
         End Set
     End Property
 
+    Public Sub AdicioneTelefones(ByVal Telefones As IList(Of ITelefone)) Implements IPessoa.AdicioneTelefones
+        If Not Telefones Is Nothing Then
+            CType(_Telefones, List(Of ITelefone)).AddRange(Telefones)
+        End If
+    End Sub
+
 End Class

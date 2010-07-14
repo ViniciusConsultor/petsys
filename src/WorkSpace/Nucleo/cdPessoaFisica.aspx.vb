@@ -6,6 +6,7 @@ Imports Compartilhados.Fabricas
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Negocio.Documento
 Imports System.IO
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 
 Partial Public Class cdPessoaFisica
     Inherits SuperPagina
@@ -17,6 +18,7 @@ Partial Public Class cdPessoaFisica
 
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_PESSOA_FISICA"
     Private CHAVE_ID As String = "CHAVE_ID_CD_PESSOA_FISICA"
+    Private CHAVE_TELEFONES As String = "CHAVE_TELEFONES_PESSOA_FISICA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlMunicipios1.MunicipioFoiSelecionado, AddressOf MunicipioDeNascimentoFoiSelecionado
@@ -99,11 +101,11 @@ Partial Public Class cdPessoaFisica
     End Sub
 
     Private Sub CarregaTiposDeTelefone()
-        '    cboTipoTelefone.Items.Clear()
+        cboTipoTelefone.Items.Clear()
 
-        '    For Each Tipo As TipoDeTelefone In TipoDeTelefone.ObtenhaTodos
-        '        cboTipoTelefone.Items.Add(New RadComboBoxItem(Tipo.Descricao, Tipo.ID.ToString))
-        '    Next
+        For Each Tipo As TipoDeTelefone In TipoDeTelefone.ObtenhaTodos
+            cboTipoTelefone.Items.Add(New RadComboBoxItem(Tipo.Descricao, Tipo.ID.ToString))
+        Next
     End Sub
 
     Private Sub CarregueSexo()
@@ -161,8 +163,6 @@ Partial Public Class cdPessoaFisica
     Private Sub btnSalva_Click()
         Dim Pessoa As IPessoaFisica = Nothing
 
-        'If Not ValidaDadosObrigatorios() Then Exit Sub
-
         Pessoa = MontaObjeto()
 
         Try
@@ -194,7 +194,7 @@ Partial Public Class cdPessoaFisica
 
         Pessoa.Nome = txtNome.Text
         Pessoa.Sexo = Sexo.ObtenhaSexo(CChar(rblSexo.SelectedValue))
-        Pessoa.DataDeNascimento = Me.txtDataDeNascimento.SelectedDate.Value
+        Pessoa.DataDeNascimento = Me.txtDataDeNascimento.SelectedDate
         Pessoa.EstadoCivil = EstadoCivil.ObtenhaEstadoCivil(CChar(cboEstadoCivil.SelectedValue))
         Pessoa.NomeDaMae = txtNomeDaMae.Text
         Pessoa.NomeDoPai = txtNomeDoPai.Text
@@ -241,6 +241,7 @@ Partial Public Class cdPessoaFisica
             Pessoa.AdicioneDocumento(RG)
         End If
 
+        Pessoa.AdicioneTelefones(CType(Session(CHAVE_TELEFONES), IList(Of ITelefone)))
         Pessoa.Foto = imgFoto.ImageUrl
         Return Pessoa
     End Function
@@ -299,9 +300,15 @@ Partial Public Class cdPessoaFisica
             txtEmail.Text = Pessoa.EnderecoDeEmail.ToString
         End If
 
+        ExibaTelefones(Pessoa.Telefones)
         imgFoto.ImageUrl = Pessoa.Foto
-
         Session(CHAVE_ID) = Pessoa.ID.Value
+    End Sub
+
+    Private Sub ExibaTelefones(ByVal Telefones As IList(Of ITelefone))
+        grdTelefones.DataSource = Telefones
+        grdTelefones.DataBind()
+        Session(CHAVE_TELEFONES) = Telefones
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -326,5 +333,48 @@ Partial Public Class cdPessoaFisica
             Next
         End If
     End Sub
+
+    Private Sub btnAdicionarTelefone_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionarTelefone.Click
+        Dim Telefones As IList(Of ITelefone)
+        Dim Inconsistencia As String
+
+        Inconsistencia = ValidaDadosDoTelefone()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
+
+        Telefones = CType(Session(CHAVE_TELEFONES), IList(Of ITelefone))
+
+        If Telefones Is Nothing Then Telefones = New List(Of ITelefone)
+
+        Dim Telefone As ITelefone
+
+        Telefone = ObtenhaObjetoTelefone()
+
+        If Telefones.Contains(Telefone) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O telefone informado já existe para esta pessoa."), False)
+            Exit Sub
+        End If
+        ExibaTelefones(Telefones)
+    End Sub
+
+    Private Function ObtenhaObjetoTelefone() As ITelefone
+        Dim Telefone As ITelefone
+        Telefone = FabricaGenerica.GetInstancia.CrieObjeto(Of ITelefone)()
+        Telefone.DDD = txtDDD.Value
+        Telefone.Numero = txtNumero.Value
+        Telefone.Tipo = TipoDeTelefone.Obtenha(CShort(cboTipoTelefone.SelectedValue))
+
+        Return Telefone
+    End Function
+
+    Private Function ValidaDadosDoTelefone() As String
+        If Not txtDDD.Value.HasValue Then Return "O DDD do telefone deve ser informado."
+        If Not txtNumero.Value.HasValue Then Return "O número do telefone deve ser informado."
+
+        Return Nothing
+    End Function
 
 End Class

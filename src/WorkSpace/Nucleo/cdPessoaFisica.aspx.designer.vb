@@ -205,15 +205,6 @@ Partial Public Class cdPessoaFisica
     Protected WithEvents txtDataDeNascimento As Global.Telerik.Web.UI.RadDatePicker
 
     '''<summary>
-    '''RequiredFieldValidator1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
-    '''<summary>
     '''Label22 control.
     '''</summary>
     '''<remarks>
@@ -284,15 +275,6 @@ Partial Public Class cdPessoaFisica
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtNomeDaMae As Global.Telerik.Web.UI.RadTextBox
-
-    '''<summary>
-    '''RequiredFieldValidator2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
 
     '''<summary>
     '''Label1 control.
@@ -709,29 +691,20 @@ Partial Public Class cdPessoaFisica
     Protected WithEvents txtNumero As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
-    '''lnhRamal control.
+    '''btnAdicionarTelefone control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lnhRamal As Global.System.Web.UI.HtmlControls.HtmlTableRow
+    Protected WithEvents btnAdicionarTelefone As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Label30 control.
+    '''grdTelefones control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label30 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtRamal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtRamal As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents grdTelefones As Global.Telerik.Web.UI.RadGrid
 End Class

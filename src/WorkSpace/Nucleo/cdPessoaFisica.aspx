@@ -105,8 +105,6 @@
                                         <td class="td">
                                             <telerik:RadDatePicker ID="txtDataDeNascimento" runat="server">
                                             </telerik:RadDatePicker>
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtDataDeNascimento"
-                                                ErrorMessage="Campo deve ser informado"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
                                     <tr>
@@ -143,8 +141,6 @@
                                             <telerik:RadTextBox ID="txtNomeDaMae" runat="server" MaxLength="255" Skin="Vista"
                                                 Width="300px" SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtNomeDaMae"
-                                                ErrorMessage="Campo deve ser informado."></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
                                     <tr>
@@ -351,17 +347,37 @@
                                             <asp:Label ID="Label29" runat="server" Text="Número"></asp:Label>
                                         </td>
                                         <td class="td">
-                                          <telerik:RadNumericTextBox ID="txtNumero" runat="server">
+                                            <telerik:RadNumericTextBox ID="txtNumero" runat="server">
                                             </telerik:RadNumericTextBox>
+                                            <asp:Button ID="btnAdicionarTelefone" runat="server" Text="Adicionar telefone" CssClass="RadUploadSubmit" />
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="lnhRamal">
-                                        <td class="campodependente">
-                                            <asp:Label ID="Label30" runat="server" Text="Ramal"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <telerik:RadTextBox ID="txtRamal" runat="server">
-                                            </telerik:RadTextBox>
+                                    <tr>
+                                        <td colspan="2">
+                                            <telerik:RadGrid ID="grdTelefones" runat="server" AutoGenerateColumns="False" GridLines="None"
+                                                Skin="Vista">
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
+                                                            ImageUrl="~/imagens/delete.gif">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn DataField="ID" UniqueName="column" Visible="False" HeaderText="ID">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="DDD" UniqueName="column1" Visible="True" HeaderText="DDD">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Numero" UniqueName="column2" Visible="True" HeaderText="Número">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Tipo.Descricao" UniqueName="column3" HeaderText="Tipo">
+                                                        </telerik:GridBoundColumn>
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
                                         </td>
                                     </tr>
                                 </table>

@@ -179,4 +179,87 @@ Public Class ServicoDeAgendaLocal
         End Try
     End Sub
 
+    Public Sub InsiraTarefa(ByVal Tarefa As ITarefa) Implements IServicoDeAgenda.InsiraTarefa
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.InsiraTarefa(Tarefa)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
+    Public Sub ModifiqueTarefa(ByVal Tarefa As ITarefa) Implements IServicoDeAgenda.ModifiqueTarefa
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.ModifiqueTarefa(Tarefa)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
+    Public Function ObtenhaTarefa(ByVal ID As Long) As ITarefa Implements IServicoDeAgenda.ObtenhaTarefa
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        Try
+            Return Mapeador.ObtenhaTarefa(ID)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Function ObtenhaTarefas(ByVal IDProprietario As Long) As IList(Of ITarefa) Implements IServicoDeAgenda.ObtenhaTarefas
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        Try
+            Return Mapeador.ObtenhaTarefas(IDProprietario)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Sub RemovaTarefa(ByVal ID As Long) Implements IServicoDeAgenda.RemovaTarefa
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.RemovaTarefa(ID)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
 End Class

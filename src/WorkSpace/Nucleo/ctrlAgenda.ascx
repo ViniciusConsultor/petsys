@@ -68,8 +68,6 @@
                                         <telerik:GridBoundColumn DataField="DataDeConclusao" HeaderText="Data de conclusão"
                                             UniqueName="column3">
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn DataField="Status.Descricao" HeaderText="Status" UniqueName="column6">
-                                        </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn DataField="Prioridade.Descricao" HeaderText="Prioridade"
                                             UniqueName="column1" Visible="True">
                                         </telerik:GridBoundColumn>

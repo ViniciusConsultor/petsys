@@ -64,4 +64,14 @@ Public Class Tarefa
         End Set
     End Property
 
+    Private _ID As Nullable(Of Long)
+    Public Property ID() As Long? Implements ITarefa.ID
+        Get
+            Return _ID
+        End Get
+        Set(ByVal value As Long?)
+            _ID = value
+        End Set
+    End Property
+
 End Class

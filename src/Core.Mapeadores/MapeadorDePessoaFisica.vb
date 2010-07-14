@@ -29,11 +29,19 @@ Public Class MapeadorDePessoaFisica
     Protected Overrides Sub Atualize(ByVal Pessoa As IPessoaFisica)
         Dim ListaQuery As New List(Of String)
 
-        ListaQuery.Add(String.Concat(" DATANASCIMENTO = ", Pessoa.DataDeNascimento.ToString("yyyyMMdd")))
+        If Pessoa.DataDeNascimento.HasValue Then
+            ListaQuery.Add(String.Concat(" DATANASCIMENTO = ", Pessoa.DataDeNascimento.Value.ToString("yyyyMMdd")))
+        Else
+            ListaQuery.Add(" DATANASCIMENTO = NULL")
+        End If
+
+
         ListaQuery.Add(String.Concat(" ESTADOCIVIL = '", Pessoa.EstadoCivil.ID, "'"))
 
         If Not Pessoa.Nacionalidade Is Nothing Then
             ListaQuery.Add(String.Concat(" NACIONALIDADE = '", Pessoa.Nacionalidade.ID, "'"))
+        Else
+            ListaQuery.Add(" NACIONALIDADE = NULL")
         End If
 
         If Not Pessoa.Raca Is Nothing Then
@@ -41,10 +49,18 @@ Public Class MapeadorDePessoaFisica
         End If
 
         ListaQuery.Add(String.Concat(" SEXO = '", Pessoa.Sexo.ID, "'"))
-        ListaQuery.Add(String.Concat(" NOMEMAE = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.NomeDaMae), "'"))
+
+        If Not String.IsNullOrEmpty(Pessoa.NomeDaMae) Then
+            ListaQuery.Add(String.Concat(" NOMEMAE = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.NomeDaMae), "'"))
+        Else
+            ListaQuery.Add(" NOMEMAE = NULL")
+        End If
+
 
         If Not String.IsNullOrEmpty(Pessoa.NomeDoPai) Then
             ListaQuery.Add(String.Concat(" NOMEPAI = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.NomeDoPai), "'"))
+        Else
+            ListaQuery.Add(" NOMEPAI = NULL")
         End If
 
         If Not Pessoa.ObtenhaDocumento(TipoDeDocumento.RG) Is Nothing Then
@@ -194,7 +210,13 @@ Public Class MapeadorDePessoaFisica
         Sql.Append("CPF, NATURALIDADE, FOTO)")
         Sql.Append("VALUES (")
         Sql.Append(Pessoa.ID.Value)
-        Sql.Append(String.Concat(", ", Pessoa.DataDeNascimento.ToString("yyyyMMdd")))
+
+        If Pessoa.DataDeNascimento.HasValue Then
+            Sql.Append(String.Concat(", ", Pessoa.DataDeNascimento.Value.ToString("yyyyMMdd")))
+        Else
+            Sql.Append(", NULL ")
+        End If
+
         Sql.Append(String.Concat(", '", Pessoa.EstadoCivil.ID, "'"))
         Sql.Append(String.Concat(", '", Pessoa.Nacionalidade.ID, "'"))
 
@@ -205,7 +227,12 @@ Public Class MapeadorDePessoaFisica
         End If
 
         Sql.Append(String.Concat(", '", Pessoa.Sexo.ID, "'"))
-        Sql.Append(String.Concat(", '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.NomeDaMae), "'"))
+
+        If Not String.IsNullOrEmpty(Pessoa.NomeDaMae) Then
+            Sql.Append(String.Concat(", '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.NomeDaMae), "'"))
+        Else
+            Sql.Append(String.Concat(", NULL"))
+        End If
 
         If Not String.IsNullOrEmpty(Pessoa.NomeDoPai) Then
             Sql.Append(String.Concat(", '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.NomeDoPai), "'"))

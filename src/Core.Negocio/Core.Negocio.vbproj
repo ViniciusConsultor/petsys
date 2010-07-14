@@ -128,10 +128,6 @@
     <Compile Include="Senha.vb" />
     <Compile Include="Tarefa.vb" />
     <Compile Include="Telefone\Telefone.vb" />
-    <Compile Include="Telefone\TelefoneCelular.vb" />
-    <Compile Include="Telefone\TelefoneComercial.vb" />
-    <Compile Include="Telefone\TelefoneRecado.vb" />
-    <Compile Include="Telefone\TelefoneResidencial.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

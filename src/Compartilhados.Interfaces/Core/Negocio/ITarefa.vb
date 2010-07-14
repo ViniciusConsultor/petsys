@@ -8,6 +8,7 @@
         Property Prioridade() As PrioridadeDaTarefa
         Property Descricao() As String
         Property Proprietario() As IPessoaFisica
+        Property ID() As Nullable(Of Long)
 
     End Interface
 
