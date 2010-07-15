@@ -4,6 +4,7 @@ Imports Telerik.Web.UI
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 
 Partial Public Class ctrlPessoa
     Inherits System.Web.UI.UserControl
@@ -114,8 +115,36 @@ Partial Public Class ctrlPessoa
             For Each Pessoa As IPessoaFisica In Pessoas
                 Dim Item As New RadComboBoxItem(Pessoa.Nome, Pessoa.ID.ToString)
 
-                Item.Attributes.Add("DataNascimento", Pessoa.DataDeNascimento.ToString("dd/MM/yyyy"))
-                Item.Attributes.Add("NomeMae", Pessoa.NomeDaMae)
+                If Pessoa.DataDeNascimento.HasValue Then
+                    Item.Attributes.Add("DataNascimento", Pessoa.DataDeNascimento.Value.ToString("dd/MM/yyyy"))
+                Else
+                    Item.Attributes.Add("DataNascimento", "")
+                End If
+
+                If Not String.IsNullOrEmpty(Pessoa.NomeDaMae) Then
+                    Item.Attributes.Add("NomeMae", Pessoa.NomeDaMae)
+                Else
+                    Item.Attributes.Add("NomeMae", "")
+                End If
+
+                Dim TelefoneResidencial As ITelefone
+                Dim TelefoneCelular As ITelefone
+
+                TelefoneResidencial = Pessoa.ObtenhaTelelefone(TipoDeTelefone.Residencial)
+                TelefoneCelular = Pessoa.ObtenhaTelelefone(TipoDeTelefone.Celular)
+
+                If Not TelefoneResidencial Is Nothing Then
+                    Item.Attributes.Add("TelefoneResidencial", TelefoneResidencial.ToString)
+                Else
+                    Item.Attributes.Add("TelefoneResidencial", "")
+                End If
+
+                If Not TelefoneCelular Is Nothing Then
+                    Item.Attributes.Add("TelefoneCelular", TelefoneCelular.ToString)
+                Else
+                    Item.Attributes.Add("TelefoneCelular", "")
+                End If
+
                 cboPessoaFisica.Items.Add(Item)
                 Item.DataBind()
             Next

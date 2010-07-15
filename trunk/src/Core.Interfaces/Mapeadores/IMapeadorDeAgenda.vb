@@ -12,13 +12,13 @@ Namespace Mapeadores
         Function ObtenhaAgenda(ByVal Pessoa As IPessoa) As IAgenda
         Function ObtenhaAgenda(ByVal IDPessoa As Long) As IAgenda
 
-        Sub InsiraCompromisso(ByVal Compromisso As ICompromisso)
+        Function InsiraCompromisso(ByVal Compromisso As ICompromisso) As Long
         Sub ModifiqueCompromisso(ByVal Compromisso As ICompromisso)
         Sub RemovaCompromisso(ByVal ID As Long)
         Function ObtenhaCompromisso(ByVal ID As Long) As ICompromisso
         Function ObtenhaCompromissos(ByVal IDProprieatario As Long) As IList(Of ICompromisso)
 
-        Sub InsiraTarefa(ByVal Tarefa As ITarefa)
+        Function InsiraTarefa(ByVal Tarefa As ITarefa) As Long
         Sub ModifiqueTarefa(ByVal Tarefa As ITarefa)
         Sub RemovaTarefa(ByVal ID As Long)
         Function ObtenhaTarefa(ByVal ID As Long) As ITarefa

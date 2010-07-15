@@ -5,6 +5,7 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.DBHelper
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 
 Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
     Implements IMapeadorDePessoa(Of T)
@@ -23,7 +24,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         SQL.Append("INSERT INTO NCL_PESSOA (ID, NOME, TIPO, ENDEMAIL,")
         SQL.Append(" LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP,")
-        SQL.Append(" BAIRRO)")
+        SQL.Append(" BAIRRO, SITE)")
         SQL.Append(" VALUES ( ")
         SQL.Append(String.Concat(Pessoa.ID, ", "))
         SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
@@ -40,15 +41,50 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Complemento), "', "))
             SQL.Append(String.Concat(Pessoa.Endereco.Municipio.ID.Value, ", "))
             SQL.Append(String.Concat(Pessoa.Endereco.CEP.Numero.Value, ", "))
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "')"))
+            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "',"))
         Else
-            SQL.Append("NULL, NULL, NULL, NULL, NULL)")
+            SQL.Append("NULL, NULL, NULL, NULL, NULL,")
+        End If
+
+        If Not String.IsNullOrEmpty(Pessoa.Site) Then
+            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "')"))
+        Else
+            SQL.Append("NULL)")
         End If
 
         DBHelper.ExecuteNonQuery(SQL.ToString)
+
+        InsiraTelefones(Pessoa)
         Me.Insira(Pessoa)
         Return Pessoa.ID.Value
     End Function
+
+    Private Sub InsiraTelefones(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+
+        RemovaTelefones(Pessoa.ID.Value)
+
+        If Not Pessoa.Telefones Is Nothing AndAlso Not Pessoa.Telefones.Count = 0 Then
+            For Each Telefone As ITelefone In Pessoa.Telefones
+                SQL = New StringBuilder
+                SQL.Append("INSERT INTO NCL_PESSOATELEFONE (IDPESSOA, DDD, NUMERO, TIPO, INDICE)")
+                SQL.Append(" VALUES ( ")
+                SQL.Append(String.Concat(Pessoa.ID, ", "))
+                SQL.Append(String.Concat(Telefone.DDD, ", "))
+                SQL.Append(String.Concat(Telefone.Numero, ", "))
+                SQL.Append(String.Concat(Telefone.Tipo.ID, ", "))
+                SQL.Append(String.Concat(Pessoa.Telefones.IndexOf(Telefone), ") "))
+                DBHelper.ExecuteNonQuery(SQL.ToString)
+            Next
+        End If
+    End Sub
+
+    Private Sub RemovaTelefones(ByVal IDPessoa As Long)
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_PESSOATELEFONE WHERE IDPESSOA = " & IDPessoa)
+    End Sub
 
     Public Function Obtenha(ByVal ID As Long) As T Implements IMapeadorDePessoa(Of T).Obtenha
         Return Me.Carregue(ID)
@@ -58,6 +94,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         Dim SQL As New StringBuilder
         Dim DBHelper As IDBHelper
 
+        Me.InsiraTelefones(Pessoa)
         Me.Atualize(Pessoa)
         DBHelper = ServerUtils.getDBHelper
         SQL.Append(String.Concat("UPDATE NCL_PESSOA SET NOME = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
@@ -75,9 +112,15 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             SQL.Append(String.Concat("COMPLEMENTO = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Complemento), "', "))
             SQL.Append(String.Concat("IDMUNICIPIO = ", Pessoa.Endereco.Municipio.ID.Value, ", "))
             SQL.Append(String.Concat("CEP = ", Pessoa.Endereco.CEP.Numero.Value, ", "))
-            SQL.Append(String.Concat("BAIRRO = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "'"))
+            SQL.Append(String.Concat("BAIRRO = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "',"))
         Else
-            SQL.Append("LOGRADOURO = NULL, COMPLEMENTO = NULL, IDMUNICIPIO = NULL, CEP = NULL, BAIRRO = NULL")
+            SQL.Append("LOGRADOURO = NULL, COMPLEMENTO = NULL, IDMUNICIPIO = NULL, CEP = NULL, BAIRRO = NULL,")
+        End If
+
+        If Not String.IsNullOrEmpty(Pessoa.Site) Then
+            SQL.Append(String.Concat("SITE = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "'"))
+        Else
+            SQL.Append("SITE = NULL")
         End If
 
         SQL.Append(String.Concat(" WHERE ID = ", Pessoa.ID.Value.ToString))
@@ -89,6 +132,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         Dim DBHelper As IDBHelper
 
         Me.Remova(Pessoa)
+        Me.RemovaTelefones(Pessoa.ID.Value)
         DBHelper = ServerUtils.getDBHelper
         SQL = String.Concat("DELETE FROM NCL_PESSOA WHERE ID = ", Pessoa.ID.Value.ToString)
         DBHelper.ExecuteNonQuery(SQL)
@@ -122,6 +166,37 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             Endereco.Municipio = MapeadorDeMunicipio.ObtenhaMunicipio(UtilidadesDePersistencia.GetValorLong(Leitor, "IDMUNICIPIO"))
             Pessoa.Endereco = Endereco
         End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "SITE") Then
+            Pessoa.Site = UtilidadesDePersistencia.GetValorString(Leitor, "SITE")
+        End If
+
+        ObtenhaTelefones(Pessoa)
+    End Sub
+
+    Private Sub ObtenhaTelefones(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper
+
+        SQL = New StringBuilder
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        SQL.Append("SELECT IDPESSOA, DDD, NUMERO, TIPO, INDICE FROM NCL_PESSOATELEFONE")
+        SQL.Append(" WHERE IDPESSOA = " & Pessoa.ID.Value.ToString)
+        SQL.Append(" ORDER BY INDICE")
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
+            While Leitor.Read
+                Dim Telefone As ITelefone
+
+                Telefone = FabricaGenerica.GetInstancia.CrieObjeto(Of ITelefone)()
+                Telefone.DDD = UtilidadesDePersistencia.getValorShort(Leitor, "DDD")
+                Telefone.Numero = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMERO")
+                Telefone.Tipo = TipoDeTelefone.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
+                Pessoa.AdicioneTelefone(Telefone)
+            End While
+        End Using
     End Sub
 
 End Class

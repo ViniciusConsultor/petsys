@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeContato.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeDespacho.vb" />
     <Compile Include="Mapeadores\IMapeadorDeSolicitacaoDeAudiencia.vb" />
     <Compile Include="Mapeadores\IMapeadorDeSolicitacaoDeConvite.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -94,6 +95,7 @@
     <Compile Include="Negocio\TipoDeDespacho.vb" />
     <Compile Include="Negocio\TipoDeSolicitacao.vb" />
     <Compile Include="Servicos\IServicoDeContato.vb" />
+    <Compile Include="Servicos\IServicoDeDespacho.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeAudiencia.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeConvite.vb" />
   </ItemGroup>

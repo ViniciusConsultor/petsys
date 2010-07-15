@@ -35,6 +35,12 @@
                                 <td style="width: 200px;">
                                     Nome da mãe
                                 </td>
+                                 <td style="width: 200px;">
+                                    Telefone residêncial
+                                </td>
+                                 <td style="width: 200px;">
+                                    Celular
+                                </td>
                             </tr>
                         </table>
                     </HeaderTemplate>
@@ -49,6 +55,12 @@
                                 </td>
                                 <td style="width: 200px;">
                                     <%#DataBinder.Eval(Container, "Attributes['NomeMae']")%>
+                                </td>
+                                <td style="width: 200px;">
+                                    <%#DataBinder.Eval(Container, "Attributes['TelefoneResidencial']")%>
+                                </td>
+                                <td style="width: 200px;">
+                                    <%#DataBinder.Eval(Container, "Attributes['TelefoneCelular']")%>
                                 </td>
                             </tr>
                         </table>

@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapeadorDeContato.vb" />
+    <Compile Include="MapeadorDeDespacho.vb" />
     <Compile Include="MapeadorDeSolicitacaoDeAudiencia.vb" />
     <Compile Include="MapeadorDeSolicitacaoDeConvite.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

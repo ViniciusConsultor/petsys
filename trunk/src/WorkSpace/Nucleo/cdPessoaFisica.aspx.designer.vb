@@ -664,13 +664,13 @@ Partial Public Class cdPessoaFisica
     Protected WithEvents Label28 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtDDD control.
+    '''txtDDDTelefone control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtDDD As Global.Telerik.Web.UI.RadNumericTextBox
+    Protected WithEvents txtDDDTelefone As Global.Telerik.Web.UI.RadMaskedTextBox
 
     '''<summary>
     '''Label29 control.
@@ -682,13 +682,13 @@ Partial Public Class cdPessoaFisica
     Protected WithEvents Label29 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtNumero control.
+    '''txtNumeroTelefone control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtNumero As Global.Telerik.Web.UI.RadNumericTextBox
+    Protected WithEvents txtNumeroTelefone As Global.Telerik.Web.UI.RadMaskedTextBox
 
     '''<summary>
     '''btnAdicionarTelefone control.

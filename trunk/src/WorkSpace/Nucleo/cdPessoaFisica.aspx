@@ -338,8 +338,8 @@
                                             <asp:Label ID="Label28" runat="server" Text="DDD"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadNumericTextBox ID="txtDDD" runat="server">
-                                            </telerik:RadNumericTextBox>
+                                            <telerik:RadMaskedTextBox ID="txtDDDTelefone" Runat="server" Mask="##">
+                                            </telerik:RadMaskedTextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -347,9 +347,11 @@
                                             <asp:Label ID="Label29" runat="server" Text="Número"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadNumericTextBox ID="txtNumero" runat="server">
-                                            </telerik:RadNumericTextBox>
-                                            <asp:Button ID="btnAdicionarTelefone" runat="server" Text="Adicionar telefone" CssClass="RadUploadSubmit" />
+                                            <telerik:RadMaskedTextBox ID="txtNumeroTelefone" Runat="server" 
+                                                Mask="####-####">
+                                            </telerik:RadMaskedTextBox>
+                                            <asp:Button ID="btnAdicionarTelefone" runat="server" CssClass="RadUploadSubmit" 
+                                                Text="Adicionar telefone" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -367,8 +369,6 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
                                                             ImageUrl="~/imagens/delete.gif">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn DataField="ID" UniqueName="column" Visible="False" HeaderText="ID">
-                                                        </telerik:GridBoundColumn>
                                                         <telerik:GridBoundColumn DataField="DDD" UniqueName="column1" Visible="True" HeaderText="DDD">
                                                         </telerik:GridBoundColumn>
                                                         <telerik:GridBoundColumn DataField="Numero" UniqueName="column2" Visible="True" HeaderText="Número">

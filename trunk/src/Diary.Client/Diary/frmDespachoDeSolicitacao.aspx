@@ -19,7 +19,7 @@
                                     <asp:Label ID="Label1" runat="server" Text="Tipo de despacho"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboDespacho" runat="server" Skin="Vista">
+                                    <telerik:RadComboBox ID="cboDespacho" runat="server" Skin="Vista" AutoPostBack="True">
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
@@ -27,8 +27,12 @@
                                 <td colspan="2">
                                     <asp:Panel ID="pnlComponenteDespacho" runat="server">
                                     </asp:Panel>
+                                
+                                
                                 </td>
+                                
                             </tr>
+                            
                         </table>
                     </asp:Panel>
                 </ContentTemplate>

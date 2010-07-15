@@ -5,7 +5,7 @@ Public Class PessoaFisica
     Inherits Pessoa
     Implements IPessoaFisica
 
-    Private _DataDeNascimento As Date
+    Private _DataDeNascimento As Nullable(Of Date)
     Private _EstadoCivil As EstadoCivil
     Private _GrauDeInstrucao As GrauDeInstrucao
     Private _Nacionalidade As Nacionalidade
@@ -67,11 +67,11 @@ Public Class PessoaFisica
         End Get
     End Property
 
-    Public Property DataDeNascimento() As Date Implements IPessoaFisica.DataDeNascimento
+    Public Property DataDeNascimento() As Nullable(Of Date) Implements IPessoaFisica.DataDeNascimento
         Get
             Return _DataDeNascimento
         End Get
-        Set(ByVal value As Date)
+        Set(ByVal value As Nullable(Of Date))
             _DataDeNascimento = value
         End Set
     End Property

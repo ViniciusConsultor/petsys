@@ -162,6 +162,14 @@ Partial Public Class cdPessoaFisica
 
     Private Sub btnSalva_Click()
         Dim Pessoa As IPessoaFisica = Nothing
+        Dim Inconsistencia As String
+
+        Inconsistencia = ValidaDados()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
 
         Pessoa = MontaObjeto()
 
@@ -182,6 +190,12 @@ Partial Public Class cdPessoaFisica
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
         End Try
     End Sub
+
+    Private Function ValidaDados() As String
+        If String.IsNullOrEmpty(txtNome.Text) Then Return "O nome da pessoa deve ser informado."
+
+        Return Nothing
+    End Function
 
     Private Function MontaObjeto() As IPessoaFisica
         Dim Pessoa As IPessoaFisica
@@ -241,6 +255,7 @@ Partial Public Class cdPessoaFisica
             Pessoa.AdicioneDocumento(RG)
         End If
 
+        Pessoa.Site = txtSite.Text
         Pessoa.AdicioneTelefones(CType(Session(CHAVE_TELEFONES), IList(Of ITelefone)))
         Pessoa.Foto = imgFoto.ImageUrl
         Return Pessoa
@@ -251,9 +266,13 @@ Partial Public Class cdPessoaFisica
         txtDataDeNascimento.SelectedDate = Pessoa.DataDeNascimento
         cboEstadoCivil.SelectedValue = Pessoa.EstadoCivil.ID
         cboNacionalidade.SelectedValue = Pessoa.Nacionalidade.ID
-        ctrlMunicipios1.MunicipioSelecionado = Pessoa.Naturalidade
-        ctrlMunicipios1.NomeDoMunicipio = Pessoa.Naturalidade.Nome
-        cboUFNascimento.SelectedValue = Pessoa.Naturalidade.UF.ID.ToString
+
+        If Not Pessoa.Naturalidade Is Nothing Then
+            ctrlMunicipios1.MunicipioSelecionado = Pessoa.Naturalidade
+            ctrlMunicipios1.NomeDoMunicipio = Pessoa.Naturalidade.Nome
+            cboUFNascimento.SelectedValue = Pessoa.Naturalidade.UF.ID.ToString
+        End If
+        
         txtNomeDaMae.Text = Pessoa.NomeDaMae
         txtNomeDoPai.Text = Pessoa.NomeDoPai
 
@@ -300,6 +319,7 @@ Partial Public Class cdPessoaFisica
             txtEmail.Text = Pessoa.EnderecoDeEmail.ToString
         End If
 
+        txtSite.Text = Pessoa.Site
         ExibaTelefones(Pessoa.Telefones)
         imgFoto.ImageUrl = Pessoa.Foto
         Session(CHAVE_ID) = Pessoa.ID.Value
@@ -357,24 +377,46 @@ Partial Public Class cdPessoaFisica
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O telefone informado já existe para esta pessoa."), False)
             Exit Sub
         End If
+        Telefones.Add(Telefone)
         ExibaTelefones(Telefones)
+        LimpaDadosDoTelefone()
+    End Sub
+
+    Private Sub LimpaDadosDoTelefone()
+        cboTipoTelefone.SelectedValue = TipoDeTelefone.Residencial.ID.ToString
+        txtDDDTelefone.Text = ""
+        txtNumeroTelefone.Text = ""
     End Sub
 
     Private Function ObtenhaObjetoTelefone() As ITelefone
         Dim Telefone As ITelefone
         Telefone = FabricaGenerica.GetInstancia.CrieObjeto(Of ITelefone)()
-        Telefone.DDD = txtDDD.Value
-        Telefone.Numero = txtNumero.Value
+        Telefone.DDD = CShort(txtDDDTelefone.Text)
+        Telefone.Numero = CLng(txtNumeroTelefone.Text)
         Telefone.Tipo = TipoDeTelefone.Obtenha(CShort(cboTipoTelefone.SelectedValue))
 
         Return Telefone
     End Function
 
     Private Function ValidaDadosDoTelefone() As String
-        If Not txtDDD.Value.HasValue Then Return "O DDD do telefone deve ser informado."
-        If Not txtNumero.Value.HasValue Then Return "O número do telefone deve ser informado."
+        If String.IsNullOrEmpty(txtDDDTelefone.Text) Then Return "O DDD do telefone deve ser informado."
+        If String.IsNullOrEmpty(txtNumeroTelefone.Text) Then Return "O número do telefone deve ser informado."
 
         Return Nothing
     End Function
 
+    Private Sub grdTelefones_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdTelefones.ItemCommand
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Dim Telefones As IList(Of ITelefone)
+            Telefones = CType(Session(CHAVE_TELEFONES), IList(Of ITelefone))
+            Telefones.RemoveAt(IndiceSelecionado)
+            ExibaTelefones(Telefones)
+        End If
+    End Sub
 End Class

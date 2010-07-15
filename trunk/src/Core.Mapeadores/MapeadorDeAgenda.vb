@@ -103,7 +103,7 @@ Public Class MapeadorDeAgenda
         Return Nothing
     End Function
 
-    Public Sub InsiraCompromisso(ByVal Compromisso As ICompromisso) Implements IMapeadorDeAgenda.InsiraCompromisso
+    Public Function InsiraCompromisso(ByVal Compromisso As ICompromisso) As Long Implements IMapeadorDeAgenda.InsiraCompromisso
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
@@ -132,7 +132,8 @@ Public Class MapeadorDeAgenda
         End If
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
-    End Sub
+        Return Compromisso.ID.Value
+    End Function
 
     Public Sub ModifiqueCompromisso(ByVal Compromisso As ICompromisso) Implements IMapeadorDeAgenda.ModifiqueCompromisso
         Dim Sql As New StringBuilder
@@ -234,7 +235,7 @@ Public Class MapeadorDeAgenda
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
-    Public Sub InsiraTarefa(ByVal Tarefa As ITarefa) Implements IMapeadorDeAgenda.InsiraTarefa
+    Public Function InsiraTarefa(ByVal Tarefa As ITarefa) As Long Implements IMapeadorDeAgenda.InsiraTarefa
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
@@ -258,7 +259,8 @@ Public Class MapeadorDeAgenda
         End If
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
-    End Sub
+        Return Tarefa.ID.Value
+    End Function
 
     Public Sub ModifiqueTarefa(ByVal Tarefa As ITarefa) Implements IMapeadorDeAgenda.ModifiqueTarefa
         Dim Sql As New StringBuilder

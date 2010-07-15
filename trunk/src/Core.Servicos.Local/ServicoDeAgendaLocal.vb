@@ -96,8 +96,9 @@ Public Class ServicoDeAgendaLocal
         End Try
     End Function
 
-    Public Sub InsiraCompromisso(ByVal Compromisso As ICompromisso) Implements IServicoDeAgenda.InsiraCompromisso
+    Public Function InsiraCompromisso(ByVal Compromisso As ICompromisso) As Long Implements IServicoDeAgenda.InsiraCompromisso
         Dim Mapeador As IMapeadorDeAgenda
+        Dim ID As Long
 
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
@@ -105,7 +106,7 @@ Public Class ServicoDeAgendaLocal
         ServerUtils.BeginTransaction()
 
         Try
-            Mapeador.InsiraCompromisso(Compromisso)
+            ID = Mapeador.InsiraCompromisso(Compromisso)
             ServerUtils.CommitTransaction()
         Catch
             ServerUtils.RollbackTransaction()
@@ -113,7 +114,9 @@ Public Class ServicoDeAgendaLocal
         Finally
             ServerUtils.libereRecursos()
         End Try
-    End Sub
+
+        Return ID
+    End Function
 
     Public Sub ModifiqueCompromisso(ByVal Compromisso As ICompromisso) Implements IServicoDeAgenda.ModifiqueCompromisso
         Dim Mapeador As IMapeadorDeAgenda
@@ -179,8 +182,9 @@ Public Class ServicoDeAgendaLocal
         End Try
     End Sub
 
-    Public Sub InsiraTarefa(ByVal Tarefa As ITarefa) Implements IServicoDeAgenda.InsiraTarefa
+    Public Function InsiraTarefa(ByVal Tarefa As ITarefa) As Long Implements IServicoDeAgenda.InsiraTarefa
         Dim Mapeador As IMapeadorDeAgenda
+        Dim ID As Long
 
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
@@ -188,7 +192,7 @@ Public Class ServicoDeAgendaLocal
         ServerUtils.BeginTransaction()
 
         Try
-            Mapeador.InsiraTarefa(Tarefa)
+            ID = Mapeador.InsiraTarefa(Tarefa)
             ServerUtils.CommitTransaction()
         Catch
             ServerUtils.RollbackTransaction()
@@ -196,7 +200,9 @@ Public Class ServicoDeAgendaLocal
         Finally
             ServerUtils.libereRecursos()
         End Try
-    End Sub
+
+        Return ID
+    End Function
 
     Public Sub ModifiqueTarefa(ByVal Tarefa As ITarefa) Implements IServicoDeAgenda.ModifiqueTarefa
         Dim Mapeador As IMapeadorDeAgenda

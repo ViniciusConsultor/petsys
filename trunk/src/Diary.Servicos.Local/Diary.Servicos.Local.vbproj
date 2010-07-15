@@ -82,6 +82,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ServicoDeContatoLocal.vb" />
+    <Compile Include="ServicoDeDespachoLocal.vb" />
     <Compile Include="ServicoDeSolicitacaoDeAudienciaLocal.vb" />
     <Compile Include="ServicoDeSolicitacaoDeConviteLocal.vb" />
   </ItemGroup>

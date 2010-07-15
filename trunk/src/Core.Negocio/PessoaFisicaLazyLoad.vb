@@ -69,7 +69,6 @@ Public Class PessoaFisicaLazyLoad
         End Set
     End Property
 
-    ' Private _Nome As String
     Public Property Nome() As String Implements IPessoa.Nome
         Get
             If _Pessoa Is Nothing Then CarreguePessoaFisica()
@@ -118,12 +117,12 @@ Public Class PessoaFisicaLazyLoad
         End Get
     End Property
 
-    Public Property DataDeNascimento() As Date Implements IPessoaFisica.DataDeNascimento
+    Public Property DataDeNascimento() As Nullable(Of Date) Implements IPessoaFisica.DataDeNascimento
         Get
             If _Pessoa Is Nothing Then CarreguePessoaFisica()
             Return _Pessoa.DataDeNascimento
         End Get
-        Set(ByVal value As Date)
+        Set(ByVal value As Nullable(Of Date))
             If _Pessoa Is Nothing Then CarreguePessoaFisica()
             _Pessoa.DataDeNascimento = value
         End Set
@@ -230,5 +229,16 @@ Public Class PessoaFisicaLazyLoad
             _Pessoa = Servico.ObtenhaPessoa(Me._ID.Value)
         End Using
     End Sub
+
+    Public Sub AdicioneTelefones(ByVal Telefones As IList(Of ITelefone)) Implements IPessoa.AdicioneTelefones
+        If _Pessoa Is Nothing Then CarreguePessoaFisica()
+
+        _Pessoa.AdicioneTelefones(Telefones)
+    End Sub
+
+    Public Function ObtenhaTelelefone(ByVal TipoTelefone As TipoDeTelefone) As ITelefone Implements IPessoa.ObtenhaTelelefone
+        If _Pessoa Is Nothing Then CarreguePessoaFisica()
+        Return _Pessoa.ObtenhaTelelefone(TipoTelefone)
+    End Function
 
 End Class
