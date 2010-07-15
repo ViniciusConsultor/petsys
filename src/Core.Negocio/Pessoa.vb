@@ -126,4 +126,19 @@ Public MustInherit Class Pessoa
         End If
     End Sub
 
+    Public Function ObtenhaTelelefone(ByVal TipoTelefone As TipoDeTelefone) As ITelefone Implements IPessoa.ObtenhaTelelefone
+        If Me._Telefones Is Nothing Then Return Nothing
+
+        Dim Telefone As ITelefone = Nothing
+
+        For Each Item As ITelefone In Me._Telefones
+            If Item.Tipo.Equals(TipoTelefone) Then
+                Telefone = Item
+                Exit For
+            End If
+        Next
+
+        Return Telefone
+    End Function
+
 End Class

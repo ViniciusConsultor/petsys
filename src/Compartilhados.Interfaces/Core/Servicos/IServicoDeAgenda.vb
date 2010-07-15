@@ -13,7 +13,7 @@ Namespace Core.Servicos
         Function ObtenhaAgenda(ByVal IDPessoa As Long) As IAgenda
 
         'Compromissos
-        Sub InsiraCompromisso(ByVal Compromisso As ICompromisso)
+        Function InsiraCompromisso(ByVal Compromisso As ICompromisso) As Long
         Sub ModifiqueCompromisso(ByVal Compromisso As ICompromisso)
         Sub RemovaCompromisso(ByVal ID As Long)
         Function ObtenhaCompromisso(ByVal ID As Long) As ICompromisso
@@ -21,7 +21,7 @@ Namespace Core.Servicos
 
 
         'Tarefa
-        Sub InsiraTarefa(ByVal Tarefa As ITarefa)
+        Function InsiraTarefa(ByVal Tarefa As ITarefa) As Long
         Sub ModifiqueTarefa(ByVal Tarefa As ITarefa)
         Sub RemovaTarefa(ByVal ID As Long)
         Function ObtenhaTarefa(ByVal ID As Long) As ITarefa

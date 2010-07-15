@@ -38,6 +38,22 @@ Namespace Telefone
             End Set
         End Property
 
+        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            Dim TelefoneAComparar As ITelefone = CType(obj, ITelefone)
+            Return ((Me.DDD = TelefoneAComparar.DDD) And (Me.Numero = TelefoneAComparar.Numero) And (Me.Tipo.Equals(TelefoneAComparar.Tipo)))
+        End Function
+
+        Public Overrides Function GetHashCode() As Integer
+            Dim StringChave As String
+
+            StringChave = String.Concat(Me.DDD, Me.Numero, Me.Tipo.ID)
+            Return StringChave.GetHashCode
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return "(" & DDD.ToString & ") - " & Numero.ToString
+        End Function
+
     End Class
 
 End Namespace
