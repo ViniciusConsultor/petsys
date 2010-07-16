@@ -4,6 +4,7 @@ Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
 Imports Telerik.Web.UI
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class cdCompromisso
     Inherits System.Web.UI.Page
@@ -11,7 +12,7 @@ Partial Public Class cdCompromisso
     Private Const CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_COMPROMISSO"
     Private Const CHAVE_ID_COMPROMISSO As String = "CHAVE_ID_COMPROMISSO"
     Private Const CHAVE_ID_PROPRIETARIO As String = "CHAVE_ID_PROPRIETARIO_COMPROMISSO"
-    
+
     Private Enum Estado As Byte
         Novo
         Modifica
@@ -110,7 +111,7 @@ Partial Public Class cdCompromisso
         Compromisso.Fim = txtDataHorarioFim.SelectedDate.Value
         Compromisso.Inicio = txtDataHorarioInicio.SelectedDate.Value
         Compromisso.Local = txtLocal.Text
-        Compromisso.Proprietario = FabricaDePessoaFisicaLazyLoad.Crie(CLng(Session(CHAVE_ID_PROPRIETARIO)))
+        Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(Session(CHAVE_ID_PROPRIETARIO)))
 
         If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
             Compromisso.ID = CLng(Session(CHAVE_ID_COMPROMISSO))

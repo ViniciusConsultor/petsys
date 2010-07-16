@@ -7,6 +7,7 @@ Imports Compartilhados
 Imports Compartilhados.Interfaces
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Core.Interfaces.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Public Class MapeadorDeOperador
     Implements IMapeadorDeOperador
@@ -82,7 +83,7 @@ Public Class MapeadorDeOperador
             If Leitor.Read Then
                 Dim Pessoa As IPessoaFisica
 
-                Pessoa = FabricaDePessoaFisicaLazyLoad.Crie(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+                Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
                 Operador = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperador)(New Object() {Pessoa})
                 Operador.Login = UtilidadesDePersistencia.GetValorString(Leitor, "LOGIN")
                 Operador.Status = StatusDoOperador.ObtenhaStatus(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))

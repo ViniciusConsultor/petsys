@@ -4,6 +4,7 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Diary.Interfaces.Servicos
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class ctrlDespachoAgenda
     Inherits System.Web.UI.UserControl
@@ -41,12 +42,12 @@ Partial Public Class ctrlDespachoAgenda
         Compromisso.Descricao = txtDescricao.Text
         Compromisso.Fim = txtDataHorarioFim.SelectedDate.Value
         Compromisso.Inicio = txtDataHorarioInicio.SelectedDate.Value
-        Compromisso.Proprietario = FabricaDePessoaFisicaLazyLoad.Crie(CLng(ViewState(CHAVE_ID_PROPRIETARIO_DESPACHO_AGENDA)))
+        Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO_DESPACHO_AGENDA)))
         Compromisso.Local = txtLocal.Text
 
         Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoAgenda)()
         Despacho.Compromisso = Compromisso
-        Despacho.Responsavel = FabricaDePessoaFisicaLazyLoad.Crie(UsuarioLogado.ID)
+        Despacho.Responsavel = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UsuarioLogado.ID)
         Despacho.Solicitacao = CType(ViewState(CHAVE_SOLICITACAO_DESPACHO_AGENDA), ISolicitacao)
 
         Return Despacho
