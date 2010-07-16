@@ -4,6 +4,7 @@ Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
 Imports Telerik.Web.UI
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class cdTarefa
     Inherits System.Web.UI.Page
@@ -119,7 +120,7 @@ Partial Public Class cdTarefa
         Tarefa.DataDeInicio = txtDataHorarioInicio.SelectedDate.Value
         Tarefa.DataDeConclusao = txtDataHorarioFim.SelectedDate.Value
         Tarefa.Prioridade = PrioridadeDaTarefa.Obtenha(CChar(cboPrioridade.SelectedValue))
-        Tarefa.Proprietario = FabricaDePessoaFisicaLazyLoad.Crie(CLng(Session(CHAVE_ID_PROPRIETARIO)))
+        Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(Session(CHAVE_ID_PROPRIETARIO)))
 
         If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
             Tarefa.ID = CLng(Session(CHAVE_ID_COMPROMISSO))

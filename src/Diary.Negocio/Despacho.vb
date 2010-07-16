@@ -35,6 +35,26 @@ Public MustInherit Class Despacho
         End Set
     End Property
 
-    Public MustOverride ReadOnly Property Tipo() As TipoDeDespacho Implements IDespacho.Tipo
+    Private _Tipo As TipoDeDespacho
+    Public Property Tipo() As TipoDeDespacho Implements IDespacho.Tipo
+        Get
+            Return _Tipo
+        End Get
+        Set(ByVal value As TipoDeDespacho)
+            _Tipo = value
+        End Set
+    End Property
 
+    Private _DataDoDespaco As Date
+    Public Property DataDoDespacho() As Date Implements IDespacho.DataDoDespacho
+        Get
+            Return _DataDoDespaco
+        End Get
+        Set(ByVal value As Date)
+            _DataDoDespaco = value
+        End Set
+    End Property
+
+    Public MustOverride ReadOnly Property TipoDestinoDespacho() As TipoDestinoDespacho Implements IDespacho.TipoDestinoDespacho
+        
 End Class

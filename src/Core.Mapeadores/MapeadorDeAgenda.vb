@@ -5,6 +5,7 @@ Imports Compartilhados.DBHelper
 Imports Compartilhados
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Public Class MapeadorDeAgenda
     Implements IMapeadorDeAgenda
@@ -218,7 +219,7 @@ Public Class MapeadorDeAgenda
 
         Compromisso.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
 
-        Compromisso.Proprietario = FabricaDePessoaFisicaLazyLoad.Crie(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+        Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
 
         Return Compromisso
     End Function
@@ -298,7 +299,7 @@ Public Class MapeadorDeAgenda
         Tarefa.DataDeInicio = UtilidadesDePersistencia.getValorDateHourSec(Leitor, "INICIO").Value
         Tarefa.Prioridade = PrioridadeDaTarefa.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "PRIORIDADE"))
         Tarefa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-        Tarefa.Proprietario = FabricaDePessoaFisicaLazyLoad.Crie(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+        Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
 
         Return Tarefa
     End Function
