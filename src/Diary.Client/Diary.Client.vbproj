@@ -201,6 +201,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="ctrlPessoa.ascx" />
     <Content Include="Diary\cdSolicitacaoDeAudiencia.aspx" />
     <Content Include="Diary\cdSolicitacaoDeConvite.aspx" />
     <Content Include="Diary\ctrlDespachoAgenda.ascx" />

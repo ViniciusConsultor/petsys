@@ -12,6 +12,8 @@ Partial Public Class ctrlDespachoAgenda
     Private Const CHAVE_ID_PROPRIETARIO_DESPACHO_AGENDA As String = "CHAVE_ID_PROPRIETARIO_DESPACHO_AGENDA"
     Private Const CHAVE_SOLICITACAO_DESPACHO_AGENDA As String = "CHAVE_SOLICITACAO_DESPACHO_AGENDA"
 
+    Public Event SolicitacaoFoiDespachada(ByVal Despacho As IDespacho)
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
@@ -26,9 +28,13 @@ Partial Public Class ctrlDespachoAgenda
             IDCompromisso = ServicoDeAgenda.InsiraCompromisso(Despacho.Compromisso)
         End Using
 
+        Despacho.Compromisso.ID = IDCompromisso
+
         Using ServicoDeDespacho As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
             ServicoDeDespacho.Inserir(Despacho)
         End Using
+
+        RaiseEvent SolicitacaoFoiDespachada(Despacho)
     End Sub
 
     Private Function MontaDespacho() As IDespachoAgenda

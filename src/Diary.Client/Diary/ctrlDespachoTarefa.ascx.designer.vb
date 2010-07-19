@@ -79,6 +79,24 @@ Partial Public Class ctrlDespachoTarefa
     Protected WithEvents txtAssunto As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboPrioridade control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboPrioridade As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
     '''Label5 control.
     '''</summary>
     '''<remarks>

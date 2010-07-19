@@ -61,6 +61,15 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected WithEvents pnlDespacho As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''ctrlPessoa1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>
@@ -79,13 +88,40 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected WithEvents cboDespacho As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''pnlComponenteDespacho control.
+    '''pnlComponenteDespachoAgenda control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlComponenteDespacho As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlComponenteDespachoAgenda As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''ctrlDespachoAgenda1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlDespachoAgenda1 As Global.Diary.Client.ctrlDespachoAgenda
+
+    '''<summary>
+    '''pnlComponenteDespachoTarefa control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlComponenteDespachoTarefa As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''ctrlDespachoTarefa1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlDespachoTarefa1 As Global.Diary.Client.ctrlDespachoTarefa
 
     '''<summary>
     '''RadDock2 control.
