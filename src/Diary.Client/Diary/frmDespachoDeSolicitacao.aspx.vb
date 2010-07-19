@@ -13,6 +13,7 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlDespachoAgenda1.SolicitacaoFoiDespachada, AddressOf SolicitacaoFoiDespachada
         AddHandler ctrlDespachoTarefa1.SolicitacaoFoiDespachada, AddressOf SolicitacaoFoiDespachada
+        AddHandler ctrlPessoa1.PessoaSelecionada, AddressOf 
 
         If Not IsPostBack Then
             Dim Id As Nullable(Of Long)
@@ -33,6 +34,8 @@ Partial Public Class frmDespachoDeSolicitacao
             End If
         End If
     End Sub
+
+    Private Sub 
 
     Private Sub SolicitacaoFoiDespachada(ByVal Despacho As IDespacho)
         Dim Despachos As IList(Of IDespacho)
@@ -100,6 +103,8 @@ Partial Public Class frmDespachoDeSolicitacao
                 pnlComponenteDespachoAgenda.Visible = False
                 pnlComponenteDespachoTarefa.Visible = True
         End Select
+
+        ctrlDespachoAgenda1.IDProprietario = 
     End Sub
 
 End Class
