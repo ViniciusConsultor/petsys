@@ -13,34 +13,35 @@
                     </Items>
                 </telerik:RadToolBar>
                 
-                <telerik:RadScheduler runat="server" ID="schCompromissos" DayStartTime="08:00:00"
-                    DayEndTime="18:00:00" TimeZoneOffset="03:00:00" DataKeyField="ID"  DataDescriptionField="Descricao" DataSubjectField="Assunto"
-                    DataStartField="Inicio" DataEndField="Fim">
-                    <AdvancedForm Modal="true" />
+                <telerik:RadScheduler runat="server" DisplayDeleteConfirmation ="false"  
+                    ID="schCompromissos" DataKeyField="ID"  
+                    DataDescriptionField="Descricao" DataSubjectField="Assunto"
+                    DataStartField="Inicio" DataEndField="Fim" 
+                    AllowEdit="False" AllowInsert="False" Culture="Portuguese (Brazil)" 
+                    EditFormTimeFormat="hh:mm" EnableAdvancedForm="False" FirstDayOfWeek="Monday" 
+                    LastDayOfWeek="Friday" ShowFullTime="True" Width="100%" 
+                    EnableDescriptionField="True" HoursPanelTimeFormat="HH:mm" 
+                    StartEditingInAdvancedForm="False">
+                    <Localization AdvancedAllDayEvent="Todo dia" AdvancedCalendarCancel="Cancelar" 
+                        AdvancedClose="Fechar" AdvancedDay="Dia" AdvancedDays="dia(s)" 
+                        AdvancedDescription="Descrição" />
+                    <AdvancedForm Enabled="False" TimeFormat="hh:mm" />
                     <TimelineView UserSelectable="false" />
                     <TimeSlotContextMenuSettings EnableDefault="true" />
-                    <AppointmentContextMenuSettings EnableDefault="true" />
                 </telerik:RadScheduler>
             </ContentTemplate>
         </telerik:RadDock>
         <telerik:RadDock ID="RadDock2" runat="server" Title="Tarefas" DefaultCommands="ExpandCollapse"
             EnableAnimation="True" Skin="Vista" DockMode="Docked">
             <ContentTemplate>
-                <table>
-                    <tr>
-                        <td>
                             <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
                                 <Items>
                                     <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Nova tarefa"
                                         CommandName="btnNovaTarefa" CausesValidation="False" CommandArgument="OPE.NCL.009.0001" />
                                 </Items>
                             </telerik:RadToolBar>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             <telerik:RadGrid ID="grdTarefas" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                                PageSize="10" GridLines="None">
+                                PageSize="10" GridLines="None" Width="100%">
                                 <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                 <MasterTableView GridLines="Both">
                                     <RowIndicatorColumn>
@@ -71,12 +72,9 @@
                                         <telerik:GridBoundColumn DataField="Prioridade.Descricao" HeaderText="Prioridade"
                                             UniqueName="column1" Visible="True">
                                         </telerik:GridBoundColumn>
-                                    </Columns>
+                                        </Columns>
                                 </MasterTableView>
                             </telerik:RadGrid>
-                        </td>
-                    </tr>
-                </table>
             </ContentTemplate>
         </telerik:RadDock>
     </telerik:RadDockZone>
