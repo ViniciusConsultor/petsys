@@ -24,21 +24,8 @@ Partial Public Class frmAgendaPessoal
         Return "FUN.NCL.012"
     End Function
 
-    Private Enum Estado As Byte
-        Inicial = 1
-        Novo
-        Consulta
-        Modifica
-        Remove
-    End Enum
-
     Private Sub ExibaTelaInicial()
-        Session(CHAVE_ESTADO) = Estado.Inicial
         MontaAgenda()
-    End Sub
-
-    Protected Sub btnNovo_Click()
-        ExibaTelaNovo()
     End Sub
 
     Private Sub MontaAgenda()
@@ -63,60 +50,7 @@ Partial Public Class frmAgendaPessoal
         ctrlAgenda1.IDProprietario = UsuarioLogado.ID
         ctrlAgenda1.HoraInicio = Agenda.HorarioDeInicio
         ctrlAgenda1.HoraFim = Agenda.HorarioDeTermino
-
-    End Sub
-
-    Private Sub ExibaTelaNovo()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO) = Estado.Novo
-    End Sub
-
-    Private Sub ExibaTelaModificar()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO) = Estado.Modifica
-    End Sub
-
-    Private Sub ExibaTelaExcluir()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO) = Estado.Remove
-    End Sub
-
-    Private Sub ExibaTelaConsultar()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-    End Sub
-
-    Protected Sub btnCancela_Click()
-        ExibaTelaInicial()
-    End Sub
-
-    Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
-        Select Case CType(e.Item, RadToolBarButton).CommandName
-
-        End Select
+        ctrlAgenda1.IntervaloEntreCompromissos = Agenda.IntervaloEntreOsCompromissos
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick

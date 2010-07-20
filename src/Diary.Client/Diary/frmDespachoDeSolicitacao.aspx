@@ -2,9 +2,9 @@
     CodeBehind="frmDespachoDeSolicitacao.aspx.vb" Inherits="Diary.Client.frmDespachoDeSolicitacao" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register src="ctrlDespachoAgenda.ascx" tagname="ctrlDespachoAgenda" tagprefix="uc1" %>
-<%@ Register src="ctrlDespachoTarefa.ascx" tagname="ctrlDespachoTarefa" tagprefix="uc2" %>
-<%@ Register src="../ctrlPessoa.ascx" tagname="ctrlPessoa" tagprefix="uc3" %>
+<%@ Register Src="ctrlDespachoAgenda.ascx" TagName="ctrlDespachoAgenda" TagPrefix="uc1" %>
+<%@ Register Src="ctrlDespachoTarefa.ascx" TagName="ctrlDespachoTarefa" TagPrefix="uc2" %>
+<%@ Register Src="../ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc3" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
@@ -13,14 +13,17 @@
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
+            <telerik:RadDock ID="RadDock3" runat="server" Title="Alvo do despacho" DefaultCommands="ExpandCollapse"
+                EnableAnimation="True" Skin="Vista" DockMode="Docked">
+                <ContentTemplate>
+                    <uc3:ctrlPessoa ID="ctrlPessoa1" runat="server" />
+                </ContentTemplate>
+            </telerik:RadDock>
             <telerik:RadDock ID="RadDock1" runat="server" Title="Despacho" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlDespacho" runat="server">
-                        <uc3:ctrlPessoa ID="ctrlPessoa1"  runat="server" />
-                        
                         <table class="tabela">
-                            
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label1" runat="server" Text="Tipo de despacho"></asp:Label>
@@ -30,13 +33,10 @@
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
-                            
                             <tr>
                                 <td colspan="2">
                                     <asp:Panel ID="pnlComponenteDespachoAgenda" runat="server">
-                                    
                                         <uc1:ctrlDespachoAgenda ID="ctrlDespachoAgenda1" runat="server" />
-                                    
                                     </asp:Panel>
                                     <asp:Panel ID="pnlComponenteDespachoTarefa" runat="server">
                                         <uc2:ctrlDespachoTarefa ID="ctrlDespachoTarefa1" runat="server" />
@@ -64,32 +64,21 @@
                                             <HeaderStyle Width="20px" />
                                         </ExpandCollapseColumn>
                                         <Columns>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
-                                                HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
-                                            </telerik:GridButtonColumn>
+                                            
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Codigo" HeaderText="Código" UniqueName="column30">
+                                            <telerik:GridBoundColumn DataField="DataDoDespacho" HeaderText="Data do despacho" UniqueName="column30">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Tipo.Descricao" HeaderText="Tipo" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column6">
+                                            <telerik:GridBoundColumn DataField="Solicitante.Nome" HeaderText="Pessoa solicitante" UniqueName="column6">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDaSolicitacao" HeaderText="Data da solicitação"
+                                            <telerik:GridBoundColumn DataField="Alvo.Nome" HeaderText="Pessoa alvo"
                                                 UniqueName="column1" Visible="True">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Contato.Pessoa.Nome" HeaderText="Contato" UniqueName="column2"
-                                                Visible="True">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Despachar" FilterImageToolTip="Despachar"
-                                                HeaderTooltip="Despachar" ImageUrl="~/imagens/accordian.gif" UniqueName="column7">
-                                            </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Finalizar" FilterImageToolTip="Finalizar"
-                                                HeaderTooltip="Finalizar" ImageUrl="~/imagens/yes.gif" UniqueName="column9">
-                                            </telerik:GridButtonColumn>
+                                            </telerik:GridBoundColumn>                                         
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

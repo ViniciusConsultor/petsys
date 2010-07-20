@@ -108,6 +108,7 @@ Partial Public Class cdAgenda
         If ctrlPessoa1.PessoaSelecionada Is Nothing Then Return "Proprietário da agenda deve ser selecionado."
         If Not txtHorarioDeInicio.SelectedDate.HasValue Then Return "O horário de início deve ser informado."
         If Not txtHorarioFinal.SelectedDate.HasValue Then Return "O horário final deve ser informado."
+        If Not txtIntervaloEntreCompromissos.SelectedDate.HasValue Then Return "O intervalo entre os compromissos deve ser informado."
         Return String.Empty
     End Function
 
@@ -120,6 +121,7 @@ Partial Public Class cdAgenda
         Agenda.Pessoa = Pessoa
         Agenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
         Agenda.HorarioDeTermino = txtHorarioFinal.SelectedDate.Value
+        Agenda.IntervaloEntreOsCompromissos = txtIntervaloEntreCompromissos.SelectedDate.Value
         Return Agenda
     End Function
 
@@ -223,6 +225,7 @@ Partial Public Class cdAgenda
     Private Sub Mostre(ByVal Agenda As IAgenda)
         txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
         txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
+        txtIntervaloEntreCompromissos.SelectedDate = Agenda.IntervaloEntreOsCompromissos
     End Sub
 
 End Class

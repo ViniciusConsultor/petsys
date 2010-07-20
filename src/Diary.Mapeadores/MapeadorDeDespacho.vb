@@ -19,17 +19,18 @@ Public Class MapeadorDeDespacho
         Despacho.ID = GeradorDeID.getInstancia.getProximoID()
 
         Sql.Append("INSERT INTO DRY_DESPACHO (")
-        Sql.Append("ID, TIPO, IDRESPONSAVEL, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA)")
+        Sql.Append("ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Despacho.ID.ToString, ", "))
         Sql.Append(String.Concat(Despacho.Tipo.ID, ", "))
-        Sql.Append(String.Concat(Despacho.Responsavel.ID, ", "))
+        Sql.Append(String.Concat(Despacho.Solicitante.ID, ", "))
+        Sql.Append(String.Concat(Despacho.Alvo.ID, ", "))
         Sql.Append(String.Concat(Despacho.Solicitacao.ID, ", "))
         Sql.Append(String.Concat(Despacho.Solicitacao.Tipo.ID, ", "))
         Sql.Append(String.Concat(Despacho.DataDoDespacho.ToString("yyyyMMddhhmmss"), ", "))
-        Sql.Append(String.Concat(Despacho.TipoDestinoDespacho.ID, ", "))
+        Sql.Append(String.Concat(Despacho.TipoDestino.ID, ", "))
 
-        If Despacho.TipoDestinoDespacho.Equals(TipoDestinoDespacho.Compromisso) Then
+        If Despacho.TipoDestino.Equals(TipoDestinoDespacho.Compromisso) Then
             Sql.Append(String.Concat(CType(Despacho, IDespachoAgenda).Compromisso.ID.Value, ", "))
             Sql.Append("NULL)")
         Else
@@ -45,7 +46,7 @@ Public Class MapeadorDeDespacho
         Dim DBHelper As IDBHelper
         Dim Despachos As IList(Of IDespacho) = New List(Of IDespacho)
 
-        Sql.Append("SELECT ID, TIPO, IDRESPONSAVEL, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA")
+        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA")
         Sql.Append(" FROM DRY_DESPACHO ")
         Sql.Append(" WHERE IDSOLICITACAO = " & IDSolicitacao)
         Sql.Append(" ORDER BY DATADODESPACHO")
@@ -79,7 +80,8 @@ Public Class MapeadorDeDespacho
 
         Despacho.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
         Despacho.Tipo = TipoDeDespacho.Obtenha(UtilidadesDePersistencia.getValorByte(Leitor, "TIPO"))
-        Despacho.Responsavel = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDRESPONSAVEL"))
+        Despacho.Solicitante = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDSOLICITANTE"))
+        Despacho.Alvo = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDALVO"))
         Despacho.DataDoDespacho = UtilidadesDePersistencia.getValorDateHourSec(Leitor, "DATADODESPACHO").Value
 
         TipoDaSolicitacao = TipoDeSolicitacao.Obtenha(UtilidadesDePersistencia.getValorByte(Leitor, "TIPOSOLICITACAO"))

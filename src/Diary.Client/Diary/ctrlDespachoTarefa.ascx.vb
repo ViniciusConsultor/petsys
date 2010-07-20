@@ -6,12 +6,14 @@ Imports Compartilhados.Interfaces.Core.Servicos
 Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 Imports Telerik.Web.UI
+Imports Compartilhados.Componentes.Web
 
 Partial Public Class ctrlDespachoTarefa
     Inherits System.Web.UI.UserControl
 
-    Private Const CHAVE_ID_PROPRIETARIO_DESPACHO_AGENDA As String = "CHAVE_ID_PROPRIETARIO_DESPACHO_TAREFA"
-    Private Const CHAVE_SOLICITACAO_DESPACHO_AGENDA As String = "CHAVE_SOLICITACAO_DESPACHO_TAREFA"
+    Private Const CHAVE_ID_ALVO_DESPACHO_TAREFA As String = "CHAVE_ID_ALVO_DESPACHO_TAREFA"
+    Private Const CHAVE_SOLICITACAO_DESPACHO_TAREFA As String = "CHAVE_SOLICITACAO_DESPACHO_TAREFA"
+    Private Const CHAVE_TIPO_DESPACHO_TAREFA As String = "CHAVE_TIPO_DESPACHO_TAREFA"
 
     Public Event SolicitacaoFoiDespachada(ByVal Despacho As IDespacho)
 
@@ -32,6 +34,14 @@ Partial Public Class ctrlDespachoTarefa
     Private Sub btnAdicionarDespacho_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionarDespacho.Click
         Dim IDTarefa As Long
         Dim Despacho As IDespachoTarefa
+        Dim Inconsistencia As String
+
+        Inconsistencia = ValidaDespacho()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
 
         Despacho = MontaDespacho()
 
@@ -60,18 +70,21 @@ Partial Public Class ctrlDespachoTarefa
         Tarefa.Descricao = txtDescricao.Text
         Tarefa.DataDeConclusao = txtDataHorarioFim.SelectedDate.Value
         Tarefa.DataDeInicio = txtDataHorarioInicio.SelectedDate.Value
-        Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO_DESPACHO_AGENDA)))
+        Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_ALVO_DESPACHO_TAREFA)))
 
         Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoTarefa)()
         Despacho.Tarefa = Tarefa
-        Despacho.Responsavel = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UsuarioLogado.ID)
-        Despacho.Solicitacao = CType(ViewState(CHAVE_SOLICITACAO_DESPACHO_AGENDA), ISolicitacao)
+        Despacho.Solicitante = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UsuarioLogado.ID)
+        Despacho.Alvo = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_ALVO_DESPACHO_TAREFA)))
+        Despacho.Solicitacao = CType(ViewState(CHAVE_SOLICITACAO_DESPACHO_TAREFA), ISolicitacao)
         Despacho.DataDoDespacho = Now
+        Despacho.Tipo = CType(ViewState(CHAVE_TIPO_DESPACHO_TAREFA), TipoDeDespacho)
 
         Return Despacho
     End Function
 
     Private Function ValidaDespacho() As String
+        If ViewState(CHAVE_ID_ALVO_DESPACHO_TAREFA) Is Nothing Then Return "O alvo do despacho deve ser informado."
         If String.IsNullOrEmpty(txtAssunto.Text) Then Return "O assunto deve ser informado."
         If Not txtDataHorarioInicio.SelectedDate.HasValue Then Return "A data e hora de inicio devem ser informados."
         If Not txtDataHorarioFim.SelectedDate.HasValue Then Return "A data e hora final devem ser informados."
@@ -79,15 +92,21 @@ Partial Public Class ctrlDespachoTarefa
         Return Nothing
     End Function
 
-    Public WriteOnly Property IDProprietario() As Long
+    Public WriteOnly Property IDAlvo() As Long
         Set(ByVal value As Long)
-            ViewState(CHAVE_ID_PROPRIETARIO_DESPACHO_AGENDA) = value
+            ViewState(CHAVE_ID_ALVO_DESPACHO_TAREFA) = value
         End Set
     End Property
 
     Public WriteOnly Property Solicitacao() As ISolicitacao
         Set(ByVal value As ISolicitacao)
-            ViewState(CHAVE_SOLICITACAO_DESPACHO_AGENDA) = value
+            ViewState(CHAVE_SOLICITACAO_DESPACHO_TAREFA) = value
+        End Set
+    End Property
+
+    Public WriteOnly Property TipoDespacho() As TipoDeDespacho
+        Set(ByVal value As TipoDeDespacho)
+            ViewState(CHAVE_TIPO_DESPACHO_TAREFA) = value
         End Set
     End Property
 

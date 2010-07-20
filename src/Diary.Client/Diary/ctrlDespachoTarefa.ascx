@@ -30,14 +30,13 @@
                 </telerik:RadTextBox>
             </td>
         </tr>
-       <tr>
+        <tr>
             <td class="th3">
                 <asp:Label ID="Label4" runat="server" Text="Prioridade"></asp:Label>
             </td>
             <td class="td">
                 <telerik:RadComboBox ID="cboPrioridade" runat="server">
                 </telerik:RadComboBox>
-             
             </td>
         </tr>
         <tr>
@@ -48,14 +47,11 @@
                 <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" TextMode="MultiLine"
                     Width="350px">
                 </telerik:RadTextBox>
-                   
             </td>
-           
         </tr>
         <tr>
             <td colspan="2">
-             <asp:Button ID="btnAdicionarDespacho" runat="server" CssClass="RadUploadSubmit" 
-                                                Text="Despachar" />
+                <asp:Button ID="btnAdicionarDespacho" runat="server" CssClass="RadUploadSubmit" Text="Despachar" />
             </td>
         </tr>
     </table>

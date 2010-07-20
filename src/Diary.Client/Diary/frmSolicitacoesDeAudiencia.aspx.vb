@@ -102,7 +102,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeAudiencia.aspx", "?Id=", ID)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência"), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar solicitação de audiência"), False)
 
         ElseIf e.CommandName = "Finalizar" Then
             Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
@@ -111,7 +111,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
         ElseIf e.CommandName = "Despachar" Then
             Dim URL As String
 
-            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID)
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID, "&Tipo=", TipoDeSolicitacao.Audiencia.ID.ToString)
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência"), False)
         End If
     End Sub
@@ -153,7 +153,6 @@ Partial Public Class frmSolicitacoesDeAudiencia
         Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
 
         Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
-
             Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(Not chkConsiderarSolicitacoesFinalizadas.Checked, _
                                                                   txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate.Value)
         End Using
