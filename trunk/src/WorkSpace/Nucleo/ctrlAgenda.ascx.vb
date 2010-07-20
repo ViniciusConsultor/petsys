@@ -75,11 +75,6 @@ Partial Public Class ctrlAgenda
     Private Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             CarregaAgenda()
-
-            UtilidadesWeb.LimparComponente(CType(grdTarefas, Control))
-            grdTarefas.DataSource = New List(Of ITarefa)
-            grdTarefas.DataBind()
-            Exit Sub
         End If
     End Sub
 
@@ -105,4 +100,30 @@ Partial Public Class ctrlAgenda
         grdTarefas.DataBind()
     End Sub
 
+    Private Sub schCompromissos_AppointmentClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.SchedulerEventArgs) Handles schCompromissos.AppointmentClick
+        Dim URL As String
+
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
+        URL = String.Concat(URL, "Nucleo/cdCompromisso.aspx")
+        URL = String.Concat(URL, "?IdProprietario=", IDProprietario.ToString)
+        URL = String.Concat(URL, "?IdCompromisso=", IDProprietario.ToString)
+
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de compromissos"), False)
+    End Sub
+
+    Private Sub schCompromissos_AppointmentCommand(ByVal sender As Object, ByVal e As Telerik.Web.UI.AppointmentCommandEventArgs) Handles schCompromissos.AppointmentCommand
+
+    End Sub
+
+    Private Sub schCompromissos_AppointmentContextMenuItemClicked(ByVal sender As Object, ByVal e As Telerik.Web.UI.AppointmentContextMenuItemClickedEventArgs) Handles schCompromissos.AppointmentContextMenuItemClicked
+
+    End Sub
+
+    Private Sub schCompromissos_AppointmentDelete(ByVal sender As Object, ByVal e As Telerik.Web.UI.SchedulerCancelEventArgs) Handles schCompromissos.AppointmentDelete
+        Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+            Servico.RemovaCompromisso(CLng(e.Appointment.ID))
+        End Using
+
+        CarregaAgenda()
+    End Sub
 End Class

@@ -10,7 +10,7 @@ Public Class Tarefa
             Return _Assunto
         End Get
         Set(ByVal value As String)
-
+            _Assunto = value
         End Set
     End Property
 
