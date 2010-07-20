@@ -17,11 +17,12 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("INSERT INTO NCL_AGENDA (")
-        Sql.Append("IDPESSOA, HORAINICO, HORAFIM)")
+        Sql.Append("IDPESSOA, HORAINICO, HORAFIM, INTERVALO)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Agenda.Pessoa.ID.ToString, ", "))
         Sql.Append(String.Concat(Agenda.HorarioDeInicio.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat(Agenda.HorarioDeTermino.ToString("HHmm"), ") "))
+        Sql.Append(String.Concat(Agenda.HorarioDeTermino.ToString("HHmm"), ", "))
+        Sql.Append(String.Concat(Agenda.IntervaloEntreOsCompromissos.ToString("HHmm"), ")"))
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
@@ -34,7 +35,9 @@ Public Class MapeadorDeAgenda
 
         Sql.Append("UPDATE NCL_AGENDA SET ")
         Sql.Append(String.Concat("HORAINICO = ", Agenda.HorarioDeInicio.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat("HORAFIM = ", Agenda.HorarioDeTermino.ToString("HHmm")))
+        Sql.Append(String.Concat("HORAFIM = ", Agenda.HorarioDeTermino.ToString("HHmm"), ", "))
+        Sql.Append(String.Concat("INTERVALO = ", Agenda.IntervaloEntreOsCompromissos.ToString("HHmm")))
+
         Sql.Append(" WHERE IDPESSOA = " & Agenda.Pessoa.ID.Value.ToString)
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
@@ -44,7 +47,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Agenda As IAgenda = Nothing
 
-        Sql.Append("SELECT HORAINICO, HORAFIM FROM NCL_AGENDA WHERE ")
+        Sql.Append("SELECT HORAINICO, HORAFIM, INTERVALO FROM NCL_AGENDA WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", Pessoa.ID.Value.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -64,6 +67,7 @@ Public Class MapeadorDeAgenda
         Agenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgenda)()
         Agenda.HorarioDeInicio = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAINICO").Value
         Agenda.HorarioDeTermino = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAFIM").Value
+        Agenda.IntervaloEntreOsCompromissos = UtilidadesDePersistencia.getValorHourMinute(Leitor, "INTERVALO").Value
 
         Return Agenda
     End Function
@@ -85,7 +89,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Agenda As IAgenda = Nothing
 
-        Sql.Append(" SELECT HORAINICO, HORAFIM, NOME, ID FROM NCL_AGENDA, NCL_PESSOA WHERE ")
+        Sql.Append(" SELECT HORAINICO, HORAFIM, NOME, INTERVALO, ID FROM NCL_AGENDA, NCL_PESSOA WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", IDPessoa.ToString))
         Sql.Append(" AND ID = IDPESSOA")
 
@@ -154,9 +158,9 @@ Public Class MapeadorDeAgenda
         End If
 
         If Not String.IsNullOrEmpty(Compromisso.Descricao) Then
-            Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(Compromisso.Descricao), "')"))
+            Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(Compromisso.Descricao), "'"))
         Else
-            Sql.Append(" DESCRICAO = NULL)")
+            Sql.Append(" DESCRICAO = NULL")
         End If
 
         Sql.Append(String.Concat(" WHERE ID = ", Compromisso.ID.Value.ToString))
@@ -276,9 +280,9 @@ Public Class MapeadorDeAgenda
         Sql.Append(String.Concat(" PRIORIDADE = '", Tarefa.Prioridade.ID.ToString, "', "))
 
         If Not String.IsNullOrEmpty(Tarefa.Descricao) Then
-            Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Descricao), "')"))
+            Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Descricao), "'"))
         Else
-            Sql.Append(" DESCRICAO = NULL)")
+            Sql.Append(" DESCRICAO = NULL")
         End If
 
         Sql.Append(String.Concat(" WHERE ID = ", Tarefa.ID.Value.ToString))

@@ -36,4 +36,14 @@ Public Class Agenda
         End Set
     End Property
 
+    Private _IntervaloEntreOsCompromissos As Date
+    Public Property IntervaloEntreOsCompromissos() As Date Implements IAgenda.IntervaloEntreOsCompromissos
+        Get
+            Return _IntervaloEntreOsCompromissos
+        End Get
+        Set(ByVal value As Date)
+            _IntervaloEntreOsCompromissos = value
+        End Set
+    End Property
+
 End Class

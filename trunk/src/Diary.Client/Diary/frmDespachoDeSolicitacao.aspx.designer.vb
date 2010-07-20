@@ -43,6 +43,24 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
+    '''RadDock3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDock3 As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
+    '''ctrlPessoa1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
+
+    '''<summary>
     '''RadDock1 control.
     '''</summary>
     '''<remarks>
@@ -59,15 +77,6 @@ Partial Public Class frmDespachoDeSolicitacao
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlDespacho As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''ctrlPessoa1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
 
     '''<summary>
     '''Label1 control.

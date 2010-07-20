@@ -10,7 +10,7 @@ Partial Public Class cdTarefa
     Inherits System.Web.UI.Page
 
     Private Const CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_TAREFA"
-    Private Const CHAVE_ID_COMPROMISSO As String = "CHAVE_ID_TAREFA"
+    Private Const CHAVE_ID_TAREFA As String = "CHAVE_ID_TAREFA"
     Private Const CHAVE_ID_PROPRIETARIO As String = "CHAVE_ID_PROPRIETARIO_TAREFA"
 
     Private Enum Estado As Byte
@@ -52,7 +52,7 @@ Partial Public Class cdTarefa
     End Sub
 
     Private Sub LimpaDados()
-        Session(CHAVE_ID_COMPROMISSO) = Nothing
+        Session(CHAVE_ID_TAREFA) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoCompromisso, Control))
         CarregaDados()
     End Sub
@@ -68,6 +68,14 @@ Partial Public Class cdTarefa
         End Using
 
         If Tarefa Is Nothing Then Exit Sub
+
+        txtAssunto.Text = Tarefa.Assunto
+        txtDescricao.Text = Tarefa.Descricao
+        txtDataHorarioInicio.SelectedDate = Tarefa.DataDeInicio
+        txtDataHorarioFim.SelectedDate = Tarefa.DataDeConclusao
+        cboPrioridade.SelectedValue = Tarefa.Prioridade.ID.ToString
+        Session(CHAVE_ID_PROPRIETARIO) = Tarefa.Proprietario.ID
+        Session(CHAVE_ID_TAREFA) = Tarefa.ID
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -123,7 +131,7 @@ Partial Public Class cdTarefa
         Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(Session(CHAVE_ID_PROPRIETARIO)))
 
         If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
-            Tarefa.ID = CLng(Session(CHAVE_ID_COMPROMISSO))
+            Tarefa.ID = CLng(Session(CHAVE_ID_TAREFA))
         End If
 
         Return Tarefa

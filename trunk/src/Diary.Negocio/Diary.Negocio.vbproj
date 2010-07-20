@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Contato.vb" />
     <Compile Include="Despacho.vb" />
+    <Compile Include="DespachoAgenda.vb" />
+    <Compile Include="DespachoTarefa.vb" />
     <Compile Include="LazyLoad\SolicitacaoDeAudienciaLazyLoad.vb" />
     <Compile Include="LazyLoad\SolicitacaoDeConviteLazyLoad.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

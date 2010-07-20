@@ -15,16 +15,6 @@ Public MustInherit Class Despacho
         End Set
     End Property
 
-    Private _Responsavel As IPessoaFisica
-    Public Property Responsavel() As IPessoaFisica Implements IDespacho.Responsavel
-        Get
-            Return _Responsavel
-        End Get
-        Set(ByVal value As IPessoaFisica)
-            _Responsavel = value
-        End Set
-    End Property
-
     Private _Solicitacao As ISolicitacao
     Public Property Solicitacao() As ISolicitacao Implements IDespacho.Solicitacao
         Get
@@ -55,6 +45,25 @@ Public MustInherit Class Despacho
         End Set
     End Property
 
-    Public MustOverride ReadOnly Property TipoDestinoDespacho() As TipoDestinoDespacho Implements IDespacho.TipoDestinoDespacho
-        
+    Public MustOverride ReadOnly Property TipoDestino() As TipoDestinoDespacho Implements IDespacho.TipoDestino
+
+    Private _Alvo As IPessoaFisica
+    Public Property Alvo() As IPessoaFisica Implements IDespacho.Alvo
+        Get
+            Return _Alvo
+        End Get
+        Set(ByVal value As IPessoaFisica)
+            _Alvo = value
+        End Set
+    End Property
+
+    Private _Solicitante As IPessoaFisica
+    Public Property Solicitante() As IPessoaFisica Implements IDespacho.Solicitante
+        Get
+            Return _Solicitante
+        End Get
+        Set(ByVal value As IPessoaFisica)
+            _Solicitante = value
+        End Set
+    End Property
 End Class

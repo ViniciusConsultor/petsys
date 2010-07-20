@@ -7,10 +7,11 @@ Namespace Negocio
 
         Property ID() As Nullable(Of Long)
         Property Tipo() As TipoDeDespacho
-        Property Responsavel() As IPessoaFisica
+        Property Solicitante() As IPessoaFisica
+        Property Alvo() As IPessoaFisica
         Property Solicitacao() As ISolicitacao
         Property DataDoDespacho() As Date
-        ReadOnly Property TipoDestinoDespacho() As TipoDestinoDespacho
+        ReadOnly Property TipoDestino() As TipoDestinoDespacho
 
     End Interface
 

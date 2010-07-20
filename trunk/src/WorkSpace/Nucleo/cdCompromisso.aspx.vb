@@ -59,6 +59,14 @@ Partial Public Class cdCompromisso
         End Using
 
         If Compromisso Is Nothing Then Exit Sub
+
+        txtAssunto.Text = Compromisso.Assunto
+        txtDescricao.Text = Compromisso.Descricao
+        txtDataHorarioFim.SelectedDate = Compromisso.Fim
+        txtDataHorarioInicio.SelectedDate = Compromisso.Inicio
+        txtLocal.Text = Compromisso.Local
+        Session(CHAVE_ID_PROPRIETARIO) = Compromisso.Proprietario.ID
+        Session(CHAVE_ID_COMPROMISSO) = Compromisso.ID
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick

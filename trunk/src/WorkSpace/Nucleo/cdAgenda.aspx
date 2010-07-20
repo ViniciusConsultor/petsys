@@ -54,6 +54,15 @@
                                     </telerik:RadTimePicker>
                                 </td>
                             </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label3" runat="server" Text="Intervalo entre os compromissos"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTimePicker ID="txtIntervaloEntreCompromissos" runat="server">
+                                    </telerik:RadTimePicker>
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>

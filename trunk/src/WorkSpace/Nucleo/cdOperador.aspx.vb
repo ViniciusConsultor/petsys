@@ -299,4 +299,7 @@ Partial Public Class cdOperador
         MostraGrupos(Nothing)
     End Sub
 
+    Private Sub grdGrupos_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdGrupos.PageIndexChanged
+        UtilidadesWeb.PaginacaoDataGrid(grdGrupos, Session(CHAVE_GRUPOS), e)
+    End Sub
 End Class
