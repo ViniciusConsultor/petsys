@@ -1,12 +1,65 @@
-﻿Imports Telerik.Web.UI
+﻿Imports Compartilhados.Componentes.Web
+Imports Telerik.Web.UI
 Imports Compartilhados.Interfaces.Core.Negocio
-Imports Compartilhados.Componentes.Web
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
+Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
-Partial Public Class ctrlAgenda
-    Inherits System.Web.UI.UserControl
+Partial Public Class frmAgenda
+    Inherits SuperPagina
     Implements ICallbackEventHandler
+
+    Private Sub ExibaAgendaDaPessoa(ByVal Pessoa As IPessoa)
+        Dim Agenda As IAgenda
+
+        Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+            Agenda = Servico.ObtenhaAgenda(Pessoa.ID.Value)
+        End Using
+
+        If Agenda Is Nothing Then
+            pnlCompromissos.Visible = False
+            pnlTarefas.Visible = False
+
+            UtilidadesWeb.MostraMensagemDeInformacao("Não existe agenda configurada para esta pessoa.")
+            Exit Sub
+        End If
+
+        pnlCompromissos.Visible = True
+        pnlTarefas.Visible = True
+        Me.IDProprietario = Pessoa.ID.Value
+        Me.HoraInicio = Agenda.HorarioDeInicio
+        Me.HoraFim = Agenda.HorarioDeTermino
+        Me.IntervaloEntreCompromissos = Agenda.IntervaloEntreOsCompromissos
+    End Sub
+
+    Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
+        Return Me.ToolBarPrincipal
+    End Function
+
+    Protected Overrides Function ObtenhaIdFuncao() As String
+        Return "FUN.NCL.012"
+    End Function
+
+    Private Sub ExibaTelaInicial()
+        Dim UsuarioLogado As Usuario
+        Dim Pessoa As IPessoaFisica
+
+        UsuarioLogado = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
+        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UsuarioLogado.ID)
+
+        ctrlPessoa1.Inicializa()
+        ctrlPessoa1.BotaoDetalharEhVisivel = False
+        ctrlPessoa1.BotaoNovoEhVisivel = False
+        ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
+        ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
+        ctrlPessoa1.PessoaSelecionada = Pessoa
+        ExibaAgendaDaPessoa(Pessoa)
+    End Sub
+
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        CarregaAgenda()
+    End Sub
 
     Private Const CHAVE_COMPROMISSOS As String = "CHAVE_COMPROMISSOS"
     Private Const CHAVE_ID_PROPRIETARIO As String = "CHAVE_ID_PROPRIETARIO"
@@ -49,13 +102,6 @@ Partial Public Class ctrlAgenda
         End Set
     End Property
 
-    Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
-        Select Case CType(e.Item, RadToolBarButton).CommandName
-            Case "btnNovaTarefa"
-                Call btnNovaTarefa_Click()
-        End Select
-    End Sub
-
     Private Sub btnNovoCompromisso_Click()
         Dim URL As String
 
@@ -74,30 +120,25 @@ Partial Public Class ctrlAgenda
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de tarefas"), False)
     End Sub
 
-    Private Sub RadToolBar1_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles RadToolBar1.ButtonClick
-        Select Case CType(e.Item, RadToolBarButton).CommandName
-            Case "btnNovoCompromisso"
-                Call btnNovoCompromisso_Click()
-        End Select
-    End Sub
-
     Private Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim cbReference As String
+        Dim callbackScript As String
+
+        AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ExibaAgendaDaPessoa
 
         cbReference = Page.ClientScript.GetCallbackEventReference(Me, "arg", "ReceiveServerData", "context", True)
-
-        Dim callbackScript As String
         callbackScript = String.Concat("function CallServer(arg,context) { ", cbReference, ";}")
         Page.ClientScript.RegisterClientScriptBlock(Me.GetType(), "CallServer", callbackScript, True)
 
         If Not IsPostBack Then
+            ExibaTelaInicial()
             CarregaAgenda()
         End If
     End Sub
 
     Public Sub CarregaAgenda()
-        UtilidadesWeb.LimparComponente(CType(schCompromissos, Control))
-        UtilidadesWeb.LimparComponente(CType(grdTarefas, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlCompromissos, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlTarefas, Control))
 
         Session.Remove(CHAVE_COMPROMISSOS)
         Session.Remove(CHAVE_TAREFAS)
@@ -177,6 +218,38 @@ Partial Public Class ctrlAgenda
 
     Private Sub grdTarefas_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdTarefas.PageIndexChanged
         UtilidadesWeb.PaginacaoDataGrid(grdTarefas, Session(CHAVE_TAREFAS), e)
+    End Sub
+
+    Private Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
+        Dim Principal As Compartilhados.Principal
+
+        Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
+
+        'Permitido excluir compromissos
+        schCompromissos.AllowDelete = Principal.EstaAutorizado("OPE.NCL.012.0002")
+
+        'Coluna com botão remover para tarefas
+        grdTarefas.Columns(0).Visible = Principal.EstaAutorizado("OPE.NCL.012.0005")
+
+        'Coluna com botão modificar para tarefas
+        grdTarefas.Columns(1).Visible = Principal.EstaAutorizado("OPE.NCL.012.0006")
+
+        'Permitido visualizar agenda de outras pessoas
+        pnlProprietario.Visible = Principal.EstaAutorizado("OPE.NCL.012.0007")
+    End Sub
+
+    Private Sub ToolBarTarefa_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarTarefa.ButtonClick
+        Select Case CType(e.Item, RadToolBarButton).CommandName
+            Case "btnNovaTarefa"
+                Call btnNovaTarefa_Click()
+        End Select
+    End Sub
+
+    Private Sub ToolBarCompromisso_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarCompromisso.ButtonClick
+        Select Case CType(e.Item, RadToolBarButton).CommandName
+            Case "btnNovoCompromisso"
+                Call btnNovoCompromisso_Click()
+        End Select
     End Sub
 
 End Class

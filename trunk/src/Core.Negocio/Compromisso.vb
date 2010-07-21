@@ -1,4 +1,5 @@
 ﻿Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados
 
 <Serializable()> _
 Public Class Compromisso
@@ -73,5 +74,22 @@ Public Class Compromisso
             _ID = value
         End Set
     End Property
+
+    Public Sub EstaConsistente() Implements ICompromisso.EstaConsistente
+        VerificaSeDataDeIncioEhMaiorQueDataAtual()
+        VerificaSeDataFinalEhMenorQueDataDeInicio()
+    End Sub
+
+    Private Sub VerificaSeDataDeIncioEhMaiorQueDataAtual()
+        If CLng(Me.Inicio.ToString("yyyyMMddHHmm")) <= CLng(Now.ToString("yyyyMMddHHmm")) Then
+            Throw New BussinesException("Data de início deve ser maior igual a data atual.")
+        End If
+    End Sub
+
+    Private Sub VerificaSeDataFinalEhMenorQueDataDeInicio()
+        If CLng(Me.Inicio.ToString("yyyyMMddHHmm")) > CLng(Me.Fim.ToString("yyyyMMddHHmm")) Then
+            Throw New BussinesException("Data de início deve ser menor igual a data final.")
+        End If
+    End Sub
 
 End Class

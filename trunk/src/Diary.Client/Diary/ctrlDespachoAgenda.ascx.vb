@@ -34,17 +34,22 @@ Partial Public Class ctrlDespachoAgenda
 
         Despacho = MontaDespacho()
 
-        Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            IDCompromisso = ServicoDeAgenda.InsiraCompromisso(Despacho.Compromisso)
-        End Using
+        Try
+            Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+                IDCompromisso = ServicoDeAgenda.InsiraCompromisso(Despacho.Compromisso)
+            End Using
 
-        Despacho.Compromisso.ID = IDCompromisso
+            Despacho.Compromisso.ID = IDCompromisso
 
-        Using ServicoDeDespacho As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
-            ServicoDeDespacho.Inserir(Despacho)
-        End Using
+            Using ServicoDeDespacho As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
+                ServicoDeDespacho.Inserir(Despacho)
+            End Using
 
-        RaiseEvent SolicitacaoFoiDespachada(Despacho)
+            RaiseEvent SolicitacaoFoiDespachada(Despacho)
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
     End Sub
 
     Private Function MontaDespacho() As IDespachoAgenda

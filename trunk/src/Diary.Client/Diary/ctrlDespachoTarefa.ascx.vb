@@ -45,17 +45,22 @@ Partial Public Class ctrlDespachoTarefa
 
         Despacho = MontaDespacho()
 
-        Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            IDTarefa = ServicoDeAgenda.InsiraTarefa(Despacho.Tarefa)
-        End Using
+        Try
+            Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+                IDTarefa = ServicoDeAgenda.InsiraTarefa(Despacho.Tarefa)
+            End Using
 
-        Despacho.Tarefa.ID = IDTarefa
+            Despacho.Tarefa.ID = IDTarefa
 
-        Using ServicoDeDespacho As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
-            ServicoDeDespacho.Inserir(Despacho)
-        End Using
+            Using ServicoDeDespacho As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
+                ServicoDeDespacho.Inserir(Despacho)
+            End Using
 
-        RaiseEvent SolicitacaoFoiDespachada(Despacho)
+            RaiseEvent SolicitacaoFoiDespachada(Despacho)
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
     End Sub
 
     Private Function MontaDespacho() As IDespachoTarefa
