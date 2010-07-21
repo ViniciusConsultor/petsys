@@ -9,6 +9,7 @@
         Property Descricao() As String
         Property Proprietario() As IPessoaFisica
         Property ID() As Nullable(Of Long)
+        Sub EstaConsistente()
 
     End Interface
 

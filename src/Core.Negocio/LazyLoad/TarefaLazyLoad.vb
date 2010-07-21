@@ -97,4 +97,9 @@ Public Class TarefaLazyLoad
         End Using
     End Sub
 
+    Public Sub EstaConsistente() Implements ITarefa.EstaConsistente
+        If _TarefaReal Is Nothing Then CarregueObjetoReal()
+        _TarefaReal.EstaConsistente()
+    End Sub
+
 End Class

@@ -97,4 +97,9 @@ Public Class CompromissoLazyLoad
         End Using
     End Sub
 
+    Public Sub EstaConsistente() Implements ICompromisso.EstaConsistente
+        If _CompromissoReal Is Nothing Then CarregueObjetoReal()
+        _CompromissoReal.EstaConsistente()
+    End Sub
+
 End Class

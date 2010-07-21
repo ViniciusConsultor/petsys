@@ -6,6 +6,7 @@ Imports System.Web
 Imports Telerik.Web
 Imports Telerik.Web.UI
 Imports System.Web.SessionState
+Imports System.Globalization
 
 Public Class UtilidadesWeb
 
@@ -224,6 +225,81 @@ Public Class UtilidadesWeb
             DirectCast(Componente, RadGrid).PagerStyle.AlwaysVisible = True
             DirectCast(Componente, RadGrid).PagerStyle.Mode = GridPagerMode.NumericPages
         End If
+
+        If TypeOf Componente Is RadScheduler Then
+            SetaGlobalizacaoPortuguesNoComponenteScheduler(CType(Componente, RadScheduler))
+        End If
+
+    End Sub
+
+    Private Shared Sub SetaGlobalizacaoPortuguesNoComponenteScheduler(ByVal Componente As RadScheduler)
+        With Componente
+            .OverflowBehavior = OverflowBehavior.Scroll
+            .StartEditingInAdvancedForm = False
+            .StartInsertingInAdvancedForm = False
+            .AllowDelete = True
+            .AllowInsert = False
+            .AllowEdit = False
+            .Culture = CultureInfo.GetCultureInfo("pt-BR")
+            .DisplayDeleteConfirmation = False
+            .AdvancedForm.Enabled = False
+            .HoursPanelTimeFormat = "HH:mm"
+            .ShowFullTime = False
+            .FirstDayOfWeek = DayOfWeek.Monday
+            .LastDayOfWeek = DayOfWeek.Friday
+            .Localization.AdvancedAllDayEvent = "Todo dia"
+            .Localization.AdvancedCalendarCancel = "Cancelar"
+            .Localization.AdvancedCalendarToday = "Hoje"
+            .Localization.AdvancedClose = "Fechar"
+            .Localization.AdvancedDaily = "Diariamente"
+            .Localization.AdvancedDay = "Dia"
+            .Localization.AdvancedDays = "dia(s)"
+            .Localization.AdvancedDescription = "Descrição"
+            .Localization.AdvancedEditAppointment = "Editar compromisso"
+            .Localization.AdvancedEvery = "Toda"
+            .Localization.AdvancedEveryWeekday = "Toda semana"
+            .Localization.AdvancedFirst = "primeiro"
+            .Localization.AdvancedFourth = "quarto"
+            .Localization.AdvancedFrom = "Hora de início"
+            .Localization.AdvancedHourly = "De hora em hora"
+            .Localization.AdvancedHours = "hora(s)"
+            .Localization.AdvancedInvalidNumber = "Número inválido"
+            .Localization.AdvancedLast = "último"
+            .Localization.AdvancedMaskDay = "dia"
+            .Localization.AdvancedMaskWeekday = "dia da semana"
+            .Localization.AdvancedMaskWeekendDay = "dia de semana"
+            .Localization.AdvancedMonthly = "Mensal"
+            .Localization.AdvancedMonths = "mês(es)"
+            .Localization.AdvancedNewAppointment = "Novo compromisso"
+            .Localization.AdvancedNoEndDate = "Sem data final"
+            .Localization.AdvancedOccurrences = "ocorrências"
+            .Localization.AdvancedOf = "de"
+            .Localization.AdvancedOfEvery = "de cada"
+            .Localization.AdvancedRecurEvery = "Repetir todos os"
+            .Localization.AdvancedSecond = "segundo"
+            .Localization.AdvancedSubject = "Assunto"
+            .Localization.AdvancedThe = "O"
+            .Localization.AdvancedThird = "terceiro"
+            .Localization.AdvancedWeekly = "Semanal"
+            .Localization.AdvancedWeeks = "semana(s) em"
+            .Localization.AdvancedWorking = "Trabalho..."
+            .Localization.AdvancedYearly = "Anual"
+            .Localization.AllDay = "Horários"
+            .Localization.Cancel = "Cancelar"
+            .Localization.ConfirmCancel = "Cancelar"
+            .Localization.ContextMenuDelete = "Apagar"
+            .Localization.ContextMenuGoToToday = "Ir para hoje"
+            .Localization.HeaderDay = "Dia"
+            .Localization.HeaderMonth = "Mês"
+            .Localization.HeaderNextDay = "próximo dia"
+            .Localization.HeaderPrevDay = "dia anterior"
+            .Localization.HeaderTimeline = "Linha do tempo"
+            .Localization.HeaderToday = "hoje"
+            .Localization.HeaderWeek = "Semana"
+            .Localization.Show24Hours = "Mostrar as 24 horas..."
+            .Localization.ShowBusinessHours = "Mostrar as horas de trabalho..."
+            .Localization.ShowMore = "mais..."
+        End With
 
     End Sub
 

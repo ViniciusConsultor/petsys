@@ -62,16 +62,6 @@ Public Class Form1
 
         Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
         Pessoa.Nome = "Administrador"
-        Pessoa.Sexo = Sexo.Masculino
-        Pessoa.DataDeNascimento = New Date(2009, 11, 1)
-        Pessoa.EstadoCivil = EstadoCivil.Ignorado
-        Pessoa.Nacionalidade = Nacionalidade.Outros
-        Pessoa.NomeDaMae = "Admin"
-        Pessoa.Raca = Raca.Branca
-
-        Using ServicoDeMunicipio As IServicoDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMunicipio)()
-            Pessoa.Naturalidade = ServicoDeMunicipio.ObtenhaMunicipiosPorNomeComoFiltro("GOIÂNIA", 1)(0)
-        End Using
 
         ToolStripProgressBar1.Increment(1)
 

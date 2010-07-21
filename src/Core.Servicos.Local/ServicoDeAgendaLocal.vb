@@ -100,9 +100,9 @@ Public Class ServicoDeAgendaLocal
         Dim Mapeador As IMapeadorDeAgenda
         Dim ID As Long
 
+        Compromisso.EstaConsistente()
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
-
         ServerUtils.BeginTransaction()
 
         Try
@@ -121,6 +121,7 @@ Public Class ServicoDeAgendaLocal
     Public Sub ModifiqueCompromisso(ByVal Compromisso As ICompromisso) Implements IServicoDeAgenda.ModifiqueCompromisso
         Dim Mapeador As IMapeadorDeAgenda
 
+        Compromisso.EstaConsistente()
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
 
@@ -186,6 +187,7 @@ Public Class ServicoDeAgendaLocal
         Dim Mapeador As IMapeadorDeAgenda
         Dim ID As Long
 
+        Tarefa.EstaConsistente()
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
 
@@ -207,6 +209,7 @@ Public Class ServicoDeAgendaLocal
     Public Sub ModifiqueTarefa(ByVal Tarefa As ITarefa) Implements IServicoDeAgenda.ModifiqueTarefa
         Dim Mapeador As IMapeadorDeAgenda
 
+        Tarefa.EstaConsistente()
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
 
