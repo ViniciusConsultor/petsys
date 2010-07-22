@@ -100,9 +100,10 @@
                                 </td>
                             </tr>
                         </table>
-                        <telerik:RadGrid ID="grdGrupos" runat="server" AutoGenerateColumns="False" GridLines="None"
-                            Skin="Vista">
-                            <MasterTableView>
+                        <telerik:RadGrid ID="grdGrupos" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                            PageSize="10" GridLines="None" Width="100%">
+                            <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                            <MasterTableView GridLines="Both">
                                 <RowIndicatorColumn>
                                     <HeaderStyle Width="20px" />
                                 </RowIndicatorColumn>
@@ -110,10 +111,10 @@
                                     <HeaderStyle Width="20px" />
                                 </ExpandCollapseColumn>
                                 <Columns>
-                                     <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                        HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                     </telerik:GridButtonColumn>
-                                    <telerik:GridBoundColumn DataField="ID" UniqueName="column" Visible="False">
+                                    <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn DataField="Nome" UniqueName="column1">
                                     </telerik:GridBoundColumn>

@@ -52,6 +52,8 @@
                         <Items>
                             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo compromisso"
                                 CommandName="btnNovoCompromisso" CausesValidation="False" CommandArgument="OPE.NCL.012.0001" />
+                            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
+                                CommandName="btnImprimirCompromisso" CausesValidation="False" CommandArgument="OPE.NCL.012.0008" />
                         </Items>
                     </telerik:RadToolBar>
                     <telerik:RadScheduler runat="server" ID="schCompromissos" DataKeyField="ID" DataDescriptionField="Descricao"

@@ -36,16 +36,18 @@ Public MustInherit Class SuperPagina
 
         ToolBar = Me.ObtenhaBarraDeFerramentas
 
-        For Each Item As RadToolBarItem In ToolBar.Items
-            If TypeOf Item Is RadToolBarButton Then
-                If Not String.IsNullOrEmpty(CType(Item, RadToolBarButton).CommandArgument) Then
-                    'Vamos fazer as verificações apenas nos botoes que tiverem visiveis
-                    If Item.Visible Then
-                        Item.Visible = Principal.EstaAutorizado(CType(Item, RadToolBarButton).CommandArgument)
+        If Not ToolBar Is Nothing Then
+            For Each Item As RadToolBarItem In ToolBar.Items
+                If TypeOf Item Is RadToolBarButton Then
+                    If Not String.IsNullOrEmpty(CType(Item, RadToolBarButton).CommandArgument) Then
+                        'Vamos fazer as verificações apenas nos botoes que tiverem visiveis
+                        If Item.Visible Then
+                            Item.Visible = Principal.EstaAutorizado(CType(Item, RadToolBarButton).CommandArgument)
+                        End If
                     End If
                 End If
-            End If
-        Next
+            Next
+        End If
     End Sub
 
     Protected Sub SuperPagina_Load(ByVal sender As Object, ByVal e As EventArgs)

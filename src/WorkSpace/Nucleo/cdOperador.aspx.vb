@@ -51,7 +51,7 @@ Partial Public Class cdOperador
         MostraGrupos(New List(Of IGrupo))
         CarregaStatus()
         rblStatus.SelectedValue = StatusDoOperador.Ativo.ID.ToString
-        grdGrupos.Columns(0).Visible = True
+        ' grdGrupos.Columns(0).Visible = True
     End Sub
 
     Private Sub CarregaStatus()
@@ -79,10 +79,11 @@ Partial Public Class cdOperador
         Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Novo
         DokSenha.Visible = True
         MostraGrupos(New List(Of IGrupo))
-        grdGrupos.Columns(0).Visible = True
+        'grdGrupos.Columns(0).Visible = True
     End Sub
 
     Private Sub ExibaTelaModificar()
+        grdGrupos.Columns(0).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
@@ -94,7 +95,6 @@ Partial Public Class cdOperador
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), True)
         Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Modifica
         DokSenha.Visible = False
-        grdGrupos.Columns(0).Visible = True
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -109,10 +109,11 @@ Partial Public Class cdOperador
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), False)
         DokSenha.Visible = False
-        grdGrupos.Columns(0).Visible = False
+        'grdGrupos.Columns(0).Visible = False
     End Sub
 
     Private Sub ExibaTelaConsultar()
+        grdGrupos.Columns(0).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True
@@ -123,7 +124,6 @@ Partial Public Class cdOperador
         DokSenha.Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), False)
-        grdGrupos.Columns(0).Visible = False
     End Sub
 
     Protected Sub btnCancela_Click()
