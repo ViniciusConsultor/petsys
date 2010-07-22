@@ -24,6 +24,7 @@ Partial Public Class frmAgenda
             pnlTarefas.Visible = False
 
             lblInconsistencia.Text = "Não existe agenda configurada para esta pessoa."
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existe agenda configurada para esta pessoa."), False)
             Exit Sub
         End If
 
@@ -234,8 +235,17 @@ Partial Public Class frmAgenda
 
         Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
 
+        'Permitido inserir compromissos
+        CType(ToolBarCompromisso.FindButtonByCommandName("btnNovoCompromisso"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0001")
+
         'Permitido excluir compromissos
         schCompromissos.AllowDelete = Principal.EstaAutorizado("OPE.NCL.012.0002")
+
+        'Permitido Imprimir compromisso
+        CType(ToolBarCompromisso.FindButtonByCommandName("btnImprimirCompromisso"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0008")
+
+        'Permitido inserir tarefas
+        CType(ToolBarCompromisso.FindButtonByCommandName("btnNovaTarefa"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0004")
 
         'Coluna com botão remover para tarefas
         grdTarefas.Columns(0).Visible = Principal.EstaAutorizado("OPE.NCL.012.0005")
@@ -250,15 +260,24 @@ Partial Public Class frmAgenda
     Private Sub ToolBarTarefa_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarTarefa.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovaTarefa"
-                Call btnNovaTarefa_Click()
+                btnNovaTarefa_Click()
         End Select
     End Sub
 
     Private Sub ToolBarCompromisso_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarCompromisso.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovoCompromisso"
-                Call btnNovoCompromisso_Click()
+                btnNovoCompromisso_Click()
+            Case "btnImprimirCompromisso"
+                btnImprimirCompromisso_Click()
         End Select
+    End Sub
+
+    Private Sub btnImprimirCompromisso_Click()
+        Dim URL As String
+
+        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoCompromisso.aspx", "?IdProprietario=", IDProprietario.ToString)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir compromisso"), False)
     End Sub
 
 End Class

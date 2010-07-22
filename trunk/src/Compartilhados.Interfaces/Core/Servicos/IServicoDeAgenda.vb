@@ -18,6 +18,7 @@ Namespace Core.Servicos
         Sub RemovaCompromisso(ByVal ID As Long)
         Function ObtenhaCompromisso(ByVal ID As Long) As ICompromisso
         Function ObtenhaCompromissos(ByVal IDProprietario As Long) As IList(Of ICompromisso)
+        Function ObtenhaCompromissos(ByVal IDProprietario As Long, ByVal DataInicio As Date, ByVal DataFim As Nullable(Of Date)) As IList(Of ICompromisso)
 
         'Tarefa
         Function InsiraTarefa(ByVal Tarefa As ITarefa) As Long

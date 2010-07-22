@@ -271,4 +271,18 @@ Public Class ServicoDeAgendaLocal
         End Try
     End Sub
 
+    Public Function ObtenhaCompromissos(ByVal IDProprietario As Long, _
+                                        ByVal DataInicio As Date, _
+                                        ByVal DataFim As Date?) As IList(Of ICompromisso) Implements IServicoDeAgenda.ObtenhaCompromissos
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        Try
+            Return Mapeador.ObtenhaCompromissos(IDProprietario, DataInicio, DataFim)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
 End Class

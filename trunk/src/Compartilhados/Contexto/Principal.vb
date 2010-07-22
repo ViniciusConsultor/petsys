@@ -39,7 +39,11 @@ Public Class Principal
     End Function
 
     Public Function EstaAutorizado(ByVal DiretivaDeAutorizacao As String) As Boolean
-        Return _Usuario.ContemItem(DiretivaDeAutorizacao)
+        'TODO: melhorar este comportamento= --> quando for passado vazio ou nothing o sistema vai autorizar
+        If Not String.IsNullOrEmpty(DiretivaDeAutorizacao) Then
+            Return _Usuario.ContemItem(DiretivaDeAutorizacao)
+        End If
+        Return True
     End Function
 
 End Class

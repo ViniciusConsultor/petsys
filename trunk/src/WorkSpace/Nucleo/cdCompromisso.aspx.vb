@@ -7,7 +7,7 @@ Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class cdCompromisso
-    Inherits System.Web.UI.Page
+    Inherits SuperPagina
 
     Private Const CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_COMPROMISSO"
     Private Const CHAVE_ID_COMPROMISSO As String = "CHAVE_ID_COMPROMISSO"
@@ -144,5 +144,12 @@ Partial Public Class cdCompromisso
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0003")
     End Sub
 
+    Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
+        Return Nothing
+    End Function
+
+    Protected Overrides Function ObtenhaIdFuncao() As String
+        Return Nothing
+    End Function
 
 End Class

@@ -342,6 +342,13 @@
       <DependentUpon>cdCompromisso.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Nucleo\cdLembrete.aspx.designer.vb">
+      <DependentUpon>cdLembrete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdLembrete.aspx.vb">
+      <DependentUpon>cdLembrete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\cdTarefa.aspx.designer.vb">
       <DependentUpon>cdTarefa.aspx</DependentUpon>
     </Compile>
@@ -361,6 +368,13 @@
     </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\frmImpressaoCompromisso.aspx.designer.vb">
+      <DependentUpon>frmImpressaoCompromisso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmImpressaoCompromisso.aspx.vb">
+      <DependentUpon>frmImpressaoCompromisso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmPainelDeControle.aspx.designer.vb">
@@ -504,6 +518,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Nucleo\GerarCompromissosEmPDF.vb" />
     <Compile Include="Utils\FabricaDeMenu.vb" />
     <Compile Include="WorkSpace.Master.designer.vb">
       <DependentUpon>WorkSpace.Master</DependentUpon>
@@ -533,9 +548,11 @@
     <Content Include="imagens\wallpapers\twip_100325_00.ss_full.jpg" />
     <Content Include="Nucleo\cdAgenda.aspx" />
     <Content Include="Nucleo\cdCompromisso.aspx" />
+    <Content Include="Nucleo\cdLembrete.aspx" />
     <Content Include="Nucleo\cdTarefa.aspx" />
     <Content Include="Nucleo\frmAgenda.aspx" />
     <Content Include="Nucleo\frmAtalhos.aspx" />
+    <Content Include="Nucleo\frmImpressaoCompromisso.aspx" />
     <Content Include="Nucleo\frmPainelDeControle.aspx" />
     <Content Include="Nucleo\cdCliente.aspx" />
     <Content Include="Nucleo\cdOperador.aspx" />

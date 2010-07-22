@@ -342,7 +342,7 @@ Public Class MapeadorDeAgenda
             End While
         End Using
 
-        Return TAREFAS
+        Return Tarefas
     End Function
 
     Public Sub RemovaTarefa(ByVal ID As Long) Implements IMapeadorDeAgenda.RemovaTarefa
@@ -356,5 +356,35 @@ Public Class MapeadorDeAgenda
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
+
+    Public Function ObtenhaCompromissos(ByVal IDProprietario As Long, _
+                                        ByVal DataInicio As Date, _
+                                        ByVal DataFim As Date?) As IList(Of ICompromisso) Implements IMapeadorDeAgenda.ObtenhaCompromissos
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Compromissos As IList(Of ICompromisso) = New List(Of ICompromisso)
+
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_COMPROMISSO WHERE")
+        Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
+        'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
+        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
+
+        If DataFim.HasValue Then
+            'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
+            Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "000001"))
+        End If
+
+        Sql.Append(" ORDER BY INICIO")
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Compromissos.Add(MontaObjetoCompromisso(Leitor))
+            End While
+        End Using
+
+        Return Compromissos
+    End Function
 
 End Class

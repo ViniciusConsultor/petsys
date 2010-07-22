@@ -7,7 +7,7 @@ Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class cdTarefa
-    Inherits System.Web.UI.Page
+    Inherits SuperPagina
 
     Private Const CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_TAREFA"
     Private Const CHAVE_ID_TAREFA As String = "CHAVE_ID_TAREFA"
@@ -141,6 +141,14 @@ Partial Public Class cdTarefa
         If String.IsNullOrEmpty(txtAssunto.Text) Then Return "O assunto da tarefa deve ser informado."
         If Not txtDataHorarioInicio.SelectedDate.HasValue Then Return "A data e horário de início da tarefa devem ser informados."
         If Not txtDataHorarioFim.SelectedDate.HasValue Then Return "A data e horário de fim da tarefa devem ser informados."
+        Return Nothing
+    End Function
+
+    Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
+        Return Nothing
+    End Function
+
+    Protected Overrides Function ObtenhaIdFuncao() As String
         Return Nothing
     End Function
 

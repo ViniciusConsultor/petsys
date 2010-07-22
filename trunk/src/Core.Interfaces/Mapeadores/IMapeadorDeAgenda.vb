@@ -17,6 +17,9 @@ Namespace Mapeadores
         Sub RemovaCompromisso(ByVal ID As Long)
         Function ObtenhaCompromisso(ByVal ID As Long) As ICompromisso
         Function ObtenhaCompromissos(ByVal IDProprieatario As Long) As IList(Of ICompromisso)
+        Function ObtenhaCompromissos(ByVal IDProprietario As Long, _
+                                     ByVal DataInicio As Date, _
+                                     ByVal DataFim As Nullable(Of Date)) As IList(Of ICompromisso)
 
         Function InsiraTarefa(ByVal Tarefa As ITarefa) As Long
         Sub ModifiqueTarefa(ByVal Tarefa As ITarefa)
