@@ -17,6 +17,7 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc3:ctrlPessoa ID="ctrlPessoa1" runat="server" />
+                    <asp:Label ID="lblInconsistencia" runat="server" Text=""></asp:Label>
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock1" runat="server" Title="Despacho" DefaultCommands="ExpandCollapse"
@@ -33,58 +34,46 @@
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <asp:Panel ID="pnlComponenteDespachoAgenda" runat="server">
-                                        <uc1:ctrlDespachoAgenda ID="ctrlDespachoAgenda1" runat="server" />
-                                    </asp:Panel>
-                                    <asp:Panel ID="pnlComponenteDespachoTarefa" runat="server">
-                                        <uc2:ctrlDespachoTarefa ID="ctrlDespachoTarefa1" runat="server" />
-                                    </asp:Panel>
-                                </td>
-                            </tr>
                         </table>
+                        <asp:Panel ID="pnlComponenteDespachoAgenda" runat="server">
+                            <uc1:ctrlDespachoAgenda ID="ctrlDespachoAgenda1" runat="server" />
+                        </asp:Panel>
+                        <asp:Panel ID="pnlComponenteDespachoTarefa" runat="server">
+                            <uc2:ctrlDespachoTarefa ID="ctrlDespachoTarefa1" runat="server" />
+                        </asp:Panel>
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock2" runat="server" Title="Despachos da solicitação" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <table class="tabela">
-                        <tr>
-                            <td colspan="2">
-                                <telerik:RadGrid ID="grdDespachos" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                                    PageSize="10" GridLines="None" Skin="Vista">
-                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                    <MasterTableView GridLines="Both">
-                                        <RowIndicatorColumn>
-                                            <HeaderStyle Width="20px" />
-                                        </RowIndicatorColumn>
-                                        <ExpandCollapseColumn>
-                                            <HeaderStyle Width="20px" />
-                                        </ExpandCollapseColumn>
-                                        <Columns>
-                                            
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
-                                            </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDoDespacho" HeaderText="Data do despacho" UniqueName="column30">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Tipo.Descricao" HeaderText="Tipo" UniqueName="column3">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Solicitante.Nome" HeaderText="Pessoa solicitante" UniqueName="column6">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Alvo.Nome" HeaderText="Pessoa alvo"
-                                                UniqueName="column1" Visible="True">
-                                            </telerik:GridBoundColumn>                                         
-                                        </Columns>
-                                    </MasterTableView>
-                                </telerik:RadGrid>
-                            </td>
-                        </tr>
-                    </table>
+                    <telerik:RadGrid ID="grdDespachos" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                        PageSize="10" GridLines="None" Skin="Vista">
+                        <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                        <MasterTableView GridLines="Both">
+                            <RowIndicatorColumn>
+                                <HeaderStyle Width="20px" />
+                            </RowIndicatorColumn>
+                            <ExpandCollapseColumn>
+                                <HeaderStyle Width="20px" />
+                            </ExpandCollapseColumn>
+                            <Columns>
+                                <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="DataDoDespacho" HeaderText="Data do despacho"
+                                    UniqueName="column30">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Tipo.Descricao" HeaderText="Tipo" UniqueName="column3">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Solicitante.Nome" HeaderText="Pessoa solicitante"
+                                    UniqueName="column6">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Alvo.Nome" HeaderText="Pessoa alvo" UniqueName="column1"
+                                    Visible="True">
+                                </telerik:GridBoundColumn>
+                            </Columns>
+                        </MasterTableView>
+                    </telerik:RadGrid>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>

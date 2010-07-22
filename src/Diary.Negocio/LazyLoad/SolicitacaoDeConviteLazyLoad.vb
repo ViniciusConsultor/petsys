@@ -136,6 +136,12 @@ Namespace LazyLoad
                 _SolicitacaoDeConviteReal.Local = value
             End Set
         End Property
+
+        Public Sub EstaConsistente() Implements Interfaces.Negocio.ISolicitacaoDeConvite.EstaConsistente
+            If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
+            _SolicitacaoDeConviteReal.EstaConsistente()
+        End Sub
+
     End Class
 
 End Namespace

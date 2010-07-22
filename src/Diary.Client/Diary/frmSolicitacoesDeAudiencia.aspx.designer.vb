@@ -16,15 +16,6 @@ Option Explicit On
 Partial Public Class frmSolicitacoesDeAudiencia
 
     '''<summary>
-    '''RadAjaxLoadingPanel1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
-
-    '''<summary>
     '''rtbToolBar control.
     '''</summary>
     '''<remarks>
@@ -203,6 +194,15 @@ Partial Public Class frmSolicitacoesDeAudiencia
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents rdkLancamentos As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
+    '''Timer1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Timer1 As Global.System.Web.UI.Timer
 
     '''<summary>
     '''grdItensLancados control.

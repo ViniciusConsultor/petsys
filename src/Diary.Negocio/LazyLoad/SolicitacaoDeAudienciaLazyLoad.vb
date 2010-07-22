@@ -114,6 +114,7 @@ Namespace LazyLoad
                 _SolicitacaoDeAudienciaReal.Assunto = value
             End Set
         End Property
+
     End Class
 
 End Namespace

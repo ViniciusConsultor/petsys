@@ -62,6 +62,10 @@ Public Class Form1
 
         Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
         Pessoa.Nome = "Administrador"
+        Pessoa.Sexo = Sexo.Masculino
+        Pessoa.EstadoCivil = EstadoCivil.Ignorado
+        Pessoa.Nacionalidade = Nacionalidade.Outros
+        Pessoa.Raca = Raca.Branca
 
         ToolStripProgressBar1.Increment(1)
 

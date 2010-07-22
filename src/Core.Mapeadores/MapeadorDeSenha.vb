@@ -58,4 +58,9 @@ Public Class MapeadorDeSenha
         DBHelper.ExecuteNonQuery(Sql.ToString, False)
     End Sub
 
+    Public Sub Remova(ByVal IDOperador As Long) Implements IMapeadorDeSenha.Remova
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_SNHOP WHERE IDOPERADOR = " & IDOperador.ToString)
+    End Sub
+
 End Class

@@ -61,6 +61,15 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
 
     '''<summary>
+    '''lblInconsistencia control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblInconsistencia As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''RadDock1 control.
     '''</summary>
     '''<remarks>

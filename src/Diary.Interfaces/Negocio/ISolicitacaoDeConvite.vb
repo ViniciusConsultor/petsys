@@ -8,6 +8,8 @@ Namespace Negocio
         Property Local() As String
         Property DataEHorario() As Date
         Property Observacao() As String
+        Sub EstaConsistente()
+
 
     End Interface
 

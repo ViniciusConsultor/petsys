@@ -110,6 +110,9 @@
                                     <HeaderStyle Width="20px" />
                                 </ExpandCollapseColumn>
                                 <Columns>
+                                     <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                    </telerik:GridButtonColumn>
                                     <telerik:GridBoundColumn DataField="ID" UniqueName="column" Visible="False">
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn DataField="Nome" UniqueName="column1">

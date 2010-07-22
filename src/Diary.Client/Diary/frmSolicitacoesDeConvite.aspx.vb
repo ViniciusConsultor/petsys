@@ -128,10 +128,10 @@ Partial Public Class frmSolicitacoesDeConvite
         grdItensLancados.Columns(1).Visible = Principal.EstaAutorizado("OPE.DRY.003.0003")
 
         'Coluna com botão despachar
-        grdItensLancados.Columns(7).Visible = Principal.EstaAutorizado("OPE.DRY.003.0004")
+        grdItensLancados.Columns(9).Visible = Principal.EstaAutorizado("OPE.DRY.003.0004")
 
         'Coluna com botão finalizar
-        grdItensLancados.Columns(8).Visible = Principal.EstaAutorizado("OPE.DRY.003.0005")
+        grdItensLancados.Columns(10).Visible = Principal.EstaAutorizado("OPE.DRY.003.0005")
 
     End Sub
 
