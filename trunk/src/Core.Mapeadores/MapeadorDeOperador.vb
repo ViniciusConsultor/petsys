@@ -27,8 +27,12 @@ Public Class MapeadorDeOperador
         Sql.Append(String.Concat("'", Operador.Status.ID, "')"))
 
         DBHelper.ExecuteNonQuery(Sql.ToString, False)
+        InsiraGrupos(DBHelper, Operador)
+    End Sub
 
-        'INSERINDO OS GRUPOS
+    Private Sub InsiraGrupos(ByVal DBHelper As IDBHelper, ByVal Operador As IOperador)
+        Dim Sql As StringBuilder
+
         For Each Grupo As IGrupo In Operador.ObtenhaGrupos
             Sql = New StringBuilder
             Sql.Append("INSERT INTO NCL_GRPOPE (IDOPERADOR, IDGRUPO) VALUES ( ")
@@ -36,7 +40,6 @@ Public Class MapeadorDeOperador
             Sql.Append(Grupo.ID.Value.ToString & ")")
             DBHelper.ExecuteNonQuery(Sql.ToString)
         Next
-
     End Sub
 
     Public Sub Modificar(ByVal Operador As IOperador) Implements IMapeadorDeOperador.Modificar
@@ -52,6 +55,9 @@ Public Class MapeadorDeOperador
         Sql.Append(Operador.Pessoa.ID.Value)
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
+
+        RemovaGrupos(DBHelper, Operador.Pessoa.ID.Value)
+        InsiraGrupos(DBHelper, Operador)
     End Sub
 
     Public Sub Remover(ByVal ID As Long) Implements IMapeadorDeOperador.Remover
@@ -59,6 +65,8 @@ Public Class MapeadorDeOperador
         Dim DBHelper As IDBHelper
 
         DBHelper = ServerUtils.getDBHelper
+
+        RemovaGrupos(DBHelper, ID)
         Sql.Append(String.Concat("DELETE FROM NCL_OPERADOR WHERE IDPESSOA = ", ID.ToString))
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
@@ -96,6 +104,10 @@ Public Class MapeadorDeOperador
 
         Return Operador
     End Function
+
+    Private Sub RemovaGrupos(ByVal DBHelper As IDBHelper, ByVal IDOperador As Long)
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_GRPOPE WHERE IDOPERADOR = " & IDOperador.ToString)
+    End Sub
 
     Private Function ObtenhaGruposDoOperador(ByVal IdOperador As Long) As IList(Of IGrupo)
         Dim Sql As New StringBuilder

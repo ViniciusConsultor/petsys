@@ -56,6 +56,7 @@ Partial Public Class ctrlDespachoTarefa
                 ServicoDeDespacho.Inserir(Despacho)
             End Using
 
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Solicitação despachada com sucesso."), False)
             RaiseEvent SolicitacaoFoiDespachada(Despacho)
 
         Catch ex As BussinesException

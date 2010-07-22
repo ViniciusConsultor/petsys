@@ -128,10 +128,10 @@ Partial Public Class frmSolicitacoesDeAudiencia
         grdItensLancados.Columns(1).Visible = Principal.EstaAutorizado("OPE.DRY.002.0003")
 
         'Coluna com botão despachar
-        grdItensLancados.Columns(7).Visible = Principal.EstaAutorizado("OPE.DRY.002.0004")
+        grdItensLancados.Columns(8).Visible = Principal.EstaAutorizado("OPE.DRY.002.0004")
 
         'Coluna com botão finalizar
-        grdItensLancados.Columns(8).Visible = Principal.EstaAutorizado("OPE.DRY.002.0005")
+        grdItensLancados.Columns(9).Visible = Principal.EstaAutorizado("OPE.DRY.002.0005")
 
     End Sub
 
@@ -206,4 +206,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
     End Sub
 
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        
+    End Sub
 End Class

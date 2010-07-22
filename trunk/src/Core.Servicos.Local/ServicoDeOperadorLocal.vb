@@ -35,15 +35,18 @@ Public Class ServicoDeOperadorLocal
     End Sub
 
     Public Sub Remover(ByVal ID As Long) Implements IServicoDeOperador.Remover
-        Dim Mapeador As IMapeadorDeOperador
+        Dim MapeadorDeOperador As IMapeadorDeOperador
+        Dim MapeadorDeSenha As IMapeadorDeSenha
 
         ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeOperador)()
+        MapeadorDeOperador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeOperador)()
+        MapeadorDeSenha = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSenha)()
 
         ServerUtils.BeginTransaction()
 
         Try
-            Mapeador.Remover(ID)
+            MapeadorDeSenha.Remova(ID)
+            MapeadorDeOperador.Remover(ID)
             ServerUtils.CommitTransaction()
         Catch
             ServerUtils.RollbackTransaction()

@@ -17,17 +17,27 @@ Partial Public Class frmAgenda
             Agenda = Servico.ObtenhaAgenda(Pessoa.ID.Value)
         End Using
 
+        lblInconsistencia.Visible = True
+
         If Agenda Is Nothing Then
             pnlCompromissos.Visible = False
             pnlTarefas.Visible = False
 
-            UtilidadesWeb.MostraMensagemDeInformacao("Não existe agenda configurada para esta pessoa.")
+            lblInconsistencia.Text = "Não existe agenda configurada para esta pessoa."
             Exit Sub
         End If
 
+        lblInconsistencia.Visible = False
         pnlCompromissos.Visible = True
         pnlTarefas.Visible = True
+
         Me.IDProprietario = Pessoa.ID.Value
+        ConfiguraAgenda(Agenda)
+        CarregaAgenda()
+    End Sub
+
+    Private Sub ConfiguraAgenda(ByVal Agenda As IAgenda)
+
         Me.HoraInicio = Agenda.HorarioDeInicio
         Me.HoraFim = Agenda.HorarioDeTermino
         Me.IntervaloEntreCompromissos = Agenda.IntervaloEntreOsCompromissos
@@ -132,7 +142,6 @@ Partial Public Class frmAgenda
 
         If Not IsPostBack Then
             ExibaTelaInicial()
-            CarregaAgenda()
         End If
     End Sub
 

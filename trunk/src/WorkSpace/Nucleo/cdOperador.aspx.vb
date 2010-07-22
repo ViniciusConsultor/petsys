@@ -48,10 +48,10 @@ Partial Public Class cdOperador
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
         Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Inicial
-        MostraGrupos(Nothing)
-        '        Session.Add(CHAVE_GRUPOS, Nothing)
+        MostraGrupos(New List(Of IGrupo))
         CarregaStatus()
         rblStatus.SelectedValue = StatusDoOperador.Ativo.ID.ToString
+        grdGrupos.Columns(0).Visible = True
     End Sub
 
     Private Sub CarregaStatus()
@@ -78,7 +78,8 @@ Partial Public Class cdOperador
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), True)
         Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Novo
         DokSenha.Visible = True
-        MostraGrupos(Nothing)
+        MostraGrupos(New List(Of IGrupo))
+        grdGrupos.Columns(0).Visible = True
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -93,6 +94,7 @@ Partial Public Class cdOperador
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), True)
         Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Modifica
         DokSenha.Visible = False
+        grdGrupos.Columns(0).Visible = True
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -107,6 +109,7 @@ Partial Public Class cdOperador
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), False)
         DokSenha.Visible = False
+        grdGrupos.Columns(0).Visible = False
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -120,6 +123,7 @@ Partial Public Class cdOperador
         DokSenha.Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), False)
+        grdGrupos.Columns(0).Visible = False
     End Sub
 
     Protected Sub btnCancela_Click()
@@ -193,7 +197,7 @@ Partial Public Class cdOperador
                 Servico.Remover(ctrlPessoa1.PessoaSelecionada.ID.Value)
             End Using
 
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Grupo excluído com sucesso."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Operador excluído com sucesso."), False)
             ExibaTelaInicial()
 
         Catch ex As BussinesException
@@ -293,13 +297,30 @@ Partial Public Class cdOperador
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
         Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Inicial
-        Session.Add(CHAVE_GRUPOS, Nothing)
         CarregaStatus()
         rblStatus.SelectedValue = StatusDoOperador.Ativo.ID.ToString
-        MostraGrupos(Nothing)
+        MostraGrupos(New List(Of IGrupo))
+    End Sub
+
+    Private Sub grdGrupos_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdGrupos.ItemCommand
+        Dim ID As Long
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            ID = CLng(e.Item.Cells(3).Text)
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Dim Grupos As IList(Of IGrupo)
+            Grupos = CType(Session(CHAVE_GRUPOS), IList(Of IGrupo))
+            Grupos.RemoveAt(IndiceSelecionado)
+            MostraGrupos(Grupos)
+        End If
     End Sub
 
     Private Sub grdGrupos_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdGrupos.PageIndexChanged
         UtilidadesWeb.PaginacaoDataGrid(grdGrupos, Session(CHAVE_GRUPOS), e)
     End Sub
+
 End Class

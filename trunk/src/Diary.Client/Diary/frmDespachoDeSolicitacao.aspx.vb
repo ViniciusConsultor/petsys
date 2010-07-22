@@ -60,11 +60,15 @@ Partial Public Class frmDespachoDeSolicitacao
             Agenda = Servico.ObtenhaAgenda(Pessoa)
         End Using
 
+        lblInconsistencia.Visible = True
+
         If Agenda Is Nothing Then
-            UtilidadesWeb.MostraMensagemDeInformacao("O alvo selecionado para o despacho ainda não possui agenda cadastrada.")
+            lblInconsistencia.Text = "O alvo selecionado para o despacho ainda não possui agenda cadastrada."
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("O alvo selecionado para o despacho ainda não possui agenda cadastrada."), False)
             Exit Sub
         End If
 
+        lblInconsistencia.Visible = False
         ctrlDespachoAgenda1.IDAlvo = ctrlPessoa1.PessoaSelecionada.ID.Value
         ctrlDespachoTarefa1.IDAlvo = ctrlPessoa1.PessoaSelecionada.ID.Value
     End Sub

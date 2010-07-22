@@ -111,6 +111,9 @@
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
+    
     <asp:Timer ID="Timer1" runat="server" Interval="30000">
     </asp:Timer>
+    <asp:Label ID="lblInconsistencia" runat="server" Font-Size="Medium" 
+        Font-Bold="True" ForeColor="#CC3300"></asp:Label>
 </asp:Content>

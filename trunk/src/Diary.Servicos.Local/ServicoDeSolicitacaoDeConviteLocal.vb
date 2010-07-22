@@ -35,6 +35,7 @@ Public Class ServicoDeSolicitacaoDeConviteLocal
         Dim Mapeador As IMapeadorDeSolicitacaoDeConvite
 
         ServerUtils.setCredencial(MyBase._Credencial)
+        SolicitacaoDeConvite.EstaConsistente()
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeConvite)()
 
         ServerUtils.BeginTransaction()

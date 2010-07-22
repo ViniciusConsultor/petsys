@@ -12,7 +12,6 @@ Namespace Negocio
         Property Contato() As IContato
         Property Descricao() As String
         ReadOnly Property Tipo() As TipoDeSolicitacao
-
     End Interface
 
 End Namespace

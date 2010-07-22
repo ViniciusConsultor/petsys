@@ -16,15 +16,6 @@ Option Explicit On
 Partial Public Class frmSolicitacoesDeConvite
 
     '''<summary>
-    '''RadAjaxLoadingPanel1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
-
-    '''<summary>
     '''rtbToolBar control.
     '''</summary>
     '''<remarks>

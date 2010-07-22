@@ -92,7 +92,12 @@ Public Class MapeadorDePessoaFisica
             Sql.Append(" CPF = NULL,")
         End If
 
-        Sql.Append(String.Concat(" NATURALIDADE = ", Pessoa.Naturalidade.ID.Value.ToString, ","))
+        If Not Pessoa.Naturalidade Is Nothing Then
+            Sql.Append(String.Concat(" NATURALIDADE = ", Pessoa.Naturalidade.ID.Value.ToString, ","))
+        Else
+            Sql.Append(" NATURALIDADE = NULL,")
+        End If
+
         Sql.Append(String.Concat(" FOTO = '", Pessoa.Foto, "'"))
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Pessoa.ID))
         DBHelper.ExecuteNonQuery(Sql.ToString)

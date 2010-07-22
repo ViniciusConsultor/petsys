@@ -239,8 +239,8 @@ Public Class MapeadorDeSolicitacaoDeConvite
             Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'S'")
         End If
 
-        Sql.Append(String.Concat(" AND DRY_SOLICCONVT.DATADECADASTRO >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
-        Sql.Append(String.Concat(" AND DRY_SOLICCONVT.DATADECADASTRO <= '", DataFim.ToString("yyyyMMddHHmmss"), "'"))
+        Sql.Append(String.Concat(" AND DRY_SOLICCONVT.DATAEHORA >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
+        Sql.Append(String.Concat(" AND DRY_SOLICCONVT.DATAEHORA <= '", DataFim.ToString("yyyyMMddHHmmss"), "'"))
 
         Sql.Append(Me.ObtenhaOrderBy)
 

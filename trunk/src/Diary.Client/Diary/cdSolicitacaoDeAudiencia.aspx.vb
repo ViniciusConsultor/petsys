@@ -49,6 +49,7 @@ Partial Public Class cdSolicitacaoDeAudiencia
         Session(CHAVE_ID) = Nothing
         Session(CHAVE_USUARIO_CADASTROU) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDaSolicitacao, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlContato, Control))
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
@@ -107,6 +108,8 @@ Partial Public Class cdSolicitacaoDeAudiencia
                 End If
 
             End Using
+
+            ExibaTelaNovo()
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
         Catch ex As BussinesException
