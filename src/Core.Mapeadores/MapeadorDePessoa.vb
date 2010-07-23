@@ -36,15 +36,21 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             SQL.Append("NULL, ")
         End If
 
-        If Not Pessoa.Endereco Is Nothing Then
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Logradouro), "', "))
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Complemento), "', "))
-            SQL.Append(String.Concat(Pessoa.Endereco.Municipio.ID.Value, ", "))
-            SQL.Append(String.Concat(Pessoa.Endereco.CEP.Numero.Value, ", "))
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "',"))
-        Else
-            SQL.Append("NULL, NULL, NULL, NULL, NULL,")
-        End If
+        'If Not Pessoa.Endereco Is Nothing Then
+        '    SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Logradouro), "', "))
+
+        '    If Not String.IsNullOrEmpty(Pessoa.Endereco.Complemento) Then
+        '        SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Complemento), "', "))
+        '    Else
+        '        SQL.Append("NULL, ")
+        '    End If
+
+        '    SQL.Append(String.Concat(Pessoa.Endereco.Municipio.ID.Value, ", "))
+        '    SQL.Append(String.Concat(Pessoa.Endereco.CEP.Numero.Value, ", "))
+        '    SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "',"))
+        'Else
+        SQL.Append("NULL, NULL, NULL, NULL, NULL,")
+        'End If
 
         If Not String.IsNullOrEmpty(Pessoa.Site) Then
             SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "')"))
