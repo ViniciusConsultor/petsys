@@ -143,4 +143,18 @@ Public Class ServicoDeSolicitacaoDeConviteLocal
         End Try
     End Sub
 
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, _
+                                                 ByVal IDContato As Long) As IList(Of ISolicitacaoDeConvite) Implements IServicoDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
+        Dim Mapeador As IMapeadorDeSolicitacaoDeConvite
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeConvite)()
+
+        Try
+            Return Mapeador.ObtenhaSolicitacoesDeConvite(TrazApenasAtivas, IDContato)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
 End Class

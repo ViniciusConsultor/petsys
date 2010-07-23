@@ -139,6 +139,8 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         If TrazApenasAtivas Then
             Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
+        Else
+            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(Me.ObtenhaOrderBy)
@@ -166,6 +168,8 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         If TrazApenasAtivas Then
             Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
+        Else
+            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
@@ -243,6 +247,35 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         End Using
 
         Return SolicitacaoDeAudiencia
+    End Function
+
+    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, _
+                                                   ByVal IDContato As Long) As IList(Of ISolicitacaoDeAudiencia) Implements IMapeadorDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
+
+        Sql.Append(Me.ObtenhaSQL)
+
+        If TrazApenasAtivas Then
+            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
+        Else
+            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'N'")
+        End If
+
+        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.IDCONTATO = ", IDContato.ToString))
+        Sql.Append(Me.ObtenhaOrderBy)
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Solicitacoes.Add(Me.MontaObjeto(Leitor))
+            End While
+
+        End Using
+
+        Return Solicitacoes
     End Function
 
 End Class

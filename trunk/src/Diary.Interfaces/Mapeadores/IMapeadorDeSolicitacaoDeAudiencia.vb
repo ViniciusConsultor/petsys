@@ -12,7 +12,8 @@ Namespace Mapeadores
         Function ObtenhaSolicitacaoPorCodigo(ByVal Codigo As Long) As ISolicitacaoDeAudiencia
         Sub Remover(ByVal ID As Long)
         Sub Finalizar(ByVal ID As Long)
-
+        Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, _
+                                                ByVal IDContato As Long) As IList(Of ISolicitacaoDeAudiencia)
     End Interface
 
 End Namespace

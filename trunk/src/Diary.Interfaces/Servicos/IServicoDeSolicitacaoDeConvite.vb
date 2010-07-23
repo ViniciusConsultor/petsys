@@ -13,6 +13,7 @@ Namespace Servicos
         Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, ByVal DataInicio As Date, ByVal DataFim As Date) As IList(Of ISolicitacaoDeConvite)
         Function ObtenhaSolicitacaoDeConvite(ByVal ID As Long) As ISolicitacaoDeConvite
         Function ObtenhaSolicitacaoPorCodigo(ByVal Codigo As Long) As ISolicitacaoDeConvite
+        Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, ByVal IDContato As Long) As IList(Of ISolicitacaoDeConvite)
         Sub Remover(ByVal ID As Long)
 
     End Interface
