@@ -26,10 +26,10 @@ Partial Public Class frmImpressaoCompromisso
 
     Private Sub CarregaOpcoesDeImpressao()
         cboOpcoesDeImpressao.Items.Clear()
-        'Detalhada (Assunto + Local + Descrição)
-        cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Detalhes completos (Assunto + Local + Descrição)", "1"))
-        'Simplificada (Assunto + Local)
-        cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Detalhes simplificados (Assunto + Local)", "2"))
+        cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Assunto + Local + Descrição", "1"))
+        cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Assunto + Local", "2"))
+        cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Assunto", "3"))
+        cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Local", "4"))
     End Sub
 
     Private Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
@@ -55,15 +55,19 @@ Partial Public Class frmImpressaoCompromisso
         End If
 
         Dim GeradorDePDF As GerarCompromissosEmPDF
-        Dim NomeDoPDFGerado As String
+        Dim NomeDoPDFGerado As String = Nothing
         Dim URL As String
 
         GeradorDePDF = New GerarCompromissosEmPDF(Compromissos)
 
         If cboOpcoesDeImpressao.SelectedValue = "1" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDFComDetalhesCompletos
-        Else
-            NomeDoPDFGerado = GeradorDePDF.GerePDFComDetalhesSimples
+            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, True)
+        ElseIf cboOpcoesDeImpressao.SelectedValue = "2" Then
+            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, False)
+        ElseIf cboOpcoesDeImpressao.SelectedValue = "3" Then
+            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, False, False)
+        ElseIf cboOpcoesDeImpressao.SelectedValue = "4" Then
+            NomeDoPDFGerado = GeradorDePDF.GerePDF(False, True, False)
         End If
 
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoPDFGerado

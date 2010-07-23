@@ -140,7 +140,6 @@ Partial Public Class cdCompromisso
 
         Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
 
-        'Permitido excluir compromissos
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0003")
     End Sub
 
