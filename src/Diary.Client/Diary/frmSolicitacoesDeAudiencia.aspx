@@ -56,6 +56,20 @@
                                     <asp:ImageButton ID="btnPesquisarPorCodigo" runat="server" ImageUrl="~/imagens/find.gif" />
                                 </td>
                             </tr>
+                            <tr runat="server" id="pnlContato">
+                                 <td class="th3">
+                                    <asp:Label ID="Label5" runat="server" Text="Contato"></asp:Label>
+                                </td>
+                                
+                                <td  class="td">
+                                  <telerik:RadComboBox ID="cboContato" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
+                                        LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
+                                        CausesValidation="False" EmptyMessage="Selecione um contato">
+                                    </telerik:RadComboBox>
+                                      <asp:ImageButton ID="btnPesquisarPorContato" runat="server" ImageUrl="~/imagens/find.gif" />
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label4" runat="server" Text="Considerar solicitações finalizadas?"></asp:Label>
@@ -63,7 +77,7 @@
                                 <td class="td">
                                     <asp:CheckBox ID="chkConsiderarSolicitacoesFinalizadas" runat="server" />
                                 </td>
-                            </tr>
+                            </tr>                           
                         </table>
                     </asp:Panel>
                 </ContentTemplate>

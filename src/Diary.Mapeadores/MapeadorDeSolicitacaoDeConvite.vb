@@ -210,6 +210,8 @@ Public Class MapeadorDeSolicitacaoDeConvite
 
         If TrazApenasAtivas Then
             Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'S'")
+        Else
+            Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(Me.ObtenhaOrderBy)
@@ -237,6 +239,8 @@ Public Class MapeadorDeSolicitacaoDeConvite
 
         If TrazApenasAtivas Then
             Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'S'")
+        Else
+            Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(String.Concat(" AND DRY_SOLICCONVT.DATAEHORA >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
@@ -267,4 +271,33 @@ Public Class MapeadorDeSolicitacaoDeConvite
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, _
+                                                 ByVal IDContato As Long) As IList(Of ISolicitacaoDeConvite) Implements IMapeadorDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite) = New List(Of ISolicitacaoDeConvite)
+
+        Sql.Append(Me.ObtenhaSQL)
+
+        If TrazApenasAtivas Then
+            Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'S'")
+        Else
+            Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'N'")
+        End If
+
+        Sql.Append(String.Concat(" AND DRY_SOLICCONVT.IDCONTATO = ", IDContato.ToString))
+
+        Sql.Append(Me.ObtenhaOrderBy)
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Solicitacoes.Add(Me.MontaObjeto(Leitor))
+            End While
+
+        End Using
+
+        Return Solicitacoes
+    End Function
 End Class

@@ -142,4 +142,18 @@ Public Class ServicoDeSolicitacaoDeAudienciaLocal
         End Try
     End Function
 
+    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, _
+                                                   ByVal IDContato As Long) As IList(Of ISolicitacaoDeAudiencia) Implements IServicoDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
+        Dim Mapeador As IMapeadorDeSolicitacaoDeAudiencia
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeAudiencia)()
+
+        Try
+            Return Mapeador.ObtenhaSolicitacoesDeAudiencia(TrazApenasAtivas, IDContato)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+
+    End Function
 End Class

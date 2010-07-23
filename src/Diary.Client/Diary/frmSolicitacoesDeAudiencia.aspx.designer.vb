@@ -169,6 +169,42 @@ Partial Public Class frmSolicitacoesDeAudiencia
     Protected WithEvents btnPesquisarPorCodigo As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''pnlContato control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlContato As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''Label5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboContato control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboContato As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''btnPesquisarPorContato control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPesquisarPorContato As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''Label4 control.
     '''</summary>
     '''<remarks>

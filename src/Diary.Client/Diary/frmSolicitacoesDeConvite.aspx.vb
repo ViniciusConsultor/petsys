@@ -35,10 +35,11 @@ Partial Public Class frmSolicitacoesDeConvite
         CarregaOpcoesDeFiltro()
         pnlCodigoDaSolicitacao.Visible = False
         pnlEntreDadas.Visible = True
+        pnlContato.Visible = False
         chkConsiderarSolicitacoesFinalizadas.Checked = False
 
         Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(Not chkConsiderarSolicitacoesFinalizadas.Checked)
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked)
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
@@ -49,6 +50,7 @@ Partial Public Class frmSolicitacoesDeConvite
 
         rblOpcaoFiltro.Items.Add(New ListItem("Por código", "1"))
         rblOpcaoFiltro.Items.Add(New ListItem("Entre datas", "2"))
+        rblOpcaoFiltro.Items.Add(New ListItem("Por contato", "3"))
 
         'Seta o valor entre datas como inicial
         rblOpcaoFiltro.SelectedValue = "2"
@@ -169,9 +171,15 @@ Partial Public Class frmSolicitacoesDeConvite
         If ValorSelecionado = "1" Then
             pnlCodigoDaSolicitacao.Visible = True
             pnlEntreDadas.Visible = False
-        Else
+            pnlContato.Visible = False
+        ElseIf ValorSelecionado = "2" Then
             pnlCodigoDaSolicitacao.Visible = False
             pnlEntreDadas.Visible = True
+            pnlContato.Visible = False
+        ElseIf ValorSelecionado = "3" Then
+            pnlCodigoDaSolicitacao.Visible = False
+            pnlEntreDadas.Visible = False
+            pnlContato.Visible = True
         End If
     End Sub
 
@@ -205,6 +213,35 @@ Partial Public Class frmSolicitacoesDeConvite
         NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
+    End Sub
+
+    Private Sub cboContato_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboContato.ItemsRequested
+        Dim Contatos As IList(Of IContato)
+
+        Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
+            Contatos = Servico.ObtenhaPorNomeComoFiltro(e.Text, 50)
+        End Using
+
+        If Not Contatos Is Nothing Then
+            For Each Contato As IContato In Contatos
+                cboContato.Items.Add(New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.Value.ToString))
+            Next
+        End If
+    End Sub
+
+    Private Sub btnPesquisarPorContato_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorContato.Click
+        If String.IsNullOrEmpty(cboContato.SelectedValue) Then
+            UtilidadesWeb.MostraMensagemDeInconsitencia("O contato da solicitação de convite deve ser informado.")
+            Exit Sub
+        End If
+
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite) = New List(Of ISolicitacaoDeConvite)
+
+        Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked, CLng(cboContato.SelectedValue))
+        End Using
+
+        ExibaSolicitacoes(Solicitacoes)
     End Sub
 
 End Class
