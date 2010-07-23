@@ -76,7 +76,7 @@ Public Class GerarCompromissosEmPDF
         For Each Compromisso As ICompromisso In _Compromissos
             If CompromissoAnterior Is Nothing OrElse _
             CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
-                If _documento.PageNumber > 1 Then
+                If Not CompromissoAnterior Is Nothing Then
                     _documento.NewPage()
                 End If
 

@@ -245,7 +245,7 @@ Partial Public Class frmAgenda
         CType(ToolBarCompromisso.FindButtonByCommandName("btnImprimirCompromisso"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0008")
 
         'Permitido inserir tarefas
-        CType(ToolBarCompromisso.FindButtonByCommandName("btnNovaTarefa"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0004")
+        CType(ToolBarTarefa.FindButtonByCommandName("btnNovaTarefa"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0004")
 
         'Coluna com botão remover para tarefas
         grdTarefas.Columns(0).Visible = Principal.EstaAutorizado("OPE.NCL.012.0005")
