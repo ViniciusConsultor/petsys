@@ -18,7 +18,6 @@ Public Class GerarCompromissosEmPDF
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
-    Private _AlturaCorpo As Single
     Private NomeDoPDF As String
 
     Public Sub New(ByVal Compromissos As IList(Of ICompromisso))
@@ -43,57 +42,26 @@ Public Class GerarCompromissosEmPDF
         Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
     End Sub
 
-    Public Function GerePDFComDetalhesSimples() As String
+    Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraLocal As Boolean, ByVal MostraDescricao As Boolean) As String
         Dim CompromissoAnterior As ICompromisso = Nothing
 
         For Each Compromisso As ICompromisso In _Compromissos
-            If CompromissoAnterior Is Nothing OrElse _
-            CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
-                If _documento.PageNumber > 1 Then
-                    _documento.NewPage()
-                End If
-
+            'Primeira vez
+            If CompromissoAnterior Is Nothing Then
                 EscrevaCabecalho(Compromisso)
                 EscrevaRodape()
-                _AlturaCorpo = 0
-
-                If Not _documento.IsOpen Then _documento.Open()
+                _documento.Open()
+                'Demais vezes testa se o compromisso atual tem data maior que o anterio. Caso tenha atualizamos a data do cabeçalho
+            ElseIf CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
+                EscrevaCabecalho(Compromisso)
+                _documento.NewPage()
             End If
 
-            EscrevaCompromisso(Compromisso, True, False)
-            _AlturaCorpo = CSng(_AlturaCorpo + 14.18)
+            EscrevaCompromisso(Compromisso, MostraAssunto, MostraLocal, MostraDescricao)
             CompromissoAnterior = Compromisso
         Next
 
         _documento.Close()
-
-        Return NomeDoPDF
-    End Function
-
-    Public Function GerePDFComDetalhesCompletos() As String
-        Dim CompromissoAnterior As ICompromisso = Nothing
-
-        For Each Compromisso As ICompromisso In _Compromissos
-            If CompromissoAnterior Is Nothing OrElse _
-            CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
-                If Not CompromissoAnterior Is Nothing Then
-                    _documento.NewPage()
-                End If
-
-                EscrevaCabecalho(Compromisso)
-                EscrevaRodape()
-                _AlturaCorpo = 0
-
-                If Not _documento.IsOpen Then _documento.Open()
-            End If
-
-            EscrevaCompromisso(Compromisso, True, True)
-            _AlturaCorpo = CSng(_AlturaCorpo + 14.18)
-            CompromissoAnterior = Compromisso
-        Next
-
-        _documento.Close()
-
         Return NomeDoPDF
     End Function
 
@@ -124,23 +92,31 @@ Public Class GerarCompromissosEmPDF
     End Function
 
     Private Sub EscrevaCompromisso(ByVal Compromisso As ICompromisso, _
+                                   ByVal MostraAssunto As Boolean, _
                                    ByVal MostraLocal As Boolean, _
                                    ByVal MostraDescricao As Boolean)
+        Dim ParagradoEmBranco As Paragraph
+
+        ParagradoEmBranco = New Paragraph(" ")
+        _documento.Add(ParagradoEmBranco)
+
         Dim Hora As Paragraph
 
-        Hora = New Paragraph(_AlturaCorpo, Compromisso.Inicio.ToString("HH:mm") & "h", _FonteHorario)
+        Hora = New Paragraph(Compromisso.Inicio.ToString("HH:mm") & "h", _FonteHorario)
         _documento.Add(Hora)
 
-        Dim Assunto As Paragraph
+        If MostraAssunto Then
+            Dim Assunto As Paragraph
 
-        Assunto = New Paragraph(_AlturaCorpo, Compromisso.Assunto, _FonteHorario)
-        Assunto.IndentationLeft = 56.7
-        _documento.Add(Assunto)
+            Assunto = New Paragraph(String.Concat("Assunto: ", Compromisso.Assunto), _FonteHorario)
+            Assunto.IndentationLeft = 56.7
+            _documento.Add(Assunto)
+        End If
 
         If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
             Dim Local As Paragraph
 
-            Local = New Paragraph(CSng(_AlturaCorpo + 14.18), String.Concat("Local: ", Compromisso.Local), _FonteHorario)
+            Local = New Paragraph(String.Concat("Local: ", Compromisso.Local), _FonteHorario)
             Local.IndentationLeft = 56.7
             _documento.Add(Local)
         End If
@@ -148,7 +124,7 @@ Public Class GerarCompromissosEmPDF
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
             Dim Descricao As Paragraph
 
-            Descricao = New Paragraph(CSng(_AlturaCorpo + 14.18), Compromisso.Descricao, _FonteHorario)
+            Descricao = New Paragraph(String.Concat("Descrição: ", Compromisso.Descricao), _FonteHorario)
             Descricao.IndentationLeft = 56.7
             _documento.Add(Descricao)
         End If

@@ -371,7 +371,7 @@ Public Class MapeadorDeAgenda
 
         If DataFim.HasValue Then
             'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
-            Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "000001"))
+            Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "235959"))
         End If
 
         Sql.Append(" ORDER BY INICIO")
