@@ -26,8 +26,45 @@
                                 <td class="td">
                                     <telerik:RadComboBox ID="cboContato" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
                                         LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="480px" Skin="Vista"
                                         CausesValidation="False" EmptyMessage="Selecione um contato">
+                                         <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 200px;">
+                                                        Nome
+                                                    </td>
+                                                    <td style="width: 80px;">
+                                                        Telefone
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        Celular
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        Cargo
+                                                    </td>
+                                                    
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 200px;">
+                                                        <%# DataBinder.Eval(Container, "Text")%>
+                                                    </td>
+                                                    <td style="width: 80px;">
+                                                        <%#DataBinder.Eval(Container, "Attributes['Telefone']")%>
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        <%#DataBinder.Eval(Container, "Attributes['Celular']")%>
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        <%#DataBinder.Eval(Container, "Attributes['Cargo']")%>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </ItemTemplate>
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>

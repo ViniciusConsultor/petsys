@@ -4,6 +4,8 @@ Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Telerik.Web.UI
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
+Imports Compartilhados.Interfaces.Core.Negocio
 
 Partial Public Class cdSolicitacaoDeConvite
     Inherits System.Web.UI.Page
@@ -168,7 +170,34 @@ Partial Public Class cdSolicitacaoDeConvite
 
         If Not Contatos Is Nothing Then
             For Each Contato As IContato In Contatos
-                cboContato.Items.Add(New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.Value.ToString))
+                Dim Item As New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.ToString)
+
+                Dim TelefoneResidencial As ITelefone
+                Dim TelefoneCelular As ITelefone
+
+                TelefoneResidencial = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Residencial)
+                TelefoneCelular = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Celular)
+
+                If Not TelefoneResidencial Is Nothing Then
+                    Item.Attributes.Add("Telefone", TelefoneResidencial.ToString)
+                Else
+                    Item.Attributes.Add("Telefone", "")
+                End If
+
+                If Not TelefoneCelular Is Nothing Then
+                    Item.Attributes.Add("Celular", TelefoneCelular.ToString)
+                Else
+                    Item.Attributes.Add("Celular", "")
+                End If
+
+                If Not String.IsNullOrEmpty(Contato.Cargo) Then
+                    Item.Attributes.Add("Cargo", Contato.Cargo)
+                Else
+                    Item.Attributes.Add("Cargo", "")
+                End If
+
+                cboContato.Items.Add(Item)
+                Item.DataBind()
             Next
         End If
     End Sub

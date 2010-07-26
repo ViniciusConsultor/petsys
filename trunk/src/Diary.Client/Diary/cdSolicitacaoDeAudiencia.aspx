@@ -26,8 +26,45 @@
                                 <td class="td">
                                     <telerik:RadComboBox ID="cboContato" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
                                         LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="480px" Skin="Vista"
                                         CausesValidation="False" EmptyMessage="Selecione um contato">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 200px;">
+                                                        Nome
+                                                    </td>
+                                                    <td style="width: 80px;">
+                                                        Telefone
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        Celular
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        Cargo
+                                                    </td>
+                                                    
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 200px;">
+                                                        <%# DataBinder.Eval(Container, "Text")%>
+                                                    </td>
+                                                    <td style="width: 80px;">
+                                                        <%#DataBinder.Eval(Container, "Attributes['Telefone']")%>
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        <%#DataBinder.Eval(Container, "Attributes['Celular']")%>
+                                                    </td>
+                                                    <td style="width: 200px;">
+                                                        <%#DataBinder.Eval(Container, "Attributes['Cargo']")%>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </ItemTemplate>
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
@@ -35,8 +72,8 @@
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="RadDock2" runat="server" Title="Dados da solicitação de audiência" DefaultCommands="ExpandCollapse"
-                EnableAnimation="True" Skin="Vista" DockMode="Docked">
+            <telerik:RadDock ID="RadDock2" runat="server" Title="Dados da solicitação de audiência"
+                DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlDadosDaSolicitacao" runat="server">
                         <table class="tabela">
@@ -45,8 +82,7 @@
                                     <asp:Label ID="Label7" runat="server" Text="Assunto"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtAssunto" runat="server" MaxLength="255" 
-                                        Width="400px">
+                                    <telerik:RadTextBox ID="txtAssunto" runat="server" MaxLength="255" Width="400px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -55,8 +91,8 @@
                                     <asp:Label ID="Label8" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="500" Rows="10"
-                                        TextMode="MultiLine" Width="400px">
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="500" Rows="10" TextMode="MultiLine"
+                                        Width="400px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>

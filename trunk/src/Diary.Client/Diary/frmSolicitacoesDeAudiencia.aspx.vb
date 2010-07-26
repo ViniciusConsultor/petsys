@@ -4,6 +4,8 @@ Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Diary.Interfaces.Negocio
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
+Imports Compartilhados.Interfaces.Core.Negocio
 
 Partial Public Class frmSolicitacoesDeAudiencia
     Inherits SuperPagina
@@ -39,7 +41,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
         chkConsiderarSolicitacoesFinalizadas.Checked = False
 
         Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(chkConsiderarSolicitacoesFinalizadas.Checked)
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(Not chkConsiderarSolicitacoesFinalizadas.Checked)
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
@@ -90,7 +92,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
             ID = CLng(e.Item.Cells(4).Text)
             IndiceSelecionado = e.Item().ItemIndex
         End If
-        
+
         If e.CommandName = "Excluir" Then
             Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
             Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
@@ -215,7 +217,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        
+
     End Sub
 
     Private Sub btnPesquisarPorContato_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorContato.Click
@@ -227,7 +229,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
         Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
 
         Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(chkConsiderarSolicitacoesFinalizadas.Checked, CLng(cboContato.SelectedValue))
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(Not chkConsiderarSolicitacoesFinalizadas.Checked, CLng(cboContato.SelectedValue))
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
@@ -242,7 +244,34 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
         If Not Contatos Is Nothing Then
             For Each Contato As IContato In Contatos
-                cboContato.Items.Add(New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.Value.ToString))
+                Dim Item As New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.ToString)
+
+                Dim TelefoneResidencial As ITelefone
+                Dim TelefoneCelular As ITelefone
+
+                TelefoneResidencial = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Residencial)
+                TelefoneCelular = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Celular)
+
+                If Not TelefoneResidencial Is Nothing Then
+                    Item.Attributes.Add("Telefone", TelefoneResidencial.ToString)
+                Else
+                    Item.Attributes.Add("Telefone", "")
+                End If
+
+                If Not TelefoneCelular Is Nothing Then
+                    Item.Attributes.Add("Celular", TelefoneCelular.ToString)
+                Else
+                    Item.Attributes.Add("Celular", "")
+                End If
+
+                If Not String.IsNullOrEmpty(Contato.Cargo) Then
+                    Item.Attributes.Add("Cargo", Contato.Cargo)
+                Else
+                    Item.Attributes.Add("Cargo", "")
+                End If
+
+                cboContato.Items.Add(Item)
+                Item.DataBind()
             Next
         End If
     End Sub
