@@ -4,6 +4,8 @@ Imports Diary.Interfaces.Negocio
 Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 
 Partial Public Class frmSolicitacoesDeConvite
     Inherits SuperPagina
@@ -39,7 +41,7 @@ Partial Public Class frmSolicitacoesDeConvite
         chkConsiderarSolicitacoesFinalizadas.Checked = False
 
         Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked)
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(Not chkConsiderarSolicitacoesFinalizadas.Checked)
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
@@ -224,7 +226,34 @@ Partial Public Class frmSolicitacoesDeConvite
 
         If Not Contatos Is Nothing Then
             For Each Contato As IContato In Contatos
-                cboContato.Items.Add(New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.Value.ToString))
+                Dim Item As New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.ToString)
+
+                Dim TelefoneResidencial As ITelefone
+                Dim TelefoneCelular As ITelefone
+
+                TelefoneResidencial = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Residencial)
+                TelefoneCelular = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Celular)
+
+                If Not TelefoneResidencial Is Nothing Then
+                    Item.Attributes.Add("Telefone", TelefoneResidencial.ToString)
+                Else
+                    Item.Attributes.Add("Telefone", "")
+                End If
+
+                If Not TelefoneCelular Is Nothing Then
+                    Item.Attributes.Add("Celular", TelefoneCelular.ToString)
+                Else
+                    Item.Attributes.Add("Celular", "")
+                End If
+
+                If Not String.IsNullOrEmpty(Contato.Cargo) Then
+                    Item.Attributes.Add("Cargo", Contato.Cargo)
+                Else
+                    Item.Attributes.Add("Cargo", "")
+                End If
+
+                cboContato.Items.Add(Item)
+                Item.DataBind()
             Next
         End If
     End Sub
@@ -238,7 +267,7 @@ Partial Public Class frmSolicitacoesDeConvite
         Dim Solicitacoes As IList(Of ISolicitacaoDeConvite) = New List(Of ISolicitacaoDeConvite)
 
         Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked, CLng(cboContato.SelectedValue))
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(Not chkConsiderarSolicitacoesFinalizadas.Checked, CLng(cboContato.SelectedValue))
         End Using
 
         ExibaSolicitacoes(Solicitacoes)

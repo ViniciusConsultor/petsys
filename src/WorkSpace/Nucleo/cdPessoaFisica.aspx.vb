@@ -225,7 +225,11 @@ Partial Public Class cdPessoaFisica
             Endereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IEndereco)()
 
             Endereco.Bairro = txtBairro.Text
-            Endereco.CEP = New CEP(CLng(txtCEPEndereco.Text))
+
+            If Not String.IsNullOrEmpty(txtCEPEndereco.Text) Then
+                Endereco.CEP = New CEP(CLng(txtCEPEndereco.Text))
+            End If
+
             Endereco.Complemento = txtComplemento.Text
             Endereco.Logradouro = txtLogradouro.Text
             Endereco.Municipio = ctrlMunicipios2.MunicipioSelecionado
@@ -286,10 +290,17 @@ Partial Public Class cdPessoaFisica
             txtLogradouro.Text = Pessoa.Endereco.Logradouro
             txtComplemento.Text = Pessoa.Endereco.Complemento
             txtBairro.Text = Pessoa.Endereco.Bairro
-            ctrlMunicipios2.MunicipioSelecionado = Pessoa.Endereco.Municipio
-            ctrlMunicipios2.NomeDoMunicipio = Pessoa.Endereco.Municipio.Nome
-            cboUFEndereco.SelectedValue = Pessoa.Endereco.Municipio.UF.ID.ToString
-            txtCEPEndereco.Text = Pessoa.Endereco.CEP.Numero.Value.ToString
+
+            If Not Pessoa.Endereco.Municipio Is Nothing Then
+                ctrlMunicipios2.MunicipioSelecionado = Pessoa.Endereco.Municipio
+                ctrlMunicipios2.NomeDoMunicipio = Pessoa.Endereco.Municipio.Nome
+                cboUFEndereco.SelectedValue = Pessoa.Endereco.Municipio.UF.ID.ToString
+            End If
+
+            If Not Pessoa.Endereco.CEP Is Nothing Then
+                txtCEPEndereco.Text = Pessoa.Endereco.CEP.Numero.Value.ToString
+            End If
+
         End If
 
         Dim CPF As ICPF

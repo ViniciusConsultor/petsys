@@ -24,13 +24,13 @@ Public Class MapeadorDeContato
         If String.IsNullOrEmpty(Contato.Cargo) Then
             Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat("'", Contato.Cargo, "', "))
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Contato.Cargo), "', "))
         End If
 
         If String.IsNullOrEmpty(Contato.Observacoes) Then
             Sql.Append("NULL)")
         Else
-            Sql.Append(String.Concat("'", Contato.Observacoes, "')"))
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Contato.Observacoes), "')"))
         End If
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
@@ -47,13 +47,13 @@ Public Class MapeadorDeContato
         If String.IsNullOrEmpty(Contato.Cargo) Then
             Sql.Append(" CARGO = NULL, ")
         Else
-            Sql.Append(String.Concat(" CARGO = '", Contato.Cargo, "', "))
+            Sql.Append(String.Concat(" CARGO = '", UtilidadesDePersistencia.FiltraApostrofe(Contato.Cargo), "', "))
         End If
 
         If String.IsNullOrEmpty(Contato.Observacoes) Then
             Sql.Append(" OBSERVACOES = NULL")
         Else
-            Sql.Append(String.Concat(" OBSERVACOES = '", Contato.Observacoes, "'"))
+            Sql.Append(String.Concat(" OBSERVACOES = '", UtilidadesDePersistencia.FiltraApostrofe(Contato.Observacoes), "'"))
         End If
 
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Contato.Pessoa.ID.Value))
