@@ -168,23 +168,33 @@ Partial Public Class cdSolicitacaoDeAudiencia
             For Each Contato As IContato In Contatos
                 Dim Item As New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.ToString)
 
-                Dim TelefoneResidencial As ITelefone
-                Dim TelefoneCelular As ITelefone
+                Dim TelefonesResidencial As IList(Of ITelefone)
+                Dim TelefonesCelular As IList(Of ITelefone)
+                Dim TelefonesComercial As IList(Of ITelefone)
 
-                TelefoneResidencial = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Residencial)
-                TelefoneCelular = Contato.Pessoa.ObtenhaTelelefone(TipoDeTelefone.Celular)
+                TelefonesResidencial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
+                TelefonesCelular = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
+                TelefonesComercial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
 
-                If Not TelefoneResidencial Is Nothing Then
-                    Item.Attributes.Add("Telefone", TelefoneResidencial.ToString)
-                Else
-                    Item.Attributes.Add("Telefone", "")
-                End If
+                Dim TelefonesSTR As New StringBuilder
 
-                If Not TelefoneCelular Is Nothing Then
-                    Item.Attributes.Add("Celular", TelefoneCelular.ToString)
-                Else
-                    Item.Attributes.Add("Celular", "")
-                End If
+                For Each Telefone As ITelefone In TelefonesResidencial
+                    TelefonesSTR.AppendLine(Telefone.ToString)
+                Next
+
+                For Each Telefone As ITelefone In TelefonesComercial
+                    TelefonesSTR.AppendLine(Telefone.ToString)
+                Next
+
+                Item.Attributes.Add("Telefone", TelefonesSTR.ToString)
+
+                Dim CelularesSTR As New StringBuilder
+
+                For Each Celular As ITelefone In TelefonesCelular
+                    CelularesSTR.AppendLine(Celular.ToString)
+                Next
+
+                Item.Attributes.Add("Celular", CelularesSTR.ToString)
 
                 If Not String.IsNullOrEmpty(Contato.Cargo) Then
                     Item.Attributes.Add("Cargo", Contato.Cargo)

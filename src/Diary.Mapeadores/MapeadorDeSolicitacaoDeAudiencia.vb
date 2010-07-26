@@ -130,17 +130,15 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Return SolicitacaoDeAudiencia
     End Function
 
-    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean) As IList(Of ISolicitacaoDeAudiencia) Implements IMapeadorDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
+    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal ConsiderarSolicitacoesFinalizadas As Boolean) As IList(Of ISolicitacaoDeAudiencia) Implements IMapeadorDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
         Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
 
         Sql.Append(Me.ObtenhaSQL)
 
-        If TrazApenasAtivas Then
+        If Not ConsiderarSolicitacoesFinalizadas Then
             Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
-        Else
-            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(Me.ObtenhaOrderBy)
@@ -157,7 +155,7 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Return Solicitacoes
     End Function
 
-    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, _
+    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal ConsiderarSolicitacoesFinalizadas As Boolean, _
                                                    ByVal DataInicio As Date, _
                                                    ByVal DataFim As Date) As IList(Of ISolicitacaoDeAudiencia) Implements IMapeadorDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
         Dim Sql As New StringBuilder
@@ -166,10 +164,8 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         Sql.Append(Me.ObtenhaSQL)
 
-        If TrazApenasAtivas Then
+        If Not ConsiderarSolicitacoesFinalizadas Then
             Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
-        Else
-            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
@@ -249,7 +245,7 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Return SolicitacaoDeAudiencia
     End Function
 
-    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal TrazApenasAtivas As Boolean, _
+    Public Function ObtenhaSolicitacoesDeAudiencia(ByVal ConsiderarSolicitacoesFinalizadas As Boolean, _
                                                    ByVal IDContato As Long) As IList(Of ISolicitacaoDeAudiencia) Implements IMapeadorDeSolicitacaoDeAudiencia.ObtenhaSolicitacoesDeAudiencia
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
@@ -257,10 +253,8 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         Sql.Append(Me.ObtenhaSQL)
 
-        If TrazApenasAtivas Then
+        If Not ConsiderarSolicitacoesFinalizadas Then
             Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
-        Else
-            Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(String.Concat(" AND DRY_SOLICAUDI.IDCONTATO = ", IDContato.ToString))

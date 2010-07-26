@@ -285,4 +285,44 @@ Public Class ServicoDeAgendaLocal
             ServerUtils.libereRecursos()
         End Try
     End Function
+
+    Public Function ObtenhaTarefas(ByVal IDProprietario As Long, _
+                                   ByVal DataInicio As Date, _
+                                   ByVal DataFim As Date?) As IList(Of ITarefa) Implements IServicoDeAgenda.ObtenhaTarefas
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        Try
+            Return Mapeador.ObtenhaTarefas(IDProprietario, DataInicio, DataFim)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Function InsiraLembrete(ByVal Lembrete As ILembrete) As Long Implements IServicoDeAgenda.InsiraLembrete
+
+    End Function
+
+    Public Sub ModifiqueLembrete(ByVal Lembrete As ILembrete) Implements IServicoDeAgenda.ModifiqueLembrete
+
+    End Sub
+
+    Public Function ObtenhaLembrete(ByVal ID As Long) As ILembrete Implements IServicoDeAgenda.ObtenhaLembrete
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaLembretes(ByVal IDProprietario As Long) As IList(Of ILembrete) Implements IServicoDeAgenda.ObtenhaLembretes
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaLembretes(ByVal IDProprietario As Long, ByVal DataInicio As Date, ByVal DataFim As Date?) As IList(Of ILembrete) Implements IServicoDeAgenda.ObtenhaLembretes
+        Return Nothing
+    End Function
+
+    Public Sub RemovaLembrete(ByVal ID As Long) Implements Compartilhados.Interfaces.Core.Servicos.IServicoDeAgenda.RemovaLembrete
+
+    End Sub
+
 End Class

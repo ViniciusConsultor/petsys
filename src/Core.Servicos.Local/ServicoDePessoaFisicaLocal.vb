@@ -77,4 +77,23 @@ Public Class ServicoDePessoaFisicaLocal
         End Try
     End Function
 
+    Public Sub Remover(ByVal Pessoa As IPessoaFisica) Implements IServicoDePessoaFisica.Remover
+        Dim Mapeador As IMapeadorDePessoaFisica
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDePessoaFisica)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.Remover(Pessoa)
+            ServerUtils.CommitTransaction()
+        Catch ex As Exception
+            ServerUtils.RollbackTransaction()
+            Throw New BussinesException("A pessoa não pode ser removida pois a mesma está sendo utilizada em outras funcionalidades do sistema.")
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
 End Class

@@ -77,4 +77,23 @@ Public Class ServicoDePessoaJuridicaLocal
         End Try
     End Function
 
+    Public Sub Remover(ByVal Pessoa As IPessoaJuridica) Implements IServicoDePessoaJuridica.Remover
+        Dim Mapeador As IMapeadorDePessoaJuridica
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDePessoaJuridica)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.Remover(Pessoa)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
 End Class

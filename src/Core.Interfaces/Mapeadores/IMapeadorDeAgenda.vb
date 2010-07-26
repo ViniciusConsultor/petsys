@@ -26,6 +26,17 @@ Namespace Mapeadores
         Sub RemovaTarefa(ByVal ID As Long)
         Function ObtenhaTarefa(ByVal ID As Long) As ITarefa
         Function ObtenhaTarefas(ByVal IDProprietario As Long) As IList(Of ITarefa)
+        Function ObtenhaTarefas(ByVal IDProprietario As Long, _
+                                   ByVal DataInicio As Date, _
+                                   ByVal DataFim As Date?) As IList(Of ITarefa)
+
+
+        Function InsiraLembrete(ByVal Lembrete As ILembrete) As Long
+        Sub ModifiqueLembrete(ByVal Lembrete As ILembrete)
+        Sub RemovaLembrete(ByVal ID As Long)
+        Function ObtenhaLembrete(ByVal ID As Long) As ILembrete
+        Function ObtenhaLembretes(ByVal IDProprietario As Long) As IList(Of ILembrete)
+        Function ObtenhaLembretes(ByVal IDProprietario As Long, ByVal DataInicio As Date, ByVal DataFim As Nullable(Of Date)) As IList(Of ILembrete)
 
     End Interface
 

@@ -10,8 +10,14 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
                 CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.NCL.006.0003" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/delete.gif" Text="Excluir"
+                CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.NCL.006.0004" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/save.gif" Text="Salvar"
                 CommandName="btnSalvar" CausesValidation="True" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/yes.gif" Text="Sim"
+                CommandName="btnSim" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Não"
+                CommandName="btnNao" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -26,7 +32,7 @@
                                 <asp:Label ID="Label24" runat="server" Text="Nome"></asp:Label>
                             </td>
                             <td class="td">
-                                <telerik:RadTextBox ID="txtNome" runat="server" MaxLength="255" Skin="Vista" Width="400px"
+                                <telerik:RadTextBox ID="txtNome" runat="server" MaxLength="100" Skin="Vista" Width="400px"
                                     SelectionOnFocus="CaretToBeginning">
                                 </telerik:RadTextBox>
                             </td>
@@ -138,7 +144,7 @@
                                             <asp:Label ID="Label2" runat="server" Text="Nome da mãe"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtNomeDaMae" runat="server" MaxLength="255" Skin="Vista"
+                                            <telerik:RadTextBox ID="txtNomeDaMae" runat="server" MaxLength="100" Skin="Vista"
                                                 Width="300px" SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>
@@ -148,7 +154,7 @@
                                             <asp:Label ID="Label1" runat="server" Text="Nome do pai"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtNomeDoPai" runat="server" MaxLength="255" Skin="Vista"
+                                            <telerik:RadTextBox ID="txtNomeDoPai" runat="server" MaxLength="100" Skin="Vista"
                                                 Width="300px" SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>
@@ -202,7 +208,7 @@
                                             <asp:Label ID="Label18" runat="server" Text="Bairro"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtBairro" runat="server" MaxLength="255" Skin="Vista" Width="300px"
+                                            <telerik:RadTextBox ID="txtBairro" runat="server" MaxLength="100" Skin="Vista" Width="300px"
                                                 SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>
@@ -260,7 +266,7 @@
                                             <asp:Label ID="Label15" runat="server" Text="Número"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtNumeroRG" runat="server" MaxLength="255" Skin="Vista"
+                                            <telerik:RadTextBox ID="txtNumeroRG" runat="server" MaxLength="30" Skin="Vista"
                                                 Width="300px" SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>
@@ -279,7 +285,7 @@
                                             <asp:Label ID="Label16" runat="server" Text="Orgão expeditor."></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtOrgaoExpeditorRG" runat="server" MaxLength="255" Skin="Vista"
+                                            <telerik:RadTextBox ID="txtOrgaoExpeditorRG" runat="server" MaxLength="20" Skin="Vista"
                                                 Width="300px" SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>
@@ -338,7 +344,7 @@
                                             <asp:Label ID="Label28" runat="server" Text="DDD"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadMaskedTextBox ID="txtDDDTelefone" Runat="server" Mask="##">
+                                            <telerik:RadMaskedTextBox ID="txtDDDTelefone" runat="server" Mask="##">
                                             </telerik:RadMaskedTextBox>
                                         </td>
                                     </tr>
@@ -347,11 +353,9 @@
                                             <asp:Label ID="Label29" runat="server" Text="Número"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadMaskedTextBox ID="txtNumeroTelefone" Runat="server" 
-                                                Mask="####-####">
+                                            <telerik:RadMaskedTextBox ID="txtNumeroTelefone" runat="server" Mask="####-####">
                                             </telerik:RadMaskedTextBox>
-                                            <asp:Button ID="btnAdicionarTelefone" runat="server" CssClass="RadUploadSubmit" 
-                                                Text="Adicionar telefone" />
+                                            <asp:Button ID="btnAdicionarTelefone" runat="server" CssClass="RadUploadSubmit" Text="Adicionar telefone" />
                                         </td>
                                     </tr>
                                     <tr>

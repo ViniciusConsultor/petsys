@@ -1,27 +1,26 @@
-﻿Imports iTextSharp.text.pdf
-Imports iTextSharp.text
-Imports System.IO
-Imports Compartilhados.Componentes.Web
-Imports Compartilhados.Fabricas
+﻿Imports iTextSharp.text
 Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados.Componentes.Web
+Imports iTextSharp.text.pdf
+Imports System.IO
 Imports Compartilhados
 
-Public Class GerarCompromissosEmPDF
+Public Class GerarTarefasEmPDF
 
     Private _documento As Document
     Private _Fonte1 As Font
     Private _Fonte2 As Font
     Private _Fonte3 As Font
     Private _PaginaAtual As Integer = 0
-    Private _Compromissos As IList(Of ICompromisso)
+    Private _Tarefas As IList(Of ITarefa)
 
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
     Private NomeDoPDF As String
 
-    Public Sub New(ByVal Compromissos As IList(Of ICompromisso))
-        _Compromissos = Compromissos
+    Public Sub New(ByVal Tarefas As IList(Of ITarefa))
+        _Tarefas = Tarefas
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
         _Fonte2 = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
         _Fonte3 = New Font(Font.TIMES_ROMAN, 10)
@@ -41,35 +40,41 @@ Public Class GerarCompromissosEmPDF
         Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
     End Sub
 
-    Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraLocal As Boolean, ByVal MostraDescricao As Boolean) As String
-        Dim CompromissoAnterior As ICompromisso = Nothing
+    Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraDescricao As Boolean) As String
+        Dim TarefaAnterior As ITarefa = Nothing
 
-        For Each Compromisso As ICompromisso In _Compromissos
+        For Each Tarefa As ITarefa In _Tarefas
             'Primeira vez
-            If CompromissoAnterior Is Nothing Then
-                EscrevaCabecalho(Compromisso)
+            If TarefaAnterior Is Nothing Then
+                EscrevaCabecalho(Tarefa.Proprietario)
                 EscrevaRodape()
                 _documento.Open()
-                'Demais vezes testa se o compromisso atual tem data maior que o anterio. Caso tenha atualizamos a data do cabeçalho
-            ElseIf CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
-                EscrevaCabecalho(Compromisso)
-                _documento.NewPage()
+                EscrevaCabecalhoDasTarefas(Tarefa.DataDeInicio)
+                'Demais vezes testa se tarefa atual tem data maior que o anterior. 
+            ElseIf CLng(TarefaAnterior.DataDeInicio.ToString("yyyyMMdd")) < CLng(TarefaAnterior.DataDeInicio.ToString("yyyyMMdd")) Then
+                EscrevaCabecalhoDasTarefas(Tarefa.DataDeInicio)
             End If
 
-            EscrevaCompromisso(Compromisso, MostraAssunto, MostraLocal, MostraDescricao)
-            CompromissoAnterior = Compromisso
+            EscrevaTarefa(Tarefa, MostraAssunto, MostraDescricao)
+            TarefaAnterior = Tarefa
         Next
 
         _documento.Close()
         Return NomeDoPDF
     End Function
 
-    Private Sub EscrevaCabecalho(ByVal Compromisso As ICompromisso)
+    Private Sub EscrevaCabecalhoDasTarefas(ByVal DataDeInicio As Date)
+        Dim Paragrafo As Paragraph
+
+        Paragrafo = New Paragraph(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(DataDeInicio), _Fonte1)
+        _documento.Add(Paragrafo)
+    End Sub
+
+    Private Sub EscrevaCabecalho(ByVal Proprietario As IPessoaFisica)
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Compromissos " & Compromisso.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
-        Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(Compromisso.Inicio), _Fonte1))
+        Frase = New Phrase("Tarefas " & Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
@@ -90,10 +95,9 @@ Public Class GerarCompromissosEmPDF
         Return Celula
     End Function
 
-    Private Sub EscrevaCompromisso(ByVal Compromisso As ICompromisso, _
-                                   ByVal MostraAssunto As Boolean, _
-                                   ByVal MostraLocal As Boolean, _
-                                   ByVal MostraDescricao As Boolean)
+    Private Sub EscrevaTarefa(ByVal Tarefa As ITarefa, _
+                              ByVal MostraAssunto As Boolean, _
+                              ByVal MostraDescricao As Boolean)
         Dim ParagradoEmBranco As Paragraph
 
         ParagradoEmBranco = New Paragraph(" ")
@@ -101,29 +105,21 @@ Public Class GerarCompromissosEmPDF
 
         Dim Hora As Paragraph
 
-        Hora = New Paragraph(Compromisso.Inicio.ToString("HH:mm") & "h", _FonteHorario)
+        Hora = New Paragraph(Tarefa.DataDeInicio.ToString("HH:mm") & "h", _FonteHorario)
         _documento.Add(Hora)
 
         If MostraAssunto Then
             Dim Assunto As Paragraph
 
-            Assunto = New Paragraph(String.Concat("Assunto: ", Compromisso.Assunto), _FonteHorario)
+            Assunto = New Paragraph(String.Concat("Assunto: ", Tarefa.Assunto), _FonteHorario)
             Assunto.IndentationLeft = 56.7
             _documento.Add(Assunto)
         End If
 
-        If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
-            Dim Local As Paragraph
-
-            Local = New Paragraph(String.Concat("Local: ", Compromisso.Local), _FonteHorario)
-            Local.IndentationLeft = 56.7
-            _documento.Add(Local)
-        End If
-
-        If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
+        If MostraDescricao AndAlso Not String.IsNullOrEmpty(Tarefa.Descricao) Then
             Dim Descricao As Paragraph
 
-            Descricao = New Paragraph(String.Concat("Descrição: ", Compromisso.Descricao), _FonteHorario)
+            Descricao = New Paragraph(String.Concat("Descrição: ", Tarefa.Descricao), _FonteHorario)
             Descricao.IndentationLeft = 56.7
             _documento.Add(Descricao)
         End If
@@ -141,5 +137,6 @@ Public Class GerarCompromissosEmPDF
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Footer = Rodape
     End Sub
+
 
 End Class

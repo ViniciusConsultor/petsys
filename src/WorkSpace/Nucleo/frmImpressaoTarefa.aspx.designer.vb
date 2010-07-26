@@ -13,16 +13,7 @@ Option Explicit On
 
 
 
-Partial Public Class frmAgenda
-
-    '''<summary>
-    '''ToolBarPrincipal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ToolBarPrincipal As Global.Telerik.Web.UI.RadToolBar
+Partial Public Class frmImpressaoTarefa
 
     '''<summary>
     '''RadDockLayout1 control.
@@ -43,78 +34,6 @@ Partial Public Class frmAgenda
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''pnlProprietario control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pnlProprietario As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
-    '''ctrlPessoa1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
-
-    '''<summary>
-    '''pnlCompromissos control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pnlCompromissos As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
-    '''ToolBarCompromisso control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ToolBarCompromisso As Global.Telerik.Web.UI.RadToolBar
-
-    '''<summary>
-    '''schCompromissos control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents schCompromissos As Global.Telerik.Web.UI.RadScheduler
-
-    '''<summary>
-    '''pnlTarefas control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pnlTarefas As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
-    '''ToolBarTarefa control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ToolBarTarefa As Global.Telerik.Web.UI.RadToolBar
-
-    '''<summary>
-    '''grdTarefas control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents grdTarefas As Global.Telerik.Web.UI.RadGrid
-
-    '''<summary>
     '''RadDock1 control.
     '''</summary>
     '''<remarks>
@@ -124,38 +43,83 @@ Partial Public Class frmAgenda
     Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''ToolBarLembretes control.
+    '''Label2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ToolBarLembretes As Global.Telerik.Web.UI.RadToolBar
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''grdLembretes control.
+    '''cboOpcoesDeImpressao control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents grdLembretes As Global.Telerik.Web.UI.RadGrid
+    Protected WithEvents cboOpcoesDeImpressao As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''Timer1 control.
+    '''RadDock3 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Timer1 As Global.System.Web.UI.Timer
+    Protected WithEvents RadDock3 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''lblInconsistencia control.
+    '''pnlFiltro control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblInconsistencia As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents pnlFiltro As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDataInicial control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataInicial As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDataFinal control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataFinal As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''btnPesquisar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPesquisar As Global.System.Web.UI.WebControls.ImageButton
 End Class

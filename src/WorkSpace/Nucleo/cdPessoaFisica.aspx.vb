@@ -14,6 +14,7 @@ Partial Public Class cdPessoaFisica
     Private Enum Estado As Byte
         Novo
         Modifica
+        Exclui
     End Enum
 
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_PESSOA_FISICA"
@@ -58,16 +59,24 @@ Partial Public Class cdPessoaFisica
     Private Sub ExibaTelaNovo()
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
+        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
         CarregueComponentes()
         Session(CHAVE_ESTADO) = Estado.Novo
+        Session(CHAVE_ID) = Nothing
+        Session(CHAVE_TELEFONES) = Nothing
         imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
     End Sub
 
     Private Sub ExibaTelaModificar()
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
+        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
         Session(CHAVE_ESTADO) = Estado.Modifica
     End Sub
@@ -75,6 +84,9 @@ Partial Public Class cdPessoaFisica
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True
+        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosPessoais, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), False)
@@ -345,10 +357,44 @@ Partial Public Class cdPessoaFisica
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnSalvar"
-                Call btnSalva_Click()
+                btnSalva_Click()
             Case "btnModificar"
-                Call ExibaTelaModificar()
+                ExibaTelaModificar()
+            Case "btnExcluir"
+                ExibaTelaExcluir()
+            Case "btnNao"
+                ExibaTelaDetalhes(CLng(Session(CHAVE_ID)))
+            Case "btnSim"
+                btnSim_Click()
         End Select
+    End Sub
+
+    Private Sub ExibaTelaExcluir()
+        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
+        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
+        UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
+        Session(CHAVE_ESTADO) = Estado.Modifica
+    End Sub
+
+    Private Sub btnSim_Click()
+        Dim Pessoa As IPessoaFisica = Nothing
+
+        Pessoa = MontaObjeto()
+
+        Try
+            Using Servico As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
+                Servico.Remover(Pessoa)
+            End Using
+
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Pessoa removida com sucesso."), False)
+            Me.ExibaTelaNovo()
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
     End Sub
 
     Protected Sub ButtonSubmit_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ButtonSubmit.Click

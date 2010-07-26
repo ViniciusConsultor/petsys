@@ -127,20 +127,31 @@ Partial Public Class ctrlPessoa
                     Item.Attributes.Add("NomeMae", "")
                 End If
 
-                Dim TelefoneResidencial As ITelefone
-                Dim TelefoneCelular As ITelefone
+                Dim TelefonesResidencial As IList(Of ITelefone)
+                Dim TelefonesCelular As IList(Of ITelefone)
 
-                TelefoneResidencial = Pessoa.ObtenhaTelelefone(TipoDeTelefone.Residencial)
-                TelefoneCelular = Pessoa.ObtenhaTelelefone(TipoDeTelefone.Celular)
+                TelefonesResidencial = Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
+                TelefonesCelular = Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
 
-                If Not TelefoneResidencial Is Nothing Then
-                    Item.Attributes.Add("TelefoneResidencial", TelefoneResidencial.ToString)
+                If Not TelefonesResidencial Is Nothing Then
+                    Dim TelefonesSTR As New StringBuilder
+
+                    For Each Telefone As ITelefone In TelefonesResidencial
+                        TelefonesSTR.AppendLine(Item.ToString)
+                    Next
+
+                    Item.Attributes.Add("TelefoneResidencial", TelefonesSTR.ToString)
                 Else
                     Item.Attributes.Add("TelefoneResidencial", "")
                 End If
 
-                If Not TelefoneCelular Is Nothing Then
-                    Item.Attributes.Add("TelefoneCelular", TelefoneCelular.ToString)
+                If Not TelefonesCelular Is Nothing Then
+                    Dim TelefonesSTR As New StringBuilder
+
+                    For Each Telefone As ITelefone In TelefonesCelular
+                        TelefonesSTR.AppendLine(Item.ToString)
+                    Next
+                    Item.Attributes.Add("TelefoneCelular", TelefonesSTR.ToString)
                 Else
                     Item.Attributes.Add("TelefoneCelular", "")
                 End If

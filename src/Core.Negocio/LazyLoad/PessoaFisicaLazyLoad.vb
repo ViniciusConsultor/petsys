@@ -231,15 +231,15 @@ Public Class PessoaFisicaLazyLoad
         _Pessoa.AdicioneTelefones(Telefones)
     End Sub
 
-    Public Function ObtenhaTelelefone(ByVal TipoTelefone As TipoDeTelefone) As ITelefone Implements IPessoa.ObtenhaTelelefone
-        If _Pessoa Is Nothing Then CarregueObjetoReal()
-        Return _Pessoa.ObtenhaTelelefone(TipoTelefone)
-    End Function
-
     Public Sub CarregueObjetoReal() Implements Compartilhados.Interfaces.Core.Negocio.LazyLoad.IObjetoLazyLoad.CarregueObjetoReal
         Using Servico As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
             _Pessoa = Servico.ObtenhaPessoa(Me._ID.Value)
         End Using
     End Sub
+
+    Public Function ObtenhaTelelefones(ByVal TipoTelefone As TipoDeTelefone) As IList(Of ITelefone) Implements IPessoa.ObtenhaTelelefones
+        If _Pessoa Is Nothing Then CarregueObjetoReal()
+        Return _Pessoa.ObtenhaTelelefones(TipoTelefone)
+    End Function
 
 End Class

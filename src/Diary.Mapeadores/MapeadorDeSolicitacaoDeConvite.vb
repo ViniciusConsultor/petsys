@@ -201,17 +201,15 @@ Public Class MapeadorDeSolicitacaoDeConvite
         Return Solicitacao
     End Function
 
-    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean) As IList(Of ISolicitacaoDeConvite) Implements IMapeadorDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal ConsiderarSolicitacoesFinalizadas As Boolean) As IList(Of ISolicitacaoDeConvite) Implements IMapeadorDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
         Dim Solicitacoes As IList(Of ISolicitacaoDeConvite) = New List(Of ISolicitacaoDeConvite)
 
         Sql.Append(Me.ObtenhaSQL)
 
-        If TrazApenasAtivas Then
+        If Not ConsiderarSolicitacoesFinalizadas Then
             Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'S'")
-        Else
-            Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(Me.ObtenhaOrderBy)
@@ -228,7 +226,7 @@ Public Class MapeadorDeSolicitacaoDeConvite
         Return Solicitacoes
     End Function
 
-    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, _
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal ConsiderarSolicitacoesFinalizadas As Boolean, _
                                                  ByVal DataInicio As Date, _
                                                  ByVal DataFim As Date) As IList(Of ISolicitacaoDeConvite) Implements IMapeadorDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
         Dim Sql As New StringBuilder
@@ -237,10 +235,8 @@ Public Class MapeadorDeSolicitacaoDeConvite
 
         Sql.Append(Me.ObtenhaSQL)
 
-        If TrazApenasAtivas Then
+        If Not ConsiderarSolicitacoesFinalizadas Then
             Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'S'")
-        Else
-            Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(String.Concat(" AND DRY_SOLICCONVT.DATAEHORA >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
@@ -271,7 +267,7 @@ Public Class MapeadorDeSolicitacaoDeConvite
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
-    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, _
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal ConsiderarSolicitacoesFinalizadas As Boolean, _
                                                  ByVal IDContato As Long) As IList(Of ISolicitacaoDeConvite) Implements IMapeadorDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
@@ -279,10 +275,8 @@ Public Class MapeadorDeSolicitacaoDeConvite
 
         Sql.Append(Me.ObtenhaSQL)
 
-        If TrazApenasAtivas Then
+        If Not ConsiderarSolicitacoesFinalizadas Then
             Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'S'")
-        Else
-            Sql.Append(" AND DRY_SOLICCONVT.ESTAATIVA = 'N'")
         End If
 
         Sql.Append(String.Concat(" AND DRY_SOLICCONVT.IDCONTATO = ", IDContato.ToString))
