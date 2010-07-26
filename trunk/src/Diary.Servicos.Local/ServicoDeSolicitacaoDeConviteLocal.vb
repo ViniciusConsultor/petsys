@@ -96,20 +96,20 @@ Public Class ServicoDeSolicitacaoDeConviteLocal
         End Try
     End Function
 
-    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean) As IList(Of ISolicitacaoDeConvite) Implements IServicoDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal ConsiderarSolicitacoesFinalizadas As Boolean) As IList(Of ISolicitacaoDeConvite) Implements IServicoDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
         Dim Mapeador As IMapeadorDeSolicitacaoDeConvite
 
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeConvite)()
 
         Try
-            Return Mapeador.ObtenhaSolicitacoesDeConvite(TrazApenasAtivas)
+            Return Mapeador.ObtenhaSolicitacoesDeConvite(ConsiderarSolicitacoesFinalizadas)
         Finally
             ServerUtils.libereRecursos()
         End Try
     End Function
 
-    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, _
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal ConsiderarSolicitacoesFinalizadas As Boolean, _
                                                  ByVal DataInicio As Date, _
                                                  ByVal DataFim As Date) As IList(Of ISolicitacaoDeConvite) Implements IServicoDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
         Dim Mapeador As IMapeadorDeSolicitacaoDeConvite
@@ -118,7 +118,7 @@ Public Class ServicoDeSolicitacaoDeConviteLocal
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeConvite)()
 
         Try
-            Return Mapeador.ObtenhaSolicitacoesDeConvite(TrazApenasAtivas, DataInicio, DataFim)
+            Return Mapeador.ObtenhaSolicitacoesDeConvite(ConsiderarSolicitacoesFinalizadas, DataInicio, DataFim)
         Finally
             ServerUtils.libereRecursos()
         End Try
@@ -143,7 +143,7 @@ Public Class ServicoDeSolicitacaoDeConviteLocal
         End Try
     End Sub
 
-    Public Function ObtenhaSolicitacoesDeConvite(ByVal TrazApenasAtivas As Boolean, _
+    Public Function ObtenhaSolicitacoesDeConvite(ByVal ConsiderarSolicitacoesFinalizadas As Boolean, _
                                                  ByVal IDContato As Long) As IList(Of ISolicitacaoDeConvite) Implements IServicoDeSolicitacaoDeConvite.ObtenhaSolicitacoesDeConvite
         Dim Mapeador As IMapeadorDeSolicitacaoDeConvite
 
@@ -151,7 +151,7 @@ Public Class ServicoDeSolicitacaoDeConviteLocal
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSolicitacaoDeConvite)()
 
         Try
-            Return Mapeador.ObtenhaSolicitacoesDeConvite(TrazApenasAtivas, IDContato)
+            Return Mapeador.ObtenhaSolicitacoesDeConvite(ConsiderarSolicitacoesFinalizadas, IDContato)
         Finally
             ServerUtils.libereRecursos()
         End Try

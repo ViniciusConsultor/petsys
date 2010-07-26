@@ -199,8 +199,7 @@ Partial Public Class cdCliente
     End Sub
 
     Private Sub MostreCliente(ByVal Cliente As ICliente)
-        'Me.txtCRMV.Text = Veterinario.CRMV
-        'Me.cboUF.SelectedValue = Veterinario.UF.ID.ToString
+
     End Sub
 
 End Class

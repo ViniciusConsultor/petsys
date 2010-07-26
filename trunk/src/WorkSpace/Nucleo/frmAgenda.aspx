@@ -53,15 +53,16 @@
                             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo compromisso"
                                 CommandName="btnNovoCompromisso" CausesValidation="False" CommandArgument="OPE.NCL.012.0001" />
                             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
-                                CommandName="btnImprimirCompromisso" CausesValidation="False" CommandArgument="OPE.NCL.012.0008" />
+                                CommandName="btnImprimirCompromisso" CausesValidation="False" CommandArgument="OPE.NCL.012.0009" />
                         </Items>
                     </telerik:RadToolBar>
                     <telerik:RadScheduler runat="server" ID="schCompromissos" DataKeyField="ID" DataDescriptionField="Descricao"
                         DataSubjectField="Assunto" DataStartField="Inicio" DataEndField="Fim" Width="100%"
-                        EnableDescriptionField="True" OnClientAppointmentDoubleClick="onAppointmentDoubleClick" AppointmentContextMenuSettings-EnableEmbeddedBaseStylesheet="False" AppointmentContextMenuSettings-EnableEmbeddedScripts="False" AppointmentContextMenuSettings-EnableEmbeddedSkins="False" TimeSlotContextMenuSettings-EnableEmbeddedBaseStylesheet="False" TimeSlotContextMenuSettings-EnableEmbeddedScripts="False" TimeSlotContextMenuSettings-EnableEmbeddedSkins="False">
+                        EnableDescriptionField="True" OnClientAppointmentDoubleClick="onAppointmentDoubleClick"
+                        AppointmentContextMenuSettings-EnableEmbeddedBaseStylesheet="False" AppointmentContextMenuSettings-EnableEmbeddedScripts="False"
+                        AppointmentContextMenuSettings-EnableEmbeddedSkins="False" TimeSlotContextMenuSettings-EnableEmbeddedBaseStylesheet="False"
+                        TimeSlotContextMenuSettings-EnableEmbeddedScripts="False" TimeSlotContextMenuSettings-EnableEmbeddedSkins="False">
                         <TimelineView UserSelectable="false" />
-                                               
-                        
                     </telerik:RadScheduler>
                 </ContentTemplate>
             </telerik:RadDock>
@@ -72,6 +73,8 @@
                         <Items>
                             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Nova tarefa"
                                 CommandName="btnNovaTarefa" CausesValidation="False" CommandArgument="OPE.NCL.012.0004" />
+                            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
+                                CommandName="btnImprimirTarefas" CausesValidation="False" CommandArgument="OPE.NCL.012.0008" />
                         </Items>
                     </telerik:RadToolBar>
                     <telerik:RadGrid ID="grdTarefas" runat="server" AutoGenerateColumns="False" AllowPaging="True"
@@ -111,11 +114,57 @@
                     </telerik:RadGrid>
                 </ContentTemplate>
             </telerik:RadDock>
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Lembretes" DefaultCommands="ExpandCollapse"
+                EnableAnimation="True" Skin="Vista" DockMode="Docked">
+                <ContentTemplate>
+                    <telerik:RadToolBar ID="ToolBarLembretes" runat="server" Skin="Vista" Style="width: 100%;">
+                        <Items>
+                            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo lembrete"
+                                CommandName="btnNovoLembrete" CausesValidation="False" CommandArgument="OPE.NCL.012.0010" />
+                            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
+                                CommandName="btnImprimirLembretes" CausesValidation="False" CommandArgument="OPE.NCL.012.0013" />
+                        </Items>
+                    </telerik:RadToolBar>
+                    <telerik:RadGrid ID="grdLembretes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                        PageSize="10" GridLines="None" Width="100%">
+                        <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                        <MasterTableView GridLines="Both">
+                            <RowIndicatorColumn>
+                                <HeaderStyle Width="20px" />
+                            </RowIndicatorColumn>
+                            <ExpandCollapseColumn>
+                                <HeaderStyle Width="20px" />
+                            </ExpandCollapseColumn>
+                            <Columns>
+                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
+                                    HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
+                                </telerik:GridButtonColumn>
+                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                </telerik:GridButtonColumn>
+                                <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column30">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Local" HeaderText="Prioridade" UniqueName="column1"
+                                    Visible="True">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column2"
+                                    Visible="True">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Inicio" HeaderText="Data de início" UniqueName="column33">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Fim" HeaderText="Data de conclusão" UniqueName="column3">
+                                </telerik:GridBoundColumn>
+                            </Columns>
+                        </MasterTableView>
+                    </telerik:RadGrid>
+                </ContentTemplate>
+            </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
-    
     <asp:Timer ID="Timer1" runat="server" Interval="30000">
     </asp:Timer>
-    <asp:Label ID="lblInconsistencia" runat="server" Font-Size="Medium" 
-        Font-Bold="True" ForeColor="#CC3300"></asp:Label>
+    <asp:Label ID="lblInconsistencia" runat="server" Font-Size="Medium" Font-Bold="True"
+        ForeColor="#CC3300"></asp:Label>
 </asp:Content>

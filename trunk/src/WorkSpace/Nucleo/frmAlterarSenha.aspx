@@ -23,7 +23,7 @@
                                 <asp:Label ID="Label1" runat="server" Text="Senha antiga"></asp:Label>
                             </td>
                             <td class="td">
-                                <telerik:RadTextBox ID="txtSenhaAntiga" runat="server" TextMode="Password" Skin="Vista">
+                                <telerik:RadTextBox ID="txtSenhaAntiga" runat="server" TextMode="Password" Skin="Vista" MaxLength="255">
                                 </telerik:RadTextBox>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
                                     ErrorMessage="Campo deve ser informado" ControlToValidate="txtSenhaAntiga"></asp:RequiredFieldValidator>
@@ -34,7 +34,7 @@
                                 <asp:Label ID="Label2" runat="server" Text="Nova senha"></asp:Label>
                             </td>
                             <td class="td">
-                                <telerik:RadTextBox ID="txtNovaSenha" runat="server" TextMode="Password" Skin="Vista">
+                                <telerik:RadTextBox ID="txtNovaSenha" runat="server" TextMode="Password" Skin="Vista" MaxLength="255">
                                 </telerik:RadTextBox>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
                                     ErrorMessage="Campo deve ser informado" ControlToValidate="txtNovaSenha"></asp:RequiredFieldValidator>
@@ -45,7 +45,7 @@
                                 <asp:Label ID="Label3" runat="server" Text="Confirmação da nova senha"></asp:Label>
                             </td>
                             <td class="td">
-                                <telerik:RadTextBox ID="txtConfirmacaoNovaSenha" runat="server" TextMode="Password" Skin="Vista">
+                                <telerik:RadTextBox ID="txtConfirmacaoNovaSenha" runat="server" TextMode="Password" Skin="Vista" MaxLength="255">
                                 </telerik:RadTextBox>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
                                     ErrorMessage="Campo deve ser informado" 

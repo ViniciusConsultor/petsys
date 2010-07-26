@@ -387,4 +387,61 @@ Public Class MapeadorDeAgenda
         Return Compromissos
     End Function
 
+    Public Function ObtenhaTarefas(ByVal IDProprietario As Long, _
+                                   ByVal DataInicio As Date, _
+                                   ByVal DataFim As Date?) As IList(Of ITarefa) Implements IMapeadorDeAgenda.ObtenhaTarefas
+
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Tarefas As IList(Of ITarefa) = New List(Of ITarefa)
+
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO FROM NCL_TAREFA WHERE")
+        Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
+        'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
+        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
+
+        If DataFim.HasValue Then
+            'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
+            Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "235959"))
+        End If
+
+        Sql.Append(" ORDER BY INICIO")
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Tarefas.Add(MontaObjetoTarefa(Leitor))
+            End While
+        End Using
+
+        Return Tarefas
+    End Function
+
+    Public Function InsiraLembrete(ByVal Lembrete As ILembrete) As Long Implements IMapeadorDeAgenda.InsiraLembrete
+
+    End Function
+
+    Public Sub ModifiqueLembrete(ByVal Lembrete As ILembrete) Implements IMapeadorDeAgenda.ModifiqueLembrete
+
+    End Sub
+
+    Public Function ObtenhaLembrete(ByVal ID As Long) As ILembrete Implements IMapeadorDeAgenda.ObtenhaLembrete
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaLembretes(ByVal IDProprietario As Long) As IList(Of ILembrete) Implements IMapeadorDeAgenda.ObtenhaLembretes
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaLembretes(ByVal IDProprietario As Long, _
+                                     ByVal DataInicio As Date, _
+                                     ByVal DataFim As Date?) As IList(Of ILembrete) Implements IMapeadorDeAgenda.ObtenhaLembretes
+        Return Nothing
+    End Function
+
+    Public Sub RemovaLembrete(ByVal ID As Long) Implements IMapeadorDeAgenda.RemovaLembrete
+
+    End Sub
+
 End Class

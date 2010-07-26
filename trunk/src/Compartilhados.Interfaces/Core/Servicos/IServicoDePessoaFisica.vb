@@ -10,6 +10,7 @@ Namespace Core.Servicos
         Function ObtenhaPessoa(ByVal ID As Long) As IPessoaFisica
         Sub Inserir(ByVal Pessoa As IPessoaFisica)
         Sub Modificar(ByVal Pessoa As IPessoaFisica)
+        Sub Remover(ByVal Pessoa As IPessoaFisica)
 
     End Interface
 

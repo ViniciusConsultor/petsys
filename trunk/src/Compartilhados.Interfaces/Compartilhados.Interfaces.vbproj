@@ -96,6 +96,7 @@
     <Compile Include="Core\Negocio\IEndereco.vb" />
     <Compile Include="Core\Negocio\IFornecedor.vb" />
     <Compile Include="Core\Negocio\IGrupo.vb" />
+    <Compile Include="Core\Negocio\ILembrete.vb" />
     <Compile Include="Core\Negocio\IMunicipio.vb" />
     <Compile Include="Core\Negocio\IOperador.vb" />
     <Compile Include="Core\Negocio\IPapelPessoa.vb" />
@@ -108,6 +109,7 @@
     <Compile Include="Core\Negocio\IVendedor.vb" />
     <Compile Include="Core\Negocio\LazyLoad\FabricaDeObjetoLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\ICompromissoLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\ILembreteLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\IObjetoLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\IPessoaFisicaLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\ITarefaLazyLoad.vb" />

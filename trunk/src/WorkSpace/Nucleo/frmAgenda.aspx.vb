@@ -261,6 +261,8 @@ Partial Public Class frmAgenda
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovaTarefa"
                 btnNovaTarefa_Click()
+            Case "btnImprimirTarefas"
+                btnImprimirTarefas_Click()
         End Select
     End Sub
 
@@ -273,11 +275,18 @@ Partial Public Class frmAgenda
         End Select
     End Sub
 
+    Private Sub btnImprimirTarefas_Click()
+        Dim URL As String
+
+        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoTarefa.aspx", "?IdProprietario=", IDProprietario.ToString)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir tarefas"), False)
+    End Sub
+
     Private Sub btnImprimirCompromisso_Click()
         Dim URL As String
 
         URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoCompromisso.aspx", "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir compromisso"), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir compromissos"), False)
     End Sub
 
 End Class

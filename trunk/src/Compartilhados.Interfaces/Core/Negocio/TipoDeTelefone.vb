@@ -8,11 +8,9 @@
 
         Public Shared Residencial As TipoDeTelefone = New TipoDeTelefone(1S, "Residêncial")
         Public Shared Comercial As TipoDeTelefone = New TipoDeTelefone(2S, "Comercial")
-        Public Shared Recado As TipoDeTelefone = New TipoDeTelefone(3S, "Recado")
         Public Shared Celular As TipoDeTelefone = New TipoDeTelefone(4S, "Celular")
 
-        Private Shared Lista As TipoDeTelefone() = {Residencial, Comercial, _
-                                                    Recado, Celular}
+        Private Shared Lista As TipoDeTelefone() = {Residencial, Comercial, Celular}
 
         Private Sub New(ByVal ID As Short, _
                         ByVal Descricao As String)
