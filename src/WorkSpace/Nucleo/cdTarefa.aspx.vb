@@ -23,7 +23,7 @@ Partial Public Class cdTarefa
             Dim IdTarefa As Nullable(Of Long)
 
             If Not String.IsNullOrEmpty(Request.QueryString("IdProprietario")) Then
-                Session(CHAVE_ID_PROPRIETARIO) = CLng(Request.QueryString("IdProprietario"))
+                ViewState(CHAVE_ID_PROPRIETARIO) = CLng(Request.QueryString("IdProprietario"))
             End If
 
             If Not String.IsNullOrEmpty(Request.QueryString("IdTarefa")) Then
@@ -47,18 +47,18 @@ Partial Public Class cdTarefa
     End Sub
 
     Private Sub ExibaTelaNovo()
-        Session(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_ESTADO) = Estado.Novo
         LimpaDados()
     End Sub
 
     Private Sub LimpaDados()
-        Session(CHAVE_ID_TAREFA) = Nothing
+        ViewState(CHAVE_ID_TAREFA) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoCompromisso, Control))
         CarregaDados()
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
         LimpaDados()
 
         Dim Tarefa As ITarefa
@@ -74,8 +74,8 @@ Partial Public Class cdTarefa
         txtDataHorarioInicio.SelectedDate = Tarefa.DataDeInicio
         txtDataHorarioFim.SelectedDate = Tarefa.DataDeConclusao
         cboPrioridade.SelectedValue = Tarefa.Prioridade.ID.ToString
-        Session(CHAVE_ID_PROPRIETARIO) = Tarefa.Proprietario.ID
-        Session(CHAVE_ID_TAREFA) = Tarefa.ID
+        ViewState(CHAVE_ID_PROPRIETARIO) = Tarefa.Proprietario.ID
+        ViewState(CHAVE_ID_TAREFA) = Tarefa.ID
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -101,7 +101,7 @@ Partial Public Class cdTarefa
 
         Try
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.InsiraTarefa(Tarefa)
                     Mensagem = "Tarefa cadastrada com sucesso."
                 Else
@@ -128,10 +128,10 @@ Partial Public Class cdTarefa
         Tarefa.DataDeInicio = txtDataHorarioInicio.SelectedDate.Value
         Tarefa.DataDeConclusao = txtDataHorarioFim.SelectedDate.Value
         Tarefa.Prioridade = PrioridadeDaTarefa.Obtenha(CChar(cboPrioridade.SelectedValue))
-        Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(Session(CHAVE_ID_PROPRIETARIO)))
+        Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO)))
 
-        If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
-            Tarefa.ID = CLng(Session(CHAVE_ID_TAREFA))
+        If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then
+            Tarefa.ID = CLng(ViewState(CHAVE_ID_TAREFA))
         End If
 
         Return Tarefa

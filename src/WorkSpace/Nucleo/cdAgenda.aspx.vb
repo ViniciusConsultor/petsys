@@ -47,7 +47,7 @@ Partial Public Class cdAgenda
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
-        Session(CHAVE_ESTADO) = Estado.Inicial
+        ViewState(CHAVE_ESTADO) = Estado.Inicial
 
         ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
@@ -65,7 +65,7 @@ Partial Public Class cdAgenda
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_ESTADO) = Estado.Novo
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -76,7 +76,7 @@ Partial Public Class cdAgenda
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -87,7 +87,7 @@ Partial Public Class cdAgenda
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO) = Estado.Remove
+        ViewState(CHAVE_ESTADO) = Estado.Remove
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -141,7 +141,7 @@ Partial Public Class cdAgenda
 
         Try
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.Insira(Agenda)
                     Mensagem = "Agenda cadastrada com sucesso."
                 Else

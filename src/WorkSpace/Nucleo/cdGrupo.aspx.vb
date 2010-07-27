@@ -39,7 +39,7 @@ Partial Public Class cdGrupo
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoGrupo, Control))
         ctrlGrupo1.HabiliteComponente(True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoGrupo, Control), False)
-        Session(CHAVE_ESTADO_CD_GRUPO) = Estado.Inicial
+        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Inicial
         CarregaStatus()
         rblStatus.SelectedValue = StatusDoGrupo.Ativo.ID
         ctrlGrupo1.EnableLoadOnDemand = True
@@ -69,7 +69,7 @@ Partial Public Class cdGrupo
         ctrlGrupo1.LimparControle()
         ctrlGrupo1.HabiliteComponente(True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoGrupo, Control), True)
-        Session(CHAVE_ESTADO_CD_GRUPO) = Estado.Novo
+        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Novo
         ctrlGrupo1.EnableLoadOnDemand = False
         ctrlGrupo1.ShowDropDownOnTextboxClick = False
         ctrlGrupo1.EhObrigatorio = True
@@ -85,7 +85,7 @@ Partial Public Class cdGrupo
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         ctrlGrupo1.HabiliteComponente(True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoGrupo, Control), True)
-        Session(CHAVE_ESTADO_CD_GRUPO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Modifica
         ctrlGrupo1.EnableLoadOnDemand = False
         ctrlGrupo1.ShowDropDownOnTextboxClick = False
         ctrlGrupo1.EhObrigatorio = True
@@ -99,7 +99,7 @@ Partial Public Class cdGrupo
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO_CD_GRUPO) = Estado.Remove
+        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Remove
         ctrlGrupo1.HabiliteComponente(False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoGrupo, Control), False)
     End Sub
@@ -127,7 +127,7 @@ Partial Public Class cdGrupo
 
         Try
             Using Servico As IServicoDeGrupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupo)()
-                If CByte(Session(CHAVE_ESTADO_CD_GRUPO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO_CD_GRUPO)) = Estado.Novo Then
                     Servico.Inserir(Grupo)
                     Mensagem = "Grupo cadastrado com sucesso."
                 Else
@@ -150,7 +150,7 @@ Partial Public Class cdGrupo
 
         Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupo)()
 
-        If CByte(Session(CHAVE_ESTADO_CD_GRUPO)) <> Estado.Novo Then
+        If CByte(ViewState(CHAVE_ESTADO_CD_GRUPO)) <> Estado.Novo Then
             Grupo.ID = ctrlGrupo1.GrupoSelecionado.ID.Value
         End If
 

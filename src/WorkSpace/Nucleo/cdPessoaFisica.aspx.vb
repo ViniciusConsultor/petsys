@@ -65,9 +65,9 @@ Partial Public Class cdPessoaFisica
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
         CarregueComponentes()
-        Session(CHAVE_ESTADO) = Estado.Novo
-        Session(CHAVE_ID) = Nothing
-        Session(CHAVE_TELEFONES) = Nothing
+        ViewState(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_ID) = Nothing
+        ViewState(CHAVE_TELEFONES) = Nothing
         imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
     End Sub
 
@@ -78,7 +78,7 @@ Partial Public Class cdPessoaFisica
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
@@ -188,7 +188,7 @@ Partial Public Class cdPessoaFisica
         Try
             Using Servico As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
 
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.Inserir(Pessoa)
                 Else
                     Servico.Modificar(Pessoa)
@@ -214,8 +214,8 @@ Partial Public Class cdPessoaFisica
 
         Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
 
-        If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
-            Pessoa.ID = CLng(Session(CHAVE_ID))
+        If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then
+            Pessoa.ID = CLng(ViewState(CHAVE_ID))
         End If
 
         Pessoa.Nome = txtNome.Text
@@ -272,7 +272,7 @@ Partial Public Class cdPessoaFisica
         End If
 
         Pessoa.Site = txtSite.Text
-        Pessoa.AdicioneTelefones(CType(Session(CHAVE_TELEFONES), IList(Of ITelefone)))
+        Pessoa.AdicioneTelefones(CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone)))
         Pessoa.Foto = imgFoto.ImageUrl
         Return Pessoa
     End Function
@@ -345,13 +345,13 @@ Partial Public Class cdPessoaFisica
         txtSite.Text = Pessoa.Site
         ExibaTelefones(Pessoa.Telefones)
         imgFoto.ImageUrl = Pessoa.Foto
-        Session(CHAVE_ID) = Pessoa.ID.Value
+        ViewState(CHAVE_ID) = Pessoa.ID.Value
     End Sub
 
     Private Sub ExibaTelefones(ByVal Telefones As IList(Of ITelefone))
         grdTelefones.DataSource = Telefones
         grdTelefones.DataBind()
-        Session(CHAVE_TELEFONES) = Telefones
+        ViewState(CHAVE_TELEFONES) = Telefones
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -363,7 +363,7 @@ Partial Public Class cdPessoaFisica
             Case "btnExcluir"
                 ExibaTelaExcluir()
             Case "btnNao"
-                ExibaTelaDetalhes(CLng(Session(CHAVE_ID)))
+                ExibaTelaDetalhes(CLng(ViewState(CHAVE_ID)))
             Case "btnSim"
                 btnSim_Click()
         End Select
@@ -376,7 +376,7 @@ Partial Public Class cdPessoaFisica
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
     Private Sub btnSim_Click()
@@ -422,7 +422,7 @@ Partial Public Class cdPessoaFisica
             Exit Sub
         End If
 
-        Telefones = CType(Session(CHAVE_TELEFONES), IList(Of ITelefone))
+        Telefones = CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone))
 
         If Telefones Is Nothing Then Telefones = New List(Of ITelefone)
 
@@ -471,7 +471,7 @@ Partial Public Class cdPessoaFisica
 
         If e.CommandName = "Excluir" Then
             Dim Telefones As IList(Of ITelefone)
-            Telefones = CType(Session(CHAVE_TELEFONES), IList(Of ITelefone))
+            Telefones = CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone))
             Telefones.RemoveAt(IndiceSelecionado)
             ExibaTelefones(Telefones)
         End If

@@ -52,10 +52,10 @@ Partial Public Class ctrlMunicipios
 
     Public Property MunicipioSelecionado() As IMunicipio
         Get
-            Return CType(Session(Me.ClientID), IMunicipio)
+            Return CType(ViewState(Me.ClientID), IMunicipio)
         End Get
         Set(ByVal value As IMunicipio)
-            Session.Add(Me.ClientID, value)
+            ViewState.Add(Me.ClientID, value)
         End Set
     End Property
 

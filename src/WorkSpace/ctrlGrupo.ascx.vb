@@ -46,10 +46,10 @@ Partial Public Class ctrlGrupo
 
     Public Property GrupoSelecionado() As IGrupo
         Get
-            Return CType(Session(Me.ClientID), IGrupo)
+            Return CType(ViewState(Me.ClientID), IGrupo)
         End Get
         Set(ByVal value As IGrupo)
-            Session.Add(Me.ClientID, value)
+            ViewState.Add(Me.ClientID, value)
         End Set
     End Property
 

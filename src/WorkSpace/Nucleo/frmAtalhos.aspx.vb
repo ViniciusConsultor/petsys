@@ -20,7 +20,7 @@ Partial Public Class frmAtalhos
     End Sub
 
     Private Sub ExibaTelaInicial()
-        Session(CHAVE_ATALHOS_EXTERNOS) = New List(Of Atalho)
+        ViewState(CHAVE_ATALHOS_EXTERNOS) = New List(Of Atalho)
         ApresenteMenuParaEscolhaDosAtalhos()
         LimpaCamposDoAtalhoExterno()
         ExibaAtalhosExternos(New List(Of Atalho))
@@ -103,7 +103,7 @@ Partial Public Class frmAtalhos
         Dim Atalhos As New List(Of Atalho)
         Dim AtalhosExternos As IList(Of Atalho)
 
-        AtalhosExternos = DirectCast(Session(CHAVE_ATALHOS_EXTERNOS), IList(Of Atalho))
+        AtalhosExternos = DirectCast(ViewState(CHAVE_ATALHOS_EXTERNOS), IList(Of Atalho))
 
         If Not AtalhosExternos.Count = 0 Then
             Atalhos.AddRange(AtalhosExternos)
@@ -161,7 +161,7 @@ Partial Public Class frmAtalhos
             Exit Sub
         End If
 
-        AtalhosExternos = CType(Session(CHAVE_ATALHOS_EXTERNOS), IList(Of Atalho))
+        AtalhosExternos = CType(ViewState(CHAVE_ATALHOS_EXTERNOS), IList(Of Atalho))
         AtalhoASerInserido = CriaAtalhoExterno()
         AtalhosExternos.Add(AtalhoASerInserido)
         ExibaAtalhosExternos(AtalhosExternos)
@@ -169,7 +169,7 @@ Partial Public Class frmAtalhos
     End Sub
 
     Private Sub ExibaAtalhosExternos(ByVal Atalhos As IList(Of Atalho))
-        Session(CHAVE_ATALHOS_EXTERNOS) = Atalhos
+        ViewState(CHAVE_ATALHOS_EXTERNOS) = Atalhos
         grdAtalhosExternos.DataSource = Atalhos
         grdAtalhosExternos.DataBind()
     End Sub

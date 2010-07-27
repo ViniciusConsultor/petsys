@@ -39,7 +39,7 @@ Partial Public Class cdMunicipio
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoMunicipio, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoMunicipio, Control), False)
         ctrlMunicipios1.HabiliteComponente(True)
-        Session(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Inicial
+        ViewState(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Inicial
         PreecheUFs()
         ctrlMunicipios1.EnableLoadOnDemand = True
         ctrlMunicipios1.ShowDropDownOnTextboxClick = True
@@ -74,7 +74,7 @@ Partial Public Class cdMunicipio
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Modifica
         ctrlMunicipios1.EnableLoadOnDemand = False
         ctrlMunicipios1.ShowDropDownOnTextboxClick = False
         ctrlMunicipios1.ExibeTituloParaSelecionarUmItem = False
@@ -88,7 +88,7 @@ Partial Public Class cdMunicipio
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Remove
+        ViewState(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Remove
         ctrlMunicipios1.HabiliteComponente(False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoMunicipio, Control), False)
     End Sub
@@ -139,7 +139,7 @@ Partial Public Class cdMunicipio
 
         Municipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMunicipio)()
 
-        If CByte(Session(CHAVE_ESTADO_CD_MUNICIPIO)) <> Estado.Novo Then
+        If CByte(ViewState(CHAVE_ESTADO_CD_MUNICIPIO)) <> Estado.Novo Then
             Municipio.ID = ctrlMunicipios1.MunicipioSelecionado.ID
         End If
 
@@ -177,7 +177,7 @@ Partial Public Class cdMunicipio
         Try
             Using Servico As IServicoDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMunicipio)()
 
-                If CByte(Session(CHAVE_ESTADO_CD_MUNICIPIO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO_CD_MUNICIPIO)) = Estado.Novo Then
                     Servico.Inserir(Municipio)
                 Else
                     Servico.Modificar(Municipio)

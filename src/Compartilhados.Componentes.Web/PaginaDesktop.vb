@@ -49,4 +49,19 @@ Public MustInherit Class PaginaDesktop
         Page.Header.Controls.Add(cssLiteral)
     End Sub
 
+    Protected Overrides Sub SavePageStateToPersistenceMedium(ByVal viewState As Object)
+        Dim formatter As LosFormatter = New LosFormatter()
+        Dim writer As StringWriter = New StringWriter()
+
+        formatter.Serialize(writer, viewState)
+        Dim viewStateString As String = writer.ToString()
+        Dim bytes As Byte() = Convert.FromBase64String(viewStateString)
+
+        ' COMPACTAR VIEWSTATE
+
+        bytes = UtilidadesWeb.CompactarViewState(bytes)
+        ClientScript.RegisterHiddenField("__VSTATE", Convert.ToBase64String(bytes))
+    End Sub
+
+
 End Class
