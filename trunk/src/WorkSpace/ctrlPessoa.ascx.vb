@@ -177,10 +177,10 @@ Partial Public Class ctrlPessoa
 
     Public Property PessoaSelecionada() As IPessoa
         Get
-            Return CType(Session(Me.ClientID), IPessoa)
+            Return CType(ViewState(Me.ClientID), IPessoa)
         End Get
         Set(ByVal value As IPessoa)
-            Session.Add(Me.ClientID, value)
+            ViewState.Add(Me.ClientID, value)
 
             If Not value Is Nothing Then
                 NomeDaPessoa = PessoaSelecionada.Nome

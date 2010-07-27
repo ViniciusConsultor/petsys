@@ -46,7 +46,7 @@ Partial Public Class cdCliente
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
-        Session(CHAVE_ESTADO_CD_CLIENTE) = Estado.Inicial
+        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Inicial
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -61,7 +61,7 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO_CD_CLIENTE) = Estado.Novo
+        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Novo
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -72,7 +72,7 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO_CD_CLIENTE) = Estado.Modifica
+        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Modifica
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -83,7 +83,7 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO_CD_CLIENTE) = Estado.Remove
+        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Remove
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -117,7 +117,7 @@ Partial Public Class cdCliente
 
         Try
             Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
-                If CByte(Session(CHAVE_ESTADO_CD_CLIENTE)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO_CD_CLIENTE)) = Estado.Novo Then
                     Servico.Inserir(Cliente)
                     Mensagem = "Cliente cadastrado com sucesso."
                 Else

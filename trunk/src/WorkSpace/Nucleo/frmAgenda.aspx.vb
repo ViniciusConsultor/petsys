@@ -150,8 +150,8 @@ Partial Public Class frmAgenda
         UtilidadesWeb.LimparComponente(CType(pnlCompromissos, Control))
         UtilidadesWeb.LimparComponente(CType(pnlTarefas, Control))
 
-        Session.Remove(CHAVE_COMPROMISSOS)
-        Session.Remove(CHAVE_TAREFAS)
+        ViewState.Remove(CHAVE_COMPROMISSOS)
+        ViewState.Remove(CHAVE_TAREFAS)
 
         Dim Tarefas As IList(Of ITarefa)
         Dim Compromissos As IList(Of ICompromisso)
@@ -165,7 +165,7 @@ Partial Public Class frmAgenda
         schCompromissos.DayEndTime = HoraFim.TimeOfDay
         schCompromissos.MinutesPerRow = IntervaloEntreCompromissos.Minute
 
-        Session(CHAVE_COMPROMISSOS) = Compromissos
+        ViewState(CHAVE_COMPROMISSOS) = Compromissos
         schCompromissos.DataSource = Compromissos
         schCompromissos.DataBind()
 
@@ -195,7 +195,7 @@ Partial Public Class frmAgenda
     End Sub
 
     Private Sub ExibaTarefas(ByVal Tarefas As IList(Of ITarefa))
-        Session(CHAVE_TAREFAS) = Tarefas
+        ViewState(CHAVE_TAREFAS) = Tarefas
         grdTarefas.DataSource = Tarefas
         grdTarefas.DataBind()
     End Sub
@@ -211,7 +211,7 @@ Partial Public Class frmAgenda
 
         If e.CommandName = "Excluir" Then
             Dim Tarefas As IList(Of ITarefa)
-            Tarefas = CType(Session((CHAVE_TAREFAS)), IList(Of ITarefa))
+            Tarefas = CType(ViewState((CHAVE_TAREFAS)), IList(Of ITarefa))
             Tarefas.RemoveAt(IndiceSelecionado)
             ExibaTarefas(Tarefas)
 
@@ -227,7 +227,7 @@ Partial Public Class frmAgenda
     End Sub
 
     Private Sub grdTarefas_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdTarefas.PageIndexChanged
-        UtilidadesWeb.PaginacaoDataGrid(grdTarefas, Session(CHAVE_TAREFAS), e)
+        UtilidadesWeb.PaginacaoDataGrid(grdTarefas, ViewState(CHAVE_TAREFAS), e)
     End Sub
 
     Private Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender

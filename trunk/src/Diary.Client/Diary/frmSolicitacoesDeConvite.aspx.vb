@@ -59,7 +59,7 @@ Partial Public Class frmSolicitacoesDeConvite
     End Sub
 
     Private Sub ExibaSolicitacoes(ByVal Solicitacoes As IList(Of ISolicitacaoDeConvite))
-        Session(CHAVE_SOLICITACOES) = Solicitacoes
+        ViewState(CHAVE_SOLICITACOES) = Solicitacoes
         Me.grdItensLancados.DataSource = Solicitacoes
         Me.grdItensLancados.DataBind()
     End Sub
@@ -95,7 +95,7 @@ Partial Public Class frmSolicitacoesDeConvite
 
         If e.CommandName = "Excluir" Then
             Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
-            Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeConvite))
+            Solicitacoes = CType(ViewState(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeConvite))
             Solicitacoes.RemoveAt(IndiceSelecionado)
             ExibaSolicitacoes(Solicitacoes)
 
@@ -140,7 +140,7 @@ Partial Public Class frmSolicitacoesDeConvite
     End Sub
 
     Private Sub grdItensLancados_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdItensLancados.PageIndexChanged
-        UtilidadesWeb.PaginacaoDataGrid(grdItensLancados, Session(CHAVE_SOLICITACOES), e)
+        UtilidadesWeb.PaginacaoDataGrid(grdItensLancados, ViewState(CHAVE_SOLICITACOES), e)
     End Sub
 
     Protected Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
@@ -209,7 +209,7 @@ Partial Public Class frmSolicitacoesDeConvite
         Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
         Dim URL As String
 
-        Solicitacoes = CType(Session(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeConvite))
+        Solicitacoes = CType(ViewState(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeConvite))
 
         Gerador = New GeradorDeSolicitacoesDeConviteEmPDF(Solicitacoes)
         NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto

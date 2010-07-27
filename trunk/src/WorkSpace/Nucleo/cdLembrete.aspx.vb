@@ -23,7 +23,7 @@ Partial Public Class cdLembrete
             Dim IdLembrete As Nullable(Of Long)
 
             If Not String.IsNullOrEmpty(Request.QueryString("IdProprietario")) Then
-                Session(CHAVE_ID_PROPRIETARIO) = CLng(Request.QueryString("IdProprietario"))
+                ViewState(CHAVE_ID_PROPRIETARIO) = CLng(Request.QueryString("IdProprietario"))
             End If
 
             If Not String.IsNullOrEmpty(Request.QueryString("IdLembrete")) Then
@@ -39,17 +39,17 @@ Partial Public Class cdLembrete
     End Sub
 
     Private Sub ExibaTelaNovo()
-        Session(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_ESTADO) = Estado.Novo
         LimpaDados()
     End Sub
 
     Private Sub LimpaDados()
-        Session(CHAVE_ID_LEMBRETE) = Nothing
+        ViewState(CHAVE_ID_LEMBRETE) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoLembrete, Control))
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
         LimpaDados()
 
         Dim Lembrete As ILembrete
@@ -65,8 +65,8 @@ Partial Public Class cdLembrete
         txtDataHorarioFim.SelectedDate = Lembrete.Fim
         txtDataHorarioInicio.SelectedDate = Lembrete.Inicio
         txtLocal.Text = Lembrete.Local
-        Session(CHAVE_ID_PROPRIETARIO) = Lembrete.Proprietario.ID
-        Session(CHAVE_ID_LEMBRETE) = Lembrete.ID
+        ViewState(CHAVE_ID_PROPRIETARIO) = Lembrete.Proprietario.ID
+        ViewState(CHAVE_ID_LEMBRETE) = Lembrete.ID
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -92,7 +92,7 @@ Partial Public Class cdLembrete
 
         Try
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.InsiraLembrete(Lembrete)
                     Mensagem = "Lembrete cadastrado com sucesso."
                 Else
@@ -119,10 +119,10 @@ Partial Public Class cdLembrete
         Lembrete.Fim = txtDataHorarioFim.SelectedDate.Value
         Lembrete.Inicio = txtDataHorarioInicio.SelectedDate.Value
         Lembrete.Local = txtLocal.Text
-        Lembrete.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(Session(CHAVE_ID_PROPRIETARIO)))
+        Lembrete.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO)))
 
-        If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
-            Lembrete.ID = CLng(Session(CHAVE_ID_LEMBRETE))
+        If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then
+            Lembrete.ID = CLng(ViewState(CHAVE_ID_LEMBRETE))
         End If
 
         Return Lembrete

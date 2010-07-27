@@ -23,7 +23,7 @@ Partial Public Class cdCompromisso
             Dim IdCompromisso As Nullable(Of Long)
 
             If Not String.IsNullOrEmpty(Request.QueryString("IdProprietario")) Then
-                Session(CHAVE_ID_PROPRIETARIO) = CLng(Request.QueryString("IdProprietario"))
+                ViewState(CHAVE_ID_PROPRIETARIO) = CLng(Request.QueryString("IdProprietario"))
             End If
 
             If Not String.IsNullOrEmpty(Request.QueryString("IdCompromisso")) Then
@@ -39,17 +39,17 @@ Partial Public Class cdCompromisso
     End Sub
 
     Private Sub ExibaTelaNovo()
-        Session(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_ESTADO) = Estado.Novo
         LimpaDados()
     End Sub
 
     Private Sub LimpaDados()
-        Session(CHAVE_ID_COMPROMISSO) = Nothing
+        ViewState(CHAVE_ID_COMPROMISSO) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoCompromisso, Control))
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
         LimpaDados()
 
         Dim Compromisso As ICompromisso
@@ -65,8 +65,8 @@ Partial Public Class cdCompromisso
         txtDataHorarioFim.SelectedDate = Compromisso.Fim
         txtDataHorarioInicio.SelectedDate = Compromisso.Inicio
         txtLocal.Text = Compromisso.Local
-        Session(CHAVE_ID_PROPRIETARIO) = Compromisso.Proprietario.ID
-        Session(CHAVE_ID_COMPROMISSO) = Compromisso.ID
+        ViewState(CHAVE_ID_PROPRIETARIO) = Compromisso.Proprietario.ID
+        ViewState(CHAVE_ID_COMPROMISSO) = Compromisso.ID
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -92,7 +92,7 @@ Partial Public Class cdCompromisso
 
         Try
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.InsiraCompromisso(Compromisso)
                     Mensagem = "Compromisso cadastrado com sucesso."
                 Else
@@ -119,10 +119,10 @@ Partial Public Class cdCompromisso
         Compromisso.Fim = txtDataHorarioFim.SelectedDate.Value
         Compromisso.Inicio = txtDataHorarioInicio.SelectedDate.Value
         Compromisso.Local = txtLocal.Text
-        Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(Session(CHAVE_ID_PROPRIETARIO)))
+        Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO)))
 
-        If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
-            Compromisso.ID = CLng(Session(CHAVE_ID_COMPROMISSO))
+        If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then
+            Compromisso.ID = CLng(ViewState(CHAVE_ID_COMPROMISSO))
         End If
 
         Return Compromisso

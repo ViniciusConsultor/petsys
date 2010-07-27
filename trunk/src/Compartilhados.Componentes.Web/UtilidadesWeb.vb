@@ -7,6 +7,8 @@ Imports Telerik.Web
 Imports Telerik.Web.UI
 Imports System.Web.SessionState
 Imports System.Globalization
+Imports System.IO
+Imports System.IO.Compression
 
 Public Class UtilidadesWeb
 
@@ -396,4 +398,37 @@ Public Class UtilidadesWeb
         DataGrid.DataBind()
     End Sub
 
+    Public Shared Function CompactarViewState(ByVal bytes As Byte()) As Byte()
+        Dim MSsaida As MemoryStream = New MemoryStream()
+        Dim gzip As GZipStream = New GZipStream(MSsaida, CompressionMode.Compress, True)
+
+        gzip.Write(bytes, 0, bytes.Length)
+        gzip.Close()
+        Return MSsaida.ToArray()
+    End Function
+
+    Public Shared Function DescompactarViewState(ByVal bytes As Byte()) As Byte()
+        Dim MSentrada As MemoryStream = New MemoryStream()
+
+        MSentrada.Write(bytes, 0, bytes.Length)
+        MSentrada.Position = 0
+
+        Dim gzip As GZipStream = New GZipStream(MSentrada, CompressionMode.Decompress, True)
+
+        Dim MSsaida As MemoryStream = New MemoryStream()
+
+        Dim buffer As Byte() = New Byte(64) {}
+        Dim leitura As Integer = -1
+
+        leitura = gzip.Read(buffer, 0, buffer.Length)
+
+        While (leitura > 0)
+            MSsaida.Write(buffer, 0, leitura)
+            leitura = gzip.Read(buffer, 0, buffer.Length)
+        End While
+
+        gzip.Close()
+        Return MSsaida.ToArray()
+
+    End Function
 End Class

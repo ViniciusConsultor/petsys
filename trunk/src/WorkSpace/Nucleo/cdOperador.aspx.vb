@@ -47,7 +47,7 @@ Partial Public Class cdOperador
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
-        Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Inicial
+        ViewState(CHAVE_ESTADO_CD_OPERADOR) = Estado.Inicial
         MostraGrupos(New List(Of IGrupo))
         CarregaStatus()
         rblStatus.SelectedValue = StatusDoOperador.Ativo.ID.ToString
@@ -76,7 +76,7 @@ Partial Public Class cdOperador
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), True)
-        Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Novo
+        ViewState(CHAVE_ESTADO_CD_OPERADOR) = Estado.Novo
         DokSenha.Visible = True
         MostraGrupos(New List(Of IGrupo))
         'grdGrupos.Columns(0).Visible = True
@@ -93,7 +93,7 @@ Partial Public Class cdOperador
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), True)
-        Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Modifica
+        ViewState(CHAVE_ESTADO_CD_OPERADOR) = Estado.Modifica
         DokSenha.Visible = False
     End Sub
 
@@ -105,7 +105,7 @@ Partial Public Class cdOperador
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Remove
+        ViewState(CHAVE_ESTADO_CD_OPERADOR) = Estado.Remove
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), False)
         DokSenha.Visible = False
@@ -148,7 +148,7 @@ Partial Public Class cdOperador
 
         Try
             Using Servico As IServicoDeOperador = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeOperador)()
-                If CByte(Session(CHAVE_ESTADO_CD_OPERADOR)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO_CD_OPERADOR)) = Estado.Novo Then
                     Servico.Inserir(Operador, ObtenhaSenha)
                     Mensagem = "Operador cadastrado com sucesso."
                 Else
@@ -174,7 +174,7 @@ Partial Public Class cdOperador
         Operador = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperador)(New Object() {Pessoa})
         Operador.Login = txtLogin.Text
         Operador.Status = StatusDoOperador.ObtenhaStatus(CChar(rblStatus.SelectedValue))
-        Operador.AdicioneGrupos(CType(Session(CHAVE_GRUPOS), IList(Of IGrupo)))
+        Operador.AdicioneGrupos(CType(ViewState(CHAVE_GRUPOS), IList(Of IGrupo)))
 
         Return Operador
     End Function
@@ -212,7 +212,7 @@ Partial Public Class cdOperador
     Private Sub GrupoFoiSelecionado(ByVal Grupo As IGrupo)
         Dim Grupos As IList(Of IGrupo)
 
-        Grupos = CType(Session(CHAVE_GRUPOS), IList(Of IGrupo))
+        Grupos = CType(ViewState(CHAVE_GRUPOS), IList(Of IGrupo))
 
         If Grupos Is Nothing Then Grupos = New List(Of IGrupo)
 
@@ -227,7 +227,7 @@ Partial Public Class cdOperador
     Private Sub MostraGrupos(ByVal Grupos As IList(Of IGrupo))
         Me.grdGrupos.MasterTableView.DataSource = Grupos
         Me.grdGrupos.DataBind()
-        Session.Add(CHAVE_GRUPOS, Grupos)
+        ViewState.Add(CHAVE_GRUPOS, Grupos)
     End Sub
     
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -296,7 +296,7 @@ Partial Public Class cdOperador
         DokSenha.Visible = False
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
-        Session(CHAVE_ESTADO_CD_OPERADOR) = Estado.Inicial
+        ViewState(CHAVE_ESTADO_CD_OPERADOR) = Estado.Inicial
         CarregaStatus()
         rblStatus.SelectedValue = StatusDoOperador.Ativo.ID.ToString
         MostraGrupos(New List(Of IGrupo))
@@ -313,14 +313,14 @@ Partial Public Class cdOperador
 
         If e.CommandName = "Excluir" Then
             Dim Grupos As IList(Of IGrupo)
-            Grupos = CType(Session(CHAVE_GRUPOS), IList(Of IGrupo))
+            Grupos = CType(ViewState(CHAVE_GRUPOS), IList(Of IGrupo))
             Grupos.RemoveAt(IndiceSelecionado)
             MostraGrupos(Grupos)
         End If
     End Sub
 
     Private Sub grdGrupos_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdGrupos.PageIndexChanged
-        UtilidadesWeb.PaginacaoDataGrid(grdGrupos, Session(CHAVE_GRUPOS), e)
+        UtilidadesWeb.PaginacaoDataGrid(grdGrupos, ViewState(CHAVE_GRUPOS), e)
     End Sub
 
 End Class

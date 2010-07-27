@@ -76,7 +76,7 @@ Partial Public Class frmDespachoDeSolicitacao
     Private Sub SolicitacaoFoiDespachada(ByVal Despacho As IDespacho)
         Dim Despachos As IList(Of IDespacho)
 
-        Despachos = CType(Session(CHAVE_DESPACHOS_DA_SOLICITACAO), IList(Of IDespacho))
+        Despachos = CType(ViewState(CHAVE_DESPACHOS_DA_SOLICITACAO), IList(Of IDespacho))
         Despachos.Add(Despacho)
         ExibaDespachos(Despachos)
     End Sub
@@ -84,7 +84,7 @@ Partial Public Class frmDespachoDeSolicitacao
     Private Sub ExibaDespachos(ByVal Despachos As IList(Of IDespacho))
         grdDespachos.DataSource = Despachos
         grdDespachos.DataBind()
-        Session(CHAVE_DESPACHOS_DA_SOLICITACAO) = Despachos
+        ViewState(CHAVE_DESPACHOS_DA_SOLICITACAO) = Despachos
     End Sub
 
     Private Sub CarregaDados()

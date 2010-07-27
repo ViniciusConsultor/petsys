@@ -54,7 +54,7 @@ Partial Public Class cdPessoaJuridica
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
-        Session(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_ESTADO) = Estado.Novo
         CarregueUFs()
         'imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
     End Sub
@@ -62,7 +62,7 @@ Partial Public Class cdPessoaJuridica
     Private Sub ExibaTelaAposSalvar()
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO) = Estado.Neutro
+        ViewState(CHAVE_ESTADO) = Estado.Neutro
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosBasicos, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlEndereco, Control), False)
@@ -98,7 +98,7 @@ Partial Public Class cdPessoaJuridica
         UtilidadesWeb.HabilitaComponentes(CType(pnlEndereco, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlPessoa, Control), True)
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar
@@ -145,7 +145,7 @@ Partial Public Class cdPessoaJuridica
         Try
             Using Servico As IServicoDePessoaJuridica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaJuridica)()
 
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.Inserir(Pessoa)
                 Else
                     Servico.Modificar(Pessoa)
@@ -166,8 +166,8 @@ Partial Public Class cdPessoaJuridica
 
         Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
 
-        If CByte(Session(CHAVE_ESTADO)) = Estado.Modifica Then
-            Pessoa.ID = CLng(Session(CHAVE_ID))
+        If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then
+            Pessoa.ID = CLng(ViewState(CHAVE_ID))
         End If
 
         Pessoa.Nome = txtNome.Text
@@ -263,7 +263,7 @@ Partial Public Class cdPessoaJuridica
 
         'imgFoto.ImageUrl = Pessoa.Foto
 
-        Session(CHAVE_ID) = Pessoa.ID.Value
+        ViewState(CHAVE_ID) = Pessoa.ID.Value
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick

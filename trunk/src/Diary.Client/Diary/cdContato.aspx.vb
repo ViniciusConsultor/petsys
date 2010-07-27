@@ -50,7 +50,7 @@ Partial Public Class cdContato
 
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoContato, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
-        Session(CHAVE_ESTADO) = Estado.Inicial
+        ViewState(CHAVE_ESTADO) = Estado.Inicial
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -67,7 +67,7 @@ Partial Public Class cdContato
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoContato, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), True)
-        Session(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_ESTADO) = Estado.Novo
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -79,7 +79,7 @@ Partial Public Class cdContato
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoContato, Control), False)
-        Session(CHAVE_ESTADO) = Estado.Modifica
+        ViewState(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -90,7 +90,7 @@ Partial Public Class cdContato
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO) = Estado.Remove
+        ViewState(CHAVE_ESTADO) = Estado.Remove
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -126,7 +126,7 @@ Partial Public Class cdContato
 
         Try
             Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-                If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
+                If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.Inserir(Contato)
                     Mensagem = "Contato cadastrado com sucesso."
                 Else
