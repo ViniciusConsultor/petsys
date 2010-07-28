@@ -115,6 +115,24 @@ Partial Public Class cdSolicitacaoDeAudiencia
     Protected WithEvents txtAssunto As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtLocal control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtLocal As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
     '''Label8 control.
     '''</summary>
     '''<remarks>

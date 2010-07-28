@@ -12,6 +12,7 @@ Partial Public Class frmDespachoDeSolicitacao
     Inherits System.Web.UI.Page
 
     Private Const CHAVE_DESPACHOS_DA_SOLICITACAO As String = "CHAVE_DESPACHOS_DA_SOLICITACAO"
+    Private Const CHAVE_ID_DA_SOLICITACAO As String = "CHAVE_ID_DA_SOLICITACAO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlDespachoAgenda1.SolicitacaoFoiDespachada, AddressOf SolicitacaoFoiDespachada
@@ -33,7 +34,6 @@ Partial Public Class frmDespachoDeSolicitacao
             ExibaTelaInicial()
 
             If Not Id Is Nothing AndAlso Not Tipo Is Nothing Then
-                Dim DespachosDaSolicitacao As IList(Of IDespacho)
                 Dim Solicitacao As ISolicitacao
 
                 If Tipo.Equals(TipoDeSolicitacao.Audiencia) Then
@@ -44,13 +44,19 @@ Partial Public Class frmDespachoDeSolicitacao
 
                 ctrlDespachoAgenda1.Solicitacao = Solicitacao
                 ctrlDespachoTarefa1.Solicitacao = Solicitacao
-
-                Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
-                    DespachosDaSolicitacao = Servico.ObtenhaDespachosDaSolicitacao(CLng(Id))
-                    ExibaDespachos(DespachosDaSolicitacao)
-                End Using
+                ViewState(CHAVE_ID_DA_SOLICITACAO) = Id.Value
+                CarregueTodosOsDespachosDaSolicitacao(Id.Value)
             End If
         End If
+    End Sub
+
+    Private Sub CarregueTodosOsDespachosDaSolicitacao(ByVal IDDaSolicitacao As Long)
+        Dim DespachosDaSolicitacao As IList(Of IDespacho)
+
+        Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
+            DespachosDaSolicitacao = Servico.ObtenhaDespachosDaSolicitacao(CLng(ID))
+            ExibaDespachos(DespachosDaSolicitacao)
+        End Using
     End Sub
 
     Private Sub ProprietarioFoiSelecionado(ByVal Pessoa As IPessoa)
@@ -89,10 +95,17 @@ Partial Public Class frmDespachoDeSolicitacao
 
     Private Sub CarregaDados()
         cboDespacho.Items.Clear()
+        cboTipoDespachoFiltro.Items.Clear()
 
         For Each Item As TipoDeDespacho In TipoDeDespacho.ObtenhaTodos
             cboDespacho.Items.Add(New RadComboBoxItem(Item.Descricao, Item.ID.ToString))
+            cboTipoDespachoFiltro.Items.Add(New RadComboBoxItem(Item.Descricao, Item.ID.ToString))
         Next
+
+        rblOpcaoFiltro.Items.Clear()
+        rblOpcaoFiltro.Items.Add(New ListItem("NENHUM", "0", True))
+        rblOpcaoFiltro.Items.Add(New ListItem("ENTRE DATAS", "1", False))
+        rblOpcaoFiltro.Items.Add(New ListItem("TIPO DE DESPACHO", "2", False))
     End Sub
 
     Private Sub ExibaTelaInicial()
@@ -107,6 +120,8 @@ Partial Public Class frmDespachoDeSolicitacao
         ctrlPessoa1.BotaoNovoEhVisivel = False
         ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
+        pnlEntreDadas.Visible = False
+        pnlTipoDeDespacho.Visible = False
     End Sub
 
     Private Sub LimpaDados()
@@ -155,6 +170,49 @@ Partial Public Class frmDespachoDeSolicitacao
     Private Sub SetaTipoDeDespachoNosControles(ByVal TipoDeDespacho As TipoDeDespacho)
         ctrlDespachoAgenda1.TipoDespacho = TipoDeDespacho
         ctrlDespachoTarefa1.TipoDespacho = TipoDeDespacho
+    End Sub
+
+    Private Sub rblOpcaoFiltro_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles rblOpcaoFiltro.SelectedIndexChanged
+        Select Case rblOpcaoFiltro.SelectedValue
+            Case "0"
+                pnlEntreDadas.Visible = False
+                pnlTipoDeDespacho.Visible = False
+                CarregueTodosOsDespachosDaSolicitacao(CLng(ViewState(CHAVE_ID_DA_SOLICITACAO)))
+            Case "1"
+                pnlEntreDadas.Visible = True
+                pnlTipoDeDespacho.Visible = False
+            Case "2"
+                pnlEntreDadas.Visible = False
+                pnlTipoDeDespacho.Visible = True
+        End Select
+    End Sub
+
+    Private Sub btnPesquisarEntreDadas_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarEntreDadas.Click
+        Dim Despachos As IList(Of IDespacho)
+
+        If Not txtDataInicial.SelectedDate.HasValue Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("A data de início deve ser informada."), False)
+            Exit Sub
+        End If
+
+        Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
+            Despachos = Servico.ObtenhaDespachosDaSolicitacao(CLng(ViewState(CHAVE_ID_DA_SOLICITACAO)), txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate)
+        End Using
+
+        ExibaDespachos(Despachos)
+    End Sub
+
+    Private Sub btnPesquisarPorTipoDeDespacho_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorTipoDeDespacho.Click
+        Dim Despachos As IList(Of IDespacho)
+        Dim TipoDeDespachoSelecionado As TipoDeDespacho
+
+        TipoDeDespachoSelecionado = TipoDeDespacho.Obtenha(CByte(cboTipoDespachoFiltro.SelectedValue))
+
+        Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
+            Despachos = Servico.ObtenhaDespachosDaSolicitacao(CLng(ViewState(CHAVE_ID_DA_SOLICITACAO)), TipoDeDespachoSelecionado)
+        End Using
+
+        ExibaDespachos(Despachos)
     End Sub
 
 End Class

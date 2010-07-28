@@ -86,6 +86,15 @@
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label2" runat="server" Text="Local"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtLocal" runat="server" MaxLength="500" Width="400px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label8" runat="server" Text="Descrição"></asp:Label>

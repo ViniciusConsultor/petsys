@@ -97,4 +97,18 @@ Public MustInherit Class SuperPagina
         ClientScript.RegisterHiddenField("__VSTATE", Convert.ToBase64String(bytes))
     End Sub
 
+    Protected Overrides Function LoadPageStateFromPersistenceMedium() As Object
+        Dim viewState As String = Request.Form("__VSTATE")
+        Dim bytes As Byte() = Convert.FromBase64String(viewState)
+
+        ' DESCOMPACTAR VIEWSTATE   
+
+        bytes = UtilidadesWeb.DescompactarViewState(bytes)
+
+        Dim formatter As LosFormatter = New LosFormatter()
+
+        Return formatter.Deserialize(Convert.ToBase64String(bytes))
+
+    End Function
+
 End Class

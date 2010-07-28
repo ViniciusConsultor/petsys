@@ -70,7 +70,7 @@ Public Class MapeadorDeCliente
         Sql.Append("AND NCL_CLIENTE.TIPOPESSOA = NCL_PESSOA.TIPO ")
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql.Append(String.Concat("AND NOME LIKE '", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
+            Sql.Append(String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         DBHelper = ServerUtils.criarNovoDbHelper

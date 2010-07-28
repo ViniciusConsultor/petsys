@@ -139,6 +139,36 @@ Partial Public Class frmSolicitacoesDeConvite
 
     End Sub
 
+    Private Sub grdItensLancados_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdItensLancados.ItemCreated
+        'Check for GridHeaderItem if you wish tooltips only for the header cells
+        If (TypeOf e.Item Is GridHeaderItem) Then
+            Dim headerItem As GridHeaderItem = CType(e.Item, GridHeaderItem)
+
+            For Each column As GridColumn In grdItensLancados.MasterTableView.RenderColumns
+                If (TypeOf column Is GridBoundColumn) Then
+                    'if the sorting feature of the grid is enabled
+                    CType(headerItem(column.UniqueName).Controls(0), LinkButton).ToolTip = column.UniqueName
+
+                    'if the sorting feature is disabled for this column or the entire grid
+                    headerItem(column.UniqueName).ToolTip = column.UniqueName
+                End If
+            Next
+        End If
+
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdItensLancados.MasterTableView.RenderColumns
+                If (TypeOf column Is GridBoundColumn) Then
+                    'this line will show a tooltip based on the CustomerID data field
+                    gridItem(column.UniqueName).ToolTip = ("CustomerID: " + gridItem.OwnerTableView.DataKeyValues(gridItem.ItemIndex)("CustomerID").ToString)
+                    'This is in case you wish to display the column name instead of data field.
+                    'gridItem[column.UniqueName].ToolTip = "Tooltip: " + column.UniqueName;
+                End If
+            Next
+        End If
+    End Sub
+
     Private Sub grdItensLancados_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdItensLancados.PageIndexChanged
         UtilidadesWeb.PaginacaoDataGrid(grdItensLancados, ViewState(CHAVE_SOLICITACOES), e)
     End Sub

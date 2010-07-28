@@ -69,6 +69,7 @@ Partial Public Class cdSolicitacaoDeAudiencia
         txtAssunto.Text = Solicitacao.Assunto
         txtDescricao.Text = Solicitacao.Descricao
         cboContato.Text = Solicitacao.Contato.Pessoa.Nome
+        txtLocal.Text = Solicitacao.Local
 
         ViewState(CHAVE_DATA) = Solicitacao.DataDaSolicitacao
         ViewState(CHAVE_STATUS) = Solicitacao.Ativa
@@ -133,6 +134,7 @@ Partial Public Class cdSolicitacaoDeAudiencia
         Solicitacao.Assunto = txtAssunto.Text
         Solicitacao.Descricao = txtDescricao.Text
         Solicitacao.Contato = Contato
+        Solicitacao.Local = txtLocal.Text
 
         If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
             DataDaSolicitacao = Now
