@@ -15,7 +15,7 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         Sql.Append("SELECT PESSOA_CONTATO.ID AS ID_PESSOA_CONTATO, PESSOA_CONTATO.NOME AS NOME_PESSOA_CONTATO, PESSOA_CONTATO.TIPO AS TIPO_PESSOA_CONTATO,")
         Sql.Append(" DRY_CONTATO.IDPESSOA, DRY_CONTATO.TIPOPESSOA, DRY_CONTATO.CARGO, DRY_CONTATO.OBSERVACOES,")
-        Sql.Append(" DRY_SOLICAUDI.ID AS ID_SOLICITACAO, DRY_SOLICAUDI.IDCONTATO, DRY_SOLICAUDI.ASSUNTO, DRY_SOLICAUDI.DESCRICAO, DRY_SOLICAUDI.CODIGO,")
+        Sql.Append(" DRY_SOLICAUDI.ID AS ID_SOLICITACAO, DRY_SOLICAUDI.IDCONTATO, DRY_SOLICAUDI.ASSUNTO, DRY_SOLICAUDI.DESCRICAO, DRY_SOLICAUDI.CODIGO, DRY_SOLICAUDI.LOCAL")
         Sql.Append(" DRY_SOLICAUDI.DATADECADASTRO, DRY_SOLICAUDI.ESTAATIVA, DRY_SOLICAUDI.IDUSUARIOCAD, PESSOA_USUARIO.ID AS ID_USUARIO, PESSOA_USUARIO.NOME AS NOME_USUARIO")
         Sql.Append(" FROM NCL_PESSOA AS PESSOA_CONTATO, DRY_CONTATO, DRY_SOLICAUDI, NCL_PESSOA AS PESSOA_USUARIO")
         Sql.Append(" WHERE DRY_CONTATO.IDPESSOA = PESSOA_CONTATO.ID")
@@ -39,7 +39,7 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         SolicitacaoDeAudiencia.Codigo = Me.ObtenhaProximoCodigoDisponivel
 
         Sql.Append("INSERT INTO DRY_SOLICAUDI (")
-        Sql.Append("ID, CODIGO, IDCONTATO, ASSUNTO, DESCRICAO, DATADECADASTRO, ESTAATIVA, IDUSUARIOCAD)")
+        Sql.Append("ID, CODIGO, IDCONTATO, ASSUNTO, DESCRICAO, DATADECADASTRO, ESTAATIVA, IDUSUARIOCAD, LOCAL)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(SolicitacaoDeAudiencia.ID.Value.ToString, ", "))
         Sql.Append(String.Concat(SolicitacaoDeAudiencia.Codigo, ", "))
@@ -48,7 +48,13 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Descricao), "', "))
         Sql.Append(String.Concat("'", SolicitacaoDeAudiencia.DataDaSolicitacao.ToString("yyyyMMddHHmmss"), "', "))
         Sql.Append(String.Concat("'", IIf(SolicitacaoDeAudiencia.Ativa, "S", "N"), "', "))
-        Sql.Append(String.Concat(SolicitacaoDeAudiencia.UsuarioQueCadastrou.ID, ")"))
+        Sql.Append(String.Concat(SolicitacaoDeAudiencia.UsuarioQueCadastrou.ID, ", "))
+
+        If Not String.IsNullOrEmpty(SolicitacaoDeAudiencia.Local) Then
+            Sql.Append(String.Concat("'", SolicitacaoDeAudiencia.Local, "')"))
+        Else
+            Sql.Append("NULL)")
+        End If
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
@@ -61,7 +67,14 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
 
         Sql.Append("UPDATE DRY_SOLICAUDI SET =")
         Sql.Append(String.Concat(" ASSUNTO = '", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Assunto), "',"))
-        Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Descricao), "'"))
+        Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Descricao), "',"))
+
+        If Not String.IsNullOrEmpty(SolicitacaoDeAudiencia.Local) Then
+            Sql.Append(String.Concat(" LOCAL = '", UtilidadesDePersistencia.FiltraApostrofe(SolicitacaoDeAudiencia.Local), "'"))
+        Else
+            Sql.Append(" LOCAL = NULL")
+        End If
+
         Sql.Append(String.Concat(" WHERE ID = ", SolicitacaoDeAudiencia.ID.Value.ToString))
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
@@ -126,6 +139,10 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
         SolicitacaoDeAudiencia.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID_SOLICITACAO")
         SolicitacaoDeAudiencia.Codigo = UtilidadesDePersistencia.GetValorLong(Leitor, "CODIGO")
         SolicitacaoDeAudiencia.UsuarioQueCadastrou = Usuario
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "LOCAL") Then
+            SolicitacaoDeAudiencia.Local = UtilidadesDePersistencia.GetValorString(Leitor, "LOCAL")
+        End If
 
         Return SolicitacaoDeAudiencia
     End Function

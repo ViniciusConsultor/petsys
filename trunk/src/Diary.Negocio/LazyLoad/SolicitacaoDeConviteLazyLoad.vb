@@ -115,17 +115,6 @@ Namespace LazyLoad
             End Set
         End Property
 
-        Public Property Local() As String Implements ISolicitacaoDeConvite.Local
-            Get
-                If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
-                Return _SolicitacaoDeConviteReal.Local
-            End Get
-            Set(ByVal value As String)
-                If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
-                _SolicitacaoDeConviteReal.Local = value
-            End Set
-        End Property
-
         Public Property Observacao() As String Implements ISolicitacaoDeConvite.Observacao
             Get
                 If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
@@ -141,6 +130,17 @@ Namespace LazyLoad
             If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
             _SolicitacaoDeConviteReal.EstaConsistente()
         End Sub
+
+        Public Property Local() As String Implements Interfaces.Negocio.ISolicitacao.Local
+            Get
+                If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
+                Return _SolicitacaoDeConviteReal.Local
+            End Get
+            Set(ByVal value As String)
+                If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
+                _SolicitacaoDeConviteReal.Local = value
+            End Set
+        End Property
 
     End Class
 

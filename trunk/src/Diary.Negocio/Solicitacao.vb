@@ -77,4 +77,14 @@ Public MustInherit Class Solicitacao
 
     Public MustOverride ReadOnly Property Tipo() As TipoDeSolicitacao Implements ISolicitacao.Tipo
 
+    Private _Local As String
+    Public Property Local() As String Implements ISolicitacao.Local
+        Get
+            Return _Local
+        End Get
+        Set(ByVal value As String)
+            _Local = value
+        End Set
+    End Property
+
 End Class

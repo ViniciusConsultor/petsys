@@ -16,16 +16,6 @@ Public Class SolicitacaoDeConvite
         End Set
     End Property
 
-    Private _Local As String
-    Public Property Local() As String Implements ISolicitacaoDeConvite.Local
-        Get
-            Return _Local
-        End Get
-        Set(ByVal value As String)
-            _Local = value
-        End Set
-    End Property
-
     Private _Observacao As String
     Public Property Observacao() As String Implements ISolicitacaoDeConvite.Observacao
         Get

@@ -115,6 +115,17 @@ Namespace LazyLoad
             End Set
         End Property
 
+        Public Property Local() As String Implements ISolicitacao.Local
+            Get
+                If _SolicitacaoDeAudienciaReal Is Nothing Then CarregueObjetoReal()
+                Return _SolicitacaoDeAudienciaReal.Local
+            End Get
+            Set(ByVal value As String)
+                If _SolicitacaoDeAudienciaReal Is Nothing Then CarregueObjetoReal()
+                _SolicitacaoDeAudienciaReal.Local = value
+            End Set
+        End Property
+
     End Class
 
 End Namespace

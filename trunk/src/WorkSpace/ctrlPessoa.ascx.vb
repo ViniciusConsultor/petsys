@@ -137,7 +137,7 @@ Partial Public Class ctrlPessoa
                     Dim TelefonesSTR As New StringBuilder
 
                     For Each Telefone As ITelefone In TelefonesResidencial
-                        TelefonesSTR.AppendLine(Item.ToString)
+                        TelefonesSTR.AppendLine(Telefone.ToString)
                     Next
 
                     Item.Attributes.Add("TelefoneResidencial", TelefonesSTR.ToString)
@@ -149,7 +149,7 @@ Partial Public Class ctrlPessoa
                     Dim TelefonesSTR As New StringBuilder
 
                     For Each Telefone As ITelefone In TelefonesCelular
-                        TelefonesSTR.AppendLine(Item.ToString)
+                        TelefonesSTR.AppendLine(Telefone.ToString)
                     Next
                     Item.Attributes.Add("TelefoneCelular", TelefonesSTR.ToString)
                 Else
