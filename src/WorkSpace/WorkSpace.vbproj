@@ -377,6 +377,13 @@
       <DependentUpon>frmImpressaoCompromisso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Nucleo\frmImpressaoLembrete.aspx.designer.vb">
+      <DependentUpon>frmImpressaoLembrete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmImpressaoLembrete.aspx.vb">
+      <DependentUpon>frmImpressaoLembrete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\frmImpressaoTarefa.aspx.designer.vb">
       <DependentUpon>frmImpressaoTarefa.aspx</DependentUpon>
     </Compile>
@@ -526,6 +533,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Nucleo\GerarCompromissosEmPDF.vb" />
+    <Compile Include="Nucleo\GerarLembretesEmPDF.vb" />
     <Compile Include="Nucleo\GerarTarefasEmPDF.vb" />
     <Compile Include="Utils\FabricaDeMenu.vb" />
     <Compile Include="WorkSpace.Master.designer.vb">
@@ -560,6 +568,7 @@
     <Content Include="Nucleo\frmAgenda.aspx" />
     <Content Include="Nucleo\frmAtalhos.aspx" />
     <Content Include="Nucleo\frmImpressaoCompromisso.aspx" />
+    <Content Include="Nucleo\frmImpressaoLembrete.aspx" />
     <Content Include="Nucleo\frmImpressaoTarefa.aspx" />
     <Content Include="Nucleo\frmPainelDeControle.aspx" />
     <Content Include="Nucleo\cdCliente.aspx" />

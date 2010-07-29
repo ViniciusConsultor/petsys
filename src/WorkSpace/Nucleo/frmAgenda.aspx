@@ -114,7 +114,7 @@
                     </telerik:RadGrid>
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Lembretes" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="pnlLembretes" runat="server" Title="Lembretes" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <telerik:RadToolBar ID="ToolBarLembretes" runat="server" Skin="Vista" Style="width: 100%;">

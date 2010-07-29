@@ -5,7 +5,7 @@
 <%@ Register Src="~/ctrlGrupo.ascx" TagName="ctrlGrupo" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
-        Style="width: 100%;">
+        Style="width: 100%;" EnableViewState ="true">
         <Items>
             <telerik:RadToolBarButton runat="server" Text="Modificar" CommandName="btnModificar"
                 ImageUrl="~/imagens/edit.gif" CausesValidation="False" CommandArgument="OPE.NCL.003.0001"/>
