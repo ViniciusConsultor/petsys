@@ -419,29 +419,165 @@ Public Class MapeadorDeAgenda
     End Function
 
     Public Function InsiraLembrete(ByVal Lembrete As ILembrete) As Long Implements IMapeadorDeAgenda.InsiraLembrete
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
 
+        DBHelper = ServerUtils.getDBHelper
+        Lembrete.ID = GeradorDeID.getInstancia.getProximoID
+
+        Sql.Append("INSERT INTO NCL_LEMBRETE (")
+        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO)")
+        Sql.Append(" VALUES (")
+        Sql.Append(String.Concat(Lembrete.ID.Value.ToString, ", "))
+        Sql.Append(String.Concat(Lembrete.Proprietario.ID.ToString, ", "))
+        Sql.Append(String.Concat(Lembrete.Inicio.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat(Lembrete.Fim.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Assunto), "', "))
+
+        If Not String.IsNullOrEmpty(Lembrete.Local) Then
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Local), "', "))
+        Else
+            Sql.Append("NULL, ")
+        End If
+
+        If Not String.IsNullOrEmpty(Lembrete.Descricao) Then
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Descricao), "')"))
+        Else
+            Sql.Append("NULL)")
+        End If
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+        Return Lembrete.ID.Value
     End Function
 
     Public Sub ModifiqueLembrete(ByVal Lembrete As ILembrete) Implements IMapeadorDeAgenda.ModifiqueLembrete
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
 
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("UPDATE NCL_LEMBRETE SET ")
+        Sql.Append(String.Concat(" INICIO = ", Lembrete.Inicio.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat(" FIM = ", Lembrete.Fim.ToString("yyyyMMddHHmmss"), ", "))
+        Sql.Append(String.Concat(" ASSUNTO = '", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Assunto), "', "))
+
+        If Not String.IsNullOrEmpty(Lembrete.Local) Then
+            Sql.Append(String.Concat(" LOCAL = '", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Local), "', "))
+        Else
+            Sql.Append(" LOCAL = NULL, ")
+        End If
+
+        If Not String.IsNullOrEmpty(Lembrete.Descricao) Then
+            Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Descricao), "'"))
+        Else
+            Sql.Append(" DESCRICAO = NULL")
+        End If
+
+        Sql.Append(String.Concat(" WHERE ID = ", Lembrete.ID.Value.ToString))
+        DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
     Public Function ObtenhaLembrete(ByVal ID As Long) As ILembrete Implements IMapeadorDeAgenda.ObtenhaLembrete
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_LEMBRETE WHERE ")
+        Sql.Append(String.Concat("ID = ", ID.ToString))
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            If Leitor.Read Then
+                Return MontaObjetoLembrete(Leitor)
+            End If
+        End Using
+
         Return Nothing
     End Function
 
     Public Function ObtenhaLembretes(ByVal IDProprietario As Long) As IList(Of ILembrete) Implements IMapeadorDeAgenda.ObtenhaLembretes
-        Return Nothing
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Lembretes As IList(Of ILembrete) = New List(Of ILembrete)
+
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_LEMBRETE WHERE ")
+        Sql.Append(String.Concat("IDPESSOA = ", IDProprietario.ToString))
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Lembretes.Add(MontaObjetoLembrete(Leitor))
+            End While
+        End Using
+
+        Return Lembretes
     End Function
 
     Public Function ObtenhaLembretes(ByVal IDProprietario As Long, _
                                      ByVal DataInicio As Date, _
                                      ByVal DataFim As Date?) As IList(Of ILembrete) Implements IMapeadorDeAgenda.ObtenhaLembretes
-        Return Nothing
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Lembretes As IList(Of ILembrete) = New List(Of ILembrete)
+
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_LEMBRETE WHERE")
+        Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
+        'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
+        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
+
+        If DataFim.HasValue Then
+            'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
+            Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "235959"))
+        End If
+
+        Sql.Append(" ORDER BY INICIO")
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Lembretes.Add(MontaObjetoLembrete(Leitor))
+            End While
+        End Using
+
+        Return Lembretes
     End Function
 
     Public Sub RemovaLembrete(ByVal ID As Long) Implements IMapeadorDeAgenda.RemovaLembrete
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
 
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("DELETE FROM NCL_LEMBRETE")
+        Sql.Append(" WHERE ID = " & ID.ToString)
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
+
+    Private Function MontaObjetoLembrete(ByVal Leitor As IDataReader) As ILembrete
+        Dim Lembrete As ILembrete
+
+        Lembrete = FabricaGenerica.GetInstancia.CrieObjeto(Of ILembrete)()
+        Lembrete.Assunto = UtilidadesDePersistencia.GetValorString(Leitor, "ASSUNTO")
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "DESCRICAO") Then
+            Lembrete.Descricao = UtilidadesDePersistencia.GetValorString(Leitor, "DESCRICAO")
+        End If
+
+        Lembrete.Fim = UtilidadesDePersistencia.getValorDateHourSec(Leitor, "FIM").Value
+        Lembrete.Inicio = UtilidadesDePersistencia.getValorDateHourSec(Leitor, "INICIO").Value
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "LOCAL") Then
+            Lembrete.Local = UtilidadesDePersistencia.GetValorString(Leitor, "LOCAL")
+        End If
+
+        Lembrete.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+
+        Lembrete.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+
+        Return Lembrete
+    End Function
 
 End Class

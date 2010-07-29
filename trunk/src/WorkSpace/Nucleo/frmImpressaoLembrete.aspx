@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="frmImpressaoTarefa.aspx.vb" Inherits="WorkSpace.frmImpressaoTarefa" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="frmImpressaoLembrete.aspx.vb" Inherits="WorkSpace.frmImpressaoLembrete" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">

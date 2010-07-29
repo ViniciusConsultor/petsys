@@ -44,4 +44,12 @@ Public Class ServicoDeDespachoLocal
         End Try
     End Function
 
+    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal DataInicial As Date, ByVal DataFinal As Date?) As System.Collections.Generic.IList(Of Interfaces.Negocio.IDespacho) Implements Interfaces.Servicos.IServicoDeDespacho.ObtenhaDespachosDaSolicitacao
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal Tipo As Interfaces.Negocio.TipoDeDespacho) As System.Collections.Generic.IList(Of Interfaces.Negocio.IDespacho) Implements Interfaces.Servicos.IServicoDeDespacho.ObtenhaDespachosDaSolicitacao
+        Return Nothing
+    End Function
+
 End Class
