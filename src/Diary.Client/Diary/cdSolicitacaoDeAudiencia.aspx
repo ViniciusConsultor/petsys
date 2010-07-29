@@ -26,7 +26,7 @@
                                 <td class="td">
                                     <telerik:RadComboBox ID="cboContato" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
                                         LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="480px" Skin="Vista"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="100%" Skin="Vista"
                                         CausesValidation="False" EmptyMessage="Selecione um contato">
                                         <HeaderTemplate>
                                             <table>

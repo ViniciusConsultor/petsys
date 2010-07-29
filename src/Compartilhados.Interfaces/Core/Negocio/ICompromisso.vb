@@ -10,6 +10,7 @@
         Property Proprietario() As IPessoaFisica
         Property ID() As Nullable(Of Long)
         Sub EstaConsistente()
+        Property Status() As StatusDoCompromisso
 
     End Interface
 

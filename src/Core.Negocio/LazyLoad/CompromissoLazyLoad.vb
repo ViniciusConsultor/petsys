@@ -102,4 +102,14 @@ Public Class CompromissoLazyLoad
         _CompromissoReal.EstaConsistente()
     End Sub
 
+    Private _Status As StatusDoCompromisso
+    Public Property Status() As StatusDoCompromisso Implements ICompromisso.Status
+        Get
+            Return _Status
+        End Get
+        Set(ByVal value As StatusDoCompromisso)
+            _Status = value
+        End Set
+    End Property
+
 End Class

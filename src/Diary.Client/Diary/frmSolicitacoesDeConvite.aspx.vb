@@ -29,8 +29,6 @@ Partial Public Class frmSolicitacoesDeConvite
     Private Sub ExibaTelaInicial()
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
 
-        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
-
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         UtilidadesWeb.LimparComponente(CType(rdkLancamentos, Control))
 
@@ -39,6 +37,11 @@ Partial Public Class frmSolicitacoesDeConvite
         pnlEntreDadas.Visible = True
         pnlContato.Visible = False
         chkConsiderarSolicitacoesFinalizadas.Checked = False
+        CarregaSolicitacoesSemFiltro()
+    End Sub
+
+    Private Sub CarregaSolicitacoesSemFiltro()
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
 
         Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
             Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked)
@@ -81,7 +84,13 @@ Partial Public Class frmSolicitacoesDeConvite
                 Call btnNovo_Click()
             Case "btnImprimir"
                 btnImprir_Click()
+            Case "btnRecarregar"
+                btnRecarregar_Click()
         End Select
+    End Sub
+
+    Private Sub btnRecarregar_Click()
+        CarregaSolicitacoesSemFiltro()
     End Sub
 
     Private Sub grdItensLancados_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdItensLancados.ItemCommand
@@ -140,30 +149,12 @@ Partial Public Class frmSolicitacoesDeConvite
     End Sub
 
     Private Sub grdItensLancados_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdItensLancados.ItemCreated
-        'Check for GridHeaderItem if you wish tooltips only for the header cells
-        If (TypeOf e.Item Is GridHeaderItem) Then
-            Dim headerItem As GridHeaderItem = CType(e.Item, GridHeaderItem)
-
-            For Each column As GridColumn In grdItensLancados.MasterTableView.RenderColumns
-                If (TypeOf column Is GridBoundColumn) Then
-                    'if the sorting feature of the grid is enabled
-                    CType(headerItem(column.UniqueName).Controls(0), LinkButton).ToolTip = column.UniqueName
-
-                    'if the sorting feature is disabled for this column or the entire grid
-                    headerItem(column.UniqueName).ToolTip = column.UniqueName
-                End If
-            Next
-        End If
-
         If (TypeOf e.Item Is GridDataItem) Then
             Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
 
             For Each column As GridColumn In grdItensLancados.MasterTableView.RenderColumns
-                If (TypeOf column Is GridBoundColumn) Then
-                    'this line will show a tooltip based on the CustomerID data field
-                    gridItem(column.UniqueName).ToolTip = ("CustomerID: " + gridItem.OwnerTableView.DataKeyValues(gridItem.ItemIndex)("CustomerID").ToString)
-                    'This is in case you wish to display the column name instead of data field.
-                    'gridItem[column.UniqueName].ToolTip = "Tooltip: " + column.UniqueName;
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
                 End If
             Next
         End If

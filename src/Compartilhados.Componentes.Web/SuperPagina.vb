@@ -2,14 +2,22 @@
 Imports Compartilhados
 Imports System.IO
 Imports Telerik.Web.UI
+Imports System.IO.Compression
 
 Public MustInherit Class SuperPagina
     Inherits Page
+
+    Private Const CHAVE_VIEW_STATE_SESSAO As String = "###__SIMPLE_VSSESSION_SUPER_PAGINA__"
+    Private escritor As System.IO.StringWriter = Nothing
+    Private los As LosFormatter = Nothing
+    Private nomePagina As String = Nothing
 
     Public Sub New()
         AddHandler MyBase.PreInit, New EventHandler(AddressOf Me.Page_PreInit)
         AddHandler MyBase.Load, New EventHandler(AddressOf Me.SuperPagina_Load)
         AddHandler MyBase.PreRender, New EventHandler(AddressOf Me.SuperPagina_PreRender)
+        Me.nomePagina = Me.Page.GetType.FullName
+        Me.escritor = New System.IO.StringWriter
     End Sub
 
     Protected Sub Page_PreInit(ByVal sender As Object, ByVal e As EventArgs)
@@ -83,32 +91,60 @@ Public MustInherit Class SuperPagina
         End Set
     End Property
 
-    'Protected Overrides Sub SavePageStateToPersistenceMedium(ByVal viewState As Object)
-    '    Dim formatter As LosFormatter = New LosFormatter()
-    '    Dim writer As StringWriter = New StringWriter()
+    Protected Overrides Function LoadPageStateFromPersistenceMedium() As Object
+        Me.los = New LosFormatter
+        Dim hashtable As Hashtable = DirectCast(Me.Session.Item(CHAVE_VIEW_STATE_SESSAO), Hashtable)
+        If (hashtable Is Nothing) Then
+            Return Nothing
+        End If
+        If Not hashtable.Contains(Me.nomePagina) Then
+            Return Nothing
+        End If
+        Return Me.los.Deserialize(descompacte(CType(hashtable.Item(Me.nomePagina), Byte())))
+    End Function
 
-    '    formatter.Serialize(writer, viewState)
-    '    Dim viewStateString As String = writer.ToString()
-    '    Dim bytes As Byte() = Convert.FromBase64String(viewStateString)
+    Protected Overrides Sub SavePageStateToPersistenceMedium(ByVal viewState As Object)
+        Try
+            Me.los = New LosFormatter
+            Me.los.Serialize(Me.escritor, viewState)
 
-    '    ' COMPACTAR VIEWSTATE
+            Dim hashtable As Hashtable = DirectCast(Me.Session.Item(CHAVE_VIEW_STATE_SESSAO), Hashtable)
+            If hashtable Is Nothing Then hashtable = New Hashtable
 
-    '    bytes = UtilidadesWeb.CompactarViewState(bytes)
-    '    ClientScript.RegisterHiddenField("__VSTATE", Convert.ToBase64String(bytes))
-    'End Sub
+            hashtable(Me.nomePagina) = compacte(Me.escritor.ToString())
+            Me.Session.Item(CHAVE_VIEW_STATE_SESSAO) = hashtable
+        Finally
+            Me.los = Nothing
+            Me.escritor = Nothing
+        End Try
+    End Sub
 
-    'Protected Overrides Function LoadPageStateFromPersistenceMedium() As Object
-    '    Dim viewState As String = Request.Form("__VSTATE")
-    '    Dim bytes As Byte() = Convert.FromBase64String(viewState)
+    Private Function compacte(ByVal texto As String) As Byte()
+        Dim dados As Byte() = System.Text.Encoding.Unicode.GetBytes(texto)
+        Dim buffer As New System.IO.MemoryStream
+        Dim compactador As New DeflateStream(buffer, CompressionMode.Compress, True)
 
-    '    ' DESCOMPACTAR VIEWSTATE   
+        compactador.Write(dados, 0, dados.Length)
+        compactador.Flush()
+        compactador.Dispose()
 
-    '    bytes = UtilidadesWeb.DescompactarViewState(bytes)
+        Return buffer.GetBuffer()
+    End Function
 
-    '    Dim formatter As LosFormatter = New LosFormatter()
+    Private Function descompacte(ByVal texto As Byte()) As String
+        Dim retorno As New System.Text.StringBuilder
+        Dim buffer As New System.IO.MemoryStream(texto)
+        Dim descompactador As New DeflateStream(buffer, CompressionMode.Decompress, True)
+        Dim bufferDeLeitura As Byte()
+        ReDim bufferDeLeitura(1024 * 1024) '1024 KB
+        Dim totalLidos As Integer = descompactador.Read(bufferDeLeitura, 0, bufferDeLeitura.Length - 1)
 
-    '    Return formatter.Deserialize(Convert.ToBase64String(bytes))
+        While totalLidos > 0
+            retorno.Append(System.Text.Encoding.Unicode.GetString(bufferDeLeitura, 0, totalLidos))
+            totalLidos = descompactador.Read(bufferDeLeitura, 0, bufferDeLeitura.Length - 1)
+        End While
 
-    'End Function
+        Return retorno.ToString
+    End Function
 
 End Class

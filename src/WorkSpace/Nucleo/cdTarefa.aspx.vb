@@ -44,6 +44,13 @@ Partial Public Class cdTarefa
         For Each Prioridade As PrioridadeDaTarefa In PrioridadeDaTarefa.ObtenhaTodos
             cboPrioridade.Items.Add(New RadComboBoxItem(Prioridade.Descricao, Prioridade.ID))
         Next
+
+        cboStatus.Items.Clear()
+        For Each Status As StatusDaTarefa In StatusDaTarefa.ObtenhaTodos
+            cboStatus.Items.Add(New RadComboBoxItem(Status.Descricao, Status.ID.ToString))
+        Next
+
+        cboStatus.SelectedValue = StatusDaTarefa.NaoIniciada.ID.ToString
     End Sub
 
     Private Sub ExibaTelaNovo()
@@ -76,6 +83,7 @@ Partial Public Class cdTarefa
         cboPrioridade.SelectedValue = Tarefa.Prioridade.ID.ToString
         ViewState(CHAVE_ID_PROPRIETARIO) = Tarefa.Proprietario.ID
         ViewState(CHAVE_ID_TAREFA) = Tarefa.ID
+        cboStatus.SelectedValue = Tarefa.Status.ID.ToString
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -133,6 +141,8 @@ Partial Public Class cdTarefa
         If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then
             Tarefa.ID = CLng(ViewState(CHAVE_ID_TAREFA))
         End If
+
+        Tarefa.Status = StatusDaTarefa.Obtenha(CChar(cboStatus.SelectedValue))
 
         Return Tarefa
     End Function

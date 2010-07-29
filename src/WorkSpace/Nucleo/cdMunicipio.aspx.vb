@@ -57,7 +57,7 @@ Partial Public Class cdMunicipio
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Novo
+        ViewState(CHAVE_ESTADO_CD_MUNICIPIO) = Estado.Novo
         PreecheUFs()
         ctrlMunicipios1.EnableLoadOnDemand = False
         ctrlMunicipios1.ShowDropDownOnTextboxClick = False
@@ -171,6 +171,7 @@ Partial Public Class cdMunicipio
 
     Private Sub btnSalva_Click()
         Dim Municipio As IMunicipio = Nothing
+        Dim Mensagem As String = Nothing
 
         Municipio = MontaObjeto()
 
@@ -179,19 +180,20 @@ Partial Public Class cdMunicipio
 
                 If CByte(ViewState(CHAVE_ESTADO_CD_MUNICIPIO)) = Estado.Novo Then
                     Servico.Inserir(Municipio)
+                    Mensagem = "Município cadastrado com sucesso."
                 Else
                     Servico.Modificar(Municipio)
+                    Mensagem = "Município modificado com sucesso."
                 End If
 
             End Using
 
             ExibaTelaInicial()
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Município cadastrado com sucesso."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
 
         Catch ex As BussinesException
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
         End Try
-
     End Sub
 
     Private Sub btnExclui_Click()

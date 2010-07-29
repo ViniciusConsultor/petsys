@@ -12,6 +12,8 @@
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.DRY.003.0001" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
                 CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.DRY.003.0006" />
+            <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
+                CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -56,17 +58,16 @@
                                     <asp:ImageButton ID="btnPesquisarPorCodigo" runat="server" ImageUrl="~/imagens/find.gif" />
                                 </td>
                             </tr>
-                             <tr runat="server" id="pnlContato">
-                                 <td class="th3">
+                            <tr runat="server" id="pnlContato">
+                                <td class="th3">
                                     <asp:Label ID="Label5" runat="server" Text="Contato"></asp:Label>
                                 </td>
-                                
-                                <td  class="td">
-                                  <telerik:RadComboBox ID="cboContato" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
+                                <td class="td">
+                                    <telerik:RadComboBox ID="cboContato" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
                                         LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
                                         AllowCustomText="True" HighlightTemplatedItems="True" Width="480px" Skin="Vista"
                                         CausesValidation="False" EmptyMessage="Selecione um contato">
-                                         <HeaderTemplate>
+                                        <HeaderTemplate>
                                             <table>
                                                 <tr>
                                                     <td style="width: 200px;">
@@ -81,7 +82,6 @@
                                                     <td style="width: 200px;">
                                                         Cargo
                                                     </td>
-                                                    
                                                 </tr>
                                             </table>
                                         </HeaderTemplate>
@@ -104,7 +104,7 @@
                                             </table>
                                         </ItemTemplate>
                                     </telerik:RadComboBox>
-                                      <asp:ImageButton ID="btnPesquisarPorContato" runat="server" ImageUrl="~/imagens/find.gif" />
+                                    <asp:ImageButton ID="btnPesquisarPorContato" runat="server" ImageUrl="~/imagens/find.gif" />
                                 </td>
                             </tr>
                             <tr>
@@ -122,8 +122,6 @@
             <telerik:RadDock ID="rdkLancamentos" runat="server" Title="Solicitações de convites ativas"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <asp:Timer ID="Timer1" runat="server" Interval="30000">
-                    </asp:Timer>
                     <table class="tabela">
                         <tr>
                             <td colspan="2">

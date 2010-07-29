@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="cdLembrete.aspx.vb" Inherits="WorkSpace.cdLembrete" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+    CodeBehind="cdLembrete.aspx.vb" Inherits="WorkSpace.cdLembrete" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
@@ -56,9 +58,18 @@
                                     <asp:Label ID="Label5" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" 
-                                        TextMode="MultiLine" Width="350px" MaxLength="4000">
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" TextMode="MultiLine"
+                                        Width="350px" MaxLength="4000">
                                     </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label6" runat="server" Text="Status"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadComboBox ID="cboStatus" runat="server">
+                                    </telerik:RadComboBox>
                                 </td>
                             </tr>
                         </table>

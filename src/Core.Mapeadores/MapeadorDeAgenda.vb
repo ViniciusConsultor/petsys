@@ -116,7 +116,7 @@ Public Class MapeadorDeAgenda
         Compromisso.ID = GeradorDeID.getInstancia.getProximoID
 
         Sql.Append("INSERT INTO NCL_COMPROMISSO (")
-        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO)")
+        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Compromisso.ID.Value.ToString, ", "))
         Sql.Append(String.Concat(Compromisso.Proprietario.ID.ToString, ", "))
@@ -131,10 +131,12 @@ Public Class MapeadorDeAgenda
         End If
 
         If Not String.IsNullOrEmpty(Compromisso.Descricao) Then
-            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Compromisso.Descricao), "')"))
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Compromisso.Descricao), "', "))
         Else
-            Sql.Append("NULL)")
+            Sql.Append("NULL, ")
         End If
+
+        Sql.Append(String.Concat("'", Compromisso.Status.ID.ToString, "')"))
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
         Return Compromisso.ID.Value
@@ -150,6 +152,8 @@ Public Class MapeadorDeAgenda
         Sql.Append(String.Concat(" INICIO = ", Compromisso.Inicio.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat(" FIM = ", Compromisso.Fim.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat(" ASSUNTO = '", UtilidadesDePersistencia.FiltraApostrofe(Compromisso.Assunto), "', "))
+        Sql.Append(String.Concat(" STATUS = '", Compromisso.Status.ID.ToString, "', "))
+
 
         If Not String.IsNullOrEmpty(Compromisso.Local) Then
             Sql.Append(String.Concat(" LOCAL = '", UtilidadesDePersistencia.FiltraApostrofe(Compromisso.Local), "', "))
@@ -171,7 +175,7 @@ Public Class MapeadorDeAgenda
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_COMPROMISSO WHERE ")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_COMPROMISSO WHERE ")
         Sql.Append(String.Concat("ID = ", ID.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -190,7 +194,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Compromissos As IList(Of ICompromisso) = New List(Of ICompromisso)
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_COMPROMISSO WHERE ")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_COMPROMISSO WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", IDProprietario.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -225,6 +229,8 @@ Public Class MapeadorDeAgenda
 
         Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
 
+        Compromisso.Status = StatusDoCompromisso.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))
+
         Return Compromisso
     End Function
 
@@ -248,7 +254,7 @@ Public Class MapeadorDeAgenda
         Tarefa.ID = GeradorDeID.getInstancia.getProximoID
 
         Sql.Append("INSERT INTO NCL_TAREFA (")
-        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO)")
+        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, STATUS, DESCRICAO)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Tarefa.ID.Value.ToString, ", "))
         Sql.Append(String.Concat(Tarefa.Proprietario.ID.ToString, ", "))
@@ -256,6 +262,7 @@ Public Class MapeadorDeAgenda
         Sql.Append(String.Concat(Tarefa.DataDeConclusao.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Assunto), "', "))
         Sql.Append(String.Concat("'", Tarefa.Prioridade.ID.ToString, "', "))
+        Sql.Append(String.Concat("'", Tarefa.Status.ID.ToString, "', "))
 
         If Not String.IsNullOrEmpty(Tarefa.Descricao) Then
             Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Descricao), "')"))
@@ -278,6 +285,7 @@ Public Class MapeadorDeAgenda
         Sql.Append(String.Concat(" FIM = ", Tarefa.DataDeConclusao.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat(" ASSUNTO = '", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Assunto), "', "))
         Sql.Append(String.Concat(" PRIORIDADE = '", Tarefa.Prioridade.ID.ToString, "', "))
+        Sql.Append(String.Concat(" STATUS = '", Tarefa.Status.ID.ToString, "', "))
 
         If Not String.IsNullOrEmpty(Tarefa.Descricao) Then
             Sql.Append(String.Concat(" DESCRICAO = '", UtilidadesDePersistencia.FiltraApostrofe(Tarefa.Descricao), "'"))
@@ -304,6 +312,7 @@ Public Class MapeadorDeAgenda
         Tarefa.Prioridade = PrioridadeDaTarefa.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "PRIORIDADE"))
         Tarefa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
         Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+        Tarefa.Status = StatusDaTarefa.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))
 
         Return Tarefa
     End Function
@@ -312,7 +321,7 @@ Public Class MapeadorDeAgenda
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO FROM NCL_TAREFA WHERE ")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO, STATUS FROM NCL_TAREFA WHERE ")
         Sql.Append(String.Concat("ID = ", ID.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -331,7 +340,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Tarefas As IList(Of ITarefa) = New List(Of ITarefa)
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO FROM NCL_TAREFA WHERE ")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO, STATUS FROM NCL_TAREFA WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", IDProprietario.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -364,7 +373,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Compromissos As IList(Of ICompromisso) = New List(Of ICompromisso)
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_COMPROMISSO WHERE")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_COMPROMISSO WHERE")
         Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
         'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
         Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
@@ -395,7 +404,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Tarefas As IList(Of ITarefa) = New List(Of ITarefa)
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO FROM NCL_TAREFA WHERE")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO, STATUS FROM NCL_TAREFA WHERE")
         Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
         'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
         Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
@@ -426,13 +435,14 @@ Public Class MapeadorDeAgenda
         Lembrete.ID = GeradorDeID.getInstancia.getProximoID
 
         Sql.Append("INSERT INTO NCL_LEMBRETE (")
-        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO)")
+        Sql.Append("ID, IDPESSOA, INICIO, FIM, ASSUNTO, STATUS, LOCAL, DESCRICAO)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Lembrete.ID.Value.ToString, ", "))
         Sql.Append(String.Concat(Lembrete.Proprietario.ID.ToString, ", "))
         Sql.Append(String.Concat(Lembrete.Inicio.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat(Lembrete.Fim.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Assunto), "', "))
+        Sql.Append(String.Concat("'", Lembrete.Status.ID.ToString, "', "))
 
         If Not String.IsNullOrEmpty(Lembrete.Local) Then
             Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Local), "', "))
@@ -460,6 +470,7 @@ Public Class MapeadorDeAgenda
         Sql.Append(String.Concat(" INICIO = ", Lembrete.Inicio.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat(" FIM = ", Lembrete.Fim.ToString("yyyyMMddHHmmss"), ", "))
         Sql.Append(String.Concat(" ASSUNTO = '", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Assunto), "', "))
+        Sql.Append(String.Concat(" STATUS = '", Lembrete.Status.ID.ToString, "', "))
 
         If Not String.IsNullOrEmpty(Lembrete.Local) Then
             Sql.Append(String.Concat(" LOCAL = '", UtilidadesDePersistencia.FiltraApostrofe(Lembrete.Local), "', "))
@@ -481,7 +492,7 @@ Public Class MapeadorDeAgenda
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_LEMBRETE WHERE ")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_LEMBRETE WHERE ")
         Sql.Append(String.Concat("ID = ", ID.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -500,7 +511,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Lembretes As IList(Of ILembrete) = New List(Of ILembrete)
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_LEMBRETE WHERE ")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_LEMBRETE WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", IDProprietario.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -521,7 +532,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Lembretes As IList(Of ILembrete) = New List(Of ILembrete)
 
-        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO FROM NCL_LEMBRETE WHERE")
+        Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_LEMBRETE WHERE")
         Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
         'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
         Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
@@ -574,8 +585,8 @@ Public Class MapeadorDeAgenda
         End If
 
         Lembrete.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-
         Lembrete.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+        Lembrete.Status = StatusDoCompromisso.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))
 
         Return Lembrete
     End Function
