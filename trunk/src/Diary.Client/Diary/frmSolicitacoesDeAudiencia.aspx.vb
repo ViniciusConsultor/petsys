@@ -29,8 +29,6 @@ Partial Public Class frmSolicitacoesDeAudiencia
     Private Sub ExibaTelaInicial()
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
 
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
-
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         UtilidadesWeb.LimparComponente(CType(rdkLancamentos, Control))
 
@@ -39,6 +37,11 @@ Partial Public Class frmSolicitacoesDeAudiencia
         pnlEntreDadas.Visible = True
         pnlContato.Visible = False
         chkConsiderarSolicitacoesFinalizadas.Checked = False
+        CarregaSolicitacoesSemFiltro()
+    End Sub
+
+    Private Sub CarregaSolicitacoesSemFiltro()
+        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
 
         Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
             Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(chkConsiderarSolicitacoesFinalizadas.Checked)
@@ -78,10 +81,16 @@ Partial Public Class frmSolicitacoesDeAudiencia
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovo"
-                Call btnNovo_Click()
+                btnNovo_Click()
             Case "btnImprimir"
                 btnImprir_Click()
+            Case "btnRecarregar"
+                btnRecarregar_Click()
         End Select
+    End Sub
+
+    Protected Sub btnRecarregar_Click()
+        CarregaSolicitacoesSemFiltro()
     End Sub
 
     Private Sub grdItensLancados_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdItensLancados.ItemCommand
@@ -216,10 +225,6 @@ Partial Public Class frmSolicitacoesDeAudiencia
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-
-    End Sub
-
     Private Sub btnPesquisarPorContato_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorContato.Click
         If String.IsNullOrEmpty(cboContato.SelectedValue) Then
             UtilidadesWeb.MostraMensagemDeInconsitencia("O contato da solicitação de audiência deve ser informado.")
@@ -282,6 +287,18 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
                 cboContato.Items.Add(Item)
                 Item.DataBind()
+            Next
+        End If
+    End Sub
+
+    Private Sub grdItensLancados_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdItensLancados.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdItensLancados.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
             Next
         End If
     End Sub

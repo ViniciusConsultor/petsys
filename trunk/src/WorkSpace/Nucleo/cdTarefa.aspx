@@ -61,6 +61,15 @@
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label6" runat="server" Text="Status"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadComboBox ID="cboStatus" runat="server">
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>

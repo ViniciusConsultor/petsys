@@ -93,4 +93,14 @@ Public Class Tarefa
         End If
     End Sub
 
+    Private _Status As StatusDaTarefa
+    Public Property Status() As StatusDaTarefa Implements ITarefa.Status
+        Get
+            Return _Status
+        End Get
+        Set(ByVal value As StatusDaTarefa)
+            _Status = value
+        End Set
+    End Property
+
 End Class

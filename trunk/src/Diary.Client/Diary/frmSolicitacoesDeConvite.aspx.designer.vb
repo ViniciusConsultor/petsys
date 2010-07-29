@@ -232,15 +232,6 @@ Partial Public Class frmSolicitacoesDeConvite
     Protected WithEvents rdkLancamentos As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''Timer1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Timer1 As Global.System.Web.UI.Timer
-
-    '''<summary>
     '''grdItensLancados control.
     '''</summary>
     '''<remarks>

@@ -46,6 +46,13 @@ Partial Public Class cdLembrete
     Private Sub LimpaDados()
         ViewState(CHAVE_ID_LEMBRETE) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoLembrete, Control))
+
+        cboStatus.Items.Clear()
+        For Each Status As StatusDoCompromisso In StatusDoCompromisso.ObtenhaTodos
+            cboStatus.Items.Add(New RadComboBoxItem(Status.Descricao, Status.ID.ToString))
+        Next
+
+        cboStatus.SelectedValue = StatusDoCompromisso.Pendente.ID.ToString
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
@@ -67,6 +74,7 @@ Partial Public Class cdLembrete
         txtLocal.Text = Lembrete.Local
         ViewState(CHAVE_ID_PROPRIETARIO) = Lembrete.Proprietario.ID
         ViewState(CHAVE_ID_LEMBRETE) = Lembrete.ID
+        cboStatus.SelectedValue = Lembrete.Status.ID.ToString
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -125,6 +133,7 @@ Partial Public Class cdLembrete
             Lembrete.ID = CLng(ViewState(CHAVE_ID_LEMBRETE))
         End If
 
+        Lembrete.Status = StatusDoCompromisso.Obtenha(CChar(cboStatus.SelectedValue))
         Return Lembrete
     End Function
 

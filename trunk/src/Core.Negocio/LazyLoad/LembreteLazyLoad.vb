@@ -102,4 +102,15 @@ Public Class LembreteLazyLoad
         _LembreteReal.EstaConsistente()
     End Sub
 
+    Public Property Status() As StatusDoCompromisso Implements ICompromisso.Status
+        Get
+            If _LembreteReal Is Nothing Then CarregueObjetoReal()
+            Return _LembreteReal.Status
+        End Get
+        Set(ByVal value As StatusDoCompromisso)
+            If _LembreteReal Is Nothing Then CarregueObjetoReal()
+            _LembreteReal.Status = value
+        End Set
+    End Property
+
 End Class

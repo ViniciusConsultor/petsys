@@ -115,6 +115,7 @@
     <Compile Include="Core\Negocio\LazyLoad\ITarefaLazyLoad.vb" />
     <Compile Include="Core\Negocio\PrioridadeDaTarefa.vb" />
     <Compile Include="Core\Negocio\StatusDaTarefa.vb" />
+    <Compile Include="Core\Negocio\StatusDoCompromisso.vb" />
     <Compile Include="Core\Negocio\Telefone\ITelefone.vb" />
     <Compile Include="Core\Negocio\Nacionalidade.vb" />
     <Compile Include="Core\Negocio\Raca.vb" />

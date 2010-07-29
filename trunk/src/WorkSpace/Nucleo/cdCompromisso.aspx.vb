@@ -46,6 +46,13 @@ Partial Public Class cdCompromisso
     Private Sub LimpaDados()
         ViewState(CHAVE_ID_COMPROMISSO) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoCompromisso, Control))
+
+        cboStatus.Items.Clear()
+        For Each Status As StatusDoCompromisso In StatusDoCompromisso.ObtenhaTodos
+            cboStatus.Items.Add(New RadComboBoxItem(Status.Descricao, Status.ID.ToString))
+        Next
+
+        cboStatus.SelectedValue = StatusDoCompromisso.Pendente.ID.ToString
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
@@ -67,6 +74,7 @@ Partial Public Class cdCompromisso
         txtLocal.Text = Compromisso.Local
         ViewState(CHAVE_ID_PROPRIETARIO) = Compromisso.Proprietario.ID
         ViewState(CHAVE_ID_COMPROMISSO) = Compromisso.ID
+        cboStatus.SelectedValue = Compromisso.Status.ID.ToString
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -125,6 +133,7 @@ Partial Public Class cdCompromisso
             Compromisso.ID = CLng(ViewState(CHAVE_ID_COMPROMISSO))
         End If
 
+        Compromisso.Status = StatusDoCompromisso.Obtenha(CChar(cboStatus.SelectedValue))
         Return Compromisso
     End Function
 

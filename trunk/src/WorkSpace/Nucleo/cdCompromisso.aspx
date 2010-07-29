@@ -58,9 +58,18 @@
                                     <asp:Label ID="Label5" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" 
-                                        TextMode="MultiLine" Width="350px" MaxLength="4000">
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" TextMode="MultiLine"
+                                        Width="350px" MaxLength="4000">
                                     </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label6" runat="server" Text="Status"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadComboBox ID="cboStatus" runat="server">
+                                    </telerik:RadComboBox>
                                 </td>
                             </tr>
                         </table>

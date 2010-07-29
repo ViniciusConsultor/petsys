@@ -141,6 +141,7 @@
       <DependentUpon>frmDespachoDeSolicitacao.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Diary\GeradorDeDespachosEmPDF.vb" />
     <Compile Include="Diary\GeradorDeSolicitacoesDeConviteEmPDF.vb" />
     <Compile Include="Diary\GeradorDeSolicitacoesEmPDF.vb" />
     <Compile Include="Diary\frmSolicitacoesDeAudiencia.aspx.designer.vb">
@@ -244,11 +245,15 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
+    <PostBuildEvent>xcopy $(SolutionDir)WorkSpace\js $(ProjectDir)js /S /I /F 
+xcopy $(SolutionDir)WorkSpace\imagens $(ProjectDir)imagens /S /I /F
+xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
 xcopy $(SolutionDir)WorkSpace\Nucleo $(ProjectDir)Nucleo /S /I /F
 xcopy $(SolutionDir)WorkSpace\Skins $(ProjectDir)Skins /S /I /F
 copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.ascx $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.css $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.css $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.Master $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.html $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.config $(ProjectDir)
