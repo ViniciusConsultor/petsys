@@ -319,6 +319,18 @@ Partial Public Class cdOperador
         End If
     End Sub
 
+    Private Sub grdGrupos_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdGrupos.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdGrupos.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
+            Next
+        End If
+    End Sub
+
     Private Sub grdGrupos_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdGrupos.PageIndexChanged
         UtilidadesWeb.PaginacaoDataGrid(grdGrupos, ViewState(CHAVE_GRUPOS), e)
     End Sub

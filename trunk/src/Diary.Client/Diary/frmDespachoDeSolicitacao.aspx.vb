@@ -7,12 +7,13 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 Imports Diary.Interfaces.Negocio.LazyLoad
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 
 Partial Public Class frmDespachoDeSolicitacao
     Inherits System.Web.UI.Page
 
     Private Const CHAVE_DESPACHOS_DA_SOLICITACAO As String = "CHAVE_DESPACHOS_DA_SOLICITACAO"
-    Private Const CHAVE_ID_DA_SOLICITACAO As String = "CHAVE_ID_DA_SOLICITACAO"
+    Private Const CHAVE_SOLICITACAO As String = "CHAVE_SOLICITACAO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlDespachoAgenda1.SolicitacaoFoiDespachada, AddressOf SolicitacaoFoiDespachada
@@ -44,8 +45,9 @@ Partial Public Class frmDespachoDeSolicitacao
 
                 ctrlDespachoAgenda1.Solicitacao = Solicitacao
                 ctrlDespachoTarefa1.Solicitacao = Solicitacao
-                ViewState(CHAVE_ID_DA_SOLICITACAO) = Id.Value
+                ViewState(CHAVE_SOLICITACAO) = Solicitacao
                 CarregueTodosOsDespachosDaSolicitacao(Id.Value)
+                AlimentaDados()
             End If
         End If
     End Sub
@@ -54,7 +56,7 @@ Partial Public Class frmDespachoDeSolicitacao
         Dim DespachosDaSolicitacao As IList(Of IDespacho)
 
         Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
-            DespachosDaSolicitacao = Servico.ObtenhaDespachosDaSolicitacao(CLng(ID))
+            DespachosDaSolicitacao = Servico.ObtenhaDespachosDaSolicitacao(CLng(IDDaSolicitacao))
             ExibaDespachos(DespachosDaSolicitacao)
         End Using
     End Sub
@@ -103,9 +105,9 @@ Partial Public Class frmDespachoDeSolicitacao
         Next
 
         rblOpcaoFiltro.Items.Clear()
-        rblOpcaoFiltro.Items.Add(New ListItem("NENHUM", "0", True))
-        rblOpcaoFiltro.Items.Add(New ListItem("ENTRE DATAS", "1", False))
-        rblOpcaoFiltro.Items.Add(New ListItem("TIPO DE DESPACHO", "2", False))
+        rblOpcaoFiltro.Items.Add(New ListItem("NENHUM", "0"))
+        rblOpcaoFiltro.Items.Add(New ListItem("ENTRE DATAS", "1"))
+        rblOpcaoFiltro.Items.Add(New ListItem("TIPO DE DESPACHO", "2"))
     End Sub
 
     Private Sub ExibaTelaInicial()
@@ -165,6 +167,7 @@ Partial Public Class frmDespachoDeSolicitacao
         End Select
 
         SetaTipoDeDespachoNosControles(Tipo)
+        AlimentaDados()
     End Sub
 
     Private Sub SetaTipoDeDespachoNosControles(ByVal TipoDeDespacho As TipoDeDespacho)
@@ -177,7 +180,7 @@ Partial Public Class frmDespachoDeSolicitacao
             Case "0"
                 pnlEntreDadas.Visible = False
                 pnlTipoDeDespacho.Visible = False
-                CarregueTodosOsDespachosDaSolicitacao(CLng(ViewState(CHAVE_ID_DA_SOLICITACAO)))
+                CarregueTodosOsDespachosDaSolicitacao(CType(ViewState(CHAVE_SOLICITACAO), ISolicitacao).ID.Value)
             Case "1"
                 pnlEntreDadas.Visible = True
                 pnlTipoDeDespacho.Visible = False
@@ -196,7 +199,7 @@ Partial Public Class frmDespachoDeSolicitacao
         End If
 
         Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
-            Despachos = Servico.ObtenhaDespachosDaSolicitacao(CLng(ViewState(CHAVE_ID_DA_SOLICITACAO)), txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate)
+            Despachos = Servico.ObtenhaDespachosDaSolicitacao(CType(ViewState(CHAVE_SOLICITACAO), ISolicitacao).ID.Value, txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate)
         End Using
 
         ExibaDespachos(Despachos)
@@ -209,10 +212,82 @@ Partial Public Class frmDespachoDeSolicitacao
         TipoDeDespachoSelecionado = TipoDeDespacho.Obtenha(CByte(cboTipoDespachoFiltro.SelectedValue))
 
         Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
-            Despachos = Servico.ObtenhaDespachosDaSolicitacao(CLng(ViewState(CHAVE_ID_DA_SOLICITACAO)), TipoDeDespachoSelecionado)
+            Despachos = Servico.ObtenhaDespachosDaSolicitacao(CType(ViewState(CHAVE_SOLICITACAO), ISolicitacao).ID.Value, TipoDeDespachoSelecionado)
         End Using
 
         ExibaDespachos(Despachos)
+    End Sub
+
+    Private Sub AlimentaDados()
+        Dim Solicitacao As ISolicitacao
+
+        Solicitacao = CType(ViewState(CHAVE_SOLICITACAO), ISolicitacao)
+
+        If Solicitacao Is Nothing Then Exit Sub
+
+        If Solicitacao.Tipo.Equals(TipoDeSolicitacao.Audiencia) Then
+            ctrlDespachoAgenda1.Assunto = CType(Solicitacao, ISolicitacaoDeAudiencia).Assunto
+            ctrlDespachoTarefa1.Assunto = CType(Solicitacao, ISolicitacaoDeAudiencia).Assunto
+        ElseIf Solicitacao.Tipo.Equals(TipoDeSolicitacao.Convite) Then
+            ctrlDespachoAgenda1.Assunto = "Convite"
+            ctrlDespachoTarefa1.Assunto = "Convite"
+            ctrlDespachoAgenda1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
+            ctrlDespachoTarefa1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
+        End If
+
+        ctrlDespachoAgenda1.Local = Solicitacao.Local
+
+        Dim DescricaoDaSoliticao As New StringBuilder
+        'Nome do contato da solicitação
+        DescricaoDaSoliticao.AppendLine(Solicitacao.Contato.Pessoa.Nome)
+
+        'Cargo do contato
+        If Not String.IsNullOrEmpty(Solicitacao.Contato.Cargo) Then
+            DescricaoDaSoliticao.AppendLine(Solicitacao.Contato.Cargo)
+        End If
+
+        'Telefones do contato
+        Dim TelefonesSTR As New StringBuilder
+
+        Dim TelefonesResidencial As IList(Of ITelefone)
+        Dim TelefonesComercial As IList(Of ITelefone)
+        Dim TelefonesCelular As IList(Of ITelefone)
+
+        TelefonesResidencial = Solicitacao.Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
+        TelefonesComercial = Solicitacao.Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
+        TelefonesCelular = Solicitacao.Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
+
+        For Each Telefone As ITelefone In TelefonesResidencial
+            TelefonesSTR.Append(String.Concat(Telefone.ToString, " "))
+        Next
+
+        For Each Telefone As ITelefone In TelefonesComercial
+            TelefonesSTR.Append(String.Concat(Telefone.ToString, " "))
+        Next
+
+        For Each Telefone As ITelefone In TelefonesCelular
+            TelefonesSTR.Append(String.Concat(Telefone.ToString, " "))
+        Next
+
+        'Se tiver telefones
+        If Not TelefonesSTR.Length = 0 Then
+            DescricaoDaSoliticao.AppendLine(TelefonesSTR.ToString)
+        End If
+
+        'Descrição da solicitação
+        If Not String.IsNullOrEmpty(Solicitacao.Descricao) Then
+            DescricaoDaSoliticao.AppendLine(Solicitacao.Descricao)
+        End If
+
+        'Observação da solicitação de convite
+        If Solicitacao.Tipo.Equals(TipoDeSolicitacao.Convite) Then
+            If String.IsNullOrEmpty(CType(Solicitacao, ISolicitacaoDeConvite).Observacao) Then
+                DescricaoDaSoliticao.AppendLine(CType(Solicitacao, ISolicitacaoDeConvite).Observacao)
+            End If
+        End If
+
+        ctrlDespachoAgenda1.Descricao = DescricaoDaSoliticao.ToString
+        ctrlDespachoTarefa1.Descricao = DescricaoDaSoliticao.ToString
     End Sub
 
 End Class

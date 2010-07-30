@@ -46,13 +46,13 @@ Public Class GerarLembretesEmPDF
         For Each Lembrete As ILembrete In _Lembretes
             'Primeira vez
             If LembreteAnterior Is Nothing Then
-                EscrevaCabecalho(Lembrete.Proprietario)
+                EscrevaCabecalho(Lembrete)
                 EscrevaRodape()
                 _documento.Open()
-                EscrevaCabecalho(Lembrete.Inicio)
                 'Demais vezes testa se tarefa atual tem data maior que o anterior. 
-            ElseIf CLng(Lembrete.Inicio.ToString("yyyyMMdd")) < CLng(LembreteAnterior.Inicio.ToString("yyyyMMdd")) Then
-                EscrevaCabecalho(Lembrete.Inicio)
+            ElseIf CLng(LembreteAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Lembrete.Inicio.ToString("yyyyMMdd")) Then
+                EscrevaCabecalho(Lembrete)
+                _documento.NewPage()
             End If
 
             EscrevaLembretes(Lembrete, MostraAssunto, MostraDescricao)
@@ -63,18 +63,12 @@ Public Class GerarLembretesEmPDF
         Return NomeDoPDF
     End Function
 
-    Private Sub EscrevaCabecalho(ByVal DataDeInicio As Date)
-        Dim Paragrafo As Paragraph
-
-        Paragrafo = New Paragraph(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(DataDeInicio), _Fonte1)
-        _documento.Add(Paragrafo)
-    End Sub
-
-    Private Sub EscrevaCabecalho(ByVal Proprietario As IPessoaFisica)
+    Private Sub EscrevaCabecalho(ByVal Lembrete As ILembrete)
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Lembretes " & Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase = New Phrase("Lembretes " & Lembrete.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(Lembrete.Inicio), _Fonte1))
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT

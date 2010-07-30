@@ -77,6 +77,7 @@ Partial Public Class ctrlDespachoTarefa
         Tarefa.DataDeConclusao = txtDataHorarioFim.SelectedDate.Value
         Tarefa.DataDeInicio = txtDataHorarioInicio.SelectedDate.Value
         Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_ALVO_DESPACHO_TAREFA)))
+        Tarefa.Status = StatusDaTarefa.NaoIniciada
 
         Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoTarefa)()
         Despacho.Tarefa = Tarefa
@@ -113,6 +114,24 @@ Partial Public Class ctrlDespachoTarefa
     Public WriteOnly Property TipoDespacho() As TipoDeDespacho
         Set(ByVal value As TipoDeDespacho)
             ViewState(CHAVE_TIPO_DESPACHO_TAREFA) = value
+        End Set
+    End Property
+
+    Public WriteOnly Property Assunto() As String
+        Set(ByVal value As String)
+            txtAssunto.Text = value
+        End Set
+    End Property
+
+    Public WriteOnly Property Descricao() As String
+        Set(ByVal value As String)
+            txtDescricao.Text = value
+        End Set
+    End Property
+
+    Public WriteOnly Property Inicio() As Date
+        Set(ByVal value As Date)
+            txtDataHorarioInicio.SelectedDate = value
         End Set
     End Property
 
