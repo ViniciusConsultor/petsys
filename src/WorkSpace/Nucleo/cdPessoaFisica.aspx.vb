@@ -476,4 +476,16 @@ Partial Public Class cdPessoaFisica
             ExibaTelefones(Telefones)
         End If
     End Sub
+
+    Private Sub grdTelefones_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdTelefones.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdTelefones.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
+            Next
+        End If
+    End Sub
 End Class

@@ -124,7 +124,7 @@ Partial Public Class frmSolicitacoesDeConvite
         ElseIf e.CommandName = "Despachar" Then
             Dim URL As String
 
-            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID, "&Tipo=", TipoDeSolicitacao.Audiencia.ID.ToString)
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID, "&Tipo=", TipoDeSolicitacao.Convite.ID.ToString)
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de convite"), False)
         End If
     End Sub

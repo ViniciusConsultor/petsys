@@ -10,7 +10,7 @@
         Public Shared Cancelado As StatusDoCompromisso = New StatusDoCompromisso("A"c, "CANCELADO")
         Public Shared Concluido As StatusDoCompromisso = New StatusDoCompromisso("C"c, "CONCLUÍDO")
 
-        Private Shared Lista As StatusDoCompromisso() = {Pendente, Concluido}
+        Private Shared Lista As StatusDoCompromisso() = {Pendente, Concluido, Cancelado}
 
         Private Sub New(ByVal ID As Char, _
                         ByVal Descricao As String)

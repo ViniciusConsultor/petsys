@@ -46,13 +46,13 @@ Public Class GerarTarefasEmPDF
         For Each Tarefa As ITarefa In _Tarefas
             'Primeira vez
             If TarefaAnterior Is Nothing Then
-                EscrevaCabecalho(Tarefa.Proprietario)
+                EscrevaCabecalho(Tarefa)
                 EscrevaRodape()
                 _documento.Open()
-                EscrevaCabecalhoDasTarefas(Tarefa.DataDeInicio)
                 'Demais vezes testa se tarefa atual tem data maior que o anterior. 
-            ElseIf CLng(TarefaAnterior.DataDeInicio.ToString("yyyyMMdd")) < CLng(TarefaAnterior.DataDeInicio.ToString("yyyyMMdd")) Then
-                EscrevaCabecalhoDasTarefas(Tarefa.DataDeInicio)
+            ElseIf CLng(TarefaAnterior.DataDeInicio.ToString("yyyyMMdd")) < CLng(Tarefa.DataDeInicio.ToString("yyyyMMdd")) Then
+                EscrevaCabecalho(Tarefa)
+                _documento.NewPage()
             End If
 
             EscrevaTarefa(Tarefa, MostraAssunto, MostraDescricao)
@@ -63,18 +63,12 @@ Public Class GerarTarefasEmPDF
         Return NomeDoPDF
     End Function
 
-    Private Sub EscrevaCabecalhoDasTarefas(ByVal DataDeInicio As Date)
-        Dim Paragrafo As Paragraph
-
-        Paragrafo = New Paragraph(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(DataDeInicio), _Fonte1)
-        _documento.Add(Paragrafo)
-    End Sub
-
-    Private Sub EscrevaCabecalho(ByVal Proprietario As IPessoaFisica)
+    Private Sub EscrevaCabecalho(ByVal Tarefa As ITarefa)
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Tarefas " & Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase = New Phrase("Tarefas " & Tarefa.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(Tarefa.DataDeInicio), _Fonte1))
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT

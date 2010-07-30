@@ -25,7 +25,6 @@ Partial Public Class frmAgenda
             pnlLembretes.Visible = False
 
             lblInconsistencia.Text = "Não existe agenda configurada para esta pessoa."
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existe agenda configurada para esta pessoa."), False)
             Exit Sub
         End If
 
@@ -68,10 +67,6 @@ Partial Public Class frmAgenda
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
         ctrlPessoa1.PessoaSelecionada = Pessoa
         ExibaAgendaDaPessoa(Pessoa)
-    End Sub
-
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        CarregaAgenda()
     End Sub
 
     Private Const CHAVE_COMPROMISSOS As String = "CHAVE_COMPROMISSOS"
@@ -240,6 +235,18 @@ Partial Public Class frmAgenda
         End If
     End Sub
 
+    Private Sub grdTarefas_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdTarefas.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdTarefas.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
+            Next
+        End If
+    End Sub
+
     Private Sub grdTarefas_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdTarefas.PageIndexChanged
         UtilidadesWeb.PaginacaoDataGrid(grdTarefas, ViewState(CHAVE_TAREFAS), e)
     End Sub
@@ -360,6 +367,18 @@ Partial Public Class frmAgenda
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar lembrete"), False)
         End If
 
+    End Sub
+
+    Private Sub grdLembretes_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdLembretes.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdLembretes.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
+            Next
+        End If
     End Sub
 
     Private Sub grdLembretes_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdLembretes.PageIndexChanged
