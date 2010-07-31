@@ -120,6 +120,13 @@
       <DependentUpon>cdSolicitacaoDeConvite.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Diary\ctrlContato.ascx.designer.vb">
+      <DependentUpon>ctrlContato.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\ctrlContato.ascx.vb">
+      <DependentUpon>ctrlContato.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Diary\ctrlDespachoAgenda.ascx.designer.vb">
       <DependentUpon>ctrlDespachoAgenda.ascx</DependentUpon>
     </Compile>
@@ -199,6 +206,7 @@
     <Content Include="ctrlPessoa.ascx" />
     <Content Include="Diary\cdSolicitacaoDeAudiencia.aspx" />
     <Content Include="Diary\cdSolicitacaoDeConvite.aspx" />
+    <Content Include="Diary\ctrlContato.ascx" />
     <Content Include="Diary\ctrlDespachoAgenda.ascx" />
     <Content Include="Diary\ctrlDespachoTarefa.ascx" />
     <Content Include="Diary\frmDespachoDeSolicitacao.aspx" />

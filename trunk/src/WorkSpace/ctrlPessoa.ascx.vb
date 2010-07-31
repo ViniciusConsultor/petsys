@@ -113,18 +113,12 @@ Partial Public Class ctrlPessoa
 
         If Not Pessoas Is Nothing Then
             For Each Pessoa As IPessoaFisica In Pessoas
-                Dim Item As New RadComboBoxItem(Pessoa.Nome, Pessoa.ID.ToString)
+                Dim Item As New RadComboBoxItem(Pessoa.Nome.Trim, Pessoa.ID.ToString)
 
                 If Pessoa.DataDeNascimento.HasValue Then
                     Item.Attributes.Add("DataNascimento", Pessoa.DataDeNascimento.Value.ToString("dd/MM/yyyy"))
                 Else
                     Item.Attributes.Add("DataNascimento", "")
-                End If
-
-                If Not String.IsNullOrEmpty(Pessoa.NomeDaMae) Then
-                    Item.Attributes.Add("NomeMae", Pessoa.NomeDaMae)
-                Else
-                    Item.Attributes.Add("NomeMae", "")
                 End If
 
                 Dim TelefonesResidencial As IList(Of ITelefone)
@@ -137,10 +131,10 @@ Partial Public Class ctrlPessoa
                     Dim TelefonesSTR As New StringBuilder
 
                     For Each Telefone As ITelefone In TelefonesResidencial
-                        TelefonesSTR.AppendLine(Telefone.ToString)
+                        TelefonesSTR.Append(Telefone.ToString & "<br>")
                     Next
 
-                    Item.Attributes.Add("TelefoneResidencial", TelefonesSTR.ToString)
+                    Item.Attributes.Add("TelefoneResidencial", TelefonesSTR.ToString.Trim)
                 Else
                     Item.Attributes.Add("TelefoneResidencial", "")
                 End If
@@ -149,9 +143,9 @@ Partial Public Class ctrlPessoa
                     Dim TelefonesSTR As New StringBuilder
 
                     For Each Telefone As ITelefone In TelefonesCelular
-                        TelefonesSTR.AppendLine(Telefone.ToString)
+                        TelefonesSTR.Append(Telefone.ToString & "<br>")
                     Next
-                    Item.Attributes.Add("TelefoneCelular", TelefonesSTR.ToString)
+                    Item.Attributes.Add("TelefoneCelular", TelefonesSTR.ToString.Trim)
                 Else
                     Item.Attributes.Add("TelefoneCelular", "")
                 End If

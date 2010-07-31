@@ -61,7 +61,7 @@ Public Class GeradorDeDespachosEmPDF
 
     Private Sub EscrevaDespachos()
         Dim Tabela As Table = New Table(7)
-        Tabela.Widths = New Single() {}
+        '   Tabela.Widths = New Single() {}
 
         Tabela.Padding = 1
         Tabela.Spacing = 1

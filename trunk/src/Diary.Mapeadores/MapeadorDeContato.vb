@@ -5,6 +5,7 @@ Imports System.Text
 Imports Compartilhados.DBHelper
 Imports Compartilhados
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Public Class MapeadorDeContato
     Implements IMapeadorDeContato
@@ -94,42 +95,44 @@ Public Class MapeadorDeContato
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
         Dim Contato As IContato = Nothing
-        Dim Tipo As TipoDePessoa
-        Dim Pessoa As IPessoa = Nothing
 
-        Sql.Append("SELECT NCL_PESSOA.ID, NCL_PESSOA.NOME, NCL_PESSOA.TIPO,")
-        Sql.Append("DRY_CONTATO.IDPESSOA, DRY_CONTATO.TIPOPESSOA, CARGO, OBSERVACOES ")
-        Sql.Append("FROM NCL_PESSOA, DRY_CONTATO ")
-        Sql.Append("WHERE DRY_CONTATO.IDPESSOA = NCL_PESSOA.ID ")
-        Sql.Append("AND DRY_CONTATO.TIPOPESSOA = NCL_PESSOA.TIPO ")
-        Sql.Append(String.Concat("AND IDPESSOA = ", ID.ToString))
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, CARGO, OBSERVACOES ")
+        Sql.Append("FROM DRY_CONTATO ")
+        Sql.Append("WHERE IDPESSOA = " & ID.ToString)
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
             If Leitor.Read Then
-                Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
-
-                If Tipo.Equals(TipoDePessoa.Fisica) Then
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                Else
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
-                End If
-
-                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-
-                Contato = FabricaGenerica.GetInstancia.CrieObjeto(Of IContato)(New Object() {Pessoa})
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "CARGO") Then
-                    Contato.Cargo = UtilidadesDePersistencia.GetValorString(Leitor, "CARGO")
-                End If
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "OBSERVACOES") Then
-                    Contato.Observacoes = UtilidadesDePersistencia.GetValorString(Leitor, "OBSERVACOES")
-                End If
+                Contato = MontaObjetoContato(Leitor)
             End If
         End Using
+
+        Return Contato
+    End Function
+
+    Private Function MontaObjetoContato(ByVal Leitor As IDataReader) As IContato
+        Dim Contato As IContato = Nothing
+        Dim Pessoa As IPessoa = Nothing
+        Dim Tipo As TipoDePessoa
+
+        Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPOPESSOA"))
+
+        If Tipo.Equals(TipoDePessoa.Fisica) Then
+            Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+        Else
+            Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+        End If
+
+        Contato = FabricaGenerica.GetInstancia.CrieObjeto(Of IContato)(New Object() {Pessoa})
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "CARGO") Then
+            Contato.Cargo = UtilidadesDePersistencia.GetValorString(Leitor, "CARGO")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "OBSERVACOES") Then
+            Contato.Observacoes = UtilidadesDePersistencia.GetValorString(Leitor, "OBSERVACOES")
+        End If
 
         Return Contato
     End Function
@@ -138,9 +141,7 @@ Public Class MapeadorDeContato
                                              ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of IContato) Implements IMapeadorDeContato.ObtenhaPorNomeComoFiltro
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
-        Dim Contato As IContato = Nothing
-        Dim Pessoa As IPessoa = Nothing
-        Dim Tipo As TipoDePessoa
+      
         Dim Contatos As IList(Of IContato) = New List(Of IContato)
 
         Sql.Append("SELECT NCL_PESSOA.ID, NCL_PESSOA.NOME, NCL_PESSOA.TIPO,")
@@ -157,28 +158,7 @@ Public Class MapeadorDeContato
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
             While Leitor.Read AndAlso Contatos.Count < QuantidadeMaximaDeRegistros
-                Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
-
-                If Tipo.Equals(TipoDePessoa.Fisica) Then
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                Else
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
-                End If
-
-                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-
-                Contato = FabricaGenerica.GetInstancia.CrieObjeto(Of IContato)(New Object() {Pessoa})
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "CARGO") Then
-                    Contato.Cargo = UtilidadesDePersistencia.GetValorString(Leitor, "CARGO")
-                End If
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "OBSERVACOES") Then
-                    Contato.Observacoes = UtilidadesDePersistencia.GetValorString(Leitor, "OBSERVACOES")
-                End If
-
-                Contatos.Add(Contato)
+                Contatos.Add(MontaObjetoContato(Leitor))
             End While
         End Using
 

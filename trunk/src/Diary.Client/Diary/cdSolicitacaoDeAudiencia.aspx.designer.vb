@@ -61,22 +61,13 @@ Partial Public Class cdSolicitacaoDeAudiencia
     Protected WithEvents pnlContato As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Label1 control.
+    '''ctrlContato1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cboContato control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboContato As Global.Telerik.Web.UI.RadComboBox
+    Protected WithEvents ctrlContato1 As Global.Diary.Client.ctrlContato
 
     '''<summary>
     '''RadDock2 control.

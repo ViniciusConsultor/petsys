@@ -44,12 +44,30 @@ Public Class ServicoDeDespachoLocal
         End Try
     End Function
 
-    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal DataInicial As Date, ByVal DataFinal As Date?) As System.Collections.Generic.IList(Of Interfaces.Negocio.IDespacho) Implements Interfaces.Servicos.IServicoDeDespacho.ObtenhaDespachosDaSolicitacao
-        Return Nothing
+    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal DataInicial As Date, ByVal DataFinal As Date?) As IList(Of IDespacho) Implements IServicoDeDespacho.ObtenhaDespachosDaSolicitacao
+        Dim Mapeador As IMapeadorDeDespacho
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeDespacho)()
+
+        Try
+            Return Mapeador.ObtenhaDespachosDaSolicitacao(IDSolicitacao, DataInicial, DataFinal)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
-    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal Tipo As Interfaces.Negocio.TipoDeDespacho) As System.Collections.Generic.IList(Of Interfaces.Negocio.IDespacho) Implements Interfaces.Servicos.IServicoDeDespacho.ObtenhaDespachosDaSolicitacao
-        Return Nothing
+    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal Tipo As TipoDeDespacho) As IList(Of IDespacho) Implements IServicoDeDespacho.ObtenhaDespachosDaSolicitacao
+        Dim Mapeador As IMapeadorDeDespacho
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeDespacho)()
+
+        Try
+            Return Mapeador.ObtenhaDespachosDaSolicitacao(IDSolicitacao, Tipo)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
 End Class

@@ -26,7 +26,7 @@
                 <asp:Label ID="Label3" runat="server" Text="Assunto"></asp:Label>
             </td>
             <td class="td">
-                <telerik:RadTextBox ID="txtAssunto" runat="server" Width="350px">
+                <telerik:RadTextBox ID="txtAssunto" runat="server" Width="350px" MaxLength="100">
                 </telerik:RadTextBox>
             </td>
         </tr>
@@ -45,7 +45,7 @@
             </td>
             <td class="td">
                 <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" TextMode="MultiLine"
-                    Width="350px">
+                    Width="350px" MaxLength="4000">
                 </telerik:RadTextBox>
             </td>
         </tr>

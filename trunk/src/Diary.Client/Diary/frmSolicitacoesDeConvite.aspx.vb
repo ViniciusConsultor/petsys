@@ -51,14 +51,15 @@ Partial Public Class frmSolicitacoesDeConvite
     End Sub
 
     Private Sub CarregaOpcoesDeFiltro()
-        rblOpcaoFiltro.Items.Clear()
+        cboTipoDeFiltro.Items.Clear()
 
-        rblOpcaoFiltro.Items.Add(New ListItem("Por código", "1"))
-        rblOpcaoFiltro.Items.Add(New ListItem("Entre datas", "2"))
-        rblOpcaoFiltro.Items.Add(New ListItem("Por contato", "3"))
+
+        cboTipoDeFiltro.Items.Add(New RadComboBoxItem("Por código", "1"))
+        cboTipoDeFiltro.Items.Add(New RadComboBoxItem("Entre datas", "2"))
+        cboTipoDeFiltro.Items.Add(New RadComboBoxItem("Por contato", "3"))
 
         'Seta o valor entre datas como inicial
-        rblOpcaoFiltro.SelectedValue = "2"
+        cboTipoDeFiltro.SelectedValue = "2"
     End Sub
 
     Private Sub ExibaSolicitacoes(ByVal Solicitacoes As IList(Of ISolicitacaoDeConvite))
@@ -186,25 +187,6 @@ Partial Public Class frmSolicitacoesDeConvite
         ExibaSolicitacoes(Solicitacoes)
     End Sub
 
-    Private Sub rblOpcaoFiltro_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles rblOpcaoFiltro.SelectedIndexChanged
-        Dim ValorSelecionado As String
-
-        ValorSelecionado = rblOpcaoFiltro.SelectedValue
-
-        If ValorSelecionado = "1" Then
-            pnlCodigoDaSolicitacao.Visible = True
-            pnlEntreDadas.Visible = False
-            pnlContato.Visible = False
-        ElseIf ValorSelecionado = "2" Then
-            pnlCodigoDaSolicitacao.Visible = False
-            pnlEntreDadas.Visible = True
-            pnlContato.Visible = False
-        ElseIf ValorSelecionado = "3" Then
-            pnlCodigoDaSolicitacao.Visible = False
-            pnlEntreDadas.Visible = False
-            pnlContato.Visible = True
-        End If
-    End Sub
 
     Protected Sub btnPesquisarPorCodigo_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorCodigo.Click
         If String.IsNullOrEmpty(txtCodigoDaSolicitacao.Text) Then
@@ -238,59 +220,8 @@ Partial Public Class frmSolicitacoesDeConvite
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
     End Sub
 
-    Private Sub cboContato_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboContato.ItemsRequested
-        Dim Contatos As IList(Of IContato)
-
-        Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-            Contatos = Servico.ObtenhaPorNomeComoFiltro(e.Text, 50)
-        End Using
-
-        If Not Contatos Is Nothing Then
-            For Each Contato As IContato In Contatos
-                Dim Item As New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.ToString)
-
-                Dim TelefonesResidencial As IList(Of ITelefone)
-                Dim TelefonesCelular As IList(Of ITelefone)
-                Dim TelefonesComercial As IList(Of ITelefone)
-
-                TelefonesResidencial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
-                TelefonesCelular = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
-                TelefonesComercial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
-
-                Dim TelefonesSTR As New StringBuilder
-
-                For Each Telefone As ITelefone In TelefonesResidencial
-                    TelefonesSTR.AppendLine(Telefone.ToString)
-                Next
-
-                For Each Telefone As ITelefone In TelefonesComercial
-                    TelefonesSTR.AppendLine(Telefone.ToString)
-                Next
-
-                Item.Attributes.Add("Telefone", TelefonesSTR.ToString)
-
-                Dim CelularesSTR As New StringBuilder
-
-                For Each Celular As ITelefone In TelefonesCelular
-                    CelularesSTR.AppendLine(Celular.ToString)
-                Next
-
-                Item.Attributes.Add("Celular", CelularesSTR.ToString)
-
-                If Not String.IsNullOrEmpty(Contato.Cargo) Then
-                    Item.Attributes.Add("Cargo", Contato.Cargo)
-                Else
-                    Item.Attributes.Add("Cargo", "")
-                End If
-
-                cboContato.Items.Add(Item)
-                Item.DataBind()
-            Next
-        End If
-    End Sub
-
     Private Sub btnPesquisarPorContato_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorContato.Click
-        If String.IsNullOrEmpty(cboContato.SelectedValue) Then
+        If ctrlContato1.ContatoSelecionado Is Nothing Then
             UtilidadesWeb.MostraMensagemDeInconsitencia("O contato da solicitação de convite deve ser informado.")
             Exit Sub
         End If
@@ -298,10 +229,29 @@ Partial Public Class frmSolicitacoesDeConvite
         Dim Solicitacoes As IList(Of ISolicitacaoDeConvite) = New List(Of ISolicitacaoDeConvite)
 
         Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
-            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked, CLng(cboContato.SelectedValue))
+            Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked, ctrlContato1.ContatoSelecionado.Pessoa.ID.Value)
         End Using
 
         ExibaSolicitacoes(Solicitacoes)
     End Sub
 
+    Private Sub cboTipoDeFiltro_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboTipoDeFiltro.SelectedIndexChanged
+        Dim ValorSelecionado As String
+
+        ValorSelecionado = cboTipoDeFiltro.SelectedValue
+
+        If ValorSelecionado = "1" Then
+            pnlCodigoDaSolicitacao.Visible = True
+            pnlEntreDadas.Visible = False
+            pnlContato.Visible = False
+        ElseIf ValorSelecionado = "2" Then
+            pnlCodigoDaSolicitacao.Visible = False
+            pnlEntreDadas.Visible = True
+            pnlContato.Visible = False
+        ElseIf ValorSelecionado = "3" Then
+            pnlCodigoDaSolicitacao.Visible = False
+            pnlEntreDadas.Visible = False
+            pnlContato.Visible = True
+        End If
+    End Sub
 End Class

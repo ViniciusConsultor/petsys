@@ -97,4 +97,54 @@ Public Class MapeadorDeDespacho
         Return Despacho
     End Function
 
+    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal DataInicial As Date, ByVal DataFinal As Date?) As IList(Of IDespacho) Implements IMapeadorDeDespacho.ObtenhaDespachosDaSolicitacao
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Despachos As IList(Of IDespacho) = New List(Of IDespacho)
+
+        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA")
+        Sql.Append(" FROM DRY_DESPACHO ")
+        Sql.Append(" WHERE IDSOLICITACAO = " & IDSolicitacao)
+
+        Sql.Append(String.Concat(" AND DATADODESPACHO >= '", DataInicial.ToString("yyyyMMdd") & "000101", "'"))
+
+        If DataFinal.HasValue Then
+            Sql.Append(String.Concat(" AND DATADECADASTRO <= '", DataFinal.Value.ToString("yyyyMMdd") & "235959", "'"))
+        End If
+
+        Sql.Append(" ORDER BY DATADODESPACHO")
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Despachos.Add(Me.ObtenhaObjetoDespacho(Leitor))
+            End While
+        End Using
+
+        Return Despachos
+    End Function
+
+    Public Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal Tipo As TipoDeDespacho) As IList(Of IDespacho) Implements IMapeadorDeDespacho.ObtenhaDespachosDaSolicitacao
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Despachos As IList(Of IDespacho) = New List(Of IDespacho)
+
+        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA")
+        Sql.Append(" FROM DRY_DESPACHO ")
+        Sql.Append(" WHERE IDSOLICITACAO = " & IDSolicitacao)
+        Sql.Append(" AND TIPO = " & Tipo.ID.ToString)
+        Sql.Append(" ORDER BY DATADODESPACHO")
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read
+                Despachos.Add(Me.ObtenhaObjetoDespacho(Leitor))
+            End While
+        End Using
+
+        Return Despachos
+    End Function
+
 End Class
