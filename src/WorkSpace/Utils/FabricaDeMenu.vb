@@ -116,7 +116,7 @@ Public Class FabricaDeMenu
                 _JsMenu.AppendLine("win = desktop.createWindow({")
                 _JsMenu.AppendLine(String.Concat("id:'win", Funcao.IDSemFormatacao, "',"))
                 _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
-                _JsMenu.AppendLine("width:750,")
+                _JsMenu.AppendLine("width:800,")
                 _JsMenu.AppendLine("height:550,")
                 _JsMenu.AppendLine(String.Concat("html:'<iframe src =""", UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, Funcao.URL, """ width=""100%"" height=""100%""></iframe>',"))
                 _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))

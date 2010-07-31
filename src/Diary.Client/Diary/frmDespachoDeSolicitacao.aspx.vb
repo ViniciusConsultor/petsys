@@ -104,10 +104,10 @@ Partial Public Class frmDespachoDeSolicitacao
             cboTipoDespachoFiltro.Items.Add(New RadComboBoxItem(Item.Descricao, Item.ID.ToString))
         Next
 
-        rblOpcaoFiltro.Items.Clear()
-        rblOpcaoFiltro.Items.Add(New ListItem("NENHUM", "0"))
-        rblOpcaoFiltro.Items.Add(New ListItem("ENTRE DATAS", "1"))
-        rblOpcaoFiltro.Items.Add(New ListItem("TIPO DE DESPACHO", "2"))
+        cboTipoDeFiltro.Items.Clear()
+        cboTipoDeFiltro.Items.Add(New RadComboBoxItem("Nenhum", "0"))
+        cboTipoDeFiltro.Items.Add(New RadComboBoxItem("Entre datas", "1"))
+        cboTipoDeFiltro.Items.Add(New RadComboBoxItem("Tipo de despacho", "2"))
     End Sub
 
     Private Sub ExibaTelaInicial()
@@ -173,21 +173,6 @@ Partial Public Class frmDespachoDeSolicitacao
     Private Sub SetaTipoDeDespachoNosControles(ByVal TipoDeDespacho As TipoDeDespacho)
         ctrlDespachoAgenda1.TipoDespacho = TipoDeDespacho
         ctrlDespachoTarefa1.TipoDespacho = TipoDeDespacho
-    End Sub
-
-    Private Sub rblOpcaoFiltro_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles rblOpcaoFiltro.SelectedIndexChanged
-        Select Case rblOpcaoFiltro.SelectedValue
-            Case "0"
-                pnlEntreDadas.Visible = False
-                pnlTipoDeDespacho.Visible = False
-                CarregueTodosOsDespachosDaSolicitacao(CType(ViewState(CHAVE_SOLICITACAO), ISolicitacao).ID.Value)
-            Case "1"
-                pnlEntreDadas.Visible = True
-                pnlTipoDeDespacho.Visible = False
-            Case "2"
-                pnlEntreDadas.Visible = False
-                pnlTipoDeDespacho.Visible = True
-        End Select
     End Sub
 
     Private Sub btnPesquisarEntreDadas_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarEntreDadas.Click
@@ -290,4 +275,43 @@ Partial Public Class frmDespachoDeSolicitacao
         ctrlDespachoTarefa1.Descricao = DescricaoDaSoliticao.ToString
     End Sub
 
+    Private Sub cboTipoDeFiltro_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboTipoDeFiltro.SelectedIndexChanged
+        Select Case cboTipoDeFiltro.SelectedValue
+            Case "0"
+                pnlEntreDadas.Visible = False
+                pnlTipoDeDespacho.Visible = False
+                CarregueTodosOsDespachosDaSolicitacao(CType(ViewState(CHAVE_SOLICITACAO), ISolicitacao).ID.Value)
+            Case "1"
+                pnlEntreDadas.Visible = True
+                pnlTipoDeDespacho.Visible = False
+            Case "2"
+                pnlEntreDadas.Visible = False
+                pnlTipoDeDespacho.Visible = True
+        End Select
+    End Sub
+
+    Private Sub toolDespachos_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles toolDespachos.ButtonClick
+        Select Case CType(e.Item, RadToolBarButton).CommandName
+            Case "btnImprimirDespachos"
+                ImprimirDespachos()
+        End Select
+    End Sub
+
+    Private Sub ImprimirDespachos()
+        Dim NomeDoArquivo As String
+        Dim Gerador As GeradorDeDespachosEmPDF
+        Dim Despachos As IList(Of IDespacho)
+        Dim URL As String
+
+        Despachos = CType(ViewState(CHAVE_DESPACHOS_DA_SOLICITACAO), IList(Of IDespacho))
+
+        If Despachos Is Nothing AndAlso Despachos.Count = 0 Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existe nenhum despacho para imprimir."), False)
+        End If
+
+        Gerador = New GeradorDeDespachosEmPDF(Despachos)
+        NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
+    End Sub
 End Class

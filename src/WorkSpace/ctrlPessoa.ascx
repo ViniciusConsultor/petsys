@@ -21,82 +21,78 @@
                 <telerik:RadComboBox ID="cboPessoaFisica" runat="server" EmptyMessage="Selecione uma pessoa"
                     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
                     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-                    Width="480px" Skin="Vista" CausesValidation="False" OnItemsRequested="cboPessoaFisica_ItemsRequested"
-                    OnSelectedIndexChanged="cboPessoaFisica_SelectedIndexChanged" AutoPostBack="True">
-                    <HeaderTemplate>
-                        <table>
+                    Width="90%" Skin="Vista" CausesValidation="False" OnItemsRequested="cboPessoaFisica_ItemsRequested"
+                    OnSelectedIndexChanged="cboPessoaFisica_SelectedIndexChanged" AutoPostBack="True" >
+                    <HeaderTemplate >
+                        <table width="96%" >
                             <tr>
-                                <td style="width: 200px;">
+                                <td  width="40%">
                                     Nome
                                 </td>
-                                <td style="width: 80px;">
-                                    Data de nascimento
+                                <td width="16%" >
+                                    Nascimento
                                 </td>
-                                <td style="width: 200px;">
-                                    Nome da mãe
+                                <td width="22%">
+                                    Tel. residêncial
                                 </td>
-                                 <td style="width: 200px;">
-                                    Telefone residêncial
-                                </td>
-                                 <td style="width: 200px;">
+                                <td width="22%">
                                     Celular
                                 </td>
                             </tr>
                         </table>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <table>
+                        <table  width="100%">
                             <tr>
-                                <td style="width: 200px;">
+                                <td  width="40%" >
                                     <%# DataBinder.Eval(Container, "Text")%>
                                 </td>
-                                <td style="width: 80px;">
+                                <td width="16%">
                                     <%#DataBinder.Eval(Container, "Attributes['DataNascimento']")%>
                                 </td>
-                                <td style="width: 200px;">
-                                    <%#DataBinder.Eval(Container, "Attributes['NomeMae']")%>
-                                </td>
-                                <td style="width: 200px;">
+                                <td width="22%">
                                     <%#DataBinder.Eval(Container, "Attributes['TelefoneResidencial']")%>
                                 </td>
-                                <td style="width: 200px;">
+                                <td width="22%">
                                     <%#DataBinder.Eval(Container, "Attributes['TelefoneCelular']")%>
                                 </td>
                             </tr>
                         </table>
                     </ItemTemplate>
-                </telerik:RadComboBox>                
+                </telerik:RadComboBox>
                 <telerik:RadComboBox ID="cboPessoaJuridica" runat="server" EmptyMessage="Selecione uma pessoa"
                     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
                     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-                    Width="480px" Skin="Vista" CausesValidation="False" AutoPostBack="True">
+                    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
                     <HeaderTemplate>
-                        <table>
+                        <table  width="96%">
                             <tr>
-                                <td style="width: 400px;">
+                                <td width="50%">
                                     Razão social
                                 </td>
-                                 <td style="width: 200px;">
+                                <td width="50%">
                                     Nome fantasia
                                 </td>
                             </tr>
                         </table>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <table>
+                        <table  width="100%">
                             <tr>
-                                <td style="width: 400px;">
+                                <td width="50%">
                                     <%# DataBinder.Eval(Container, "Text")%>
                                 </td>
-                                 <td style="width: 200px;">
+                                <td width="50%">
                                     <%#DataBinder.Eval(Container, "Attributes['NomeFantasia']")%>
                                 </td>
                             </tr>
                         </table>
                     </ItemTemplate>
                 </telerik:RadComboBox>
-                <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="imagens/new.gif" CausesValidation="False" CommandArgument="OPE.NCL.006.0001" />
-                <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="imagens/details.gif" CausesValidation="False" CommandArgument="OPE.NCL.006.0002" />
+                <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="imagens/new.gif" ToolTip="Novo" CausesValidation="False"
+                    CommandArgument="OPE.NCL.006.0001" />
+                <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="imagens/details.gif" ToolTip="Detalhar" CausesValidation="False"
+                    CommandArgument="OPE.NCL.006.0002" />
                 <asp:RequiredFieldValidator ID="rfvPessoaFisica" runat="server" ErrorMessage="Campo deve ser informado."
                     ControlToValidate="cboPessoaFisica"></asp:RequiredFieldValidator>
             </td>

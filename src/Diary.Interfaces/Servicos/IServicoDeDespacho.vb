@@ -11,7 +11,6 @@ Namespace Servicos
         Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal DataInicial As Date, ByVal DataFinal As Nullable(Of Date)) As IList(Of IDespacho)
         Function ObtenhaDespachosDaSolicitacao(ByVal IDSolicitacao As Long, ByVal Tipo As TipoDeDespacho) As IList(Of IDespacho)
 
-
     End Interface
 
 End Namespace

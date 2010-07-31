@@ -151,6 +151,15 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
+    '''toolDespachos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents toolDespachos As Global.Telerik.Web.UI.RadToolBar
+
+    '''<summary>
     '''pnlFiltro control.
     '''</summary>
     '''<remarks>
@@ -169,13 +178,13 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected WithEvents Label10 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''rblOpcaoFiltro control.
+    '''cboTipoDeFiltro control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rblOpcaoFiltro As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents cboTipoDeFiltro As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''pnlEntreDadas control.

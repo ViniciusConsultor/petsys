@@ -47,16 +47,21 @@
             <telerik:RadDock ID="RadDock2" runat="server" Title="Despachos da solicitação" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                     <asp:Panel ID="pnlFiltro" runat="server">
+                    <telerik:RadToolBar ID="toolDespachos" runat="server" Skin="Vista" Style="width: 100%;">
+                        <Items>
+                            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir despachos"
+                                CommandName="btnImprimirDespachos"/>
+                        </Items>
+                    </telerik:RadToolBar>
+                    <asp:Panel ID="pnlFiltro" runat="server">
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label10" runat="server" Text="Opção de filtro"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <asp:RadioButtonList ID="rblOpcaoFiltro" runat="server" AutoPostBack="True" RepeatDirection="Horizontal"
-                                        RepeatLayout="Flow">
-                                    </asp:RadioButtonList>
+                                    <telerik:RadComboBox ID="cboTipoDeFiltro" runat="server" AutoPostBack="true">
+                                    </telerik:RadComboBox>
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlEntreDadas">
@@ -79,9 +84,10 @@
                                 <td class="td">
                                     <telerik:RadComboBox ID="cboTipoDespachoFiltro" runat="server" Skin="Vista">
                                     </telerik:RadComboBox>
-                                    <asp:ImageButton ID="btnPesquisarPorTipoDeDespacho" runat="server"  ToolTip="Pesquisar" ImageUrl="~/imagens/find.gif" />
+                                    <asp:ImageButton ID="btnPesquisarPorTipoDeDespacho" runat="server" ToolTip="Pesquisar"
+                                        ImageUrl="~/imagens/find.gif" />
                                 </td>
-                            </tr>          
+                            </tr>
                         </table>
                     </asp:Panel>
                     <telerik:RadGrid ID="grdDespachos" runat="server" AutoGenerateColumns="False" AllowPaging="True"

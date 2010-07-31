@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
     TagPrefix="cc1" %>
+<%@ Register Src="ctrlContato.ascx" TagName="ctrlContato" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;">
@@ -29,9 +30,8 @@
                                     <asp:Label ID="Label2" runat="server" Text="Opção de filtro"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <asp:RadioButtonList ID="rblOpcaoFiltro" runat="server" AutoPostBack="True" RepeatDirection="Horizontal"
-                                        RepeatLayout="Flow">
-                                    </asp:RadioButtonList>
+                                    <telerik:RadComboBox ID="cboTipoDeFiltro" runat="server" AutoPostBack="true">
+                                    </telerik:RadComboBox>
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlEntreDadas">
@@ -44,7 +44,7 @@
                                     <asp:Label ID="Label1" runat="server" Text=" a  "></asp:Label>
                                     <telerik:RadDatePicker ID="txtDataFinal" runat="server">
                                     </telerik:RadDatePicker>
-                                    <asp:ImageButton ID="btnPesquisar" runat="server" ImageUrl="~/imagens/find.gif" />
+                                    <asp:ImageButton ID="btnPesquisar" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlCodigoDaSolicitacao">
@@ -55,58 +55,22 @@
                                     <telerik:RadNumericTextBox ID="txtCodigoDaSolicitacao" runat="server" DataType="System.Int64"
                                         AllowOutOfRangeAutoCorrect="False">
                                     </telerik:RadNumericTextBox>
-                                    <asp:ImageButton ID="btnPesquisarPorCodigo" runat="server" ImageUrl="~/imagens/find.gif" />
+                                    <asp:ImageButton ID="btnPesquisarPorCodigo" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
                                 </td>
                             </tr>
+                        </table>
+                        <table>
                             <tr runat="server" id="pnlContato">
-                                <td class="th3">
-                                    <asp:Label ID="Label5" runat="server" Text="Contato"></asp:Label>
+                                <td width="90%">
+                                    <uc1:ctrlContato ID="ctrlContato1" runat="server" />
                                 </td>
-                                <td class="td">
-                                    <telerik:RadComboBox ID="cboContato" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
-                                        LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="480px" Skin="Vista"
-                                        CausesValidation="False" EmptyMessage="Selecione um contato">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <td style="width: 200px;">
-                                                        Nome
-                                                    </td>
-                                                    <td style="width: 80px;">
-                                                        Telefone
-                                                    </td>
-                                                    <td style="width: 200px;">
-                                                        Celular
-                                                    </td>
-                                                    <td style="width: 200px;">
-                                                        Cargo
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table>
-                                                <tr>
-                                                    <td style="width: 200px;">
-                                                        <%# DataBinder.Eval(Container, "Text")%>
-                                                    </td>
-                                                    <td style="width: 80px;">
-                                                        <%#DataBinder.Eval(Container, "Attributes['Telefone']")%>
-                                                    </td>
-                                                    <td style="width: 200px;">
-                                                        <%#DataBinder.Eval(Container, "Attributes['Celular']")%>
-                                                    </td>
-                                                    <td style="width: 200px;">
-                                                        <%#DataBinder.Eval(Container, "Attributes['Cargo']")%>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </ItemTemplate>
-                                    </telerik:RadComboBox>
-                                    <asp:ImageButton ID="btnPesquisarPorContato" runat="server" ImageUrl="~/imagens/find.gif" />
+                                <td>
+                                    <asp:ImageButton ID="btnPesquisarPorContato" runat="server" ToolTip="Pesquisar" ImageUrl="~/imagens/find.gif" />
                                 </td>
                             </tr>
+                        </table>
+                        <table class="tabela">
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label4" runat="server" Text="Considerar solicitações finalizadas?"></asp:Label>

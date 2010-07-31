@@ -14,7 +14,6 @@ Partial Public Class cdSolicitacaoDeConvite
     Private Const CHAVE_ID As String = "CHAVE_ID_SOLICITACAO_DE_CONVITE"
     Private Const CHAVE_DATA As String = "CHAVE_DATA_SOLICITACAO_DE_CONVITE"
     Private Const CHAVE_STATUS As String = "CHAVE_STATUS_SOLICITACAO_DE_CONVITE"
-    Private Const CHAVE_ID_CONTATO As String = "CHAVE_ID_CONTATO_SOLICITACAO_DE_CONVITE"
     Private Const CHAVE_USUARIO_CADASTROU As String = "CHAVE_USUARIO_CADASTROU_SOLICITACAO_DE_CONVITE"
 
     Private Enum Estado As Byte
@@ -41,13 +40,13 @@ Partial Public Class cdSolicitacaoDeConvite
     Private Sub ExibaTelaNovo()
         ViewState(CHAVE_ESTADO) = Estado.Novo
         LimpaDados()
-        cboContato.Enabled = True
+        ctrlContato1.EstaAtivo = True
     End Sub
 
     Private Sub LimpaDados()
         ViewState(CHAVE_DATA) = Nothing
         ViewState(CHAVE_STATUS) = Nothing
-        ViewState(CHAVE_ID_CONTATO) = Nothing
+        ctrlContato1.ContatoSelecionado = Nothing
         ViewState(CHAVE_ID) = Nothing
         ViewState(CHAVE_USUARIO_CADASTROU) = Nothing
         UtilidadesWeb.LimparComponente(CType(pnlDadosDaSolicitacao, Control))
@@ -70,14 +69,13 @@ Partial Public Class cdSolicitacaoDeConvite
         txtLocal.Text = Solicitacao.Local
         txtObservacao.Text = Solicitacao.Observacao
         txtDescricao.Text = Solicitacao.Descricao
-        cboContato.Text = Solicitacao.Contato.Pessoa.Nome
+        ctrlContato1.ContatoSelecionado = Solicitacao.Contato
 
         ViewState(CHAVE_DATA) = Solicitacao.DataDaSolicitacao
         ViewState(CHAVE_STATUS) = Solicitacao.Ativa
-        ViewState(CHAVE_ID_CONTATO) = Solicitacao.Contato.Pessoa.ID
         ViewState(CHAVE_ID) = Solicitacao.ID
         ViewState(CHAVE_USUARIO_CADASTROU) = Solicitacao.UsuarioQueCadastrou
-        cboContato.Enabled = False
+        ctrlContato1.EstaAtivo = False
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -126,11 +124,7 @@ Partial Public Class cdSolicitacaoDeConvite
         Dim DataDaSolicitacao As Date
 
         Solicitacao = FabricaGenerica.GetInstancia.CrieObjeto(Of ISolicitacaoDeConvite)()
-
-        Using ServicoDeContato As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-            Contato = ServicoDeContato.Obtenha(CLng(ViewState(CHAVE_ID_CONTATO)))
-        End Using
-
+        Contato = ctrlContato1.ContatoSelecionado
         Solicitacao.DataEHorario = txtDataEHora.SelectedDate.Value
         Solicitacao.Local = txtLocal.Text
         Solicitacao.Observacao = txtObservacao.Text
@@ -154,68 +148,11 @@ Partial Public Class cdSolicitacaoDeConvite
     End Function
 
     Private Function ValidaLancamento() As String
-        If String.IsNullOrEmpty(CStr(ViewState(CHAVE_ID_CONTATO))) Then Return "O contato deve ser informado."
+        If ctrlContato1.ContatoSelecionado Is Nothing Then Return "O contato deve ser informado."
         If Not txtDataEHora.SelectedDate.HasValue Then Return "A data e hora da solicitação de convite deve ser informada."
         If String.IsNullOrEmpty(txtLocal.Text) Then Return "O local da solicitação de convite deve ser informado."
         If String.IsNullOrEmpty(txtDescricao.Text) Then Return "A descrição da solicitação de audiência deve ser informada."
         Return Nothing
     End Function
-
-    Private Sub cboContato_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboContato.ItemsRequested
-        Dim Contatos As IList(Of IContato)
-
-        Using Servico As IServicoDeContato = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeContato)()
-            Contatos = Servico.ObtenhaPorNomeComoFiltro(e.Text, 50)
-        End Using
-
-        If Not Contatos Is Nothing Then
-            For Each Contato As IContato In Contatos
-                Dim Item As New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.ToString)
-
-                Dim TelefonesResidencial As IList(Of ITelefone)
-                Dim TelefonesCelular As IList(Of ITelefone)
-                Dim TelefonesComercial As IList(Of ITelefone)
-
-                TelefonesResidencial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
-                TelefonesCelular = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
-                TelefonesComercial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
-
-                Dim TelefonesSTR As New StringBuilder
-
-                For Each Telefone As ITelefone In TelefonesResidencial
-                    TelefonesSTR.AppendLine(Telefone.ToString)
-                Next
-
-                For Each Telefone As ITelefone In TelefonesComercial
-                    TelefonesSTR.AppendLine(Telefone.ToString)
-                Next
-
-                Item.Attributes.Add("Telefone", TelefonesSTR.ToString)
-
-                Dim CelularesSTR As New StringBuilder
-
-                For Each Celular As ITelefone In TelefonesCelular
-                    CelularesSTR.AppendLine(Celular.ToString)
-                Next
-
-                Item.Attributes.Add("Celular", CelularesSTR.ToString)
-
-                If Not String.IsNullOrEmpty(Contato.Cargo) Then
-                    Item.Attributes.Add("Cargo", Contato.Cargo)
-                Else
-                    Item.Attributes.Add("Cargo", "")
-                End If
-
-                cboContato.Items.Add(Item)
-                Item.DataBind()
-            Next
-        End If
-    End Sub
-
-    Private Sub cboContato_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboContato.SelectedIndexChanged
-        If String.IsNullOrEmpty(DirectCast(o, RadComboBox).SelectedValue) Then Exit Sub
-
-        ViewState(CHAVE_ID_CONTATO) = CLng(DirectCast(o, RadComboBox).SelectedValue)
-    End Sub
 
 End Class

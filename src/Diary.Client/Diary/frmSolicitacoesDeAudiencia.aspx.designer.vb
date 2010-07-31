@@ -70,13 +70,13 @@ Partial Public Class frmSolicitacoesDeAudiencia
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''rblOpcaoFiltro control.
+    '''cboTipoDeFiltro control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rblOpcaoFiltro As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents cboTipoDeFiltro As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''pnlEntreDadas control.
@@ -178,22 +178,13 @@ Partial Public Class frmSolicitacoesDeAudiencia
     Protected WithEvents pnlContato As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''Label5 control.
+    '''ctrlContato1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cboContato control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboContato As Global.Telerik.Web.UI.RadComboBox
+    Protected WithEvents ctrlContato1 As Global.Diary.Client.ctrlContato
 
     '''<summary>
     '''btnPesquisarPorContato control.
