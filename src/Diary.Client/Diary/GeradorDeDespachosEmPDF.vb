@@ -41,10 +41,6 @@ Public Class GeradorDeDespachosEmPDF
         Return NomeDoPDF
     End Function
 
-    Private Sub EscrevaCabecalho()
-      
-    End Sub
-
     Private Function CrieCelula(ByVal Texto As String, _
                                 ByVal Fonte As Font, _
                                 ByVal AlinhamentoHorizontal As Integer, _
