@@ -70,11 +70,12 @@ Public Class GeradorDeSolicitacoesEmPDF
     End Function
 
     Private Sub EscrevaSolicitacoes()
-        Dim Tabela As Table = New Table(5)
+        Dim Tabela As Table = New Table(6)
 
         Tabela.Padding = 1
         Tabela.Spacing = 1
 
+        Tabela.AddCell(Me.CrieCelula("Parecer", _Fonte1, Cell.ALIGN_LEFT, 13, True))
         Tabela.AddCell(Me.CrieCelula("Código", _Fonte1, Cell.ALIGN_LEFT, 13, True))
         Tabela.AddCell(Me.CrieCelula("Data", _Fonte1, Cell.ALIGN_LEFT, 13, True))
         Tabela.AddCell(Me.CrieCelula("Assunto", _Fonte1, Cell.ALIGN_LEFT, 13, True))
