@@ -303,6 +303,7 @@ Public Class ServicoDeAgendaLocal
 
     Public Function InsiraLembrete(ByVal Lembrete As ILembrete) As Long Implements IServicoDeAgenda.InsiraLembrete
         Dim Mapeador As IMapeadorDeAgenda
+        Dim ID As Long
 
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
@@ -310,7 +311,7 @@ Public Class ServicoDeAgendaLocal
         ServerUtils.BeginTransaction()
 
         Try
-            Mapeador.InsiraLembrete(Lembrete)
+            ID = Mapeador.InsiraLembrete(Lembrete)
             ServerUtils.CommitTransaction()
         Catch
             ServerUtils.RollbackTransaction()
@@ -318,6 +319,8 @@ Public Class ServicoDeAgendaLocal
         Finally
             ServerUtils.libereRecursos()
         End Try
+
+        Return ID
     End Function
 
     Public Sub ModifiqueLembrete(ByVal Lembrete As ILembrete) Implements IServicoDeAgenda.ModifiqueLembrete

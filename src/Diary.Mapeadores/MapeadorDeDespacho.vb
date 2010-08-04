@@ -19,7 +19,7 @@ Public Class MapeadorDeDespacho
         Despacho.ID = GeradorDeID.getInstancia.getProximoID()
 
         Sql.Append("INSERT INTO DRY_DESPACHO (")
-        Sql.Append("ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA)")
+        Sql.Append("ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA, IDLEMBRETE)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Despacho.ID.ToString, ", "))
         Sql.Append(String.Concat(Despacho.Tipo.ID, ", "))
@@ -32,10 +32,16 @@ Public Class MapeadorDeDespacho
 
         If Despacho.TipoDestino.Equals(TipoDestinoDespacho.Compromisso) Then
             Sql.Append(String.Concat(CType(Despacho, IDespachoAgenda).Compromisso.ID.Value, ", "))
-            Sql.Append("NULL)")
-        Else
             Sql.Append("NULL, ")
-            Sql.Append(String.Concat(CType(Despacho, IDespachoTarefa).Tarefa.ID.Value, ")"))
+            Sql.Append("NULL)")
+        ElseIf Despacho.TipoDestino.Equals(TipoDestinoDespacho.Tarefa) Then
+            Sql.Append("NULL, ")
+            Sql.Append(String.Concat(CType(Despacho, IDespachoTarefa).Tarefa.ID.Value, ", "))
+            Sql.Append("NULL)")
+        ElseIf Despacho.TipoDestino.Equals(TipoDestinoDespacho.Lembrete) Then
+            Sql.Append("NULL, ")
+            Sql.Append("NULL, ")
+            Sql.Append(String.Concat(CType(Despacho, IDespachoLembrete).Lembrete.ID.Value, ")"))
         End If
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
@@ -46,7 +52,7 @@ Public Class MapeadorDeDespacho
         Dim DBHelper As IDBHelper
         Dim Despachos As IList(Of IDespacho) = New List(Of IDespacho)
 
-        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA")
+        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA, IDLEMBRETE")
         Sql.Append(" FROM DRY_DESPACHO ")
         Sql.Append(" WHERE IDSOLICITACAO = " & IDSolicitacao)
         Sql.Append(" ORDER BY DATADODESPACHO")
@@ -73,9 +79,13 @@ Public Class MapeadorDeDespacho
         If TipoDestino.Equals(TipoDestinoDespacho.Compromisso) Then
             Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoAgenda)()
             CType(Despacho, IDespachoAgenda).Compromisso = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ICompromissoLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDCOMPROMISSO"))
-        Else
+        ElseIf TipoDestino.Equals(TipoDestinoDespacho.Tarefa) Then
             Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoTarefa)()
             CType(Despacho, IDespachoTarefa).Tarefa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ITarefaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDTAREFA"))
+        Else
+            TipoDestino.Equals(TipoDestinoDespacho.Lembrete)
+            Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoLembrete)()
+            CType(Despacho, IDespachoLembrete).Lembrete = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ILembreteLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDLEMBRETE"))
         End If
 
         Despacho.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
@@ -102,7 +112,7 @@ Public Class MapeadorDeDespacho
         Dim DBHelper As IDBHelper
         Dim Despachos As IList(Of IDespacho) = New List(Of IDespacho)
 
-        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA")
+        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA, IDLEMBRETE")
         Sql.Append(" FROM DRY_DESPACHO ")
         Sql.Append(" WHERE IDSOLICITACAO = " & IDSolicitacao)
 
@@ -130,7 +140,7 @@ Public Class MapeadorDeDespacho
         Dim DBHelper As IDBHelper
         Dim Despachos As IList(Of IDespacho) = New List(Of IDespacho)
 
-        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA")
+        Sql.Append("SELECT ID, TIPO, IDSOLICITANTE, IDALVO, IDSOLICITACAO, TIPOSOLICITACAO, DATADODESPACHO, TIPODESTDESPACHO, IDCOMPROMISSO, IDTAREFA, IDLEMBRETE")
         Sql.Append(" FROM DRY_DESPACHO ")
         Sql.Append(" WHERE IDSOLICITACAO = " & IDSolicitacao)
         Sql.Append(" AND TIPO = " & Tipo.ID.ToString)

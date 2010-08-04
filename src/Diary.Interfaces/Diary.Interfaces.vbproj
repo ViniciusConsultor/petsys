@@ -88,6 +88,7 @@
     <Compile Include="Negocio\IContato.vb" />
     <Compile Include="Negocio\IDespacho.vb" />
     <Compile Include="Negocio\IDespachoAgenda.vb" />
+    <Compile Include="Negocio\IDespachoLembrete.vb" />
     <Compile Include="Negocio\IDespachoTarefa.vb" />
     <Compile Include="Negocio\ISolicitacao.vb" />
     <Compile Include="Negocio\ISolicitacaoDeAudiencia.vb" />

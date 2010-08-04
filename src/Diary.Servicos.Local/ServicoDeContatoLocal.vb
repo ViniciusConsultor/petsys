@@ -5,6 +5,7 @@ Imports Compartilhados.Interfaces.Core.Negocio
 
 Imports Diary.Interfaces.Mapeadores
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Public Class ServicoDeContatoLocal
     Inherits Servico
@@ -87,6 +88,7 @@ Public Class ServicoDeContatoLocal
 
         ServerUtils.BeginTransaction()
 
+        'Exclui o contato
         Try
             Mapeador.Remover(ID)
             ServerUtils.CommitTransaction()
@@ -96,6 +98,13 @@ Public Class ServicoDeContatoLocal
         Finally
             ServerUtils.libereRecursos()
         End Try
+
+        'Tenta excluir a pessoa associada ao contato
+        'Using ServicoDePessoa As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
+        '    ServicoDePessoa.Remover(
+
+        'End Using
+
     End Sub
 
     Public Function Obtenha(ByVal ID As Long) As Interfaces.Negocio.IContato Implements Interfaces.Servicos.IServicoDeContato.Obtenha

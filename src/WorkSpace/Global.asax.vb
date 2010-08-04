@@ -5,6 +5,7 @@ Imports System.Reflection
 Imports Core.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Core.Interfaces.Negocio
+Imports Compartilhados.Componentes.Web
 
 Public Class Global_asax
     Inherits System.Web.HttpApplication
@@ -29,7 +30,9 @@ Public Class Global_asax
         Dim MensagemDeLog As String = ObtenhaMensagemDeLog()
 
         EscritorDeLog.escrevaLog(MensagemDeLog)
-        System.Web.HttpContext.Current.Server.Transfer("~/Erro.aspx", True)
+
+        Dim URL As String = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "erro.html"
+        System.Web.HttpContext.Current.Response.Redirect(URL)
     End Sub
 
     Sub Session_End(ByVal sender As Object, ByVal e As EventArgs)

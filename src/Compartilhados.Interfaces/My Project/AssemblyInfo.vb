@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security
@@ -11,9 +11,9 @@ Imports System.Security
 
 <Assembly: AssemblyTitle("Compartilhados.Interfaces")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyCompany("Simple TI")> 
 <Assembly: AssemblyProduct("Compartilhados.Interfaces")> 
-<Assembly: AssemblyCopyright("Copyright © 2009")> 
+<Assembly: AssemblyCopyright("Copyright © Simple TI  2010")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: AllowPartiallyTrustedCallersAttribute()> 
 
@@ -34,4 +34,4 @@ Imports System.Security
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyFileVersion("1.1.1.57")> 

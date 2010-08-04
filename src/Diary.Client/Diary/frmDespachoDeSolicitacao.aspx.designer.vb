@@ -142,6 +142,24 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected WithEvents ctrlDespachoTarefa1 As Global.Diary.Client.ctrlDespachoTarefa
 
     '''<summary>
+    '''pnlComponenteDespachoLembrete control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlComponenteDespachoLembrete As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''ctrlDespachoLembrete1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlDespachoLembrete1 As Global.Diary.Client.ctrlDespachoLembrete
+
+    '''<summary>
     '''RadDock2 control.
     '''</summary>
     '''<remarks>

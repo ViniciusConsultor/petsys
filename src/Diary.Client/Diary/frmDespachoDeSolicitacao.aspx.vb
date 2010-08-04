@@ -18,6 +18,7 @@ Partial Public Class frmDespachoDeSolicitacao
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlDespachoAgenda1.SolicitacaoFoiDespachada, AddressOf SolicitacaoFoiDespachada
         AddHandler ctrlDespachoTarefa1.SolicitacaoFoiDespachada, AddressOf SolicitacaoFoiDespachada
+        AddHandler ctrlDespachoLembrete1.SolicitacaoFoiDespachada, AddressOf SolicitacaoFoiDespachada
         AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ProprietarioFoiSelecionado
 
         If Not IsPostBack Then
@@ -45,6 +46,7 @@ Partial Public Class frmDespachoDeSolicitacao
 
                 ctrlDespachoAgenda1.Solicitacao = Solicitacao
                 ctrlDespachoTarefa1.Solicitacao = Solicitacao
+                ctrlDespachoLembrete1.Solicitacao = Solicitacao
                 ViewState(CHAVE_SOLICITACAO) = Solicitacao
                 CarregueTodosOsDespachosDaSolicitacao(Id.Value)
                 AlimentaDados()
@@ -79,6 +81,7 @@ Partial Public Class frmDespachoDeSolicitacao
         lblInconsistencia.Visible = False
         ctrlDespachoAgenda1.IDAlvo = ctrlPessoa1.PessoaSelecionada.ID.Value
         ctrlDespachoTarefa1.IDAlvo = ctrlPessoa1.PessoaSelecionada.ID.Value
+        ctrlDespachoLembrete1.IDAlvo = ctrlPessoa1.PessoaSelecionada.ID.Value
     End Sub
 
     Private Sub SolicitacaoFoiDespachada(ByVal Despacho As IDespacho)
@@ -117,6 +120,7 @@ Partial Public Class frmDespachoDeSolicitacao
         SetaTipoDeDespachoNosControles(TipoDeDespacho.Agendar)
         pnlComponenteDespachoAgenda.Visible = True
         pnlComponenteDespachoTarefa.Visible = False
+        pnlComponenteDespachoLembrete.Visible = False
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = False
@@ -129,6 +133,7 @@ Partial Public Class frmDespachoDeSolicitacao
     Private Sub LimpaDados()
         UtilidadesWeb.LimparComponente(CType(pnlComponenteDespachoAgenda, Control))
         UtilidadesWeb.LimparComponente(CType(pnlComponenteDespachoTarefa, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlComponenteDespachoLembrete, Control))
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -146,24 +151,31 @@ Partial Public Class frmDespachoDeSolicitacao
             Case TipoDeDespacho.Agendar.ID.ToString
                 pnlComponenteDespachoAgenda.Visible = True
                 pnlComponenteDespachoTarefa.Visible = False
+                pnlComponenteDespachoLembrete.Visible = False
             Case TipoDeDespacho.Lembrente.ID.ToString
-                pnlComponenteDespachoAgenda.Visible = True
+                pnlComponenteDespachoAgenda.Visible = False
                 pnlComponenteDespachoTarefa.Visible = False
+                pnlComponenteDespachoLembrete.Visible = True
             Case TipoDeDespacho.Mensagem.ID.ToString
                 pnlComponenteDespachoAgenda.Visible = False
                 pnlComponenteDespachoTarefa.Visible = True
+                pnlComponenteDespachoLembrete.Visible = False
             Case TipoDeDespacho.Presente.ID.ToString
                 pnlComponenteDespachoAgenda.Visible = False
                 pnlComponenteDespachoTarefa.Visible = True
+                pnlComponenteDespachoLembrete.Visible = False
             Case TipoDeDespacho.Remarcar.ID.ToString
                 pnlComponenteDespachoAgenda.Visible = False
                 pnlComponenteDespachoTarefa.Visible = True
+                pnlComponenteDespachoLembrete.Visible = False
             Case TipoDeDespacho.Representante.ID.ToString
                 pnlComponenteDespachoAgenda.Visible = True
                 pnlComponenteDespachoTarefa.Visible = False
+                pnlComponenteDespachoLembrete.Visible = False
             Case TipoDeDespacho.Telegrama.ID.ToString
                 pnlComponenteDespachoAgenda.Visible = False
                 pnlComponenteDespachoTarefa.Visible = True
+                pnlComponenteDespachoLembrete.Visible = False
         End Select
 
         SetaTipoDeDespachoNosControles(Tipo)
@@ -173,6 +185,7 @@ Partial Public Class frmDespachoDeSolicitacao
     Private Sub SetaTipoDeDespachoNosControles(ByVal TipoDeDespacho As TipoDeDespacho)
         ctrlDespachoAgenda1.TipoDespacho = TipoDeDespacho
         ctrlDespachoTarefa1.TipoDespacho = TipoDeDespacho
+        ctrlDespachoLembrete1.TipoDespacho = TipoDeDespacho
     End Sub
 
     Private Sub btnPesquisarEntreDadas_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarEntreDadas.Click
@@ -213,14 +226,18 @@ Partial Public Class frmDespachoDeSolicitacao
         If Solicitacao.Tipo.Equals(TipoDeSolicitacao.Audiencia) Then
             ctrlDespachoAgenda1.Assunto = CType(Solicitacao, ISolicitacaoDeAudiencia).Assunto
             ctrlDespachoTarefa1.Assunto = CType(Solicitacao, ISolicitacaoDeAudiencia).Assunto
+            ctrlDespachoLembrete1.Assunto = CType(Solicitacao, ISolicitacaoDeAudiencia).Assunto
         ElseIf Solicitacao.Tipo.Equals(TipoDeSolicitacao.Convite) Then
             ctrlDespachoAgenda1.Assunto = "Convite"
             ctrlDespachoTarefa1.Assunto = "Convite"
+            ctrlDespachoLembrete1.Assunto = "Convite"
             ctrlDespachoAgenda1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
             ctrlDespachoTarefa1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
+            ctrlDespachoLembrete1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
         End If
 
         ctrlDespachoAgenda1.Local = Solicitacao.Local
+        ctrlDespachoLembrete1.Local = Solicitacao.Local
 
         Dim DescricaoDaSoliticao As New StringBuilder
         'Nome do contato da solicitação
@@ -273,6 +290,7 @@ Partial Public Class frmDespachoDeSolicitacao
 
         ctrlDespachoAgenda1.Descricao = DescricaoDaSoliticao.ToString
         ctrlDespachoTarefa1.Descricao = DescricaoDaSoliticao.ToString
+        ctrlDespachoLembrete1.Descricao = DescricaoDaSoliticao.ToString
     End Sub
 
     Private Sub cboTipoDeFiltro_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboTipoDeFiltro.SelectedIndexChanged
