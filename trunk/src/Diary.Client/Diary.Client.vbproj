@@ -134,6 +134,13 @@
       <DependentUpon>ctrlDespachoAgenda.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Diary\ctrlDespachoLembrete.ascx.designer.vb">
+      <DependentUpon>ctrlDespachoLembrete.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\ctrlDespachoLembrete.ascx.vb">
+      <DependentUpon>ctrlDespachoLembrete.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Diary\ctrlDespachoTarefa.ascx.designer.vb">
       <DependentUpon>ctrlDespachoTarefa.ascx</DependentUpon>
     </Compile>
@@ -208,6 +215,7 @@
     <Content Include="Diary\cdSolicitacaoDeConvite.aspx" />
     <Content Include="Diary\ctrlContato.ascx" />
     <Content Include="Diary\ctrlDespachoAgenda.ascx" />
+    <Content Include="Diary\ctrlDespachoLembrete.ascx" />
     <Content Include="Diary\ctrlDespachoTarefa.ascx" />
     <Content Include="Diary\frmDespachoDeSolicitacao.aspx" />
     <Content Include="Diary\frmSolicitacoesDeAudiencia.aspx" />

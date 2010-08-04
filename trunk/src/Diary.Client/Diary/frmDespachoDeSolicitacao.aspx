@@ -1,10 +1,11 @@
-ï»¿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
     CodeBehind="frmDespachoDeSolicitacao.aspx.vb" Inherits="Diary.Client.frmDespachoDeSolicitacao" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlDespachoAgenda.ascx" TagName="ctrlDespachoAgenda" TagPrefix="uc1" %>
 <%@ Register Src="ctrlDespachoTarefa.ascx" TagName="ctrlDespachoTarefa" TagPrefix="uc2" %>
 <%@ Register Src="../ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc3" %>
+<%@ Register Src="ctrlDespachoLembrete.ascx" TagName="ctrlDespachoLembrete" TagPrefix="uc4" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
@@ -41,23 +42,26 @@
                         <asp:Panel ID="pnlComponenteDespachoTarefa" runat="server">
                             <uc2:ctrlDespachoTarefa ID="ctrlDespachoTarefa1" runat="server" />
                         </asp:Panel>
+                        <asp:Panel ID="pnlComponenteDespachoLembrete" runat="server">
+                            <uc4:ctrlDespachoLembrete ID="ctrlDespachoLembrete1" runat="server" />
+                        </asp:Panel>
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="RadDock2" runat="server" Title="Despachos da solicitaÃ§Ã£o" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock2" runat="server" Title="Despachos da solicitação" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <telerik:RadToolBar ID="toolDespachos" runat="server" Skin="Vista" Style="width: 100%;">
                         <Items>
                             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir despachos"
-                                CommandName="btnImprimirDespachos"/>
+                                CommandName="btnImprimirDespachos" />
                         </Items>
                     </telerik:RadToolBar>
                     <asp:Panel ID="pnlFiltro" runat="server">
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label10" runat="server" Text="OpÃ§Ã£o de filtro"></asp:Label>
+                                    <asp:Label ID="Label10" runat="server" Text="Opção de filtro"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadComboBox ID="cboTipoDeFiltro" runat="server" AutoPostBack="true">

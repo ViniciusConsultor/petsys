@@ -8,13 +8,14 @@
 
         Public Shared Compromisso As TipoDestinoDespacho = New TipoDestinoDespacho(1, "COMPROMISSO")
         Public Shared Tarefa As TipoDestinoDespacho = New TipoDestinoDespacho(2, "TAREFA")
+        Public Shared Lembrete As TipoDestinoDespacho = New TipoDestinoDespacho(3, "LEMBRETE")
 
         Private Sub New(ByVal ID As Byte, ByVal Descricao As String)
             _ID = ID
             _Descricao = Descricao
         End Sub
 
-        Private Shared Lista As TipoDestinoDespacho() = {Compromisso, Tarefa}
+        Private Shared Lista As TipoDestinoDespacho() = {Compromisso, Tarefa, Lembrete}
 
         Public ReadOnly Property ID() As Byte
             Get
