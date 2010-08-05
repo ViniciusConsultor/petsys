@@ -98,6 +98,17 @@ body
 	border-left-style: none;
 }
 
+.containerCopyright 
+{
+    position: absolute;
+	left: 35%;
+	top: 95%;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+
 .esqueci
 {
 	/* esqueci minha senha*/
