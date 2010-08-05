@@ -18,8 +18,8 @@ Public Class GeradorDeDespachosEmPDF
     Public Sub New(ByVal Despachos As IList(Of IDespacho))
         _Despachos = Despachos
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
-        _Fonte2 = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
-        _Fonte3 = New Font(Font.TIMES_ROMAN, 10)
+        _Fonte2 = New Font(Font.TIMES_ROMAN, 12, Font.BOLD)
+        _Fonte3 = New Font(Font.TIMES_ROMAN, 14, Font.BOLDITALIC)
     End Sub
 
     Public Function GerePDFSolicitacoesEmAberto() As String
@@ -56,16 +56,16 @@ Public Class GeradorDeDespachosEmPDF
     End Function
 
     Private Sub EscrevaDespachos()
-        Dim Tabela As Table = New Table(7)
-        '   Tabela.Widths = New Single() {}
+        Dim Tabela As Table = New Table(4)
 
         Tabela.Padding = 1
         Tabela.Spacing = 1
+        Tabela.Width = 100%
 
-        Tabela.AddCell(Me.CrieCelula("Data e hora", _Fonte1, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Alvo do despacho", _Fonte1, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Tipo do despacho", _Fonte1, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Solicitante", _Fonte1, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Data e hora", _Fonte2, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Alvo do despacho", _Fonte2, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Tipo do despacho", _Fonte2, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Solicitante", _Fonte2, Cell.ALIGN_LEFT, 13, True))
 
         Dim Solicitacao As ISolicitacao = Nothing
 
@@ -80,7 +80,7 @@ Public Class GeradorDeDespachosEmPDF
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Despachos da solicitação " & Solicitacao.Codigo.ToString & vbLf, _Fonte1)
+        Frase = New Phrase("Despachos da solicitação " & Solicitacao.Codigo.ToString & vbLf, _Fonte3)
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
