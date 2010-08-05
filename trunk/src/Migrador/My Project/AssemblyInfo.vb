@@ -1,6 +1,7 @@
 Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Security
 
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
@@ -12,10 +13,11 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("Simple TI")> 
 <Assembly: AssemblyProduct("Migrador")> 
-<Assembly: AssemblyCopyright("Copyright © Simple TI  2010")>
+<Assembly: AssemblyCopyright("Copyright © Simple TI  2010")> 
 <Assembly: AssemblyTrademark("")> 
+<Assembly: AllowPartiallyTrustedCallersAttribute()> 
 
-<Assembly: ComVisible(False)>
+<Assembly: ComVisible(False)> 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
 <Assembly: Guid("f3d31e3d-b012-4106-8994-4ec63afa0330")> 

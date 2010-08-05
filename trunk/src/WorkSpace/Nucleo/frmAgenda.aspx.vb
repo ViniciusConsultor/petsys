@@ -75,7 +75,7 @@ Partial Public Class frmAgenda
     Private Const CHAVE_LEMBRETES As String = "CHAVE_LEMBRETES"
     Private URL As String
 
-    Public Property HoraInicio() As Date
+    Private Property HoraInicio() As Date
         Get
             Return CDate(ViewState("CHAVE_HORAINICIO"))
         End Get
@@ -84,7 +84,7 @@ Partial Public Class frmAgenda
         End Set
     End Property
 
-    Public Property HoraFim() As Date
+    Private Property HoraFim() As Date
         Get
             Return CDate(ViewState("CHAVE_HORAFIM"))
         End Get
@@ -93,7 +93,7 @@ Partial Public Class frmAgenda
         End Set
     End Property
 
-    Public Property IntervaloEntreCompromissos() As Date
+    Private Property IntervaloEntreCompromissos() As Date
         Get
             Return CDate(ViewState("CHAVE_INTERVALOENTRECOMPROMISSOS"))
         End Get
@@ -102,11 +102,11 @@ Partial Public Class frmAgenda
         End Set
     End Property
 
-    Public Property IDProprietario() As Long
+    Private Property IDProprietario() As Nullable(Of Long)
         Get
             Return CLng(ViewState(CHAVE_ID_PROPRIETARIO))
         End Get
-        Set(ByVal value As Long)
+        Set(ByVal value As Nullable(Of Long))
             ViewState(CHAVE_ID_PROPRIETARIO) = value
         End Set
     End Property
@@ -144,7 +144,9 @@ Partial Public Class frmAgenda
         End If
     End Sub
 
-    Public Sub CarregaAgenda()
+    Private Sub CarregaAgenda()
+        If Not Me.IDProprietario.HasValue Then Exit Sub
+
         UtilidadesWeb.LimparComponente(CType(pnlCompromissos, Control))
         UtilidadesWeb.LimparComponente(CType(pnlTarefas, Control))
         UtilidadesWeb.LimparComponente(CType(pnlLembretes, Control))
@@ -158,9 +160,9 @@ Partial Public Class frmAgenda
         Dim Lembretes As IList(Of ILembrete)
 
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Compromissos = Servico.ObtenhaCompromissos(IDProprietario)
-            Tarefas = Servico.ObtenhaTarefas(IDProprietario)
-            Lembretes = Servico.ObtenhaLembretes(IDProprietario)
+            Compromissos = Servico.ObtenhaCompromissos(IDProprietario.Value)
+            Tarefas = Servico.ObtenhaTarefas(IDProprietario.Value)
+            Lembretes = Servico.ObtenhaLembretes(IDProprietario.Value)
         End Using
 
         schCompromissos.DayStartTime = HoraInicio.TimeOfDay
@@ -383,6 +385,10 @@ Partial Public Class frmAgenda
 
     Private Sub grdLembretes_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdLembretes.PageIndexChanged
         UtilidadesWeb.PaginacaoDataGrid(grdTarefas, ViewState(CHAVE_LEMBRETES), e)
+    End Sub
+
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        CarregaAgenda()
     End Sub
 
 End Class

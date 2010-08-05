@@ -2,14 +2,13 @@
     CodeBehind="Login.aspx.vb" Inherits="WorkSpace.Login" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="titulo">
         ::
         <asp:Label ID="Label1" runat="server" Text="Login"></asp:Label>
         ::
     </div>
-    <table >
+    <table>
         <tr>
             <td class="label">
                 <asp:Label ID="Label2" runat="server" Text="Login:"></asp:Label>
@@ -35,12 +34,10 @@
             </td>
         </tr>
     </table>
-   <%-- <div class="esqueci">
+    <%-- <div class="esqueci">
         <asp:LinkButton ID="btnEsqueceuASenha" runat="server" CausesValidation="False">Esqueceu sua senha?</asp:LinkButton>
     </div>--%>
     <div>
         <asp:Button ID="btnEntrar" runat="server" CssClass="botao" Text="Entrar" />
     </div>
-    
-    
 </asp:Content>

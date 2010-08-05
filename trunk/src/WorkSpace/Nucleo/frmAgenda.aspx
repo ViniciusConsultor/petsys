@@ -32,6 +32,8 @@
         }
     </script>
 
+    <asp:Timer ID="Timer1" runat="server" Interval="20000">
+    </asp:Timer>
     <telerik:RadToolBar ID="ToolBarPrincipal" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
@@ -163,7 +165,6 @@
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
-  
     <asp:Label ID="lblInconsistencia" runat="server" Font-Size="Medium" Font-Bold="True"
         ForeColor="#CC3300"></asp:Label>
 </asp:Content>
