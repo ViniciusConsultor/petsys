@@ -10,9 +10,7 @@ Public Class GerarCompromissosEmPDF
 
     Private _documento As Document
     Private _Fonte1 As Font
-    Private _Fonte2 As Font
-    Private _Fonte3 As Font
-    Private _PaginaAtual As Integer = 0
+    Private _FonteRodape As Font
     Private _Compromissos As IList(Of ICompromisso)
 
     Private _FonteNomeProprietarioCabecalho As Font
@@ -23,10 +21,10 @@ Public Class GerarCompromissosEmPDF
     Public Sub New(ByVal Compromissos As IList(Of ICompromisso))
         _Compromissos = Compromissos
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
-        _Fonte2 = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
-        _Fonte3 = New Font(Font.TIMES_ROMAN, 10)
-        _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 10)
-        _FonteHorario = New Font(Font.TIMES_ROMAN, 10)
+        _FonteRodape = New Font(Font.TIMES_ROMAN, 10, Font.ITALIC)
+
+        _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 12, Font.BOLDITALIC)
+        _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
         _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
         Dim CaminhoDoPDF As String
@@ -76,20 +74,6 @@ Public Class GerarCompromissosEmPDF
         _documento.Header = Cabecalho
     End Sub
 
-    Private Function CrieCelula(ByVal Texto As String, _
-                                ByVal Fonte As Font, _
-                                ByVal AlinhamentoHorizontal As Integer, _
-                                ByVal Borda As Integer, _
-                                ByVal EhCabecalho As Boolean) As Cell
-        Dim Celula As Cell
-
-        Celula = New Cell(New Phrase(Texto, Fonte))
-        Celula.HorizontalAlignment = AlinhamentoHorizontal
-        Celula.Border = Borda
-        Celula.Header = EhCabecalho
-        Return Celula
-    End Function
-
     Private Sub EscrevaCompromisso(ByVal Compromisso As ICompromisso, _
                                    ByVal MostraAssunto As Boolean, _
                                    ByVal MostraLocal As Boolean, _
@@ -107,7 +91,7 @@ Public Class GerarCompromissosEmPDF
         If MostraAssunto Then
             Dim Assunto As Paragraph
 
-            Assunto = New Paragraph(String.Concat("Assunto: ", Compromisso.Assunto), _FonteHorario)
+            Assunto = New Paragraph(String.Concat("Assunto: ", Compromisso.Assunto), _FonteDescricaoCompromissos)
             Assunto.IndentationLeft = 56.7
             _documento.Add(Assunto)
         End If
@@ -115,7 +99,7 @@ Public Class GerarCompromissosEmPDF
         If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
             Dim Local As Paragraph
 
-            Local = New Paragraph(String.Concat("Local: ", Compromisso.Local), _FonteHorario)
+            Local = New Paragraph(String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos)
             Local.IndentationLeft = 56.7
             _documento.Add(Local)
         End If
@@ -123,7 +107,7 @@ Public Class GerarCompromissosEmPDF
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
             Dim Descricao As Paragraph
 
-            Descricao = New Paragraph(String.Concat("Descrição: ", Compromisso.Descricao), _FonteHorario)
+            Descricao = New Paragraph(String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos)
             Descricao.IndentationLeft = 56.7
             _documento.Add(Descricao)
         End If
@@ -136,7 +120,7 @@ Public Class GerarCompromissosEmPDF
 
         Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
 
-        Rodape = New HeaderFooter(New Phrase(Texto.ToString, _Fonte1), False)
+        Rodape = New HeaderFooter(New Phrase(Texto.ToString, _FonteRodape), False)
 
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Footer = Rodape

@@ -90,6 +90,8 @@ Partial Public Class frmDespachoDeSolicitacao
         Despachos = CType(ViewState(CHAVE_DESPACHOS_DA_SOLICITACAO), IList(Of IDespacho))
         Despachos.Add(Despacho)
         ExibaDespachos(Despachos)
+        ExibaTelaInicial()
+        AlimentaDados()
     End Sub
 
     Private Sub ExibaDespachos(ByVal Despachos As IList(Of IDespacho))
@@ -134,6 +136,7 @@ Partial Public Class frmDespachoDeSolicitacao
         UtilidadesWeb.LimparComponente(CType(pnlComponenteDespachoAgenda, Control))
         UtilidadesWeb.LimparComponente(CType(pnlComponenteDespachoTarefa, Control))
         UtilidadesWeb.LimparComponente(CType(pnlComponenteDespachoLembrete, Control))
+        UtilidadesWeb.LimparComponente(CType(grdDespachos, Control))
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick

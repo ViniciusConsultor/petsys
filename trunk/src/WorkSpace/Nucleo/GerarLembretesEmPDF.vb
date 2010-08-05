@@ -9,11 +9,8 @@ Public Class GerarLembretesEmPDF
 
     Private _documento As Document
     Private _Fonte1 As Font
-    Private _Fonte2 As Font
-    Private _Fonte3 As Font
-    Private _PaginaAtual As Integer = 0
+    Private _FonteRodape As Font
     Private _Lembretes As IList(Of ILembrete)
-
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
@@ -22,10 +19,10 @@ Public Class GerarLembretesEmPDF
     Public Sub New(ByVal Lembretes As IList(Of ILembrete))
         _Lembretes = Lembretes
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
-        _Fonte2 = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
-        _Fonte3 = New Font(Font.TIMES_ROMAN, 10)
-        _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 10)
-        _FonteHorario = New Font(Font.TIMES_ROMAN, 10)
+        _FonteRodape = New Font(Font.TIMES_ROMAN, 10, Font.ITALIC)
+       
+        _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 12, Font.BOLDITALIC)
+        _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
         _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
         Dim CaminhoDoPDF As String
@@ -75,20 +72,6 @@ Public Class GerarLembretesEmPDF
         _documento.Header = Cabecalho
     End Sub
 
-    Private Function CrieCelula(ByVal Texto As String, _
-                                ByVal Fonte As Font, _
-                                ByVal AlinhamentoHorizontal As Integer, _
-                                ByVal Borda As Integer, _
-                                ByVal EhCabecalho As Boolean) As Cell
-        Dim Celula As Cell
-
-        Celula = New Cell(New Phrase(Texto, Fonte))
-        Celula.HorizontalAlignment = AlinhamentoHorizontal
-        Celula.Border = Borda
-        Celula.Header = EhCabecalho
-        Return Celula
-    End Function
-
     Private Sub EscrevaLembretes(ByVal Lembrete As ILembrete, _
                                  ByVal MostraAssunto As Boolean, _
                                  ByVal MostraDescricao As Boolean)
@@ -105,7 +88,7 @@ Public Class GerarLembretesEmPDF
         If MostraAssunto Then
             Dim Assunto As Paragraph
 
-            Assunto = New Paragraph(String.Concat("Assunto: ", Lembrete.Assunto), _FonteHorario)
+            Assunto = New Paragraph(String.Concat("Assunto: ", Lembrete.Assunto), _FonteDescricaoCompromissos)
             Assunto.IndentationLeft = 56.7
             _documento.Add(Assunto)
         End If
@@ -113,7 +96,7 @@ Public Class GerarLembretesEmPDF
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Lembrete.Descricao) Then
             Dim Descricao As Paragraph
 
-            Descricao = New Paragraph(String.Concat("Descrição: ", Lembrete.Descricao), _FonteHorario)
+            Descricao = New Paragraph(String.Concat("Descrição: ", Lembrete.Descricao), _FonteDescricaoCompromissos)
             Descricao.IndentationLeft = 56.7
             _documento.Add(Descricao)
         End If
@@ -126,7 +109,7 @@ Public Class GerarLembretesEmPDF
 
         Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
 
-        Rodape = New HeaderFooter(New Phrase(Texto.ToString, _Fonte1), False)
+        Rodape = New HeaderFooter(New Phrase(Texto.ToString, _FonteRodape), False)
 
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Footer = Rodape
