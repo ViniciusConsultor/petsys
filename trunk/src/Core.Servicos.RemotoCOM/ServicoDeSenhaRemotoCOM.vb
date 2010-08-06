@@ -32,4 +32,10 @@ Public Class ServicoDeSenhaRemotoCOM
         Return ServicoLocal.ObtenhaSenhaDoOperador(Operador)
     End Function
 
+    Public Sub Altere(ByVal IDOperador As Long, _
+                      ByVal NovaSenha As ISenha, _
+                      ByVal ConfirmacaoNovaSenha As ISenha) Implements IServicoDeSenha.Altere
+        ServicoLocal.Altere(IDOperador, NovaSenha, ConfirmacaoNovaSenha)
+    End Sub
+
 End Class

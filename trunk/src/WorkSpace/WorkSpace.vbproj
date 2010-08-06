@@ -363,12 +363,26 @@
       <DependentUpon>frmAgenda.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Nucleo\frmAlterarSenhaDoOperador.aspx.designer.vb">
+      <DependentUpon>frmAlterarSenhaDoOperador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmAlterarSenhaDoOperador.aspx.vb">
+      <DependentUpon>frmAlterarSenhaDoOperador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Nucleo\frmAtalhos.aspx.vb">
       <DependentUpon>frmAtalhos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\frmConfiguracoesPessoais.aspx.designer.vb">
+      <DependentUpon>frmConfiguracoesPessoais.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmConfiguracoesPessoais.aspx.vb">
+      <DependentUpon>frmConfiguracoesPessoais.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmImpressaoCompromisso.aspx.designer.vb">
       <DependentUpon>frmImpressaoCompromisso.aspx</DependentUpon>
@@ -567,7 +581,9 @@
     <Content Include="Nucleo\cdLembrete.aspx" />
     <Content Include="Nucleo\cdTarefa.aspx" />
     <Content Include="Nucleo\frmAgenda.aspx" />
+    <Content Include="Nucleo\frmAlterarSenhaDoOperador.aspx" />
     <Content Include="Nucleo\frmAtalhos.aspx" />
+    <Content Include="Nucleo\frmConfiguracoesPessoais.aspx" />
     <Content Include="Nucleo\frmImpressaoCompromisso.aspx" />
     <Content Include="Nucleo\frmImpressaoLembrete.aspx" />
     <Content Include="Nucleo\frmImpressaoTarefa.aspx" />

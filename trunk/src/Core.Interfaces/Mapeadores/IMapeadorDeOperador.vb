@@ -10,6 +10,8 @@ Namespace Mapeadores
         Sub Inserir(ByRef Operador As IOperador)
         Sub Modificar(ByVal Operador As IOperador)
         Sub Remover(ByVal ID As Long)
+        Function ObtenhaOperadores(ByVal Nome As String, _
+                                   ByVal Quantidade As Integer) As IList(Of IOperador)
 
     End Interface
 

@@ -78,10 +78,6 @@ Public Class MapeadorDeOperador
         Sql.Append(" FROM NCL_OPERADOR")
         Sql.Append(String.Concat(" WHERE LOGIN = '", UtilidadesDePersistencia.FiltraApostrofe(Login), "'"))
 
-        Return Me.ObtenhaOperador(Sql.ToString)
-    End Function
-
-    Private Function ObtenhaOperador(ByVal Sql As String) As IOperador
         Dim DBHelper As IDBHelper
         Dim Operador As IOperador = Nothing
 
@@ -89,16 +85,31 @@ Public Class MapeadorDeOperador
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
             If Leitor.Read Then
-                Dim Pessoa As IPessoaFisica
-
-                Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
-                Operador = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperador)(New Object() {Pessoa})
-                Operador.Login = UtilidadesDePersistencia.GetValorString(Leitor, "LOGIN")
-                Operador.Status = StatusDoOperador.ObtenhaStatus(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))
+                Operador = MontaOperador(Leitor, True)
             End If
         End Using
 
-        If Not Operador Is Nothing Then
+        Return Operador
+    End Function
+
+    Private Function MontaOperador(ByVal Leitor As IDataReader, ByVal CarregaOsGrupos As Boolean) As IOperador
+        Dim Operador As IOperador = Nothing
+        Dim Pessoa As IPessoa
+        Dim Tipo As TipoDePessoa
+
+        Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPOPESSOA"))
+
+        If Tipo.Equals(TipoDePessoa.Fisica) Then
+            Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+        Else
+            Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+        End If
+
+        Operador = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperador)(New Object() {Pessoa})
+        Operador.Login = UtilidadesDePersistencia.GetValorString(Leitor, "LOGIN")
+        Operador.Status = StatusDoOperador.ObtenhaStatus(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))
+
+        If Not Operador Is Nothing AndAlso CarregaOsGrupos Then
             Operador.AdicioneGrupos(ObtenhaGruposDoOperador(Operador.Pessoa.ID.Value))
         End If
 
@@ -142,7 +153,44 @@ Public Class MapeadorDeOperador
         Sql.Append(" FROM NCL_OPERADOR")
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Pessoa.ID.Value.ToString))
 
-        Return Me.ObtenhaOperador(Sql.ToString)
+        Dim DBHelper As IDBHelper
+        Dim Operador As IOperador = Nothing
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            If Leitor.Read Then
+                Operador = MontaOperador(Leitor, True)
+            End If
+        End Using
+
+        Return Operador
+    End Function
+
+    Public Function ObtenhaOperadores(ByVal Nome As String, _
+                                      ByVal Quantidade As Integer) As IList(Of IOperador) Implements IMapeadorDeOperador.ObtenhaOperadores
+        Dim Sql As New StringBuilder
+
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS, ID, TIPO")
+        Sql.Append(" FROM NCL_OPERADOR, NCL_PESSOA")
+        Sql.Append(" WHERE  ID = IDPESSOA AND TIPO = TIPOPESSOA")
+
+        If Not String.IsNullOrEmpty(Nome) Then
+            Sql.Append(String.Concat(" WHERE NOME LIKE %'", UtilidadesDePersistencia.FiltraApostrofe(Nome), "'%"))
+        End If
+
+        Dim DBHelper As IDBHelper
+        Dim Operadores As IList(Of IOperador) = New List(Of IOperador)
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            While Leitor.Read AndAlso Operadores.Count < Quantidade
+                Operadores.Add(MontaOperador(Leitor, False))
+            End While
+        End Using
+
+        Return Operadores
     End Function
 
 End Class

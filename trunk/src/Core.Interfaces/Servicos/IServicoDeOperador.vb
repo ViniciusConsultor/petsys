@@ -12,6 +12,7 @@ Namespace Servicos
         Sub Inserir(ByVal Operador As IOperador, ByVal Senha As ISenha)
         Sub Modificar(ByVal Operador As IOperador)
         Sub Remover(ByVal ID As Long)
+        Function ObtenhaOperadores(ByVal Nome As String, ByVal Quantidade As Integer) As IList(Of IOperador)
 
     End Interface
 

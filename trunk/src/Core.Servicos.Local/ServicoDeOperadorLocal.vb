@@ -103,4 +103,9 @@ Public Class ServicoDeOperadorLocal
         End Try
     End Sub
 
+    Public Function ObtenhaOperadores(ByVal Nome As String, _
+                                      ByVal Quantidade As Integer) As IList(Of IOperador) Implements IServicoDeOperador.ObtenhaOperadores
+        Return Nothing
+    End Function
+
 End Class

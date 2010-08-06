@@ -112,6 +112,7 @@
     <Compile Include="Core\Negocio\LazyLoad\ILembreteLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\IObjetoLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\IPessoaFisicaLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IPessoaJuridicaLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\ITarefaLazyLoad.vb" />
     <Compile Include="Core\Negocio\PrioridadeDaTarefa.vb" />
     <Compile Include="Core\Negocio\StatusDaTarefa.vb" />
