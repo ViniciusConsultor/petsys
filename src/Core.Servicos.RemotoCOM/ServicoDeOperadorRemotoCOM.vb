@@ -42,4 +42,8 @@ Public Class ServicoDeOperadorRemotoCOM
     Public Sub Inserir(ByVal Operador As Compartilhados.Interfaces.Core.Negocio.IOperador, ByVal Senha As Interfaces.Negocio.ISenha) Implements Interfaces.Servicos.IServicoDeOperador.Inserir
         ServicoLocal.Inserir(Operador, Senha)
     End Sub
+
+    Public Function ObtenhaOperadores(ByVal Nome As String, ByVal Quantidade As Integer) As IList(Of IOperador) Implements IServicoDeOperador.ObtenhaOperadores
+        Return ServicoLocal.ObtenhaOperadores(Nome, Quantidade)
+    End Function
 End Class

@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="AjudanteDeCriptografia.vb" />
     <Compile Include="BussinesException.vb" />
+    <Compile Include="ConfiguracaoPessoal.vb" />
     <Compile Include="Credencial.vb" />
     <Compile Include="Contexto\FabricaDeContexto.vb" />
     <Compile Include="DBHelper\AbstractDBHelper.vb" />

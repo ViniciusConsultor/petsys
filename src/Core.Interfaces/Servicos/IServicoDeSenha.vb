@@ -12,6 +12,9 @@ Namespace Servicos
                    ByVal SenhaAntigaInformada As ISenha, _
                    ByVal NovaSenha As ISenha, _
                    ByVal ConfirmacaoNovaSenha As ISenha)
+        Sub Altere(ByVal IDOperador As Long, _
+                   ByVal NovaSenha As ISenha, _
+                   ByVal ConfirmacaoNovaSenha As ISenha)
 
     End Interface
 
