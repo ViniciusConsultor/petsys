@@ -142,7 +142,7 @@ Partial Public Class cdAgenda
         Try
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
                 If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
-                    Servico.Insira(Agenda)
+                    '  Servico.Insira(Agenda)
                     Mensagem = "Agenda cadastrada com sucesso."
                 Else
                     Servico.Modifique(Agenda)

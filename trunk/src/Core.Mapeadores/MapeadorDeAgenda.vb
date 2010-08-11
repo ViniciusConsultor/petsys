@@ -10,7 +10,7 @@ Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 Public Class MapeadorDeAgenda
     Implements IMapeadorDeAgenda
 
-    Public Sub Insira(ByVal Agenda As IAgenda) Implements IMapeadorDeAgenda.Insira
+    Private Sub Insira(ByVal Agenda As IAgenda)
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
@@ -28,18 +28,8 @@ Public Class MapeadorDeAgenda
     End Sub
 
     Public Sub Modifique(ByVal Agenda As IAgenda) Implements IMapeadorDeAgenda.Modifique
-        Dim Sql As New StringBuilder
-        Dim DBHelper As IDBHelper
-
-        DBHelper = ServerUtils.getDBHelper
-
-        Sql.Append("UPDATE NCL_AGENDA SET ")
-        Sql.Append(String.Concat("HORAINICO = ", Agenda.HorarioDeInicio.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat("HORAFIM = ", Agenda.HorarioDeTermino.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat("INTERVALO = ", Agenda.IntervaloEntreOsCompromissos.ToString("HHmm")))
-
-        Sql.Append(" WHERE IDPESSOA = " & Agenda.Pessoa.ID.Value.ToString)
-        DBHelper.ExecuteNonQuery(Sql.ToString)
+        Me.Remova(Agenda.Pessoa.ID.Value)
+        Me.Insira(Agenda)
     End Sub
 
     Public Function ObtenhaAgenda(ByVal Pessoa As IPessoa) As IAgenda Implements IMapeadorDeAgenda.ObtenhaAgenda

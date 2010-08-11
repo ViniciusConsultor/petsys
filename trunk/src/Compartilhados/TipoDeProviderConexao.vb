@@ -9,8 +9,9 @@ Public Class TipoDeProviderConexao
     Public Shared SQLSERVER As TipoDeProviderConexao = New TipoDeProviderConexao("2"c, "MS SQL SERVER")
     Public Shared ORACLE As TipoDeProviderConexao = New TipoDeProviderConexao("3"c, "ORACLE")
     Public Shared SQLITE As TipoDeProviderConexao = New TipoDeProviderConexao("4"c, "SQLITE")
+    Public Shared MYSQL As TipoDeProviderConexao = New TipoDeProviderConexao("5"c, "MYSQL")
 
-    Private Shared Lista As TipoDeProviderConexao() = {OLEBD, ODBC, SQLSERVER, ORACLE, SQLITE}
+    Private Shared Lista As TipoDeProviderConexao() = {OLEBD, ODBC, SQLSERVER, ORACLE, SQLITE, MYSQL}
 
     Private Sub New(ByVal ID As Char, _
                     ByVal Descricao As String)

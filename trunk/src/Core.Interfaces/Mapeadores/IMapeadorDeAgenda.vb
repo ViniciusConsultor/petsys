@@ -5,7 +5,6 @@ Namespace Mapeadores
 
     Public Interface IMapeadorDeAgenda
 
-        Sub Insira(ByVal Agenda As IAgenda)
         Sub Modifique(ByVal Agenda As IAgenda)
         Sub Remova(ByVal ID As Long)
 
