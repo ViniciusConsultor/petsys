@@ -37,6 +37,8 @@ Public Class ServicoDeConexaoLocal
             Instancia = FabricaGenerica.GetInstancia.CrieObjeto(Of IConexaoOracle)()
         ElseIf Provider.Equals(TipoDeProviderConexao.SQLITE) Then
             Instancia = FabricaGenerica.GetInstancia.CrieObjeto(Of IConexaoSQLite)()
+        ElseIf Provider.Equals(TipoDeProviderConexao.MYSQL) Then
+            Instancia = FabricaGenerica.GetInstancia.CrieObjeto(Of IConexaoMySQL)()
         End If
 
         If Instancia Is Nothing Then Throw New Exception("Não existe provider instalado para " & Provider.Descricao & ". Procure o suporte.")

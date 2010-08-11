@@ -46,4 +46,14 @@ Public Class Agenda
         End Set
     End Property
 
+    Private _PessoaPadraoAoAcessarAAgenda As IPessoa
+    Public Property PessoaPadraoAoAcessarAAgenda() As IPessoa Implements IAgenda.PessoaPadraoAoAcessarAAgenda
+        Get
+            Return _PessoaPadraoAoAcessarAAgenda
+        End Get
+        Set(ByVal value As IPessoa)
+            _PessoaPadraoAoAcessarAAgenda = value
+        End Set
+    End Property
+
 End Class

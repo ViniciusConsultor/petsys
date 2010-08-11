@@ -15,6 +15,8 @@ Namespace DBHelper
                 DB = New OracleHelper(Conexao.StringDeConexao)
             ElseIf Conexao.Provider.Equals(TipoDeProviderConexao.SQLITE) Then
                 DB = New SQLiteHelper(Conexao.StringDeConexao)
+            ElseIf Conexao.Provider.Equals(TipoDeProviderConexao.MYSQL) Then
+                DB = New MySQLHelper(Conexao.StringDeConexao)
             End If
 
             If DB Is Nothing Then Throw New Exception("Não existe provider helper implementado para o tipo " & Conexao.Provider.Descricao)

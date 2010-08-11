@@ -370,19 +370,12 @@
       <DependentUpon>frmAlterarSenhaDoOperador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Nucleo\frmAtalhos.aspx.designer.vb">
-      <DependentUpon>frmAtalhos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Nucleo\frmAtalhos.aspx.vb">
-      <DependentUpon>frmAtalhos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Nucleo\frmConfiguracoesPessoais.aspx.designer.vb">
       <DependentUpon>frmConfiguracoesPessoais.aspx</DependentUpon>
     </Compile>
     <Compile Include="Nucleo\frmConfiguracoesPessoais.aspx.vb">
       <DependentUpon>frmConfiguracoesPessoais.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmImpressaoCompromisso.aspx.designer.vb">
       <DependentUpon>frmImpressaoCompromisso.aspx</DependentUpon>
@@ -489,13 +482,6 @@
       <DependentUpon>Desktop.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Nucleo\frmAlterarPapelDeParede.aspx.designer.vb">
-      <DependentUpon>frmAlterarPapelDeParede.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Nucleo\frmAlterarPapelDeParede.aspx.vb">
-      <DependentUpon>frmAlterarPapelDeParede.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Nucleo\frmAutorizacao.aspx.designer.vb">
       <DependentUpon>frmAutorizacao.aspx</DependentUpon>
     </Compile>
@@ -582,7 +568,6 @@
     <Content Include="Nucleo\cdTarefa.aspx" />
     <Content Include="Nucleo\frmAgenda.aspx" />
     <Content Include="Nucleo\frmAlterarSenhaDoOperador.aspx" />
-    <Content Include="Nucleo\frmAtalhos.aspx" />
     <Content Include="Nucleo\frmConfiguracoesPessoais.aspx" />
     <Content Include="Nucleo\frmImpressaoCompromisso.aspx" />
     <Content Include="Nucleo\frmImpressaoLembrete.aspx" />
@@ -597,7 +582,6 @@
     <Content Include="ctrlPessoa.ascx" />
     <Content Include="Nucleo\frmAlterarSenha.aspx" />
     <Content Include="Nucleo\cdGrupo.aspx" />
-    <Content Include="Nucleo\frmAlterarPapelDeParede.aspx" />
     <Content Include="Nucleo\frmAutorizacao.aspx" />
     <Content Include="Global.asax" />
     <Content Include="imagens\agent.png" />

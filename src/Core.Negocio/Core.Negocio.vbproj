@@ -81,6 +81,7 @@
     <Compile Include="Cliente.vb" />
     <Compile Include="Compromisso.vb" />
     <Compile Include="Conexao.vb" />
+    <Compile Include="ConexaoMySQL.vb" />
     <Compile Include="ConexaoODBC.vb" />
     <Compile Include="ConexaoOLEDB.vb" />
     <Compile Include="ConexaoOracle.vb" />
@@ -143,7 +144,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Core.Negocio.snk" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

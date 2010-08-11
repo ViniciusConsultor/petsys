@@ -6,7 +6,6 @@ Namespace Core.Servicos
         Inherits IServico
 
         'Cadastro de agenda
-        Sub Insira(ByVal Agenda As IAgenda)
         Sub Modifique(ByVal Agenda As IAgenda)
         Sub Remova(ByVal ID As Long)
         Function ObtenhaAgenda(ByVal Pessoa As IPessoa) As IAgenda

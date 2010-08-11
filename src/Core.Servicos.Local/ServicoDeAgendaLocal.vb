@@ -12,25 +12,6 @@ Public Class ServicoDeAgendaLocal
         MyBase.New(Credencial)
     End Sub
 
-    Public Sub Insira(ByVal Agenda As IAgenda) Implements IServicoDeAgenda.Insira
-        Dim Mapeador As IMapeadorDeAgenda
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
-
-        ServerUtils.BeginTransaction()
-
-        Try
-            Mapeador.Insira(Agenda)
-            ServerUtils.CommitTransaction()
-        Catch
-            ServerUtils.RollbackTransaction()
-            Throw
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Sub
-
     Public Sub Modifique(ByVal Agenda As IAgenda) Implements IServicoDeAgenda.Modifique
         Dim Mapeador As IMapeadorDeAgenda
 
