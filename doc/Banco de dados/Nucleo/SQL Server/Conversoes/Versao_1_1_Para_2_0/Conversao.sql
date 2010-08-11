@@ -1,0 +1,1 @@
+INSERT INTO NCL_FUNCAO (IDMODULO, IDFUNCAO, NOME) VALUES ('MOD.NCL','FUN.NCL.013','Alterar senha de operadores');
