@@ -17,7 +17,7 @@
             <telerik:RadDock ID="pnlOperador" runat="server" Title="Operador" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <telerik:RadComboBox ID="cboOperador" runat="server" EmptyMessage="Selecione uma pessoa"
+                    <telerik:RadComboBox ID="cboOperador" runat="server" EmptyMessage="Selecione um operador"
                         EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
                         ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
                         Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">

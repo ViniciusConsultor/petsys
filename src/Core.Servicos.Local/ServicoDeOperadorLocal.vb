@@ -105,7 +105,16 @@ Public Class ServicoDeOperadorLocal
 
     Public Function ObtenhaOperadores(ByVal Nome As String, _
                                       ByVal Quantidade As Integer) As IList(Of IOperador) Implements IServicoDeOperador.ObtenhaOperadores
-        Return Nothing
+        Dim Mapeador As IMapeadorDeOperador
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeOperador)()
+
+        Try
+            Return Mapeador.ObtenhaOperadores(Nome, Quantidade)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
 End Class
