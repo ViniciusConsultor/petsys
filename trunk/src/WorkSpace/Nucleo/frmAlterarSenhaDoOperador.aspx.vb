@@ -26,7 +26,7 @@ Partial Public Class frmAlterarSenhaDoOperador
     End Sub
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.NCL.0013"
+        Return "FUN.NCL.004"
     End Function
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
@@ -62,7 +62,7 @@ Partial Public Class frmAlterarSenhaDoOperador
         If String.IsNullOrEmpty(txtNovaSenha.Text) Then Inconsistencias.Add("A nova senha deve ser informada.")
         If String.IsNullOrEmpty(txtConfirmacaoNovaSenha.Text) Then Inconsistencias.Add("A confirmação da nova senha deve ser informada.")
 
-        Return Nothing
+        Return Inconsistencias
     End Function
 
     Private Function ObtenhaSenha(ByVal SenhaDescriptografada As String) As ISenha
@@ -75,7 +75,7 @@ Partial Public Class frmAlterarSenhaDoOperador
         Return Senha
     End Function
 
-    Private Sub btnSalva_Click()
+    Private Sub btnModifica_Click()
         Dim Senha As IPessoaFisica = Nothing
         Dim Inconsistencias As IList(Of String)
 
@@ -113,6 +113,7 @@ Partial Public Class frmAlterarSenhaDoOperador
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnModificar"
+                btnModifica_Click()
         End Select
     End Sub
 
