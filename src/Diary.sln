@@ -13,12 +13,12 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Diary.Client", "Diary.Clien
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{712BA39E-DD93-44F3-B439-0D3458E03FB1}"
 	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Diary\INSERT.sql = ..\doc\Banco de dados\Diary\INSERT.sql
+		..\doc\Banco de dados\Diary\INSERT_DRY.sql = ..\doc\Banco de dados\Diary\INSERT_DRY.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{3C72A82B-188F-4CB6-AF7F-6ECB31FFDAB0}"
 	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Diary\SQL Server\CREATE_DRY.sql = ..\doc\Banco de dados\Diary\SQL Server\CREATE_DRY.sql
+		..\doc\Banco de dados\Diary\SQL Server\CREATE_DRY_SQLServer.sql = ..\doc\Banco de dados\Diary\SQL Server\CREATE_DRY_SQLServer.sql
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Migrador", "Migrador\Migrador.vbproj", "{A9E35EE3-02AC-4826-ACF6-33AD83F36767}"

@@ -48,6 +48,18 @@ Public Class Util
         Return Configuracao.Value
     End Function
 
+    Public Shared Function ObtenhaCaminhoArquivoXMLDeGatilho() As String
+        Dim Caminho As String
+
+        If ExecutandoServidorWeb() Then
+            Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar & "gatilhos.xml"
+        Else
+            Caminho = ObtenhaPastaConfiguradaPorVariavelDeAmbiente() & Path.DirectorySeparatorChar & "gatilhos.xml"
+        End If
+
+        Return Caminho
+    End Function
+
     Public Shared Function ObtenhaStringDeConexao() As String
         Dim Configuracao As KeyValueConfigurationElement
         Dim Caminho As String
