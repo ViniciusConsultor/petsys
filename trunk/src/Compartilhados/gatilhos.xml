@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<gatilhos>
+  <gatilho type="Compartilhados.Interfaces.Core.Servicos.IServicoDeAgenda">
+    <metodo nome="RemovaCompromisso">
+      <interessados>
+        <interessado fullname="Diary.Interfaces" type="IServicoDeDespacho" metodo="RemovaDespachoAssociadoACompromisso"></interessado>
+      </interessados>
+    </metodo>
+  </gatilho>
+</gatilhos>
