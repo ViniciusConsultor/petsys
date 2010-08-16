@@ -151,6 +151,8 @@ Public Class ServicoDeAgendaLocal
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
 
+        GerenciadorDeGatilhos.GetInstancia.DispareGatilhoAntes(Me.GetType.FullName, "RemovaCompromisso", New Object() {ID})
+
         ServerUtils.BeginTransaction()
 
         Try

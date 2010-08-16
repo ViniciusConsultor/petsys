@@ -2903,6 +2903,8 @@
     </PreBuildEvent>
     <PostBuildEvent>copy $(TargetDir)*.dll $(ProjectDir)bin\
 copy $(TargetDir)*.pdb $(ProjectDir)bin\
-copy $(TargetDir)*.config $(ProjectDir)bin\</PostBuildEvent>
+copy $(TargetDir)*.config $(ProjectDir)bin\
+copy $(TargetDir)*.xml $(ProjectDir)bin\
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

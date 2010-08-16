@@ -157,4 +157,40 @@ Public Class MapeadorDeDespacho
         Return Despachos
     End Function
 
+    Public Sub RemovaDespachoAssociadoACompromisso(ByVal IDCompromisso As Long) Implements IMapeadorDeDespacho.RemovaDespachoAssociadoACompromisso
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("DELETE FROM DRY_DESPACHO ")
+        Sql.Append("WHERE IDCOMPROMISSO = " & IDCompromisso.ToString)
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
+    Public Sub RemovaDespachoAssociadoALembrete(ByVal IDLembrete As Long) Implements IMapeadorDeDespacho.RemovaDespachoAssociadoALembrete
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("DELETE FROM DRY_DESPACHO ")
+        Sql.Append("WHERE IDLEMBRETE = " & IDLembrete.ToString)
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
+    Public Sub RemovaDespachoAssociadoATarefa(ByVal IDTarefa As Long) Implements IMapeadorDeDespacho.RemovaDespachoAssociadoATarefa
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("DELETE FROM DRY_DESPACHO ")
+        Sql.Append("WHERE IDTAREFA = " & IDTarefa.ToString)
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
+
 End Class

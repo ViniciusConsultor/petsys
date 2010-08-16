@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Diary\cdContato.aspx.vb">
       <DependentUpon>cdContato.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Diary\cdSolicitacaoDeAudiencia.aspx.designer.vb">
       <DependentUpon>cdSolicitacaoDeAudiencia.aspx</DependentUpon>
@@ -162,12 +163,14 @@
     </Compile>
     <Compile Include="Diary\frmSolicitacoesDeAudiencia.aspx.vb">
       <DependentUpon>frmSolicitacoesDeAudiencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Diary\frmSolicitacoesDeConvite.aspx.designer.vb">
       <DependentUpon>frmSolicitacoesDeConvite.aspx</DependentUpon>
     </Compile>
     <Compile Include="Diary\frmSolicitacoesDeConvite.aspx.vb">
       <DependentUpon>frmSolicitacoesDeConvite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
