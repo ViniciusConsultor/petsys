@@ -30,13 +30,38 @@ Namespace Fabricas
             Return InstanciaSolitaria
         End Function
 
+        Public Function CrieObjeto(ByVal FullName As String, _
+                                   ByVal NomeDoTipo As String) As Object
+            Dim Instancia As Object
+            Dim NomeDoAssembly As String
+            Dim NomeTipoConcreto As String
+
+            NomeDoAssembly = ObtenhaNomeDoAssembly(FullName)
+            NomeTipoConcreto = ObtenhaNomeTipoConcreto(NomeDoTipo)
+
+            If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
+                Dim Asse As Assembly
+
+                Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
+                DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
+            End If
+
+            If NomeDoAssembly.Contains("Servico") Then
+                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
+            Else
+                Instancia = CriaInstancia(NomeDoAssembly, NomeTipoConcreto)
+            End If
+
+            Return Instancia
+        End Function
+
         Public Function CrieObjeto(Of T)() As T
             Dim Instancia As Object
             Dim NomeDoAssembly As String
             Dim NomeTipoConcreto As String
 
-            NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T))
-            NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T))
+            NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
+            NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
 
             If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
                 Dim Asse As Assembly
@@ -59,8 +84,8 @@ Namespace Fabricas
             Dim NomeDoAssembly As String
             Dim NomeTipoConcreto As String
 
-            NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T))
-            NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T))
+            NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
+            NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
 
             If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
                 Dim Asse As Assembly
@@ -127,13 +152,13 @@ Namespace Fabricas
             Return TipoDaInstanciaFutura
         End Function
 
-        Private Function ObtenhaNomeDoAssembly(ByVal TipoDaInterface As Type) As String
+        Private Function ObtenhaNomeDoAssembly(ByVal TipoDaInterface As String) As String
             Dim NomeDoAssemblyEmPartes() As String
             Dim NomeDoAssembly As String
 
-            NomeDoAssemblyEmPartes = TipoDaInterface.FullName.Split(New Char() {"."c})
+            NomeDoAssemblyEmPartes = TipoDaInterface.Split(New Char() {"."c})
 
-            If TipoDaInterface.FullName.StartsWith("Compartilhados.Interfaces") Then
+            If TipoDaInterface.StartsWith("Compartilhados.Interfaces") Then
                 NomeDoAssembly = String.Concat(NomeDoAssemblyEmPartes(2), ".", NomeDoAssemblyEmPartes(3))
             Else
                 NomeDoAssembly = String.Concat(NomeDoAssemblyEmPartes(0), ".", NomeDoAssemblyEmPartes(2))
@@ -146,10 +171,10 @@ Namespace Fabricas
             Return NomeDoAssembly
         End Function
 
-        Private Function ObtenhaNomeTipoConcreto(ByVal TipoDaInterface As Type) As String
+        Private Function ObtenhaNomeTipoConcreto(ByVal TipoDaInterface As String) As String
             Dim NomeDoTipoConcreto As String
 
-            NomeDoTipoConcreto = TipoDaInterface.Name.Substring(1)
+            NomeDoTipoConcreto = TipoDaInterface.Substring(1)
 
             If NomeDoTipoConcreto.StartsWith("Servico") Then
                 NomeDoTipoConcreto &= TipoDeDistribuicao
