@@ -52,13 +52,13 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''RadTabStrip1 control.
+    '''tabStrip control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+    Protected WithEvents tabStrip As Global.Telerik.Web.UI.RadTabStrip
 
     '''<summary>
     '''RadMultiPage1 control.

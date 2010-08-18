@@ -77,7 +77,7 @@ Public Class ServicoDePessoaFisicaLocal
         End Try
     End Function
 
-    Public Sub Remover(ByVal Pessoa As IPessoaFisica) Implements IServicoDePessoaFisica.Remover
+    Public Sub Remover(ByVal ID As Long) Implements IServicoDePessoaFisica.Remover
         Dim Mapeador As IMapeadorDePessoaFisica
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -86,7 +86,7 @@ Public Class ServicoDePessoaFisicaLocal
         ServerUtils.BeginTransaction()
 
         Try
-            Mapeador.Remover(Pessoa)
+            Mapeador.Remover(ID)
             ServerUtils.CommitTransaction()
         Catch ex As Exception
             ServerUtils.RollbackTransaction()

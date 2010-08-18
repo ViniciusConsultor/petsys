@@ -380,13 +380,9 @@ Partial Public Class cdPessoaFisica
     End Sub
 
     Private Sub btnSim_Click()
-        Dim Pessoa As IPessoaFisica = Nothing
-
-        Pessoa = MontaObjeto()
-
         Try
             Using Servico As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
-                Servico.Remover(Pessoa)
+                Servico.Remover(CLng(ViewState(CHAVE_ID)))
             End Using
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Pessoa removida com sucesso."), False)

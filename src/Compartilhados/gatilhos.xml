@@ -3,21 +3,21 @@
     <metodo nome="RemovaCompromisso">
       <Antes>
         <interessados>
-          <interessado fullname="Diary.Interfaces.Servicos" type="IServicoDeDespacho" metodo="RemovaDespachoAssociadoACompromisso"></interessado>
+          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoACompromisso"></interessado>
         </interessados>
       </Antes>
     </metodo>
     <metodo nome="RemovaTarefa">
       <Antes>
         <interessados>
-          <interessado fullname="Diary.Interfaces.Servicos" type="IServicoDeDespacho" metodo="RemovaDespachoAssociadoATarefa"></interessado>
+          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoATarefa"></interessado>
         </interessados>
       </Antes>
     </metodo>
     <metodo nome="RemovaLembrete">
       <Antes>
         <interessados>
-          <interessado fullname="Diary.Interfaces.Servicos" type="IServicoDeDespacho" metodo="RemovaDespachoAssociadoALembrete"></interessado>
+          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoALembrete"></interessado>
         </interessados>
       </Antes>
     </metodo>

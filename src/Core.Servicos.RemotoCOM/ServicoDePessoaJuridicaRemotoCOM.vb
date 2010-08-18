@@ -38,8 +38,8 @@ Public Class ServicoDePessoaJuridicaRemotoCOM
         ServicoLocal = New ServicoDePessoaJuridicaLocal(Credencial)
     End Sub
 
-    Public Sub Remover(ByVal Pessoa As IPessoaJuridica) Implements IServicoDePessoaJuridica.Remover
-        ServicoLocal.Remover(Pessoa)
+    Public Sub Remover(ByVal ID As Long) Implements IServicoDePessoaJuridica.Remover
+        ServicoLocal.Remover(ID)
     End Sub
 
 End Class
