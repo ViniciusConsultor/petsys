@@ -8,6 +8,7 @@ Imports Core.Interfaces.Negocio
 Imports Core.Interfaces.Servicos
 Imports System.IO
 Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class frmConfiguracoesPessoais
     Inherits SuperPagina
@@ -262,14 +263,17 @@ Partial Public Class frmConfiguracoesPessoais
 
     Private Function MontaObjeto() As IAgenda
         Dim Pessoa As IPessoa
+        Dim PessoaPadrao As IPessoa
         Dim Agenda As IAgenda
 
-        Pessoa = ctrlPessoa1.PessoaSelecionada
+        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.ID)
+        PessoaPadrao = ctrlPessoa1.PessoaSelecionada
         Agenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgenda)()
         Agenda.Pessoa = Pessoa
         Agenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
         Agenda.HorarioDeTermino = txtHorarioFinal.SelectedDate.Value
         Agenda.IntervaloEntreOsCompromissos = txtIntervaloEntreCompromissos.SelectedDate.Value
+        Agenda.PessoaPadraoAoAcessarAAgenda = PessoaPadrao
         Return Agenda
     End Function
 
@@ -301,6 +305,21 @@ Partial Public Class frmConfiguracoesPessoais
         txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
         txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
         txtIntervaloEntreCompromissos.SelectedDate = Agenda.IntervaloEntreOsCompromissos
+        ctrlPessoa1.PessoaSelecionada = Agenda.PessoaPadraoAoAcessarAAgenda
+    End Sub
+
+    Private Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
+        'Atalhos
+        tabStrip.Tabs(0).Visible = FabricaDeContexto.GetInstancia.GetContextoAtual.EstaAutorizado("OPE.NCL.011.0001")
+        'Temas
+        tabStrip.Tabs(1).Visible = FabricaDeContexto.GetInstancia.GetContextoAtual.EstaAutorizado("OPE.NCL.011.0002")
+        'Papel de parede
+        tabStrip.Tabs(2).Visible = FabricaDeContexto.GetInstancia.GetContextoAtual.EstaAutorizado("OPE.NCL.011.0003")
+        'Agenda
+        tabStrip.Tabs(3).Visible = FabricaDeContexto.GetInstancia.GetContextoAtual.EstaAutorizado("OPE.NCL.011.0004")
+
+        'Verifica se usuário logado tem permissão para visualizar outras agendas
+        pnlPessoaPadraoDaAgenda.Visible = FabricaDeContexto.GetInstancia.GetContextoAtual.EstaAutorizado("OPE.NCL.012.0007")
     End Sub
 
 End Class

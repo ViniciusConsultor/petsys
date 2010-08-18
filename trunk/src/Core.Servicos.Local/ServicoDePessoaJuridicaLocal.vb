@@ -77,7 +77,7 @@ Public Class ServicoDePessoaJuridicaLocal
         End Try
     End Function
 
-    Public Sub Remover(ByVal Pessoa As IPessoaJuridica) Implements IServicoDePessoaJuridica.Remover
+    Public Sub Remover(ByVal ID As Long) Implements IServicoDePessoaJuridica.Remover
         Dim Mapeador As IMapeadorDePessoaJuridica
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -86,11 +86,11 @@ Public Class ServicoDePessoaJuridicaLocal
         ServerUtils.BeginTransaction()
 
         Try
-            Mapeador.Remover(Pessoa)
+            Mapeador.Remover(ID)
             ServerUtils.CommitTransaction()
         Catch
             ServerUtils.RollbackTransaction()
-            Throw
+            Throw New BussinesException("A pessoa não pode ser removida pois a mesma está sendo utilizada em outras funcionalidades do sistema.")
         Finally
             ServerUtils.libereRecursos()
         End Try

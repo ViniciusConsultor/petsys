@@ -45,8 +45,8 @@
     <Reference Include="Compartilhados.Componentes.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ef9a14a1e9ced6a8, processorArchitecture=MSIL" />
     <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
     <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\itextsharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -69,8 +69,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
-    <Reference Include="Telerik.Web.UI, Version=2009.3.1103.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Telerik.Web.UI, Version=2010.1.309.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="WorkSpace, Version=1.0.0.0, Culture=neutral, PublicKeyToken=edfc2dbc3d03de90, processorArchitecture=MSIL" />

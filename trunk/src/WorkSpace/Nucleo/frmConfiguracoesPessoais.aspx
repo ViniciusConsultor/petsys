@@ -17,11 +17,11 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Configurações pessoais" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <telerik:RadTabStrip ID="RadTabStrip1" runat="server" SelectedIndex="2" MultiPageID="RadMultiPage1">
+                    <telerik:RadTabStrip ID="tabStrip" runat="server" MultiPageID="RadMultiPage1">
                         <Tabs>
-                            <telerik:RadTab runat="server" Text="Atalhos" Selected="True">
+                            <telerik:RadTab runat="server" Text="Atalhos" Selected="true">
                             </telerik:RadTab>
-                            <telerik:RadTab runat="server" Text="Temas">
+                            <telerik:RadTab runat="server" Text="Temas" >
                             </telerik:RadTab>
                             <telerik:RadTab runat="server" Text="Papel de parede">
                             </telerik:RadTab>
@@ -29,7 +29,7 @@
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
-                    <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="2">
+                    <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
                         <!--Atalhos -->
                         <telerik:RadPageView ID="rpvAtalhos" runat="server">
                             <telerik:RadDockLayout ID="RadDockLayout2" runat="server" Skin="Vista">

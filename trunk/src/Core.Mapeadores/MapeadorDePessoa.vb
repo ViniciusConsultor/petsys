@@ -12,7 +12,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
     Protected MustOverride Sub Insira(ByVal Pessoa As T)
     Protected MustOverride Sub Atualize(ByVal Pessoa As T)
-    Protected MustOverride Sub Remova(ByVal Pessoa As T)
+    Protected MustOverride Sub Remova(ByVal ID As Long)
     Protected MustOverride Function Carregue(ByVal Id As Long) As T
     Protected MustOverride Function CarreguePorNome(ByVal Nome As String, ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of T)
 
@@ -177,14 +177,14 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         DBHelper.ExecuteNonQuery(SQL.ToString)
     End Sub
 
-    Public Sub Remover(ByVal Pessoa As T) Implements IMapeadorDePessoa(Of T).Remover
+    Public Sub Remover(ByVal ID As Long) Implements IMapeadorDePessoa(Of T).Remover
         Dim SQL As String
         Dim DBHelper As IDBHelper
 
-        Me.Remova(Pessoa)
-        Me.RemovaTelefones(Pessoa.ID.Value)
+        Me.Remova(ID)
+        Me.RemovaTelefones(ID)
         DBHelper = ServerUtils.getDBHelper
-        SQL = String.Concat("DELETE FROM NCL_PESSOA WHERE ID = ", Pessoa.ID.Value.ToString)
+        SQL = String.Concat("DELETE FROM NCL_PESSOA WHERE ID = ", ID.ToString)
         DBHelper.ExecuteNonQuery(SQL)
     End Sub
 

@@ -10,7 +10,7 @@ Namespace Mapeadores
         Function Obtenha(ByVal ID As Long) As T
         Function Inserir(ByVal Pessoa As T) As Long
         Sub Atualizar(ByVal Pessoa As T)
-        Sub Remover(ByVal Pessoa As T)
+        Sub Remover(ByVal ID As Long)
 
     End Interface
 

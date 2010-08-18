@@ -151,11 +151,10 @@ Public Class ServicoDeAgendaLocal
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
 
-        GerenciadorDeGatilhos.GetInstancia.DispareGatilhoAntes(Me.GetType.FullName, "RemovaCompromisso", New Object() {ID})
-
         ServerUtils.BeginTransaction()
 
         Try
+            GerenciadorDeGatilhos.GetInstancia.DispareGatilhoAntes(Me.GetType.FullName, "RemovaCompromisso", New Object() {ID})
             Mapeador.RemovaCompromisso(ID)
             ServerUtils.CommitTransaction()
         Catch
@@ -244,6 +243,7 @@ Public Class ServicoDeAgendaLocal
         ServerUtils.BeginTransaction()
 
         Try
+            GerenciadorDeGatilhos.GetInstancia.DispareGatilhoAntes(Me.GetType.FullName, "RemovaTarefa", New Object() {ID})
             Mapeador.RemovaTarefa(ID)
             ServerUtils.CommitTransaction()
         Catch
@@ -373,6 +373,7 @@ Public Class ServicoDeAgendaLocal
         ServerUtils.BeginTransaction()
 
         Try
+            GerenciadorDeGatilhos.GetInstancia.DispareGatilhoAntes(Me.GetType.FullName, "RemovaLembrete", New Object() {ID})
             Mapeador.RemovaLembrete(ID)
             ServerUtils.CommitTransaction()
         Catch

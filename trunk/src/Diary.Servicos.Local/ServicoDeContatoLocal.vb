@@ -88,23 +88,15 @@ Public Class ServicoDeContatoLocal
 
         ServerUtils.BeginTransaction()
 
-        'Exclui o contato
         Try
             Mapeador.Remover(ID)
             ServerUtils.CommitTransaction()
         Catch
             ServerUtils.RollbackTransaction()
-            Throw
+            Throw New BussinesException("O contato não pode ser removido pois o mesmo está sendo utilizado em outras funcionalidades do sistema.")
         Finally
             ServerUtils.libereRecursos()
         End Try
-
-        'Tenta excluir a pessoa associada ao contato
-        'Using ServicoDePessoa As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
-        '    ServicoDePessoa.Remover(
-
-        'End Using
-
     End Sub
 
     Public Function Obtenha(ByVal ID As Long) As Interfaces.Negocio.IContato Implements Interfaces.Servicos.IServicoDeContato.Obtenha

@@ -291,13 +291,13 @@ Public Class MapeadorDePessoaFisica
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
-    Protected Overrides Sub Remova(ByVal Pessoa As IPessoaFisica)
+    Protected Overrides Sub Remova(ByVal ID As Long)
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
         DBHelper = ServerUtils.getDBHelper
 
-        Sql.Append(String.Concat("DELETE FROM NCL_PESSOAFISICA WHERE IDPESSOA = ", Pessoa.ID.Value))
+        Sql.Append(String.Concat("DELETE FROM NCL_PESSOAFISICA WHERE IDPESSOA = ", ID))
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
