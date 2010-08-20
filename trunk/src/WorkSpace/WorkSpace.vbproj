@@ -81,6 +81,7 @@
     <Reference Include="System.Web.Mobile" />
     <Reference Include="Telerik.Web.UI, Version=2010.1.309.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Telerik.Web.UI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -318,13 +319,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Erro.aspx.designer.vb">
-      <DependentUpon>Erro.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Erro.aspx.vb">
-      <DependentUpon>Erro.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="Nucleo\cdAgenda.aspx.designer.vb">
       <DependentUpon>cdAgenda.aspx</DependentUpon>
     </Compile>
@@ -550,7 +544,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Erro.aspx" />
     <Content Include="imagens\wallpapers\13-daylight_planet_wallpaper_by_janedoe873.jpg" />
     <Content Include="imagens\wallpapers\desktop.gif" />
     <Content Include="imagens\wallpapers\desktop3.jpg" />
