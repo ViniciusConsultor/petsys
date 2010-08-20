@@ -43,13 +43,35 @@ Partial Public Class frmConfiguracoesPessoais
         imgPapelDeParede.ImageUrl = String.Concat("~/", Perfil.ImagemDesktop)
 
         'agenda
-
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
-
         ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
+        ctrlPessoa1.BotaoNovoEhVisivel = False
+
+        Dim Agenda As IAgenda
+
+        Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+            Agenda = ServicoDeAgenda.ObtenhaAgenda(Usuario.ID)
+        End Using
+
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDaAgenda, Control))
+
+        If Agenda Is Nothing Then
+            chkHabilitaAgenda.Checked = False
+            ctrlPessoa1.PessoaSelecionada = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(Usuario.ID)
+            UtilidadesWeb.LimparComponente(CType(pnlDadosDaAgenda, Control))
+            UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), False)
+            UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), False)
+        Else
+            chkHabilitaAgenda.Checked = True
+            ctrlPessoa1.PessoaSelecionada = Agenda.PessoaPadraoAoAcessarAAgenda
+            UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), False)
+            txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
+            txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
+            txtIntervaloEntreCompromissos.SelectedDate = Agenda.IntervaloEntreOsCompromissos
+        End If
     End Sub
 
     Private Sub ApresenteMenuParaEscolhaDosAtalhos()
@@ -320,6 +342,15 @@ Partial Public Class frmConfiguracoesPessoais
 
         'Verifica se usuário logado tem permissão para visualizar outras agendas
         pnlPessoaPadraoDaAgenda.Visible = FabricaDeContexto.GetInstancia.GetContextoAtual.EstaAutorizado("OPE.NCL.012.0007")
+    End Sub
+
+    Private Sub chkHabilitaAgenda_CheckedChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles chkHabilitaAgenda.CheckedChanged
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDaAgenda, Control))
+
+        If Not chkHabilitaAgenda.Checked Then
+            UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), False)
+            UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), False)
+        End If
     End Sub
 
 End Class

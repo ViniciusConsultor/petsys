@@ -39,48 +39,7 @@ Public MustInherit Class SuperPagina
             MostraOperacoesAutorizadas()
         End If
 
-        'Dim Script As New StringBuilder
-        'Script.AppendLine("function disableButtons() {")
-        'Script.AppendLine("var e=document.getElementsByTagName('INPUT');")
-        'Script.AppendLine("for(x in e){")
-        'Script.AppendLine("var t=e[x].type;")
-        'Script.AppendLine("if(t){")
-        'Script.AppendLine("t=t.toLowerCase();")
-        'Script.AppendLine("if(t=='submit'||t=='button'||t=='image')")
-        'Script.AppendLine("e[x].disabled=true;")
-        'Script.AppendLine("}")
-        'Script.AppendLine("}")
-        'Script.AppendLine("e=document.getElementsByTagName('A');")
-        'Script.AppendLine("for(x in e)")
-        'Script.AppendLine("if(e[x].tagName && e[x].tagName.toLowerCase()=='a')")
-        'Script.AppendLine("{")
-        'Script.AppendLine(("e[x].onclick=new Function('return false;');e[x].href='#';e[x].style.color='#DEDEDE'"))
-        'Script.AppendLine("}")
-        'Script.AppendLine("} ")
-
-        'Me.Page.ClientScript.RegisterStartupScript(Me.GetType(), "disable", Script.ToString, True)
-        'Me.Page.Form.Attributes.Add("onsubmit", "disableButtons();")
-
-        ''  OnPreRenderPaginaBase(e);
-
-        'ForcePostbackEmBotoes(Me.Page)
-
     End Sub
-
-    'Private Sub ForcePostbackEmBotoes(ByVal controle As Control)
-    '    If TypeOf controle Is Button Then
-    '        CType(controle, Button).UseSubmitBehavior = False
-    '    End If
-
-    '    If TypeOf controle Is ImageButton Then
-    '        CType(controle, ImageButton).Attributes.Add("onclick", "__doPostBack(\'" + controle.UniqueID + "\',\'\');")
-    '    End If
-
-
-    '    For Each filho As Control In controle.Controls
-    '        ForcePostbackEmBotoes(filho)
-    '    Next
-    'End Sub
 
     Private Sub MostraOperacoesAutorizadas()
         Dim ToolBar As RadToolBar

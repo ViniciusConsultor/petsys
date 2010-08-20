@@ -25,33 +25,6 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents rtbToolBar As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
-    '''RadDockLayout1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDockLayout1 As Global.Telerik.Web.UI.RadDockLayout
-
-    '''<summary>
-    '''RadDockZone1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
-
-    '''<summary>
-    '''RadDock1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
     '''tabStrip control.
     '''</summary>
     '''<remarks>
@@ -97,13 +70,13 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents RadDockZone2 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock3 control.
+    '''RadDock2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock3 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
     '''trwMenuDoUsuario control.
@@ -115,13 +88,13 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents trwMenuDoUsuario As Global.Telerik.Web.UI.RadTreeView
 
     '''<summary>
-    '''RadDock4 control.
+    '''RadDock2_2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock4 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents RadDock2_2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
     '''Label5 control.
@@ -349,13 +322,13 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents RadDockZone3 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock5 control.
+    '''RadDock3 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock5 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents RadDock3 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
     '''Label7 control.
