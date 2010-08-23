@@ -121,22 +121,22 @@ Partial Public Class ctrlPessoa
                     Item.Attributes.Add("DataNascimento", "")
                 End If
 
-                Dim TelefonesResidencial As IList(Of ITelefone)
+                Dim TelefonesComercial As IList(Of ITelefone)
                 Dim TelefonesCelular As IList(Of ITelefone)
 
-                TelefonesResidencial = Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
+                TelefonesComercial = Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
                 TelefonesCelular = Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
 
-                If Not TelefonesResidencial Is Nothing Then
+                If Not TelefonesComercial Is Nothing Then
                     Dim TelefonesSTR As New StringBuilder
 
-                    For Each Telefone As ITelefone In TelefonesResidencial
+                    For Each Telefone As ITelefone In TelefonesComercial
                         TelefonesSTR.Append(Telefone.ToString & "<br>")
                     Next
 
-                    Item.Attributes.Add("TelefoneResidencial", TelefonesSTR.ToString.Trim)
+                    Item.Attributes.Add("TelefoneComercial", TelefonesSTR.ToString.Trim)
                 Else
-                    Item.Attributes.Add("TelefoneResidencial", "")
+                    Item.Attributes.Add("TelefoneComercial", "")
                 End If
 
                 If Not TelefonesCelular Is Nothing Then
