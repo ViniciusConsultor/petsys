@@ -17,12 +17,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("INSERT INTO NCL_AGENDA (")
-        Sql.Append("IDPESSOA, HORAINICO, HORAFIM, INTERVALO)")
+        Sql.Append("IDPESSOA, HORAINICO, HORAFIM, INTERVALO, IDPESSOAPADRAO)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Agenda.Pessoa.ID.ToString, ", "))
         Sql.Append(String.Concat(Agenda.HorarioDeInicio.ToString("HHmm"), ", "))
         Sql.Append(String.Concat(Agenda.HorarioDeTermino.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat(Agenda.IntervaloEntreOsCompromissos.ToString("HHmm"), ")"))
+        Sql.Append(String.Concat(Agenda.IntervaloEntreOsCompromissos.ToString("HHmm"), ", "))
+        Sql.Append(String.Concat(Agenda.PessoaPadraoAoAcessarAAgenda.ID.ToString, ")"))
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
@@ -37,7 +38,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Agenda As IAgenda = Nothing
 
-        Sql.Append("SELECT HORAINICO, HORAFIM, INTERVALO FROM NCL_AGENDA WHERE ")
+        Sql.Append("SELECT HORAINICO, HORAFIM, INTERVALO, IDPESSOAPADRAO FROM NCL_AGENDA WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", Pessoa.ID.Value.ToString))
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -58,7 +59,8 @@ Public Class MapeadorDeAgenda
         Agenda.HorarioDeInicio = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAINICO").Value
         Agenda.HorarioDeTermino = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAFIM").Value
         Agenda.IntervaloEntreOsCompromissos = UtilidadesDePersistencia.getValorHourMinute(Leitor, "INTERVALO").Value
-
+        Agenda.PessoaPadraoAoAcessarAAgenda = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOAPADRAO"))
+        Agenda.Pessoa = Pessoa
         Return Agenda
     End Function
 
@@ -79,7 +81,7 @@ Public Class MapeadorDeAgenda
         Dim DBHelper As IDBHelper
         Dim Agenda As IAgenda = Nothing
 
-        Sql.Append(" SELECT HORAINICO, HORAFIM, NOME, INTERVALO, ID FROM NCL_AGENDA, NCL_PESSOA WHERE ")
+        Sql.Append(" SELECT HORAINICO, HORAFIM, NOME, INTERVALO, ID, IDPESSOAPADRAO FROM NCL_AGENDA, NCL_PESSOA WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", IDPessoa.ToString))
         Sql.Append(" AND ID = IDPESSOA")
 

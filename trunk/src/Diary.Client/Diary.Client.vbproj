@@ -69,8 +69,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
-    <Reference Include="Telerik.Web.UI, Version=2010.1.309.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Web.UI, Version=2009.3.1103.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Telerik.Web.UI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WorkSpace, Version=1.0.0.0, Culture=neutral, PublicKeyToken=edfc2dbc3d03de90, processorArchitecture=MSIL" />
   </ItemGroup>
@@ -268,7 +269,7 @@ xcopy $(SolutionDir)WorkSpace\Skins $(ProjectDir)Skins /S /I /F
 copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.ascx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.css $(ProjectDir)
-copy  $(SolutionDir)WorkSpace\*.css $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.xml $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.Master $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.html $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.config $(ProjectDir)

@@ -176,7 +176,7 @@ Public Class MapeadorDeOperador
         Sql.Append(" WHERE  ID = IDPESSOA AND TIPO = TIPOPESSOA")
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql.Append(String.Concat(" WHERE NOME LIKE %'", UtilidadesDePersistencia.FiltraApostrofe(Nome), "'%"))
+            Sql.Append(String.Concat(" AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         Dim DBHelper As IDBHelper

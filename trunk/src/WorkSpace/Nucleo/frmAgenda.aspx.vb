@@ -23,7 +23,6 @@ Partial Public Class frmAgenda
             pnlCompromissos.Visible = False
             pnlTarefas.Visible = False
             pnlLembretes.Visible = False
-
             lblInconsistencia.Text = "Não existe agenda configurada para esta pessoa."
             Exit Sub
         End If
@@ -55,18 +54,30 @@ Partial Public Class frmAgenda
 
     Private Sub ExibaTelaInicial()
         Dim UsuarioLogado As Usuario
-        Dim Pessoa As IPessoaFisica
+        Dim PessoaLogada As IPessoaFisica
 
         UsuarioLogado = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
-        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UsuarioLogado.ID)
+        PessoaLogada = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UsuarioLogado.ID)
 
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = False
         ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
-        ctrlPessoa1.PessoaSelecionada = Pessoa
-        ExibaAgendaDaPessoa(Pessoa)
+
+        Dim AgendaDaPessoaLogada As IAgenda
+
+        Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+            AgendaDaPessoaLogada = ServicoDeAgenda.ObtenhaAgenda(UsuarioLogado.ID)
+        End Using
+
+        If Not AgendaDaPessoaLogada Is Nothing Then
+            ctrlPessoa1.PessoaSelecionada = AgendaDaPessoaLogada.PessoaPadraoAoAcessarAAgenda
+            ExibaAgendaDaPessoa(AgendaDaPessoaLogada.PessoaPadraoAoAcessarAAgenda)
+        Else
+            ctrlPessoa1.PessoaSelecionada = PessoaLogada
+            ExibaAgendaDaPessoa(PessoaLogada)
+        End If
     End Sub
 
     Private Const CHAVE_COMPROMISSOS As String = "CHAVE_COMPROMISSOS"
@@ -138,7 +149,7 @@ Partial Public Class frmAgenda
         cbReference = Page.ClientScript.GetCallbackEventReference(Me, "arg", "ReceiveServerData", "context", True)
         callbackScript = String.Concat("function CallServer(arg,context) { ", cbReference, ";}")
         Page.ClientScript.RegisterClientScriptBlock(Me.GetType(), "CallServer", callbackScript, True)
-
+        UtilidadesWeb.SetaGlobalizacaoPortuguesNoComponenteScheduler(Me.schCompromissos)
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If

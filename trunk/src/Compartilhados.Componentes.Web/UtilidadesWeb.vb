@@ -234,7 +234,7 @@ Public Class UtilidadesWeb
 
     End Sub
 
-    Private Shared Sub SetaGlobalizacaoPortuguesNoComponenteScheduler(ByVal Componente As RadScheduler)
+    Public Shared Sub SetaGlobalizacaoPortuguesNoComponenteScheduler(ByVal Componente As RadScheduler)
         With Componente
             .OverflowBehavior = OverflowBehavior.Scroll
             .StartEditingInAdvancedForm = False
