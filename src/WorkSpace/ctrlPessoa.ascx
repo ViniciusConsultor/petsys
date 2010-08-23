@@ -33,7 +33,7 @@
                                     Nascimento
                                 </td>
                                 <td width="22%">
-                                    Tel. residêncial
+                                    Tel. comercial
                                 </td>
                                 <td width="22%">
                                     Celular
@@ -51,7 +51,7 @@
                                     <%#DataBinder.Eval(Container, "Attributes['DataNascimento']")%>
                                 </td>
                                 <td width="22%">
-                                    <%#DataBinder.Eval(Container, "Attributes['TelefoneResidencial']")%>
+                                    <%#DataBinder.Eval(Container, "Attributes['TelefoneComercial']")%>
                                 </td>
                                 <td width="22%">
                                     <%#DataBinder.Eval(Container, "Attributes['TelefoneCelular']")%>
