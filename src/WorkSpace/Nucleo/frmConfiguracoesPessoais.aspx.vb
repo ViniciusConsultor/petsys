@@ -61,13 +61,11 @@ Partial Public Class frmConfiguracoesPessoais
         If Agenda Is Nothing Then
             chkHabilitaAgenda.Checked = False
             ctrlPessoa1.PessoaSelecionada = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(Usuario.ID)
-            UtilidadesWeb.LimparComponente(CType(pnlDadosDaAgenda, Control))
             UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), False)
-            UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), False)
         Else
             chkHabilitaAgenda.Checked = True
             ctrlPessoa1.PessoaSelecionada = Agenda.PessoaPadraoAoAcessarAAgenda
-            UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), False)
+            UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), True)
             txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
             txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
             txtIntervaloEntreCompromissos.SelectedDate = Agenda.IntervaloEntreOsCompromissos
@@ -349,8 +347,10 @@ Partial Public Class frmConfiguracoesPessoais
 
         If Not chkHabilitaAgenda.Checked Then
             UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), False)
-            UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), False)
+            Exit Sub
         End If
+
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), True)
     End Sub
 
 End Class

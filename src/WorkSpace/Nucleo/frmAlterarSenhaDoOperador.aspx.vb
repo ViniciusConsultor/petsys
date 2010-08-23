@@ -56,13 +56,11 @@ Partial Public Class frmAlterarSenhaDoOperador
         ViewState(CHAVE_OPERADOR) = e.Value
     End Sub
 
-    Private Function ValidaDados() As IList(Of String)
-        Dim Inconsistencias As IList(Of String) = New List(Of String)
+    Private Function ValidaDados() As String
+        If String.IsNullOrEmpty(txtNovaSenha.Text) Then Return "A nova senha deve ser informada."
+        If String.IsNullOrEmpty(txtConfirmacaoNovaSenha.Text) Then Return "A confirmação da nova senha deve ser informada."
 
-        If String.IsNullOrEmpty(txtNovaSenha.Text) Then Inconsistencias.Add("A nova senha deve ser informada.")
-        If String.IsNullOrEmpty(txtConfirmacaoNovaSenha.Text) Then Inconsistencias.Add("A confirmação da nova senha deve ser informada.")
-
-        Return Inconsistencias
+        Return Nothing
     End Function
 
     Private Function ObtenhaSenha(ByVal SenhaDescriptografada As String) As ISenha
@@ -77,12 +75,12 @@ Partial Public Class frmAlterarSenhaDoOperador
 
     Private Sub btnModifica_Click()
         Dim Senha As IPessoaFisica = Nothing
-        Dim Inconsistencias As IList(Of String)
+        Dim Inconsistencia As String
 
-        Inconsistencias = ValidaDados()
+        Inconsistencia = ValidaDados()
 
-        If Not Inconsistencias.Count = 0 Then
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsistencias(Inconsistencias), False)
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
             Exit Sub
         End If
 

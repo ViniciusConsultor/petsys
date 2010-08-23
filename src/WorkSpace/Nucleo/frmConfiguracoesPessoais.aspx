@@ -13,7 +13,7 @@
         </Items>
     </telerik:RadToolBar>
  
-    <telerik:RadTabStrip ID="tabStrip" runat="server" MultiPageID="RadMultiPage1" SelectedIndex="0">
+    <telerik:RadTabStrip ID="tabStrip" runat="server" MultiPageID="mltPage" SelectedIndex="0" CausesValidation="false">
         <Tabs>
             <telerik:RadTab runat="server" Text="Atalhos" Selected="true">
             </telerik:RadTab>
@@ -25,7 +25,7 @@
             </telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
-    <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
+    <telerik:RadMultiPage ID="mltPage" runat="server">
         <!--Atalhos -->
         <telerik:RadPageView ID="rpvAtalhos" runat="server" Selected="true">
             <telerik:RadDockLayout ID="RadDockLayout2" runat="server" Skin="Vista">
