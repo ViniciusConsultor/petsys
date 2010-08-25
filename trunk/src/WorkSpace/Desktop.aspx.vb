@@ -16,7 +16,6 @@ Partial Public Class Desktop
             Me.MontaAtalhos()
             Me.ExibaNotifacoes()
         End If
-
     End Sub
 
     Private Sub MontaAtalhos()

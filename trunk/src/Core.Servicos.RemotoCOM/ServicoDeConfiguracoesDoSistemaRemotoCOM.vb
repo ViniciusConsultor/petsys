@@ -5,6 +5,7 @@ Imports Core.Servicos.Local
 Imports System.EnterpriseServices
 Imports Compartilhados
 Imports Core.Interfaces.Negocio
+Imports Compartilhados.Interfaces.Core.Servicos
 
 < _
 EventTrackingEnabled(), _

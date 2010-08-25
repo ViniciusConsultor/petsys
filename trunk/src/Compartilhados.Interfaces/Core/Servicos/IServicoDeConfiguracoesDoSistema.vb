@@ -1,7 +1,7 @@
 ﻿Imports Compartilhados
-Imports Core.Interfaces.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio
 
-Namespace Servicos
+Namespace Core.Servicos
 
     Public Interface IServicoDeConfiguracoesDoSistema
         Inherits IServico

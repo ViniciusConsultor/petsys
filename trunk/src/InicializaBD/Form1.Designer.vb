@@ -26,6 +26,12 @@ Partial Class Form1
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.txtNome = New System.Windows.Forms.TextBox
+        Me.txtLogin = New System.Windows.Forms.TextBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.txtSenha = New System.Windows.Forms.TextBox
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -34,7 +40,7 @@ Partial Class Form1
         Me.btnInicializar.Location = New System.Drawing.Point(422, 25)
         Me.btnInicializar.Name = "btnInicializar"
         Me.btnInicializar.Size = New System.Drawing.Size(75, 23)
-        Me.btnInicializar.TabIndex = 0
+        Me.btnInicializar.TabIndex = 4
         Me.btnInicializar.Text = "Inicializar"
         Me.btnInicializar.UseVisualStyleBackColor = True
         '
@@ -62,11 +68,69 @@ Partial Class Form1
         Me.ToolStripProgressBar1.Size = New System.Drawing.Size(100, 16)
         Me.ToolStripProgressBar1.Visible = False
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(95, 13)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "Nome do operador"
+        '
+        'txtNome
+        '
+        Me.txtNome.Location = New System.Drawing.Point(15, 27)
+        Me.txtNome.MaxLength = 100
+        Me.txtNome.Name = "txtNome"
+        Me.txtNome.Size = New System.Drawing.Size(321, 20)
+        Me.txtNome.TabIndex = 1
+        '
+        'txtLogin
+        '
+        Me.txtLogin.Location = New System.Drawing.Point(15, 66)
+        Me.txtLogin.MaxLength = 255
+        Me.txtLogin.Name = "txtLogin"
+        Me.txtLogin.Size = New System.Drawing.Size(321, 20)
+        Me.txtLogin.TabIndex = 2
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(12, 50)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(33, 13)
+        Me.Label2.TabIndex = 6
+        Me.Label2.Text = "Login"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(12, 89)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(38, 13)
+        Me.Label3.TabIndex = 7
+        Me.Label3.Text = "Senha"
+        '
+        'txtSenha
+        '
+        Me.txtSenha.Location = New System.Drawing.Point(15, 105)
+        Me.txtSenha.MaxLength = 255
+        Me.txtSenha.Name = "txtSenha"
+        Me.txtSenha.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txtSenha.Size = New System.Drawing.Size(144, 20)
+        Me.txtSenha.TabIndex = 3
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(509, 266)
+        Me.Controls.Add(Me.txtSenha)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.txtLogin)
+        Me.Controls.Add(Me.txtNome)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.btnInicializar)
         Me.Name = "Form1"
@@ -81,5 +145,11 @@ Partial Class Form1
     Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripProgressBar1 As System.Windows.Forms.ToolStripProgressBar
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents txtNome As System.Windows.Forms.TextBox
+    Friend WithEvents txtLogin As System.Windows.Forms.TextBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents txtSenha As System.Windows.Forms.TextBox
 
 End Class

@@ -31,19 +31,13 @@ Partial Public Class ctrlContato
             For Each Contato As IContato In Contatos
                 Dim Item As New RadComboBoxItem(Contato.Pessoa.Nome, Contato.Pessoa.ID.ToString)
 
-                Dim TelefonesResidencial As IList(Of ITelefone)
                 Dim TelefonesCelular As IList(Of ITelefone)
                 Dim TelefonesComercial As IList(Of ITelefone)
 
-                TelefonesResidencial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
                 TelefonesCelular = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
                 TelefonesComercial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
 
                 Dim TelefonesSTR As New StringBuilder
-
-                For Each Telefone As ITelefone In TelefonesResidencial
-                    TelefonesSTR.Append(Telefone.ToString & "<BR>")
-                Next
 
                 For Each Telefone As ITelefone In TelefonesComercial
                     TelefonesSTR.AppendLine(Telefone.ToString & "<BR>")

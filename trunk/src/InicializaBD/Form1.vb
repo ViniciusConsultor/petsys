@@ -20,7 +20,22 @@ Public Class Form1
         ToolStripStatusLabel1.Text = ""
     End Sub
 
+    Private Function ValidaDados() As String
+        If String.IsNullOrEmpty(txtNome.Text) Then Return "O nome do operador deve ser informado."
+        If String.IsNullOrEmpty(txtLogin.Text) Then Return "O login do operador deve ser informado."
+        If String.IsNullOrEmpty(txtSenha.Text) Then Return "A senha do operador deve ser informada."
+
+        Return Nothing
+    End Function
+
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnInicializar.Click
+        Dim Inconsistencia As String = ValidaDados()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            MsgBox(Inconsistencia, MsgBoxStyle.Exclamation, "Inconsistências")
+            Exit Sub
+        End If
+
         Try
             InicializaMunicipios()
             IniciaOperador()
@@ -61,7 +76,7 @@ Public Class Form1
         ToolStripStatusLabel1.Text = "Preparando Pessoa ADMINISTRADOR..."
 
         Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-        Pessoa.Nome = "Administrador"
+        Pessoa.Nome = txtNome.Text
         Pessoa.Sexo = Sexo.Masculino
         Pessoa.EstadoCivil = EstadoCivil.Ignorado
         Pessoa.Nacionalidade = Nacionalidade.Outros
@@ -79,7 +94,7 @@ Public Class Form1
 
         ToolStripStatusLabel1.Text = "Preparando Operador ADMINISTRADOR..."
         Operador = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperador)(New Object() {Pessoa})
-        Operador.Login = "admin"
+        Operador.Login = txtLogin.Text
         Operador.Status = StatusDoOperador.Ativo
         Operador.AdicioneGrupo(Grupo)
 
@@ -145,7 +160,7 @@ Public Class Form1
         Dim Senha As ISenha
         Dim SenhaTXTCript As String
 
-        SenhaTXTCript = AjudanteDeCriptografia.CriptografeMaoUnicao("admin")
+        SenhaTXTCript = AjudanteDeCriptografia.CriptografeMaoUnicao(txtSenha.Text)
 
         Senha = FabricaGenerica.GetInstancia.CrieObjeto(Of ISenha)(New Object() {SenhaTXTCript, Now})
         Return Senha

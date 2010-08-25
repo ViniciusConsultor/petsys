@@ -6,6 +6,9 @@ Imports Core.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Core.Interfaces.Negocio
 Imports Compartilhados.Componentes.Web
+Imports Compartilhados.Interfaces.Core.Servicos
+Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados.Interfaces
 
 Public Class Global_asax
     Inherits System.Web.HttpApplication
@@ -30,9 +33,29 @@ Public Class Global_asax
         Dim MensagemDeLog As String = ObtenhaMensagemDeLog()
 
         EscritorDeLog.escrevaLog(MensagemDeLog)
-
+        EnviaEmail(MensagemDeLog)
         Dim URL As String = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "erro.html"
         System.Web.HttpContext.Current.Response.Redirect(URL)
+    End Sub
+
+    Private Sub EnviaEmail(ByVal MensagemDoErro As String)
+        Dim Configuracao As IConfiguracaoDoSistema
+
+        Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
+            Configuracao = ServicoDeConfiguracao.ObtenhaConfiguracaoDoSistema()
+        End Using
+
+        If Not Configuracao Is Nothing AndAlso Configuracao.NotificarErrosAutomaticamente Then
+            Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema
+
+            ConfiguracaoDeEmail = Configuracao.ConfiguracaoDeEmailDoSistema
+            If Not Configuracao Is Nothing Then
+                GerenciadorDeEmail.EnviaEmail("Erro ocorrido no sistema.", _
+                                              ConfiguracaoDeEmail.EmailRemetente, _
+                                              Configuracao.RemetenteDaNotificaoDeErros, _
+                                              MensagemDoErro)
+            End If
+        End If
     End Sub
 
     Sub Session_End(ByVal sender As Object, ByVal e As EventArgs)

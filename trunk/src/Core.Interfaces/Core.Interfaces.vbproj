@@ -111,8 +111,6 @@
     <Compile Include="Negocio\IConexaoOracle.vb" />
     <Compile Include="Negocio\IConexaoSQLite.vb" />
     <Compile Include="Negocio\IConexaoSQLServer.vb" />
-    <Compile Include="Negocio\IConfiguracaoDeEmailDoSistema.vb" />
-    <Compile Include="Negocio\IConfiguracaoDoSistema.vb" />
     <Compile Include="Negocio\IDiretivaDeSeguranca.vb" />
     <Compile Include="Negocio\IFuncao.vb" />
     <Compile Include="Negocio\IMenuComposto.vb" />
@@ -125,7 +123,6 @@
     <Compile Include="Servicos\IServicoDeAutorizacao.vb" />
     <Compile Include="Servicos\IServicoDeCliente.vb" />
     <Compile Include="Servicos\IServicoDeConexao.vb" />
-    <Compile Include="Servicos\IServicoDeConfiguracoesDoSistema.vb" />
     <Compile Include="Servicos\IServicoDeGrupo.vb" />
     <Compile Include="Servicos\IServicoDeMenu.vb" />
     <Compile Include="Servicos\IServicoDeOperador.vb" />
