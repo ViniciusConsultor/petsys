@@ -91,6 +91,8 @@
     <Compile Include="Core\Negocio\Documento\ICPF.vb" />
     <Compile Include="Core\Negocio\Documento\IDocumento.vb" />
     <Compile Include="Core\Negocio\ICompromisso.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDeEmailDoSistema.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDoSistema.vb" />
     <Compile Include="Core\Negocio\IContaBancaria.vb" />
     <Compile Include="Core\Negocio\IDadoBancario.vb" />
     <Compile Include="Core\Negocio\IEndereco.vb" />
@@ -128,12 +130,14 @@
     <Compile Include="Core\Negocio\TipoDeTelefone.vb" />
     <Compile Include="Core\Negocio\UF.vb" />
     <Compile Include="Core\Servicos\IServicoDeAgenda.vb" />
+    <Compile Include="Core\Servicos\IServicoDeConfiguracoesDoSistema.vb" />
     <Compile Include="Core\Servicos\IServicoDeGeracaoDeID.vb" />
     <Compile Include="Core\Servicos\IServicoDeMunicipio.vb" />
     <Compile Include="Core\Servicos\IServicoDePerfil.vb" />
     <Compile Include="Core\Servicos\IServicoDePessoaFisica.vb" />
     <Compile Include="Core\Servicos\IServicoDePessoaJuridica.vb" />
     <Compile Include="GeradorDeID.vb" />
+    <Compile Include="GerenciadorDeEmail.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

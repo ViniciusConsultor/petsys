@@ -1,6 +1,6 @@
 ﻿Imports Compartilhados
 
-Namespace Negocio
+Namespace Core.Negocio
 
     Public Interface IConfiguracaoDeEmailDoSistema
 

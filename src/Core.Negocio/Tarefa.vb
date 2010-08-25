@@ -77,7 +77,7 @@ Public Class Tarefa
 
     Public Sub EstaConsistente() Implements ITarefa.EstaConsistente
 
-        VerificaSeDataDeIncioEhMaiorQueDataAtual()
+        'VerificaSeDataDeIncioEhMaiorQueDataAtual()
         VerificaSeDataFinalEhMenorQueDataDeInicio()
     End Sub
 

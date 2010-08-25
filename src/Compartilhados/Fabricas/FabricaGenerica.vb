@@ -30,6 +30,17 @@ Namespace Fabricas
             Return InstanciaSolitaria
         End Function
 
+        Private Sub CarregaAssembly(ByVal NomeDoAssembly As String)
+            If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
+                Dim Asse As Assembly
+
+                Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
+
+                If Asse Is Nothing Then Throw New DLLNaoEncontradaException("DLL não instada")
+                DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
+            End If
+        End Sub
+
         Public Function CrieObjeto(ByVal FullName As String, _
                                    ByVal NomeDoTipo As String) As Object
             Dim Instancia As Object
@@ -39,13 +50,8 @@ Namespace Fabricas
             NomeDoAssembly = ObtenhaNomeDoAssembly(FullName)
             NomeTipoConcreto = ObtenhaNomeTipoConcreto(NomeDoTipo)
 
-            If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
-                Dim Asse As Assembly
-
-                Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
-                DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
-            End If
-
+            CarregaAssembly(NomeDoAssembly)
+            
             If NomeDoAssembly.Contains("Servico") Then
                 Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
             Else
@@ -63,12 +69,7 @@ Namespace Fabricas
             NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
             NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
 
-            If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
-                Dim Asse As Assembly
-
-                Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
-                DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
-            End If
+           CarregaAssembly(NomeDoAssembly)
 
             If NomeDoAssembly.Contains("Servico") Then
                 Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
@@ -87,12 +88,7 @@ Namespace Fabricas
             NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
             NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
 
-            If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
-                Dim Asse As Assembly
-
-                Asse = Assembly.Load(NomeDoAssembly)
-                DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
-            End If
+            CarregaAssembly(NomeDoAssembly)
 
             If NomeDoAssembly.Contains("Servico") Then
                 Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)

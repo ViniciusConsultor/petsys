@@ -76,7 +76,7 @@ Public Class Lembrete
     End Property
 
     Public Sub EstaConsistente() Implements ICompromisso.EstaConsistente
-        VerificaSeDataDeIncioEhMaiorQueDataAtual()
+        ' VerificaSeDataDeIncioEhMaiorQueDataAtual()
         VerificaSeDataFinalEhMenorQueDataDeInicio()
     End Sub
 

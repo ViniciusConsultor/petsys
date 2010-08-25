@@ -1,4 +1,5 @@
 ﻿Imports Core.Interfaces.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio
 
 <Serializable()> _
 Public Class ConfiguracaoDoSistema
@@ -21,6 +22,16 @@ Public Class ConfiguracaoDoSistema
         End Get
         Set(ByVal value As Boolean)
             _NotificarErrosAutomaticamente = value
+        End Set
+    End Property
+
+    Private _RemetenteDaNotificaoDeErros As String
+    Public Property RemetenteDaNotificaoDeErros() As String Implements IConfiguracaoDoSistema.RemetenteDaNotificaoDeErros
+        Get
+            Return _RemetenteDaNotificaoDeErros
+        End Get
+        Set(ByVal value As String)
+            _RemetenteDaNotificaoDeErros = value
         End Set
     End Property
 

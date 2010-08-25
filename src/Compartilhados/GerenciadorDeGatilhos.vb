@@ -18,13 +18,17 @@ Public Class GerenciadorDeGatilhos
 
             For Each NoInteressados As XmlNode In NoGatilhoAntes.ChildNodes
                 For Each NoInteressado As XmlNode In NoInteressados
-                    Dim Instancia As Object
+                    Dim Instancia As Object = Nothing
 
-                    Instancia = FabricaGenerica.GetInstancia.CrieObjeto(NoInteressado.Attributes("fullname").Value, NoInteressado.Attributes("type").Value)
+                    Try
+                        Instancia = FabricaGenerica.GetInstancia.CrieObjeto(NoInteressado.Attributes("fullname").Value, NoInteressado.Attributes("type").Value)
 
-                    Dim mi As MethodInfo = Instancia.GetType().GetMethod(NoInteressado.Attributes("metodo").Value)
+                        Dim mi As MethodInfo = Instancia.GetType().GetMethod(NoInteressado.Attributes("metodo").Value)
 
-                    mi.Invoke(Instancia, BindingFlags.InvokeMethod, Nothing, Parametros, Nothing)
+                        mi.Invoke(Instancia, BindingFlags.InvokeMethod, Nothing, Parametros, Nothing)
+                    Catch ex As DLLNaoEncontradaException
+                        'Não faz nada
+                    End Try
                 Next
             Next
         End If
@@ -41,11 +45,15 @@ Public Class GerenciadorDeGatilhos
                 For Each NoInteressado As XmlNode In NoInteressados
                     Dim Instancia As Object
 
-                    Instancia = FabricaGenerica.GetInstancia.CrieObjeto(NoInteressado.Attributes("fullname").Value, NoInteressado.Attributes("type").Value)
+                    Try
+                        Instancia = FabricaGenerica.GetInstancia.CrieObjeto(NoInteressado.Attributes("fullname").Value, NoInteressado.Attributes("type").Value)
 
-                    Dim mi As MethodInfo = Instancia.GetType().GetMethod(NoInteressado.Attributes("metodo").Value)
+                        Dim mi As MethodInfo = Instancia.GetType().GetMethod(NoInteressado.Attributes("metodo").Value)
 
-                    mi.Invoke(Instancia, BindingFlags.InvokeMethod, Nothing, Parametros, Nothing)
+                        mi.Invoke(Instancia, BindingFlags.InvokeMethod, Nothing, Parametros, Nothing)
+                    Catch ex As DLLNaoEncontradaException
+                        'Não faz nada
+                    End Try
                 Next
             Next
         End If

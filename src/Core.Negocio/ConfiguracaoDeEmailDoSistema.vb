@@ -1,5 +1,6 @@
 ﻿Imports Core.Interfaces.Negocio
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio
 
 <Serializable()> _
 Public Class ConfiguracaoDeEmailDoSistema

@@ -33,9 +33,9 @@ Public Class SolicitacaoDeConvite
     End Property
 
     Public Sub EstaConsistente() Implements ISolicitacaoDeConvite.EstaConsistente
-        If CLng(DataEHorario.ToString("yyyyMMddHHmm")) < CLng(Now.ToString("yyyyMMddHHmm")) Then
-            Throw New BussinesException("A data e horário da solicitação deve ser maior que a data e horário atual.")
-        End If
+        'If CLng(DataEHorario.ToString("yyyyMMddHHmm")) < CLng(Now.ToString("yyyyMMddHHmm")) Then
+        '    Throw New BussinesException("A data e horário da solicitação deve ser maior que a data e horário atual.")
+        'End If
     End Sub
 
 End Class

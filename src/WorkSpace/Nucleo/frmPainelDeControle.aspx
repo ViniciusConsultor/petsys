@@ -36,6 +36,16 @@
                                         <asp:CheckBox ID="chkNotificarErrosNaAplicacaoAutomaticamente" runat="server" />
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label4" runat="server" Text="E-mail do remetente da notificação de erros"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                         <telerik:RadTextBox ID="txtRemetenteNotificacaoDeErros" runat="server" MaxLength="255" Skin="Vista"
+                                            Width="300px" SelectionOnFocus="CaretToBeginning">
+                                        </telerik:RadTextBox>
+                                    </td>
+                                </tr>
                             </table>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="rpvEmail" runat="server">
