@@ -14,30 +14,32 @@ Public Class ServicoDeConfiguracoesDoSistemaLocal
         MyBase.New(Credencial)
     End Sub
 
-
     Public Function ObtenhaConfiguracaoDoSistema() As IConfiguracaoDoSistema Implements IServicoDeConfiguracoesDoSistema.ObtenhaConfiguracaoDoSistema
-        Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema
-        Dim ConfiguracaoGeral As IConfiguracaoDoSistema
+        Dim Mapeador As IMapeadorDeConfiguracoesDoSistema
 
-        ConfiguracaoGeral = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDoSistema)()
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeConfiguracoesDoSistema)()
 
-        ConfiguracaoGeral.NotificarErrosAutomaticamente = True
-
-        ConfiguracaoDeEmail = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeEmailDoSistema)()
-        ConfiguracaoDeEmail.EmailRemetente = "hermes@lggo.com.br"
-        ConfiguracaoDeEmail.HabilitarSSL = False
-        ConfiguracaoDeEmail.Porta = 25
-        ConfiguracaoDeEmail.RequerAutenticacao = True
-        ConfiguracaoDeEmail.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida = "53841"
-        ConfiguracaoDeEmail.UsuarioDeAutenticacaoDoServidorDeSaida = "hermes@lggo.com.br"
-        ConfiguracaoDeEmail.TipoDoServidor = TipoDeServidorDeEmail.SMTP
-        ConfiguracaoDeEmail.ServidorDeSaidaDeEmail = "mail.lggo.com.br"
-
-        ConfiguracaoGeral.ConfiguracaoDeEmailDoSistema = ConfiguracaoDeEmail
-        Return ConfiguracaoGeral
+        Return Mapeador.ObtenhaConfiguracaoDoSistema()
     End Function
 
     Public Sub Salve(ByVal Configuracao As IConfiguracaoDoSistema) Implements IServicoDeConfiguracoesDoSistema.Salve
+        Dim Mapeador As IMapeadorDeConfiguracoesDoSistema
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeConfiguracoesDoSistema)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.Salve(Configuracao)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Sub
 
 End Class

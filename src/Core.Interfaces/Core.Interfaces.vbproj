@@ -80,6 +80,7 @@
     <Compile Include="Mapeadores\IMapeadorDeAgenda.vb" />
     <Compile Include="Mapeadores\IMapeadorDeAutorizacao.vb" />
     <Compile Include="Mapeadores\IMapeadorDeCliente.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeConfiguracoesDoSistema.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGeracaoDeID.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGrupo.vb" />
     <Compile Include="Mapeadores\IMapeadorDeMenu.vb" />

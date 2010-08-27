@@ -72,8 +72,7 @@ Partial Public Class frmPainelDeControle
     Private Function ValidaDados() As String
         If chkNotificarErrosNaAplicacaoAutomaticamente.Checked Then
             If String.IsNullOrEmpty(txtRemetenteNotificacaoDeErros.Text) Then Return "O e-mail do remetente da notificação de erros deve ser informado."
-            ValidaDadosObrigatoriosDoEmail()
-            Return Nothing
+            Return ValidaDadosObrigatoriosDoEmail()
         End If
 
         If ExisteAlgumCampoDeEmailComValores() Then ValidaDadosObrigatoriosDoEmail()
@@ -112,7 +111,7 @@ Partial Public Class frmPainelDeControle
             Exit Sub
         End If
 
-        Dim Configuracao As IConfiguracaoDoSistema = Nothing
+        Dim Configuracao As IConfiguracaoDoSistema = ObtenhaObjetoConfiguracaoDoSistema()
 
         Try
             Using Servico As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
@@ -126,6 +125,7 @@ Partial Public Class frmPainelDeControle
 
     Private Function ObtenhaObjetoConfiguracaoDoSistema() As IConfiguracaoDoSistema
         Dim Configuracao As IConfiguracaoDoSistema
+        Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema = Nothing
 
         Configuracao = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDoSistema)()
         Configuracao.NotificarErrosAutomaticamente = chkNotificarErrosNaAplicacaoAutomaticamente.Checked
@@ -135,8 +135,6 @@ Partial Public Class frmPainelDeControle
         End If
 
         If ExisteAlgumCampoDeEmailComValores() Then
-            Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema = Nothing
-
             ConfiguracaoDeEmail = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeEmailDoSistema)()
 
             ConfiguracaoDeEmail.EmailRemetente = txtRemetente.Text
@@ -152,6 +150,8 @@ Partial Public Class frmPainelDeControle
             ConfiguracaoDeEmail.ServidorDeSaidaDeEmail = txtServidorDeSaidaDeEmail.Text
             ConfiguracaoDeEmail.TipoDoServidor = TipoDeServidorDeEmail.Obtenha(CChar(cboTipoDeServidor.SelectedValue))
         End If
+
+        Configuracao.ConfiguracaoDeEmailDoSistema = ConfiguracaoDeEmail
 
         Return Configuracao
     End Function

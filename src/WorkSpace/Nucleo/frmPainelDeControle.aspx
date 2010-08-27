@@ -74,7 +74,7 @@
                                     <td class="th3">
                                         <asp:Label ID="Label1" runat="server" Text="Porta"></asp:Label>
                                     </td>
-                                    <td class="td" style="height: 32px">
+                                    <td class="td">
                                         <telerik:RadNumericTextBox ID="txtPorta" Runat="server" 
                                             DataType="System.Int16" Skin="Vista">
                                         </telerik:RadNumericTextBox>
@@ -112,7 +112,7 @@
                                     </td>
                                     <td class="td">
                                         <telerik:RadTextBox ID="txtSenhaUsuarioAutenticacaoServidorDeSaida" runat="server" MaxLength="255" 
-                                            SelectionOnFocus="CaretToBeginning" Skin="Vista" Width="300px">
+                                            SelectionOnFocus="CaretToBeginning" Skin="Vista" Width="300px" TextMode="Password">
                                         </telerik:RadTextBox>
                                     </td>
                                 </tr>
