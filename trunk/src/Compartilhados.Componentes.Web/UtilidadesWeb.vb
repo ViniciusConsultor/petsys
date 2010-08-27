@@ -219,6 +219,10 @@ Public Class UtilidadesWeb
 
         If TypeOf Componente Is RadDatePicker Then
             DirectCast(Componente, RadDatePicker).SelectedDate = Nothing
+            DirectCast(Componente, RadDatePicker).DateInput.MinDate = CDate("01/01/1900 00:00:00")
+            DirectCast(Componente, RadDatePicker).MinDate = CDate("01/01/1900 00:00:00")
+            DirectCast(Componente, RadDatePicker).Calendar.RangeMinDate = CDate("01/01/1900 00:00:00")
+            DirectCast(Componente, RadDatePicker).Calendar.CultureInfo = CultureInfo.GetCultureInfo("pt-BR")
         End If
 
         If TypeOf Componente Is RadGrid Then
