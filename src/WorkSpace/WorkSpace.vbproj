@@ -326,6 +326,13 @@
       <DependentUpon>cdAgenda.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Nucleo\cdBancosEAgencias.aspx.designer.vb">
+      <DependentUpon>cdBancosEAgencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdBancosEAgencias.aspx.vb">
+      <DependentUpon>cdBancosEAgencias.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\cdCompromisso.aspx.designer.vb">
       <DependentUpon>cdCompromisso.aspx</DependentUpon>
     </Compile>
@@ -553,6 +560,7 @@
     <Content Include="imagens\wallpapers\twip_100325_00.ss_full.jpg" />
     <Content Include="naoencontrado.htm" />
     <Content Include="Nucleo\cdAgenda.aspx" />
+    <Content Include="Nucleo\cdBancosEAgencias.aspx" />
     <Content Include="Nucleo\cdCompromisso.aspx" />
     <Content Include="Nucleo\cdLembrete.aspx" />
     <Content Include="Nucleo\cdTarefa.aspx" />

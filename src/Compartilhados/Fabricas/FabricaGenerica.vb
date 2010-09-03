@@ -106,7 +106,7 @@ Namespace Fabricas
 
             Credencial = Util.ConstruaCredencial
 
-            If TipoDeDistribuicao.Equals("RemotoCOM") Then
+            If TipoDeDistribuicao.Equals("Remoting") Then
                 Instancia = Me.CriaInstancia(NomeDoAssembly, NomeTipoConcreto)
                 CType(Instancia, IServicoRemoto).SetaCredencial(Credencial)
             ElseIf TipoDeDistribuicao.Equals("Local") Then
