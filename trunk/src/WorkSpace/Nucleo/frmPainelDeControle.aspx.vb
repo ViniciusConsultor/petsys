@@ -13,7 +13,7 @@ Partial Public Class frmPainelDeControle
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             ExibaTelaInicial()
-            CarregueConfiguracao()
+            MostreConfiguracao()
         End If
     End Sub
 
@@ -33,7 +33,7 @@ Partial Public Class frmPainelDeControle
         Next
     End Sub
 
-    Private Sub CarregueConfiguracao()
+    Private Sub MostreConfiguracao()
         Dim Configuracao As IConfiguracaoDoSistema
 
         Using Servico As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
@@ -58,6 +58,23 @@ Partial Public Class frmPainelDeControle
 
                 txtRemetente.Text = Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente
             End If
+
+            Dim ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
+
+            ConfiguracaoDeAgendaDoSistema = Configuracao.ConfiguracaoDeAgendaDoSistema
+
+            With ConfiguracaoDeAgendaDoSistema
+                chkApresentarLinhasCabecalhoCompromissos.Checked = .ApresentarLinhasNoCabecalhoDeCompromissos
+                chkApresentarLinhasCabecalhoLembretes.Checked = .ApresentarLinhasNoCabecalhoDeLembretes
+                chkApresentarLinhasCabecalhoTarefas.Checked = .ApresentarLinhasNoCabecalhoDeTarefas
+                chkApresentarLinhasRodapeCompromissos.Checked = .ApresentarLinhasNoRodapeDeCompromissos
+                chkApresentarLinhasRodapeLembretes.Checked = .ApresentarLinhasNoRodapeDeLembretes
+                chkApresentarLinhasRodapeTarefas.Checked = .ApresentarLinhasNoRodapeDeTarefas
+
+                txtCabecalhoCompromissos.Text = .TextoCabecalhoDeCompromissos
+                txtCabecalhoLembretes.Text = .TextoCabelhoDeLembretes
+                txtCabecalhoTarefas.Text = .TextoCabecalhoDeTarefas
+            End With
         End If
 
     End Sub
@@ -76,6 +93,10 @@ Partial Public Class frmPainelDeControle
         End If
 
         If ExisteAlgumCampoDeEmailComValores() Then ValidaDadosObrigatoriosDoEmail()
+
+        If String.IsNullOrEmpty(txtCabecalhoCompromissos.Text) Then Return "O texto do cabeçalho de compromissos deve ser informado."
+        If String.IsNullOrEmpty(txtCabecalhoLembretes.Text) Then Return "O texto do cabeçalho de lembretes deve ser informado."
+        If String.IsNullOrEmpty(txtCabecalhoTarefas.Text) Then Return "O texto do cabeçalho de tarefas deve ser informado."
 
         Return Nothing
     End Function
@@ -152,6 +173,26 @@ Partial Public Class frmPainelDeControle
         End If
 
         Configuracao.ConfiguracaoDeEmailDoSistema = ConfiguracaoDeEmail
+
+        Dim ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
+
+        ConfiguracaoDeAgendaDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoSistema)()
+
+        With ConfiguracaoDeAgendaDoSistema
+            .ApresentarLinhasNoCabecalhoDeCompromissos = chkApresentarLinhasCabecalhoCompromissos.Checked
+            .ApresentarLinhasNoCabecalhoDeLembretes = chkApresentarLinhasCabecalhoLembretes.Checked
+            .ApresentarLinhasNoCabecalhoDeTarefas = chkApresentarLinhasCabecalhoTarefas.Checked
+
+            .ApresentarLinhasNoRodapeDeCompromissos = chkApresentarLinhasRodapeCompromissos.Checked
+            .ApresentarLinhasNoRodapeDeLembretes = chkApresentarLinhasRodapeLembretes.Checked
+            .ApresentarLinhasNoRodapeDeTarefas = chkApresentarLinhasRodapeTarefas.Checked
+
+            .TextoCabecalhoDeCompromissos = txtCabecalhoCompromissos.Text
+            .TextoCabecalhoDeTarefas = txtCabecalhoTarefas.Text
+            .TextoCabelhoDeLembretes = txtCabecalhoLembretes.Text
+        End With
+
+        Configuracao.ConfiguracaoDeAgendaDoSistema = ConfiguracaoDeAgendaDoSistema
 
         Return Configuracao
     End Function
