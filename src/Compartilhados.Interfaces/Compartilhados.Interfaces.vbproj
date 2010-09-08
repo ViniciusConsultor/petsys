@@ -91,6 +91,7 @@
     <Compile Include="Core\Negocio\Documento\ICPF.vb" />
     <Compile Include="Core\Negocio\Documento\IDocumento.vb" />
     <Compile Include="Core\Negocio\ICompromisso.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDeAgendaDoSistema.vb" />
     <Compile Include="Core\Negocio\IConfiguracaoDeEmailDoSistema.vb" />
     <Compile Include="Core\Negocio\IConfiguracaoDoSistema.vb" />
     <Compile Include="Core\Negocio\IContaBancaria.vb" />

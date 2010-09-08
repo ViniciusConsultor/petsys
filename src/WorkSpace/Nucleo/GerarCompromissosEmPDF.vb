@@ -5,6 +5,7 @@ Imports Compartilhados.Componentes.Web
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Public Class GerarCompromissosEmPDF
 
@@ -16,6 +17,7 @@ Public Class GerarCompromissosEmPDF
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
+    Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
     Private NomeDoPDF As String
 
     Public Sub New(ByVal Compromissos As IList(Of ICompromisso))
@@ -42,6 +44,16 @@ Public Class GerarCompromissosEmPDF
     Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraLocal As Boolean, ByVal MostraDescricao As Boolean) As String
         Dim CompromissoAnterior As ICompromisso = Nothing
 
+        Dim Configuracao As IConfiguracaoDoSistema
+
+        Using Servico As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
+            Configuracao = Servico.ObtenhaConfiguracaoDoSistema
+        End Using
+
+        If Configuracao Is Nothing Then Throw New BussinesException("Os compromissos não podem ser impressos pois a configuração de agenda do sistema ainda não foi configurada.")
+
+        _ConfiguracaoDeAgendaDoSistema = Configuracao.ConfiguracaoDeAgendaDoSistema
+
         For Each Compromisso As ICompromisso In _Compromissos
             'Primeira vez
             If CompromissoAnterior Is Nothing Then
@@ -66,11 +78,16 @@ Public Class GerarCompromissosEmPDF
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Compromissos " & Compromisso.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeCompromissos & Compromisso.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
         Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(Compromisso.Inicio), _Fonte1))
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
+
+        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeCompromissos Then
+            Cabecalho.Border = HeaderFooter.NO_BORDER
+        End If
+
         _documento.Header = Cabecalho
     End Sub
 
@@ -121,6 +138,10 @@ Public Class GerarCompromissosEmPDF
         Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
 
         Rodape = New HeaderFooter(New Phrase(Texto.ToString, _FonteRodape), False)
+
+        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeCompromissos Then
+            Rodape.Border = HeaderFooter.NO_BORDER
+        End If
 
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Footer = Rodape

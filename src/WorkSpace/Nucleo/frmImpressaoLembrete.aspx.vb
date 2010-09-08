@@ -3,6 +3,7 @@ Imports Telerik.Web.UI
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
+Imports Compartilhados
 
 Partial Public Class frmImpressaoLembrete
     Inherits SuperPagina
@@ -58,13 +59,19 @@ Partial Public Class frmImpressaoLembrete
 
         GeradorDePDF = New GerarLembretesEmPDF(Lembretes)
 
-        If cboOpcoesDeImpressao.SelectedValue = "1" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True)
-        ElseIf cboOpcoesDeImpressao.SelectedValue = "2" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, False)
-        ElseIf cboOpcoesDeImpressao.SelectedValue = "3" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDF(False, True)
-        End If
+        Try
+            If cboOpcoesDeImpressao.SelectedValue = "1" Then
+                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True)
+            ElseIf cboOpcoesDeImpressao.SelectedValue = "2" Then
+                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, False)
+            ElseIf cboOpcoesDeImpressao.SelectedValue = "3" Then
+                NomeDoPDFGerado = GeradorDePDF.GerePDF(False, True)
+            End If
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+            Exit Sub
+        End Try
 
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoPDFGerado
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)

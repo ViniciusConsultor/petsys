@@ -35,4 +35,13 @@ Public Class ConfiguracaoDoSistema
         End Set
     End Property
 
+    Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
+    Public Property ConfiguracaoDeAgendaDoSistema() As IConfiguracaoDeAgendaDoSistema Implements IConfiguracaoDoSistema.ConfiguracaoDeAgendaDoSistema
+        Get
+            Return _ConfiguracaoDeAgendaDoSistema
+        End Get
+        Set(ByVal value As IConfiguracaoDeAgendaDoSistema)
+            _ConfiguracaoDeAgendaDoSistema = value
+        End Set
+    End Property
 End Class

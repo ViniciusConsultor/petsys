@@ -4,6 +4,8 @@ Imports Compartilhados.Componentes.Web
 Imports iTextSharp.text.pdf
 Imports System.IO
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Servicos
+Imports Compartilhados.Fabricas
 
 Public Class GerarTarefasEmPDF
 
@@ -15,6 +17,7 @@ Public Class GerarTarefasEmPDF
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
     Private NomeDoPDF As String
+    Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
 
     Public Sub New(ByVal Tarefas As IList(Of ITarefa))
         _Tarefas = Tarefas
@@ -38,6 +41,16 @@ Public Class GerarTarefasEmPDF
 
     Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraDescricao As Boolean) As String
         Dim TarefaAnterior As ITarefa = Nothing
+
+        Dim Configuracao As IConfiguracaoDoSistema
+
+        Using Servico As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
+            Configuracao = Servico.ObtenhaConfiguracaoDoSistema
+        End Using
+
+        If Configuracao Is Nothing Then Throw New BussinesException("As tarefas não podem ser impressas pois a configuração de agenda do sistema ainda não foi configurada.")
+
+        _ConfiguracaoDeAgendaDoSistema = Configuracao.ConfiguracaoDeAgendaDoSistema
 
         For Each Tarefa As ITarefa In _Tarefas
             'Primeira vez
@@ -63,11 +76,16 @@ Public Class GerarTarefasEmPDF
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Tarefas " & Tarefa.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeTarefas & Tarefa.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
         Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(Tarefa.DataDeInicio), _Fonte1))
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
+
+        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeCompromissos Then
+            Cabecalho.Border = HeaderFooter.NO_BORDER
+        End If
+
         _documento.Header = Cabecalho
     End Sub
 
@@ -109,8 +127,12 @@ Public Class GerarTarefasEmPDF
         Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
 
         Rodape = New HeaderFooter(New Phrase(Texto.ToString, _FonteRodape), False)
-
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
+
+        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeCompromissos Then
+            Rodape.Border = HeaderFooter.NO_BORDER
+        End If
+
         _documento.Footer = Rodape
     End Sub
 

@@ -60,15 +60,21 @@ Partial Public Class frmImpressaoCompromisso
 
         GeradorDePDF = New GerarCompromissosEmPDF(Compromissos)
 
-        If cboOpcoesDeImpressao.SelectedValue = "1" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, True)
-        ElseIf cboOpcoesDeImpressao.SelectedValue = "2" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, False)
-        ElseIf cboOpcoesDeImpressao.SelectedValue = "3" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDF(True, False, False)
-        ElseIf cboOpcoesDeImpressao.SelectedValue = "4" Then
-            NomeDoPDFGerado = GeradorDePDF.GerePDF(False, True, False)
-        End If
+        Try
+            If cboOpcoesDeImpressao.SelectedValue = "1" Then
+                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, True)
+            ElseIf cboOpcoesDeImpressao.SelectedValue = "2" Then
+                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, False)
+            ElseIf cboOpcoesDeImpressao.SelectedValue = "3" Then
+                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, False, False)
+            ElseIf cboOpcoesDeImpressao.SelectedValue = "4" Then
+                NomeDoPDFGerado = GeradorDePDF.GerePDF(False, True, False)
+            End If
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+            Exit Sub
+        End Try
 
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoPDFGerado
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
