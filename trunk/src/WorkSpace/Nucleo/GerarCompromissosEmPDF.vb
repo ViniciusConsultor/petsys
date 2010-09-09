@@ -96,6 +96,7 @@ Public Class GerarCompromissosEmPDF
                                    ByVal MostraLocal As Boolean, _
                                    ByVal MostraDescricao As Boolean)
         Dim ParagradoEmBranco As Paragraph
+        Dim Flag As Boolean = False
 
         ParagradoEmBranco = New Paragraph(" ")
         _documento.Add(ParagradoEmBranco)
@@ -108,23 +109,35 @@ Public Class GerarCompromissosEmPDF
         If MostraAssunto Then
             Dim Assunto As Paragraph
 
-            Assunto = New Paragraph(String.Concat("Assunto: ", Compromisso.Assunto), _FonteDescricaoCompromissos)
+            Assunto = New Paragraph(0, String.Concat("Assunto: ", Compromisso.Assunto), _FonteDescricaoCompromissos)
             Assunto.IndentationLeft = 56.7
             _documento.Add(Assunto)
+            Flag = True
         End If
 
         If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
             Dim Local As Paragraph
 
-            Local = New Paragraph(String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos)
+            If Not Flag Then
+                Local = New Paragraph(0, String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos)
+            Else
+                Local = New Paragraph(String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos)
+            End If
+
             Local.IndentationLeft = 56.7
             _documento.Add(Local)
+            Flag = True
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
             Dim Descricao As Paragraph
 
-            Descricao = New Paragraph(String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos)
+            If Not Flag Then
+                Descricao = New Paragraph(0, String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos)
+            Else
+                Descricao = New Paragraph(String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos)
+            End If
+
             Descricao.IndentationLeft = 56.7
             _documento.Add(Descricao)
         End If

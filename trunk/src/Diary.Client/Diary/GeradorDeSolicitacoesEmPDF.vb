@@ -52,6 +52,7 @@ Public Class GeradorDeSolicitacoesEmPDF
         Frase = New Phrase("Solicitações de atendimento " & vbLf, _Fonte3)
 
         Cabecalho = New HeaderFooter(Frase, False)
+        Cabecalho.Border = HeaderFooter.NO_BORDER
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Header = Cabecalho
     End Sub
@@ -71,9 +72,9 @@ Public Class GeradorDeSolicitacoesEmPDF
     End Function
 
     Private Sub EscrevaSolicitacoes()
-        Dim Tabela As Table = New Table(6)
+        Dim Tabela As Table = New Table(7)
 
-        Tabela.Widths = New Single() {85, 85, 120, 300, 400, 400}
+        Tabela.Widths = New Single() {85, 85, 120, 300, 400, 400, 120}
 
         Tabela.Padding = 1
         Tabela.Spacing = 1
@@ -85,6 +86,7 @@ Public Class GeradorDeSolicitacoesEmPDF
         Tabela.AddCell(Me.CrieCelula("Assunto", _Fonte2, Cell.ALIGN_CENTER, 13, True))
         Tabela.AddCell(Me.CrieCelula("Descrição", _Fonte2, Cell.ALIGN_CENTER, 13, True))
         Tabela.AddCell(Me.CrieCelula("Contato", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Possui despacho?", _Fonte2, Cell.ALIGN_CENTER, 13, True))
 
         For Each Solicitacao As ISolicitacaoDeAudiencia In _Solicitacoes
             Tabela.AddCell(Me.CrieCelula(" ", _Fonte1, Cell.ALIGN_LEFT, 13, False))
@@ -93,6 +95,7 @@ Public Class GeradorDeSolicitacoesEmPDF
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Assunto, _Fonte1, Cell.ALIGN_LEFT, 13, False))
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Descricao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Contato.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(Me.CrieCelula(IIf(Solicitacao.TemDespacho, "SIM", "NÃO").ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
         Next
 
         _documento.Add(Tabela)
@@ -106,7 +109,7 @@ Public Class GeradorDeSolicitacoesEmPDF
         Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
 
         Rodape = New HeaderFooter(New Phrase(Texto.ToString, _Fonte4), False)
-
+        Rodape.Border = HeaderFooter.NO_BORDER
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Footer = Rodape
     End Sub
