@@ -13,6 +13,7 @@ Namespace Negocio
         Property Descricao() As String
         ReadOnly Property Tipo() As TipoDeSolicitacao
         Property Local() As String
+        Function TemDespacho() As Boolean
     End Interface
 
 End Namespace

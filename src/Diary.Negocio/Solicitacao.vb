@@ -1,5 +1,7 @@
 ﻿Imports Diary.Interfaces.Negocio
 Imports Compartilhados
+Imports Diary.Interfaces.Servicos
+Imports Compartilhados.Fabricas
 
 <Serializable()> _
 Public MustInherit Class Solicitacao
@@ -86,5 +88,19 @@ Public MustInherit Class Solicitacao
             _Local = value
         End Set
     End Property
+
+    Public Function TemDespacho() As Boolean Implements ISolicitacao.TemDespacho
+        If Me.ID Is Nothing Then Return False
+
+        Dim Despachos As IList(Of IDespacho)
+
+        Using Servico As IServicoDeDespacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeDespacho)()
+            Despachos = Servico.ObtenhaDespachosDaSolicitacao(Me.ID.Value)
+        End Using
+
+        If Despachos Is Nothing Then Return False
+
+        Return Despachos.Count > 0
+    End Function
 
 End Class

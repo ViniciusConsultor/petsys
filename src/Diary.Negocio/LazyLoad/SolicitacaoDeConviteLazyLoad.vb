@@ -142,6 +142,11 @@ Namespace LazyLoad
             End Set
         End Property
 
+        Public Function TemDespacho() As Boolean Implements ISolicitacao.TemDespacho
+            If _SolicitacaoDeConviteReal Is Nothing Then CarregueObjetoReal()
+            Return _SolicitacaoDeConviteReal.TemDespacho
+        End Function
+
     End Class
 
 End Namespace

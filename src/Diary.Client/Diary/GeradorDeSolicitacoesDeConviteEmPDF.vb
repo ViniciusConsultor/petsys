@@ -52,10 +52,12 @@ Public Class GeradorDeSolicitacoesDeConviteEmPDF
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Solicitações de convite " & vbLf, _Fonte3)
+        Frase = New Phrase("Convites/Representações " & vbLf, _Fonte3)
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
+        Cabecalho.Border = HeaderFooter.NO_BORDER
+
         _documento.Header = Cabecalho
     End Sub
 
@@ -74,8 +76,8 @@ Public Class GeradorDeSolicitacoesDeConviteEmPDF
     End Function
 
     Private Sub EscrevaSolicitacoes()
-        Dim Tabela As Table = New Table(8)
-        Tabela.Widths = New Single() {85, 85, 120, 300, 400, 400, 200, 120}
+        Dim Tabela As Table = New Table(9)
+        Tabela.Widths = New Single() {100, 85, 120, 280, 380, 400, 200, 120, 120}
 
         Tabela.Width = 100%
         Tabela.Padding = 1
@@ -89,6 +91,7 @@ Public Class GeradorDeSolicitacoesDeConviteEmPDF
         Tabela.AddCell(Me.CrieCelula("Observação", _Fonte2, Cell.ALIGN_CENTER, 13, True))
         Tabela.AddCell(Me.CrieCelula("Contato", _Fonte2, Cell.ALIGN_CENTER, 13, True))
         Tabela.AddCell(Me.CrieCelula("Data da solicitação", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(Me.CrieCelula("Possui despacho?", _Fonte2, Cell.ALIGN_CENTER, 13, True))
 
         For Each Solicitacao As ISolicitacaoDeConvite In _Solicitacoes
             Tabela.AddCell(Me.CrieCelula("", _Fonte1, Cell.ALIGN_LEFT, 13, False))
@@ -99,6 +102,7 @@ Public Class GeradorDeSolicitacoesDeConviteEmPDF
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Observacao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
             Tabela.AddCell(Me.CrieCelula(Solicitacao.Contato.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
             Tabela.AddCell(Me.CrieCelula(Solicitacao.DataDaSolicitacao.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
+            Tabela.AddCell(Me.CrieCelula(IIf(Solicitacao.TemDespacho, "SIM", "NÃO").ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
         Next
 
         _documento.Add(Tabela)
@@ -112,7 +116,7 @@ Public Class GeradorDeSolicitacoesDeConviteEmPDF
         Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
 
         Rodape = New HeaderFooter(New Phrase(Texto.ToString, _Fonte4), False)
-
+        Rodape.Border = HeaderFooter.NO_BORDER
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Footer = Rodape
     End Sub

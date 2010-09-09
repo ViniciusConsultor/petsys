@@ -94,6 +94,7 @@ Public Class GerarLembretesEmPDF
                                  ByVal MostraAssunto As Boolean, _
                                  ByVal MostraDescricao As Boolean)
         Dim ParagradoEmBranco As Paragraph
+        Dim Flag As Boolean = False
 
         ParagradoEmBranco = New Paragraph(" ")
         _documento.Add(ParagradoEmBranco)
@@ -106,17 +107,24 @@ Public Class GerarLembretesEmPDF
         If MostraAssunto Then
             Dim Assunto As Paragraph
 
-            Assunto = New Paragraph(String.Concat("Assunto: ", Lembrete.Assunto), _FonteDescricaoCompromissos)
+            Assunto = New Paragraph(0, String.Concat("Assunto: ", Lembrete.Assunto), _FonteDescricaoCompromissos)
             Assunto.IndentationLeft = 56.7
             _documento.Add(Assunto)
+            Flag = True
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Lembrete.Descricao) Then
             Dim Descricao As Paragraph
 
-            Descricao = New Paragraph(String.Concat("Descrição: ", Lembrete.Descricao), _FonteDescricaoCompromissos)
+            If Not Flag Then
+                Descricao = New Paragraph(0, String.Concat("Descrição: ", Lembrete.Descricao), _FonteDescricaoCompromissos)
+            Else
+                Descricao = New Paragraph(String.Concat("Descrição: ", Lembrete.Descricao), _FonteDescricaoCompromissos)
+            End If
+
             Descricao.IndentationLeft = 56.7
             _documento.Add(Descricao)
+            Flag = False
         End If
     End Sub
 
