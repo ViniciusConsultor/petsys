@@ -49,7 +49,7 @@ Public Class GeradorDeSolicitacoesEmPDF
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase("Solicitações de atendimento " & vbLf, _Fonte3)
+        Frase = New Phrase("Solicitações de audiência " & vbLf, _Fonte3)
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Border = HeaderFooter.NO_BORDER
