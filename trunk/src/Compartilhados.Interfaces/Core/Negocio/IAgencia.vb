@@ -4,6 +4,7 @@
         Inherits IPapelPessoa
 
         Property Numero() As String
+        Property Banco() As IBanco
 
     End Interface
 

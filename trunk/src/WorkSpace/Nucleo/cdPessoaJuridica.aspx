@@ -24,7 +24,7 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label24" runat="server" Text="Nome" ></asp:Label>
+                                    <asp:Label ID="Label24" runat="server" Text="Nome"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtNome" runat="server" MaxLength="100" Skin="Vista" Width="400px"
@@ -184,8 +184,8 @@
                                             <asp:Label ID="Label1" runat="server" Text="Inscrição estadual"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadMaskedTextBox ID="txtInscricaoEstadual" runat="server" Mask="##.###.###-#" Skin="Vista"
-                                                LabelCssClass="radLabelCss_Vista">
+                                            <telerik:RadMaskedTextBox ID="txtInscricaoEstadual" runat="server" Mask="##.###.###-#"
+                                                Skin="Vista" LabelCssClass="radLabelCss_Vista">
                                             </telerik:RadMaskedTextBox>
                                         </td>
                                     </tr>
@@ -194,8 +194,8 @@
                                             <asp:Label ID="Label3" runat="server" Text="Inscrição municipal"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadMaskedTextBox ID="txtInstricaoMunicipal" runat="server" Mask="###.###-#" Skin="Vista"
-                                                LabelCssClass="radLabelCss_Vista">
+                                            <telerik:RadMaskedTextBox ID="txtInstricaoMunicipal" runat="server" Mask="###.###-#"
+                                                Skin="Vista" LabelCssClass="radLabelCss_Vista">
                                             </telerik:RadMaskedTextBox>
                                         </td>
                                     </tr>
@@ -213,6 +213,75 @@
                                             <telerik:RadTextBox ID="txtEmail" runat="server" MaxLength="255" Skin="Vista" Width="300px"
                                                 SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label25" runat="server" Text="Site"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtSite" runat="server" MaxLength="255" Skin="Vista" Width="300px"
+                                                SelectionOnFocus="CaretToBeginning">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label26" runat="server" Text="Telefone"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label27" runat="server" Text="Tipo"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadComboBox ID="cboTipoTelefone" runat="server" Skin="Vista">
+                                            </telerik:RadComboBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label28" runat="server" Text="DDD"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadMaskedTextBox ID="txtDDDTelefone" runat="server" Mask="##">
+                                            </telerik:RadMaskedTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label29" runat="server" Text="Número"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadMaskedTextBox ID="txtNumeroTelefone" runat="server" Mask="####-####">
+                                            </telerik:RadMaskedTextBox>
+                                            <asp:Button ID="btnAdicionarTelefone" runat="server" CssClass="RadUploadSubmit" Text="Adicionar telefone" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <telerik:RadGrid ID="grdTelefones" runat="server" AutoGenerateColumns="False" GridLines="None"
+                                                Skin="Vista">
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
+                                                            ImageUrl="~/imagens/delete.gif">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn DataField="DDD" UniqueName="column1" Visible="True" HeaderText="DDD">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Numero" UniqueName="column2" Visible="True" HeaderText="Número">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Tipo.Descricao" UniqueName="column3" HeaderText="Tipo">
+                                                        </telerik:GridBoundColumn>
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
                                         </td>
                                     </tr>
                                 </table>

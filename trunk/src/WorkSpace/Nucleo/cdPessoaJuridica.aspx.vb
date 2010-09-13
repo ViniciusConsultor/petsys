@@ -6,6 +6,7 @@ Imports Compartilhados.Fabricas
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Negocio.Documento
 Imports System.IO
+Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 
 Partial Public Class cdPessoaJuridica
     Inherits SuperPagina
@@ -18,6 +19,7 @@ Partial Public Class cdPessoaJuridica
 
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_PESSOA_JURIDICA"
     Private CHAVE_ID As String = "CHAVE_ID_CD_PESSOA_JURIDICA"
+    Private CHAVE_TELEFONES As String = "CHAVE_TELEFONES_PESSOA_JURIDICA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlMunicipios2.MunicipioFoiSelecionado, AddressOf MunicipioDeEnderecoFoiSelecionado
@@ -212,6 +214,9 @@ Partial Public Class cdPessoaJuridica
             Pessoa.AdicioneDocumento(InscricaoMunicipal)
         End If
 
+        Pessoa.Site = txtSite.Text
+        Pessoa.AdicioneTelefones(CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone)))
+
         Return Pessoa
     End Function
 
@@ -263,6 +268,9 @@ Partial Public Class cdPessoaJuridica
 
         'imgFoto.ImageUrl = Pessoa.Foto
 
+        txtSite.Text = Pessoa.Site
+        ExibaTelefones(Pessoa.Telefones)
+
         ViewState(CHAVE_ID) = Pessoa.ID.Value
     End Sub
 
@@ -295,6 +303,90 @@ Partial Public Class cdPessoaJuridica
         For Each Item As UF In UF.ObtenhaTodos
             cboUFEndereco.Items.Add(New RadComboBoxItem(Item.Nome, Item.ID.ToString))
         Next
+    End Sub
+
+    Private Sub btnAdicionarTelefone_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionarTelefone.Click
+        Dim Telefones As IList(Of ITelefone)
+        Dim Inconsistencia As String
+
+        Inconsistencia = ValidaDadosDoTelefone()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
+
+        Telefones = CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone))
+
+        If Telefones Is Nothing Then Telefones = New List(Of ITelefone)
+
+        Dim Telefone As ITelefone
+
+        Telefone = ObtenhaObjetoTelefone()
+
+        If Telefones.Contains(Telefone) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O telefone informado já existe para esta pessoa."), False)
+            Exit Sub
+        End If
+        Telefones.Add(Telefone)
+        ExibaTelefones(Telefones)
+        LimpaDadosDoTelefone()
+    End Sub
+
+    Private Sub LimpaDadosDoTelefone()
+        cboTipoTelefone.SelectedValue = TipoDeTelefone.Residencial.ID.ToString
+        txtDDDTelefone.Text = ""
+        txtNumeroTelefone.Text = ""
+    End Sub
+
+    Private Function ObtenhaObjetoTelefone() As ITelefone
+        Dim Telefone As ITelefone
+        Telefone = FabricaGenerica.GetInstancia.CrieObjeto(Of ITelefone)()
+        Telefone.DDD = CShort(txtDDDTelefone.Text)
+        Telefone.Numero = CLng(txtNumeroTelefone.Text)
+        Telefone.Tipo = TipoDeTelefone.Obtenha(CShort(cboTipoTelefone.SelectedValue))
+
+        Return Telefone
+    End Function
+
+    Private Function ValidaDadosDoTelefone() As String
+        If String.IsNullOrEmpty(txtDDDTelefone.Text) Then Return "O DDD do telefone deve ser informado."
+        If String.IsNullOrEmpty(txtNumeroTelefone.Text) Then Return "O número do telefone deve ser informado."
+
+        Return Nothing
+    End Function
+
+    Private Sub grdTelefones_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdTelefones.ItemCommand
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Dim Telefones As IList(Of ITelefone)
+            Telefones = CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone))
+            Telefones.RemoveAt(IndiceSelecionado)
+            ExibaTelefones(Telefones)
+        End If
+    End Sub
+
+    Private Sub grdTelefones_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdTelefones.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdTelefones.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub ExibaTelefones(ByVal Telefones As IList(Of ITelefone))
+        grdTelefones.DataSource = Telefones
+        grdTelefones.DataBind()
+        ViewState(CHAVE_TELEFONES) = Telefones
     End Sub
 
 End Class
