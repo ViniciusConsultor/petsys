@@ -184,8 +184,8 @@ Public Class MapeadorDeOperador
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
-        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read AndAlso Operadores.Count < Quantidade
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString, Quantidade)
+            While Leitor.Read
                 Operadores.Add(MontaOperador(Leitor, False))
             End While
         End Using

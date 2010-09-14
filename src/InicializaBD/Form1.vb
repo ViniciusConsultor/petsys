@@ -36,6 +36,17 @@ Public Class Form1
             Exit Sub
         End If
 
+        Dim Municipios As IList(Of IMunicipio)
+
+        Using Servico As IServicoDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMunicipio)()
+            Municipios = Servico.ObtenhaMunicipiosPorNomeComoFiltro("A", 50)
+        End Using
+
+        If Municipios.Count > 0 Then
+            MsgBox("A base de dados já foi inicializada.", MsgBoxStyle.Information, "Inconsistência")
+            Exit Sub
+        End If
+
         Try
             InicializaMunicipios()
             IniciaOperador()

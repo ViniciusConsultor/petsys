@@ -91,9 +91,8 @@ Public Class MapeadorDeMunicipio
 
         Municipios = New List(Of IMunicipio)
 
-        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read AndAlso Municipios.Count < QuantidadeMaxima
-
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString, QuantidadeMaxima)
+            While Leitor.Read
                 Municipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMunicipio)()
                 Municipio.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
                 Municipio.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
