@@ -112,8 +112,8 @@ Public Class MapeadorDeGrupo
 
         Grupos = New List(Of IGrupo)
 
-        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read AndAlso Grupos.Count < QuantidadeMaximaDeRegistros
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString, QuantidadeMaximaDeRegistros)
+            While Leitor.Read
                 Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupo)()
                 Grupo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
                 Grupo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")

@@ -22,6 +22,9 @@ Namespace DBHelper
 
         ' Executa uma query sql e retorna um DataReader
         Function obtenhaReader(ByVal sQuery As String) As IDataReader
+        Function obtenhaReader(ByVal Query As String, ByVal QuantidadeDeRegistros As Integer) As IDataReader
+        Function SuporteALimite() As Boolean
+        Function ObtenhaQueryComLimite(ByVal QueryOriginal As String, ByVal QuantidadeDeRegistros As Integer) As String
 
     End Interface
 

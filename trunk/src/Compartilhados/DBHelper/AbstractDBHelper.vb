@@ -66,7 +66,7 @@ Namespace DBHelper
             Return Not Transacao Is Nothing
         End Function
 
-        Public Function obtenhaReader(ByVal sQuery As String) As System.Data.IDataReader Implements IDBHelper.obtenhaReader
+        Public Function obtenhaReader(ByVal sQuery As String) As IDataReader Implements IDBHelper.obtenhaReader
             Dim Comando As IDbCommand = Nothing
             Dim Leitor As IDataReader
 
@@ -80,6 +80,22 @@ Namespace DBHelper
                 If Not Comando Is Nothing Then Comando.Dispose()
             End Try
 
+        End Function
+
+        Public Function obtenhaReader(ByVal Query As String, _
+                                      ByVal QuantidadeDeRegistros As Integer) As IDataReader Implements IDBHelper.obtenhaReader
+            If SuporteALimite() Then
+                Return obtenhaReader(ObtenhaQueryComLimite(Query, QuantidadeDeRegistros))
+            End If
+
+            Return obtenhaReader(Query)
+        End Function
+
+        Public MustOverride Function SuporteALimite() As Boolean Implements IDBHelper.SuporteALimite
+
+        Public Overridable Function ObtenhaQueryComLimite(ByVal QueryOriginal As String, _
+                                                          ByVal QuantidadeDeRegistros As Integer) As String Implements IDBHelper.ObtenhaQueryComLimite
+            Return QueryOriginal
         End Function
 
     End Class

@@ -19,6 +19,10 @@ Namespace DBHelper
             Return New OleDbDataAdapter(CType(pComando, OleDbCommand))
         End Function
 
+        Public Overrides Function SuporteALimite() As Boolean
+            Return False
+        End Function
+
     End Class
 
 End Namespace

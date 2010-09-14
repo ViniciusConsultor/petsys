@@ -101,8 +101,8 @@ Public Class MapeadorDePessoaJuridica
 
         Pessoas = New List(Of IPessoaJuridica)
 
-        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql)
-            While Leitor.Read AndAlso Pessoas.Count < QuantidadeMaximaDeRegistros
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql, QuantidadeMaximaDeRegistros)
+            While Leitor.Read
                 Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
                 MyBase.PreencheDados(Pessoa, Leitor)
 

@@ -75,8 +75,8 @@ Public Class MapeadorDeCliente
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
-        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read AndAlso Clientes.Count < QuantidadeMaximaDeRegistros
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString, QuantidadeMaximaDeRegistros)
+            While Leitor.Read
                 Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
 
                 If Tipo.Equals(TipoDePessoa.Fisica) Then
