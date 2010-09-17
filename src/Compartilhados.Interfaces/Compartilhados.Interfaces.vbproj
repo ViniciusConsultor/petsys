@@ -127,6 +127,7 @@
     <Compile Include="Core\Negocio\StatusDoGrupo.vb" />
     <Compile Include="Core\Negocio\StatusDoOperador.vb" />
     <Compile Include="Core\Negocio\TipoDeDocumento.vb" />
+    <Compile Include="Core\Negocio\TipoDeFormatoDeSaidaDoDocumento.vb" />
     <Compile Include="Core\Negocio\TipoDePessoa.vb" />
     <Compile Include="Core\Negocio\TipoDeTelefone.vb" />
     <Compile Include="Core\Negocio\UF.vb" />

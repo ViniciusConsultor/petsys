@@ -530,9 +530,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Nucleo\GerarCompromissosEmPDF.vb" />
-    <Compile Include="Nucleo\GerarLembretesEmPDF.vb" />
-    <Compile Include="Nucleo\GerarTarefasEmPDF.vb" />
+    <Compile Include="Nucleo\ImpressorDeCompromissos.vb" />
+    <Compile Include="Nucleo\ImpressorDeLembretes.vb" />
+    <Compile Include="Nucleo\ImpressorDeTarefas.vb" />
     <Compile Include="Utils\FabricaDeMenu.vb" />
     <Compile Include="WorkSpace.Master.designer.vb">
       <DependentUpon>WorkSpace.Master</DependentUpon>

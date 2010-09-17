@@ -6,8 +6,9 @@ Imports System.IO
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
+Imports iTextSharp.text.rtf
 
-Public Class GerarLembretesEmPDF
+Public Class ImpressorDeLembretes
 
     Private _documento As Document
     Private _Fonte1 As Font
@@ -16,10 +17,11 @@ Public Class GerarLembretesEmPDF
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
-    Private NomeDoPDF As String
+    Private NomeDoArquivoDeSaida As String
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
 
-    Public Sub New(ByVal Lembretes As IList(Of ILembrete))
+    Public Sub New(ByVal Lembretes As IList(Of ILembrete), _
+                   ByVal FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento)
         _Lembretes = Lembretes
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
         _FonteRodape = New Font(Font.TIMES_ROMAN, 10, Font.ITALIC)
@@ -28,19 +30,41 @@ Public Class GerarLembretesEmPDF
         _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
         _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
-        Dim CaminhoDoPDF As String
-        Dim Escritor As PdfWriter
-
-        NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
-        CaminhoDoPDF = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
-
         _documento = New Document(PageSize.A4)
-        Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
+        CriaEscritor(FormatoDeSaida)
+    End Sub
+
+    Private Sub CriaEscritor(ByVal FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento)
+        If FormatoDeSaida.Equals(TipoDeFormatoDeSaidaDoDocumento.PDF) Then
+            CriaEscritorPDF()
+        ElseIf FormatoDeSaida.Equals(TipoDeFormatoDeSaidaDoDocumento.RTF) Then
+            CriaEscritorRTF()
+        End If
+    End Sub
+
+    Private Sub CriaEscritorPDF()
+        Dim Escritor As PdfWriter
+        Dim Caminho As String
+
+        NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
+        Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
+
+        Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
         Escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE)
         Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
     End Sub
 
-    Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraDescricao As Boolean) As String
+    Private Sub CriaEscritorRTF()
+        Dim Escritor As RtfWriter2
+        Dim Caminho As String
+
+        NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
+        Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
+
+        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
+    End Sub
+
+    Public Function Gere(ByVal MostraAssunto As Boolean, ByVal MostraDescricao As Boolean) As String
         Dim LembreteAnterior As ILembrete = Nothing
 
         Dim Configuracao As IConfiguracaoDoSistema
@@ -70,7 +94,7 @@ Public Class GerarLembretesEmPDF
         Next
 
         _documento.Close()
-        Return NomeDoPDF
+        Return NomeDoArquivoDeSaida
     End Function
 
     Private Sub EscrevaCabecalho(ByVal Lembrete As ILembrete)

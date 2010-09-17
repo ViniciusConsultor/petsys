@@ -1,4 +1,5 @@
 ﻿Imports iTextSharp.text.pdf
+Imports iTextSharp.text.rtf
 Imports iTextSharp.text
 Imports System.IO
 Imports Compartilhados.Componentes.Web
@@ -6,8 +7,9 @@ Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Servicos
+Imports iTextSharp.text.pdf.draw
 
-Public Class GerarCompromissosEmPDF
+Public Class ImpressorDeCompromissos
 
     Private _documento As Document
     Private _Fonte1 As Font
@@ -18,9 +20,10 @@ Public Class GerarCompromissosEmPDF
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
-    Private NomeDoPDF As String
+    Private NomeDoArquivoDeSaida As String
 
-    Public Sub New(ByVal Compromissos As IList(Of ICompromisso))
+    Public Sub New(ByVal Compromissos As IList(Of ICompromisso), _
+                   ByVal FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento)
         _Compromissos = Compromissos
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
         _FonteRodape = New Font(Font.TIMES_ROMAN, 10, Font.ITALIC)
@@ -29,19 +32,41 @@ Public Class GerarCompromissosEmPDF
         _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
         _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
-        Dim CaminhoDoPDF As String
-        Dim Escritor As PdfWriter
-
-        NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
-        CaminhoDoPDF = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
-
         _documento = New Document(PageSize.A4)
-        Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
+        CriaEscritor(FormatoDeSaida)
+    End Sub
+
+    Private Sub CriaEscritor(ByVal FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento)
+        If FormatoDeSaida.Equals(TipoDeFormatoDeSaidaDoDocumento.PDF) Then
+            CriaEscritorPDF()
+        ElseIf FormatoDeSaida.Equals(TipoDeFormatoDeSaidaDoDocumento.RTF) Then
+            CriaEscritorRTF()
+        End If
+    End Sub
+
+    Private Sub CriaEscritorPDF()
+        Dim Escritor As PdfWriter
+        Dim Caminho As String
+
+        NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
+        Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
+
+        Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
         Escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE)
         Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
     End Sub
 
-    Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraLocal As Boolean, ByVal MostraDescricao As Boolean) As String
+    Private Sub CriaEscritorRTF()
+        Dim Escritor As RtfWriter2
+        Dim Caminho As String
+
+        NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
+        Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
+
+        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
+    End Sub
+
+    Public Function Gere(ByVal MostraAssunto As Boolean, ByVal MostraLocal As Boolean, ByVal MostraDescricao As Boolean) As String
         Dim CompromissoAnterior As ICompromisso = Nothing
 
         Dim Configuracao As IConfiguracaoDoSistema
@@ -71,7 +96,7 @@ Public Class GerarCompromissosEmPDF
         Next
 
         _documento.Close()
-        Return NomeDoPDF
+        Return NomeDoArquivoDeSaida
     End Function
 
     Private Sub EscrevaCabecalho(ByVal Compromisso As ICompromisso)
@@ -98,59 +123,53 @@ Public Class GerarCompromissosEmPDF
         Dim ParagradoEmBranco As Paragraph
         Dim Flag As Boolean = False
 
-        ParagradoEmBranco = New Paragraph(" ")
+        ParagradoEmBranco = New Paragraph("")
         _documento.Add(ParagradoEmBranco)
 
-        Dim Hora As Paragraph
+        Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
 
-        Hora = New Paragraph(Compromisso.Inicio.ToString("HH:mm") & "h", _FonteHorario)
-        _documento.Add(Hora)
+        Dim CorpoCompromisso As Phrase
+
+        CorpoCompromisso = New Phrase
+
+        CorpoCompromisso.Add(New Chunk(Compromisso.Inicio.ToString("HH") & "h" & Compromisso.Inicio.ToString("mm") & "min", _FonteHorario))
+        CorpoCompromisso.Add(CaracterTAB)
 
         If MostraAssunto Then
-            Dim Assunto As Paragraph
-
-            Assunto = New Paragraph(0, String.Concat("Assunto: ", Compromisso.Assunto), _FonteDescricaoCompromissos)
-            Assunto.IndentationLeft = 56.7
-            _documento.Add(Assunto)
+            CorpoCompromisso.Add(New Chunk(String.Concat("Assunto: ", Compromisso.Assunto), _FonteDescricaoCompromissos))
+            CorpoCompromisso.Add(Chunk.NEWLINE)
             Flag = True
         End If
 
         If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
-            Dim Local As Paragraph
-
-            If Not Flag Then
-                Local = New Paragraph(0, String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos)
-            Else
-                Local = New Paragraph(String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos)
+            If Flag Then
+                CorpoCompromisso.Add(CaracterTAB)
             End If
 
-            Local.IndentationLeft = 56.7
-            _documento.Add(Local)
-            Flag = True
+            CorpoCompromisso.Add(New Chunk(String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos))
+            CorpoCompromisso.Add(Chunk.NEWLINE)
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
-            Dim Descricao As Paragraph
-
-            If Not Flag Then
-                Descricao = New Paragraph(0, String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos)
-            Else
-                Descricao = New Paragraph(String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos)
+            If Flag Then
+                CorpoCompromisso.Add(CaracterTAB)
             End If
 
-            Descricao.IndentationLeft = 56.7
-            _documento.Add(Descricao)
+            CorpoCompromisso.Add(New Chunk(String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos))
         End If
+
+        _documento.Add(CorpoCompromisso)
     End Sub
 
     Private Sub EscrevaRodape()
         Dim Rodape As HeaderFooter
+        Dim DataEHoraAtual As Date = Now
 
-        Dim Texto As New StringBuilder
+        Dim Texto As String
 
-        Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
+        Texto = String.Concat("Impressão em: ", DataEHoraAtual.ToString("dd/MM/yyyy"), " às ", DataEHoraAtual.ToString("HH"), "h", DataEHoraAtual.ToString("mm"), "m", DataEHoraAtual.ToString("ss"), "s")
 
-        Rodape = New HeaderFooter(New Phrase(Texto.ToString, _FonteRodape), False)
+        Rodape = New HeaderFooter(New Phrase(Texto, _FonteRodape), False)
 
         If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeCompromissos Then
             Rodape.Border = HeaderFooter.NO_BORDER
