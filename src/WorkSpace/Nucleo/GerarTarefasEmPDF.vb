@@ -1,7 +1,8 @@
 ﻿Imports iTextSharp.text
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Componentes.Web
-Imports iTextSharp.text.pdf
+'Imports iTextSharp.text.pdf
+Imports iTextSharp.text.rtf
 Imports System.IO
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Servicos
@@ -28,15 +29,19 @@ Public Class GerarTarefasEmPDF
         _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
         Dim CaminhoDoPDF As String
-        Dim Escritor As PdfWriter
+        '       Dim Escritor As PdfWriter
+        Dim Escritor As RtfWriter2
 
-        NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
+        'NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
+        NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
         CaminhoDoPDF = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
 
         _documento = New Document(PageSize.A4)
-        Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
-        Escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE)
-        Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
+        'Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
+
+        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
+        'Escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE)
+        'Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
     End Sub
 
     Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraDescricao As Boolean) As String
