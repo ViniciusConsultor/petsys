@@ -18,6 +18,15 @@
                                 </telerik:RadComboBox>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label3" runat="server" Text="Formato de saída"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:RadioButtonList ID="rblFormato" runat="server" 
+                                    RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                </asp:RadioButtonList>
+                            </td>
                         </tr>
                     </table>
                 </ContentTemplate>

@@ -22,6 +22,7 @@ Partial Public Class frmImpressaoLembrete
     Private Sub ExibaTelaInicial()
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         CarregaOpcoesDeImpressao()
+        CarregaOpcoesDeFormatoDeSaida()
     End Sub
 
     Private Sub CarregaOpcoesDeImpressao()
@@ -29,6 +30,12 @@ Partial Public Class frmImpressaoLembrete
         cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Assunto + Descrição", "1"))
         cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Assunto", "2"))
         cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Descrição", "3"))
+    End Sub
+
+    Private Sub CarregaOpcoesDeFormatoDeSaida()
+        rblFormato.Items.Clear()
+        rblFormato.Items.Add(New ListItem(TipoDeFormatoDeSaidaDoDocumento.RTF.Descricao, TipoDeFormatoDeSaidaDoDocumento.RTF.ID))
+        rblFormato.Items.Add(New ListItem(TipoDeFormatoDeSaidaDoDocumento.PDF.Descricao, TipoDeFormatoDeSaidaDoDocumento.PDF.ID))
     End Sub
 
     Private Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
@@ -53,19 +60,21 @@ Partial Public Class frmImpressaoLembrete
             Exit Sub
         End If
 
-        Dim GeradorDePDF As GerarLembretesEmPDF
-        Dim NomeDoPDFGerado As String = Nothing
+        Dim Gerador As ImpressorDeLembretes
+        Dim NomeDoArquivo As String = Nothing
         Dim URL As String
+        Dim FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento
 
-        GeradorDePDF = New GerarLembretesEmPDF(Lembretes)
+        FormatoDeSaida = TipoDeFormatoDeSaidaDoDocumento.Obtenha(CChar(rblFormato.SelectedValue))
+        Gerador = New ImpressorDeLembretes(Lembretes, FormatoDeSaida)
 
         Try
             If cboOpcoesDeImpressao.SelectedValue = "1" Then
-                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True)
+                NomeDoArquivo = Gerador.Gere(True, True)
             ElseIf cboOpcoesDeImpressao.SelectedValue = "2" Then
-                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, False)
+                NomeDoArquivo = Gerador.Gere(True, False)
             ElseIf cboOpcoesDeImpressao.SelectedValue = "3" Then
-                NomeDoPDFGerado = GeradorDePDF.GerePDF(False, True)
+                NomeDoArquivo = Gerador.Gere(False, True)
             End If
 
         Catch ex As BussinesException
@@ -73,7 +82,8 @@ Partial Public Class frmImpressaoLembrete
             Exit Sub
         End Try
 
-        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoPDFGerado
+        'URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoPDFGerado
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
     End Sub
 

@@ -22,6 +22,7 @@ Partial Public Class frmImpressaoCompromisso
     Private Sub ExibaTelaInicial()
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         CarregaOpcoesDeImpressao()
+        CarregaOpcoesDeFormatoDeSaida()
     End Sub
 
     Private Sub CarregaOpcoesDeImpressao()
@@ -30,6 +31,12 @@ Partial Public Class frmImpressaoCompromisso
         cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Assunto + Local", "2"))
         cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Assunto", "3"))
         cboOpcoesDeImpressao.Items.Add(New RadComboBoxItem("Local", "4"))
+    End Sub
+
+    Private Sub CarregaOpcoesDeFormatoDeSaida()
+        rblFormato.Items.Clear()
+        rblFormato.Items.Add(New ListItem(TipoDeFormatoDeSaidaDoDocumento.RTF.Descricao, TipoDeFormatoDeSaidaDoDocumento.RTF.ID))
+        rblFormato.Items.Add(New ListItem(TipoDeFormatoDeSaidaDoDocumento.PDF.Descricao, TipoDeFormatoDeSaidaDoDocumento.PDF.ID))
     End Sub
 
     Private Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
@@ -54,21 +61,24 @@ Partial Public Class frmImpressaoCompromisso
             Exit Sub
         End If
 
-        Dim GeradorDePDF As GerarCompromissosEmPDF
-        Dim NomeDoPDFGerado As String = Nothing
+        Dim Gerador As ImpressorDeCompromissos
+        Dim NomeDoArquivo As String = Nothing
         Dim URL As String
+        Dim FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento
 
-        GeradorDePDF = New GerarCompromissosEmPDF(Compromissos)
+        FormatoDeSaida = TipoDeFormatoDeSaidaDoDocumento.Obtenha(CChar(rblFormato.SelectedValue))
+
+        Gerador = New ImpressorDeCompromissos(Compromissos, FormatoDeSaida)
 
         Try
             If cboOpcoesDeImpressao.SelectedValue = "1" Then
-                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, True)
+                NomeDoArquivo = Gerador.Gere(True, True, True)
             ElseIf cboOpcoesDeImpressao.SelectedValue = "2" Then
-                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, True, False)
+                NomeDoArquivo = Gerador.Gere(True, True, False)
             ElseIf cboOpcoesDeImpressao.SelectedValue = "3" Then
-                NomeDoPDFGerado = GeradorDePDF.GerePDF(True, False, False)
+                NomeDoArquivo = Gerador.Gere(True, False, False)
             ElseIf cboOpcoesDeImpressao.SelectedValue = "4" Then
-                NomeDoPDFGerado = GeradorDePDF.GerePDF(False, True, False)
+                NomeDoArquivo = Gerador.Gere(False, True, False)
             End If
 
         Catch ex As BussinesException
@@ -76,7 +86,7 @@ Partial Public Class frmImpressaoCompromisso
             Exit Sub
         End Try
 
-        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoPDFGerado
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
     End Sub
 

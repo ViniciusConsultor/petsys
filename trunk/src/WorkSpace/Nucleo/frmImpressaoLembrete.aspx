@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="frmImpressaoLembrete.aspx.vb" Inherits="WorkSpace.frmImpressaoLembrete" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+    CodeBehind="frmImpressaoLembrete.aspx.vb" Inherits="WorkSpace.frmImpressaoLembrete" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
@@ -16,6 +18,15 @@
                                 </telerik:RadComboBox>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label3" runat="server" Text="Formato de saída"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:RadioButtonList ID="rblFormato" runat="server" RepeatDirection="Horizontal"
+                                    RepeatLayout="Flow">
+                                </asp:RadioButtonList>
+                            </td>
                         </tr>
                     </table>
                 </ContentTemplate>

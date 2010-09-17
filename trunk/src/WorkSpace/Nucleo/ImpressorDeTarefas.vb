@@ -1,14 +1,14 @@
 ﻿Imports iTextSharp.text
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Componentes.Web
-'Imports iTextSharp.text.pdf
+Imports iTextSharp.text.pdf
 Imports iTextSharp.text.rtf
 Imports System.IO
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
 
-Public Class GerarTarefasEmPDF
+Public Class ImpressorDeTarefas
 
     Private _documento As Document
     Private _Fonte1 As Font
@@ -17,10 +17,11 @@ Public Class GerarTarefasEmPDF
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
     Private _FonteDescricaoCompromissos As Font
-    Private NomeDoPDF As String
+    Private NomeDoArquivoDeSaida As String
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
 
-    Public Sub New(ByVal Tarefas As IList(Of ITarefa))
+    Public Sub New(ByVal Tarefas As IList(Of ITarefa), _
+                   ByVal FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento)
         _Tarefas = Tarefas
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
         _FonteRodape = New Font(Font.TIMES_ROMAN, 10, Font.ITALIC)
@@ -28,23 +29,41 @@ Public Class GerarTarefasEmPDF
         _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
         _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
-        Dim CaminhoDoPDF As String
-        '       Dim Escritor As PdfWriter
-        Dim Escritor As RtfWriter2
-
-        'NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
-        NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
-        CaminhoDoPDF = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
-
         _documento = New Document(PageSize.A4)
-        'Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
-
-        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
-        'Escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE)
-        'Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
+        CriaEscritor(FormatoDeSaida)
     End Sub
 
-    Public Function GerePDF(ByVal MostraAssunto As Boolean, ByVal MostraDescricao As Boolean) As String
+    Private Sub CriaEscritor(ByVal FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento)
+        If FormatoDeSaida.Equals(TipoDeFormatoDeSaidaDoDocumento.PDF) Then
+            CriaEscritorPDF()
+        ElseIf FormatoDeSaida.Equals(TipoDeFormatoDeSaidaDoDocumento.RTF) Then
+            CriaEscritorRTF()
+        End If
+    End Sub
+
+    Private Sub CriaEscritorPDF()
+        Dim Escritor As PdfWriter
+        Dim Caminho As String
+
+        NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
+        Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
+
+        Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
+        Escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE)
+        Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
+    End Sub
+
+    Private Sub CriaEscritorRTF()
+        Dim Escritor As RtfWriter2
+        Dim Caminho As String
+
+        NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
+        Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
+
+        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
+    End Sub
+
+    Public Function Gere(ByVal MostraAssunto As Boolean, ByVal MostraDescricao As Boolean) As String
         Dim TarefaAnterior As ITarefa = Nothing
 
         Dim Configuracao As IConfiguracaoDoSistema
@@ -74,7 +93,7 @@ Public Class GerarTarefasEmPDF
         Next
 
         _documento.Close()
-        Return NomeDoPDF
+        Return NomeDoArquivoDeSaida
     End Function
 
     Private Sub EscrevaCabecalho(ByVal Tarefa As ITarefa)
@@ -148,6 +167,5 @@ Public Class GerarTarefasEmPDF
 
         _documento.Footer = Rodape
     End Sub
-
 
 End Class
