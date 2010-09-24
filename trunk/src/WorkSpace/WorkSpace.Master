@@ -15,7 +15,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" LoadScriptsBeforeUI="true" AsyncPostBackTimeOut="600">
+    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" LoadScriptsBeforeUI="true"
+        AsyncPostBackTimeout="600">
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
