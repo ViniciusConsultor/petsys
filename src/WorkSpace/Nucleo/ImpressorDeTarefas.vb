@@ -7,6 +7,7 @@ Imports System.IO
 Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
+Imports iTextSharp.text.pdf.draw
 
 Public Class ImpressorDeTarefas
 
@@ -122,43 +123,40 @@ Public Class ImpressorDeTarefas
         ParagradoEmBranco = New Paragraph(" ")
         _documento.Add(ParagradoEmBranco)
 
-        Dim Hora As Paragraph
+        Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
+        Dim CorpoLembrete As Phrase
 
-        Hora = New Paragraph(Tarefa.DataDeInicio.ToString("HH:mm") & "h", _FonteHorario)
-        _documento.Add(Hora)
+        CorpoLembrete = New Phrase
+
+        CorpoLembrete.Add(New Chunk(Tarefa.DataDeInicio.ToString("HH") & "h" & Tarefa.DataDeInicio.ToString("mm") & "min", _FonteHorario))
+        CorpoLembrete.Add(CaracterTAB)
 
         If MostraAssunto Then
-            Dim Assunto As Paragraph
-
-            Assunto = New Paragraph(0, String.Concat("Assunto: ", Tarefa.Assunto), _FonteDescricaoCompromissos)
-            Assunto.IndentationLeft = 56.7
-            _documento.Add(Assunto)
+            CorpoLembrete.Add(New Chunk(String.Concat("Assunto: ", Tarefa.Assunto), _FonteDescricaoCompromissos))
+            CorpoLembrete.Add(Chunk.NEWLINE)
             Flag = True
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Tarefa.Descricao) Then
-            Dim Descricao As Paragraph
-
-            If Not Flag Then
-                Descricao = New Paragraph(0, String.Concat("Descrição: ", Tarefa.Descricao), _FonteDescricaoCompromissos)
-            Else
-                Descricao = New Paragraph(String.Concat("Descrição: ", Tarefa.Descricao), _FonteDescricaoCompromissos)
+            If Flag Then
+                CorpoLembrete.Add(CaracterTAB)
             End If
 
-            Descricao.IndentationLeft = 56.7
-            _documento.Add(Descricao)
-            Flag = True
+            CorpoLembrete.Add(New Chunk(String.Concat("Descrição: ", Tarefa.Descricao), _FonteDescricaoCompromissos))
         End If
+
+        _documento.Add(CorpoLembrete)
     End Sub
 
     Private Sub EscrevaRodape()
         Dim Rodape As HeaderFooter
+        Dim DataEHoraAtual As Date = Now
 
-        Dim Texto As New StringBuilder
+        Dim Texto As String
 
-        Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))
+        Texto = String.Concat("Impressão em: ", DataEHoraAtual.ToString("dd/MM/yyyy"), " às ", DataEHoraAtual.ToString("HH"), "h", DataEHoraAtual.ToString("mm"), "m", DataEHoraAtual.ToString("ss"), "s")
 
-        Rodape = New HeaderFooter(New Phrase(Texto.ToString, _FonteRodape), False)
+        Rodape = New HeaderFooter(New Phrase(Texto, _FonteRodape), False)
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
 
         If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeCompromissos Then

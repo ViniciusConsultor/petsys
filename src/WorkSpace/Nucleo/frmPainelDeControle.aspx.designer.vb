@@ -160,6 +160,15 @@ Partial Public Class frmPainelDeControle
     Protected WithEvents txtServidorDeSaidaDeEmail As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
+    '''RadColorPicker1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadColorPicker1 As Global.Telerik.Web.UI.RadColorPicker
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>

@@ -118,11 +118,9 @@ Public Class FabricaDeMenu
                 _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
                 _JsMenu.AppendLine("width:800,")
                 _JsMenu.AppendLine("height:550,")
-                _JsMenu.AppendLine(String.Concat("html:'<iframe src =""", UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, Funcao.URL, """ width=""100%"" height=""100%""></iframe>',"))
+                _JsMenu.AppendLine(String.Concat("html:'" & CrieHTML(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & Funcao.URL) & "',"))
                 _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
                 _JsMenu.AppendLine("shim:false,")
-                _JsMenu.AppendLine("loadingText: 'Aguarde carregando...',")
-                _JsMenu.AppendLine("loadMask: {msg:'Loading Topics...'},")
                 _JsMenu.AppendLine("animCollapse:true,")
                 _JsMenu.AppendLine("constrainHeader:true")
                 _JsMenu.AppendLine("});")
@@ -143,5 +141,18 @@ Public Class FabricaDeMenu
         _JsMenu.AppendLine("}")
         _JsMenu.AppendLine("});")
     End Sub
+
+    Private Function CrieHTML(ByVal URL As String) As String
+        Dim HTML As New StringBuilder
+
+        HTML.Append("<div id=""divLoading"" style=""background-color: #CC3300; color: white; font-weight: bold;")
+        HTML.Append("font-family: Arial; font-size: small; display: inline; position: absolute; top: 0px;")
+        HTML.Append("left: 0px; padding: 2px;"">")
+        HTML.Append("Aguarde carregando página...")
+        HTML.Append("</div>")
+        HTML.Append("<iframe src=""" & URL & """ & frameborder=""0"" id=""iContent"" onload=""hideLoading()""  width=""100%"" height=""100%""/>")
+
+        Return HTML.ToString
+    End Function
 
 End Class

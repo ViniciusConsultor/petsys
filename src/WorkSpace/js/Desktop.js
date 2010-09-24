@@ -132,7 +132,7 @@ Ext.Desktop = function(app) {
                         title: t.innerText,
                         width: 640,
                         height: 480,
-                        html: '<iframe src="'+ t.firstChild.href +'" width="100%" height="100%"></iframe>',
+                        html: '<div id="divLoading" style="background-color: #CC3300; color: white; font-weight: bold; font-family: Arial; font-size: small; display: inline; position: absolute; top: 0px; left: 0px; padding: 2px;"> Aguarde carregando p&aacute;gina...</div> <iframe src="' + t.firstChild.href + '" width="100%" height="100%" onload="hideLoading()"></iframe>', 
                         iconCls: 'bogus',
                         shim: false,
                         animCollapse: false,

@@ -21,16 +21,14 @@
     <script src="js/Module.js" type="text/javascript"></script>
 
     <link href="desktop.css" rel="stylesheet" type="text/css" />
-    
-  </head>
 
-<body scroll="no" runat="server" id="Corpo" >
+    <script src="js/loading.js" type="text/javascript"></script>
+
+</head>
+<body scroll="no" runat="server" id="Corpo">
     <div id="desktop">
-    
-      <dl id="shortcuts" runat="server">
-        
-      </dl>
-
+        <dl id="shortcuts" runat="server">
+        </dl>
     </div>
     <div id="ux-taskbar">
         <div id="ux-taskbar-start">
