@@ -23,6 +23,7 @@ Partial Public Class frmImpressaoTarefa
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         CarregaOpcoesDeImpressao()
         CarregaOpcoesDeFormatoDeSaida()
+        rblFormato.SelectedValue = TipoDeFormatoDeSaidaDoDocumento.RTF.ID.ToString
     End Sub
 
     Private Sub CarregaOpcoesDeImpressao()
@@ -83,7 +84,7 @@ Partial Public Class frmImpressaoTarefa
         End Try
 
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
     End Sub
 
     Private Function ValidaDados() As String

@@ -551,6 +551,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="imagens\carregandopagina.gif" />
     <Content Include="imagens\wallpapers\13-daylight_planet_wallpaper_by_janedoe873.jpg" />
     <Content Include="imagens\wallpapers\desktop.gif" />
     <Content Include="imagens\wallpapers\desktop3.jpg" />

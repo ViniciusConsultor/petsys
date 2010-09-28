@@ -132,11 +132,12 @@ Ext.Desktop = function(app) {
                         title: t.innerText,
                         width: 640,
                         height: 480,
-                        html: '<div id="divLoading" style="background-color: #CC3300; color: white; font-weight: bold; font-family: Arial; font-size: small; display: inline; position: absolute; top: 0px; left: 0px; padding: 2px;"> Aguarde carregando p&aacute;gina...</div> <iframe src="' + t.firstChild.href + '" width="100%" height="100%" onload="hideLoading()"></iframe>', 
+                        html: '<div id="divLoading" style="position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"> <div style="position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"> <img src="imagens/carregandopagina.gif" alt=""></div></div>  <iframe src="' + t.firstChild.href + '" width="100%" height="100%" onload="hideLoading()"></iframe>', 
                         iconCls: 'bogus',
                         shim: false,
                         animCollapse: false,
                         constrainHeader: true
+                                               
                     });
                 }
                 win.show();
