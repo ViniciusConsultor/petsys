@@ -10,9 +10,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("T13.Servicos.RemotoCOM")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Simple TI")> 
+<Assembly: AssemblyCompany("SimpleTI")> 
 <Assembly: AssemblyProduct("T13.Servicos.RemotoCOM")> 
-<Assembly: AssemblyCopyright("Copyright © Simple TI  2010")>
+<Assembly: AssemblyCopyright("SimpleTI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(True)> 
@@ -32,4 +32,4 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.1.1.57")> 
+<Assembly: AssemblyFileVersion("1.2.0.80")> 

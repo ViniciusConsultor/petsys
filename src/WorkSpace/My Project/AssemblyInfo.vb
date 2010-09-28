@@ -10,9 +10,9 @@ Imports System.Security
 ' Review the values of the assembly attributes
 <Assembly: AssemblyTitle("WorkSpace")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Simple TI")> 
+<Assembly: AssemblyCompany("SimpleTI")> 
 <Assembly: AssemblyProduct("WorkSpace")> 
-<Assembly: AssemblyCopyright("Copyright © Simple TI  2010")>
+<Assembly: AssemblyCopyright("SimpleTI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: AllowPartiallyTrustedCallersAttribute()> 
 
@@ -33,4 +33,4 @@ Imports System.Security
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.1.1.57")> 
+<Assembly: AssemblyFileVersion("1.2.0.80")> 

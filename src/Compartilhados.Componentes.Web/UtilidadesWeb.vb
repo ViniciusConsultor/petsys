@@ -61,6 +61,18 @@ Public Class UtilidadesWeb
 
     End Sub
 
+    Public Shared Function MostraArquivoParaDownload(ByVal URL As String, ByVal Titulo As String) As String
+        Dim Js As New StringBuilder
+
+        Js.AppendLine("<script language='javascript' type='text/javascript'>")
+
+        Js.AppendLine("window.open(""" & URL & """, """ & Titulo & """, """")")
+        Js.AppendLine("</script>")
+
+        Return Js.ToString
+
+    End Function
+
     Public Shared Function MostraMensagemDeInformacao(ByVal mensagem As String) As String
         Dim Js As New StringBuilder
 

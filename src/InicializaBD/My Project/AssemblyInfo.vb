@@ -11,9 +11,9 @@ Imports System.Security
 
 <Assembly: AssemblyTitle("InicializaBD")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Simple TI")> 
+<Assembly: AssemblyCompany("SimpleTI")> 
 <Assembly: AssemblyProduct("InicializaBD")> 
-<Assembly: AssemblyCopyright("Copyright © Simple TI  2010")> 
+<Assembly: AssemblyCopyright("SimpleTI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: AllowPartiallyTrustedCallersAttribute()> 
 <Assembly: ComVisible(False)> 
@@ -33,4 +33,4 @@ Imports System.Security
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.1.1.57")> 
+<Assembly: AssemblyFileVersion("1.2.0.80")> 

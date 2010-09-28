@@ -145,10 +145,10 @@ Public Class FabricaDeMenu
     Private Function CrieHTML(ByVal URL As String) As String
         Dim HTML As New StringBuilder
 
-        HTML.Append("<div id=""divLoading"" style=""background-color: #CC3300; color: white; font-weight: bold;")
-        HTML.Append("font-family: Arial; font-size: small; display: inline; position: absolute; top: 0px;")
-        HTML.Append("left: 0px; padding: 2px;"">")
-        HTML.Append("Aguarde carregando página...")
+        HTML.Append("<div id=""divLoading"" style=""position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"">")
+        HTML.Append("<div style=""position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"">")
+        HTML.Append("<img src=""imagens/carregandopagina.gif"" alt="""">")
+        HTML.Append("</div>")
         HTML.Append("</div>")
         HTML.Append("<iframe src=""" & URL & """ & frameborder=""0"" id=""iContent"" onload=""hideLoading()""  width=""100%"" height=""100%""/>")
 
