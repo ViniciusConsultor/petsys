@@ -6,9 +6,9 @@
         Private _ID As Char
         Private _Descricao As String
 
-        Public Shared NaoIniciada As StatusDaTarefa = New StatusDaTarefa("N"c, "NÃO INICIADA")
-        Public Shared EmAndamento As StatusDaTarefa = New StatusDaTarefa("E"c, "EM ANDAMENTO")
-        Public Shared Concluida As StatusDaTarefa = New StatusDaTarefa("C"c, "CONCLUÍDA")
+        Public Shared NaoIniciada As StatusDaTarefa = New StatusDaTarefa("N"c, "Não iniciada")
+        Public Shared EmAndamento As StatusDaTarefa = New StatusDaTarefa("E"c, "Em andamento")
+        Public Shared Concluida As StatusDaTarefa = New StatusDaTarefa("C"c, "Concluída")
 
         Private Shared Lista As StatusDaTarefa() = {NaoIniciada, EmAndamento, Concluida}
 

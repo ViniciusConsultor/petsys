@@ -60,6 +60,20 @@ Public Class Util
         Return Caminho
     End Function
 
+    Public Shared Function SistemaUtilizaSQLUpperCase() As Boolean
+        Dim Configuracao As KeyValueConfigurationElement
+        Dim Caminho As String
+
+        If ExecutandoServidorWeb() Then
+            Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
+        Else
+            Caminho = ObtenhaPastaConfiguradaPorVariavelDeAmbiente()
+        End If
+
+        Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("SistemaUtilizaSQLUpperCase")
+        Return CBool(Configuracao.Value)
+    End Function
+
     Public Shared Function ObtenhaStringDeConexao() As String
         Dim Configuracao As KeyValueConfigurationElement
         Dim Caminho As String

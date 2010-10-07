@@ -6,9 +6,9 @@
         Private _ID As Char
         Private _Descricao As String
 
-        Public Shared Pendente As StatusDoCompromisso = New StatusDoCompromisso("P"c, "PENDENTE")
-        Public Shared Cancelado As StatusDoCompromisso = New StatusDoCompromisso("A"c, "CANCELADO")
-        Public Shared Concluido As StatusDoCompromisso = New StatusDoCompromisso("C"c, "CONCLUÍDO")
+        Public Shared Pendente As StatusDoCompromisso = New StatusDoCompromisso("P"c, "Pendente")
+        Public Shared Cancelado As StatusDoCompromisso = New StatusDoCompromisso("A"c, "Cancelado")
+        Public Shared Concluido As StatusDoCompromisso = New StatusDoCompromisso("C"c, "Concluído")
 
         Private Shared Lista As StatusDoCompromisso() = {Pendente, Concluido, Cancelado}
 

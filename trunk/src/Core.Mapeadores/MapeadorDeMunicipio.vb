@@ -151,7 +151,7 @@ Public Class MapeadorDeMunicipio
         SQL = ObtenhaSQL()
 
         If Not String.IsNullOrEmpty(Nome) Then
-            SQL.Append(String.Concat(" WHERE NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome).ToUpper, "%'"))
+            SQL.Append(String.Concat(" WHERE NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         SQL.Append(" ORDER BY NOME")

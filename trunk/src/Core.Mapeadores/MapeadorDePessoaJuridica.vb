@@ -88,7 +88,7 @@ Public Class MapeadorDePessoaJuridica
         Sql.Append(" WHERE ID = IDPESSOA ")
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql.Append(String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome).ToUpper, "%'"))
+            Sql.Append(String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros)

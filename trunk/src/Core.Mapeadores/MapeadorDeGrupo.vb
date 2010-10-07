@@ -99,7 +99,7 @@ Public Class MapeadorDeGrupo
         SQL = ObtenhaSQL()
 
         If Not String.IsNullOrEmpty(Nome) Then
-            SQL.Append(String.Concat(" WHERE NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome).ToUpper, "%'"))
+            SQL.Append(String.Concat(" WHERE NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         Return ObtenhaGrupos(SQL, QuantidadeMaximaDeRegistros)

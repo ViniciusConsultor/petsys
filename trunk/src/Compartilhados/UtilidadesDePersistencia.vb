@@ -20,10 +20,6 @@
         Return Retorno
     End Function
 
-    Public Shared Function PreparaComando(ByVal Comando As String) As String
-        Return Comando.Trim().ToUpper()
-    End Function
-
     Public Overloads Shared Function GetValorBooleano(ByVal Linha As DataRow, ByVal NomeColuna As String) As Boolean
         Return p_getValorBoolean(Linha.Item(NomeColuna))
     End Function

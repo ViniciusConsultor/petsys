@@ -132,7 +132,7 @@ Public Class MapeadorDePessoaFisica
         Sql = Me.ObtenhaQueryBasica
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql &= String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome).ToUpper, "%'")
+            Sql &= String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'")
         End If
 
         Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros)

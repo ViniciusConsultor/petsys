@@ -5,7 +5,7 @@
     <telerik:RadComboBox ID="cboMunicipios" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
         LoadingMessage="Carregando..." ShowDropDownOnTextboxClick="False" MarkFirstMatch="false"
         AllowCustomText="True" HighlightTemplatedItems="True" Width="500px" 
-        Skin="Vista" CausesValidation="False" EmptyMessage="Selecione um município" MaxLength="30">
+        Skin="Vista" CausesValidation="False" EmptyMessage="Selecione um município" MaxLength="50">
         <HeaderTemplate>
             <table style="width: 450px" cellspacing="0" cellpadding="0">
                 <tr>
