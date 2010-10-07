@@ -21,6 +21,7 @@ Public Class ServicoDeConexaoLocal
 
         Conexao = Me.ObtenhaInstancia(Provider)
         Conexao.StringDeConexao = Util.ObtenhaStringDeConexao()
+        Conexao.SistemaUtilizaSQLUpperCase = Util.SistemaUtilizaSQLUpperCase
         Return Conexao
     End Function
 

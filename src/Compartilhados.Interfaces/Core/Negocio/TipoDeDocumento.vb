@@ -9,8 +9,8 @@
         Public Shared CPF As TipoDeDocumento = New TipoDeDocumento(1S, "CPF")
         Public Shared RG As TipoDeDocumento = New TipoDeDocumento(2S, "RG")
         Public Shared CNPJ As TipoDeDocumento = New TipoDeDocumento(3S, "CNPJ")
-        Public Shared IE As TipoDeDocumento = New TipoDeDocumento(4S, "INSCRIÇÃO ESTADUAL")
-        Public Shared IM As TipoDeDocumento = New TipoDeDocumento(5S, "INSCRIÇÃO MUNICIPAL")
+        Public Shared IE As TipoDeDocumento = New TipoDeDocumento(4S, "Inscrição Estadual")
+        Public Shared IM As TipoDeDocumento = New TipoDeDocumento(5S, "Inscrição Municipal")
 
         Private Shared Lista As TipoDeDocumento() = {CPF, RG, CNPJ, IE}
 

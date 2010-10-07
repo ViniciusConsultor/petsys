@@ -6,9 +6,9 @@
         Private _ID As Char
         Private _Descricao As String
 
-        Public Shared Baixa As PrioridadeDaTarefa = New PrioridadeDaTarefa("B"c, "BAIXA")
-        Public Shared Normal As PrioridadeDaTarefa = New PrioridadeDaTarefa("N"c, "NORMAL")
-        Public Shared Alta As PrioridadeDaTarefa = New PrioridadeDaTarefa("A"c, "ALTA")
+        Public Shared Baixa As PrioridadeDaTarefa = New PrioridadeDaTarefa("B"c, "Baixa")
+        Public Shared Normal As PrioridadeDaTarefa = New PrioridadeDaTarefa("N"c, "Normal")
+        Public Shared Alta As PrioridadeDaTarefa = New PrioridadeDaTarefa("A"c, "Alta")
         
         Private Shared Lista As PrioridadeDaTarefa() = {baixa, normal, alta}
 

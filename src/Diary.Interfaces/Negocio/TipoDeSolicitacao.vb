@@ -6,8 +6,8 @@
         Private _ID As Byte
         Private _Descricao As String
 
-        Public Shared Audiencia As TipoDeSolicitacao = New TipoDeSolicitacao(1, "AUDIÊNCIA")
-        Public Shared Convite As TipoDeSolicitacao = New TipoDeSolicitacao(2, "CONVITE")
+        Public Shared Audiencia As TipoDeSolicitacao = New TipoDeSolicitacao(1, "Audiência")
+        Public Shared Convite As TipoDeSolicitacao = New TipoDeSolicitacao(2, "Convite")
 
         Private Sub New(ByVal ID As Byte, ByVal Descricao As String)
             _ID = ID

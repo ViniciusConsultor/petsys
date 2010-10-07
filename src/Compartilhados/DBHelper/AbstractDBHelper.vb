@@ -8,12 +8,14 @@ Namespace DBHelper
 
         Protected ConexaoPadrao As IDbConnection
         Private Transacao As IDbTransaction
+        Private SistemaUtilizaSQLUpperCase As Boolean
 
         Protected MustOverride Function CrieConexao(ByVal StringDeConexao As String) As IDbConnection
         Protected MustOverride Function CrieDataAdapter(ByVal Comando As IDbCommand) As DbDataAdapter
 
-        Public Sub New(ByVal StringDeConexao As String)
+        Public Sub New(ByVal StringDeConexao As String, ByVal SistemaUtilizaSQLUpperCase As Boolean)
             ConexaoPadrao = CrieConexao(StringDeConexao)
+            SistemaUtilizaSQLUpperCase = SistemaUtilizaSQLUpperCase
         End Sub
 
         Public Sub BeginTransaction(ByVal TipoTransacao As IsolationLevel) Implements IDBHelper.BeginTransaction
@@ -33,7 +35,7 @@ Namespace DBHelper
         End Sub
 
         Public Function ExecuteNonQuery(ByVal SQL As String) As Integer Implements IDBHelper.ExecuteNonQuery
-            Return ExecuteNonQuery(SQL, True)
+            Return ExecuteNonQuery(SQL, Me.SistemaUtilizaSQLUpperCase)
         End Function
 
         Public Function ExecuteNonQuery(ByVal SQL As String, _

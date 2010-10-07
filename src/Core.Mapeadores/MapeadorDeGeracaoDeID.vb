@@ -13,7 +13,7 @@ Public Class MapeadorDeGeracaoDeID
 
         Sql = "UPDATE NCL_IDENTIFICADOR SET NUMHIGH = " & NumeroHigh.ToString
 
-        DBHelper.ExecuteNonQuery(UtilidadesDePersistencia.PreparaComando(Sql))
+        DBHelper.ExecuteNonQuery(Sql)
     End Sub
 
     Public Function ObtenhaNumeroHigh() As Integer Implements IMapeadorDeGeracaoDeID.ObtenhaNumeroHigh
@@ -25,7 +25,7 @@ Public Class MapeadorDeGeracaoDeID
         Sql = "SELECT NUMHIGH FROM NCL_IDENTIFICADOR"
 
         DBHelper = ServerUtils.criarNovoDbHelper
-        Leitor = DBHelper.obtenhaReader(UtilidadesDePersistencia.PreparaComando(Sql))
+        Leitor = DBHelper.obtenhaReader(Sql)
 
         If Leitor.Read Then
             NumeroHigh = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMHIGH")
@@ -43,7 +43,7 @@ Public Class MapeadorDeGeracaoDeID
         Sql = "INSERT INTO NCL_IDENTIFICADOR (NUMHIGH) VALUES (0) "
 
         DBHelper = ServerUtils.criarNovoDbHelper
-        DBHelper.ExecuteNonQuery(UtilidadesDePersistencia.PreparaComando(Sql))
+        DBHelper.ExecuteNonQuery(Sql)
     End Sub
 
 End Class

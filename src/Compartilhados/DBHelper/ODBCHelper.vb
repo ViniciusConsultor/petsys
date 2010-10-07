@@ -6,8 +6,8 @@ Namespace DBHelper
     Friend Class ODBCHelper
         Inherits AbstractDBHelper
 
-        Public Sub New(ByVal sStrConn As String)
-            MyBase.New(sStrConn)
+        Public Sub New(ByVal sStrConn As String, ByVal SistemaUtilizaSQLUpperCase As Boolean)
+            MyBase.New(sStrConn, SistemaUtilizaSQLUpperCase)
         End Sub
 
         Protected Overrides Function crieConexao(ByVal sStrConn As String) As IDbConnection

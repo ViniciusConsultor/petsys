@@ -6,9 +6,9 @@
         Private _ID As Byte
         Private _Descricao As String
 
-        Public Shared Compromisso As TipoDestinoDespacho = New TipoDestinoDespacho(1, "COMPROMISSO")
-        Public Shared Tarefa As TipoDestinoDespacho = New TipoDestinoDespacho(2, "TAREFA")
-        Public Shared Lembrete As TipoDestinoDespacho = New TipoDestinoDespacho(3, "LEMBRETE")
+        Public Shared Compromisso As TipoDestinoDespacho = New TipoDestinoDespacho(1, "Compromisso")
+        Public Shared Tarefa As TipoDestinoDespacho = New TipoDestinoDespacho(2, "Tarefa")
+        Public Shared Lembrete As TipoDestinoDespacho = New TipoDestinoDespacho(3, "Lembrete")
 
         Private Sub New(ByVal ID As Byte, ByVal Descricao As String)
             _ID = ID
