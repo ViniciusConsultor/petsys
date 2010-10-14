@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
-    CodeBehind="frmAtendimentoAnimal.aspx.vb" Inherits="WorkSpace.frmAtendimentoAnimal" %>
+    CodeBehind="frmAtendimentoAnimal.aspx.vb" Inherits="PetSys.Client.frmAtendimentoAnimal" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="crtlAnimal.ascx" TagName="crtlAnimal" TagPrefix="uc1" %>

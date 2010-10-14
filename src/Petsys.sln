@@ -11,6 +11,16 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Servicos.Local", "Pe
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Client", "PetSys.Client\PetSys.Client.vbproj", "{D67A6FDC-9C17-41CA-8F1F-A6CE2AEEE634}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{32D963FA-9227-43B6-83A3-DDB97528E472}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\PetSys\INSERT_PET.sql = ..\doc\Banco de dados\PetSys\INSERT_PET.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{D903A286-A268-4878-9738-81CB42F6F83D}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\PetSys\SQL Server\CREATE_PET_SQLServer.sql = ..\doc\Banco de dados\PetSys\SQL Server\CREATE_PET_SQLServer.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,5 +50,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D903A286-A268-4878-9738-81CB42F6F83D} = {32D963FA-9227-43B6-83A3-DDB97528E472}
 	EndGlobalSection
 EndGlobal
