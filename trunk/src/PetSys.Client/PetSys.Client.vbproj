@@ -110,7 +110,6 @@
     <Content Include="PetSys\cdVeterinario.aspx" />
     <Content Include="PetSys\crtlAnimal.ascx" />
     <Content Include="PetSys\frmAtendimentoAnimal.aspx" />
-    <Content Include="PetSys\frmVacinasDoAnimal.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -161,13 +160,6 @@
       <DependentUpon>frmAtendimentoAnimal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PetSys\frmVacinasDoAnimal.aspx.designer.vb">
-      <DependentUpon>frmVacinasDoAnimal.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\frmVacinasDoAnimal.aspx.vb">
-      <DependentUpon>frmVacinasDoAnimal.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -187,6 +179,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="WorkSpace.Master" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PetSys.Interfaces\PetSys.Interfaces.vbproj">

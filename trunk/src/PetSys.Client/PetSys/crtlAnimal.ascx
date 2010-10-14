@@ -1,8 +1,8 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="crtlAnimal.ascx.vb" Inherits="WorkSpace.crtlAnimal" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="crtlAnimal.ascx.vb"
+    Inherits="PetSys.Client.crtlAnimal" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Panel ID="pnlAnimal" runat="server">
     <table class="tabela">
-        
         <tr>
             <td class="th3">
                 <asp:Label ID="Label6" runat="server" Text="Nome"></asp:Label>
@@ -49,8 +49,10 @@
                         </table>
                     </ItemTemplate>
                 </telerik:RadComboBox>
-                <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="imagens/new.gif" CausesValidation="False" CommandArgument="OPE.PET.002.0001" />
-                <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="imagens/details.gif" CausesValidation="False" CommandArgument="OPE.NCL.002.0004" />
+                <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="imagens/new.gif" CausesValidation="False"
+                    CommandArgument="OPE.PET.002.0001" />
+                <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="imagens/details.gif" CausesValidation="False"
+                    CommandArgument="OPE.NCL.002.0004" />
                 <asp:RequiredFieldValidator ID="rfvAnimal" runat="server" ErrorMessage="Campo deve ser informado."
                     ControlToValidate="cboAnimal"></asp:RequiredFieldValidator>
             </td>

@@ -99,6 +99,8 @@
     <Compile Include="Negocio\IAtendimentoDoAnimal.vb" />
     <Compile Include="Negocio\IProprietarioDeAnimal.vb" />
     <Compile Include="Negocio\IVeterinario.vb" />
+    <Compile Include="Negocio\LazyLoad\IAnimalLazyLoad.vb" />
+    <Compile Include="Negocio\LazyLoad\IVeterinarioLazyLoad.vb" />
     <Compile Include="Negocio\SexoDoAnimal.vb" />
     <Compile Include="Servicos\IServicoDeAnimal.vb" />
     <Compile Include="Servicos\IServicoDeAtendimentoDoAnimal.vb" />

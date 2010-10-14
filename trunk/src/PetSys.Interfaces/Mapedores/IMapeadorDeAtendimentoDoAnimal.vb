@@ -8,6 +8,7 @@ Namespace Mapeadores
         Function ObtenhaAtendimento(ByVal ID As Long) As IAtendimentoDoAnimal
         Sub Insira(ByVal Atendimento As IAtendimentoDoAnimal)
         Sub Modificar(ByVal Atendimento As IAtendimentoDoAnimal)
+        Sub Excluir(ByVal ID As Long)
 
     End Interface
 
