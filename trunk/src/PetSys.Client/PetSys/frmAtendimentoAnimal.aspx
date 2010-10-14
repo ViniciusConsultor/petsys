@@ -9,14 +9,6 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.PET.003.0001" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
-                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.PET.003.0002" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/delete.gif" Text="Excluir"
-                CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.PET.003.0003" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/yes.gif" Text="Sim"
-                CommandName="btnSim" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Não"
-                CommandName="btnNao" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -32,16 +24,32 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlHistoricoDeAtendimentos" runat="server">
-                        <telerik:RadGrid ID="grdAtendimentos" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-                            ShowFooter="True" Skin="Vista" GridLines="None">
-                            <MasterTableView>
+                        <telerik:RadGrid ID="grdAtendimentos" runat="server" AutoGenerateColumns="False"
+                            AllowPaging="True" PageSize="10" GridLines="None" Width="100%">
+                            <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                            <MasterTableView GridLines="Both">
+                                <RowIndicatorColumn>
+                                    <HeaderStyle Width="20px" />
+                                </RowIndicatorColumn>
+                                <ExpandCollapseColumn>
+                                    <HeaderStyle Width="20px" />
+                                </ExpandCollapseColumn>
                                 <Columns>
-                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Editar" 
-                                        UniqueName="column1">
+                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
+                                        HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                     </telerik:GridButtonColumn>
-                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" 
-                                        UniqueName="column">
+                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                        HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                     </telerik:GridButtonColumn>
+                                    <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn DataField="DataEHoraDoAtendimento" HeaderText="Data e hora"
+                                        UniqueName="column30">
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn DataField="Veterinario.Pessoa.Nome" HeaderText="Veterinário"
+                                        UniqueName="column2" Visible="True">
+                                    </telerik:GridBoundColumn>
+                                    
                                 </Columns>
                             </MasterTableView>
                         </telerik:RadGrid>
