@@ -177,8 +177,9 @@ Partial Public Class ctrlPessoa
             ViewState.Add(Me.ClientID, value)
 
             If Not value Is Nothing Then
-                NomeDaPessoa = PessoaSelecionada.Nome
-                TipoDaPessoa = PessoaSelecionada.Tipo
+                TipoDaPessoa = value.Tipo
+                NomeDaPessoa = value.Nome
+
             End If
         End Set
     End Property
