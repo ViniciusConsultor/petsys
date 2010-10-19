@@ -56,6 +56,7 @@
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
+          
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
 </asp:Content>
