@@ -32,6 +32,10 @@ Public Class Util
         Return environmentVariable
     End Function
 
+    Public Shared Function ObtenhaCaminhoDaPastaDoServidorDeAplicacao() As String
+        Return ObtenhaPastaConfiguradaPorVariavelDeAmbiente()
+    End Function
+
     Public Shared Function ObtenhaCaminhoDeConfiguracaoDoServicoDeConexao() As String
         Dim Configuracao As KeyValueConfigurationElement
         Dim Caminho As String
