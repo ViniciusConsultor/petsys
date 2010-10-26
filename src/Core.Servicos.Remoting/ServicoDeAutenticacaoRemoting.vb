@@ -7,14 +7,14 @@ Public Class ServicoDeAutenticacaoRemoting
     Inherits ServicoRemoto
     Implements IServicoDeAutenticacao
 
-    Private ServicoLocal As ServicoDeAutenticacaoLocal
+    Private _ServicoLocal As ServicoDeAutenticacaoLocal
 
     Public Function FacaLogon(ByVal LoginInformado As String, ByVal SenhaInformada As String) As IOperador Implements IServicoDeAutenticacao.FacaLogon
-        Return ServicoLocal.FacaLogon(LoginInformado, SenhaInformada)
+        Return _ServicoLocal.FacaLogon(LoginInformado, SenhaInformada)
     End Function
 
     Public Overrides Sub SetaCredencial(ByVal Credencial As ICredencial)
-        ServicoLocal = New ServicoDeAutenticacaoLocal(Credencial)
+        _ServicoLocal = New ServicoDeAutenticacaoLocal(Credencial)
     End Sub
 
 End Class
