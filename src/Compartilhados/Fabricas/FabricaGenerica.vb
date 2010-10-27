@@ -2,6 +2,8 @@
 Imports System.Runtime.Remoting.Activation
 Imports System.Runtime.Remoting
 Imports System.Net.Sockets
+Imports System.Runtime.Remoting.Channels.Tcp
+Imports System.Runtime.Remoting.Channels
 
 Namespace Fabricas
 
@@ -11,6 +13,8 @@ Namespace Fabricas
         Private Shared InstanciaSolitaria As FabricaGenerica
         Private Shared ObjetoLock As New Object
         Private Shared TipoDeDistribuicao As String
+        Private Shared ServidorDeAplicacao As String
+        Private Const PORTA_SRV_APP As String = "1235"
 
         Private Sub New()
             If DicionarioDeAssemblyTypes Is Nothing Then
@@ -18,6 +22,14 @@ Namespace Fabricas
             End If
 
             TipoDeDistribuicao = Util.ObtenhaTipoDeDistribuicao
+            ServidorDeAplicacao = Util.ObtenhaServidorDeAplicao
+
+            Dim CanalCliente As TcpClientChannel = New TcpClientChannel()
+
+            If ChannelServices.RegisteredChannels.Length = 0 Then
+                ChannelServices.RegisterChannel(CanalCliente, False)
+            End If
+
         End Sub
 
         Public Shared Function GetInstancia() As FabricaGenerica
@@ -113,7 +125,7 @@ Namespace Fabricas
                 NomeDoTipoConcretoOriginal = "I" & NomeDoTipoConcreto
                 NomeDoTipoConcretoOriginal = NomeDoTipoConcretoOriginal.Remove(NomeDoTipoConcretoOriginal.IndexOf("Remoting"), 8)
 
-                Instancia = Activator.GetObject(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcretoOriginal), "tcp://localhost:1235/" & NomeDoTipoConcreto)
+                Instancia = Activator.GetObject(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcretoOriginal), "tcp://" & ServidorDeAplicacao & ":" & PORTA_SRV_APP & "/" & NomeDoTipoConcreto)
                 CType(Instancia, IServicoRemoto).SetaCredencial(Credencial)
             ElseIf TipoDeDistribuicao.Equals("Local") Then
                 Dim Parametro As Object() = New Object() {Credencial}
