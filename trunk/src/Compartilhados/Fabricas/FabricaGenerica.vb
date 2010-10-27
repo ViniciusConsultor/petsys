@@ -39,7 +39,7 @@ Namespace Fabricas
 
                 Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
 
-                If Asse Is Nothing Then Throw New DLLNaoEncontradaException("A DLL " & NomeDoAssembly & " não instada")
+                If Asse Is Nothing Then Throw New DLLNaoEncontradaException("A DLL " & NomeDoAssembly & " não instalada")
                 DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
             End If
         End Sub
@@ -53,10 +53,11 @@ Namespace Fabricas
             NomeDoAssembly = ObtenhaNomeDoAssembly(FullName)
             NomeTipoConcreto = ObtenhaNomeTipoConcreto(NomeDoTipo)
 
+            CarregaAssembly(NomeDoAssembly)
+
             If NomeDoAssembly.Contains("Servico") Then
                 Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
             Else
-                CarregaAssembly(NomeDoAssembly)
                 Instancia = CriaInstancia(NomeDoAssembly, NomeTipoConcreto)
             End If
 
@@ -68,13 +69,14 @@ Namespace Fabricas
             Dim NomeDoAssembly As String
             Dim NomeTipoConcreto As String
 
-            If GetType(T).FullName.Contains("Servico") Then
-                Instancia = CriaInstanciaDeServico(GetType(T).FullName, GetType(T).Name)
-            Else
-                NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
-                NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
+            NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
+            NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
 
-                CarregaAssembly(NomeDoAssembly)
+            CarregaAssembly(NomeDoAssembly)
+
+            If GetType(T).FullName.Contains("Servico") Then
+                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
+            Else
                 Instancia = CriaInstancia(NomeDoAssembly, NomeTipoConcreto)
             End If
 
@@ -106,7 +108,12 @@ Namespace Fabricas
             Credencial = Util.ConstruaCredencial
 
             If TipoDeDistribuicao.Equals("Remoting") Then
-                Instancia = Activator.GetObject(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcreto), "tcp://localhost:1235/" & NomeDoTipoConcreto)
+                Dim NomeDoTipoConcretoOriginal As String
+
+                NomeDoTipoConcretoOriginal = "I" & NomeDoTipoConcreto
+                NomeDoTipoConcretoOriginal = NomeDoTipoConcretoOriginal.Remove(NomeDoTipoConcretoOriginal.IndexOf("Remoting"), 8)
+
+                Instancia = Activator.GetObject(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcretoOriginal), "tcp://localhost:1235/" & NomeDoTipoConcreto)
                 CType(Instancia, IServicoRemoto).SetaCredencial(Credencial)
             ElseIf TipoDeDistribuicao.Equals("Local") Then
                 Dim Parametro As Object() = New Object() {Credencial}
@@ -153,8 +160,8 @@ Namespace Fabricas
 
             NomeDoAssemblyEmPartes = TipoDaInterface.Split(New Char() {"."c})
 
-            If TipoDaInterface.Contains("Servico") Then
-
+            If TipoDaInterface.Contains("Servico") AndAlso TipoDeDistribuicao.Equals("Remoting", StringComparison.InvariantCultureIgnoreCase) Then
+                Return String.Concat(NomeDoAssemblyEmPartes(0), ".", NomeDoAssemblyEmPartes(1))
             End If
 
             If TipoDaInterface.StartsWith("Compartilhados.Interfaces") Then
@@ -163,9 +170,9 @@ Namespace Fabricas
                 NomeDoAssembly = String.Concat(NomeDoAssemblyEmPartes(0), ".", NomeDoAssemblyEmPartes(2))
             End If
 
-            'If NomeDoAssembly.Contains("Servico") Then
-            '    NomeDoAssembly &= String.Concat(".", TipoDeDistribuicao)
-            'End If
+            If NomeDoAssembly.Contains("Servico") Then
+                NomeDoAssembly &= String.Concat(".", TipoDeDistribuicao)
+            End If
 
             Return NomeDoAssembly
         End Function
@@ -175,9 +182,9 @@ Namespace Fabricas
 
             NomeDoTipoConcreto = TipoDaInterface.Substring(1)
 
-            'If NomeDoTipoConcreto.StartsWith("Servico") Then
-            '    NomeDoTipoConcreto &= TipoDeDistribuicao
-            'End If
+            If NomeDoTipoConcreto.StartsWith("Servico") Then
+                NomeDoTipoConcreto &= TipoDeDistribuicao
+            End If
 
             Return NomeDoTipoConcreto
         End Function
