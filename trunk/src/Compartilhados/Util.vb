@@ -92,6 +92,13 @@ Public Class Util
         Return Configuracao.Value
     End Function
 
+    Public Shared Function ObtenhaServidorDeAplicao() As String
+        Dim Configuracao As String = System.Configuration.ConfigurationManager.AppSettings("ServidorDeAplicacao")
+
+        If String.IsNullOrEmpty(Configuracao) Then Configuracao = "localhost"
+        Return Configuracao
+    End Function
+
     Public Shared Function ObtenhaTipoDeDistribuicao() As String
         Dim Configuaracao As String = System.Configuration.ConfigurationManager.AppSettings("TipoDistribuicao")
 

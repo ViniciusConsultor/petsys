@@ -8,7 +8,7 @@ Imports System.IO
 Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        ChannelServices.RegisterChannel(New TcpServerChannel(1235))
+        ChannelServices.RegisterChannel(New TcpServerChannel(1235), False)
 
         Dim DicionarioDeAssemblyTypes As Dictionary(Of String, Type())
 
