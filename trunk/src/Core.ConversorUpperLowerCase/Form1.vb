@@ -208,7 +208,7 @@ Public Class Form1
                 If Not UtilidadesDePersistencia.EhNulo(Leitor, "DESCRICAO") Then
                     Sql2.Append("DESCRICAO = '" & UtilidadesDeConversao.FormataTextoPrimeiraLetraEmMaiusculoRestanteMinusculo(UtilidadesDePersistencia.GetValorString(Leitor, "DESCRICAO"), rbLower.Checked) & "' ")
                 Else
-                    Sql2.Append("DESCRICAO = NULL, ")
+                    Sql2.Append("DESCRICAO = NULL ")
                 End If
 
                 Sql2.Append("WHERE ID = " & UtilidadesDePersistencia.GetValorLong(Leitor, "ID"))

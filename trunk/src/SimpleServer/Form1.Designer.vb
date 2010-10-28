@@ -23,6 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.txtStatus = New System.Windows.Forms.TextBox
+        Me.btnReiniciar = New System.Windows.Forms.Button
         Me.SuspendLayout()
         '
         'txtStatus
@@ -34,18 +35,32 @@ Partial Class Form1
         Me.txtStatus.Size = New System.Drawing.Size(358, 121)
         Me.txtStatus.TabIndex = 0
         '
+        'btnReiniciar
+        '
+        Me.btnReiniciar.Location = New System.Drawing.Point(392, 12)
+        Me.btnReiniciar.Name = "btnReiniciar"
+        Me.btnReiniciar.Size = New System.Drawing.Size(75, 23)
+        Me.btnReiniciar.TabIndex = 1
+        Me.btnReiniciar.Text = "&Reiniciar"
+        Me.btnReiniciar.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(479, 160)
+        Me.Controls.Add(Me.btnReiniciar)
         Me.Controls.Add(Me.txtStatus)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Form1"
-        Me.Text = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Simple Server .NET Remoting"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents txtStatus As System.Windows.Forms.TextBox
+    Friend WithEvents btnReiniciar As System.Windows.Forms.Button
 
 End Class

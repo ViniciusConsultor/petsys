@@ -136,7 +136,7 @@ Public Class ImpressorDeCompromissos
         CorpoCompromisso.Add(CaracterTAB)
 
         If MostraAssunto Then
-            CorpoCompromisso.Add(New Chunk(String.Concat("Assunto: ", Compromisso.Assunto), _FonteDescricaoCompromissos))
+            CorpoCompromisso.Add(New Chunk(Compromisso.Assunto, _FonteDescricaoCompromissos))
             CorpoCompromisso.Add(Chunk.NEWLINE)
             Flag = True
         End If
@@ -146,7 +146,7 @@ Public Class ImpressorDeCompromissos
                 CorpoCompromisso.Add(CaracterTAB)
             End If
 
-            CorpoCompromisso.Add(New Chunk(String.Concat("Local: ", Compromisso.Local), _FonteDescricaoCompromissos))
+            CorpoCompromisso.Add(New Chunk(Compromisso.Local, _FonteDescricaoCompromissos))
             CorpoCompromisso.Add(Chunk.NEWLINE)
         End If
 
@@ -155,7 +155,23 @@ Public Class ImpressorDeCompromissos
                 CorpoCompromisso.Add(CaracterTAB)
             End If
 
-            CorpoCompromisso.Add(New Chunk(String.Concat("Descrição: ", Compromisso.Descricao), _FonteDescricaoCompromissos))
+            If Compromisso.Descricao.Contains(vbLf) Then
+                Dim LinhasDaDescricao() As String
+
+                LinhasDaDescricao = Compromisso.Descricao.Split(CChar(vbLf))
+
+                For Each Linha As String In LinhasDaDescricao
+                    If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
+                        CorpoCompromisso.Add(CaracterTAB)
+                    End If
+
+                    CorpoCompromisso.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
+                    CorpoCompromisso.Add(Chunk.NEWLINE)
+                Next
+
+            Else
+                CorpoCompromisso.Add(New Chunk(Compromisso.Descricao, _FonteDescricaoCompromissos))
+            End If
         End If
 
         _documento.Add(CorpoCompromisso)
