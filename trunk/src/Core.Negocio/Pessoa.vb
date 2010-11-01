@@ -137,7 +137,7 @@ Public MustInherit Class Pessoa
             End If
         Next
 
-        Return Telefones
+        Return TelefonesDoTipo
     End Function
 
 End Class

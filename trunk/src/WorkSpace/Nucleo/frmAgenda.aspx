@@ -29,7 +29,7 @@
                 html: "<iframe src = " + url + " width=100% height=100%></iframe>"
             });
             win.show();
-        }
+        }        
     </script>
 
     <asp:Timer ID="Timer1" runat="server" Interval="20000">
@@ -79,6 +79,22 @@
                                 CommandName="btnImprimirTarefas" CausesValidation="False" CommandArgument="OPE.NCL.012.0008" />
                         </Items>
                     </telerik:RadToolBar>
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label7" runat="server" Text="Data de início"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadDatePicker ID="txtDataInicialTarefa" runat="server">
+                                </telerik:RadDatePicker>
+                                <asp:Label ID="Label1" runat="server" Text=" a  "></asp:Label>
+                                <telerik:RadDatePicker ID="txtDataFinalTarefa" runat="server">
+                                </telerik:RadDatePicker>
+                                <asp:ImageButton ID="btnPesquisarTarefas" runat="server" ToolTip="Pesquisar tarefas"
+                                    ImageUrl="~/imagens/find.gif" />
+                            </td>
+                        </tr>
+                    </table>
                     <telerik:RadGrid ID="grdTarefas" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                         PageSize="10" GridLines="None" Width="100%">
                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
@@ -111,6 +127,9 @@
                                 <telerik:GridBoundColumn DataField="Prioridade.Descricao" HeaderText="Prioridade"
                                     UniqueName="column1" Visible="True">
                                 </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Status.Descricao" HeaderText="Status"
+                                    UniqueName="column1" Visible="True">
+                                </telerik:GridBoundColumn>
                             </Columns>
                         </MasterTableView>
                     </telerik:RadGrid>
@@ -127,6 +146,22 @@
                                 CommandName="btnImprimirLembretes" CausesValidation="False" CommandArgument="OPE.NCL.012.0013" />
                         </Items>
                     </telerik:RadToolBar>
+                   <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label2" runat="server" Text="Período"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadDatePicker ID="txtDataDeInicioLembretes" runat="server">
+                                </telerik:RadDatePicker>
+                                <asp:Label ID="Label3" runat="server" Text=" a  "></asp:Label>
+                                <telerik:RadDatePicker ID="txtDataDeFimLembretes" runat="server">
+                                </telerik:RadDatePicker>
+                                <asp:ImageButton ID="btnPesquisarLembretes" runat="server" ToolTip="Pesquisar lembretes"
+                                    ImageUrl="~/imagens/find.gif" />
+                            </td>
+                        </tr>
+                    </table>
                     <telerik:RadGrid ID="grdLembretes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                         PageSize="10" GridLines="None" Width="100%">
                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
@@ -157,6 +192,9 @@
                                 <telerik:GridBoundColumn DataField="Inicio" HeaderText="Data de início" UniqueName="column33">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn DataField="Fim" HeaderText="Data de conclusão" UniqueName="column3">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Status.Descricao" HeaderText="Status"
+                                    UniqueName="column1" Visible="True">
                                 </telerik:GridBoundColumn>
                             </Columns>
                         </MasterTableView>

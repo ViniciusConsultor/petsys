@@ -57,8 +57,19 @@ Partial Public Class cdPessoaJuridica
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
         ViewState(CHAVE_ESTADO) = Estado.Novo
+        ViewState(CHAVE_TELEFONES) = Nothing
         CarregueUFs()
+        CarregaTiposDeTelefone()
+        cboUFEndereco.Enabled = False
         'imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
+    End Sub
+
+    Private Sub CarregaTiposDeTelefone()
+        cboTipoTelefone.Items.Clear()
+
+        For Each Tipo As TipoDeTelefone In TipoDeTelefone.ObtenhaTodos
+            cboTipoTelefone.Items.Add(New RadComboBoxItem(Tipo.Descricao, Tipo.ID.ToString))
+        Next
     End Sub
 
     Private Sub ExibaTelaAposSalvar()
@@ -89,7 +100,9 @@ Partial Public Class cdPessoaJuridica
         End Using
 
         CarregueUFs()
+        CarregaTiposDeTelefone()
         Me.ExibaObjeto(Pessoa)
+        cboUFEndereco.Enabled = False
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -101,6 +114,7 @@ Partial Public Class cdPessoaJuridica
         UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlPessoa, Control), True)
         ViewState(CHAVE_ESTADO) = Estado.Modifica
+        cboUFEndereco.Enabled = False
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar

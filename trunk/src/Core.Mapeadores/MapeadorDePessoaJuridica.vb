@@ -83,13 +83,15 @@ Public Class MapeadorDePessoaJuridica
 
         Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
         Sql.Append("LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, ")
-        Sql.Append("BAIRRO, IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM ")
+        Sql.Append("BAIRRO, IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM, SITE ")
         Sql.Append("FROM NCL_PESSOA, NCL_PESSOAJURIDICA")
         Sql.Append(" WHERE ID = IDPESSOA ")
 
         If Not String.IsNullOrEmpty(Nome) Then
             Sql.Append(String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
+
+        Sql.AppendLine(" ORDER BY NOME")
 
         Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros)
     End Function

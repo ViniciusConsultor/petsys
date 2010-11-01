@@ -61,6 +61,7 @@
                                     <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" TextMode="MultiLine"
                                         Width="350px" MaxLength="4000">
                                     </telerik:RadTextBox>
+                             
                                 </td>
                             </tr>
                             <tr>
