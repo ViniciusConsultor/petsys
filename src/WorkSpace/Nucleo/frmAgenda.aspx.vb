@@ -13,6 +13,10 @@ Partial Public Class frmAgenda
     Private Sub ExibaAgendaDaPessoa(ByVal Pessoa As IPessoa)
         Dim Agenda As IAgenda
 
+        UtilidadesWeb.LimparComponente(CType(pnlCompromissos, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlTarefas, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlLembretes, Control))
+
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
             Agenda = Servico.ObtenhaAgenda(Pessoa.ID.Value)
         End Using
@@ -33,12 +37,15 @@ Partial Public Class frmAgenda
         pnlLembretes.Visible = True
 
         Me.IDProprietario = Pessoa.ID.Value
+        txtDataInicialTarefa.SelectedDate = Now
+        txtDataFinalTarefa.SelectedDate = Now
+        txtDataDeInicioLembretes.SelectedDate = Now
+        txtDataDeFimLembretes.SelectedDate = Now
         ConfiguraAgenda(Agenda)
         CarregaAgenda()
     End Sub
 
     Private Sub ConfiguraAgenda(ByVal Agenda As IAgenda)
-
         Me.HoraInicio = Agenda.HorarioDeInicio
         Me.HoraFim = Agenda.HorarioDeTermino
         Me.IntervaloEntreCompromissos = Agenda.IntervaloEntreOsCompromissos
@@ -158,10 +165,6 @@ Partial Public Class frmAgenda
     Private Sub CarregaAgenda()
         If Not Me.IDProprietario.HasValue Then Exit Sub
 
-        UtilidadesWeb.LimparComponente(CType(pnlCompromissos, Control))
-        UtilidadesWeb.LimparComponente(CType(pnlTarefas, Control))
-        UtilidadesWeb.LimparComponente(CType(pnlLembretes, Control))
-
         ViewState.Remove(CHAVE_COMPROMISSOS)
         ViewState.Remove(CHAVE_TAREFAS)
         ViewState.Remove(CHAVE_LEMBRETES)
@@ -172,8 +175,19 @@ Partial Public Class frmAgenda
 
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
             Compromissos = Servico.ObtenhaCompromissos(IDProprietario.Value)
-            Tarefas = Servico.ObtenhaTarefas(IDProprietario.Value)
-            Lembretes = Servico.ObtenhaLembretes(IDProprietario.Value)
+
+            If Not txtDataInicialTarefa.SelectedDate.HasValue Then
+                Tarefas = New List(Of ITarefa)
+            Else
+                Tarefas = Servico.ObtenhaTarefas(IDProprietario.Value, txtDataInicialTarefa.SelectedDate.Value, txtDataFinalTarefa.SelectedDate)
+            End If
+
+            If Not txtDataDeInicioLembretes.SelectedDate.HasValue Then
+                Lembretes = New List(Of ILembrete)
+            Else
+                Lembretes = Servico.ObtenhaLembretes(IDProprietario.Value, txtDataDeInicioLembretes.SelectedDate.Value, txtDataDeFimLembretes.SelectedDate)
+            End If
+
         End Using
 
         schCompromissos.DayStartTime = HoraInicio.TimeOfDay
@@ -197,11 +211,17 @@ Partial Public Class frmAgenda
     End Sub
 
     Public Function GetCallbackResult() As String Implements System.Web.UI.ICallbackEventHandler.GetCallbackResult
-        Dim InformacoesClient As String = String.Concat(URL, ",", "Cadastro de compromissos,", Guid.NewGuid.ToString)
+        Dim InformacoesClient As String = ""
+
+        InformacoesClient = String.Concat(URL, ",", "Cadastro de compromissos,", Guid.NewGuid.ToString)
         Return InformacoesClient
     End Function
 
     Public Sub RaiseCallbackEvent(ByVal eventArgument As String) Implements System.Web.UI.ICallbackEventHandler.RaiseCallbackEvent
+        MontaURLCompromisso(eventArgument)
+    End Sub
+
+    Private Sub MontaURLCompromisso(ByVal eventArgument As String)
         Dim ID As String = eventArgument
 
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
@@ -400,6 +420,36 @@ Partial Public Class frmAgenda
 
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         CarregaAgenda()
+    End Sub
+
+    Private Sub btnPesquisarTarefas_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarTarefas.Click
+        Dim Tarefas As IList(Of ITarefa)
+
+        If Not txtDataInicialTarefa.SelectedDate.HasValue Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data de início das tarefas deve ser informada."), False)
+            Exit Sub
+        End If
+
+        Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+            Tarefas = Servico.ObtenhaTarefas(IDProprietario.Value, txtDataInicialTarefa.SelectedDate.Value, txtDataFinalTarefa.SelectedDate)
+        End Using
+
+        ExibaTarefas(Tarefas)
+    End Sub
+
+    Private Sub btnPesquisarLembretes_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarLembretes.Click
+        Dim Lembretes As IList(Of ILembrete)
+
+        If Not txtDataDeInicioLembretes.SelectedDate.HasValue Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data de início dos lembretes deve ser informada."), False)
+            Exit Sub
+        End If
+
+        Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
+            Lembretes = Servico.ObtenhaLembretes(IDProprietario.Value, txtDataDeInicioLembretes.SelectedDate.Value, txtDataDeFimLembretes.SelectedDate)
+        End Using
+
+        ExibaLembretes(Lembretes)
     End Sub
 
 End Class

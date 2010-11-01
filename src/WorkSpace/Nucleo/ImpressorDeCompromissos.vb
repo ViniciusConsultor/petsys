@@ -165,6 +165,7 @@ Public Class ImpressorDeCompromissos
                         CorpoCompromisso.Add(CaracterTAB)
                     End If
 
+                    If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
                     CorpoCompromisso.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
                     CorpoCompromisso.Add(Chunk.NEWLINE)
                 Next

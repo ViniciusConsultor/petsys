@@ -135,6 +135,8 @@ Public Class MapeadorDePessoaFisica
             Sql &= String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'")
         End If
 
+        Sql &= " ORDER BY NOME"
+
         Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros)
     End Function
 

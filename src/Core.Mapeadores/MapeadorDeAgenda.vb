@@ -367,11 +367,9 @@ Public Class MapeadorDeAgenda
 
         Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_COMPROMISSO WHERE")
         Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
-        'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
-        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
+        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000000"))
 
         If DataFim.HasValue Then
-            'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
             Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "235959"))
         End If
 
@@ -398,11 +396,9 @@ Public Class MapeadorDeAgenda
 
         Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, PRIORIDADE, DESCRICAO, STATUS FROM NCL_TAREFA WHERE")
         Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
-        'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
-        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
+        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000000"))
 
         If DataFim.HasValue Then
-            'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
             Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "235959"))
         End If
 
@@ -526,11 +522,9 @@ Public Class MapeadorDeAgenda
 
         Sql.Append(" SELECT ID, IDPESSOA, INICIO, FIM, ASSUNTO, LOCAL, DESCRICAO, STATUS FROM NCL_LEMBRETE WHERE")
         Sql.Append(String.Concat(" IDPESSOA = ", IDProprietario.ToString))
-        'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
-        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000001"))
+        Sql.Append(String.Concat(" AND INICIO >= ", DataInicio.ToString("yyyyMMdd") & "000000"))
 
         If DataFim.HasValue Then
-            'é concatenado 000001 para respeitar o formato de yyyyMMddHHmmss
             Sql.Append(String.Concat(" AND FIM <= ", DataFim.Value.ToString("yyyyMMdd") & "235959"))
         End If
 

@@ -121,7 +121,7 @@ Public Class ImpressorDeLembretes
         Dim ParagradoEmBranco As Paragraph
         Dim Flag As Boolean = False
 
-        ParagradoEmBranco = New Paragraph(" ")
+        ParagradoEmBranco = New Paragraph("")
         _documento.Add(ParagradoEmBranco)
 
         Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
@@ -133,7 +133,7 @@ Public Class ImpressorDeLembretes
         CorpoLembrete.Add(CaracterTAB)
 
         If MostraAssunto Then
-            CorpoLembrete.Add(New Chunk(String.Concat("Assunto: ", Lembrete.Assunto), _FonteDescricaoCompromissos))
+            CorpoLembrete.Add(New Chunk(Lembrete.Assunto, _FonteDescricaoCompromissos))
             CorpoLembrete.Add(Chunk.NEWLINE)
             Flag = True
         End If
@@ -143,7 +143,24 @@ Public Class ImpressorDeLembretes
                 CorpoLembrete.Add(CaracterTAB)
             End If
 
-            CorpoLembrete.Add(New Chunk(String.Concat("Descrição: ", Lembrete.Descricao), _FonteDescricaoCompromissos))
+            If Lembrete.Descricao.Contains(vbLf) Then
+                Dim LinhasDaDescricao() As String
+
+                LinhasDaDescricao = Lembrete.Descricao.Split(CChar(vbLf))
+
+                For Each Linha As String In LinhasDaDescricao
+                    If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
+                        CorpoLembrete.Add(CaracterTAB)
+                    End If
+
+                    If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
+                    CorpoLembrete.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
+                    CorpoLembrete.Add(Chunk.NEWLINE)
+                Next
+
+            Else
+                CorpoLembrete.Add(New Chunk(Lembrete.Descricao, _FonteDescricaoCompromissos))
+            End If
         End If
 
         _documento.Add(CorpoLembrete)
