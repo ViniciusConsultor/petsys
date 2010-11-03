@@ -20,16 +20,16 @@
             <td class="td">
                 <telerik:RadComboBox ID="cboPessoaFisica" runat="server" EmptyMessage="Selecione uma pessoa"
                     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
-                    ShowDropDownOnTextboxClick="False" AllowCustomText="True" Width="90%" Skin="Vista"
-                    CausesValidation="False" OnItemsRequested="cboPessoaFisica_ItemsRequested" OnSelectedIndexChanged="cboPessoaFisica_SelectedIndexChanged"
-                    AutoPostBack="True" >
-                    <HeaderTemplate>
-                        <table width="96%">
+                    ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
+                    Width="90%" Skin="Vista" CausesValidation="False" OnItemsRequested="cboPessoaFisica_ItemsRequested"
+                    OnSelectedIndexChanged="cboPessoaFisica_SelectedIndexChanged" AutoPostBack="True" >
+                    <HeaderTemplate >
+                        <table width="96%" >
                             <tr>
-                                <td width="40%">
+                                <td  width="40%">
                                     Nome
                                 </td>
-                                <td width="16%">
+                                <td width="16%" >
                                     Nascimento
                                 </td>
                                 <td width="22%">
@@ -42,9 +42,9 @@
                         </table>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <table width="100%">
+                        <table  width="100%">
                             <tr>
-                                <td width="40%">
+                                <td  width="40%" >
                                     <%# DataBinder.Eval(Container, "Text")%>
                                 </td>
                                 <td width="16%">
@@ -65,7 +65,7 @@
                     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
                     Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
                     <HeaderTemplate>
-                        <table width="96%">
+                        <table  width="96%">
                             <tr>
                                 <td width="50%">
                                     Razão social
@@ -77,7 +77,7 @@
                         </table>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <table width="100%">
+                        <table  width="100%">
                             <tr>
                                 <td width="50%">
                                     <%# DataBinder.Eval(Container, "Text")%>
@@ -89,10 +89,10 @@
                         </table>
                     </ItemTemplate>
                 </telerik:RadComboBox>
-                <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="imagens/new.gif" ToolTip="Novo"
-                    CausesValidation="False" CommandArgument="OPE.NCL.006.0001" />
-                <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="imagens/details.gif" ToolTip="Detalhar"
-                    CausesValidation="False" CommandArgument="OPE.NCL.006.0002" />
+                <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="imagens/new.gif" ToolTip="Novo" CausesValidation="False"
+                    CommandArgument="OPE.NCL.006.0001" />
+                <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="imagens/details.gif" ToolTip="Detalhar" CausesValidation="False"
+                    CommandArgument="OPE.NCL.006.0002" />
                 <asp:RequiredFieldValidator ID="rfvPessoaFisica" runat="server" ErrorMessage="Campo deve ser informado."
                     ControlToValidate="cboPessoaFisica"></asp:RequiredFieldValidator>
             </td>

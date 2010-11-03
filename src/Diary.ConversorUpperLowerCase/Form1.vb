@@ -9,6 +9,7 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim Conexao As IConexao
+        Me.Height = 150
 
         Using Servico As IServicoDeConexao = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConexao)()
             Conexao = Servico.ObtenhaConexao
@@ -28,9 +29,35 @@ Public Class Form1
 
             MsgBox("Migração realizada com sucesso.", MsgBoxStyle.Information, "Sucesso.")
         Catch ex As Exception
+            Me.Height = 450
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Erro")
+            txtMsgErro.Text = ObtenhaMensagemDeLog(ex)
         End Try
+
     End Sub
+
+    Private Function ObtenhaMensagemDeLog(ByVal ex As Exception) As String
+        Dim Erro As Exception
+        Dim DataDoErro As Date = Now
+        Dim Mensagem As New StringBuilder
+
+        Erro = ex
+
+        Mensagem.AppendLine("Foi gerado uma exceção ")
+        Mensagem.AppendLine("Data do erro : " & DataDoErro.ToString("dd/MM/yyyy"))
+        Mensagem.AppendLine("Hora do erro : " & DataDoErro.ToString("HH:mm:ss"))
+
+        Do While Not Erro Is Nothing
+            Mensagem.AppendLine("Origem do erro : " & Erro.Source)
+            Mensagem.AppendLine("Descrição do erro : " & Erro.Message)
+            Mensagem.AppendLine("Método origem : " & Erro.ToString)
+            Mensagem.AppendLine("Resumo : " & Erro.StackTrace)
+            Mensagem.AppendLine("-------------------------------------------------------------")
+            Erro = Erro.InnerException
+        Loop
+
+        Return Mensagem.ToString
+    End Function
 
     Private Sub MigraTabelaDeContato()
         Dim Sql As String

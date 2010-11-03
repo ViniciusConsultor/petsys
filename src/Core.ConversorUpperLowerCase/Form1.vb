@@ -8,8 +8,9 @@ Imports Compartilhados.Conversores
 Public Class Form1
 
     Private Sub btnConverter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnConverter.Click
-        ServerUtils.setCredencial(Util.ConstruaCredencial)
         Try
+            ServerUtils.setCredencial(Util.ConstruaCredencial)
+
             MigraTabelaDeMunicipio()
             MigraTabelaDeGrupo()
             MigraTabelaDePessoa()
@@ -18,13 +19,37 @@ Public Class Form1
             MigraTabelaDeCompromisso()
             MigraTabelaDeTarefa()
 
-
             MsgBox("Migração realizada com sucesso.")
         Catch ex As Exception
+            Me.Height = 450
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Erro")
+            txtMsgErro.Text = ObtenhaMensagemDeLog(ex)
         End Try
 
     End Sub
+
+    Private Function ObtenhaMensagemDeLog(ByVal ex As Exception) As String
+        Dim Erro As Exception
+        Dim DataDoErro As Date = Now
+        Dim Mensagem As New StringBuilder
+
+        Erro = ex
+
+        Mensagem.AppendLine("Foi gerado uma exceção ")
+        Mensagem.AppendLine("Data do erro : " & DataDoErro.ToString("dd/MM/yyyy"))
+        Mensagem.AppendLine("Hora do erro : " & DataDoErro.ToString("HH:mm:ss"))
+
+        Do While Not Erro Is Nothing
+            Mensagem.AppendLine("Origem do erro : " & Erro.Source)
+            Mensagem.AppendLine("Descrição do erro : " & Erro.Message)
+            Mensagem.AppendLine("Método origem : " & Erro.ToString)
+            Mensagem.AppendLine("Resumo : " & Erro.StackTrace)
+            Mensagem.AppendLine("-------------------------------------------------------------")
+            Erro = Erro.InnerException
+        Loop
+
+        Return Mensagem.ToString
+    End Function
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim Conexao As IConexao
@@ -33,6 +58,8 @@ Public Class Form1
             Conexao = Servico.ObtenhaConexao
         End Using
 
+
+        Me.Height = 150
         Me.Cursor = Cursors.Default
         FabricaDeContexto.GetInstancia.GetContextoAtual.Conexao = Conexao
     End Sub
@@ -168,9 +195,9 @@ Public Class Form1
                 Sql2.Append("UPDATE NCL_PESSOAJURIDICA SET ")
 
                 If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEFANTASIA") Then
-                    Sql2.Append("NOMEFANTASIA = '" & UtilidadesDeConversao.FormataTextoEmMaisculoMinusculoIntercaladoPorEspaco(UtilidadesDePersistencia.GetValorString(Leitor, "NOMEFANTASIA"), rbLower.Checked) & "', ")
+                    Sql2.Append("NOMEFANTASIA = '" & UtilidadesDeConversao.FormataTextoEmMaisculoMinusculoIntercaladoPorEspaco(UtilidadesDePersistencia.GetValorString(Leitor, "NOMEFANTASIA"), rbLower.Checked) & "' ")
                 Else
-                    Sql2.Append("NOMEFANTASIA = NULL, ")
+                    Sql2.Append("NOMEFANTASIA = NULL ")
                 End If
 
                 Sql2.Append("WHERE IDPESSOA = " & UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
