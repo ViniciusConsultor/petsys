@@ -26,6 +26,7 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label
         Me.rbLower = New System.Windows.Forms.RadioButton
         Me.rbUpper = New System.Windows.Forms.RadioButton
+        Me.txtMsgErro = New System.Windows.Forms.TextBox
         Me.SuspendLayout()
         '
         'btnConverter
@@ -68,11 +69,20 @@ Partial Class Form1
         Me.rbUpper.Text = "Upper"
         Me.rbUpper.UseVisualStyleBackColor = True
         '
+        'txtMsgErro
+        '
+        Me.txtMsgErro.Location = New System.Drawing.Point(16, 117)
+        Me.txtMsgErro.Multiline = True
+        Me.txtMsgErro.Name = "txtMsgErro"
+        Me.txtMsgErro.Size = New System.Drawing.Size(293, 291)
+        Me.txtMsgErro.TabIndex = 4
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(321, 124)
+        Me.ClientSize = New System.Drawing.Size(321, 412)
+        Me.Controls.Add(Me.txtMsgErro)
         Me.Controls.Add(Me.rbUpper)
         Me.Controls.Add(Me.rbLower)
         Me.Controls.Add(Me.Label1)
@@ -90,5 +100,6 @@ Partial Class Form1
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents rbLower As System.Windows.Forms.RadioButton
     Friend WithEvents rbUpper As System.Windows.Forms.RadioButton
+    Friend WithEvents txtMsgErro As System.Windows.Forms.TextBox
 
 End Class

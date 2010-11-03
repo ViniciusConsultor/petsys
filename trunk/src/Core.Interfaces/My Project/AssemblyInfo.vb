@@ -11,9 +11,9 @@ Imports System.Security
 
 <Assembly: AssemblyTitle("Core.Interfaces")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("SimpleTI")> 
+<Assembly: AssemblyCompany("Simple TI")> 
 <Assembly: AssemblyProduct("Core.Interfaces")> 
-<Assembly: AssemblyCopyright("SimpleTI Copyright © 2010")>
+<Assembly: AssemblyCopyright("Simple TI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: AllowPartiallyTrustedCallersAttribute()> 
 
@@ -34,4 +34,4 @@ Imports System.Security
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.2.0.80")> 
+<Assembly: AssemblyFileVersion("3.0.0.0")> 
