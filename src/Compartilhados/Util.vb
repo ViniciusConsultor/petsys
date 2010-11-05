@@ -2,6 +2,7 @@
 Imports System.IO
 Imports Compartilhados.Fabricas
 Imports System.Configuration
+Imports System.Xml
 
 Public Class Util
 
@@ -51,6 +52,21 @@ Public Class Util
         If Configuracao Is Nothing Then Throw New Exception("O arquivo de configuração Core.Servicos.Local.config não foi encontrado.")
         Return Configuracao.Value
     End Function
+
+    Public Shared Sub SalveConfiguracaoDeConexao(ByVal Conexao As IConexao)
+        Dim Caminho As String
+        Dim Xml As XmlDocument
+
+        If ExecutandoServidorWeb() Then
+            Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
+        Else
+            Caminho = ObtenhaPastaConfiguradaPorVariavelDeAmbiente()
+        End If
+
+        Xml = New XmlDocument
+        Xml.Load(Path.Combine(Caminho, "Core.Servicos.Local.dll.config"))
+
+    End Sub
 
     Public Shared Function ObtenhaCaminhoArquivoXMLDeGatilho() As String
         Dim Caminho As String

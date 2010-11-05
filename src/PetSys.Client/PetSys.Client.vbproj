@@ -246,7 +246,6 @@
 xcopy $(SolutionDir)WorkSpace\imagens $(ProjectDir)imagens /S /I /F
 xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
 xcopy $(SolutionDir)WorkSpace\Nucleo $(ProjectDir)Nucleo /S /I /F
-xcopy $(SolutionDir)WorkSpace\Skins $(ProjectDir)Skins /S /I /F
 copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.ascx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.css $(ProjectDir)

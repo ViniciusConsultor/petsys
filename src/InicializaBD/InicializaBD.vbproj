@@ -89,6 +89,24 @@
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmConfigurarConexao.Designer.vb">
+      <DependentUpon>frmConfigurarConexao.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmConfigurarConexao.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConverterBancoDeDados.Designer.vb">
+      <DependentUpon>frmConverterBancoDeDados.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmConverterBancoDeDados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -108,6 +126,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConfigurarConexao.resx">
+      <DependentUpon>frmConfigurarConexao.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
