@@ -8,13 +8,14 @@
 
         Public Shared Audiencia As TipoDeSolicitacao = New TipoDeSolicitacao(1, "Audiência")
         Public Shared Convite As TipoDeSolicitacao = New TipoDeSolicitacao(2, "Convite")
+        Public Shared Visita As TipoDeSolicitacao = New TipoDeSolicitacao(3, "Visita")
 
         Private Sub New(ByVal ID As Byte, ByVal Descricao As String)
             _ID = ID
             _Descricao = Descricao
         End Sub
 
-        Private Shared Lista As TipoDeSolicitacao() = {Audiencia, Convite}
+        Private Shared Lista As TipoDeSolicitacao() = {Audiencia, Convite, Visita}
 
         Public ReadOnly Property ID() As Byte
             Get

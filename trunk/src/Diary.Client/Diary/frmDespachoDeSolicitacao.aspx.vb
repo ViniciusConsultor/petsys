@@ -40,6 +40,8 @@ Partial Public Class frmDespachoDeSolicitacao
 
                 If Tipo.Equals(TipoDeSolicitacao.Audiencia) Then
                     Solicitacao = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ISolicitacaoDeAudienciaLazyLoad)(CLng(Id))
+                ElseIf Tipo.Equals(TipoDeSolicitacao.Visita) Then
+                    Solicitacao = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ISolicitacaoDeVisitaLazyLoad)(CLng(Id))
                 Else
                     Solicitacao = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ISolicitacaoDeConviteLazyLoad)(CLng(Id))
                 End If
