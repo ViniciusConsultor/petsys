@@ -195,7 +195,7 @@ Partial Public Class frmDespachoDeSolicitacao
         Dim Despachos As IList(Of IDespacho)
 
         If Not txtDataInicial.SelectedDate.HasValue Then
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("A data de início deve ser informada."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("A data de início do despacho deve ser informada."), False)
             Exit Sub
         End If
 
@@ -327,7 +327,7 @@ Partial Public Class frmDespachoDeSolicitacao
         Despachos = CType(ViewState(CHAVE_DESPACHOS_DA_SOLICITACAO), IList(Of IDespacho))
 
         If Despachos Is Nothing AndAlso Despachos.Count = 0 Then
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existe nenhum despacho para imprimir."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem despachos para serem impressos."), False)
         End If
 
         Gerador = New GeradorDeDespachosEmPDF(Despachos)

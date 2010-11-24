@@ -166,7 +166,6 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
             While Leitor.Read
                 Solicitacoes.Add(Me.MontaObjeto(Leitor))
             End While
-
         End Using
 
         Return Solicitacoes
@@ -185,8 +184,8 @@ Public Class MapeadorDeSolicitacaoDeAudiencia
             Sql.Append(" AND DRY_SOLICAUDI.ESTAATIVA = 'S'")
         End If
 
-        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO >= '", DataInicio.ToString("yyyyMMddHHmmss"), "'"))
-        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO <= '", DataFim.ToString("yyyyMMddHHmmss"), "'"))
+        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO >= '", DataInicio.ToString("yyyyMMdd") & "000000", "'"))
+        Sql.Append(String.Concat(" AND DRY_SOLICAUDI.DATADECADASTRO <= '", DataFim.ToString("yyyyMMdd") & "235959", "'"))
 
         Sql.Append(Me.ObtenhaOrderBy)
 
