@@ -167,19 +167,18 @@ Partial Public Class frmSolicitacoesDeConvite
 
     Protected Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
         If txtDataInicial.IsEmpty Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O data inicial da solicitação de convite deve ser informada.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data inicial da solicitação de convite deve ser informada."), False)
             Exit Sub
         End If
 
         If txtDataFinal.IsEmpty Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O data final da solicitação de convite deve ser informada.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data final da solicitação de convite deve ser informada."), False)
             Exit Sub
         End If
 
         Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
 
         Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
-
             Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked, _
                                                                 txtDataInicial.SelectedDate.Value, txtDataFinal.SelectedDate.Value)
         End Using
@@ -187,10 +186,9 @@ Partial Public Class frmSolicitacoesDeConvite
         ExibaSolicitacoes(Solicitacoes)
     End Sub
 
-
     Protected Sub btnPesquisarPorCodigo_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorCodigo.Click
         If String.IsNullOrEmpty(txtCodigoDaSolicitacao.Text) Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O código da solicitação de convite deve ser informado.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O código da solicitação de convite deve ser informado."), False)
             Exit Sub
         End If
 
@@ -214,6 +212,10 @@ Partial Public Class frmSolicitacoesDeConvite
 
         Solicitacoes = CType(ViewState(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeConvite))
 
+        If Solicitacoes Is Nothing AndAlso Solicitacoes.Count = 0 Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem solicitações de convite para ser impressas."), False)
+        End If
+
         Gerador = New GeradorDeSolicitacoesDeConviteEmPDF(Solicitacoes)
         NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
@@ -222,7 +224,7 @@ Partial Public Class frmSolicitacoesDeConvite
 
     Private Sub btnPesquisarPorContato_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorContato.Click
         If ctrlContato1.ContatoSelecionado Is Nothing Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O contato da solicitação de convite deve ser informado.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O contato da solicitação de convite deve ser informado."), False)
             Exit Sub
         End If
 
@@ -254,4 +256,5 @@ Partial Public Class frmSolicitacoesDeConvite
             pnlContato.Visible = True
         End If
     End Sub
+
 End Class

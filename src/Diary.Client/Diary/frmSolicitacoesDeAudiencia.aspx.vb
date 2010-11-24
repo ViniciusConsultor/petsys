@@ -154,12 +154,12 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
     Protected Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
         If txtDataInicial.IsEmpty Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O data inicial da solicitação de audiência deve ser informada.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data inicial da solicitação de audiência deve ser informada."), False)
             Exit Sub
         End If
 
         If txtDataFinal.IsEmpty Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O data final da solicitação de audiência deve ser informada.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data final da solicitação de audiência deve ser informada."), False)
             Exit Sub
         End If
 
@@ -173,10 +173,9 @@ Partial Public Class frmSolicitacoesDeAudiencia
         ExibaSolicitacoes(Solicitacoes)
     End Sub
 
-
     Protected Sub btnPesquisarPorCodigo_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorCodigo.Click
         If String.IsNullOrEmpty(txtCodigoDaSolicitacao.Text) Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O código da solicitação de audiência deve ser informado.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O código da solicitação de audiência deve ser informado."), False)
             Exit Sub
         End If
 
@@ -200,6 +199,10 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
         Solicitacoes = CType(ViewState(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
 
+        If Solicitacoes Is Nothing AndAlso Solicitacoes.Count = 0 Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem solicitações de audiência para ser impressas."), False)
+        End If
+
         Gerador = New GeradorDeSolicitacoesEmPDF(Solicitacoes)
         NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
@@ -208,7 +211,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
     Private Sub btnPesquisarPorContato_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorContato.Click
         If ctrlContato1.ContatoSelecionado Is Nothing Then
-            UtilidadesWeb.MostraMensagemDeInconsitencia("O contato da solicitação de audiência deve ser informado.")
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O contato da solicitação de audiência deve ser informado."), False)
             Exit Sub
         End If
 
@@ -252,4 +255,5 @@ Partial Public Class frmSolicitacoesDeAudiencia
             pnlContato.Visible = True
         End If
     End Sub
+
 End Class
