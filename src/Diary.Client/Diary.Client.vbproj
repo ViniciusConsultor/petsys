@@ -120,6 +120,13 @@
       <DependentUpon>cdSolicitacaoDeConvite.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Diary\cdSolicitacaoDeVisita.aspx.designer.vb">
+      <DependentUpon>cdSolicitacaoDeVisita.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\cdSolicitacaoDeVisita.aspx.vb">
+      <DependentUpon>cdSolicitacaoDeVisita.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Diary\ctrlContato.ascx.designer.vb">
       <DependentUpon>ctrlContato.ascx</DependentUpon>
     </Compile>
@@ -154,6 +161,13 @@
     <Compile Include="Diary\frmDespachoDeSolicitacao.aspx.vb">
       <DependentUpon>frmDespachoDeSolicitacao.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Diary\frmSolicitacoesDeVisita.aspx.designer.vb">
+      <DependentUpon>frmSolicitacoesDeVisita.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diary\frmSolicitacoesDeVisita.aspx.vb">
+      <DependentUpon>frmSolicitacoesDeVisita.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Diary\GeradorDeDespachosEmPDF.vb" />
     <Compile Include="Diary\GeradorDeSolicitacoesDeConviteEmPDF.vb" />
@@ -213,6 +227,7 @@
     <Content Include="ctrlPessoa.ascx" />
     <Content Include="Diary\cdSolicitacaoDeAudiencia.aspx" />
     <Content Include="Diary\cdSolicitacaoDeConvite.aspx" />
+    <Content Include="Diary\cdSolicitacaoDeVisita.aspx" />
     <Content Include="Diary\ctrlContato.ascx" />
     <Content Include="Diary\ctrlDespachoAgenda.ascx" />
     <Content Include="Diary\ctrlDespachoLembrete.ascx" />
@@ -220,6 +235,7 @@
     <Content Include="Diary\frmDespachoDeSolicitacao.aspx" />
     <Content Include="Diary\frmSolicitacoesDeAudiencia.aspx" />
     <Content Include="Diary\frmSolicitacoesDeConvite.aspx" />
+    <Content Include="Diary\frmSolicitacoesDeVisita.aspx" />
     <Content Include="Web.config" />
     <Content Include="Diary\cdContato.aspx" />
     <Content Include="WorkSpace.Master" />

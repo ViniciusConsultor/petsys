@@ -1,3 +1,3 @@
-   function hideLoading() {
-		    document.getElementById("divLoading").style.display="none";
+   function hideLoading(id) {
+       document.getElementById(id).style.display = "none";
 	    }

@@ -83,6 +83,7 @@
     <Compile Include="DespachoTarefa.vb" />
     <Compile Include="LazyLoad\SolicitacaoDeAudienciaLazyLoad.vb" />
     <Compile Include="LazyLoad\SolicitacaoDeConviteLazyLoad.vb" />
+    <Compile Include="LazyLoad\SolicitacaoDeVisitaLazyLoad.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -101,6 +102,7 @@
     <Compile Include="Solicitacao.vb" />
     <Compile Include="SolicitacaoDeAudiencia.vb" />
     <Compile Include="SolicitacaoDeConvite.vb" />
+    <Compile Include="SolicitacaoDeVisita.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

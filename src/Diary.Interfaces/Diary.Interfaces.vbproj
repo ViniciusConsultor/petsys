@@ -70,6 +70,7 @@
     <Compile Include="Mapeadores\IMapeadorDeDespacho.vb" />
     <Compile Include="Mapeadores\IMapeadorDeSolicitacaoDeAudiencia.vb" />
     <Compile Include="Mapeadores\IMapeadorDeSolicitacaoDeConvite.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeSolicitacaoDeVisita.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -93,8 +94,10 @@
     <Compile Include="Negocio\ISolicitacao.vb" />
     <Compile Include="Negocio\ISolicitacaoDeAudiencia.vb" />
     <Compile Include="Negocio\ISolicitacaoDeConvite.vb" />
+    <Compile Include="Negocio\ISolicitacaoDeVisita.vb" />
     <Compile Include="Negocio\LazyLoad\ISolicitacaoDeAudienciaLazyLoad.vb" />
     <Compile Include="Negocio\LazyLoad\ISolicitacaoDeConviteLazyLoad.vb" />
+    <Compile Include="Negocio\LazyLoad\ISolicitacaoDeVisitaLazyLoad.vb" />
     <Compile Include="Negocio\TipoDeDespacho.vb" />
     <Compile Include="Negocio\TipoDeSolicitacao.vb" />
     <Compile Include="Negocio\TipoDestinoDespacho.vb" />
@@ -102,6 +105,7 @@
     <Compile Include="Servicos\IServicoDeDespacho.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeAudiencia.vb" />
     <Compile Include="Servicos\IServicoDeSolicitacaoDeConvite.vb" />
+    <Compile Include="Servicos\IServicoDeSolicitacaoDeVisita.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

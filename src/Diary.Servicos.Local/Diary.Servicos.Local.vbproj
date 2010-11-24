@@ -85,6 +85,7 @@
     <Compile Include="ServicoDeDespachoLocal.vb" />
     <Compile Include="ServicoDeSolicitacaoDeAudienciaLocal.vb" />
     <Compile Include="ServicoDeSolicitacaoDeConviteLocal.vb" />
+    <Compile Include="ServicoDeSolicitacaoDeVisitaLocal.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
