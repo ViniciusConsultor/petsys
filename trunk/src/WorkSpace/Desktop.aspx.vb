@@ -60,7 +60,7 @@ Partial Public Class Desktop
             Link.Attributes("href") = Item.ObtenhaURLCompleta(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual)
 
             Dim dt As New HtmlGenericControl("dt")
-            dt.Attributes("id") = Item.ID
+            dt.Attributes("id") = Item.ID.Replace(".", "_")
 
             Link.Controls.Add(Imagem)
             Link.Controls.Add(Div)
