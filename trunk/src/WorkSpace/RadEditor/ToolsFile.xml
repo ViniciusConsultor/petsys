@@ -1,0 +1,12 @@
+<root>
+  <tools name="Formatting" enabled="true" dockable="true">
+    <tool name="FontName"/>
+    <tool name="RealFontSize"/>
+    <tool separator="true"/>
+    <tool name="Bold"/>
+    <tool name="Italic"/>
+    <tool name="Underline"/>
+    <tool separator="true"/>
+    <tool name="ForeColor"/>
+  </tools>
+</root>
