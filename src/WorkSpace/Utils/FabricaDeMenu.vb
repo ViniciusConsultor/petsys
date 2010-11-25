@@ -146,6 +146,9 @@ Public Class FabricaDeMenu
         Dim HTML As New StringBuilder
         Dim IDDiv As String = Guid.NewGuid.ToString
 
+        IDDiv = IDDiv.Replace("-", "_")
+        IDDiv = String.Concat("div_", IDDiv)
+
         HTML.Append("<div id=""" & IDDiv & """ style=""position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"">")
         HTML.Append("<div style=""position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"">")
         HTML.Append("<img src=""imagens/carregandopagina.gif"" alt="""">")
