@@ -112,7 +112,7 @@ Partial Public Class cdCompromisso
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtAssunto As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents txtAssunto As Global.Telerik.Web.UI.RadEditor
 
     '''<summary>
     '''Label4 control.
@@ -130,7 +130,7 @@ Partial Public Class cdCompromisso
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtLocal As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents txtLocal As Global.Telerik.Web.UI.RadEditor
 
     '''<summary>
     '''Label5 control.
@@ -148,7 +148,7 @@ Partial Public Class cdCompromisso
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtDescricao As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents txtDescricao As Global.Telerik.Web.UI.RadEditor
 
     '''<summary>
     '''Label6 control.

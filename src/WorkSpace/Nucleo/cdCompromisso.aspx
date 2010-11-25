@@ -40,8 +40,26 @@
                                     <asp:Label ID="Label3" runat="server" Text="Assunto"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtAssunto" runat="server" Width="350px" MaxLength="50">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadEditor ID="txtAssunto" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                                        Language="pt-BR" Skin="Vista" Width="350px">
+                                        <FontNames>
+                                            <telerik:EditorFont Value="Arial" />
+                                            <telerik:EditorFont Value="Times New Roman" />
+                                        </FontNames>
+                                        <Colors>
+                                            <telerik:EditorColor Index="0" Title="Preto" Value="Black" />
+                                            <telerik:EditorColor Index="0" Title="Cinza" Value="Gray" />
+                                            <telerik:EditorColor Index="0" Title="Vermelho" Value="Red" />
+                                            <telerik:EditorColor Index="0" Title="Marron" Value="Brown" />
+                                            <telerik:EditorColor Index="0" Title="Rosa" Value="Pink" />
+                                            <telerik:EditorColor Index="0" Title="Amarelo" Value="Yellow" />
+                                            <telerik:EditorColor Index="0" Title="Azul" Value="Blue" />
+                                            <telerik:EditorColor Index="0" Title="Laranja" Value="Orange" />
+                                        </Colors>
+                                        <Content>
+                                        
+</Content>
+                                    </telerik:RadEditor>
                                 </td>
                             </tr>
                             <tr>
@@ -49,8 +67,26 @@
                                     <asp:Label ID="Label4" runat="server" Text="Local"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtLocal" runat="server" Width="350px" MaxLength="100">
-                                    </telerik:RadTextBox>
+                                   <telerik:RadEditor ID="txtLocal" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                                        Language="pt-BR" Skin="Vista" Width="350px">
+                                        <FontNames>
+                                            <telerik:EditorFont Value="Arial" />
+                                            <telerik:EditorFont Value="Times New Roman" />
+                                        </FontNames>
+                                        <Colors>
+                                            <telerik:EditorColor Index="0" Title="Preto" Value="Black" />
+                                            <telerik:EditorColor Index="0" Title="Cinza" Value="Gray" />
+                                            <telerik:EditorColor Index="0" Title="Vermelho" Value="Red" />
+                                            <telerik:EditorColor Index="0" Title="Marron" Value="Brown" />
+                                            <telerik:EditorColor Index="0" Title="Rosa" Value="Pink" />
+                                            <telerik:EditorColor Index="0" Title="Amarelo" Value="Yellow" />
+                                            <telerik:EditorColor Index="0" Title="Azul" Value="Blue" />
+                                            <telerik:EditorColor Index="0" Title="Laranja" Value="Orange" />
+                                        </Colors>
+                                        <Content>
+                                        
+</Content>
+                                    </telerik:RadEditor>
                                 </td>
                             </tr>
                             <tr>
@@ -58,10 +94,26 @@
                                     <asp:Label ID="Label5" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" TextMode="MultiLine"
-                                        Width="350px" MaxLength="4000">
-                                    </telerik:RadTextBox>
-                             
+                                 <telerik:RadEditor ID="txtDescricao" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                                        Language="pt-BR" Skin="Vista" Width="350">
+                                        <FontNames>
+                                            <telerik:EditorFont Value="Arial" />
+                                            <telerik:EditorFont Value="Times New Roman" />
+                                        </FontNames>
+                                        <Colors>
+                                            <telerik:EditorColor Index="0" Title="Preto" Value="Black" />
+                                            <telerik:EditorColor Index="0" Title="Cinza" Value="Gray" />
+                                            <telerik:EditorColor Index="0" Title="Vermelho" Value="Red" />
+                                            <telerik:EditorColor Index="0" Title="Marron" Value="Brown" />
+                                            <telerik:EditorColor Index="0" Title="Rosa" Value="Pink" />
+                                            <telerik:EditorColor Index="0" Title="Amarelo" Value="Yellow" />
+                                            <telerik:EditorColor Index="0" Title="Azul" Value="Blue" />
+                                            <telerik:EditorColor Index="0" Title="Laranja" Value="Orange" />
+                                        </Colors>
+                                        <Content>
+                                        
+</Content>
+                                    </telerik:RadEditor>
                                 </td>
                             </tr>
                             <tr>

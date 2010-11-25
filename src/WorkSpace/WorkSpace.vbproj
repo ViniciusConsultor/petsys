@@ -623,6 +623,7 @@
     </None>
     <Content Include="Nucleo\cdMunicipio.aspx" />
     <None Include="WorkSpace.snk" />
+    <Content Include="RadEditor\ToolsFile.xml" />
     <Content Include="StyleSheet.css" />
     <Content Include="StyleSheetLogin.css" />
     <Content Include="WorkSpace.Master" />
