@@ -67,11 +67,11 @@ Partial Public Class cdCompromisso
 
         If Compromisso Is Nothing Then Exit Sub
 
-        txtAssunto.Text = Compromisso.Assunto
-        txtDescricao.Text = Compromisso.Descricao
+        txtAssunto.Content = Compromisso.Assunto
+        txtDescricao.Content = Compromisso.Descricao
         txtDataHorarioFim.SelectedDate = Compromisso.Fim
         txtDataHorarioInicio.SelectedDate = Compromisso.Inicio
-        txtLocal.Text = Compromisso.Local
+        txtLocal.Content = Compromisso.Local
         ViewState(CHAVE_ID_PROPRIETARIO) = Compromisso.Proprietario.ID
         ViewState(CHAVE_ID_COMPROMISSO) = Compromisso.ID
         cboStatus.SelectedValue = Compromisso.Status.ID.ToString
@@ -122,11 +122,11 @@ Partial Public Class cdCompromisso
         Dim Compromisso As ICompromisso
 
         Compromisso = FabricaGenerica.GetInstancia.CrieObjeto(Of ICompromisso)()
-        Compromisso.Assunto = txtAssunto.Text
-        Compromisso.Descricao = txtDescricao.Text
+        Compromisso.Assunto = txtAssunto.Content
+        Compromisso.Descricao = txtDescricao.Content
         Compromisso.Fim = txtDataHorarioFim.SelectedDate.Value
         Compromisso.Inicio = txtDataHorarioInicio.SelectedDate.Value
-        Compromisso.Local = txtLocal.Text
+        Compromisso.Local = txtLocal.Content
         Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO)))
 
         If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then

@@ -224,7 +224,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <Content Include="ctrlPessoa.ascx" />
     <Content Include="Diary\cdSolicitacaoDeAudiencia.aspx" />
     <Content Include="Diary\cdSolicitacaoDeConvite.aspx" />
     <Content Include="Diary\cdSolicitacaoDeVisita.aspx" />
@@ -236,7 +235,6 @@
     <Content Include="Diary\frmSolicitacoesDeAudiencia.aspx" />
     <Content Include="Diary\frmSolicitacoesDeConvite.aspx" />
     <Content Include="Diary\frmSolicitacoesDeVisita.aspx" />
-    <Content Include="Web.config" />
     <Content Include="Diary\cdContato.aspx" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
@@ -280,6 +278,7 @@
     <PostBuildEvent>xcopy $(SolutionDir)WorkSpace\js $(ProjectDir)js /S /I /F 
 xcopy $(SolutionDir)WorkSpace\imagens $(ProjectDir)imagens /S /I /F
 xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
+xcopy $(SolutionDir)WorkSpace\RadEditor $(ProjectDir)RadEditor /S /I /F
 xcopy $(SolutionDir)WorkSpace\Nucleo $(ProjectDir)Nucleo /S /I /F
 copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.ascx $(ProjectDir)

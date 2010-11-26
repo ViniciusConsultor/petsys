@@ -38,8 +38,12 @@
                                     <asp:Label ID="Label3" runat="server" Text="Assunto"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtAssunto" runat="server" Width="350px" MaxLength="50">
-                                    </telerik:RadTextBox>
+                                      <telerik:RadEditor ID="txtAssunto" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                                        Language="pt-BR" MaxHtmlLength="4000" Skin="Vista" AutoResizeHeight="True" Width="450px"
+                                        ContentAreaCssFile="~/RadEditor/StyleSheetRadEditor.css">
+                                        <Content>
+                                        </Content>
+                                    </telerik:RadEditor>
                                 </td>
                             </tr>
                             <tr>
@@ -56,9 +60,12 @@
                                     <asp:Label ID="Label5" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" 
-                                        TextMode="MultiLine" Width="350px" MaxLength="4000">
-                                    </telerik:RadTextBox>
+                                       <telerik:RadEditor ID="txtDescricao" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                                        Language="pt-BR" MaxHtmlLength="4000" Skin="Vista" AutoResizeHeight="True" Width="450px"
+                                        ContentAreaCssFile="~/RadEditor/StyleSheetRadEditor.css">
+                                        <Content>
+                                        </Content>
+                                    </telerik:RadEditor>
                                 </td>
                             </tr>
                             <tr>

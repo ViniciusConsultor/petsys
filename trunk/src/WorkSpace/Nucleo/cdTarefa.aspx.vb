@@ -76,8 +76,8 @@ Partial Public Class cdTarefa
 
         If Tarefa Is Nothing Then Exit Sub
 
-        txtAssunto.Text = Tarefa.Assunto
-        txtDescricao.Text = Tarefa.Descricao
+        txtAssunto.Content = Tarefa.Assunto
+        txtDescricao.Content = Tarefa.Descricao
         txtDataHorarioInicio.SelectedDate = Tarefa.DataDeInicio
         txtDataHorarioFim.SelectedDate = Tarefa.DataDeConclusao
         cboPrioridade.SelectedValue = Tarefa.Prioridade.ID.ToString
@@ -131,8 +131,8 @@ Partial Public Class cdTarefa
         Dim Tarefa As ITarefa
 
         Tarefa = FabricaGenerica.GetInstancia.CrieObjeto(Of ITarefa)()
-        Tarefa.Assunto = txtAssunto.Text
-        Tarefa.Descricao = txtDescricao.Text
+        Tarefa.Assunto = txtAssunto.Content
+        Tarefa.Descricao = txtDescricao.Content
         Tarefa.DataDeInicio = txtDataHorarioInicio.SelectedDate.Value
         Tarefa.DataDeConclusao = txtDataHorarioFim.SelectedDate.Value
         Tarefa.Prioridade = PrioridadeDaTarefa.Obtenha(CChar(cboPrioridade.SelectedValue))
