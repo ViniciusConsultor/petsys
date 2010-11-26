@@ -31,7 +31,8 @@
                                     <asp:Label ID="Label7" runat="server" Text="Assunto"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtAssunto" runat="server" MaxLength="50" Width="400px">
+                                    <telerik:RadTextBox ID="txtAssunto" runat="server" MaxLength="1000" Rows="4" TextMode="MultiLine"
+                                        Width="400px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -40,7 +41,8 @@
                                     <asp:Label ID="Label2" runat="server" Text="Local"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtLocal" runat="server" MaxLength="100" Width="400px">
+                                    <telerik:RadTextBox ID="txtLocal" runat="server" MaxLength="1000" Rows="4" TextMode="MultiLine"
+                                        Width="400px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -49,7 +51,7 @@
                                     <asp:Label ID="Label8" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="4000" Rows="10" TextMode="MultiLine"
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="1500" Rows="4" TextMode="MultiLine"
                                         Width="400px">
                                     </telerik:RadTextBox>
                                 </td>

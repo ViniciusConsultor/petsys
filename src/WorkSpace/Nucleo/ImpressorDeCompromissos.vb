@@ -18,7 +18,7 @@ Public Class ImpressorDeCompromissos
 
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
-    Private _FonteDescricaoCompromissos As Font
+    ' Private _FonteDescricaoCompromissos As Font
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
     Private NomeDoArquivoDeSaida As String
 
@@ -30,7 +30,7 @@ Public Class ImpressorDeCompromissos
 
         _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 12, Font.BOLDITALIC)
         _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
-        _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
+        ' _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
         _documento = New Document(PageSize.A4)
         CriaEscritor(FormatoDeSaida)
@@ -136,7 +136,12 @@ Public Class ImpressorDeCompromissos
         CorpoCompromisso.Add(CaracterTAB)
 
         If MostraAssunto Then
-            CorpoCompromisso.Add(New Chunk(Compromisso.Assunto, _FonteDescricaoCompromissos))
+            'CorpoCompromisso.Add(New Chunk(Compromisso.Assunto, _FonteDescricaoCompromissos))
+
+            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Compromisso.Assunto)
+                CorpoCompromisso.Add(Elemento)
+            Next
+
             CorpoCompromisso.Add(Chunk.NEWLINE)
             Flag = True
         End If
@@ -146,7 +151,12 @@ Public Class ImpressorDeCompromissos
                 CorpoCompromisso.Add(CaracterTAB)
             End If
 
-            CorpoCompromisso.Add(New Chunk(Compromisso.Local, _FonteDescricaoCompromissos))
+            'CorpoCompromisso.Add(New Chunk(Compromisso.Local, _FonteDescricaoCompromissos))
+
+            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Compromisso.Local)
+                CorpoCompromisso.Add(Elemento)
+            Next
+
             CorpoCompromisso.Add(Chunk.NEWLINE)
         End If
 
@@ -171,8 +181,13 @@ Public Class ImpressorDeCompromissos
             '    Next
 
             'Else
-            CorpoCompromisso.Add(New Chunk(Compromisso.Descricao, _FonteDescricaoCompromissos))
+            'CorpoCompromisso.Add(New Chunk(Compromisso.Descricao, _FonteDescricaoCompromissos))
             ' End If
+
+            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Compromisso.Descricao)
+                CorpoCompromisso.Add(Elemento)
+            Next
+
         End If
 
         _documento.Add(CorpoCompromisso)

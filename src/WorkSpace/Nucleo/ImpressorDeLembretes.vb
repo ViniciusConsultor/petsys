@@ -17,7 +17,7 @@ Public Class ImpressorDeLembretes
     Private _Lembretes As IList(Of ILembrete)
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
-    Private _FonteDescricaoCompromissos As Font
+    ' Private _FonteDescricaoCompromissos As Font
     Private NomeDoArquivoDeSaida As String
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
 
@@ -29,7 +29,7 @@ Public Class ImpressorDeLembretes
 
         _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 12, Font.BOLDITALIC)
         _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
-        _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
+        '  _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
         _documento = New Document(PageSize.A4)
         CriaEscritor(FormatoDeSaida)
@@ -124,43 +124,52 @@ Public Class ImpressorDeLembretes
         ParagradoEmBranco = New Paragraph("")
         _documento.Add(ParagradoEmBranco)
 
-        Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
+        'Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
         Dim CorpoLembrete As Phrase
 
         CorpoLembrete = New Phrase
 
         CorpoLembrete.Add(New Chunk(Lembrete.Inicio.ToString("HH") & "h" & Lembrete.Inicio.ToString("mm") & "min", _FonteHorario))
-        CorpoLembrete.Add(CaracterTAB)
+        CorpoLembrete.Add(iTextSharpUtilidades.ObtenhaCaracterQueRepresentaTAB)
 
         If MostraAssunto Then
-            CorpoLembrete.Add(New Chunk(Lembrete.Assunto, _FonteDescricaoCompromissos))
+            'CorpoLembrete.Add(New Chunk(Lembrete.Assunto, _FonteDescricaoCompromissos))
+
+            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Lembrete.Assunto)
+                CorpoLembrete.Add(Elemento)
+            Next
+
             CorpoLembrete.Add(Chunk.NEWLINE)
             Flag = True
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Lembrete.Descricao) Then
             If Flag Then
-                CorpoLembrete.Add(CaracterTAB)
+                CorpoLembrete.Add(iTextSharpUtilidades.ObtenhaCaracterQueRepresentaTAB)
             End If
 
-            If Lembrete.Descricao.Contains(vbLf) Then
-                Dim LinhasDaDescricao() As String
+            'If Lembrete.Descricao.Contains(vbLf) Then
+            '    Dim LinhasDaDescricao() As String
 
-                LinhasDaDescricao = Lembrete.Descricao.Split(CChar(vbLf))
+            '    LinhasDaDescricao = Lembrete.Descricao.Split(CChar(vbLf))
 
-                For Each Linha As String In LinhasDaDescricao
-                    If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
-                        CorpoLembrete.Add(CaracterTAB)
-                    End If
+            '    For Each Linha As String In LinhasDaDescricao
+            '        If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
+            '            CorpoLembrete.Add(CaracterTAB)
+            '        End If
 
-                    If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
-                    CorpoLembrete.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
-                    CorpoLembrete.Add(Chunk.NEWLINE)
-                Next
+            '        If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
+            '        CorpoLembrete.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
+            '        CorpoLembrete.Add(Chunk.NEWLINE)
+            '    Next
 
-            Else
-                CorpoLembrete.Add(New Chunk(Lembrete.Descricao, _FonteDescricaoCompromissos))
-            End If
+            'Else
+            '    CorpoLembrete.Add(New Chunk(Lembrete.Descricao, _FonteDescricaoCompromissos))
+            'End If
+
+            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Lembrete.Descricao)
+                CorpoLembrete.Add(Elemento)
+            Next
         End If
 
         _documento.Add(CorpoLembrete)

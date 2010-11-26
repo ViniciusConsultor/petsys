@@ -1,4 +1,5 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ctrlDespachoLembrete.ascx.vb" Inherits="Diary.Client.ctrlDespachoLembrete" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ctrlDespachoLembrete.ascx.vb"
+    Inherits="Diary.Client.ctrlDespachoLembrete" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Panel ID="pnlDadosDoCompromisso" runat="server">
     <table class="tabela">
@@ -25,8 +26,12 @@
                 <asp:Label ID="Label3" runat="server" Text="Assunto"></asp:Label>
             </td>
             <td class="td">
-                <telerik:RadTextBox ID="txtAssunto" runat="server" Width="350px" MaxLength="100">
-                </telerik:RadTextBox>
+                <telerik:RadEditor ID="txtAssunto" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                    Language="pt-BR" MaxHtmlLength="4000" Skin="Vista" AutoResizeHeight="True" Width="450px"
+                    ContentAreaCssFile="~/RadEditor/StyleSheetRadEditor.css">
+                    <content>
+                                        </content>
+                </telerik:RadEditor>
             </td>
         </tr>
         <tr>
@@ -34,8 +39,12 @@
                 <asp:Label ID="Label4" runat="server" Text="Local"></asp:Label>
             </td>
             <td class="td">
-                <telerik:RadTextBox ID="txtLocal" runat="server" Width="350px" MaxLength="100">
-                </telerik:RadTextBox>
+                <telerik:RadEditor ID="txtLocal" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                    Language="pt-BR" MaxHtmlLength="4000" Skin="Vista" AutoResizeHeight="True" Width="450px"
+                    ContentAreaCssFile="~/RadEditor/StyleSheetRadEditor.css">
+                    <content>
+                                        </content>
+                </telerik:RadEditor>
             </td>
         </tr>
         <tr>
@@ -43,15 +52,17 @@
                 <asp:Label ID="Label5" runat="server" Text="Descrição"></asp:Label>
             </td>
             <td class="td">
-                <telerik:RadTextBox ID="txtDescricao" runat="server" Rows="10" TextMode="MultiLine"
-                    Width="350px" MaxLength="4000">
-                </telerik:RadTextBox>
+                <telerik:RadEditor ID="txtDescricao" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
+                    Language="pt-BR" MaxHtmlLength="4000" Skin="Vista" AutoResizeHeight="True" Width="450px"
+                    ContentAreaCssFile="~/RadEditor/StyleSheetRadEditor.css">
+                    <content>
+                                        </content>
+                </telerik:RadEditor>
             </td>
         </tr>
-         <tr>
+        <tr>
             <td colspan="2">
-             <asp:Button ID="btnAdicionarDespacho" runat="server" CssClass="RadUploadSubmit" 
-                                                Text="Despachar" />
+                <asp:Button ID="btnAdicionarDespacho" runat="server" CssClass="RadUploadSubmit" Text="Despachar" />
             </td>
         </tr>
     </table>

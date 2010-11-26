@@ -123,45 +123,53 @@ Public Class ImpressorDeTarefas
         ParagradoEmBranco = New Paragraph("")
         _documento.Add(ParagradoEmBranco)
 
-        Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
-        Dim CorpoLembrete As Phrase
+        Dim CorpoTarefa As Phrase
 
-        CorpoLembrete = New Phrase
+        CorpoTarefa = New Phrase
 
-        CorpoLembrete.Add(New Chunk(Tarefa.DataDeInicio.ToString("HH") & "h" & Tarefa.DataDeInicio.ToString("mm") & "min", _FonteHorario))
-        CorpoLembrete.Add(CaracterTAB)
+        CorpoTarefa.Add(New Chunk(Tarefa.DataDeInicio.ToString("HH") & "h" & Tarefa.DataDeInicio.ToString("mm") & "min", _FonteHorario))
+        CorpoTarefa.Add(iTextSharpUtilidades.ObtenhaCaracterQueRepresentaTAB)
 
         If MostraAssunto Then
-            CorpoLembrete.Add(New Chunk(Tarefa.Assunto, _FonteDescricaoCompromissos))
-            CorpoLembrete.Add(Chunk.NEWLINE)
+            ' CorpoTarefa.Add(New Chunk(Tarefa.Assunto, _FonteDescricaoCompromissos))
+
+            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Tarefa.Assunto)
+                CorpoTarefa.Add(Elemento)
+            Next
+
+            CorpoTarefa.Add(Chunk.NEWLINE)
             Flag = True
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Tarefa.Descricao) Then
             If Flag Then
-                CorpoLembrete.Add(CaracterTAB)
+                CorpoTarefa.Add(iTextSharpUtilidades.ObtenhaCaracterQueRepresentaTAB)
             End If
 
-            If Tarefa.Descricao.Contains(vbLf) Then
-                Dim LinhasDaDescricao() As String
+            'If Tarefa.Descricao.Contains(vbLf) Then
+            '    Dim LinhasDaDescricao() As String
 
-                LinhasDaDescricao = Tarefa.Descricao.Split(CChar(vbLf))
+            '    LinhasDaDescricao = Tarefa.Descricao.Split(CChar(vbLf))
 
-                For Each Linha As String In LinhasDaDescricao
-                    If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
-                        CorpoLembrete.Add(CaracterTAB)
-                    End If
+            '    For Each Linha As String In LinhasDaDescricao
+            '        If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
+            '            CorpoTarefa.Add(iTextSharpUtilidades.ObtenhaCaracterQueRepresentaTAB)
+            '        End If
 
-                    If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
-                    CorpoLembrete.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
-                    CorpoLembrete.Add(Chunk.NEWLINE)
-                Next
-            Else
-                CorpoLembrete.Add(New Chunk(Tarefa.Descricao, _FonteDescricaoCompromissos))
-            End If
+            '        If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
+            '        CorpoTarefa.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
+            '        CorpoTarefa.Add(Chunk.NEWLINE)
+            '    Next
+            'Else
+            '    CorpoTarefa.Add(New Chunk(Tarefa.Descricao, _FonteDescricaoCompromissos))
+            'End If
+
+            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Tarefa.Descricao)
+                CorpoTarefa.Add(Elemento)
+            Next
         End If
 
-        _documento.Add(CorpoLembrete)
+        _documento.Add(CorpoTarefa)
     End Sub
 
     Private Sub EscrevaRodape()

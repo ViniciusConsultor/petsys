@@ -67,11 +67,11 @@ Partial Public Class cdLembrete
 
         If Lembrete Is Nothing Then Exit Sub
 
-        txtAssunto.Text = Lembrete.Assunto
-        txtDescricao.Text = Lembrete.Descricao
+        txtAssunto.Content = Lembrete.Assunto
+        txtDescricao.Content = Lembrete.Descricao
         txtDataHorarioFim.SelectedDate = Lembrete.Fim
         txtDataHorarioInicio.SelectedDate = Lembrete.Inicio
-        txtLocal.Text = Lembrete.Local
+        txtLocal.Content = Lembrete.Local
         ViewState(CHAVE_ID_PROPRIETARIO) = Lembrete.Proprietario.ID
         ViewState(CHAVE_ID_LEMBRETE) = Lembrete.ID
         cboStatus.SelectedValue = Lembrete.Status.ID.ToString
@@ -122,11 +122,11 @@ Partial Public Class cdLembrete
         Dim Lembrete As ILembrete
 
         Lembrete = FabricaGenerica.GetInstancia.CrieObjeto(Of ILembrete)()
-        Lembrete.Assunto = txtAssunto.Text
-        Lembrete.Descricao = txtDescricao.Text
+        Lembrete.Assunto = txtAssunto.Content
+        Lembrete.Descricao = txtDescricao.Content
         Lembrete.Fim = txtDataHorarioFim.SelectedDate.Value
         Lembrete.Inicio = txtDataHorarioInicio.SelectedDate.Value
-        Lembrete.Local = txtLocal.Text
+        Lembrete.Local = txtLocal.Content
         Lembrete.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO)))
 
         If CByte(ViewState(CHAVE_ESTADO)) = Estado.Modifica Then
