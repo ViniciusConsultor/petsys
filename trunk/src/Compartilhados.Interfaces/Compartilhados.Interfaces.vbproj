@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Negocio\IAgencia.vb" />
+    <Compile Include="Core\Negocio\IAgenda.vb" />
     <Compile Include="Core\Negocio\IBanco.vb" />
     <Compile Include="Core\Negocio\CEP.vb" />
     <Compile Include="Core\Negocio\DiaDaSemana.vb" />

@@ -14,22 +14,16 @@ Public Class ImpressorDeAgenda
     Private _documento As Document
     Private _Fonte1 As Font
     Private _FonteRodape As Font
-    Private _Compromissos As IList(Of ICompromisso)
-    Private _Tarefas As IList(Of ITarefa)
-    Private _Lembretes As IList(Of ILembrete)
+    Private _Agenda As IAgenda
 
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
     Private NomeDoArquivoDeSaida As String
 
-    Public Sub New(ByVal Compromissos As IList(Of ICompromisso), _
-                   ByVal Lembretes As IList(Of ILembrete), _
-                   ByVal Tarefas As IList(Of ITarefa), _
+    Public Sub New(ByVal Agenda As IAgenda, _
                    ByVal FormatoDeSaida As TipoDeFormatoDeSaidaDoDocumento)
-        _Compromissos = Compromissos
-        _Lembretes = Lembretes
-        _Tarefas = Tarefas
+        _Agenda = Agenda
 
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
         _FonteRodape = New Font(Font.TIMES_ROMAN, 10, Font.ITALIC)
@@ -71,8 +65,6 @@ Public Class ImpressorDeAgenda
     End Sub
 
     Public Function Gere(ByVal MostraAssunto As Boolean, ByVal MostraLocal As Boolean, ByVal MostraDescricao As Boolean) As String
-        Dim CompromissoAnterior As ICompromisso = Nothing
-
         Dim Configuracao As IConfiguracaoDoSistema
 
         Using Servico As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
@@ -83,25 +75,43 @@ Public Class ImpressorDeAgenda
 
         _ConfiguracaoDeAgendaDoSistema = Configuracao.ConfiguracaoDeAgendaDoSistema
 
-        For Each Compromisso As ICompromisso In _Compromissos
-            'Primeira vez
-            If CompromissoAnterior Is Nothing Then
-                EscrevaCabecalho(Compromisso)
-                EscrevaRodape()
-                _documento.Open()
-                'Demais vezes testa se o compromisso atual tem data maior que o anterio. Caso tenha atualizamos a data do cabeçalho
-            ElseIf CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
-                EscrevaCabecalho(Compromisso)
-                _documento.NewPage()
+        Dim DataAux As Date = _Agenda.Inicio
+
+        While DataAux <= _Agenda.Fim
+            Dim CompromissosDaData As IList(Of ICompromisso)
+
+            CompromissosDaData = _Agenda.ObtenhaCompromissos(DataAux)
+
+            If Not CompromissosDaData Is Nothing Then
+                EscrevaCompromissos(CompromissosDaData)
             End If
 
-            EscrevaCompromisso(Compromisso, MostraAssunto, MostraLocal, MostraDescricao)
-            CompromissoAnterior = Compromisso
-        Next
+
+        End While
+
+        'For Each Compromisso As ICompromisso In _Compromissos
+        '    'Primeira vez
+        '    If CompromissoAnterior Is Nothing Then
+        '        EscrevaCabecalho(Compromisso)
+        '        EscrevaRodape()
+        '        _documento.Open()
+        '        'Demais vezes testa se o compromisso atual tem data maior que o anterio. Caso tenha atualizamos a data do cabeçalho
+        '    ElseIf CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
+        '        EscrevaCabecalho(Compromisso)
+        '        _documento.NewPage()
+        '    End If
+
+        '    EscrevaCompromisso(Compromisso, MostraAssunto, MostraLocal, MostraDescricao)
+        '    CompromissoAnterior = Compromisso
+        'Next
 
         _documento.Close()
         Return NomeDoArquivoDeSaida
     End Function
+
+    Private Sub EscrevaCompromissos(ByVal Compromissos As IList(Of ICompromisso))
+
+    End Sub
 
     Private Sub EscrevaCabecalho(ByVal Compromisso As ICompromisso)
         Dim Cabecalho As HeaderFooter

@@ -84,7 +84,7 @@ Partial Public Class frmImpressaoAgenda
 
         FormatoDeSaida = TipoDeFormatoDeSaidaDoDocumento.Obtenha(CChar(rblFormato.SelectedValue))
 
-        Gerador = New ImpressorDeAgenda(Compromissos, Lembretes, Tarefas, FormatoDeSaida)
+        ' Gerador = New ImpressorDeAgenda(Compromissos, Lembretes, Tarefas, FormatoDeSaida)
 
         Try
             If cboOpcoesDeImpressao.SelectedValue = "1" Then
