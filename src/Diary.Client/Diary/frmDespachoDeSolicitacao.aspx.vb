@@ -322,7 +322,7 @@ Partial Public Class frmDespachoDeSolicitacao
 
     Private Sub ImprimirDespachos()
         Dim NomeDoArquivo As String
-        Dim Gerador As GeradorDeDespachosEmPDF
+        Dim Gerador As GeradorDeDespachos
         Dim Despachos As IList(Of IDespacho)
         Dim URL As String
 
@@ -332,8 +332,8 @@ Partial Public Class frmDespachoDeSolicitacao
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem despachos para serem impressos."), False)
         End If
 
-        Gerador = New GeradorDeDespachosEmPDF(Despachos)
-        NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
+        Gerador = New GeradorDeDespachos(Despachos)
+        NomeDoArquivo = Gerador.GereRelatorioDeDespachos
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
     End Sub

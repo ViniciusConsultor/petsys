@@ -11,19 +11,19 @@ Partial Public Class frmAgenda
     Implements ICallbackEventHandler
 
     Private Sub ExibaAgendaDaPessoa(ByVal Pessoa As IPessoa)
-        Dim Agenda As IAgenda
+        Dim ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario
 
         UtilidadesWeb.LimparComponente(CType(pnlCompromissos, Control))
         UtilidadesWeb.LimparComponente(CType(pnlTarefas, Control))
         UtilidadesWeb.LimparComponente(CType(pnlLembretes, Control))
 
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Agenda = Servico.ObtenhaAgenda(Pessoa.ID.Value)
+            ConfiguracaoDaAgenda = Servico.ObtenhaConfiguracao(Pessoa.ID.Value)
         End Using
 
         lblInconsistencia.Visible = True
 
-        If Agenda Is Nothing Then
+        If ConfiguracaoDaAgenda Is Nothing Then
             pnlCompromissos.Visible = False
             pnlTarefas.Visible = False
             pnlLembretes.Visible = False
@@ -41,14 +41,14 @@ Partial Public Class frmAgenda
         txtDataFinalTarefa.SelectedDate = Now
         txtDataDeInicioLembretes.SelectedDate = Now
         txtDataDeFimLembretes.SelectedDate = Now
-        ConfiguraAgenda(Agenda)
+        ConfiguraAgenda(ConfiguracaoDaAgenda)
         CarregaAgenda()
     End Sub
 
-    Private Sub ConfiguraAgenda(ByVal Agenda As IAgenda)
-        Me.HoraInicio = Agenda.HorarioDeInicio
-        Me.HoraFim = Agenda.HorarioDeTermino
-        Me.IntervaloEntreCompromissos = Agenda.IntervaloEntreOsCompromissos
+    Private Sub ConfiguraAgenda(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario)
+        Me.HoraInicio = ConfiguracaoDaAgenda.HorarioDeInicio
+        Me.HoraFim = ConfiguracaoDaAgenda.HorarioDeTermino
+        Me.IntervaloEntreCompromissos = ConfiguracaoDaAgenda.IntervaloEntreOsCompromissos
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
@@ -72,15 +72,15 @@ Partial Public Class frmAgenda
         ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
 
-        Dim AgendaDaPessoaLogada As IAgenda
+        Dim ConfiguracaoDaAgendaDaPessoaLogada As IConfiguracaoDeAgendaDoUsuario
 
         Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            AgendaDaPessoaLogada = ServicoDeAgenda.ObtenhaAgenda(UsuarioLogado.ID)
+            ConfiguracaoDaAgendaDaPessoaLogada = ServicoDeAgenda.ObtenhaConfiguracao(UsuarioLogado.ID)
         End Using
 
-        If Not AgendaDaPessoaLogada Is Nothing Then
-            ctrlPessoa1.PessoaSelecionada = AgendaDaPessoaLogada.PessoaPadraoAoAcessarAAgenda
-            ExibaAgendaDaPessoa(AgendaDaPessoaLogada.PessoaPadraoAoAcessarAAgenda)
+        If Not ConfiguracaoDaAgendaDaPessoaLogada Is Nothing Then
+            ctrlPessoa1.PessoaSelecionada = ConfiguracaoDaAgendaDaPessoaLogada.PessoaPadraoAoAcessarAAgenda
+            ExibaAgendaDaPessoa(ConfiguracaoDaAgendaDaPessoaLogada.PessoaPadraoAoAcessarAAgenda)
         Else
             ctrlPessoa1.PessoaSelecionada = PessoaLogada
             ExibaAgendaDaPessoa(PessoaLogada)

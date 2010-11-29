@@ -206,7 +206,7 @@ Partial Public Class frmSolicitacoesDeConvite
 
     Private Sub btnImprir_Click()
         Dim NomeDoArquivo As String
-        Dim Gerador As GeradorDeSolicitacoesDeConviteEmPDF
+        Dim Gerador As GeradorDeSolicitacoesDeConvite
         Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
         Dim URL As String
 
@@ -216,8 +216,8 @@ Partial Public Class frmSolicitacoesDeConvite
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem solicitações de convite para ser impressas."), False)
         End If
 
-        Gerador = New GeradorDeSolicitacoesDeConviteEmPDF(Solicitacoes)
-        NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
+        Gerador = New GeradorDeSolicitacoesDeConvite(Solicitacoes)
+        NomeDoArquivo = Gerador.GereRelatorioDeSolicitacoes
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
     End Sub

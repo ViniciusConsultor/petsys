@@ -1,6 +1,6 @@
 ﻿Namespace Core.Negocio
 
-    Public Interface IAgenda
+    Public Interface IConfiguracaoDeAgendaDoUsuario
 
         Property Pessoa() As IPessoa
         Property HorarioDeInicio() As Date

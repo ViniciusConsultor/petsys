@@ -118,8 +118,7 @@ Public Class ImpressorDeCompromissos
                                    ByVal MostraDescricao As Boolean)
         Dim Texto As New StringBuilder
         Dim TabelaCompromissos As Table = New Table(2)
-        'TabelaCompromissos.Padding = 1
-        'TabelaCompromissos.Spacing = 1
+
         TabelaCompromissos.Width = 100%
         TabelaCompromissos.Widths = New Single() {80, 500}
 
@@ -147,7 +146,6 @@ Public Class ImpressorDeCompromissos
 
         TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
                                                                     Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
-
         _documento.Add(TabelaCompromissos)
     End Sub
 

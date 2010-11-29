@@ -50,27 +50,27 @@ Partial Public Class frmConfiguracoesPessoais
         ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
         ctrlPessoa1.BotaoNovoEhVisivel = False
 
-        Dim Agenda As IAgenda
+        Dim ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario
 
         Using ServicoDeAgenda As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Agenda = ServicoDeAgenda.ObtenhaAgenda(Usuario.ID)
+            ConfiguracaoDaAgenda = ServicoDeAgenda.ObtenhaConfiguracao(Usuario.ID)
         End Using
 
         UtilidadesWeb.LimparComponente(CType(pnlDadosDaAgenda, Control))
 
-        If Agenda Is Nothing Then
+        If ConfiguracaoDaAgenda Is Nothing Then
             chkHabilitaAgenda.Checked = False
             ctrlPessoa1.PessoaSelecionada = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(Usuario.ID)
             UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), False)
             UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), False)
         Else
             chkHabilitaAgenda.Checked = True
-            ctrlPessoa1.PessoaSelecionada = Agenda.PessoaPadraoAoAcessarAAgenda
+            ctrlPessoa1.PessoaSelecionada = ConfiguracaoDaAgenda.PessoaPadraoAoAcessarAAgenda
             UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), True)
             UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), True)
-            txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
-            txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
-            txtIntervaloEntreCompromissos.SelectedDate = Agenda.IntervaloEntreOsCompromissos
+            txtHorarioDeInicio.SelectedDate = ConfiguracaoDaAgenda.HorarioDeInicio
+            txtHorarioFinal.SelectedDate = ConfiguracaoDaAgenda.HorarioDeTermino
+            txtIntervaloEntreCompromissos.SelectedDate = ConfiguracaoDaAgenda.IntervaloEntreOsCompromissos
         End If
     End Sub
 
@@ -283,26 +283,26 @@ Partial Public Class frmConfiguracoesPessoais
         Return String.Empty
     End Function
 
-    Private Function MontaObjeto() As IAgenda
+    Private Function MontaObjeto() As IConfiguracaoDeAgendaDoUsuario
         Dim Pessoa As IPessoa
         Dim PessoaPadrao As IPessoa
-        Dim Agenda As IAgenda
+        Dim ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario
 
         Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.ID)
         PessoaPadrao = ctrlPessoa1.PessoaSelecionada
-        Agenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgenda)()
-        Agenda.Pessoa = Pessoa
-        Agenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
-        Agenda.HorarioDeTermino = txtHorarioFinal.SelectedDate.Value
-        Agenda.IntervaloEntreOsCompromissos = txtIntervaloEntreCompromissos.SelectedDate.Value
-        Agenda.PessoaPadraoAoAcessarAAgenda = PessoaPadrao
-        Return Agenda
+        ConfiguracaoDaAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoUsuario)()
+        ConfiguracaoDaAgenda.Pessoa = Pessoa
+        ConfiguracaoDaAgenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
+        ConfiguracaoDaAgenda.HorarioDeTermino = txtHorarioFinal.SelectedDate.Value
+        ConfiguracaoDaAgenda.IntervaloEntreOsCompromissos = txtIntervaloEntreCompromissos.SelectedDate.Value
+        ConfiguracaoDaAgenda.PessoaPadraoAoAcessarAAgenda = PessoaPadrao
+        Return ConfiguracaoDaAgenda
     End Function
 
     Private Sub SalveAgenda()
 
         If chkHabilitaAgenda.Checked Then
-            Dim Agenda As IAgenda
+            Dim ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario
             Dim Inconsistencia As String
 
             Inconsistencia = ConsisteDados()
@@ -311,23 +311,23 @@ Partial Public Class frmConfiguracoesPessoais
                 Throw New BussinesException(Inconsistencia)
             End If
 
-            Agenda = MontaObjeto()
+            ConfiguracaoDaAgenda = MontaObjeto()
 
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-                Servico.Modifique(Agenda)
+                Servico.ModifiqueConfiguracao(ConfiguracaoDaAgenda)
             End Using
         Else
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-                Servico.Remova(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.ID)
+                Servico.RemovaConfiguracao(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.ID)
             End Using
         End If
     End Sub
 
-    Private Sub Mostre(ByVal Agenda As IAgenda)
-        txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
-        txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
-        txtIntervaloEntreCompromissos.SelectedDate = Agenda.IntervaloEntreOsCompromissos
-        ctrlPessoa1.PessoaSelecionada = Agenda.PessoaPadraoAoAcessarAAgenda
+    Private Sub Mostre(ByVal Configuracao As IConfiguracaoDeAgendaDoUsuario)
+        txtHorarioDeInicio.SelectedDate = Configuracao.HorarioDeInicio
+        txtHorarioFinal.SelectedDate = Configuracao.HorarioDeTermino
+        txtIntervaloEntreCompromissos.SelectedDate = Configuracao.IntervaloEntreOsCompromissos
+        ctrlPessoa1.PessoaSelecionada = Configuracao.PessoaPadraoAoAcessarAAgenda
     End Sub
 
     Private Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender

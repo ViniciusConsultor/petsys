@@ -70,6 +70,78 @@ Partial Public Class frmAgenda
     Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
 
     '''<summary>
+    '''lblInconsistencia control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblInconsistencia As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''RadSplitter1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadSplitter1 As Global.Telerik.Web.UI.RadSplitter
+
+    '''<summary>
+    '''leftPane control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents leftPane As Global.Telerik.Web.UI.RadPane
+
+    '''<summary>
+    '''PanelBar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PanelBar As Global.Telerik.Web.UI.RadPanelBar
+
+    '''<summary>
+    '''RadSplitBar2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadSplitBar2 As Global.Telerik.Web.UI.RadSplitBar
+
+    '''<summary>
+    '''rightPane control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rightPane As Global.Telerik.Web.UI.RadPane
+
+    '''<summary>
+    '''RadDockLayout2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDockLayout2 As Global.Telerik.Web.UI.RadDockLayout
+
+    '''<summary>
+    '''RadDockZone2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDockZone2 As Global.Telerik.Web.UI.RadDockZone
+
+    '''<summary>
     '''pnlCompromissos control.
     '''</summary>
     '''<remarks>
@@ -239,13 +311,4 @@ Partial Public Class frmAgenda
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents grdLembretes As Global.Telerik.Web.UI.RadGrid
-
-    '''<summary>
-    '''lblInconsistencia control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblInconsistencia As Global.System.Web.UI.WebControls.Label
 End Class

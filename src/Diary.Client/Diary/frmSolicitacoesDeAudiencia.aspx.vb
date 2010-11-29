@@ -193,7 +193,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
 
     Private Sub btnImprir_Click()
         Dim NomeDoArquivo As String
-        Dim Gerador As GeradorDeSolicitacoesEmPDF
+        Dim Gerador As GeradorDeSolicitacoesDeAudiencia
         Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
         Dim URL As String
 
@@ -203,8 +203,8 @@ Partial Public Class frmSolicitacoesDeAudiencia
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem solicitações de audiência para ser impressas."), False)
         End If
 
-        Gerador = New GeradorDeSolicitacoesEmPDF(Solicitacoes)
-        NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
+        Gerador = New GeradorDeSolicitacoesDeAudiencia(Solicitacoes)
+        NomeDoArquivo = Gerador.GereRelatorioDeSolicitacoes
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
     End Sub

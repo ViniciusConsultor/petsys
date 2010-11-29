@@ -10,94 +10,34 @@ Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 Public Class MapeadorDeAgenda
     Implements IMapeadorDeAgenda
 
-    Private Sub Insira(ByVal Agenda As IAgenda)
+    Private Sub InsiraConfiguracao(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario)
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
 
         DBHelper = ServerUtils.getDBHelper
 
-        Sql.Append("INSERT INTO NCL_AGENDA (")
+        Sql.Append("INSERT INTO NCL_CNFAGENDAUSU (")
         Sql.Append("IDPESSOA, HORAINICO, HORAFIM, INTERVALO, IDPESSOAPADRAO)")
         Sql.Append(" VALUES (")
-        Sql.Append(String.Concat(Agenda.Pessoa.ID.ToString, ", "))
-        Sql.Append(String.Concat(Agenda.HorarioDeInicio.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat(Agenda.HorarioDeTermino.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat(Agenda.IntervaloEntreOsCompromissos.ToString("HHmm"), ", "))
-        Sql.Append(String.Concat(Agenda.PessoaPadraoAoAcessarAAgenda.ID.ToString, ")"))
+        Sql.Append(String.Concat(ConfiguracaoDaAgenda.Pessoa.ID.ToString, ", "))
+        Sql.Append(String.Concat(ConfiguracaoDaAgenda.HorarioDeInicio.ToString("HHmm"), ", "))
+        Sql.Append(String.Concat(ConfiguracaoDaAgenda.HorarioDeTermino.ToString("HHmm"), ", "))
+        Sql.Append(String.Concat(ConfiguracaoDaAgenda.IntervaloEntreOsCompromissos.ToString("HHmm"), ", "))
+        Sql.Append(String.Concat(ConfiguracaoDaAgenda.PessoaPadraoAoAcessarAAgenda.ID.ToString, ")"))
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
-    Public Sub Modifique(ByVal Agenda As IAgenda) Implements IMapeadorDeAgenda.Modifique
-        Me.Remova(Agenda.Pessoa.ID.Value)
-        Me.Insira(Agenda)
-    End Sub
+    Private Function MontaObjeto(ByVal Leitor As IDataReader, ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario
+        Dim Configuracao As IConfiguracaoDeAgendaDoUsuario
 
-    Public Function ObtenhaAgenda(ByVal Pessoa As IPessoa) As IAgenda Implements IMapeadorDeAgenda.ObtenhaAgenda
-        Dim Sql As New StringBuilder
-        Dim DBHelper As IDBHelper
-        Dim Agenda As IAgenda = Nothing
-
-        Sql.Append("SELECT HORAINICO, HORAFIM, INTERVALO, IDPESSOAPADRAO FROM NCL_AGENDA WHERE ")
-        Sql.Append(String.Concat("IDPESSOA = ", Pessoa.ID.Value.ToString))
-
-        DBHelper = ServerUtils.criarNovoDbHelper
-
-        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Return MontaObjeto(Leitor, Pessoa)
-            End If
-        End Using
-
-        Return Nothing
-    End Function
-
-    Private Function MontaObjeto(ByVal Leitor As IDataReader, ByVal Pessoa As IPessoa) As IAgenda
-        Dim Agenda As IAgenda
-
-        Agenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgenda)()
-        Agenda.HorarioDeInicio = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAINICO").Value
-        Agenda.HorarioDeTermino = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAFIM").Value
-        Agenda.IntervaloEntreOsCompromissos = UtilidadesDePersistencia.getValorHourMinute(Leitor, "INTERVALO").Value
-        Agenda.PessoaPadraoAoAcessarAAgenda = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOAPADRAO"))
-        Agenda.Pessoa = Pessoa
-        Return Agenda
-    End Function
-
-    Public Sub Remova(ByVal ID As Long) Implements IMapeadorDeAgenda.Remova
-        Dim Sql As New StringBuilder
-        Dim DBHelper As IDBHelper
-
-        DBHelper = ServerUtils.getDBHelper
-
-        Sql.Append("DELETE FROM NCL_AGENDA")
-        Sql.Append(" WHERE IDPESSOA = " & ID.ToString)
-
-        DBHelper.ExecuteNonQuery(Sql.ToString)
-    End Sub
-
-    Public Function ObtenhaAgenda(ByVal IDPessoa As Long) As IAgenda Implements IMapeadorDeAgenda.ObtenhaAgenda
-        Dim Sql As New StringBuilder
-        Dim DBHelper As IDBHelper
-        Dim Agenda As IAgenda = Nothing
-
-        Sql.Append(" SELECT HORAINICO, HORAFIM, NOME, INTERVALO, ID, IDPESSOAPADRAO FROM NCL_AGENDA, NCL_PESSOA WHERE ")
-        Sql.Append(String.Concat("IDPESSOA = ", IDPessoa.ToString))
-        Sql.Append(" AND ID = IDPESSOA")
-
-        DBHelper = ServerUtils.criarNovoDbHelper
-
-        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Dim Pessoa As IPessoa
-                Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-                Return MontaObjeto(Leitor, Pessoa)
-            End If
-        End Using
-
-        Return Nothing
+        Configuracao = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoUsuario)()
+        Configuracao.HorarioDeInicio = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAINICO").Value
+        Configuracao.HorarioDeTermino = UtilidadesDePersistencia.getValorHourMinute(Leitor, "HORAFIM").Value
+        Configuracao.IntervaloEntreOsCompromissos = UtilidadesDePersistencia.getValorHourMinute(Leitor, "INTERVALO").Value
+        Configuracao.PessoaPadraoAoAcessarAAgenda = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOAPADRAO"))
+        Configuracao.Pessoa = Pessoa
+        Return Configuracao
     End Function
 
     Public Function InsiraCompromisso(ByVal Compromisso As ICompromisso) As Long Implements IMapeadorDeAgenda.InsiraCompromisso
@@ -576,5 +516,65 @@ Public Class MapeadorDeAgenda
 
         Return Lembrete
     End Function
+
+    Public Sub ModifiqueConfiguracao(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario) Implements IMapeadorDeAgenda.ModifiqueConfiguracao
+        Me.RemovaConfiguracao(ConfiguracaoDaAgenda.Pessoa.ID.Value)
+        Me.InsiraConfiguracao(ConfiguracaoDaAgenda)
+    End Sub
+
+    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario Implements IMapeadorDeAgenda.ObtenhaConfiguracao
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim ConfiguracaoDeAgendaDoUsuario As IConfiguracaoDeAgendaDoUsuario = Nothing
+
+        Sql.Append("SELECT HORAINICO, HORAFIM, INTERVALO, IDPESSOAPADRAO FROM NCL_CNFAGENDAUSU WHERE ")
+        Sql.Append(String.Concat("IDPESSOA = ", Pessoa.ID.Value.ToString))
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            If Leitor.Read Then
+                Return MontaObjeto(Leitor, Pessoa)
+            End If
+        End Using
+
+        Return Nothing
+    End Function
+
+    Public Function ObtenhaConfiguracao(ByVal IDPessoa As Long) As IConfiguracaoDeAgendaDoUsuario Implements IMapeadorDeAgenda.ObtenhaConfiguracao
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+        Dim Configuracao As IConfiguracaoDeAgendaDoUsuario = Nothing
+
+        Sql.Append(" SELECT HORAINICO, HORAFIM, NOME, INTERVALO, ID, IDPESSOAPADRAO FROM NCL_CNFAGENDAUSU, NCL_PESSOA WHERE ")
+        Sql.Append(String.Concat("IDPESSOA = ", IDPessoa.ToString))
+        Sql.Append(" AND ID = IDPESSOA")
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            If Leitor.Read Then
+                Dim Pessoa As IPessoa
+                Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
+                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+                Return MontaObjeto(Leitor, Pessoa)
+            End If
+        End Using
+
+        Return Nothing
+    End Function
+
+    Public Sub RemovaConfiguracao(ByVal ID As Long) Implements IMapeadorDeAgenda.RemovaConfiguracao
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("DELETE FROM NCL_CNFAGENDAUSU")
+        Sql.Append(" WHERE IDPESSOA = " & ID.ToString)
+
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+    End Sub
 
 End Class

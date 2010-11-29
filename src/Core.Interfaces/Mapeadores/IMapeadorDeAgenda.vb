@@ -5,11 +5,10 @@ Namespace Mapeadores
 
     Public Interface IMapeadorDeAgenda
 
-        Sub Modifique(ByVal Agenda As IAgenda)
-        Sub Remova(ByVal ID As Long)
-
-        Function ObtenhaAgenda(ByVal Pessoa As IPessoa) As IAgenda
-        Function ObtenhaAgenda(ByVal IDPessoa As Long) As IAgenda
+        Sub ModifiqueConfiguracao(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario)
+        Sub RemovaConfiguracao(ByVal ID As Long)
+        Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario
+        Function ObtenhaConfiguracao(ByVal IDPessoa As Long) As IConfiguracaoDeAgendaDoUsuario
 
         Function InsiraCompromisso(ByVal Compromisso As ICompromisso) As Long
         Sub ModifiqueCompromisso(ByVal Compromisso As ICompromisso)

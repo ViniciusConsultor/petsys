@@ -108,13 +108,13 @@
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Codigo" HeaderText="Código" UniqueName="column30">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Pauta" UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Local" HeaderText="Local" UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column6">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDaSolicitacao" HeaderText="Data da solicitação"
+                                            <telerik:GridBoundColumn DataField="DataDaSolicitacao" HeaderText="Data e hora do cadastro"
                                                 UniqueName="column1" Visible="True">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Contato.Pessoa.Nome" HeaderText="Contato" UniqueName="column2"

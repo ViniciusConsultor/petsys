@@ -375,6 +375,13 @@
       <DependentUpon>frmConfiguracoesPessoais.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Nucleo\frmImpressaoAgenda.aspx.designer.vb">
+      <DependentUpon>frmImpressaoAgenda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmImpressaoAgenda.aspx.vb">
+      <DependentUpon>frmImpressaoAgenda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\frmImpressaoCompromisso.aspx.designer.vb">
       <DependentUpon>frmImpressaoCompromisso.aspx</DependentUpon>
     </Compile>
@@ -530,6 +537,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Nucleo\ImpressorDeAgenda.vb" />
     <Compile Include="Nucleo\ImpressorDeCompromissos.vb" />
     <Compile Include="Nucleo\ImpressorDeLembretes.vb" />
     <Compile Include="Nucleo\ImpressorDeTarefas.vb" />
@@ -569,6 +577,7 @@
     <Content Include="Nucleo\frmAgenda.aspx" />
     <Content Include="Nucleo\frmAlterarSenhaDoOperador.aspx" />
     <Content Include="Nucleo\frmConfiguracoesPessoais.aspx" />
+    <Content Include="Nucleo\frmImpressaoAgenda.aspx" />
     <Content Include="Nucleo\frmImpressaoCompromisso.aspx" />
     <Content Include="Nucleo\frmImpressaoLembrete.aspx" />
     <Content Include="Nucleo\frmImpressaoTarefa.aspx" />

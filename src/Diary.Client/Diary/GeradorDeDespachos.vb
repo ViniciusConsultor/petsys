@@ -1,12 +1,12 @@
 ﻿Imports Diary.Interfaces.Negocio
-Imports iTextSharp.text.pdf
 Imports iTextSharp.text
 Imports System.IO
 Imports Compartilhados.Componentes.Web
 Imports Compartilhados.Fabricas
 Imports Compartilhados
+Imports iTextSharp.text.rtf
 
-Public Class GeradorDeDespachosEmPDF
+Public Class GeradorDeDespachos
 
     Private _documento As Document
     Private _Fonte1 As Font
@@ -22,23 +22,22 @@ Public Class GeradorDeDespachosEmPDF
         _Fonte3 = New Font(Font.TIMES_ROMAN, 14, Font.BOLDITALIC)
     End Sub
 
-    Public Function GerePDFSolicitacoesEmAberto() As String
-        Dim NomeDoPDF As String
-        Dim CaminhoDoPDF As String
-        Dim Escritor As PdfWriter
+    Public Function GereRelatorioDeDespachos() As String
+        Dim Escritor As RtfWriter2
+        Dim Caminho As String
+        Dim NomeDoArquivoDeSaida As String
 
-        NomeDoPDF = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".pdf")
-        CaminhoDoPDF = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
+        NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
+        Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
 
-        _documento = New Document(PageSize.A4)
-        Escritor = PdfWriter.GetInstance(_documento, New FileStream(Path.Combine(CaminhoDoPDF, NomeDoPDF), FileMode.Create))
-        Escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE)
-        Escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE)
+        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
+
+        _documento = New Document(PageSize.A4.Rotate)
         EscrevaDespachos()
         EscrevaRodape()
         _documento.Close()
 
-        Return NomeDoPDF
+        Return NomeDoArquivoDeSaida
     End Function
 
     Private Function CrieCelula(ByVal Texto As String, _
@@ -101,5 +100,4 @@ Public Class GeradorDeDespachosEmPDF
         Rodape.Alignment = HeaderFooter.ALIGN_RIGHT
         _documento.Footer = Rodape
     End Sub
-
 End Class
