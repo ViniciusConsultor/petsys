@@ -169,9 +169,10 @@
       <DependentUpon>frmSolicitacoesDeVisita.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Diary\GeradorDeDespachosEmPDF.vb" />
-    <Compile Include="Diary\GeradorDeSolicitacoesDeConviteEmPDF.vb" />
-    <Compile Include="Diary\GeradorDeSolicitacoesEmPDF.vb" />
+    <Compile Include="Diary\GeradorDeDespachos.vb" />
+    <Compile Include="Diary\GeradorDeSolicitacoesDeAudiencia.vb" />
+    <Compile Include="Diary\GeradorDeSolicitacoesDeConvite.vb" />
+    <Compile Include="Diary\GeradorDeSolicitacoesDeVisita.vb" />
     <Compile Include="Diary\frmSolicitacoesDeAudiencia.aspx.designer.vb">
       <DependentUpon>frmSolicitacoesDeAudiencia.aspx</DependentUpon>
     </Compile>

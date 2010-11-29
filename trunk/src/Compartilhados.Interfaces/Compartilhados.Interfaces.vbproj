@@ -78,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Negocio\IAgencia.vb" />
-    <Compile Include="Core\Negocio\IAgenda.vb" />
     <Compile Include="Core\Negocio\IBanco.vb" />
     <Compile Include="Core\Negocio\CEP.vb" />
     <Compile Include="Core\Negocio\DiaDaSemana.vb" />
@@ -92,6 +91,7 @@
     <Compile Include="Core\Negocio\Documento\IDocumento.vb" />
     <Compile Include="Core\Negocio\ICompromisso.vb" />
     <Compile Include="Core\Negocio\IConfiguracaoDeAgendaDoSistema.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDeAgendaDoUsuario.vb" />
     <Compile Include="Core\Negocio\IConfiguracaoDeEmailDoSistema.vb" />
     <Compile Include="Core\Negocio\IConfiguracaoDoSistema.vb" />
     <Compile Include="Core\Negocio\IContaBancaria.vb" />

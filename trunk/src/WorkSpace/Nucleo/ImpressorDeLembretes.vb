@@ -17,7 +17,6 @@ Public Class ImpressorDeLembretes
     Private _Lembretes As IList(Of ILembrete)
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
-    ' Private _FonteDescricaoCompromissos As Font
     Private NomeDoArquivoDeSaida As String
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
 
@@ -29,7 +28,6 @@ Public Class ImpressorDeLembretes
 
         _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 12, Font.BOLDITALIC)
         _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
-        '  _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
 
         _documento = New Document(PageSize.A4)
         CriaEscritor(FormatoDeSaida)
@@ -118,61 +116,34 @@ Public Class ImpressorDeLembretes
     Private Sub EscrevaLembretes(ByVal Lembrete As ILembrete, _
                                  ByVal MostraAssunto As Boolean, _
                                  ByVal MostraDescricao As Boolean)
-        Dim ParagradoEmBranco As Paragraph
-        Dim Flag As Boolean = False
+        Dim Texto As New StringBuilder
+        Dim TabelaLembretes As Table = New Table(2)
 
-        ParagradoEmBranco = New Paragraph("")
-        _documento.Add(ParagradoEmBranco)
+        TabelaLembretes.Width = 100%
+        TabelaLembretes.Widths = New Single() {80, 500}
 
-        'Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
-        Dim CorpoLembrete As Phrase
+        Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+        'coluna de horario
+        TabelaLembretes.AddCell(CelulaEmBranco)
+        'coluna de descricao
+        TabelaLembretes.AddCell(CelulaEmBranco)
 
-        CorpoLembrete = New Phrase
-
-        CorpoLembrete.Add(New Chunk(Lembrete.Inicio.ToString("HH") & "h" & Lembrete.Inicio.ToString("mm") & "min", _FonteHorario))
-        CorpoLembrete.Add(iTextSharpUtilidades.ObtenhaCaracterQueRepresentaTAB)
+        'Adiciona a celula com o horário
+        TabelaLembretes.AddCell(iTextSharpUtilidades.CrieCelula(Lembrete.Inicio.ToString("HH") & "h" & Lembrete.Inicio.ToString("mm") & "min", _
+                                                                    _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
 
         If MostraAssunto Then
-            'CorpoLembrete.Add(New Chunk(Lembrete.Assunto, _FonteDescricaoCompromissos))
-
-            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Lembrete.Assunto)
-                CorpoLembrete.Add(Elemento)
-            Next
-
-            CorpoLembrete.Add(Chunk.NEWLINE)
-            Flag = True
+            Texto.Append(Lembrete.Assunto & "<br />")
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Lembrete.Descricao) Then
-            If Flag Then
-                CorpoLembrete.Add(iTextSharpUtilidades.ObtenhaCaracterQueRepresentaTAB)
-            End If
-
-            'If Lembrete.Descricao.Contains(vbLf) Then
-            '    Dim LinhasDaDescricao() As String
-
-            '    LinhasDaDescricao = Lembrete.Descricao.Split(CChar(vbLf))
-
-            '    For Each Linha As String In LinhasDaDescricao
-            '        If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
-            '            CorpoLembrete.Add(CaracterTAB)
-            '        End If
-
-            '        If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
-            '        CorpoLembrete.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
-            '        CorpoLembrete.Add(Chunk.NEWLINE)
-            '    Next
-
-            'Else
-            '    CorpoLembrete.Add(New Chunk(Lembrete.Descricao, _FonteDescricaoCompromissos))
-            'End If
-
-            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Lembrete.Descricao)
-                CorpoLembrete.Add(Elemento)
-            Next
+            Texto.Append(Lembrete.Descricao)
         End If
 
-        _documento.Add(CorpoLembrete)
+        TabelaLembretes.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
+                                                                Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+
+        _documento.Add(TabelaLembretes)
     End Sub
 
     Private Sub EscrevaRodape()

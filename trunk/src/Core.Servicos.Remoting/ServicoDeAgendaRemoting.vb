@@ -25,10 +25,6 @@ Public Class ServicoDeAgendaRemoting
         Return _ServicoLocal.InsiraTarefa(Tarefa)
     End Function
 
-    Public Sub Modifique(ByVal Agenda As IAgenda) Implements IServicoDeAgenda.Modifique
-        _ServicoLocal.Modifique(Agenda)
-    End Sub
-
     Public Sub ModifiqueCompromisso(ByVal Compromisso As ICompromisso) Implements IServicoDeAgenda.ModifiqueCompromisso
         _ServicoLocal.ModifiqueCompromisso(Compromisso)
     End Sub
@@ -40,14 +36,6 @@ Public Class ServicoDeAgendaRemoting
     Public Sub ModifiqueTarefa(ByVal Tarefa As ITarefa) Implements IServicoDeAgenda.ModifiqueTarefa
         _ServicoLocal.ModifiqueTarefa(Tarefa)
     End Sub
-
-    Public Function ObtenhaAgenda(ByVal Pessoa As IPessoa) As IAgenda Implements IServicoDeAgenda.ObtenhaAgenda
-        Return _ServicoLocal.ObtenhaAgenda(Pessoa)
-    End Function
-
-    Public Function ObtenhaAgenda(ByVal IDPessoa As Long) As IAgenda Implements IServicoDeAgenda.ObtenhaAgenda
-        Return _ServicoLocal.ObtenhaAgenda(IDPessoa)
-    End Function
 
     Public Function ObtenhaCompromisso(ByVal ID As Long) As ICompromisso Implements IServicoDeAgenda.ObtenhaCompromisso
         Return _ServicoLocal.ObtenhaCompromisso(ID)
@@ -85,10 +73,6 @@ Public Class ServicoDeAgendaRemoting
         Return _ServicoLocal.ObtenhaTarefas(IDProprietario, DataInicio, DataFim)
     End Function
 
-    Public Sub Remova(ByVal ID As Long) Implements IServicoDeAgenda.Remova
-        _ServicoLocal.Remova(ID)
-    End Sub
-
     Public Sub RemovaCompromisso(ByVal ID As Long) Implements IServicoDeAgenda.RemovaCompromisso
         _ServicoLocal.RemovaCompromisso(ID)
     End Sub
@@ -99,6 +83,22 @@ Public Class ServicoDeAgendaRemoting
 
     Public Sub RemovaTarefa(ByVal ID As Long) Implements IServicoDeAgenda.RemovaTarefa
         _ServicoLocal.RemovaTarefa(ID)
+    End Sub
+
+    Public Sub ModifiqueConfiguracao(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario) Implements IServicoDeAgenda.ModifiqueConfiguracao
+        _ServicoLocal.ModifiqueConfiguracao(ConfiguracaoDaAgenda)
+    End Sub
+
+    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
+        Return _ServicoLocal.ObtenhaConfiguracao(Pessoa)
+    End Function
+
+    Public Function ObtenhaConfiguracao(ByVal IDPessoa As Long) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
+        Return _ServicoLocal.ObtenhaConfiguracao(IDPessoa)
+    End Function
+
+    Public Sub RemovaConfiguracao(ByVal ID As Long) Implements IServicoDeAgenda.RemovaConfiguracao
+        _ServicoLocal.RemovaConfiguracao(ID)
     End Sub
 
 End Class

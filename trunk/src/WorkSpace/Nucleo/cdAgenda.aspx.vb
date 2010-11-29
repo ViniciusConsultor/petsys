@@ -112,22 +112,22 @@ Partial Public Class cdAgenda
         Return String.Empty
     End Function
 
-    Private Function MontaObjeto() As IAgenda
+    Private Function MontaObjeto() As IConfiguracaoDeAgendaDoUsuario
         Dim Pessoa As IPessoa
-        Dim Agenda As IAgenda
+        Dim ConfiguracaoDeAgenda As IConfiguracaoDeAgendaDoUsuario
 
         Pessoa = ctrlPessoa1.PessoaSelecionada
-        Agenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgenda)()
-        Agenda.Pessoa = Pessoa
-        Agenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
-        Agenda.HorarioDeTermino = txtHorarioFinal.SelectedDate.Value
-        Agenda.IntervaloEntreOsCompromissos = txtIntervaloEntreCompromissos.SelectedDate.Value
-        Return Agenda
+        ConfiguracaoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoUsuario)()
+        ConfiguracaoDeAgenda.Pessoa = Pessoa
+        ConfiguracaoDeAgenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
+        ConfiguracaoDeAgenda.HorarioDeTermino = txtHorarioFinal.SelectedDate.Value
+        ConfiguracaoDeAgenda.IntervaloEntreOsCompromissos = txtIntervaloEntreCompromissos.SelectedDate.Value
+        Return ConfiguracaoDeAgenda
     End Function
 
     Private Sub btnSalva_Click()
         Dim Mensagem As String
-        Dim Agenda As IAgenda
+        Dim ConfiguracaoDeAgenda As IConfiguracaoDeAgendaDoUsuario
         Dim Inconsistencia As String
 
         Inconsistencia = ConsisteDados()
@@ -137,16 +137,16 @@ Partial Public Class cdAgenda
             Exit Sub
         End If
 
-        Agenda = MontaObjeto()
+        ConfiguracaoDeAgenda = MontaObjeto()
 
         Try
             Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
                 If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     '  Servico.Insira(Agenda)
-                    Mensagem = "Agenda cadastrada com sucesso."
+                    Mensagem = "Cofiguração da agenda do usuário cadastrada com sucesso."
                 Else
-                    Servico.Modifique(Agenda)
-                    Mensagem = "Agenda modificada com sucesso."
+                    Servico.ModifiqueConfiguracao(ConfiguracaoDeAgenda)
+                    Mensagem = "Cofiguração da agenda do usuário modificada com sucesso."
                 End If
 
             End Using
@@ -205,27 +205,27 @@ Partial Public Class cdAgenda
     End Sub
 
     Private Sub ObtenhaAgenda(ByVal Pessoa As IPessoa)
-        Dim Agenda As IAgenda
+        Dim ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario
 
         ctrlPessoa1.BotaoDetalharEhVisivel = True
 
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Agenda = Servico.ObtenhaAgenda(Pessoa)
+            ConfiguracaoDaAgenda = Servico.ObtenhaConfiguracao(Pessoa)
         End Using
 
-        If Agenda Is Nothing Then
+        If ConfiguracaoDaAgenda Is Nothing Then
             CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
             Exit Sub
         End If
 
-        Mostre(Agenda)
+        Mostre(ConfiguracaoDaAgenda)
         ExibaTelaConsultar()
     End Sub
 
-    Private Sub Mostre(ByVal Agenda As IAgenda)
-        txtHorarioDeInicio.SelectedDate = Agenda.HorarioDeInicio
-        txtHorarioFinal.SelectedDate = Agenda.HorarioDeTermino
-        txtIntervaloEntreCompromissos.SelectedDate = Agenda.IntervaloEntreOsCompromissos
+    Private Sub Mostre(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario)
+        txtHorarioDeInicio.SelectedDate = ConfiguracaoDaAgenda.HorarioDeInicio
+        txtHorarioFinal.SelectedDate = ConfiguracaoDaAgenda.HorarioDeTermino
+        txtIntervaloEntreCompromissos.SelectedDate = ConfiguracaoDaAgenda.IntervaloEntreOsCompromissos
     End Sub
 
 End Class

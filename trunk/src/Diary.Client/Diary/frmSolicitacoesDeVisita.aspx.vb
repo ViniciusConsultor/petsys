@@ -192,21 +192,21 @@ Partial Public Class frmSolicitacoesDeVisita
     End Sub
 
     Private Sub btnImprir_Click()
-        'Dim NomeDoArquivo As String
-        'Dim Gerador As GeradorDeSolicitacoesEmPDF
-        'Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
-        'Dim URL As String
+        Dim NomeDoArquivo As String
+        Dim Gerador As GeradorDeSolicitacoesDeVisita
+        Dim Solicitacoes As IList(Of ISolicitacaoDeVisita)
+        Dim URL As String
 
-        'Solicitacoes = CType(ViewState(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeAudiencia))
+        Solicitacoes = CType(ViewState(CHAVE_SOLICITACOES), IList(Of ISolicitacaoDeVisita))
 
-        'If Solicitacoes Is Nothing AndAlso Solicitacoes.Count = 0 Then
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem solicitações de audiência para ser impressas."), False)
-        'End If
+        If Solicitacoes Is Nothing AndAlso Solicitacoes.Count = 0 Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Não existem solicitações de visita para ser impressas."), False)
+        End If
 
-        'Gerador = New GeradorDeSolicitacoesEmPDF(Solicitacoes)
-        'NomeDoArquivo = Gerador.GerePDFSolicitacoesEmAberto
-        'URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
-        'ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
+        Gerador = New GeradorDeSolicitacoesDeVisita(Solicitacoes)
+        NomeDoArquivo = Gerador.GereRelatorioDeSolicitacoes
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
     End Sub
 
     Private Sub btnPesquisarPorContato_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarPorContato.Click

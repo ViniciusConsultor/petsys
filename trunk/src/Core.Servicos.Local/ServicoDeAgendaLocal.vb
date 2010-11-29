@@ -12,71 +12,6 @@ Public Class ServicoDeAgendaLocal
         MyBase.New(Credencial)
     End Sub
 
-    Public Sub Modifique(ByVal Agenda As IAgenda) Implements IServicoDeAgenda.Modifique
-        Dim Mapeador As IMapeadorDeAgenda
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
-
-        ServerUtils.BeginTransaction()
-
-        Try
-            Mapeador.Modifique(Agenda)
-            ServerUtils.CommitTransaction()
-        Catch
-            ServerUtils.RollbackTransaction()
-            Throw
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Sub
-
-    Public Function ObtenhaAgenda(ByVal Pessoa As IPessoa) As IAgenda Implements IServicoDeAgenda.ObtenhaAgenda
-        Dim Mapeador As IMapeadorDeAgenda
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
-
-        Try
-            Return Mapeador.ObtenhaAgenda(Pessoa)
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-
-    End Function
-
-    Public Sub Remova(ByVal ID As Long) Implements IServicoDeAgenda.Remova
-        Dim Mapeador As IMapeadorDeAgenda
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
-
-        ServerUtils.BeginTransaction()
-
-        Try
-            Mapeador.Remova(ID)
-            ServerUtils.CommitTransaction()
-        Catch
-            ServerUtils.RollbackTransaction()
-            Throw
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Sub
-
-    Public Function ObtenhaAgenda(ByVal IDPessoa As Long) As IAgenda Implements IServicoDeAgenda.ObtenhaAgenda
-        Dim Mapeador As IMapeadorDeAgenda
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
-
-        Try
-            Return Mapeador.ObtenhaAgenda(IDPessoa)
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Function
-
     Public Function InsiraCompromisso(ByVal Compromisso As ICompromisso) As Long Implements IServicoDeAgenda.InsiraCompromisso
         Dim Mapeador As IMapeadorDeAgenda
         Dim ID As Long
@@ -364,7 +299,7 @@ Public Class ServicoDeAgendaLocal
         End Try
     End Function
 
-    Public Sub RemovaLembrete(ByVal ID As Long) Implements Compartilhados.Interfaces.Core.Servicos.IServicoDeAgenda.RemovaLembrete
+    Public Sub RemovaLembrete(ByVal ID As Long) Implements IServicoDeAgenda.RemovaLembrete
         Dim Mapeador As IMapeadorDeAgenda
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -375,6 +310,71 @@ Public Class ServicoDeAgendaLocal
         Try
             GerenciadorDeGatilhos.GetInstancia.DispareGatilhoAntes(Me.GetType.FullName, "RemovaLembrete", New Object() {ID})
             Mapeador.RemovaLembrete(ID)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
+    Public Sub ModifiqueConfiguracao(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario) Implements IServicoDeAgenda.ModifiqueConfiguracao
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.ModifiqueConfiguracao(ConfiguracaoDaAgenda)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
+
+    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        Try
+            Return Mapeador.ObtenhaConfiguracao(Pessoa)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+
+    End Function
+
+    Public Function ObtenhaConfiguracao(ByVal IDPessoa As Long) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        Try
+            Return Mapeador.ObtenhaConfiguracao(IDPessoa)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Sub RemovaConfiguracao(ByVal ID As Long) Implements IServicoDeAgenda.RemovaConfiguracao
+        Dim Mapeador As IMapeadorDeAgenda
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAgenda)()
+
+        ServerUtils.BeginTransaction()
+
+        Try
+            Mapeador.RemovaConfiguracao(ID)
             ServerUtils.CommitTransaction()
         Catch
             ServerUtils.RollbackTransaction()
