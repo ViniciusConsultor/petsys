@@ -18,7 +18,6 @@ Public Class ImpressorDeCompromissos
 
     Private _FonteNomeProprietarioCabecalho As Font
     Private _FonteHorario As Font
-    ' Private _FonteDescricaoCompromissos As Font
     Private _ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
     Private NomeDoArquivoDeSaida As String
 
@@ -27,11 +26,8 @@ Public Class ImpressorDeCompromissos
         _Compromissos = Compromissos
         _Fonte1 = New Font(Font.TIMES_ROMAN, 10)
         _FonteRodape = New Font(Font.TIMES_ROMAN, 10, Font.ITALIC)
-
         _FonteNomeProprietarioCabecalho = New Font(Font.TIMES_ROMAN, 12, Font.BOLDITALIC)
         _FonteHorario = New Font(Font.TIMES_ROMAN, 10, Font.BOLD)
-        ' _FonteDescricaoCompromissos = New Font(Font.TIMES_ROMAN, 10)
-
         _documento = New Document(PageSize.A4)
         CriaEscritor(FormatoDeSaida)
     End Sub
@@ -120,77 +116,39 @@ Public Class ImpressorDeCompromissos
                                    ByVal MostraAssunto As Boolean, _
                                    ByVal MostraLocal As Boolean, _
                                    ByVal MostraDescricao As Boolean)
-        Dim ParagradoEmBranco As Paragraph
-        Dim Flag As Boolean = False
+        Dim Texto As New StringBuilder
+        Dim TabelaCompromissos As Table = New Table(2)
+        'TabelaCompromissos.Padding = 1
+        'TabelaCompromissos.Spacing = 1
+        TabelaCompromissos.Width = 100%
+        TabelaCompromissos.Widths = New Single() {80, 500}
 
-        ParagradoEmBranco = New Paragraph("")
-        _documento.Add(ParagradoEmBranco)
+        Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+        'coluna de horario
+        TabelaCompromissos.AddCell(CelulaEmBranco)
+        'coluna de descricao
+        TabelaCompromissos.AddCell(CelulaEmBranco)
 
-        Dim CaracterTAB = New Chunk(New VerticalPositionMark(), 50)
-
-        Dim CorpoCompromisso As Phrase
-
-        CorpoCompromisso = New Phrase
-
-        CorpoCompromisso.Add(New Chunk(Compromisso.Inicio.ToString("HH") & "h" & Compromisso.Inicio.ToString("mm") & "min", _FonteHorario))
-        CorpoCompromisso.Add(CaracterTAB)
+        'Adiciona a celula com o horário
+        TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Compromisso.Inicio.ToString("HH") & "h" & Compromisso.Inicio.ToString("mm") & "min", _
+                                                                    _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
 
         If MostraAssunto Then
-            'CorpoCompromisso.Add(New Chunk(Compromisso.Assunto, _FonteDescricaoCompromissos))
-
-            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Compromisso.Assunto)
-                CorpoCompromisso.Add(Elemento)
-            Next
-
-            CorpoCompromisso.Add(Chunk.NEWLINE)
-            Flag = True
+            Texto.Append(Compromisso.Assunto & "<br />")
         End If
 
         If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
-            If Flag Then
-                CorpoCompromisso.Add(CaracterTAB)
-            End If
-
-            'CorpoCompromisso.Add(New Chunk(Compromisso.Local, _FonteDescricaoCompromissos))
-
-            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Compromisso.Local)
-                CorpoCompromisso.Add(Elemento)
-            Next
-
-            CorpoCompromisso.Add(Chunk.NEWLINE)
+            Texto.Append(Compromisso.Local & "<br />")
         End If
 
         If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
-            If Flag Then
-                CorpoCompromisso.Add(CaracterTAB)
-            End If
-
-            'If Compromisso.Descricao.Contains(vbLf) Then
-            '    Dim LinhasDaDescricao() As String
-
-            '    LinhasDaDescricao = Compromisso.Descricao.Split(CChar(vbLf))
-
-            '    For Each Linha As String In LinhasDaDescricao
-            '        If Not Array.IndexOf(LinhasDaDescricao, Linha) = 0 Then
-            '            CorpoCompromisso.Add(CaracterTAB)
-            '        End If
-
-            '        If Linha.Contains(vbCr) Then Linha = Linha.Remove(Linha.IndexOf(vbCr), 1)
-            '        CorpoCompromisso.Add(New Chunk(Linha, _FonteDescricaoCompromissos))
-            '        CorpoCompromisso.Add(Chunk.NEWLINE)
-            '    Next
-
-            'Else
-            'CorpoCompromisso.Add(New Chunk(Compromisso.Descricao, _FonteDescricaoCompromissos))
-            ' End If
-
-            For Each Elemento As IElement In iTextSharpUtilidades.TraduzaTextoHTMLListaDeElementos(Compromisso.Descricao)
-                CorpoCompromisso.Add(Elemento)
-            Next
-
+            Texto.Append(Compromisso.Descricao)
         End If
 
-        _documento.Add(CorpoCompromisso)
+        TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
+                                                                    Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+
+        _documento.Add(TabelaCompromissos)
     End Sub
 
     Private Sub EscrevaRodape()
