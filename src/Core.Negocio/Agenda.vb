@@ -7,14 +7,14 @@ Public Class Agenda
     Private _Compromissos As IList(Of ICompromisso)
     Private _Tarefas As IList(Of ITarefa)
     Private _Lembretes As IList(Of ILembrete)
-    Private _Proprietario As IPessoa
+    Private _Proprietario As IPessoaFisica
 
     Public Sub New(ByVal Inicio As Date, _
                    ByVal Fim As Date, _
                    ByVal Compromissos As IList(Of ICompromisso), _
                    ByVal Lembretes As IList(Of ILembrete), _
                    ByVal Tarefas As IList(Of ITarefa), _
-                   ByVal Proprietario As IPessoa)
+                   ByVal Proprietario As IPessoaFisica)
         _Inicio = Inicio
         _Fim = Fim
         _Compromissos = Compromissos
@@ -24,23 +24,17 @@ Public Class Agenda
     End Sub
 
     Private _Fim As Date
-    Public Property Fim() As Date Implements IAgenda.Fim
+    Public ReadOnly Property Fim() As Date Implements IAgenda.Fim
         Get
             Return _Fim
         End Get
-        Set(ByVal value As Date)
-            _Fim = value
-        End Set
     End Property
 
     Private _Inicio As Date
-    Public Property Inicio() As Date Implements IAgenda.Inicio
+    Public ReadOnly Property Inicio() As Date Implements IAgenda.Inicio
         Get
             Return _Inicio
         End Get
-        Set(ByVal value As Date)
-            _Inicio = value
-        End Set
     End Property
 
     Private _DicionarioDeCompromissos As Dictionary(Of String, IList(Of ICompromisso))
@@ -133,5 +127,11 @@ Public Class Agenda
         Next
 
     End Sub
+
+    Public ReadOnly Property Proprietario() As IPessoaFisica Implements IAgenda.Proprietario
+        Get
+            Return _Proprietario
+        End Get
+    End Property
 
 End Class

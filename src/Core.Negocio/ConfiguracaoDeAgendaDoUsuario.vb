@@ -34,22 +34,22 @@ Public Class ConfiguracaoDeAgendaDoUsuario
         End Set
     End Property
 
-    Private _Pessoa As IPessoa
-    Public Property Pessoa() As IPessoa Implements IConfiguracaoDeAgendaDoUsuario.Pessoa
+    Private _Pessoa As IPessoaFisica
+    Public Property Pessoa() As IPessoaFisica Implements IConfiguracaoDeAgendaDoUsuario.Pessoa
         Get
             Return _Pessoa
         End Get
-        Set(ByVal value As IPessoa)
+        Set(ByVal value As IPessoaFisica)
             _Pessoa = value
         End Set
     End Property
 
-    Private _PessoaPadraoAoAcessarAAgenda As IPessoa
-    Public Property PessoaPadraoAoAcessarAAgenda() As IPessoa Implements IConfiguracaoDeAgendaDoUsuario.PessoaPadraoAoAcessarAAgenda
+    Private _PessoaPadraoAoAcessarAAgenda As IPessoaFisica
+    Public Property PessoaPadraoAoAcessarAAgenda() As IPessoaFisica Implements IConfiguracaoDeAgendaDoUsuario.PessoaPadraoAoAcessarAAgenda
         Get
             Return _PessoaPadraoAoAcessarAAgenda
         End Get
-        Set(ByVal value As IPessoa)
+        Set(ByVal value As IPessoaFisica)
             _PessoaPadraoAoAcessarAAgenda = value
         End Set
     End Property

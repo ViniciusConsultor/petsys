@@ -284,12 +284,12 @@ Partial Public Class frmConfiguracoesPessoais
     End Function
 
     Private Function MontaObjeto() As IConfiguracaoDeAgendaDoUsuario
-        Dim Pessoa As IPessoa
-        Dim PessoaPadrao As IPessoa
+        Dim Pessoa As IPessoaFisica
+        Dim PessoaPadrao As IPessoaFisica
         Dim ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario
 
         Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.ID)
-        PessoaPadrao = ctrlPessoa1.PessoaSelecionada
+        PessoaPadrao = CType(ctrlPessoa1.PessoaSelecionada, IPessoaFisica)
         ConfiguracaoDaAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoUsuario)()
         ConfiguracaoDaAgenda.Pessoa = Pessoa
         ConfiguracaoDaAgenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value

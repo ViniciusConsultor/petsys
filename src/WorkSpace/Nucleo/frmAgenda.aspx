@@ -1,4 +1,4 @@
-ï»¿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
     CodeBehind="frmAgenda.aspx.vb" Inherits="WorkSpace.frmAgenda" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
@@ -37,11 +37,13 @@
     <telerik:RadToolBar ID="ToolBarPrincipal" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
+                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.NCL.012.0011" />
         </Items>
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="pnlProprietario" runat="server" Title="ProprietÃ¡rio da agenda"
+            <telerik:RadDock ID="pnlProprietario" runat="server" Title="Proprietário da agenda"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc2:ctrlPessoa ID="ctrlPessoa1" runat="server" />
@@ -58,41 +60,30 @@
                 Scrolling="None">
                 <telerik:RadPanelBar runat="server" Skin="Vista" ID="PanelBar" Width="100%">
                     <Items>
-                        <telerik:RadPanelItem runat="server" Text="OpÃ§Ãµes de visualizaÃ§Ã£o" Expanded="True">
-                            <Items>
-                                <telerik:RadPanelItem runat="server">
-                                    <ItemTemplate>
-                                        <div>
-                                            <div>
-                                                <asp:CheckBox ID="chkMostrarCompromissos" runat="server" Text="Compromissos" Checked="true"
-                                                    AutoPostBack="true" />
-                                            </div>
-                                            <div>
-                                                <asp:CheckBox ID="chkMostrarTarefas" runat="server" Text="Tarefas" Checked="true"
-                                                    AutoPostBack="true" />
-                                            </div>
-                                            <div>
-                                                <asp:CheckBox ID="chkMostrarLembretes" runat="server" Text="Lembretes" Checked="true"
-                                                    AutoPostBack="true" />
-                                            </div>
-                                        </div>
-                                    </ItemTemplate>
-                                </telerik:RadPanelItem>
-                            </Items>
+                        <telerik:RadPanelItem runat="server" Text="Calendário" Expanded="true">
+                            <ItemTemplate>
+                                <telerik:RadCalendar ID="cldCalendarioAgenda" runat="server" AutoPostBack="true"
+                                    DayNameFormat="FirstTwoLetters" EnableMonthYearFastNavigation="false" EnableMultiSelect="false"
+                                    EnableNavigation="true" Skin="Vista" 
+                                    onselectionchanged="cldCalendarioAgenda_SelectionChanged">
+                                </telerik:RadCalendar>
+                            </ItemTemplate>
                         </telerik:RadPanelItem>
-                        <telerik:RadPanelItem runat="server" Text="CalendÃ¡rio" Expanded="true">
-                            <Items>
-                                <telerik:RadPanelItem runat="server">
-                                    <ItemTemplate>
-                                        <div>
-                                            <telerik:RadCalendar runat="server" ID="cldCalendarioAgenda" Skin="Vista" AutoPostBack="true"
-                                                EnableMultiSelect="false" DayNameFormat="FirstTwoLetters" EnableNavigation="true"
-                                                EnableMonthYearFastNavigation="false">
-                                            </telerik:RadCalendar>
-                                        </div>
-                                    </ItemTemplate>
-                                </telerik:RadPanelItem>
-                            </Items>
+                        <telerik:RadPanelItem runat="server" Text="Opções de visualização" Expanded="True">
+                            <ItemTemplate>
+                                <div>
+                                    <asp:CheckBox ID="chkMostrarCompromissos" runat="server" AutoPostBack="true" Checked="true"
+                                        OnCheckedChanged="chkMostrarCompromissos_CheckedChanged" Text="Compromissos" />
+                                </div>
+                                <div>
+                                    <asp:CheckBox ID="chkMostrarTarefas" runat="server" AutoPostBack="true" Checked="true"
+                                        Text="Tarefas" oncheckedchanged="chkMostrarTarefas_CheckedChanged" />
+                                </div>
+                                <div>
+                                    <asp:CheckBox ID="chkMostrarLembretes" runat="server" AutoPostBack="true" Checked="true"
+                                        Text="Lembretes" oncheckedchanged="chkMostrarLembretes_CheckedChanged" />
+                                </div>
+                            </ItemTemplate>
                         </telerik:RadPanelItem>
                     </Items>
                 </telerik:RadPanelBar>
@@ -108,8 +99,6 @@
                                     <Items>
                                         <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo compromisso"
                                             CommandName="btnNovoCompromisso" CausesValidation="False" CommandArgument="OPE.NCL.012.0001" />
-                                        <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
-                                            CommandName="btnImprimirCompromisso" CausesValidation="False" CommandArgument="OPE.NCL.012.0009" />
                                     </Items>
                                 </telerik:RadToolBar>
                                 <telerik:RadScheduler runat="server" ID="schCompromissos" DataKeyField="ID" DataDescriptionField="Descricao"
@@ -117,15 +106,14 @@
                                     EnableDescriptionField="True" OnClientAppointmentDoubleClick="onAppointmentDoubleClick"
                                     AppointmentContextMenuSettings-EnableEmbeddedBaseStylesheet="False" AppointmentContextMenuSettings-EnableEmbeddedScripts="False"
                                     AppointmentContextMenuSettings-EnableEmbeddedSkins="False" TimeSlotContextMenuSettings-EnableEmbeddedBaseStylesheet="False"
-                                    TimeSlotContextMenuSettings-EnableEmbeddedScripts="False" 
-                                    TimeSlotContextMenuSettings-EnableEmbeddedSkins="False" 
+                                    TimeSlotContextMenuSettings-EnableEmbeddedScripts="False" TimeSlotContextMenuSettings-EnableEmbeddedSkins="False"
                                     ShowNavigationPane="False" Skin="Vista">
                                     <TimelineView UserSelectable="false" />
                                     <WeekView UserSelectable="False" />
-                                    <TimeSlotContextMenuSettings EnableEmbeddedBaseStylesheet="False" 
-                                        EnableEmbeddedScripts="False" EnableEmbeddedSkins="False" Skin="Vista" />
-                                    <AppointmentContextMenuSettings EnableEmbeddedBaseStylesheet="False" 
-                                        EnableEmbeddedScripts="False" EnableEmbeddedSkins="False" Skin="Vista" />
+                                    <TimeSlotContextMenuSettings EnableEmbeddedBaseStylesheet="False" EnableEmbeddedScripts="False"
+                                        EnableEmbeddedSkins="False" Skin="Vista" />
+                                    <AppointmentContextMenuSettings EnableEmbeddedBaseStylesheet="False" EnableEmbeddedScripts="False"
+                                        EnableEmbeddedSkins="False" Skin="Vista" />
                                     <DayView UserSelectable="False" />
                                     <MonthView UserSelectable="False" />
                                 </telerik:RadScheduler>
@@ -138,26 +126,8 @@
                                     <Items>
                                         <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Nova tarefa"
                                             CommandName="btnNovaTarefa" CausesValidation="False" CommandArgument="OPE.NCL.012.0004" />
-                                        <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
-                                            CommandName="btnImprimirTarefas" CausesValidation="False" CommandArgument="OPE.NCL.012.0008" />
                                     </Items>
                                 </telerik:RadToolBar>
-                                <table class="tabela">
-                                    <tr>
-                                        <td class="th3">
-                                            <asp:Label ID="Label7" runat="server" Text="Data de inÃ­cio"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <telerik:RadDatePicker ID="txtDataInicialTarefa" runat="server">
-                                            </telerik:RadDatePicker>
-                                            <asp:Label ID="Label1" runat="server" Text=" a  "></asp:Label>
-                                            <telerik:RadDatePicker ID="txtDataFinalTarefa" runat="server">
-                                            </telerik:RadDatePicker>
-                                            <asp:ImageButton ID="btnPesquisarTarefas" runat="server" ToolTip="Pesquisar tarefas"
-                                                ImageUrl="~/imagens/find.gif" />
-                                        </td>
-                                    </tr>
-                                </table>
                                 <telerik:RadGrid ID="grdTarefas" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                                     PageSize="10" GridLines="None" Width="100%">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
@@ -179,12 +149,12 @@
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column30">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="DescriÃ§Ã£o" UniqueName="column2"
+                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column2"
                                                 Visible="True">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDeInicio" HeaderText="Data de inÃ­cio" UniqueName="column33">
+                                            <telerik:GridBoundColumn DataField="DataDeInicio" HeaderText="Data de início" UniqueName="column33">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDeConclusao" HeaderText="Data de conclusÃ£o"
+                                            <telerik:GridBoundColumn DataField="DataDeConclusao" HeaderText="Data de conclusão"
                                                 UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Prioridade.Descricao" HeaderText="Prioridade"
@@ -204,27 +174,9 @@
                                 <telerik:RadToolBar ID="ToolBarLembretes" runat="server" Skin="Vista" Style="width: 100%;">
                                     <Items>
                                         <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo lembrete"
-                                            CommandName="btnNovoLembrete" CausesValidation="False" CommandArgument="OPE.NCL.012.0010" />
-                                        <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/imprimir.png" Text="Imprimir"
-                                            CommandName="btnImprimirLembretes" CausesValidation="False" CommandArgument="OPE.NCL.012.0013" />
+                                            CommandName="btnNovoLembrete" CausesValidation="False" CommandArgument="OPE.NCL.012.0008" />
                                     </Items>
                                 </telerik:RadToolBar>
-                                <table class="tabela">
-                                    <tr>
-                                        <td class="th3">
-                                            <asp:Label ID="Label2" runat="server" Text="PerÃ­odo"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <telerik:RadDatePicker ID="txtDataDeInicioLembretes" runat="server">
-                                            </telerik:RadDatePicker>
-                                            <asp:Label ID="Label3" runat="server" Text=" a  "></asp:Label>
-                                            <telerik:RadDatePicker ID="txtDataDeFimLembretes" runat="server">
-                                            </telerik:RadDatePicker>
-                                            <asp:ImageButton ID="btnPesquisarLembretes" runat="server" ToolTip="Pesquisar lembretes"
-                                                ImageUrl="~/imagens/find.gif" />
-                                        </td>
-                                    </tr>
-                                </table>
                                 <telerik:RadGrid ID="grdLembretes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                                     PageSize="10" GridLines="None" Width="100%">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
@@ -249,12 +201,12 @@
                                             <telerik:GridBoundColumn DataField="Local" HeaderText="Prioridade" UniqueName="column1"
                                                 Visible="True">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="DescriÃ§Ã£o" UniqueName="column2"
+                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column2"
                                                 Visible="True">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Inicio" HeaderText="Data de inÃ­cio" UniqueName="column33">
+                                            <telerik:GridBoundColumn DataField="Inicio" HeaderText="Data de início" UniqueName="column33">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Fim" HeaderText="Data de conclusÃ£o" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Fim" HeaderText="Data de conclusão" UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Status.Descricao" HeaderText="Status" UniqueName="column1"
                                                 Visible="True">

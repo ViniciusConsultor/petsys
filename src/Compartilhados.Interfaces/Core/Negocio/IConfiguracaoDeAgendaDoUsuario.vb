@@ -2,11 +2,11 @@
 
     Public Interface IConfiguracaoDeAgendaDoUsuario
 
-        Property Pessoa() As IPessoa
+        Property Pessoa() As IPessoaFisica
         Property HorarioDeInicio() As Date
         Property HorarioDeTermino() As Date
         Property IntervaloEntreOsCompromissos() As Date
-        Property PessoaPadraoAoAcessarAAgenda() As IPessoa
+        Property PessoaPadraoAoAcessarAAgenda() As IPessoaFisica
 
     End Interface
 

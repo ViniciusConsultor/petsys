@@ -77,48 +77,49 @@ Public Class ImpressorDeAgenda
 
         Dim DataAux As Date = _Agenda.Inicio
 
+        _documento.Open()
+
         While DataAux <= _Agenda.Fim
             Dim CompromissosDaData As IList(Of ICompromisso)
 
+            EscrevaCabecalho()
             CompromissosDaData = _Agenda.ObtenhaCompromissos(DataAux)
 
             If Not CompromissosDaData Is Nothing Then
-                EscrevaCompromissos(CompromissosDaData)
+                EscrevaCompromissos(CompromissosDaData, MostraAssunto, MostraLocal, MostraDescricao)
             End If
 
+            Dim LembretesDaData As IList(Of ILembrete)
 
+            LembretesDaData = _Agenda.ObtenhaLembretes(DataAux)
+
+            If Not LembretesDaData Is Nothing Then
+                EscrevaLembretes(LembretesDaData, MostraAssunto, MostraDescricao)
+            End If
+
+            Dim TarefasDaData As IList(Of ITarefa)
+
+            TarefasDaData = _Agenda.ObtenhaTarefas(DataAux)
+
+            If Not TarefasDaData Is Nothing Then
+                EscrevaTarefas(TarefasDaData, MostraAssunto, MostraDescricao)
+            End If
+
+            EscrevaRodape()
+            DataAux.AddDays(1)
+            _documento.NewPage()
         End While
-
-        'For Each Compromisso As ICompromisso In _Compromissos
-        '    'Primeira vez
-        '    If CompromissoAnterior Is Nothing Then
-        '        EscrevaCabecalho(Compromisso)
-        '        EscrevaRodape()
-        '        _documento.Open()
-        '        'Demais vezes testa se o compromisso atual tem data maior que o anterio. Caso tenha atualizamos a data do cabeçalho
-        '    ElseIf CLng(CompromissoAnterior.Inicio.ToString("yyyyMMdd")) < CLng(Compromisso.Inicio.ToString("yyyyMMdd")) Then
-        '        EscrevaCabecalho(Compromisso)
-        '        _documento.NewPage()
-        '    End If
-
-        '    EscrevaCompromisso(Compromisso, MostraAssunto, MostraLocal, MostraDescricao)
-        '    CompromissoAnterior = Compromisso
-        'Next
 
         _documento.Close()
         Return NomeDoArquivoDeSaida
     End Function
 
-    Private Sub EscrevaCompromissos(ByVal Compromissos As IList(Of ICompromisso))
-
-    End Sub
-
-    Private Sub EscrevaCabecalho(ByVal Compromisso As ICompromisso)
+    Private Sub EscrevaCabecalho()
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeCompromissos & Compromisso.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
-        Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(Compromisso.Inicio), _Fonte1))
+        Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeCompromissos & _Agenda.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(_Agenda.Inicio), _Fonte1))
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
@@ -130,41 +131,113 @@ Public Class ImpressorDeAgenda
         _documento.Header = Cabecalho
     End Sub
 
-    Private Sub EscrevaCompromisso(ByVal Compromisso As ICompromisso, _
-                                   ByVal MostraAssunto As Boolean, _
-                                   ByVal MostraLocal As Boolean, _
-                                   ByVal MostraDescricao As Boolean)
-        Dim Texto As New StringBuilder
+    Private Sub EscrevaCompromissos(ByVal Compromissos As IList(Of ICompromisso), _
+                                    ByVal MostraAssunto As Boolean, _
+                                    ByVal MostraLocal As Boolean, _
+                                    ByVal MostraDescricao As Boolean)
         Dim TabelaCompromissos As Table = New Table(2)
 
         TabelaCompromissos.Width = 100%
         TabelaCompromissos.Widths = New Single() {80, 500}
 
-        Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
-        'coluna de horario
-        TabelaCompromissos.AddCell(CelulaEmBranco)
-        'coluna de descricao
-        TabelaCompromissos.AddCell(CelulaEmBranco)
+        For Each Compromisso As ICompromisso In Compromissos
+            Dim Texto As New StringBuilder
 
-        'Adiciona a celula com o horário
-        TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Compromisso.Inicio.ToString("HH") & "h" & Compromisso.Inicio.ToString("mm") & "min", _
-                                                                    _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+            'coluna de horario
+            TabelaCompromissos.AddCell(CelulaEmBranco)
+            'coluna de descricao
+            TabelaCompromissos.AddCell(CelulaEmBranco)
 
-        If MostraAssunto Then
-            Texto.Append(Compromisso.Assunto & "<br />")
-        End If
+            'Adiciona a celula com o horário
+            TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Compromisso.Inicio.ToString("HH") & "h" & Compromisso.Inicio.ToString("mm") & "min", _
+                                                                        _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
 
-        If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
-            Texto.Append(Compromisso.Local & "<br />")
-        End If
+            If MostraAssunto Then
+                Texto.Append(Compromisso.Assunto & "<br />")
+            End If
 
-        If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
-            Texto.Append(Compromisso.Descricao)
-        End If
+            If MostraLocal AndAlso Not String.IsNullOrEmpty(Compromisso.Local) Then
+                Texto.Append(Compromisso.Local & "<br />")
+            End If
 
-        TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
-                                                                    Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+            If MostraDescricao AndAlso Not String.IsNullOrEmpty(Compromisso.Descricao) Then
+                Texto.Append(Compromisso.Descricao)
+            End If
+
+            TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
+                                                                        Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+        Next
+
         _documento.Add(TabelaCompromissos)
+    End Sub
+
+    Private Sub EscrevaLembretes(ByVal Lembretes As IList(Of ILembrete), _
+                                 ByVal MostraAssunto As Boolean, _
+                                 ByVal MostraDescricao As Boolean)
+        Dim TabelaLembretes As Table = New Table(2)
+
+        TabelaLembretes.Width = 100%
+        TabelaLembretes.Widths = New Single() {80, 500}
+
+        For Each Lembrete As ILembrete In Lembretes
+            Dim Texto As New StringBuilder
+            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+            'coluna de horario
+            TabelaLembretes.AddCell(CelulaEmBranco)
+            'coluna de descricao
+            TabelaLembretes.AddCell(CelulaEmBranco)
+            'Adiciona a celula com o horário
+            TabelaLembretes.AddCell(iTextSharpUtilidades.CrieCelula(Lembrete.Inicio.ToString("HH") & "h" & Lembrete.Inicio.ToString("mm") & "min", _
+                                                                        _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+            If MostraAssunto Then
+                Texto.Append(Lembrete.Assunto & "<br />")
+            End If
+
+            If MostraDescricao AndAlso Not String.IsNullOrEmpty(Lembrete.Descricao) Then
+                Texto.Append(Lembrete.Descricao)
+            End If
+
+            TabelaLembretes.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
+                                                                    Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+        Next
+
+        _documento.Add(TabelaLembretes)
+    End Sub
+
+    Private Sub EscrevaTarefas(ByVal Tarefas As IList(Of ITarefa), _
+                               ByVal MostraAssunto As Boolean, _
+                               ByVal MostraDescricao As Boolean)
+        Dim TabelaTarefa As Table = New Table(2)
+
+        TabelaTarefa.Width = 100%
+        TabelaTarefa.Widths = New Single() {80, 500}
+
+        For Each Tarefa As ITarefa In Tarefas
+            Dim Texto As New StringBuilder
+            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+            'coluna de horario
+            TabelaTarefa.AddCell(CelulaEmBranco)
+            'coluna de descricao
+            TabelaTarefa.AddCell(CelulaEmBranco)
+
+            'Adiciona a celula com o horário
+            TabelaTarefa.AddCell(iTextSharpUtilidades.CrieCelula(Tarefa.DataDeInicio.ToString("HH") & "h" & Tarefa.DataDeInicio.ToString("mm") & "min", _
+                                                                 _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+
+            If MostraAssunto Then
+                Texto.Append(Tarefa.Assunto & "<br />")
+            End If
+
+            If MostraDescricao AndAlso Not String.IsNullOrEmpty(Tarefa.Descricao) Then
+                Texto.Append(Tarefa.Descricao)
+            End If
+
+            TabelaTarefa.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
+                                                                 Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+        Next
+
+        _documento.Add(TabelaTarefa)
     End Sub
 
     Private Sub EscrevaRodape()
