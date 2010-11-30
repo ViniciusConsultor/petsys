@@ -4,6 +4,7 @@ Imports Telerik.Web.UI
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class frmImpressaoAgenda
     Inherits SuperPagina
@@ -84,7 +85,19 @@ Partial Public Class frmImpressaoAgenda
 
         FormatoDeSaida = TipoDeFormatoDeSaidaDoDocumento.Obtenha(CChar(rblFormato.SelectedValue))
 
-        ' Gerador = New ImpressorDeAgenda(Compromissos, Lembretes, Tarefas, FormatoDeSaida)
+        Dim Agenda As IAgenda
+        Dim Proprietario As IPessoaFisica
+
+        Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_PROPRIETARIO_AGENDA_IMPRESSAO)))
+
+        Agenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgenda)(New Object() {txtDataInicial.SelectedDate, _
+                                                                                  txtDataFinal.SelectedDate, _
+                                                                                  Compromissos, _
+                                                                                  Lembretes, _
+                                                                                  Tarefas, _
+                                                                                  Proprietario})
+        Agenda.Organize()
+        Gerador = New ImpressorDeAgenda(Agenda, FormatoDeSaida)
 
         Try
             If cboOpcoesDeImpressao.SelectedValue = "1" Then

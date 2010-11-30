@@ -113,10 +113,10 @@ Partial Public Class cdAgenda
     End Function
 
     Private Function MontaObjeto() As IConfiguracaoDeAgendaDoUsuario
-        Dim Pessoa As IPessoa
+        Dim Pessoa As IPessoaFisica
         Dim ConfiguracaoDeAgenda As IConfiguracaoDeAgendaDoUsuario
 
-        Pessoa = ctrlPessoa1.PessoaSelecionada
+        Pessoa = CType(ctrlPessoa1.PessoaSelecionada, IPessoaFisica)
         ConfiguracaoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoUsuario)()
         ConfiguracaoDeAgenda.Pessoa = Pessoa
         ConfiguracaoDeAgenda.HorarioDeInicio = txtHorarioDeInicio.SelectedDate.Value
@@ -210,7 +210,7 @@ Partial Public Class cdAgenda
         ctrlPessoa1.BotaoDetalharEhVisivel = True
 
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            ConfiguracaoDaAgenda = Servico.ObtenhaConfiguracao(Pessoa)
+            ConfiguracaoDaAgenda = Servico.ObtenhaConfiguracao(CType(Pessoa, IPessoaFisica))
         End Using
 
         If ConfiguracaoDaAgenda Is Nothing Then

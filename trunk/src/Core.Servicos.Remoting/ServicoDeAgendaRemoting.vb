@@ -89,7 +89,7 @@ Public Class ServicoDeAgendaRemoting
         _ServicoLocal.ModifiqueConfiguracao(ConfiguracaoDaAgenda)
     End Sub
 
-    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
+    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoaFisica) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
         Return _ServicoLocal.ObtenhaConfiguracao(Pessoa)
     End Function
 

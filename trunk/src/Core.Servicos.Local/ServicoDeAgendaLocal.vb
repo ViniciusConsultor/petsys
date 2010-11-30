@@ -338,7 +338,7 @@ Public Class ServicoDeAgendaLocal
         End Try
     End Sub
 
-    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
+    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoaFisica) As IConfiguracaoDeAgendaDoUsuario Implements IServicoDeAgenda.ObtenhaConfiguracao
         Dim Mapeador As IMapeadorDeAgenda
 
         ServerUtils.setCredencial(MyBase._Credencial)

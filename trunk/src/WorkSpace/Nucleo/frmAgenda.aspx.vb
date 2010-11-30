@@ -31,16 +31,13 @@ Partial Public Class frmAgenda
             Exit Sub
         End If
 
+        DataSelecionada = Now
         lblInconsistencia.Visible = False
         pnlCompromissos.Visible = True
         pnlTarefas.Visible = True
         pnlLembretes.Visible = True
 
         Me.IDProprietario = Pessoa.ID.Value
-        txtDataInicialTarefa.SelectedDate = Now
-        txtDataFinalTarefa.SelectedDate = Now
-        txtDataDeInicioLembretes.SelectedDate = Now
-        txtDataDeFimLembretes.SelectedDate = Now
         ConfiguraAgenda(ConfiguracaoDaAgenda)
         CarregaAgenda()
     End Sub
@@ -92,6 +89,7 @@ Partial Public Class frmAgenda
     Private Const CHAVE_TAREFAS As String = "CHAVE_TAREFAS"
     Private Const CHAVE_LEMBRETES As String = "CHAVE_LEMBRETES"
     Private URL As String
+    Private Const CHAVE_DATA_SELECIONADA As String = "CHAVE_DATA_SELECIONADA"
 
     Private Property HoraInicio() As Date
         Get
@@ -129,6 +127,15 @@ Partial Public Class frmAgenda
         End Set
     End Property
 
+    Private Property DataSelecionada() As Date
+        Get
+            Return CDate(ViewState(CHAVE_DATA_SELECIONADA))
+        End Get
+        Set(ByVal value As Date)
+            ViewState(CHAVE_DATA_SELECIONADA) = value
+        End Set
+    End Property
+
     Private Sub btnNovoCompromisso_Click()
         Dim URL As String
 
@@ -157,6 +164,7 @@ Partial Public Class frmAgenda
         callbackScript = String.Concat("function CallServer(arg,context) { ", cbReference, ";}")
         Page.ClientScript.RegisterClientScriptBlock(Me.GetType(), "CallServer", callbackScript, True)
         UtilidadesWeb.SetaGlobalizacaoPortuguesNoComponenteScheduler(Me.schCompromissos)
+
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If
@@ -174,25 +182,15 @@ Partial Public Class frmAgenda
         Dim Lembretes As IList(Of ILembrete)
 
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Compromissos = Servico.ObtenhaCompromissos(IDProprietario.Value)
-
-            If Not txtDataInicialTarefa.SelectedDate.HasValue Then
-                Tarefas = New List(Of ITarefa)
-            Else
-                Tarefas = Servico.ObtenhaTarefas(IDProprietario.Value, txtDataInicialTarefa.SelectedDate.Value, txtDataFinalTarefa.SelectedDate)
-            End If
-
-            If Not txtDataDeInicioLembretes.SelectedDate.HasValue Then
-                Lembretes = New List(Of ILembrete)
-            Else
-                Lembretes = Servico.ObtenhaLembretes(IDProprietario.Value, txtDataDeInicioLembretes.SelectedDate.Value, txtDataDeFimLembretes.SelectedDate)
-            End If
-
+            Compromissos = Servico.ObtenhaCompromissos(IDProprietario.Value, DataSelecionada, DataSelecionada)
+            Tarefas = Servico.ObtenhaTarefas(IDProprietario.Value, DataSelecionada, DataSelecionada)
+            Lembretes = Servico.ObtenhaLembretes(IDProprietario.Value, DataSelecionada, DataSelecionada)
         End Using
 
         schCompromissos.DayStartTime = HoraInicio.TimeOfDay
         schCompromissos.DayEndTime = HoraFim.TimeOfDay
         schCompromissos.MinutesPerRow = IntervaloEntreCompromissos.Minute
+        schCompromissos.SelectedDate = DataSelecionada
 
         ViewState(CHAVE_COMPROMISSOS) = Compromissos
         schCompromissos.DataSource = Compromissos
@@ -295,34 +293,33 @@ Partial Public Class frmAgenda
         'Permitido excluir compromissos
         schCompromissos.AllowDelete = Principal.EstaAutorizado("OPE.NCL.012.0002")
 
-        'Permitido Imprimir compromisso
-        CType(ToolBarCompromisso.FindButtonByCommandName("btnImprimirCompromisso"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0008")
-
         'Permitido inserir tarefas
         CType(ToolBarTarefa.FindButtonByCommandName("btnNovaTarefa"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0004")
 
-        'Coluna com botão remover para tarefas
-        grdTarefas.Columns(0).Visible = Principal.EstaAutorizado("OPE.NCL.012.0005")
-
         'Coluna com botão modificar para tarefas
-        grdTarefas.Columns(1).Visible = Principal.EstaAutorizado("OPE.NCL.012.0006")
+        grdTarefas.Columns(0).Visible = Principal.EstaAutorizado("OPE.NCL.012.0006")
+
+        'Coluna com botão remover para tarefas
+        grdTarefas.Columns(1).Visible = Principal.EstaAutorizado("OPE.NCL.012.0005")
 
         'Permitido visualizar agenda de outras pessoas
         pnlProprietario.Visible = Principal.EstaAutorizado("OPE.NCL.012.0007")
 
         'Permitido inserir lembretes
-        CType(ToolBarLembretes.FindButtonByCommandName("btnNovoLembrete"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0010")
+        CType(ToolBarLembretes.FindButtonByCommandName("btnNovoLembrete"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0008")
 
-        'Permitido imprimir lembretes
-        CType(ToolBarLembretes.FindButtonByCommandName("btnImprimirLembretes"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0013")
+        'Coluna com botão modificar para lembretes
+        grdLembretes.Columns(0).Visible = Principal.EstaAutorizado("OPE.NCL.012.0010")
+
+        'Coluna com botão remover para lembretes
+        grdLembretes.Columns(1).Visible = Principal.EstaAutorizado("OPE.NCL.012.0009")
+
     End Sub
 
     Private Sub ToolBarTarefa_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarTarefa.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovaTarefa"
                 btnNovaTarefa_Click()
-            Case "btnImprimirTarefas"
-                btnImprimirTarefas_Click()
         End Select
     End Sub
 
@@ -330,38 +327,20 @@ Partial Public Class frmAgenda
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovoCompromisso"
                 btnNovoCompromisso_Click()
-            Case "btnImprimirCompromisso"
-                btnImprimirCompromisso_Click()
         End Select
     End Sub
 
-    Private Sub btnImprimirTarefas_Click()
+    Private Sub btnImprimir()
         Dim URL As String
 
-        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoTarefa.aspx", "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir tarefas"), False)
-    End Sub
-
-    Private Sub btnImprimirCompromisso_Click()
-        Dim URL As String
-
-        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoCompromisso.aspx", "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir compromissos"), False)
-    End Sub
-
-    Private Sub btnImprimirLembretes_Click()
-        Dim URL As String
-
-        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoLembrete.aspx", "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir lembretes"), False)
+        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoAgenda.aspx", "?IdProprietario=", IDProprietario.ToString)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir agenda"), False)
     End Sub
 
     Private Sub ToolBarLembretes_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarLembretes.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovoLembrete"
                 btnNovoLembrete_Click()
-            Case "btnImprimirLembretes"
-                btnImprimirLembretes_Click()
         End Select
     End Sub
 
@@ -399,7 +378,6 @@ Partial Public Class frmAgenda
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/cdLembrete.aspx", "?IdLembrete=", ID, "&IdProprietario=", IDProprietario.ToString)
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar lembrete"), False)
         End If
-
     End Sub
 
     Private Sub grdLembretes_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdLembretes.ItemCreated
@@ -418,38 +396,28 @@ Partial Public Class frmAgenda
         UtilidadesWeb.PaginacaoDataGrid(grdTarefas, ViewState(CHAVE_LEMBRETES), e)
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+    Private Sub ToolBarPrincipal_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarPrincipal.ButtonClick
+        Select Case CType(e.Item, RadToolBarButton).CommandName
+            Case "btnImprimir"
+                btnImprimir()
+        End Select
+    End Sub
+
+    Protected Sub chkMostrarCompromissos_CheckedChanged(ByVal sender As Object, ByVal e As EventArgs)
+        pnlCompromissos.Visible = CType(sender, CheckBox).Checked
+    End Sub
+
+    Protected Sub chkMostrarTarefas_CheckedChanged(ByVal sender As Object, ByVal e As EventArgs)
+        pnlTarefas.Visible = CType(sender, CheckBox).Checked
+    End Sub
+
+    Protected Sub chkMostrarLembretes_CheckedChanged(ByVal sender As Object, ByVal e As EventArgs)
+        pnlLembretes.Visible = CType(sender, CheckBox).Checked
+    End Sub
+
+    Protected Sub cldCalendarioAgenda_SelectionChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.Calendar.SelectedDatesEventArgs)
+        DataSelecionada = e.SelectedDates(0).Date
         CarregaAgenda()
-    End Sub
-
-    Private Sub btnPesquisarTarefas_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarTarefas.Click
-        Dim Tarefas As IList(Of ITarefa)
-
-        If Not txtDataInicialTarefa.SelectedDate.HasValue Then
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data de início das tarefas deve ser informada."), False)
-            Exit Sub
-        End If
-
-        Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Tarefas = Servico.ObtenhaTarefas(IDProprietario.Value, txtDataInicialTarefa.SelectedDate.Value, txtDataFinalTarefa.SelectedDate)
-        End Using
-
-        ExibaTarefas(Tarefas)
-    End Sub
-
-    Private Sub btnPesquisarLembretes_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisarLembretes.Click
-        Dim Lembretes As IList(Of ILembrete)
-
-        If Not txtDataDeInicioLembretes.SelectedDate.HasValue Then
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data de início dos lembretes deve ser informada."), False)
-            Exit Sub
-        End If
-
-        Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Lembretes = Servico.ObtenhaLembretes(IDProprietario.Value, txtDataDeInicioLembretes.SelectedDate.Value, txtDataDeFimLembretes.SelectedDate)
-        End Using
-
-        ExibaLembretes(Lembretes)
     End Sub
 
 End Class

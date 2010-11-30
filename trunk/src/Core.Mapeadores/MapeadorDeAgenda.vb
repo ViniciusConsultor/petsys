@@ -28,7 +28,7 @@ Public Class MapeadorDeAgenda
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
-    Private Function MontaObjeto(ByVal Leitor As IDataReader, ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario
+    Private Function MontaObjeto(ByVal Leitor As IDataReader, ByVal Pessoa As IPessoaFisica) As IConfiguracaoDeAgendaDoUsuario
         Dim Configuracao As IConfiguracaoDeAgendaDoUsuario
 
         Configuracao = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoUsuario)()
@@ -522,7 +522,7 @@ Public Class MapeadorDeAgenda
         Me.InsiraConfiguracao(ConfiguracaoDaAgenda)
     End Sub
 
-    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario Implements IMapeadorDeAgenda.ObtenhaConfiguracao
+    Public Function ObtenhaConfiguracao(ByVal Pessoa As IPessoaFisica) As IConfiguracaoDeAgendaDoUsuario Implements IMapeadorDeAgenda.ObtenhaConfiguracao
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
         Dim ConfiguracaoDeAgendaDoUsuario As IConfiguracaoDeAgendaDoUsuario = Nothing
@@ -554,7 +554,7 @@ Public Class MapeadorDeAgenda
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
             If Leitor.Read Then
-                Dim Pessoa As IPessoa
+                Dim Pessoa As IPessoaFisica
                 Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
                 Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
                 Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")

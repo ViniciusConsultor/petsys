@@ -8,7 +8,7 @@ Namespace Core.Servicos
         'Configuracao da agenda do usuario
         Sub ModifiqueConfiguracao(ByVal ConfiguracaoDaAgenda As IConfiguracaoDeAgendaDoUsuario)
         Sub RemovaConfiguracao(ByVal ID As Long)
-        Function ObtenhaConfiguracao(ByVal Pessoa As IPessoa) As IConfiguracaoDeAgendaDoUsuario
+        Function ObtenhaConfiguracao(ByVal Pessoa As IPessoaFisica) As IConfiguracaoDeAgendaDoUsuario
         Function ObtenhaConfiguracao(ByVal IDPessoa As Long) As IConfiguracaoDeAgendaDoUsuario
 
         'Compromissos
