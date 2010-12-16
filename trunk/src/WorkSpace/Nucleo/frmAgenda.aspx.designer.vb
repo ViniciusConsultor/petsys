@@ -16,15 +16,6 @@ Option Explicit On
 Partial Public Class frmAgenda
 
     '''<summary>
-    '''Timer1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Timer1 As Global.System.Web.UI.Timer
-
-    '''<summary>
     '''ToolBarPrincipal control.
     '''</summary>
     '''<remarks>

@@ -32,8 +32,6 @@
         }        
     </script>
 
-    <asp:Timer ID="Timer1" runat="server" Interval="20000">
-    </asp:Timer>
     <telerik:RadToolBar ID="ToolBarPrincipal" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
@@ -64,8 +62,7 @@
                             <ItemTemplate>
                                 <telerik:RadCalendar ID="cldCalendarioAgenda" runat="server" AutoPostBack="true"
                                     DayNameFormat="FirstTwoLetters" EnableMonthYearFastNavigation="false" EnableMultiSelect="false"
-                                    EnableNavigation="true" Skin="Vista" 
-                                    onselectionchanged="cldCalendarioAgenda_SelectionChanged">
+                                    EnableNavigation="true" Skin="Vista" OnSelectionChanged="cldCalendarioAgenda_SelectionChanged">
                                 </telerik:RadCalendar>
                             </ItemTemplate>
                         </telerik:RadPanelItem>
@@ -77,11 +74,11 @@
                                 </div>
                                 <div>
                                     <asp:CheckBox ID="chkMostrarTarefas" runat="server" AutoPostBack="true" Checked="true"
-                                        Text="Tarefas" oncheckedchanged="chkMostrarTarefas_CheckedChanged" />
+                                        Text="Tarefas" OnCheckedChanged="chkMostrarTarefas_CheckedChanged" />
                                 </div>
                                 <div>
                                     <asp:CheckBox ID="chkMostrarLembretes" runat="server" AutoPostBack="true" Checked="true"
-                                        Text="Lembretes" oncheckedchanged="chkMostrarLembretes_CheckedChanged" />
+                                        Text="Lembretes" OnCheckedChanged="chkMostrarLembretes_CheckedChanged" />
                                 </div>
                             </ItemTemplate>
                         </telerik:RadPanelItem>
@@ -89,7 +86,7 @@
                 </telerik:RadPanelBar>
             </telerik:RadPane>
             <telerik:RadSplitBar runat="server" ID="RadSplitBar2" CollapseMode="Forward" />
-            <telerik:RadPane runat="Server" ID="rightPane" Scrolling="None" Width="100%">
+            <telerik:RadPane runat="Server" ID="rightPane" Scrolling="Y" Width="100%">
                 <telerik:RadDockLayout ID="RadDockLayout2" runat="server" Skin="Vista">
                     <telerik:RadDockZone ID="RadDockZone2" runat="server" Skin="Vista">
                         <telerik:RadDock ID="pnlCompromissos" runat="server" Title="Compromissos" DefaultCommands="ExpandCollapse"
