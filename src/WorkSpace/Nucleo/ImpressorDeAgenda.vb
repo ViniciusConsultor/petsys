@@ -106,8 +106,9 @@ Public Class ImpressorDeAgenda
             End If
 
             EscrevaRodape()
-            DataAux.AddDays(1)
-            _documento.NewPage()
+            DataAux = DataAux.AddDays(1)
+
+            If DataAux < _Agenda.Fim Then _documento.NewPage()
         End While
 
         _documento.Close()
