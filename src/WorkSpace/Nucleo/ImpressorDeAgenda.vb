@@ -119,13 +119,13 @@ Public Class ImpressorDeAgenda
         Dim Cabecalho As HeaderFooter
         Dim Frase As Phrase
 
-        Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeCompromissos & _Agenda.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
+        Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDaAgenda & _Agenda.Proprietario.Nome & vbLf, _FonteNomeProprietarioCabecalho)
         Frase.Add(New Phrase(UtilitarioDeData.ObtenhaDiaDaSemanaDiaDoMesMesAnoEmStr(_Agenda.Inicio), _Fonte1))
 
         Cabecalho = New HeaderFooter(Frase, False)
         Cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT
 
-        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeCompromissos Then
+        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDaAgenda Then
             Cabecalho.Border = HeaderFooter.NO_BORDER
         End If
 
@@ -140,6 +140,23 @@ Public Class ImpressorDeAgenda
 
         TabelaCompromissos.Width = 100%
         TabelaCompromissos.Widths = New Single() {80, 500}
+        TabelaCompromissos.Border = Table.NO_BORDER
+
+        If Not String.IsNullOrEmpty(_ConfiguracaoDeAgendaDoSistema.TextoCompromissos) Then
+
+            If _ConfiguracaoDeAgendaDoSistema.TextoDoCompromissoEntreLinhas Then
+                _documento.Add(New iTextSharp.text.pdf.draw.LineSeparator())
+            End If
+
+            Dim Frase As Phrase
+            Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoCompromissos, _FonteHorario)
+            _documento.Add(Frase)
+
+            If _ConfiguracaoDeAgendaDoSistema.TextoDoCompromissoEntreLinhas Then
+                _documento.Add(New iTextSharp.text.pdf.draw.LineSeparator())
+            End If
+
+        End If
 
         For Each Compromisso As ICompromisso In Compromissos
             Dim Texto As New StringBuilder
@@ -180,6 +197,23 @@ Public Class ImpressorDeAgenda
 
         TabelaLembretes.Width = 100%
         TabelaLembretes.Widths = New Single() {80, 500}
+        TabelaLembretes.Border = Table.NO_BORDER
+
+        If Not String.IsNullOrEmpty(_ConfiguracaoDeAgendaDoSistema.TextoLembretes) Then
+
+            If _ConfiguracaoDeAgendaDoSistema.TextoDeLembretesEntreLinhas Then
+                _documento.Add(New iTextSharp.text.pdf.draw.LineSeparator())
+            End If
+
+            Dim Frase As Phrase
+
+            Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoLembretes, _FonteHorario)
+            _documento.Add(Frase)
+
+            If _ConfiguracaoDeAgendaDoSistema.TextoDeLembretesEntreLinhas Then
+                _documento.Add(New iTextSharp.text.pdf.draw.LineSeparator())
+            End If
+        End If
 
         For Each Lembrete As ILembrete In Lembretes
             Dim Texto As New StringBuilder
@@ -213,6 +247,23 @@ Public Class ImpressorDeAgenda
 
         TabelaTarefa.Width = 100%
         TabelaTarefa.Widths = New Single() {80, 500}
+        TabelaTarefa.Border = Table.NO_BORDER
+
+        If Not String.IsNullOrEmpty(_ConfiguracaoDeAgendaDoSistema.TextoTarefas) Then
+
+            If _ConfiguracaoDeAgendaDoSistema.TextoDeTarefasEntreLinhas Then
+                _documento.Add(New iTextSharp.text.pdf.draw.LineSeparator())
+            End If
+
+            Dim Frase As Phrase
+
+            Frase = New Phrase(_ConfiguracaoDeAgendaDoSistema.TextoTarefas, _FonteHorario)
+            _documento.Add(Frase)
+
+            If _ConfiguracaoDeAgendaDoSistema.TextoDeTarefasEntreLinhas Then
+                _documento.Add(New iTextSharp.text.pdf.draw.LineSeparator())
+            End If
+        End If
 
         For Each Tarefa As ITarefa In Tarefas
             Dim Texto As New StringBuilder
@@ -225,7 +276,6 @@ Public Class ImpressorDeAgenda
             'Adiciona a celula com o horário
             TabelaTarefa.AddCell(iTextSharpUtilidades.CrieCelula(Tarefa.DataDeInicio.ToString("HH") & "h" & Tarefa.DataDeInicio.ToString("mm") & "min", _
                                                                  _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
-
             If MostraAssunto Then
                 Texto.Append(Tarefa.Assunto & "<br />")
             End If
@@ -251,7 +301,7 @@ Public Class ImpressorDeAgenda
 
         Rodape = New HeaderFooter(New Phrase(Texto, _FonteRodape), False)
 
-        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeCompromissos Then
+        If Not _ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDaAgenda Then
             Rodape.Border = HeaderFooter.NO_BORDER
         End If
 
