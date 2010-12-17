@@ -64,16 +64,15 @@ Partial Public Class frmPainelDeControle
             ConfiguracaoDeAgendaDoSistema = Configuracao.ConfiguracaoDeAgendaDoSistema
 
             With ConfiguracaoDeAgendaDoSistema
-                chkApresentarLinhasCabecalhoCompromissos.Checked = .ApresentarLinhasNoCabecalhoDeCompromissos
-                chkApresentarLinhasCabecalhoLembretes.Checked = .ApresentarLinhasNoCabecalhoDeLembretes
-                chkApresentarLinhasCabecalhoTarefas.Checked = .ApresentarLinhasNoCabecalhoDeTarefas
-                chkApresentarLinhasRodapeCompromissos.Checked = .ApresentarLinhasNoRodapeDeCompromissos
-                chkApresentarLinhasRodapeLembretes.Checked = .ApresentarLinhasNoRodapeDeLembretes
-                chkApresentarLinhasRodapeTarefas.Checked = .ApresentarLinhasNoRodapeDeTarefas
-
-                txtCabecalhoCompromissos.Text = .TextoCabecalhoDeCompromissos
-                txtCabecalhoLembretes.Text = .TextoCabelhoDeLembretes
-                txtCabecalhoTarefas.Text = .TextoCabecalhoDeTarefas
+                chkApresentarLinhasCabecalhoAgenda.Checked = .ApresentarLinhasNoCabecalhoDaAgenda
+                chkApresentarLinhasRodapeAgenda.Checked = .ApresentarLinhasNoRodapeDaAgenda
+                chkApresentarLinhasTextoCompromisso.Checked = .TextoDoCompromissoEntreLinhas
+                chkApresentarLinhasTextoLembrete.Checked = .TextoDeLembretesEntreLinhas
+                chkApresentarLinhasTextoTarefas.Checked = .TextoDeTarefasEntreLinhas
+                txtCabecalhoAgenda.Text = .TextoCabecalhoDaAgenda
+                txtCompromissos.Text = .TextoCompromissos
+                txtTextoLembretes.Text = .TextoLembretes
+                txtTextoTarefas.Text = .TextoTarefas
             End With
         End If
 
@@ -94,10 +93,8 @@ Partial Public Class frmPainelDeControle
 
         If ExisteAlgumCampoDeEmailComValores() Then ValidaDadosObrigatoriosDoEmail()
 
-        If String.IsNullOrEmpty(txtCabecalhoCompromissos.Text) Then Return "O texto do cabeçalho de compromissos deve ser informado."
-        If String.IsNullOrEmpty(txtCabecalhoLembretes.Text) Then Return "O texto do cabeçalho de lembretes deve ser informado."
-        If String.IsNullOrEmpty(txtCabecalhoTarefas.Text) Then Return "O texto do cabeçalho de tarefas deve ser informado."
-
+        If String.IsNullOrEmpty(txtCabecalhoAgenda.Text) Then Return "O texto do cabeçalho da agenda deve ser informado."
+        
         Return Nothing
     End Function
 
@@ -179,17 +176,15 @@ Partial Public Class frmPainelDeControle
         ConfiguracaoDeAgendaDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoSistema)()
 
         With ConfiguracaoDeAgendaDoSistema
-            .ApresentarLinhasNoCabecalhoDeCompromissos = chkApresentarLinhasCabecalhoCompromissos.Checked
-            .ApresentarLinhasNoCabecalhoDeLembretes = chkApresentarLinhasCabecalhoLembretes.Checked
-            .ApresentarLinhasNoCabecalhoDeTarefas = chkApresentarLinhasCabecalhoTarefas.Checked
-
-            .ApresentarLinhasNoRodapeDeCompromissos = chkApresentarLinhasRodapeCompromissos.Checked
-            .ApresentarLinhasNoRodapeDeLembretes = chkApresentarLinhasRodapeLembretes.Checked
-            .ApresentarLinhasNoRodapeDeTarefas = chkApresentarLinhasRodapeTarefas.Checked
-
-            .TextoCabecalhoDeCompromissos = txtCabecalhoCompromissos.Text
-            .TextoCabecalhoDeTarefas = txtCabecalhoTarefas.Text
-            .TextoCabelhoDeLembretes = txtCabecalhoLembretes.Text
+            .ApresentarLinhasNoCabecalhoDaAgenda = chkApresentarLinhasCabecalhoAgenda.Checked
+            .ApresentarLinhasNoRodapeDaAgenda = chkApresentarLinhasRodapeAgenda.Checked
+            .TextoDoCompromissoEntreLinhas = chkApresentarLinhasTextoCompromisso.Checked
+            .TextoDeLembretesEntreLinhas = chkApresentarLinhasTextoLembrete.Checked
+            .TextoDeTarefasEntreLinhas = chkApresentarLinhasTextoTarefas.Checked
+            .TextoCabecalhoDaAgenda = txtCabecalhoAgenda.Text
+            .TextoCompromissos = txtCompromissos.Text
+            .TextoLembretes = txtTextoLembretes.Text
+            .TextoTarefas = txtTextoTarefas.Text
         End With
 
         Configuracao.ConfiguracaoDeAgendaDoSistema = ConfiguracaoDeAgendaDoSistema

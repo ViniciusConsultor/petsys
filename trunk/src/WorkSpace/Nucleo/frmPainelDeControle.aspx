@@ -75,7 +75,7 @@
                                         <asp:Label ID="Label1" runat="server" Text="Porta"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <telerik:RadNumericTextBox ID="txtPorta" runat="server" DataType="System.Int16"  Skin="Vista">
+                                        <telerik:RadNumericTextBox ID="txtPorta" runat="server" DataType="System.Int16" Skin="Vista">
                                         </telerik:RadNumericTextBox>
                                     </td>
                                 </tr>
@@ -132,80 +132,82 @@
                             <table class="tabela">
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label5" runat="server" Text="Texto cabeçalho compromissos"></asp:Label>
+                                        <asp:Label ID="Label5" runat="server" Text="Texto cabeçalho agenda"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <telerik:RadTextBox ID="txtCabecalhoCompromissos" runat="server" MaxLength="50"
-                                            Skin="Vista" Width="300px" SelectionOnFocus="CaretToBeginning">
+                                        <telerik:RadTextBox ID="txtCabecalhoAgenda" runat="server" MaxLength="50" Skin="Vista"
+                                            Width="300px" SelectionOnFocus="CaretToBeginning">
                                         </telerik:RadTextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label7" runat="server" Text="Apresentar linhas separadoras no cabeçalho de compromissos?"></asp:Label>
+                                        <asp:Label ID="Label7" runat="server" Text="Apresentar linhas separadoras no cabeçalho da agenda?"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <asp:CheckBox ID="chkApresentarLinhasCabecalhoCompromissos" runat="server" />
+                                        <asp:CheckBox ID="chkApresentarLinhasCabecalhoAgenda" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label11" runat="server" Text="Apresentar linhas separadoras no rodapé de compromissos?"></asp:Label>
+                                        <asp:Label ID="Label13" runat="server" Text="Apresentar linhas separadoras no rodapé da agenda?"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <asp:CheckBox ID="chkApresentarLinhasRodapeCompromissos" runat="server" />
+                                        <asp:CheckBox ID="chkApresentarLinhasRodapeAgenda" runat="server" />
                                     </td>
                                 </tr>
-                                  <tr>
+                                <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label6" runat="server" Text="Texto cabeçalho tarefas"></asp:Label>
+                                        <asp:Label ID="Label6" runat="server" Text="Texto compromissos"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <telerik:RadTextBox ID="txtCabecalhoTarefas" runat="server" MaxLength="50"
-                                            Skin="Vista" Width="300px" SelectionOnFocus="CaretToBeginning">
+                                        <telerik:RadTextBox ID="txtCompromissos" runat="server" MaxLength="50" Skin="Vista"
+                                            Width="300px" SelectionOnFocus="CaretToBeginning">
                                         </telerik:RadTextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label8" runat="server" Text="Apresentar linhas separadoras no cabeçalho de tarefas?"></asp:Label>
+                                        <asp:Label ID="Label8" runat="server" Text="Apresentar o texto do compromisso entre linhas?"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <asp:CheckBox ID="chkApresentarLinhasCabecalhoTarefas" runat="server" />
+                                        <asp:CheckBox ID="chkApresentarLinhasTextoCompromisso" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label9" runat="server" Text="Apresentar linhas separadoras no rodapé de tarefas?"></asp:Label>
+                                        <asp:Label ID="Label9" runat="server" Text="Texto tarefas"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <asp:CheckBox ID="chkApresentarLinhasRodapeTarefas" runat="server" />
-                                    </td>
-                                </tr>
-                                  <tr>
-                                    <td class="th3">
-                                        <asp:Label ID="Label10" runat="server" Text="Texto cabeçalho lembretes"></asp:Label>
-                                    </td>
-                                    <td class="td">
-                                        <telerik:RadTextBox ID="txtCabecalhoLembretes" runat="server" MaxLength="50"
-                                            Skin="Vista" Width="300px" SelectionOnFocus="CaretToBeginning">
+                                        <telerik:RadTextBox ID="txtTextoTarefas" runat="server" MaxLength="50" Skin="Vista"
+                                            Width="300px" SelectionOnFocus="CaretToBeginning">
                                         </telerik:RadTextBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label12" runat="server" Text="Apresentar linhas separadoras no cabeçalho de lembretes?"></asp:Label>
+                                        <asp:Label ID="Label11" runat="server" Text="Apresentar o texto de tarefas entre linhas?"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <asp:CheckBox ID="chkApresentarLinhasCabecalhoLembretes" runat="server" />
+                                        <asp:CheckBox ID="chkApresentarLinhasTextoTarefas" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label13" runat="server" Text="Apresentar linhas separadoras no rodapé de lembretes?"></asp:Label>
+                                        <asp:Label ID="Label10" runat="server" Text="Texto lembretes"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <asp:CheckBox ID="chkApresentarLinhasRodapeLembretes" runat="server" />
+                                        <telerik:RadTextBox ID="txtTextoLembretes" runat="server" MaxLength="50" Skin="Vista"
+                                            Width="300px" SelectionOnFocus="CaretToBeginning">
+                                        </telerik:RadTextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label12" runat="server" Text="Apresentar o texto de lembretes entre linhas?"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <asp:CheckBox ID="chkApresentarLinhasTextoLembrete" runat="server" />
                                     </td>
                                 </tr>
                             </table>

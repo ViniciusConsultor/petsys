@@ -15,11 +15,10 @@ Public Class MapeadorDeConfiguracoesDoSistema
         Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema = Nothing
         Dim ConfiguracaoDeAgenda As IConfiguracaoDeAgendaDoSistema = Nothing
 
-        Sql.Append("SELECT NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, HABILITARSSL,")
-        Sql.Append("PORTA, REQUERAUTENTICACAO, SHNUSUSERVSAIDA, USUSERVSAIDA,")
-        Sql.Append("SERVSAIDA, TIPOSERVSAIDA, TXTCABCOMPRO,	APRELNHCABCOMPRO,")
-        Sql.Append("APRELNHRODCOMPRO, TXTCABLEMBRE, APRELNHCABLEMBRE, APRELNHRODLEMBRE,")
-        Sql.Append("TXTCABTARE,	APRELNHCABTARE, APRELNHRODTARE")
+        Sql.Append("SELECT NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, HABILITARSSL, ")
+        Sql.Append("PORTA, REQUERAUTENTICACAO, SHNUSUSERVSAIDA, USUSERVSAIDA, ")
+        Sql.Append("SERVSAIDA, TIPOSERVSAIDA, TXTCOMPRO, TXTCOMPROENTRELNH, TXTLEMBRE, ")
+        Sql.Append("TXTLEMBREENTRELNH, TXTTARE, TXTTAREENTRELNH, TXTCABAGEN, APRELNHCABAGEN, APRELNHRODAGEN")
         Sql.Append(" FROM NCL_CNFGERAL")
 
         DBHelper = ServerUtils.criarNovoDbHelper
@@ -53,15 +52,16 @@ Public Class MapeadorDeConfiguracoesDoSistema
                 ConfiguracaoDoSistema.ConfiguracaoDeEmailDoSistema = ConfiguracaoDeEmail
 
                 ConfiguracaoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoSistema)()
-                ConfiguracaoDeAgenda.ApresentarLinhasNoCabecalhoDeCompromissos = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHCABCOMPRO")
-                ConfiguracaoDeAgenda.ApresentarLinhasNoCabecalhoDeLembretes = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHCABLEMBRE")
-                ConfiguracaoDeAgenda.ApresentarLinhasNoCabecalhoDeTarefas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHCABTARE")
-                ConfiguracaoDeAgenda.ApresentarLinhasNoRodapeDeCompromissos = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHRODCOMPRO")
-                ConfiguracaoDeAgenda.ApresentarLinhasNoRodapeDeLembretes = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHRODLEMBRE")
-                ConfiguracaoDeAgenda.ApresentarLinhasNoRodapeDeTarefas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHRODTARE")
-                ConfiguracaoDeAgenda.TextoCabecalhoDeCompromissos = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCABCOMPRO")
-                ConfiguracaoDeAgenda.TextoCabecalhoDeTarefas = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCABTARE")
-                ConfiguracaoDeAgenda.TextoCabelhoDeLembretes = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCABLEMBRE")
+                ConfiguracaoDeAgenda.ApresentarLinhasNoCabecalhoDaAgenda = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHCABAGEN")
+                ConfiguracaoDeAgenda.ApresentarLinhasNoRodapeDaAgenda = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHRODAGEN")
+                ConfiguracaoDeAgenda.TextoDoCompromissoEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTCOMPROENTRELNH")
+                ConfiguracaoDeAgenda.TextoDeLembretesEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTLEMBREENTRELNH")
+                ConfiguracaoDeAgenda.TextoDeTarefasEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTTAREENTRELNH")
+
+                ConfiguracaoDeAgenda.TextoCabecalhoDaAgenda = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCABAGEN")
+                ConfiguracaoDeAgenda.TextoCompromissos = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCOMPRO")
+                ConfiguracaoDeAgenda.TextoLembretes = UtilidadesDePersistencia.GetValorString(Leitor, "TXTLEMBRE")
+                ConfiguracaoDeAgenda.TextoTarefas = UtilidadesDePersistencia.GetValorString(Leitor, "TXTTARE")
 
                 ConfiguracaoDoSistema.ConfiguracaoDeAgendaDoSistema = ConfiguracaoDeAgenda
             End If
@@ -79,11 +79,10 @@ Public Class MapeadorDeConfiguracoesDoSistema
         DBHelper.ExecuteNonQuery("DELETE FROM NCL_CNFGERAL")
 
         Sql.Append("INSERT INTO NCL_CNFGERAL (")
-        Sql.Append("NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, HABILITARSSL,")
-        Sql.Append("PORTA, REQUERAUTENTICACAO, SHNUSUSERVSAIDA, USUSERVSAIDA,")
-        Sql.Append("SERVSAIDA, TIPOSERVSAIDA, APRELNHCABCOMPRO, APRELNHCABLEMBRE,")
-        Sql.Append("APRELNHCABTARE, APRELNHRODCOMPRO, APRELNHRODLEMBRE, APRELNHRODTARE,")
-        Sql.Append("TXTCABCOMPRO, TXTCABTARE, TXTCABLEMBRE)")
+        Sql.Append("NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, HABILITARSSL, ")
+        Sql.Append("PORTA, REQUERAUTENTICACAO, SHNUSUSERVSAIDA, USUSERVSAIDA, ")
+        Sql.Append("SERVSAIDA, TIPOSERVSAIDA, TXTCOMPRO, TXTCOMPROENTRELNH, TXTLEMBRE, ")
+        Sql.Append("TXTLEMBREENTRELNH, TXTTARE, TXTTAREENTRELNH, TXTCABAGEN, APRELNHCABAGEN, APRELNHRODAGEN)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat("'", IIf(Configuracao.NotificarErrosAutomaticamente, "S", "N"), "', "))
 
@@ -112,15 +111,18 @@ Public Class MapeadorDeConfiguracoesDoSistema
             Sql.Append("NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,")
         End If
 
-        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeCompromissos, "S", "N"), "', "))
-        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeLembretes, "S", "N"), "', "))
-        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeTarefas, "S", "N"), "', "))
-        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeCompromissos, "S", "N"), "', "))
-        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeLembretes, "S", "N"), "', "))
-        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeTarefas, "S", "N"), "', "))
-        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeCompromissos), "', "))
-        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeTarefas), "', "))
-        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoCabelhoDeLembretes), "') "))
+        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoCompromissos), "', "))
+        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoDoCompromissoEntreLinhas, "S", "N"), "', "))
+
+        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoLembretes), "', "))
+        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoDeLembretesEntreLinhas, "S", "N"), "', "))
+
+        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoTarefas), "', "))
+        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoDeTarefasEntreLinhas, "S", "N"), "', "))
+
+        Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoCabecalhoDaAgenda), "', "))
+        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDaAgenda, "S", "N"), "', "))
+        Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDaAgenda, "S", "N"), "')"))
 
         DBHelper.ExecuteNonQuery(Sql.ToString, False)
     End Sub

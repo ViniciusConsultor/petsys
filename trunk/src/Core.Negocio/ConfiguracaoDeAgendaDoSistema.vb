@@ -4,94 +4,94 @@
 Public Class ConfiguracaoDeAgendaDoSistema
     Implements IConfiguracaoDeAgendaDoSistema
 
-
-    Private _ApresentarLinhasNoCabecalhoDeCompromissos As Boolean
-    Public Property ApresentarLinhasNoCabecalhoDeCompromissos() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeCompromissos
+    Private _ApresentarLinhasNoCabecalhoDaAgenda As Boolean
+    Public Property ApresentarLinhasNoCabecalhoDaAgenda() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDaAgenda
         Get
-            Return _ApresentarLinhasNoCabecalhoDeCompromissos
+            Return _ApresentarLinhasNoCabecalhoDaAgenda
         End Get
         Set(ByVal value As Boolean)
-            _ApresentarLinhasNoCabecalhoDeCompromissos = value
+            _ApresentarLinhasNoCabecalhoDaAgenda = value
         End Set
     End Property
 
-    Private _ApresentarLinhasNoCabecalhoDeLembretes As Boolean
-    Public Property ApresentarLinhasNoCabecalhoDeLembretes() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeLembretes
+    Private _ApresentarLinhasNoRodapeDaAgenda As Boolean
+    Public Property ApresentarLinhasNoRodapeDaAgenda() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDaAgenda
         Get
-            Return _ApresentarLinhasNoCabecalhoDeLembretes
+            Return _ApresentarLinhasNoRodapeDaAgenda
         End Get
         Set(ByVal value As Boolean)
-            _ApresentarLinhasNoCabecalhoDeLembretes = value
+            _ApresentarLinhasNoRodapeDaAgenda = value
         End Set
     End Property
 
-    Private _ApresentarLinhasNoCabecalhoDeTarefas As Boolean
-    Public Property ApresentarLinhasNoCabecalhoDeTarefas() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoCabecalhoDeTarefas
+    Private _TextoCabecalhoDaAgenda As String
+    Public Property TextoCabecalhoDaAgenda() As String Implements IConfiguracaoDeAgendaDoSistema.TextoCabecalhoDaAgenda
         Get
-            Return _ApresentarLinhasNoCabecalhoDeTarefas
-        End Get
-        Set(ByVal value As Boolean)
-            _ApresentarLinhasNoCabecalhoDeTarefas = value
-        End Set
-    End Property
-
-    Private _ApresentarLinhasNoRodapeDeCompromissos As Boolean
-    Public Property ApresentarLinhasNoRodapeDeCompromissos() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeCompromissos
-        Get
-            Return _ApresentarLinhasNoRodapeDeCompromissos
-        End Get
-        Set(ByVal value As Boolean)
-            _ApresentarLinhasNoRodapeDeCompromissos = value
-        End Set
-    End Property
-
-    Private _ApresentarLinhasNoRodapeDeLembretes As Boolean
-    Public Property ApresentarLinhasNoRodapeDeLembretes() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeLembretes
-        Get
-            Return _ApresentarLinhasNoRodapeDeLembretes
-        End Get
-        Set(ByVal value As Boolean)
-            _ApresentarLinhasNoRodapeDeLembretes = value
-        End Set
-    End Property
-
-    Private _ApresentarLinhasNoRodapeDeTarefas As Boolean
-    Public Property ApresentarLinhasNoRodapeDeTarefas() As Boolean Implements IConfiguracaoDeAgendaDoSistema.ApresentarLinhasNoRodapeDeTarefas
-        Get
-            Return _ApresentarLinhasNoRodapeDeTarefas
-        End Get
-        Set(ByVal value As Boolean)
-            _ApresentarLinhasNoRodapeDeTarefas = value
-        End Set
-    End Property
-
-    Private _TextoCabecalhoDeCompromissos As String
-    Public Property TextoCabecalhoDeCompromissos() As String Implements IConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeCompromissos
-        Get
-            Return _TextoCabecalhoDeCompromissos
+            Return _TextoCabecalhoDaAgenda
         End Get
         Set(ByVal value As String)
-            _TextoCabecalhoDeCompromissos = value
+            _TextoCabecalhoDaAgenda = value
         End Set
     End Property
 
-    Private _TextoCabecalhoDeTarefas As String
-    Public Property TextoCabecalhoDeTarefas() As String Implements IConfiguracaoDeAgendaDoSistema.TextoCabecalhoDeTarefas
+    Private _TextoCompromissos As String
+    Public Property TextoCompromissos() As String Implements IConfiguracaoDeAgendaDoSistema.TextoCompromissos
         Get
-            Return _TextoCabecalhoDeTarefas
+            Return _TextoCompromissos
         End Get
         Set(ByVal value As String)
-            _TextoCabecalhoDeTarefas = value
+            _TextoCompromissos = value
         End Set
     End Property
 
-    Private _TextoCabelhoDeLembretes As String
-    Public Property TextoCabelhoDeLembretes() As String Implements IConfiguracaoDeAgendaDoSistema.TextoCabelhoDeLembretes
+    Private _TextoDeLembretesEntreLinhas As Boolean
+    Public Property TextoDeLembretesEntreLinhas() As Boolean Implements IConfiguracaoDeAgendaDoSistema.TextoDeLembretesEntreLinhas
         Get
-            Return _TextoCabelhoDeLembretes
+            Return _TextoDeLembretesEntreLinhas
         End Get
-        Set(ByVal value As String)
-            _TextoCabelhoDeLembretes = value
+        Set(ByVal value As Boolean)
+            _TextoDeLembretesEntreLinhas = value
         End Set
     End Property
+
+    Private _TextoDeTarefasEntreLinhas As Boolean
+    Public Property TextoDeTarefasEntreLinhas() As Boolean Implements IConfiguracaoDeAgendaDoSistema.TextoDeTarefasEntreLinhas
+        Get
+            Return _TextoDeTarefasEntreLinhas
+        End Get
+        Set(ByVal value As Boolean)
+            _TextoDeTarefasEntreLinhas = value
+        End Set
+    End Property
+
+    Private _TextoDoCompromissoEntreLinhas As Boolean
+    Public Property TextoDoCompromissoEntreLinhas() As Boolean Implements IConfiguracaoDeAgendaDoSistema.TextoDoCompromissoEntreLinhas
+        Get
+            Return _TextoDoCompromissoEntreLinhas
+        End Get
+        Set(ByVal value As Boolean)
+            _TextoDoCompromissoEntreLinhas = value
+        End Set
+    End Property
+
+    Private _TextoLembretes As String
+    Public Property TextoLembretes() As String Implements IConfiguracaoDeAgendaDoSistema.TextoLembretes
+        Get
+            Return _TextoLembretes
+        End Get
+        Set(ByVal value As String)
+            _TextoLembretes = value
+        End Set
+    End Property
+
+    Private _TextoTarefas As String
+    Public Property TextoTarefas() As String Implements IConfiguracaoDeAgendaDoSistema.TextoTarefas
+        Get
+            Return _TextoTarefas
+        End Get
+        Set(ByVal value As String)
+            _TextoTarefas = value
+        End Set
+    End Property
+
 End Class
