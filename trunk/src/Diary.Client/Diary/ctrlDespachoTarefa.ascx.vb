@@ -72,8 +72,8 @@ Partial Public Class ctrlDespachoTarefa
         UsuarioLogado = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
         Tarefa = FabricaGenerica.GetInstancia.CrieObjeto(Of ITarefa)()
         Tarefa.Prioridade = PrioridadeDaTarefa.Obtenha(CChar(cboPrioridade.SelectedValue))
-        Tarefa.Assunto = txtAssunto.Text
-        Tarefa.Descricao = txtDescricao.Text
+        Tarefa.Assunto = txtAssunto.Content
+        Tarefa.Descricao = txtDescricao.Content
         Tarefa.DataDeConclusao = txtDataHorarioFim.SelectedDate.Value
         Tarefa.DataDeInicio = txtDataHorarioInicio.SelectedDate.Value
         Tarefa.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_ALVO_DESPACHO_TAREFA)))
@@ -92,7 +92,7 @@ Partial Public Class ctrlDespachoTarefa
 
     Private Function ValidaDespacho() As String
         If ViewState(CHAVE_ID_ALVO_DESPACHO_TAREFA) Is Nothing Then Return "O alvo do despacho deve ser informado."
-        If String.IsNullOrEmpty(txtAssunto.Text) Then Return "O assunto deve ser informado."
+        If String.IsNullOrEmpty(txtAssunto.Content) Then Return "O assunto deve ser informado."
         If Not txtDataHorarioInicio.SelectedDate.HasValue Then Return "A data e hora de inicio devem ser informados."
         If Not txtDataHorarioFim.SelectedDate.HasValue Then Return "A data e hora final devem ser informados."
 
@@ -119,13 +119,13 @@ Partial Public Class ctrlDespachoTarefa
 
     Public WriteOnly Property Assunto() As String
         Set(ByVal value As String)
-            txtAssunto.Text = value
+            txtAssunto.Content = value
         End Set
     End Property
 
     Public WriteOnly Property Descricao() As String
         Set(ByVal value As String)
-            txtDescricao.Text = value
+            txtDescricao.Content = value
         End Set
     End Property
 

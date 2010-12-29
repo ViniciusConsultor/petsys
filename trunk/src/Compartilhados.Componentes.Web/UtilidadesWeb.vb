@@ -111,27 +111,6 @@ Public Class UtilidadesWeb
     End Function
 
     Public Shared Function ExibeJanelaModal(ByVal URL As String, _
-                                            ByVal TituloDaJanela As String) As String
-        Dim Js As New StringBuilder
-
-        Js.AppendLine("<script language='javascript' type='text/javascript'>")
-        Js.AppendLine("var win; ")
-        Js.AppendLine(" win = new Ext.Window({ ")
-        Js.AppendLine(String.Concat(" id: '", Guid.NewGuid.ToString, "',"))
-        Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
-        Js.AppendLine("layout:  'fit',")
-        Js.AppendLine("modal: true,")
-        Js.AppendLine("width : 640,")
-        Js.AppendLine("height : 480,")
-        Js.AppendLine(String.Concat("html:'<iframe src =""", URL, """ width=""100%"" height=""100%""></iframe>',"))
-        Js.AppendLine("});")
-        Js.AppendLine("win.show();")
-        Js.AppendLine("</script>")
-
-        Return Js.ToString
-    End Function
-
-    Public Shared Function ExibeJanelaModal(ByVal URL As String, _
                                             ByVal TituloDaJanela As String, _
                                             ByVal Width As Integer, _
                                             ByVal Height As Integer) As String
@@ -144,8 +123,8 @@ Public Class UtilidadesWeb
         Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
         Js.AppendLine("layout:  'fit',")
         Js.AppendLine("modal: true,")
-        Js.AppendLine(String.Concat("width : ", Width.ToString))
-        Js.AppendLine(String.Concat("height : ", Height.ToString))
+        Js.AppendLine(String.Concat("width : ", Width.ToString, ","))
+        Js.AppendLine(String.Concat("height : ", Height.ToString, ","))
         Js.AppendLine(String.Concat("html:'<iframe src =""", URL, """ width=""100%"" height=""100%""></iframe>',"))
         Js.AppendLine("});")
         Js.AppendLine("win.show();")
@@ -155,7 +134,9 @@ Public Class UtilidadesWeb
     End Function
 
     Public Shared Function ExibeJanela(ByVal URL As String, _
-                                       ByVal TituloDaJanela As String) As String
+                                       ByVal TituloDaJanela As String, _
+                                       ByVal Width As Integer, _
+                                       ByVal Height As Integer) As String
         Dim Js As New StringBuilder
 
         Js.AppendLine("<script language='javascript' type='text/javascript'>")
@@ -165,8 +146,8 @@ Public Class UtilidadesWeb
         Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
         Js.AppendLine("layout:  'fit',")
         Js.AppendLine("modal: false,")
-        Js.AppendLine("width : 640,")
-        Js.AppendLine("height : 480,")
+        Js.AppendLine(String.Concat("width : ", Width.ToString, ","))
+        Js.AppendLine(String.Concat("height : ", Height.ToString, ","))
         Js.AppendLine(String.Concat("html:'<iframe src =""", URL, """ width=""100%"" height=""100%""></iframe>',"))
         Js.AppendLine("});")
         Js.AppendLine("win.show();")

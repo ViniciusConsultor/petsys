@@ -42,11 +42,8 @@ Partial Public Class frmImpressaoLancamentos
         Gerador = New CriadorDeRelatorio(ListaDeLancamentos)
 
         NomeDoArquivo = Gerador.GereNotaFiscal()
-        'URL = "http://" & HttpContext.Current.Request.Url.Host & "/" & HttpContext.Current.Request.ApplicationPath & "/" & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
-
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
-
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar

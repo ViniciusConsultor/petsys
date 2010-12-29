@@ -142,7 +142,7 @@ Partial Public Class frmAgenda
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
         URL = String.Concat(URL, "Nucleo/cdCompromisso.aspx")
         URL = String.Concat(URL, "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de compromissos"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de compromissos", 650, 450), False)
     End Sub
 
     Private Sub btnNovaTarefa_Click()
@@ -151,7 +151,7 @@ Partial Public Class frmAgenda
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
         URL = String.Concat(URL, "Nucleo/cdTarefa.aspx")
         URL = String.Concat(URL, "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de tarefas"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de tarefas", 650, 450), False)
     End Sub
 
     Private Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -262,7 +262,7 @@ Partial Public Class frmAgenda
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/cdTarefa.aspx", "?IdTarefa=", ID, "&IdProprietario=", IDProprietario.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar tarefa"), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar tarefa", 650, 450), False)
         End If
     End Sub
 
@@ -334,7 +334,7 @@ Partial Public Class frmAgenda
         Dim URL As String
 
         URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/frmImpressaoAgenda.aspx", "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir agenda"), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir agenda", 650, 450), False)
     End Sub
 
     Private Sub ToolBarLembretes_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles ToolBarLembretes.ButtonClick
@@ -350,7 +350,7 @@ Partial Public Class frmAgenda
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
         URL = String.Concat(URL, "Nucleo/cdLembrete.aspx")
         URL = String.Concat(URL, "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de lembretes"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de lembretes", 650, 450), False)
     End Sub
 
     Private Sub grdLembretes_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdLembretes.ItemCommand
@@ -376,7 +376,7 @@ Partial Public Class frmAgenda
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/cdLembrete.aspx", "?IdLembrete=", ID, "&IdProprietario=", IDProprietario.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar lembrete"), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar lembrete", 650, 450), False)
         End If
     End Sub
 
@@ -400,6 +400,8 @@ Partial Public Class frmAgenda
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnImprimir"
                 btnImprimir()
+            Case "btnRecarregar"
+                btnRecarregar()
         End Select
     End Sub
 
@@ -417,6 +419,10 @@ Partial Public Class frmAgenda
 
     Protected Sub cldCalendarioAgenda_SelectionChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.Calendar.SelectedDatesEventArgs)
         DataSelecionada = e.SelectedDates(0).Date
+        CarregaAgenda()
+    End Sub
+
+    Private Sub btnRecarregar()
         CarregaAgenda()
     End Sub
 

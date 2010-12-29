@@ -94,7 +94,7 @@ Public Class ImpressorDeAgenda
             LembretesDaData = _Agenda.ObtenhaLembretes(DataAux)
 
             If Not LembretesDaData Is Nothing Then
-                EscrevaLembretes(LembretesDaData, MostraAssunto, MostraDescricao)
+                EscrevaLembretes(LembretesDaData, MostraAssunto, MostraLocal, MostraDescricao)
             End If
 
             Dim TarefasDaData As IList(Of ITarefa)
@@ -161,7 +161,7 @@ Public Class ImpressorDeAgenda
         For Each Compromisso As ICompromisso In Compromissos
             Dim Texto As New StringBuilder
 
-            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelulaComConteudoHTML("", Cell.NO_BORDER, False)
             'coluna de horario
             TabelaCompromissos.AddCell(CelulaEmBranco)
             'coluna de descricao
@@ -183,8 +183,8 @@ Public Class ImpressorDeAgenda
                 Texto.Append(Compromisso.Descricao)
             End If
 
-            TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
-                                                                        Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+            TabelaCompromissos.AddCell(iTextSharpUtilidades.CrieCelulaComConteudoHTML(Texto.ToString, _
+                                                                                      Cell.NO_BORDER, False))
         Next
 
         _documento.Add(TabelaCompromissos)
@@ -192,6 +192,7 @@ Public Class ImpressorDeAgenda
 
     Private Sub EscrevaLembretes(ByVal Lembretes As IList(Of ILembrete), _
                                  ByVal MostraAssunto As Boolean, _
+                                 ByVal MostraLocal As Boolean, _
                                  ByVal MostraDescricao As Boolean)
         Dim TabelaLembretes As Table = New Table(2)
 
@@ -217,24 +218,28 @@ Public Class ImpressorDeAgenda
 
         For Each Lembrete As ILembrete In Lembretes
             Dim Texto As New StringBuilder
-            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelulaComConteudoHTML("", Cell.NO_BORDER, False)
             'coluna de horario
             TabelaLembretes.AddCell(CelulaEmBranco)
             'coluna de descricao
             TabelaLembretes.AddCell(CelulaEmBranco)
             'Adiciona a celula com o horário
             TabelaLembretes.AddCell(iTextSharpUtilidades.CrieCelula(Lembrete.Inicio.ToString("HH") & "h" & Lembrete.Inicio.ToString("mm") & "min", _
-                                                                        _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+                                                                    _FonteHorario, Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
             If MostraAssunto Then
                 Texto.Append(Lembrete.Assunto & "<br />")
+            End If
+
+            If MostraLocal AndAlso Not String.IsNullOrEmpty(Lembrete.Local) Then
+                Texto.Append(Lembrete.Local & "<br />")
             End If
 
             If MostraDescricao AndAlso Not String.IsNullOrEmpty(Lembrete.Descricao) Then
                 Texto.Append(Lembrete.Descricao)
             End If
 
-            TabelaLembretes.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
-                                                                    Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+            TabelaLembretes.AddCell(iTextSharpUtilidades.CrieCelulaComConteudoHTML(Texto.ToString, _
+                                                                                   Cell.NO_BORDER, False))
         Next
 
         _documento.Add(TabelaLembretes)
@@ -267,7 +272,7 @@ Public Class ImpressorDeAgenda
 
         For Each Tarefa As ITarefa In Tarefas
             Dim Texto As New StringBuilder
-            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelula("", Cell.ALIGN_LEFT, Cell.NO_BORDER, False)
+            Dim CelulaEmBranco = iTextSharpUtilidades.CrieCelulaComConteudoHTML("", Cell.NO_BORDER, False)
             'coluna de horario
             TabelaTarefa.AddCell(CelulaEmBranco)
             'coluna de descricao
@@ -284,8 +289,8 @@ Public Class ImpressorDeAgenda
                 Texto.Append(Tarefa.Descricao)
             End If
 
-            TabelaTarefa.AddCell(iTextSharpUtilidades.CrieCelula(Texto.ToString, _
-                                                                 Cell.ALIGN_LEFT, Cell.NO_BORDER, False))
+            TabelaTarefa.AddCell(iTextSharpUtilidades.CrieCelulaComConteudoHTML(Texto.ToString, _
+                                                                                Cell.NO_BORDER, False))
         Next
 
         _documento.Add(TabelaTarefa)

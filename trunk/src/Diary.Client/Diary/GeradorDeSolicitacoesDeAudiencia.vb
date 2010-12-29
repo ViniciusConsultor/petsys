@@ -30,18 +30,13 @@ Public Class GeradorDeSolicitacoesDeAudiencia
 
         NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
         Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
-
-        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
-
         _documento = New Document(PageSize.A4.Rotate)
-
+        Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
         EscrevaCabecalho()
         EscrevaRodape()
-
         _documento.Open()
         EscrevaSolicitacoes()
         _documento.Close()
-
         Return NomeDoArquivoDeSaida
     End Function
 
@@ -57,20 +52,6 @@ Public Class GeradorDeSolicitacoesDeAudiencia
         _documento.Header = Cabecalho
     End Sub
 
-    Private Function CrieCelula(ByVal Texto As String, _
-                                ByVal Fonte As Font, _
-                                ByVal AlinhamentoHorizontal As Integer, _
-                                ByVal Borda As Integer, _
-                                ByVal EhCabecalho As Boolean) As Cell
-        Dim Celula As Cell
-
-        Celula = New Cell(New Phrase(Texto, Fonte))
-        Celula.HorizontalAlignment = AlinhamentoHorizontal
-        Celula.Border = Borda
-        Celula.Header = EhCabecalho
-        Return Celula
-    End Function
-
     Private Sub EscrevaSolicitacoes()
         Dim Tabela As Table = New Table(7)
 
@@ -80,22 +61,22 @@ Public Class GeradorDeSolicitacoesDeAudiencia
         Tabela.Spacing = 1
         Tabela.Width = 100%
 
-        Tabela.AddCell(Me.CrieCelula("Código", _Fonte2, Cell.ALIGN_CENTER, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Data e hora do cadastro", _Fonte2, Cell.ALIGN_CENTER, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Contato", _Fonte2, Cell.ALIGN_CENTER, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Pauta", _Fonte2, Cell.ALIGN_CENTER, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Descrição", _Fonte2, Cell.ALIGN_CENTER, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Possui despacho?", _Fonte2, Cell.ALIGN_CENTER, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Parecer", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Código", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data e hora do cadastro", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Contato", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Pauta", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Descrição", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Possui despacho?", _Fonte2, Cell.ALIGN_CENTER, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Parecer", _Fonte2, Cell.ALIGN_CENTER, 13, True))
 
         For Each Solicitacao As ISolicitacaoDeAudiencia In _Solicitacoes
-            Tabela.AddCell(Me.CrieCelula(Solicitacao.Codigo.ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Solicitacao.DataDaSolicitacao.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Solicitacao.Contato.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Solicitacao.Assunto, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Solicitacao.Descricao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(IIf(Solicitacao.TemDespacho, "SIM", "NÃO").ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
-            Tabela.AddCell(Me.CrieCelula(" ", _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Solicitacao.Codigo.ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Solicitacao.DataDaSolicitacao.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Solicitacao.Contato.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Solicitacao.Assunto, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Solicitacao.Descricao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(IIf(Solicitacao.TemDespacho, "SIM", "NÃO").ToString, _Fonte1, Cell.ALIGN_CENTER, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(" ", _Fonte1, Cell.ALIGN_LEFT, 13, False))
         Next
 
         _documento.Add(Tabela)
@@ -105,7 +86,6 @@ Public Class GeradorDeSolicitacoesDeAudiencia
 
     Private Sub EscrevaRodape()
         Dim Rodape As HeaderFooter
-
         Dim Texto As New StringBuilder
 
         Texto.AppendLine(String.Concat("Impressão em: ", Now.ToString("dd/MM/yyyy HH:mm:ss")))

@@ -51,7 +51,7 @@ Namespace Fabricas
 
                 Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
 
-                If Asse Is Nothing Then Throw New DLLNaoEncontradaException("A DLL " & NomeDoAssembly & " não instalada")
+                If Asse Is Nothing Then Throw New DLLNaoEncontradaException("A DLL " & NomeDoAssembly & " não foi encontrada no diretório da aplicação.")
                 DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
             End If
         End Sub

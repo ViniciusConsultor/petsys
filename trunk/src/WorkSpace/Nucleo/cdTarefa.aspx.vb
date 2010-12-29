@@ -162,4 +162,17 @@ Partial Public Class cdTarefa
         Return Nothing
     End Function
 
+    Private Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
+        Dim Principal As Compartilhados.Principal
+
+        Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
+
+        If Principal.EstaAutorizado("OPE.NCL.012.0004") OrElse Principal.EstaAutorizado("OPE.NCL.012.0006") Then
+            CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
+        Else
+            CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
+        End If
+
+
+    End Sub
 End Class

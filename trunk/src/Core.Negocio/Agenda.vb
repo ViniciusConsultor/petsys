@@ -21,6 +21,7 @@ Public Class Agenda
         _Lembretes = Lembretes
         _Tarefas = Tarefas
         _Proprietario = Proprietario
+        Organize()
     End Sub
 
     Private _Fim As Date
@@ -70,7 +71,7 @@ Public Class Agenda
         Return Tarefas
     End Function
 
-    Public Sub Organize() Implements IAgenda.Organize
+    Private Sub Organize()
         OrganizeCompromissos()
         OrganizeTarefas()
         OrganizeLembretes()

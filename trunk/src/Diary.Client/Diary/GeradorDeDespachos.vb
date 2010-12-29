@@ -12,7 +12,6 @@ Public Class GeradorDeDespachos
     Private _Fonte1 As Font
     Private _Fonte2 As Font
     Private _Fonte3 As Font
-    Private _PaginaAtual As Integer = 0
     Private _Despachos As IList(Of IDespacho)
 
     Public Sub New(ByVal Despachos As IList(Of IDespacho))
@@ -27,31 +26,15 @@ Public Class GeradorDeDespachos
         Dim Caminho As String
         Dim NomeDoArquivoDeSaida As String
 
+        _documento = New Document(PageSize.A4.Rotate)
         NomeDoArquivoDeSaida = String.Concat(Now.ToString("yyyyMMddhhmmss"), ".rtf")
         Caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS)
-
         Escritor = RtfWriter2.GetInstance(_documento, New FileStream(Path.Combine(Caminho, NomeDoArquivoDeSaida), FileMode.Create))
-
-        _documento = New Document(PageSize.A4.Rotate)
         EscrevaDespachos()
         EscrevaRodape()
         _documento.Close()
 
         Return NomeDoArquivoDeSaida
-    End Function
-
-    Private Function CrieCelula(ByVal Texto As String, _
-                                ByVal Fonte As Font, _
-                                ByVal AlinhamentoHorizontal As Integer, _
-                                ByVal Borda As Integer, _
-                                ByVal EhCabecalho As Boolean) As Cell
-        Dim Celula As Cell
-
-        Celula = New Cell(New Phrase(Texto, Fonte))
-        Celula.HorizontalAlignment = AlinhamentoHorizontal
-        Celula.Border = Borda
-        Celula.Header = EhCabecalho
-        Return Celula
     End Function
 
     Private Sub EscrevaDespachos()
@@ -61,18 +44,18 @@ Public Class GeradorDeDespachos
         Tabela.Spacing = 1
         Tabela.Width = 100%
 
-        Tabela.AddCell(Me.CrieCelula("Data e hora", _Fonte2, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Alvo do despacho", _Fonte2, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Tipo do despacho", _Fonte2, Cell.ALIGN_LEFT, 13, True))
-        Tabela.AddCell(Me.CrieCelula("Solicitante", _Fonte2, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data e hora", _Fonte2, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Alvo do despacho", _Fonte2, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Tipo do despacho", _Fonte2, Cell.ALIGN_LEFT, 13, True))
+        Tabela.AddCell(iTextSharpUtilidades.CrieCelula("Solicitante", _Fonte2, Cell.ALIGN_LEFT, 13, True))
 
         Dim Solicitacao As ISolicitacao = Nothing
 
         For Each Despacho As IDespacho In _Despachos
-            Tabela.AddCell(Me.CrieCelula(Despacho.DataDoDespacho.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Despacho.Alvo.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Despacho.Tipo.Descricao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
-            Tabela.AddCell(Me.CrieCelula(Despacho.Solicitante.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Despacho.DataDoDespacho.ToString("dd/MM/yyyy HH:mm:ss").ToString, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Despacho.Alvo.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Despacho.Tipo.Descricao, _Fonte1, Cell.ALIGN_LEFT, 13, False))
+            Tabela.AddCell(iTextSharpUtilidades.CrieCelula(Despacho.Solicitante.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, False))
             Solicitacao = Despacho.Solicitacao
         Next
 

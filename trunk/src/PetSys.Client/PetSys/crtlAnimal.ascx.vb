@@ -56,7 +56,7 @@ Partial Public Class crtlAnimal
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de animais"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de animais", 650, 450), False)
     End Sub
 
     Private Sub btnDetalhar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnDetalhar.Click
@@ -64,7 +64,7 @@ Partial Public Class crtlAnimal
 
         URL = ObtenhaURL()
         URL = String.Concat(URL, "?Id=", AnimalSelecionado.ID.Value.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de animais"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de animais", 650, 450), False)
     End Sub
 
     Private Function ObtenhaURL() As String

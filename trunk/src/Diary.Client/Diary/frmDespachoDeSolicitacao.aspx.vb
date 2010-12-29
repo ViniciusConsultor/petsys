@@ -66,15 +66,15 @@ Partial Public Class frmDespachoDeSolicitacao
     End Sub
 
     Private Sub ProprietarioFoiSelecionado(ByVal Pessoa As IPessoa)
-        Dim Agenda As IAgenda
+        Dim ConfiguracaoDeAgenda As IConfiguracaoDeAgendaDoUsuario
 
         Using Servico As IServicoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAgenda)()
-            Agenda = Servico.ObtenhaAgenda(Pessoa)
+            ConfiguracaoDeAgenda = Servico.ObtenhaConfiguracao(CType(Pessoa, IPessoaFisica))
         End Using
 
         lblInconsistencia.Visible = True
 
-        If Agenda Is Nothing Then
+        If ConfiguracaoDeAgenda Is Nothing Then
             lblInconsistencia.Text = "O alvo selecionado para o despacho ainda não possui agenda cadastrada."
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("O alvo selecionado para o despacho ainda não possui agenda cadastrada."), False)
             Exit Sub
@@ -239,6 +239,10 @@ Partial Public Class frmDespachoDeSolicitacao
             ctrlDespachoAgenda1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
             ctrlDespachoTarefa1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
             ctrlDespachoLembrete1.Inicio = CType(Solicitacao, ISolicitacaoDeConvite).DataEHorario
+        ElseIf Solicitacao.Tipo.Equals(TipoDeSolicitacao.Visita) Then
+            ctrlDespachoAgenda1.Assunto = CType(Solicitacao, ISolicitacaoDeVisita).Assunto
+            ctrlDespachoTarefa1.Assunto = CType(Solicitacao, ISolicitacaoDeVisita).Assunto
+            ctrlDespachoLembrete1.Assunto = CType(Solicitacao, ISolicitacaoDeVisita).Assunto
         End If
 
         ctrlDespachoAgenda1.Local = Solicitacao.Local

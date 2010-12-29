@@ -96,7 +96,6 @@ Partial Public Class frmImpressaoAgenda
                                                                                   Lembretes, _
                                                                                   Tarefas, _
                                                                                   Proprietario})
-        Agenda.Organize()
         Gerador = New ImpressorDeAgenda(Agenda, FormatoDeSaida)
 
         Try
@@ -121,6 +120,7 @@ Partial Public Class frmImpressaoAgenda
 
     Private Function ValidaDados() As String
         If Not txtDataInicial.SelectedDate.HasValue Then Return "A data de início deve ser informada."
+        If Not txtDataFinal.SelectedDate.HasValue Then Return "A data de fim deve ser informada."
         If Not chkCompromissos.Checked AndAlso Not chkLembretes.Checked AndAlso Not chkTarefas.Checked Then Return "Ao menos um item da agenda deve ser selecionado para impressão."
 
         Return Nothing

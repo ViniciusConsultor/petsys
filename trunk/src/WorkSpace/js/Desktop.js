@@ -130,8 +130,8 @@ Ext.Desktop = function(app) {
                     win = desktop.createWindow({
                         id: 'win' + t.id,
                         title: t.innerText,
-                        width: 640,
-                        height: 480,
+                        width: 800,
+                        height: 550,
                         html: '<div id="div_' + t.id + '" style="position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"> <div style="position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"> <img src="imagens/carregandopagina.gif" alt=""></div></div>  <iframe src="' + t.firstChild.href + '" width="100%" height="100%" onload="hideLoading(div_' + t.id + ')"></iframe>', 
                         iconCls: 'bogus',
                         shim: false,

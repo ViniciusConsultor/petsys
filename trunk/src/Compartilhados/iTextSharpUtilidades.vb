@@ -28,10 +28,9 @@ Public Class iTextSharpUtilidades
         Return Celula
     End Function
 
-    Public Shared Function CrieCelula(ByVal TextoHTML As String, _
-                                      ByVal AlinhamentoHorizontal As Integer, _
-                                      ByVal Borda As Integer, _
-                                      ByVal EhCabecalho As Boolean) As Cell
+    Public Shared Function CrieCelulaComConteudoHTML(ByVal TextoHTML As String, _
+                                                     ByVal Borda As Integer, _
+                                                     ByVal EhCabecalho As Boolean) As Cell
         Dim Celula As Cell
         Dim ConteudoDaCelula As Phrase
 
@@ -42,7 +41,7 @@ Public Class iTextSharpUtilidades
         Next
 
         Celula = New Cell(ConteudoDaCelula)
-        Celula.HorizontalAlignment = AlinhamentoHorizontal
+        'Celula.HorizontalAlignment = AlinhamentoHorizontal
         Celula.Border = Borda
         Celula.Header = EhCabecalho
         Return Celula

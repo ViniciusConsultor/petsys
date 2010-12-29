@@ -30,14 +30,6 @@ Public Class PessoaJuridicaLazyLoad
         _Pessoa.AdicioneTelefone(Telefone)
     End Sub
 
-    Public ReadOnly Property Documentos() As IList(Of IDocumento) Implements IPessoa.Documentos
-        Get
-            If _Pessoa Is Nothing Then CarregueObjetoReal()
-
-            Return _Pessoa.Documentos
-        End Get
-    End Property
-
     Public Property Endereco() As IEndereco Implements IPessoa.Endereco
         Get
             If _Pessoa Is Nothing Then CarregueObjetoReal()
