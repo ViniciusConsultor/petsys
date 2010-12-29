@@ -149,7 +149,11 @@ Partial Public Class cdLembrete
 
         Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
 
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = Principal.EstaAutorizado("OPE.NCL.012.0012")
+        If Principal.EstaAutorizado("OPE.NCL.012.0008") OrElse Principal.EstaAutorizado("OPE.NCL.012.0010") Then
+            CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
+        Else
+            CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
+        End If
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar

@@ -98,7 +98,9 @@ Public Class MapeadorDeDespacho
 
         If TipoDaSolicitacao.Equals(TipoDeSolicitacao.Audiencia) Then
             Solicitacao = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ISolicitacaoDeAudienciaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDSOLICITACAO"))
-        Else
+        ElseIf TipoDaSolicitacao.Equals(TipoDeSolicitacao.Visita) Then
+            Solicitacao = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ISolicitacaoDeVisitaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDSOLICITACAO"))
+        ElseIf TipoDaSolicitacao.Equals(TipoDeSolicitacao.Convite) Then
             Solicitacao = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of ISolicitacaoDeConviteLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDSOLICITACAO"))
         End If
 

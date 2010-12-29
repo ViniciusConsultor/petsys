@@ -89,7 +89,7 @@ Namespace LazyLoad
 
         Public ReadOnly Property Tipo() As TipoDeSolicitacao Implements ISolicitacao.Tipo
             Get
-                Return TipoDeSolicitacao.Audiencia
+                Return TipoDeSolicitacao.Visita
             End Get
         End Property
 

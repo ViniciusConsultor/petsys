@@ -62,12 +62,12 @@ Partial Public Class ctrlDespachoAgenda
 
         UsuarioLogado = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
         Compromisso = FabricaGenerica.GetInstancia.CrieObjeto(Of ICompromisso)()
-        Compromisso.Assunto = txtAssunto.Text
-        Compromisso.Descricao = txtDescricao.Text
+        Compromisso.Assunto = txtAssunto.Content
+        Compromisso.Descricao = txtDescricao.Content
         Compromisso.Fim = txtDataHorarioFim.SelectedDate.Value
         Compromisso.Inicio = txtDataHorarioInicio.SelectedDate.Value
         Compromisso.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_ALVO_DESPACHO_AGENDA)))
-        Compromisso.Local = txtLocal.Text
+        Compromisso.Local = txtLocal.Content
         Compromisso.Status = StatusDoCompromisso.Pendente
 
         Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoAgenda)()
@@ -109,19 +109,19 @@ Partial Public Class ctrlDespachoAgenda
 
     Public WriteOnly Property Local() As String
         Set(ByVal value As String)
-            txtLocal.Text = value
+            txtLocal.Content = value
         End Set
     End Property
 
     Public WriteOnly Property Assunto() As String
         Set(ByVal value As String)
-            txtAssunto.Text = value
+            txtAssunto.Content = value
         End Set
     End Property
 
     Public WriteOnly Property Descricao() As String
         Set(ByVal value As String)
-            txtDescricao.Text = value
+            txtDescricao.Content = value
         End Set
     End Property
 

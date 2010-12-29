@@ -1,24 +1,16 @@
 <root>
   <tools name="Formatting" enabled="true" dockable="true">
-    <tool Name="Undo" Text="Desfazer" />
-    <tool Name="Redo" Text="Refazer" />
 
-    <tool separator="true"/>
-
+    <!--<tool name="Bold" text="Negrito"/>
+    <tool name="Italic" text="Itálico"/>
+    <tool name="Underline" text="Sublinhado"/>-->
     <tool name="FontName" text="Nome da fonte"/>
     <tool name="RealFontSize" text="Tamanho da fonte"/>
     <tool name="ForeColor" text="Cor da fonte"/>
-    <tool separator="true"/>
+  
+    <!--<tool separator="true"/>-->
 
-    <tool name="Bold" text="Negrito"/>
-    <tool name="Italic" text="Itálico"/>
-    <tool name="Underline" text="Sublinhado"/>
+   
 
-    <tool separator="true"/>
-    <tool name="JustifyLeft" Text="Justificado a esquerda" />
-    <tool name="JustifyCenter" Text="Centralizar" />
-    <tool name="JustifyRight" Text="Justificado a direita" />
-    <tool Name="JustifyFull" Text="Justificado" />
-
-  </tools>
+    </tools>
 </root>

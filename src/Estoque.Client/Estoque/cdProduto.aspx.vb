@@ -247,7 +247,7 @@ Partial Public Class cdProduto
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de marcas de produtos"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de marcas de produtos", 650, 450), False)
     End Sub
 
     Private Function ObtenhaURL() As String

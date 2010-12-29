@@ -10,7 +10,6 @@ Namespace Core.Negocio
         ReadOnly Property Tipo() As TipoDePessoa
         Property EnderecoDeEmail() As EnderecoDeEmail
         ReadOnly Property Telefones() As IList(Of ITelefone)
-        ReadOnly Property Documentos() As IList(Of IDocumento)
         Function ObtenhaDocumento(ByVal TipoDocumento As TipoDeDocumento) As IDocumento
         Function ObtenhaTelelefones(ByVal TipoTelefone As TipoDeTelefone) As IList(Of ITelefone)
         Sub AdicioneDocumento(ByVal Documento As IDocumento)

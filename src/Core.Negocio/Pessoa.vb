@@ -51,12 +51,6 @@ Public MustInherit Class Pessoa
         _Documentos.Add(Documento.Tipo, Documento)
     End Sub
 
-    Public ReadOnly Property Documentos() As IList(Of IDocumento) Implements IPessoa.Documentos
-        Get
-            Return CType(_Documentos.Values, IList(Of IDocumento))
-        End Get
-    End Property
-
     Public Function ObtenhaDocumento(ByVal TipoDocumento As TipoDeDocumento) As IDocumento Implements IPessoa.ObtenhaDocumento
         Dim Documento As IDocumento = Nothing
 

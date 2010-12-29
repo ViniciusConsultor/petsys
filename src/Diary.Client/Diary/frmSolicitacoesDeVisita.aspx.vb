@@ -71,7 +71,7 @@ Partial Public Class frmSolicitacoesDeVisita
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de visita"), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de visita", 650, 450), False)
     End Sub
 
     Private Function ObtenhaURL() As String
@@ -115,17 +115,18 @@ Partial Public Class frmSolicitacoesDeVisita
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeVisita.aspx", "?Id=", ID)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar solicitação de visita"), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar solicitação de visita", 650, 450), False)
 
         ElseIf e.CommandName = "Finalizar" Then
             Using Servico As IServicoDeSolicitacaoDeVisita = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeVisita)()
                 Servico.Finalizar(ID)
+                btnRecarregar_Click()
             End Using
         ElseIf e.CommandName = "Despachar" Then
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID, "&Tipo=", TipoDeSolicitacao.Visita.ID.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de visita"), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de visita", 650, 450), False)
         End If
     End Sub
 

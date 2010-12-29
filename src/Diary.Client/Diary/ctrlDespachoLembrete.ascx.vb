@@ -61,12 +61,12 @@ Partial Public Class ctrlDespachoLembrete
 
         UsuarioLogado = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
         Lembrete = FabricaGenerica.GetInstancia.CrieObjeto(Of ILembrete)()
-        Lembrete.Assunto = txtAssunto.Text
-        Lembrete.Descricao = txtDescricao.Text
+        Lembrete.Assunto = txtAssunto.Content
+        Lembrete.Descricao = txtDescricao.Content
         Lembrete.Fim = txtDataHorarioFim.SelectedDate.Value
         Lembrete.Inicio = txtDataHorarioInicio.SelectedDate.Value
         Lembrete.Proprietario = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(CLng(ViewState(CHAVE_ID_ALVO_DESPACHO_LEMBRETE)))
-        Lembrete.Local = txtLocal.Text
+        Lembrete.Local = txtLocal.Content
         Lembrete.Status = StatusDoCompromisso.Pendente
 
         Despacho = FabricaGenerica.GetInstancia.CrieObjeto(Of IDespachoLembrete)()
@@ -108,19 +108,19 @@ Partial Public Class ctrlDespachoLembrete
 
     Public WriteOnly Property Local() As String
         Set(ByVal value As String)
-            txtLocal.Text = value
+            txtLocal.Content = value
         End Set
     End Property
 
     Public WriteOnly Property Assunto() As String
         Set(ByVal value As String)
-            txtAssunto.Text = value
+            txtAssunto.Content = value
         End Set
     End Property
 
     Public WriteOnly Property Descricao() As String
         Set(ByVal value As String)
-            txtDescricao.Text = value
+            txtDescricao.Content = value
         End Set
     End Property
 

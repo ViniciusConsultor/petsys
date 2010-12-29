@@ -253,7 +253,7 @@ Partial Public Class frmLancamentoDeServicosPrestados
         Gerador = New CriadorDeRelatorio(Lancamentos)
         NomeDoArquivo = Gerador.GereNotaFiscal()
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & UtilidadesWeb.PASTA_LOADS & "/" & NomeDoArquivo
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Imprimir"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraArquivoParaDownload(URL, "Imprimir"), False)
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar
