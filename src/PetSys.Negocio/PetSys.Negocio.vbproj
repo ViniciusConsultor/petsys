@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animal.vb" />
-    <Compile Include="AtendimentoDoAnimal.vb" />
+    <Compile Include="Atendimento.vb" />
     <Compile Include="LazyLoad\AnimalLazyLoad.vb" />
     <Compile Include="LazyLoad\VeterinarioLazyLoad.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

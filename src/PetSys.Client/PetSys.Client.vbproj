@@ -139,6 +139,13 @@
       <DependentUpon>cdAnimal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="PetSys\cdAtendimento.aspx.designer.vb">
+      <DependentUpon>cdAtendimento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PetSys\cdAtendimento.aspx.vb">
+      <DependentUpon>cdAtendimento.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="PetSys\cdVeterinario.aspx.designer.vb">
       <DependentUpon>cdVeterinario.aspx</DependentUpon>
     </Compile>
@@ -167,20 +174,6 @@
       <DependentUpon>frmFichaAnimal.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="PetSys\frmVacinas.aspx.designer.vb">
-      <DependentUpon>frmVacinas.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\frmVacinas.aspx.vb">
-      <DependentUpon>frmVacinas.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="PetSys\frmVermifugos.aspx.designer.vb">
-      <DependentUpon>frmVermifugos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PetSys\frmVermifugos.aspx.vb">
-      <DependentUpon>frmVermifugos.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -200,9 +193,8 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="PetSys\cdAtendimento.aspx" />
     <Content Include="PetSys\frmFichaAnimal.aspx" />
-    <Content Include="PetSys\frmVacinas.aspx" />
-    <Content Include="PetSys\frmVermifugos.aspx" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
   <ItemGroup>
