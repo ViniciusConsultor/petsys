@@ -82,7 +82,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ServicoDeAnimalLocal.vb" />
-    <Compile Include="ServicoDeAtendimentoDoAnimalLocal.vb" />
+    <Compile Include="ServicoDeAtendimentoLocal.vb" />
     <Compile Include="ServicoDeVeterinarioLocal.vb" />
   </ItemGroup>
   <ItemGroup>

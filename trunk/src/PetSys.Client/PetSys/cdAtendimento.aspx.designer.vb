@@ -13,5 +13,5 @@ Option Explicit On
 
 
 
-Partial Public Class frmVermifugos
+Partial Public Class cdAtendimento
 End Class
