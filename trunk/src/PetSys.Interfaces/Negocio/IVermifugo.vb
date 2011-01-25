@@ -1,13 +1,13 @@
 ﻿Namespace Negocio
 
-    Public Interface IVacina
+    Public Interface IVermifugo
 
         Property ID() As Nullable(Of Long)
         Property Nome() As String
-        Property DataDaVacinacao() As Date
+        Property Data() As Date
         Property Observacao() As String
-        Property RevacinarEm() As Nullable(Of Date)
-        Property VeterinarioQueAplicou() As IVeterinario
+        Property ProximaDoseEm() As Nullable(Of Date)
+        Property VeterinarioQueReceitou() As IVeterinario
         Property AnimalQueRecebeu() As IAnimal
 
     End Interface

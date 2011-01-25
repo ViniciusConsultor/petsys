@@ -77,6 +77,8 @@
   <ItemGroup>
     <Compile Include="MapeadorDeAnimal.vb" />
     <Compile Include="MapeadorDeAtendimento.vb" />
+    <Compile Include="MapeadorDeVacina.vb" />
+    <Compile Include="MapeadorDeVermifugos.vb" />
     <Compile Include="MapeadorDeVeterinario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
