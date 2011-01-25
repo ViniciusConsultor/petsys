@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Mapedores\IMapeadorDeAnimal.vb" />
     <Compile Include="Mapedores\IMapeadorDeAtendimento.vb" />
+    <Compile Include="Mapedores\IMapeadorDeVacina.vb" />
+    <Compile Include="Mapedores\IMapeadorDeVermifugos.vb" />
     <Compile Include="Mapedores\IMapeadorDeVeterinario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -100,6 +102,7 @@
     <Compile Include="Negocio\IProntuario.vb" />
     <Compile Include="Negocio\IProprietarioDeAnimal.vb" />
     <Compile Include="Negocio\IVacina.vb" />
+    <Compile Include="Negocio\IVermifugo.vb" />
     <Compile Include="Negocio\IVeterinario.vb" />
     <Compile Include="Negocio\LazyLoad\IAnimalLazyLoad.vb" />
     <Compile Include="Negocio\LazyLoad\IVeterinarioLazyLoad.vb" />
