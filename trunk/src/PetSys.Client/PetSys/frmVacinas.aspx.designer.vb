@@ -13,7 +13,7 @@ Option Explicit On
 
 
 
-Partial Public Class frmAtendimentoAnimal
+Partial Public Class frmVacinas
 
     '''<summary>
     '''rtbToolBar control.
@@ -79,20 +79,11 @@ Partial Public Class frmAtendimentoAnimal
     Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''pnlHistoricoDeAtendimentos control.
+    '''grdVacinas control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlHistoricoDeAtendimentos As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''grdAtendimentos control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents grdAtendimentos As Global.Telerik.Web.UI.RadGrid
+    Protected WithEvents grdVacinas As Global.Telerik.Web.UI.RadGrid
 End Class

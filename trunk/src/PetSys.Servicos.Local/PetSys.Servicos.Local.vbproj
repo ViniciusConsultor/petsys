@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="ServicoDeAnimalLocal.vb" />
     <Compile Include="ServicoDeAtendimentoLocal.vb" />
+    <Compile Include="ServicoDeVacinaLocal.vb" />
     <Compile Include="ServicoDeVeterinarioLocal.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -17,17 +17,7 @@ Partial Public Class cdAnimal
         AddHandler crtlAnimal1.AnimalFoiSelecionado, AddressOf MostreAnimal
 
         If Not IsPostBack Then
-            Dim Id As Nullable(Of Long)
-
-            If Not String.IsNullOrEmpty(Request.QueryString("Id")) Then
-                Id = CLng(Request.QueryString("Id"))
-            End If
-
-            If Id Is Nothing Then
-                Me.ExibaTelaInicial()
-            Else
-                Me.ExibaTelaDetalhes(Id.Value)
-            End If
+            Me.ExibaTelaInicial()
         End If
     End Sub
 
@@ -67,6 +57,10 @@ Partial Public Class cdAnimal
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+
+        CType(toolBarRodape.FindButtonByCommandName("btnVacinas"), RadToolBarButton).Visible = False
+        CType(toolBarRodape.FindButtonByCommandName("btnAtendimentos"), RadToolBarButton).Visible = False
+
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoAnimal, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoAnimal, Control), False)
 
@@ -120,6 +114,10 @@ Partial Public Class cdAnimal
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+
+        CType(toolBarRodape.FindButtonByCommandName("btnVacinas"), RadToolBarButton).Visible = False
+        CType(toolBarRodape.FindButtonByCommandName("btnAtendimentos"), RadToolBarButton).Visible = False
+
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoAnimal, Control), True)
         Session(CHAVE_ESTADO) = Estado.Novo
 
@@ -145,6 +143,10 @@ Partial Public Class cdAnimal
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+
+        CType(toolBarRodape.FindButtonByCommandName("btnVacinas"), RadToolBarButton).Visible = True
+        CType(toolBarRodape.FindButtonByCommandName("btnAtendimentos"), RadToolBarButton).Visible = True
+
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoAnimal, Control), True)
         Session(CHAVE_ESTADO) = Estado.Modifica
         crtlAnimal1.EnableLoadOnDemand = False
@@ -159,6 +161,10 @@ Partial Public Class cdAnimal
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
+
+        CType(toolBarRodape.FindButtonByCommandName("btnVacinas"), RadToolBarButton).Visible = True
+        CType(toolBarRodape.FindButtonByCommandName("btnAtendimentos"), RadToolBarButton).Visible = True
+
         Session(CHAVE_ESTADO) = Estado.Remove
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoAnimal, Control), False)
     End Sub
@@ -171,6 +177,9 @@ Partial Public Class cdAnimal
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+
+        CType(toolBarRodape.FindButtonByCommandName("btnVacinas"), RadToolBarButton).Visible = True
+        CType(toolBarRodape.FindButtonByCommandName("btnAtendimentos"), RadToolBarButton).Visible = True
     End Sub
 
     Protected Sub btnCancela_Click()
@@ -292,6 +301,29 @@ Partial Public Class cdAnimal
                 imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_FOTO_ANIMAL, "/" & validFile.GetName())
             Next
         End If
+    End Sub
+
+    Private Sub toolBarRodape_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles toolBarRodape.ButtonClick
+        Select Case CType(e.Item, RadToolBarButton).CommandName
+            Case "btnVacinas"
+                Call btnVacinas_Click()
+            Case "btnAtendimentos"
+                Call btnAtendimentos_Click()
+        End Select
+    End Sub
+
+    Private Sub btnVacinas_Click()
+        Dim URL As String
+
+        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/frmVacinas.aspx", "?Id=", CLng(Session(ID_OBJETO)))
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Vacinas do animal", 650, 450), False)
+    End Sub
+
+    Private Sub btnAtendimentos_Click()
+        Dim URL As String
+
+        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/frmAtendimentoAnimal.aspx", "?Id=", CLng(Session(ID_OBJETO)))
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Atendimentos do animal", 650, 450), False)
     End Sub
 
 End Class

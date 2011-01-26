@@ -8,7 +8,7 @@
         Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
-                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.PET.003.0001" />
+                CommandName="btnNovo" CausesValidation="False"  />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -17,7 +17,16 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Animal" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <uc1:crtlAnimal ID="crtlAnimal1" runat="server" />
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label6" runat="server" Text="Nome"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblAnimal" runat="server" Text=""></asp:Label>
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock2" runat="server" Title="Histórico de atendimentos" DefaultCommands="ExpandCollapse"

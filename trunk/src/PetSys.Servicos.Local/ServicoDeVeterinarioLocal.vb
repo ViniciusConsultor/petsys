@@ -76,4 +76,17 @@ Public Class ServicoDeVeterinarioLocal
         End Try
     End Sub
 
+    Public Function VerificaSePessoaEhVeterinario(ByVal IdPessoa As Long) As Boolean Implements IServicoDeVeterinario.VerificaSePessoaEhVeterinario
+        Dim Mapeador As IMapeadorDeVeterinario
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeVeterinario)()
+
+        Try
+            Return Mapeador.VerificaSePessoaEhVeterinario(IdPessoa)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
 End Class

@@ -75,4 +75,20 @@ Public Class MapeadorDeVeterinario
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
+    Public Function VerificaSePessoaEhVeterinario(ByVal IdPessoa As Long) As Boolean Implements IMapeadorDeVeterinario.VerificaSePessoaEhVeterinario
+        Dim Sql As New StringBuilder
+
+        Sql.Append("SELECT IDPESSOA FROM PET_VETERINARIO")
+        Sql.Append(String.Concat(" WHERE IDPESSOA = ", IdPessoa.ToString))
+
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
+            Return Leitor.Read
+        End Using
+
+    End Function
+
 End Class

@@ -103,7 +103,7 @@ Public Class MapeadorDeVacina
         Dim Vacina As IVacina
 
         Vacina = FabricaGenerica.GetInstancia.CrieObjeto(Of IVacina)()
-        Vacina.AnimalQueRecebeu = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimal)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDANIMAL"))
+        Vacina.AnimalQueRecebeu = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimalLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDANIMAL"))
         Vacina.DataDaVacinacao = UtilidadesDePersistencia.getValorDate(Leitor, "DATA").Value
         Vacina.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
         Vacina.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
