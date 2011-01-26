@@ -3,6 +3,7 @@ Imports PetSys.Interfaces.Negocio
 Imports PetSys.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Telerik.Web.UI
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Partial Public Class frmAtendimentoAnimal
     Inherits SuperPagina
@@ -10,45 +11,37 @@ Partial Public Class frmAtendimentoAnimal
     Private Const CHAVE_HISTORICO_ATENDIMENTOS As String = "CHAVE_HISTORICO_ATENDIMENTOS"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        AddHandler crtlAnimal1.AnimalFoiSelecionado, AddressOf AnimalFoiSelecionado
-
         If Not IsPostBack Then
-            ExibaTelaInicial()
+            Dim Id As Nullable(Of Long)
+
+            If Not String.IsNullOrEmpty(Request.QueryString("Id")) Then
+                Id = CLng(Request.QueryString("Id"))
+                ExibaTelaInicial(Id.Value)
+            End If
         End If
     End Sub
 
-    Private Sub ExibaTelaInicial()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
-
-        crtlAnimal1.Inicializa()
-        crtlAnimal1.BotaoDetalharEhVisivel = False
-        crtlAnimal1.BotaoNovoEhVisivel = True
-        crtlAnimal1.EnableLoadOnDemand = True
-        crtlAnimal1.ShowDropDownOnTextboxClick = True
-        crtlAnimal1.AutoPostBack = True
-        crtlAnimal1.EhObrigatorio = False
-
-        Dim Atendimentos As IList(Of IAtendimento) = New List(Of IAtendimento)
-
-        ExibaAtendimentosHistoricos(Atendimentos)
-    End Sub
-
     Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
-        Return rtbToolBar
+        Return Nothing
     End Function
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.PET.003"
+        Return Nothing
     End Function
 
-    Private Sub AnimalFoiSelecionado(ByVal Animal As IAnimal)
+    Private Sub ExibaTelaInicial(ByVal IDAnimal As Long)
         Dim Atendimentos As IList(Of IAtendimento)
+
+        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
+
+        Dim Animal As IAnimal = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimal)(IDAnimal)
+
+        lblAnimal.Text = Animal.Nome
 
         Using Servico As IServicoDeAtendimento = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAtendimento)()
             Atendimentos = Servico.ObtenhaAtendimentos(Animal)
         End Using
 
-        crtlAnimal1.BotaoDetalharEhVisivel = True
         ExibaAtendimentosHistoricos(Atendimentos)
     End Sub
 

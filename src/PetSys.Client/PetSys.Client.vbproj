@@ -146,6 +146,13 @@
       <DependentUpon>cdAtendimento.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="PetSys\cdVacina.aspx.designer.vb">
+      <DependentUpon>cdVacina.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PetSys\cdVacina.aspx.vb">
+      <DependentUpon>cdVacina.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="PetSys\cdVeterinario.aspx.designer.vb">
       <DependentUpon>cdVeterinario.aspx</DependentUpon>
     </Compile>
@@ -167,12 +174,12 @@
       <DependentUpon>frmAtendimentoAnimal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PetSys\frmFichaAnimal.aspx.designer.vb">
-      <DependentUpon>frmFichaAnimal.aspx</DependentUpon>
+    <Compile Include="PetSys\frmVacinas.aspx.designer.vb">
+      <DependentUpon>frmVacinas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PetSys\frmFichaAnimal.aspx.vb">
-      <DependentUpon>frmFichaAnimal.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+    <Compile Include="PetSys\frmVacinas.aspx.vb">
+      <DependentUpon>frmVacinas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +201,8 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <Content Include="PetSys\cdAtendimento.aspx" />
-    <Content Include="PetSys\frmFichaAnimal.aspx" />
+    <Content Include="PetSys\cdVacina.aspx" />
+    <Content Include="PetSys\frmVacinas.aspx" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
   <ItemGroup>

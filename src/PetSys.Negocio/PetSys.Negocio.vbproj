@@ -95,6 +95,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ProprietarioDeAnimal.vb" />
+    <Compile Include="Vacina.vb" />
+    <Compile Include="Vermifugo.vb" />
     <Compile Include="Veterinario.vb" />
   </ItemGroup>
   <ItemGroup>

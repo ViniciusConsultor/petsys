@@ -9,6 +9,7 @@ Namespace Mapeadores
         Sub Inserir(ByVal Veterinario As IVeterinario)
         Sub Modificar(ByVal Veterinario As IVeterinario)
         Sub Remover(ByVal ID As Long)
+        Function VerificaSePessoaEhVeterinario(ByVal IdPessoa As Long) As Boolean
 
     End Interface
 

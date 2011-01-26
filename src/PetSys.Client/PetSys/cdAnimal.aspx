@@ -125,4 +125,14 @@
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
+    
+     <telerik:RadToolBar ID="toolBarRodape" runat="server" Skin="Vista" Style="width: 100%;">
+        <Items>
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/vacina.gif" Text="Vacinas"
+                CommandName="btnVacinas" CausesValidation="False"  />
+                
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/atendimento14.gif" Text="Atendimentos"
+                CommandName="btnAtendimentos" CausesValidation="False"  />
+        </Items>
+    </telerik:RadToolBar>
 </asp:Content>

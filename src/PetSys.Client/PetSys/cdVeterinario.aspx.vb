@@ -49,6 +49,8 @@ Partial Public Class cdVeterinario
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
+        ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
+        ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
         Session(CHAVE_ESTADO) = Estado.Inicial
         CarregaUF()
     End Sub

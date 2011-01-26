@@ -6,6 +6,7 @@ Imports Compartilhados
 Imports Compartilhados.Interfaces
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
+Imports PetSys.Interfaces.Negocio.LazyLoad
 
 Public Class MapeadorDeVermifugos
     Implements IMapeadorDeVermifugos
@@ -102,7 +103,7 @@ Public Class MapeadorDeVermifugos
         Dim Vermifugo As IVermifugo
 
         Vermifugo = FabricaGenerica.GetInstancia.CrieObjeto(Of IVermifugo)()
-        Vermifugo.AnimalQueRecebeu = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimal)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDANIMAL"))
+        Vermifugo.AnimalQueRecebeu = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimalLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDANIMAL"))
         Vermifugo.Data = UtilidadesDePersistencia.getValorDate(Leitor, "DATA").Value
         Vermifugo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
         Vermifugo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")

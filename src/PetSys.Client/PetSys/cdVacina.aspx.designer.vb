@@ -13,7 +13,7 @@ Option Explicit On
 
 
 
-Partial Public Class frmAtendimentoAnimal
+Partial Public Class cdVacina
 
     '''<summary>
     '''rtbToolBar control.
@@ -43,56 +43,101 @@ Partial Public Class frmAtendimentoAnimal
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock1 control.
+    '''pnlDadosDaVacina control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents pnlDadosDaVacina As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''Label6 control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblAnimal control.
+    '''txtData control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblAnimal As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtData As Global.Telerik.Web.UI.RadDateInput
 
     '''<summary>
-    '''RadDock2 control.
+    '''Label2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''pnlHistoricoDeAtendimentos control.
+    '''txtNome control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlHistoricoDeAtendimentos As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents txtNome As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
-    '''grdAtendimentos control.
+    '''Label3 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents grdAtendimentos As Global.Telerik.Web.UI.RadGrid
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtObservacao control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtObservacao As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtRevacinar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtRevacinar As Global.Telerik.Web.UI.RadDateInput
+
+    '''<summary>
+    '''Label5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblVeterinarioResponsavel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblVeterinarioResponsavel As Global.System.Web.UI.WebControls.Label
 End Class

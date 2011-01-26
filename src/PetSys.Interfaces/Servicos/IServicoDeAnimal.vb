@@ -13,6 +13,7 @@ Namespace Servicos
         Sub Inserir(ByVal Animal As IAnimal)
         Sub Modificar(ByVal Animal As IAnimal)
         Sub Excluir(ByVal ID As Long)
+        Function ObtenhaVacinasDoAnimal(ByVal IDAnimal As Long) As IList(Of IVacina)
 
     End Interface
 
