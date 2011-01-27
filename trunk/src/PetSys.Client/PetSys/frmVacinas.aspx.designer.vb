@@ -52,22 +52,13 @@ Partial Public Class frmVacinas
     Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''Label6 control.
+    '''crtlAnimalResumido1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lblAnimal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblAnimal As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents crtlAnimalResumido1 As Global.PetSys.Client.crtlAnimalResumido
 
     '''<summary>
     '''RadDock2 control.

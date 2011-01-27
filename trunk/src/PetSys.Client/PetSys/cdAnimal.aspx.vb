@@ -316,14 +316,14 @@ Partial Public Class cdAnimal
         Dim URL As String
 
         URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/frmVacinas.aspx", "?Id=", CLng(Session(ID_OBJETO)))
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Vacinas do animal", 650, 450), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Vacinas do animal", 700, 500), False)
     End Sub
 
     Private Sub btnAtendimentos_Click()
         Dim URL As String
 
         URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/frmAtendimentoAnimal.aspx", "?Id=", CLng(Session(ID_OBJETO)))
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Atendimentos do animal", 650, 450), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Atendimentos do animal", 700, 500), False)
     End Sub
 
 End Class

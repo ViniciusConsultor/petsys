@@ -40,9 +40,9 @@ Public Class Animal
                 Dim Meses As Long
                 Dim Dias As Long
 
-                Anos = DateDiff(DateInterval.Year, Now, Me.DataDeNascimento.Value)
-                Meses = DateDiff(DateInterval.Month, Now, Me.DataDeNascimento.Value)
-                Dias = DateDiff(DateInterval.Day, Now, Me.DataDeNascimento.Value)
+                Anos = DateDiff(DateInterval.Year, Me.DataDeNascimento.Value, Now)
+                Meses = DateDiff(DateInterval.Month, Me.DataDeNascimento.Value, Now)
+                Dias = DateDiff(DateInterval.Day, Me.DataDeNascimento.Value, Now)
 
                 If Anos > 0 Then
                     If Anos = 1 Then
@@ -50,22 +50,25 @@ Public Class Animal
                     Else
                         IdadeFormatada.Append(String.Concat(Anos, " anos "))
                     End If
-                End If
 
-                If Meses > 0 Then
-                    If Meses = 1 Then
-                        IdadeFormatada.Append(String.Concat(Meses, " mês "))
-                    Else
-                        IdadeFormatada.Append(String.Concat(Meses, " meses "))
-                    End If
-                End If
+                Else
+                    If Meses > 0 Then
+                        If Meses = 1 Then
+                            IdadeFormatada.Append(String.Concat(Meses, " mês "))
+                        Else
+                            IdadeFormatada.Append(String.Concat(Meses, " meses "))
+                        End If
 
-                If Dias > 0 Then
-                    If Dias = 1 Then
-                        IdadeFormatada.Append(String.Concat(Dias, " dia "))
                     Else
-                        IdadeFormatada.Append(String.Concat(Dias, " dias "))
+                        If Dias > 0 Then
+                            If Dias = 1 Then
+                                IdadeFormatada.Append(String.Concat(Dias, " dia "))
+                            Else
+                                IdadeFormatada.Append(String.Concat(Dias, " dias "))
+                            End If
+                        End If
                     End If
+
                 End If
 
                 Return IdadeFormatada.ToString

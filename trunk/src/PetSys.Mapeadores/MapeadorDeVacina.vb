@@ -119,7 +119,7 @@ Public Class MapeadorDeVacina
         Dim PessoaLazyLoad As IPessoaFisicaLazyLoad
         Dim VeterinarioLazyLoad As IVeterinarioLazyLoad
 
-        PessoaLazyLoad = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDVETERINARIO"))
+        PessoaLazyLoad = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDVETERINARIORESP"))
         VeterinarioLazyLoad = FabricaGenerica.GetInstancia.CrieObjeto(Of IVeterinarioLazyLoad)(New Object() {PessoaLazyLoad})
         Vacina.VeterinarioQueAplicou = VeterinarioLazyLoad
 

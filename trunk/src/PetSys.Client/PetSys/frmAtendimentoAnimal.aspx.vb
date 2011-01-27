@@ -4,11 +4,13 @@ Imports PetSys.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Telerik.Web.UI
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
+Imports PetSys.Interfaces.Negocio.LazyLoad
 
 Partial Public Class frmAtendimentoAnimal
     Inherits SuperPagina
 
     Private Const CHAVE_HISTORICO_ATENDIMENTOS As String = "CHAVE_HISTORICO_ATENDIMENTOS"
+    Private Const CHAVE_ID_ANIMAL As String = "CHAVE_ID_ANIMAL_FRMATENDIMENTOANIMAL"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -34,9 +36,10 @@ Partial Public Class frmAtendimentoAnimal
 
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
 
-        Dim Animal As IAnimal = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimal)(IDAnimal)
+        ViewState(CHAVE_ID_ANIMAL) = IDAnimal
+        Dim Animal As IAnimal = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimalLazyLoad)(IDAnimal)
 
-        lblAnimal.Text = Animal.Nome
+        crtlAnimalResumido1.ApresentaDadosResumidosDoAnimal(Animal)
 
         Using Servico As IServicoDeAtendimento = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAtendimento)()
             Atendimentos = Servico.ObtenhaAtendimentos(Animal)
@@ -82,7 +85,7 @@ Partial Public Class frmAtendimentoAnimal
     Protected Sub btnNovo_Click()
         Dim URL As String
 
-        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/cdAtendimento.aspx")
+        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/cdAtendimento.aspx", "?IdAnimal=", CLng(ViewState(CHAVE_ID_ANIMAL)))
         ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar atendimento", 650, 450), False)
     End Sub
 

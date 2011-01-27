@@ -1,35 +1,62 @@
-﻿Public Partial Class cdAtendimento
+﻿Imports Compartilhados.Componentes.Web
+Imports PetSys.Interfaces.Negocio
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
+Imports PetSys.Interfaces.Negocio.LazyLoad
+Imports PetSys.Interfaces.Servicos
+Imports Compartilhados.Fabricas
+Imports Compartilhados
+Imports Telerik.Web.UI
+
+Partial Public Class cdAtendimento
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
-            Dim Id As Nullable(Of Long)
+            Dim IdAnimal As Nullable(Of Long)
+            Dim IdAtendimento As Nullable(Of Long) = Nothing
 
-            If Not String.IsNullOrEmpty(Request.QueryString("Id")) Then
-                Id = CLng(Request.QueryString("Id"))
+            If Not String.IsNullOrEmpty(Request.QueryString("IdAnimal")) Then
+                IdAnimal = CLng(Request.QueryString("IdAnimal"))
             End If
 
-            If Id Is Nothing Then
-                Me.ExibaTelaNovo()
+            If IdAtendimento Is Nothing Then
+                Me.ExibaTelaNovo(IdAnimal.Value)
             Else
-                Me.ExibaTelaDetalhes(Id.Value)
+                Me.ExibaTelaDetalhes(IdAnimal.Value)
             End If
         End If
     End Sub
 
-    Private Sub ExibaTelaNovo()
+    Private Sub ExibaTelaNovo(ByVal IdAnimal As Long)
         'CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         'CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
         'CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
         'CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         'CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        'UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
-        'UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
-        'CarregueComponentes()
-        'ViewState(CHAVE_ESTADO) = Estado.Novo
-        'ViewState(CHAVE_ID) = Nothing
-        'ViewState(CHAVE_TELEFONES) = Nothing
-        'imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
+        'UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control)
+        UtilidadesWeb.LimparComponente(CType(pnlDadosGerais, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDoAnimal, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlProntuario, Control))
+
+        Dim Animal As IAnimal = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimalLazyLoad)(IdAnimal)
+
+        crtlAnimalResumido1.ApresentaDadosResumidosDoAnimal(Animal)
+
+        lblDataEHora.Text = Now.ToString("dd/MM/yyyy HH:mm")
+
+        Dim UsuarioLogadoEhVeterinario As Boolean
+
+        Using Servico As IServicoDeVeterinario = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeVeterinario)()
+            UsuarioLogadoEhVeterinario = Servico.VerificaSePessoaEhVeterinario(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.ID)
+        End Using
+
+        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = UsuarioLogadoEhVeterinario
+
+        If UsuarioLogadoEhVeterinario Then
+            lblVeterinario.Text = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.Nome
+        Else
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("Para utilizar a funcionalidade de atendimento o usuário precisa ser um veterinário."), False)
+        End If
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)

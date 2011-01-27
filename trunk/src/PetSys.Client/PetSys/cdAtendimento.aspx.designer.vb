@@ -43,31 +43,31 @@ Partial Public Class cdAtendimento
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock1 control.
+    '''pnlDadosDoAnimal control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents pnlDadosDoAnimal As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''lblAnimalProprietario control.
+    '''crtlAnimalResumido1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblAnimalProprietario As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents crtlAnimalResumido1 As Global.PetSys.Client.crtlAnimalResumido
 
     '''<summary>
-    '''RadDock2 control.
+    '''pnlDadosGerais control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents pnlDadosGerais As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
     '''Label5 control.
@@ -104,24 +104,6 @@ Partial Public Class cdAtendimento
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblDataEHoraDoRetorno As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Label2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Label3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Label1 control.
