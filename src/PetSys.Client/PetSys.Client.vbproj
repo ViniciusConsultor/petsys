@@ -167,6 +167,13 @@
       <DependentUpon>crtlAnimal.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="PetSys\crtlAnimalResumido.ascx.designer.vb">
+      <DependentUpon>crtlAnimalResumido.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PetSys\crtlAnimalResumido.ascx.vb">
+      <DependentUpon>crtlAnimalResumido.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="PetSys\frmAtendimentoAnimal.aspx.designer.vb">
       <DependentUpon>frmAtendimentoAnimal.aspx</DependentUpon>
     </Compile>
@@ -202,6 +209,7 @@
     </None>
     <Content Include="PetSys\cdAtendimento.aspx" />
     <Content Include="PetSys\cdVacina.aspx" />
+    <Content Include="PetSys\crtlAnimalResumido.ascx" />
     <Content Include="PetSys\frmVacinas.aspx" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
@@ -214,6 +222,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Loads\Exames\" />
+    <Folder Include="Loads\Fotos\Animais\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

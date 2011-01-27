@@ -2,6 +2,7 @@
     CodeBehind="frmVacinas.aspx.vb" Inherits="PetSys.Client.frmVacinas" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register src="crtlAnimalResumido.ascx" tagname="crtlAnimalResumido" tagprefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
@@ -15,16 +16,7 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Animal" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <table class="tabela">
-                        <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label6" runat="server" Text="Nome"></asp:Label>
-                            </td>
-                            <td class="td">
-                                <asp:Label ID="lblAnimal" runat="server" Text=""></asp:Label>
-                            </td>
-                        </tr>
-                    </table>
+                    <uc1:crtlAnimalResumido ID="crtlAnimalResumido1" runat="server" />
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock2" runat="server" Title="Vacinas" DefaultCommands="ExpandCollapse"
@@ -41,9 +33,6 @@
                                 <HeaderStyle Width="20px" />
                             </ExpandCollapseColumn>
                             <Columns>
-                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
-                                    HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column1">
-                                </telerik:GridButtonColumn>
                                 <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                     HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column2">
                                 </telerik:GridButtonColumn>
@@ -57,7 +46,7 @@
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn DataField="RevacinarEm" HeaderText="Reaplicar em" UniqueName="column7">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="Veterinario.Pessoa.Nome" HeaderText="Veterinário"
+                                <telerik:GridBoundColumn DataField="VeterinarioQueAplicou.Pessoa.Nome" HeaderText="Veterinário"
                                     UniqueName="column8" Visible="True">
                                 </telerik:GridBoundColumn>
                             </Columns>

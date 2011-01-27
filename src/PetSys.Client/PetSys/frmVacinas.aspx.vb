@@ -30,7 +30,7 @@ Partial Public Class frmVacinas
         ViewState(CHAVE_ID_ANIMAL) = IDAnimal
         Dim Animal As IAnimal = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimalLazyLoad)(IDAnimal)
 
-        lblAnimal.Text = Animal.Nome
+        crtlAnimalResumido1.ApresentaDadosResumidosDoAnimal(Animal)
 
         Using Servico As IServicoDeAnimal = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAnimal)()
             Vacinas = Servico.ObtenhaVacinasDoAnimal(IDAnimal)
@@ -52,7 +52,7 @@ Partial Public Class frmVacinas
     Private Sub btnNovo_Click()
         Dim URL As String
 
-        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/cdVacina.aspx", "?Id=", CLng(Session(CHAVE_ID_ANIMAL)))
+        URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/cdVacina.aspx", "?Id=", CLng(ViewState(CHAVE_ID_ANIMAL)))
         ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova vacina", 500, 300), False)
     End Sub
 

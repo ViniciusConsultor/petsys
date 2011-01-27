@@ -3,6 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="crtlAnimal.ascx" TagName="crtlAnimal" TagPrefix="uc1" %>
+<%@ Register src="crtlAnimalResumido.ascx" tagname="crtlAnimalResumido" tagprefix="uc2" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;">
@@ -17,16 +18,7 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Animal" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <table class="tabela">
-                        <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label6" runat="server" Text="Nome"></asp:Label>
-                            </td>
-                            <td class="td">
-                                <asp:Label ID="lblAnimal" runat="server" Text=""></asp:Label>
-                            </td>
-                        </tr>
-                    </table>
+                    <uc2:crtlAnimalResumido ID="crtlAnimalResumido1" runat="server" />
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock2" runat="server" Title="Histórico de atendimentos" DefaultCommands="ExpandCollapse"
