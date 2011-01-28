@@ -8,7 +8,6 @@ Namespace Mapeadores
         Function ObtenhaVacina(ByVal ID As Long) As IVacina
         Function ObtenhaVacinas(ByVal IDs As IList(Of Long)) As IList(Of IVacina)
         Sub Inserir(ByRef Vacina As IVacina)
-        Sub Modificar(ByVal Vacina As IVacina)
         Sub Excluir(ByVal ID As Long)
 
     End Interface

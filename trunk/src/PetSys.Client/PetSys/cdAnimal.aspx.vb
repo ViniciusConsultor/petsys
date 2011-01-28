@@ -221,7 +221,6 @@ Partial Public Class cdAnimal
                     Servico.Modificar(Animal)
                     Mensagem = "Animal modificado com sucesso."
                 End If
-
             End Using
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)

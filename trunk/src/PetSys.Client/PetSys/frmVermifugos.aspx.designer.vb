@@ -13,16 +13,7 @@ Option Explicit On
 
 
 
-Partial Public Class frmVacinas
-
-    '''<summary>
-    '''btnPostBack control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnPostBack As Global.System.Web.UI.WebControls.Button
+Partial Public Class frmVermifugos
 
     '''<summary>
     '''rtbToolBar control.
@@ -79,11 +70,11 @@ Partial Public Class frmVacinas
     Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''grdVacinas control.
+    '''grdVermifugos control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents grdVacinas As Global.Telerik.Web.UI.RadGrid
+    Protected WithEvents grdVermifugos As Global.Telerik.Web.UI.RadGrid
 End Class

@@ -1,8 +1,10 @@
 ﻿Imports PetSys.Interfaces.Negocio
+Imports Compartilhados
 
-Namespace Mapeadores
+Namespace Servicos
 
-    Public Interface IMapeadorDeVermifugos
+    Public Interface IServicoDeVermifugo
+        Inherits IServico
 
         Function ObtenhaVermifugosDoAnimal(ByVal IdAnimal As Long) As IList(Of IVermifugo)
         Function ObtenhaVermifugo(ByVal ID As Long) As IVermifugo

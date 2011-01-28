@@ -97,13 +97,13 @@ Partial Public Class cdAtendimento
     Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblDataEHoraDoRetorno control.
+    '''txtDataDoRetorno control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblDataEHoraDoRetorno As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtDataDoRetorno As Global.Telerik.Web.UI.RadDateInput
 
     '''<summary>
     '''Label1 control.
@@ -160,13 +160,211 @@ Partial Public Class cdAtendimento
     Protected WithEvents RadPageView1 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
-    '''Panel1 control.
+    '''pnlDadosDaVacina control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Panel1 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlDadosDaVacina As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDataDaVacinacao control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataDaVacinacao As Global.Telerik.Web.UI.RadDateInput
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtNomeDaVacina control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtNomeDaVacina As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''Label11 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label11 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtObservacaoDaVacina control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtObservacaoDaVacina As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''Label12 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label12 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtRevacinar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtRevacinar As Global.Telerik.Web.UI.RadDateInput
+
+    '''<summary>
+    '''btnAdicionarVacina control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdicionarVacina As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''grdVacinas control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdVacinas As Global.Telerik.Web.UI.RadGrid
+
+    '''<summary>
+    '''RadPageView5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadPageView5 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''pnlDadosDoVermifugo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlDadosDoVermifugo As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label13 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label13 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDataVermifugo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataVermifugo As Global.Telerik.Web.UI.RadDateInput
+
+    '''<summary>
+    '''Label14 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label14 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtNomeVermifugo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtNomeVermifugo As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''Label15 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label15 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtObservacaoVermifugo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtObservacaoVermifugo As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''Label16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label16 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtProximaDose control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtProximaDose As Global.Telerik.Web.UI.RadDateInput
+
+    '''<summary>
+    '''btnAdicionarVermifugo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdicionarVermifugo As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''grdVermifugos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdVermifugos As Global.Telerik.Web.UI.RadGrid
 
     '''<summary>
     '''RadPageView2 control.

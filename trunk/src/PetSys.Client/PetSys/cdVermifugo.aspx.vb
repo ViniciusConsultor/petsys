@@ -7,10 +7,10 @@ Imports PetSys.Interfaces.Negocio
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 Imports PetSys.Interfaces.Negocio.LazyLoad
 
-Partial Public Class cdVacina
+Partial Public Class cdVermifugo
     Inherits SuperPagina
 
-    Private Const CHAVE_ID_ANIMAL As String = "CHAVE_CD_VACINA_ID_ANIMAL"
+    Private Const CHAVE_ID_ANIMAL As String = "CHAVE_CD_VERMIFUGO_ID_ANIMAL"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -34,7 +34,7 @@ Partial Public Class cdVacina
     End Function
 
     Private Sub ExibaTelaInicial()
-        UtilidadesWeb.LimparComponente(CType(pnlDadosDaVacina, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDoVermifugo, Control))
 
         txtData.SelectedDate = Now
 
@@ -49,7 +49,7 @@ Partial Public Class cdVacina
         If UsuarioLogadoEhVeterinario Then
             lblVeterinarioResponsavel.Text = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.Nome
         Else
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("Para utilizar a funcionalidade de vacinas o usuário precisa ser um veterinário."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("Para utilizar a funcionalidade de vermífugos o usuário precisa ser um veterinário."), False)
         End If
 
     End Sub
@@ -65,12 +65,9 @@ Partial Public Class cdVacina
         End If
 
         Try
-            Using Servico As IServicoDeVacina = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeVacina)()
-                Servico.Inserir(ObtenhaObjetoVacina)
-                ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Vacina cadastrada com sucesso."), False)
-
-                'ScriptManager.RegisterStartupScript(Page, Me.GetType(), "FecharJanela", "window.opener.ExecutarPostBack();", False)
-                ScriptManager.RegisterStartupScript(Page, Me.GetType(), "FecharJanela", "window.opener.re;", False)
+            Using Servico As IServicoDeVermifugo = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeVermifugo)()
+                Servico.Inserir(ObtenhaObjetoVermifugo)
+                ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Vermífugo cadastrado com sucesso."), False)
             End Using
 
         Catch ex As BussinesException
@@ -79,29 +76,29 @@ Partial Public Class cdVacina
 
     End Sub
 
-    Private Function ObtenhaObjetoVacina() As IVacina
-        Dim Vacina As IVacina
+    Private Function ObtenhaObjetoVermifugo() As IVermifugo
+        Dim Vermifugo As IVermifugo
 
-        Vacina = FabricaGenerica.GetInstancia.CrieObjeto(Of IVacina)()
-        Vacina.Nome = txtNome.Text
-        Vacina.Observacao = txtObservacao.Text
-        Vacina.DataDaVacinacao = txtData.SelectedDate.Value
-        Vacina.AnimalQueRecebeu = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimalLazyLoad)(CLng(ViewState(CHAVE_ID_ANIMAL)))
-        Vacina.RevacinarEm = txtRevacinar.SelectedDate
+        Vermifugo = FabricaGenerica.GetInstancia.CrieObjeto(Of IVermifugo)()
+        Vermifugo.Nome = txtNome.Text
+        Vermifugo.Observacao = txtObservacao.Text
+        Vermifugo.Data = txtData.SelectedDate.Value
+        Vermifugo.AnimalQueRecebeu = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IAnimalLazyLoad)(CLng(ViewState(CHAVE_ID_ANIMAL)))
+        Vermifugo.ProximaDoseEm = txtProximaDose.SelectedDate
 
         Dim PessoaLazyLoad As IPessoaFisicaLazyLoad
         Dim VeterinarioLazyLoad As IVeterinarioLazyLoad
 
         PessoaLazyLoad = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario.ID)
         VeterinarioLazyLoad = FabricaGenerica.GetInstancia.CrieObjeto(Of IVeterinarioLazyLoad)(New Object() {PessoaLazyLoad})
-        Vacina.VeterinarioQueAplicou = VeterinarioLazyLoad
+        Vermifugo.VeterinarioQueReceitou = VeterinarioLazyLoad
 
-        Return Vacina
+        Return Vermifugo
     End Function
 
     Private Function ValidaDados() As String
-        If Not txtData.SelectedDate.HasValue Then Return "A data da vacina deve ser informada."
-        If String.IsNullOrEmpty(txtNome.Text) Then Return "O nome da vacina deve ser informado."
+        If Not txtData.SelectedDate.HasValue Then Return "A data do vermífugo deve ser informada."
+        If String.IsNullOrEmpty(txtNome.Text) Then Return "O nome do vermífugo deve ser informado."
         Return Nothing
     End Function
 
@@ -111,6 +108,5 @@ Partial Public Class cdVacina
                 Call btnSalvar_Click()
         End Select
     End Sub
-
 
 End Class
