@@ -56,10 +56,6 @@ Public Class MapeadorDeVermifugos
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
-    Public Sub Modificar(ByVal Vermifugo As IVermifugo) Implements IMapeadorDeVermifugos.Modificar
-
-    End Sub
-
     Public Function ObtenhaVermifugo(ByVal ID As Long) As IVermifugo Implements IMapeadorDeVermifugos.ObtenhaVermifugo
         Dim Sql As New StringBuilder
 

@@ -93,17 +93,4 @@ Public Class ServicoDeAnimalLocal
         End Try
     End Sub
 
-    Public Function ObtenhaVacinasDoAnimal(ByVal IDAnimal As Long) As IList(Of IVacina) Implements IServicoDeAnimal.ObtenhaVacinasDoAnimal
-        Dim Mapeador As IMapeadorDeVacina
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeVacina)()
-
-        Try
-            Return Mapeador.ObtenhaVacinasDoAnimal(IDAnimal)
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Function
-
 End Class

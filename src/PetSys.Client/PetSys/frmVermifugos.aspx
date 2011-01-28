@@ -1,18 +1,7 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
-    CodeBehind="frmVacinas.aspx.vb" Inherits="PetSys.Client.frmVacinas" %>
-
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="frmVermifugos.aspx.vb" Inherits="PetSys.Client.frmVermifugos" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register src="crtlAnimalResumido.ascx" tagname="crtlAnimalResumido" tagprefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <script language="javascript">
-        function ExecutarPostBack() {
-            __doPostBack('<%=btnPostBack.UniqueID%>', '');
-        }
-        
-        
-
-    </script>
-    <asp:Button ID="btnPostBack" runat="server" Style="display: none" />
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
@@ -28,10 +17,10 @@
                     <uc1:crtlAnimalResumido ID="crtlAnimalResumido1" runat="server" />
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="RadDock2" runat="server" Title="Vacinas" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock2" runat="server" Title="Vermífugos" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <telerik:RadGrid ID="grdVacinas" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                    <telerik:RadGrid ID="grdVermifugos" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                         PageSize="10" GridLines="None" Width="100%">
                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                         <MasterTableView GridLines="Both">
@@ -49,13 +38,13 @@
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn DataField="Nome" HeaderText="Nome" UniqueName="column4">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="DataDaVacinacao" HeaderText="Aplicada em" UniqueName="column5">
+                                <telerik:GridBoundColumn DataField="Data" HeaderText="Data" UniqueName="column5">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn DataField="Observacao" HeaderText="Observação" UniqueName="column6">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="RevacinarEm" HeaderText="Reaplicar em" UniqueName="column7">
+                                <telerik:GridBoundColumn DataField="ProximaDoseEm" HeaderText="Próxima dose" UniqueName="column7">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="VeterinarioQueAplicou.Pessoa.Nome" HeaderText="Veterinário"
+                                <telerik:GridBoundColumn DataField="VeterinarioQueReceitou.Pessoa.Nome" HeaderText="Veterinário"
                                     UniqueName="column8" Visible="True">
                                 </telerik:GridBoundColumn>
                             </Columns>

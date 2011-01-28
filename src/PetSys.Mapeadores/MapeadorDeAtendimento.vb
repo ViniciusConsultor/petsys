@@ -31,7 +31,7 @@ Public Class MapeadorDeAtendimento
         Atendimento.ID = GeradorDeID.getInstancia.getProximoID
 
         Sql.Append("INSERT INTO PET_ATENDANIMAL")
-        Sql.Append(" (ID, IDANIMAL, IDVETERINARIO, DATAEHORA, DATAEHORARETORNO")
+        Sql.Append(" (ID, IDANIMAL, IDVETERINARIO, DATAEHORA, DATAEHORARETORNO,")
         Sql.Append(" QUEIXA, SINCLINICO, PROGNOSTICO, TRATAMENTO, PESODOANIMAL)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Atendimento.ID.Value.ToString, ", "))
@@ -40,7 +40,7 @@ Public Class MapeadorDeAtendimento
         Sql.Append(String.Concat(Atendimento.DataEHoraDoAtendimento.ToString("yyyyMMddhhmmss"), ", "))
 
         If Atendimento.DataEHoraDoRetorno.HasValue Then
-            Sql.Append(String.Concat(Atendimento.DataEHoraDoRetorno.Value.ToString("yyyyMMddhhmmss"), ", "))
+            Sql.Append(String.Concat(Atendimento.DataEHoraDoRetorno.Value.ToString("yyyyMMdd"), ", "))
         Else
             Sql.Append("NULL, ")
         End If
@@ -75,8 +75,39 @@ Public Class MapeadorDeAtendimento
             Sql.Append("NULL)")
         End If
 
-
         DBHelper.ExecuteNonQuery(Sql.ToString)
+
+        InsiraVacinasDoAtendimento(DBHelper, Atendimento)
+    End Sub
+
+    Private Sub InsiraVacinasDoAtendimento(ByVal DBHelper As IDBHelper, ByVal Atendimento As IAtendimento)
+        Dim Sql As New StringBuilder
+        Dim MapeadorDeVacina As IMapeadorDeVacina
+
+        MapeadorDeVacina = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeVacina)()
+
+        For Each Vacina As IVacina In Atendimento.Vacinas
+            MapeadorDeVacina.Inserir(Vacina)
+            Sql.Append("INSERT PET_ATENDVAC (IDATENDIMENTO, IDVACINA) VALUES (")
+            Sql.Append(Atendimento.ID.Value.ToString & Vacina.ID.Value.ToString & ")")
+            DBHelper.ExecuteNonQuery(Sql.ToString)
+            Sql = New StringBuilder
+        Next
+    End Sub
+
+    Private Sub InsiraVermifugosDoAtendimento(ByVal DBHelper As IDBHelper, ByVal Atendimento As IAtendimento)
+        Dim Sql As New StringBuilder
+        Dim MapeadorDeVermifugos As IMapeadorDeVermifugos
+
+        MapeadorDeVermifugos = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeVermifugos)()
+
+        For Each Vermifugo As IVermifugo In Atendimento.Vermifugos
+            MapeadorDeVermifugos.Inserir(Vermifugo)
+            Sql.Append("INSERT PET_ATENDVERM (IDATENDIMENTO, IDVERMIFUGO) VALUES (")
+            Sql.Append(Atendimento.ID.Value.ToString & Vermifugo.ID.Value.ToString & ")")
+            DBHelper.ExecuteNonQuery(Sql.ToString)
+            Sql = New StringBuilder
+        Next
     End Sub
 
     Public Sub Modificar(ByVal Atendimento As IAtendimento) Implements IMapeadorDeAtendimento.Modificar

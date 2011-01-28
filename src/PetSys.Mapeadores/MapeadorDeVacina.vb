@@ -56,10 +56,6 @@ Public Class MapeadorDeVacina
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
-    Public Sub Modificar(ByVal Vacina As IVacina) Implements IMapeadorDeVacina.Modificar
-
-    End Sub
-
     Public Function ObtenhaVacina(ByVal ID As Long) As IVacina Implements IMapeadorDeVacina.ObtenhaVacina
         Dim Sql As New StringBuilder
 

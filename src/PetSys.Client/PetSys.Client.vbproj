@@ -153,6 +153,13 @@
       <DependentUpon>cdVacina.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="PetSys\cdVermifugo.aspx.designer.vb">
+      <DependentUpon>cdVermifugo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PetSys\cdVermifugo.aspx.vb">
+      <DependentUpon>cdVermifugo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="PetSys\cdVeterinario.aspx.designer.vb">
       <DependentUpon>cdVeterinario.aspx</DependentUpon>
     </Compile>
@@ -188,6 +195,13 @@
       <DependentUpon>frmVacinas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="PetSys\frmVermifugos.aspx.designer.vb">
+      <DependentUpon>frmVermifugos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PetSys\frmVermifugos.aspx.vb">
+      <DependentUpon>frmVermifugos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -209,8 +223,10 @@
     </None>
     <Content Include="PetSys\cdAtendimento.aspx" />
     <Content Include="PetSys\cdVacina.aspx" />
+    <Content Include="PetSys\cdVermifugo.aspx" />
     <Content Include="PetSys\crtlAnimalResumido.ascx" />
     <Content Include="PetSys\frmVacinas.aspx" />
+    <Content Include="PetSys\frmVermifugos.aspx" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
   <ItemGroup>

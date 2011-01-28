@@ -49,15 +49,42 @@ Public Class ServicoDeVacinaLocal
     End Sub
 
     Public Function ObtenhaVacina(ByVal ID As Long) As IVacina Implements IServicoDeVacina.ObtenhaVacina
-        Return Nothing
+        Dim Mapeador As IMapeadorDeVacina
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeVacina)()
+
+        Try
+            Return Mapeador.ObtenhaVacina(ID)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
     Public Function ObtenhaVacinas(ByVal IDs As IList(Of Long)) As IList(Of IVacina) Implements IServicoDeVacina.ObtenhaVacinas
-        Return Nothing
+        Dim Mapeador As IMapeadorDeVacina
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeVacina)()
+
+        Try
+            Return Mapeador.ObtenhaVacinas(IDs)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
     Public Function ObtenhaVacinasDoAnimal(ByVal IdAnimal As Long) As IList(Of IVacina) Implements IServicoDeVacina.ObtenhaVacinasDoAnimal
-        Return Nothing
+        Dim Mapeador As IMapeadorDeVacina
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeVacina)()
+
+        Try
+            Return Mapeador.ObtenhaVacinasDoAnimal(IdAnimal)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
 End Class

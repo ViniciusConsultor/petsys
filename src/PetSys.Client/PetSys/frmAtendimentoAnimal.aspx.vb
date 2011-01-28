@@ -77,7 +77,7 @@ Partial Public Class frmAtendimentoAnimal
         ElseIf e.CommandName = "Modificar" Then
             Dim URL As String
 
-            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/cdAtendimento.aspx", "?Id=", ID)
+            URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "PetSys/cdAtendimento.aspx", "?IdAnimal=", CLng(ViewState(CHAVE_ID_ANIMAL)), "&IdAtendimento=", ID)
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar atendimento", 650, 450), False)
         End If
     End Sub

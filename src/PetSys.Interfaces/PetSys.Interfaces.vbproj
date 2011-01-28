@@ -110,6 +110,7 @@
     <Compile Include="Servicos\IServicoDeAnimal.vb" />
     <Compile Include="Servicos\IServicoDeAtendimento.vb" />
     <Compile Include="Servicos\IServicoDeVacina.vb" />
+    <Compile Include="Servicos\IServicoDeVermifugo.vb" />
     <Compile Include="Servicos\IServicoDeVeterinario.vb" />
   </ItemGroup>
   <ItemGroup>
