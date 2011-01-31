@@ -68,9 +68,8 @@ Partial Public Class cdVacina
             Using Servico As IServicoDeVacina = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeVacina)()
                 Servico.Inserir(ObtenhaObjetoVacina)
                 ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Vacina cadastrada com sucesso."), False)
+                ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "FecharJanela", "window.opener.location.reload();", True)
 
-                'ScriptManager.RegisterStartupScript(Page, Me.GetType(), "FecharJanela", "window.opener.ExecutarPostBack();", False)
-                ScriptManager.RegisterStartupScript(Page, Me.GetType(), "FecharJanela", "window.opener.re;", False)
             End Using
 
         Catch ex As BussinesException
