@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="cdCliente.aspx.vb" Inherits="WorkSpace.cdCliente" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+    CodeBehind="cdCliente.aspx.vb" Inherits="WorkSpace.cdCliente" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
     TagPrefix="cc1" %>
@@ -17,7 +19,7 @@
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Cancelar"
                 CommandName="btnCancelar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/yes.gif" Text="Sim"
-                CommandName="btnSim" CausesValidation="False" />
+                CommandName="btnSim" CakusesValidation="False" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Não"
                 CommandName="btnNao" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
@@ -29,6 +31,62 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label1" runat="server" Text="Informações adicionais"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadTextBox ID="txtInformacoesAdicionais" runat="server">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label2" runat="server" Text="Faixa salarial"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtFaixaSalarial" runat="server">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label4" runat="server" Text="Desconto automático"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtDescontoAutomatico" runat="server">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label3" runat="server" Text="Valor máximo para compras"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtValorMaximoParaCompras" runat="server">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label5" runat="server" Text="Saldo para compras"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtSaldoParaCompras" runat="server">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label6" runat="server" Text="Pontos acumulados"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtPontosAcumulados" runat="server">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>
