@@ -101,9 +101,25 @@ Partial Public Class cdGrupoDeProduto
         ExibaTelaInicial()
     End Sub
 
+    Private Function ValidaDados() As String
+        If String.IsNullOrEmpty(cboGruposDeProduto.Text) Then
+            Return "O nome do grupo de produtos deve ser informado."
+        End If
+
+        Return Nothing
+    End Function
+
     Private Sub btnSalva_Click()
         Dim GrupoDeProduto As IGrupoDeProduto = Nothing
         Dim Mensagem As String
+        Dim Inconsistencia As String
+
+        Inconsistencia = ValidaDados()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
 
         GrupoDeProduto = MontaObjeto()
 
@@ -137,8 +153,7 @@ Partial Public Class cdGrupoDeProduto
         End If
 
         Grupo.Nome = cboGruposDeProduto.Text
-        Grupo.PorcentagemDeComissao = CDbl(txtPorcentagemDeComissao.Value)
-
+        Grupo.PorcentagemDeComissao = txtPorcentagemDeComissao.Value
         Return Grupo
     End Function
 

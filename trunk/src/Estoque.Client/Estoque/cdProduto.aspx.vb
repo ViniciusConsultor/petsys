@@ -36,13 +36,27 @@ Partial Public Class cdProduto
         UtilidadesWeb.LimparComponente(CType(pnlCaracteristicasDoProduto, Control))
         UtilidadesWeb.LimparComponente(CType(pnlImpostosValores, Control))
         UtilidadesWeb.LimparComponente(CType(pnlProduto, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlObservacoes, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlProduto, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlImpostosValores, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlCaracteristicasDoProduto, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlObservacoes, Control), False)
         ViewState(CHAVE_ESTADO) = Estado.Inicial
         cboProduto.EmptyMessage = "Selecione um produto"
         txtCodigo.EmptyMessage = "Informe o código"
+        cboProduto.EnableLoadOnDemand = True
         Session(CHAVE_OBJETO) = Nothing
+        CarregaDadosIniciais()
+        pnlQuantidadeEmEstoque.Visible = True
+        txtQtdEstoque.Enabled = False
+    End Sub
+
+    Private Sub CarregaDadosIniciais()
+        cboMedida.Items.Clear()
+
+        For Each Item As UnidadeDeMedida In UnidadeDeMedida.ObtenhaTodos
+            cboMedida.Items.Add(New RadComboBoxItem(Item.Descricao, Item.ID.ToString))
+        Next
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -62,10 +76,15 @@ Partial Public Class cdProduto
         UtilidadesWeb.LimparComponente(CType(pnlCaracteristicasDoProduto, Control))
         UtilidadesWeb.LimparComponente(CType(pnlImpostosValores, Control))
         UtilidadesWeb.LimparComponente(CType(pnlProduto, Control))
+        UtilidadesWeb.LimparComponente(CType(pnlObservacoes, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlImpostosValores, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlCaracteristicasDoProduto, Control), True)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlObservacoes, Control), True)
         cboProduto.EmptyMessage = ""
         txtCodigo.EmptyMessage = ""
+        cboProduto.EnableLoadOnDemand = False
+        CarregaDadosIniciais()
+        pnlQuantidadeEmEstoque.Visible = False
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -79,7 +98,11 @@ Partial Public Class cdProduto
         ViewState(CHAVE_ESTADO) = Estado.Modifica
         UtilidadesWeb.HabilitaComponentes(CType(pnlImpostosValores, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlCaracteristicasDoProduto, Control), True)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlObservacoes, Control), True)
+        cboProduto.EnableLoadOnDemand = False
         cboProduto.EmptyMessage = ""
+        pnlQuantidadeEmEstoque.Visible = True
+        txtQtdEstoque.Enabled = False
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -94,6 +117,7 @@ Partial Public Class cdProduto
         UtilidadesWeb.HabilitaComponentes(CType(pnlProduto, Control), False)
         cboProduto.EmptyMessage = ""
         txtCodigo.EmptyMessage = ""
+        pnlQuantidadeEmEstoque.Visible = True
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -106,15 +130,34 @@ Partial Public Class cdProduto
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         cboProduto.EmptyMessage = ""
         txtCodigo.EmptyMessage = ""
+        pnlQuantidadeEmEstoque.Visible = True
     End Sub
 
     Protected Sub btnCancela_Click()
         ExibaTelaInicial()
     End Sub
 
+    Private Function ValidaDados() As String
+        Dim Inconsistencias As IList(Of String) = New List(Of String)
+
+        If String.IsNullOrEmpty(cboProduto.Text) Then Return "O nome do produto deve ser informado."
+        If String.IsNullOrEmpty(cboGrupoDeProduto.SelectedValue) Then Return "O grupo de produto deve ser informado."
+
+        Return Nothing
+    End Function
+
     Private Sub btnSalva_Click()
         Dim Produto As IProduto = Nothing
         Dim Mensagem As String
+        Dim Inconsistencia As String
+
+        Inconsistencia = ValidaDados()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
+
 
         Produto = MontaObjeto()
 
@@ -148,7 +191,11 @@ Partial Public Class cdProduto
         Produto.Observacoes = txtObservacoes.Text
         Produto.PorcentagemDeLucro = txtPorcentagemDeLucro.Value
         Produto.QuantidadeMinimaEmEstoque = txtQtdEstoqueMinimo.Value
-        Produto.Unidade = txtUnidade.Text
+
+        If Not String.IsNullOrEmpty(cboMedida.SelectedValue) Then
+            Produto.UnidadeDeMedida = UnidadeDeMedida.ObtenhaTipoDeUnidade(CChar(cboMedida.SelectedValue))
+        End If
+
         Produto.ValorDeCusto = txtValorDeCusto.Value
         Produto.ValorDeVendaMinimo = txtValorDeVendaMinimo.Value
 
@@ -170,11 +217,14 @@ Partial Public Class cdProduto
 
         txtObservacoes.Text = Produto.Observacoes
         txtPorcentagemDeLucro.Value = Produto.PorcentagemDeLucro
-        txtQtdEstoqueMinimo.Value = Produto.QuantidadeMinimaEmEstoque
-        txtUnidade.Text = Produto.Unidade
+
+        If Not Produto.UnidadeDeMedida Is Nothing Then
+            cboMedida.SelectedValue = Produto.UnidadeDeMedida.ID.ToString
+        End If
+
         txtValorDeCusto.Value = Produto.ValorDeCusto
         txtValorDeVendaMinimo.Value = Produto.ValorDeVendaMinimo
-        txtValorDeVenda.Value = Produto.ValorDeVendaMinimo
+        txtValorDeVenda.Value = Produto.ValorDeVenda
     End Sub
 
     Private Sub btnModificar_Click()
@@ -234,23 +284,30 @@ Partial Public Class cdProduto
     End Function
 
     Private Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
-        Dim Principal As Compartilhados.Principal
+        'Dim Principal As Compartilhados.Principal
 
-        Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
-        'Só verificamos se tem permissão se o botão estiver marcado para ser exibido (pela aplicação)
-        If btnNovaMarca.Visible Then
-            Principal.EstaAutorizado(btnNovaMarca.CommandArgument)
-        End If
+        'Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
+        ''Só verificamos se tem permissão se o botão estiver marcado para ser exibido (pela aplicação)
+        'If btnNovaMarca.Visible Then
+        '    Principal.EstaAutorizado(btnNovaMarca.CommandArgument)
+        'End If
     End Sub
 
     Private Sub btnNovaMarca_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnNovaMarca.Click
         Dim URL As String
 
-        URL = ObtenhaURL()
+        URL = ObtenhaURLNovaMarca()
         ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de marcas de produtos", 650, 450), False)
     End Sub
 
-    Private Function ObtenhaURL() As String
+    Private Function ObtenhaURLNovoGrupoDeProduto() As String
+        Dim URL As String
+
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
+        Return String.Concat(URL, "Estoque/cdGrupoDeProduto.aspx")
+    End Function
+
+    Private Function ObtenhaURLNovaMarca() As String
         Dim URL As String
 
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
@@ -391,4 +448,12 @@ Partial Public Class cdProduto
         Produto.ValorDeCusto = txtValorDeCusto.Value
         txtValorDeVenda.Value = Produto.ValorDeVenda
     End Sub
+
+    Protected Sub btnNovoGrupoDoProduto_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnNovoGrupoDoProduto.Click
+        Dim URL As String
+
+        URL = ObtenhaURLNovoGrupoDeProduto()
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de grupo de produto", 650, 450), False)
+    End Sub
+
 End Class

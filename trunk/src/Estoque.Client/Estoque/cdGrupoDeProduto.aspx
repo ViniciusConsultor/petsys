@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="cdGrupoDeProduto.aspx.vb" Inherits="WorkSpace.cdGrupoDeProduto" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="cdGrupoDeProduto.aspx.vb" Inherits="Estoque.Client.cdGrupoDeProduto" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
@@ -43,8 +43,6 @@
                                         AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
                                         CausesValidation="False"  MaxLength="80">
                                     </telerik:RadComboBox>
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Campo deve ser informado."
-                                        ControlToValidate="cboGruposDeProduto"></asp:RequiredFieldValidator>
                                 </td>
                             </tr>
                         </table>
