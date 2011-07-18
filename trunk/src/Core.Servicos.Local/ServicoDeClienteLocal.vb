@@ -3,6 +3,7 @@ Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Core.Interfaces.Mapeadores
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Public Class ServicoDeClienteLocal
     Inherits Servico
@@ -32,22 +33,22 @@ Public Class ServicoDeClienteLocal
     End Sub
 
     Public Sub Modificar(ByVal Cliente As ICliente) Implements IServicoDeCliente.Modificar
-        'Dim Mapeador As IMapeadorDeCliente
+        Dim Mapeador As IMapeadorDeCliente
 
-        'ServerUtils.setCredencial(MyBase._Credencial)
-        'Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeCliente)()
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeCliente)()
 
-        'ServerUtils.BeginTransaction()
+        ServerUtils.BeginTransaction()
 
-        'Try
-        '    Mapeador.Modificar(Cliente)
-        '    ServerUtils.CommitTransaction()
-        'Catch
-        '    ServerUtils.RollbackTransaction()
-        '    Throw
-        'Finally
-        '    ServerUtils.libereRecursos()
-        'End Try
+        Try
+            Mapeador.Modificar(Cliente)
+            ServerUtils.CommitTransaction()
+        Catch
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Sub
 
     Public Overloads Function Obtenha(ByVal Pessoa As IPessoa) As ICliente Implements IServicoDeCliente.Obtenha
