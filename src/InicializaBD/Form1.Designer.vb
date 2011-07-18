@@ -32,6 +32,8 @@ Partial Class Form1
         Me.Label2 = New System.Windows.Forms.Label
         Me.Label3 = New System.Windows.Forms.Label
         Me.txtSenha = New System.Windows.Forms.TextBox
+        Me.txtNomeDaEmpresa = New System.Windows.Forms.TextBox
+        Me.Label4 = New System.Windows.Forms.Label
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -120,11 +122,30 @@ Partial Class Form1
         Me.txtSenha.Size = New System.Drawing.Size(144, 20)
         Me.txtSenha.TabIndex = 3
         '
+        'txtNomeDaEmpresa
+        '
+        Me.txtNomeDaEmpresa.Location = New System.Drawing.Point(15, 153)
+        Me.txtNomeDaEmpresa.MaxLength = 100
+        Me.txtNomeDaEmpresa.Name = "txtNomeDaEmpresa"
+        Me.txtNomeDaEmpresa.Size = New System.Drawing.Size(321, 20)
+        Me.txtNomeDaEmpresa.TabIndex = 8
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(12, 135)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(93, 13)
+        Me.Label4.TabIndex = 9
+        Me.Label4.Text = "Nome da empresa"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(509, 266)
+        Me.Controls.Add(Me.txtNomeDaEmpresa)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.txtSenha)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -151,5 +172,7 @@ Partial Class Form1
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents txtSenha As System.Windows.Forms.TextBox
+    Friend WithEvents txtNomeDaEmpresa As System.Windows.Forms.TextBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
 
 End Class

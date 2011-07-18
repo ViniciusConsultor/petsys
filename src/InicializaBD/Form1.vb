@@ -50,11 +50,57 @@ Public Class Form1
         Try
             InicializaMunicipios()
             IniciaOperador()
+            IniciaEmpresa()
 
             MsgBox("Base de dados inicializada com sucesso.", MsgBoxStyle.Information, "Inicialização de base de dados.")
         Catch ex As Exception
             MsgBox("Ocorreu um erro durante a inicialização do banco de dados." & vbLf & ex.Message, MsgBoxStyle.Critical, "Inicialização de base de dados.")
         End Try
+    End Sub
+
+    Private Sub IniciaEmpresa()
+        Dim Pessoa As IPessoaJuridica
+        Dim Empresa As IEmpresa
+
+        Me.Cursor = Cursors.WaitCursor
+        ToolStripProgressBar1.Visible = True
+        ToolStripProgressBar1.Maximum = 4
+        Me.Activate()
+
+        ToolStripProgressBar1.Increment(1)
+
+        ToolStripStatusLabel1.Text = "Preparando Pessoa..."
+
+        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+        Pessoa.Nome = txtNomeDaEmpresa.Text
+
+        ToolStripProgressBar1.Increment(1)
+
+        ToolStripStatusLabel1.Text = "Inserindo Pessoa..."
+
+        Using ServicoDePessoa As IServicoDePessoaJuridica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaJuridica)()
+            ServicoDePessoa.Inserir(Pessoa)
+        End Using
+
+        ToolStripProgressBar1.Increment(1)
+
+        ToolStripStatusLabel1.Text = "Preparando empresa..."
+        Empresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IEmpresa)(New Object() {Pessoa})
+        Empresa.DataDaAtivacao = Now
+
+        ToolStripProgressBar1.Increment(1)
+
+        ToolStripStatusLabel1.Text = "Inserindo empresa..."
+        Using ServicoDeEmpresa As IServicoDeEmpresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeEmpresa)()
+            ServicoDeEmpresa.Insira(Empresa)
+        End Using
+
+        ToolStripProgressBar1.Increment(1)
+
+        Me.Cursor = Cursors.Default
+        Me.ToolStripProgressBar1.Value = 0
+        ToolStripProgressBar1.Visible = False
+        ToolStripStatusLabel1.Text = ""
     End Sub
 
     Private Sub IniciaOperador()
