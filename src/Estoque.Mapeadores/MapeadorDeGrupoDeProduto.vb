@@ -17,7 +17,13 @@ Public Class MapeadorDeGrupoDeProduto
 
         Sql.Append("UPDATE ETQ_GRPPRODUTO SET ")
         Sql.Append(String.Concat("NOME = '", UtilidadesDePersistencia.FiltraApostrofe(GrupoDeProdutos.Nome), "', "))
-        Sql.Append(String.Concat("PRCCOMISSAO = ", UtilidadesDePersistencia.TPVd(GrupoDeProdutos.PorcentagemDeComissao)))
+
+        If GrupoDeProdutos.PorcentagemDeComissao Is Nothing Then
+            Sql.Append("PRCCOMISSAO = NULL")
+        Else
+            Sql.Append(String.Concat("PRCCOMISSAO = ", UtilidadesDePersistencia.TPVd(GrupoDeProdutos.PorcentagemDeComissao.Value)))
+        End If
+
         Sql.Append(String.Concat(" WHERE ID = ", GrupoDeProdutos.ID.Value.ToString))
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
@@ -36,7 +42,13 @@ Public Class MapeadorDeGrupoDeProduto
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(GrupoDeProdutos.ID.Value.ToString, ", "))
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(GrupoDeProdutos.Nome), "', "))
-        Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(GrupoDeProdutos.PorcentagemDeComissao), ")"))
+
+        If GrupoDeProdutos.PorcentagemDeComissao Is Nothing Then
+            Sql.Append("NULL)")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(GrupoDeProdutos.PorcentagemDeComissao.Value), ")"))
+        End If
+
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
@@ -63,7 +75,10 @@ Public Class MapeadorDeGrupoDeProduto
                 Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupoDeProduto)()
                 Grupo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
                 Grupo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-                Grupo.PorcentagemDeComissao = UtilidadesDePersistencia.getValorDouble(Leitor, "PRCCOMISSAO")
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "PRCCOMISSAO") Then
+                    Grupo.PorcentagemDeComissao = UtilidadesDePersistencia.getValorDouble(Leitor, "PRCCOMISSAO")
+                End If
 
                 Grupos.Add(Grupo)
             End While

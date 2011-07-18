@@ -112,10 +112,10 @@ Public Class MapeadorDeProduto
 
         Sql.Append(String.Concat(" NOME = '", UtilidadesDePersistencia.FiltraApostrofe(Produto.Nome), "',"))
 
-        If String.IsNullOrEmpty(Produto.Unidade) Then
+        If Produto.UnidadeDeMedida Is Nothing Then
             Sql.Append(" UNIDADE = NULL,")
         Else
-            Sql.Append(String.Concat(" UNIDADE = '", UtilidadesDePersistencia.FiltraApostrofe(Produto.Unidade), "',"))
+            Sql.Append(String.Concat(" UNIDADE = '", Produto.UnidadeDeMedida.ID.ToString, "',"))
         End If
 
         If Produto.Marca Is Nothing Then
@@ -181,10 +181,10 @@ Public Class MapeadorDeProduto
 
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.Nome), "', "))
 
-        If String.IsNullOrEmpty(Produto.Unidade) Then
+        If Produto.UnidadeDeMedida Is Nothing Then
             Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Produto.Unidade), "', "))
+            Sql.Append(String.Concat("'", Produto.UnidadeDeMedida.ID.ToString, "', "))
         End If
 
         If Produto.Marca Is Nothing Then
@@ -333,7 +333,7 @@ Public Class MapeadorDeProduto
 
                 If Not UtilidadesDePersistencia.EhNulo(Leitor, "QTDMINESTOQUE") Then Produto.QuantidadeMinimaEmEstoque = UtilidadesDePersistencia.getValorDouble(Leitor, "QTDMINESTOQUE")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "UNIDADE") Then Produto.Unidade = UtilidadesDePersistencia.GetValorString(Leitor, "UNIDADE")
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "UNIDADE") Then Produto.UnidadeDeMedida = UnidadeDeMedida.ObtenhaTipoDeUnidade(UtilidadesDePersistencia.getValorChar(Leitor, "UNIDADE"))
 
                 If Not UtilidadesDePersistencia.EhNulo(Leitor, "VALORDECUSTO") Then Produto.ValorDeCusto = UtilidadesDePersistencia.getValorDouble(Leitor, "VALORDECUSTO")
 
