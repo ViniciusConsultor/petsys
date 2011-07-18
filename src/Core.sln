@@ -29,28 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", 
 		..\doc\Banco de dados\Nucleo\SQL Server\CREATE_NCL_SQLServer.sql = ..\doc\Banco de dados\Nucleo\SQL Server\CREATE_NCL_SQLServer.sql
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conversoes", "Conversoes", "{2784CB7D-884D-419A-9C6B-CC47E2ECF23F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versao_1_PARA_1_1", "Versao_1_PARA_1_1", "{9466BE09-90E7-465D-98EE-6FA2DE582684}"
-	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_1_Para_1_1\Conversao.sql = ..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_1_Para_1_1\Conversao.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versao_1_1PARA_2_0", "Versao_1_1PARA_2_0", "{A8E318D1-1EFC-4B68-8376-F8A78E4AFA46}"
-	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_1_1_Para_2_0\Conversao.sql = ..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_1_1_Para_2_0\Conversao.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{5C011FC2-C6CA-44BD-990B-7499FEB88DA2}"
-	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Nucleo\MySQL\CREATE_NCL_MySQL.sql = ..\doc\Banco de dados\Nucleo\MySQL\CREATE_NCL_MySQL.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versao_2_0_PARA_3_0", "Versao_2_0_PARA_3_0", "{7D09C90D-4901-4F58-93B5-4A5964964B25}"
-	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_2_0_Para_3_0\Conversao.sql = ..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_2_0_Para_3_0\Conversao.sql
-	EndProjectSection
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Core.Servicos.Remoting", "Core.Servicos.Remoting\Core.Servicos.Remoting.vbproj", "{C8B4F2F9-A3C0-48FC-A443-EC7E93BCBE56}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimpleServer", "SimpleServer\SimpleServer.vbproj", "{6C462882-F0F1-4668-B253-B591B0ADBB19}"
@@ -59,9 +37,9 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Core.ConversorUpperLowerCas
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Compartilhados.Conversores", "Compartilhados.Conversores\Compartilhados.Conversores.vbproj", "{7B00DBD4-EBEB-40AA-9ACF-96667E870E58}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versao_3_0_Para_3_1", "Versao_3_0_Para_3_1", "{D6370077-FAE7-4C0B-8079-A03989C24282}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{9255272A-ABC7-4C87-9BD5-0862B395B1FA}"
 	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_3_0_Para_3_1\Conversao.sql = ..\doc\Banco de dados\Nucleo\SQL Server\Conversoes\Versao_3_0_Para_3_1\Conversao.sql
+		..\doc\Banco de dados\Nucleo\Oracle\CREATE_NCL_Oracle.sql = ..\doc\Banco de dados\Nucleo\Oracle\CREATE_NCL_Oracle.sql
 	EndProjectSection
 EndProject
 Global
@@ -128,11 +106,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E2867623-7BBE-43EA-833F-7AFB15203909} = {B705C844-764A-4A51-8676-1ECF6EB28500}
-		{5C011FC2-C6CA-44BD-990B-7499FEB88DA2} = {B705C844-764A-4A51-8676-1ECF6EB28500}
-		{2784CB7D-884D-419A-9C6B-CC47E2ECF23F} = {E2867623-7BBE-43EA-833F-7AFB15203909}
-		{9466BE09-90E7-465D-98EE-6FA2DE582684} = {2784CB7D-884D-419A-9C6B-CC47E2ECF23F}
-		{A8E318D1-1EFC-4B68-8376-F8A78E4AFA46} = {2784CB7D-884D-419A-9C6B-CC47E2ECF23F}
-		{7D09C90D-4901-4F58-93B5-4A5964964B25} = {2784CB7D-884D-419A-9C6B-CC47E2ECF23F}
-		{D6370077-FAE7-4C0B-8079-A03989C24282} = {2784CB7D-884D-419A-9C6B-CC47E2ECF23F}
+		{9255272A-ABC7-4C87-9BD5-0862B395B1FA} = {B705C844-764A-4A51-8676-1ECF6EB28500}
 	EndGlobalSection
 EndGlobal

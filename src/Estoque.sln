@@ -11,6 +11,21 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Servicos.Local", "E
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Client", "Estoque.Client\Estoque.Client.vbproj", "{1F123E04-A12A-4025-87DF-EF7F909C9535}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{383B5B62-43FE-4A58-9678-366106D1BB00}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Estoque\INSERT_EQT.SQL = ..\doc\Banco de dados\Estoque\INSERT_EQT.SQL
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{E0FB598A-847D-4D01-B110-A07E400C503C}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Estoque\SQL Server\CREATE_ETQ_SQLServer.SQL = ..\doc\Banco de dados\Estoque\SQL Server\CREATE_ETQ_SQLServer.SQL
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{B10A44A3-E58D-4A2B-B1CB-A407320E99F4}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Estoque\Oracle\CREATE_ETQ_Oracle.SQL = ..\doc\Banco de dados\Estoque\Oracle\CREATE_ETQ_Oracle.SQL
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,5 +55,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0FB598A-847D-4D01-B110-A07E400C503C} = {383B5B62-43FE-4A58-9678-366106D1BB00}
+		{B10A44A3-E58D-4A2B-B1CB-A407320E99F4} = {383B5B62-43FE-4A58-9678-366106D1BB00}
 	EndGlobalSection
 EndGlobal
