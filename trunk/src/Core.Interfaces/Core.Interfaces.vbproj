@@ -79,8 +79,11 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeAgenda.vb" />
     <Compile Include="Mapeadores\IMapeadorDeAutorizacao.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeBancosEAgencias.vb" />
     <Compile Include="Mapeadores\IMapeadorDeCliente.vb" />
     <Compile Include="Mapeadores\IMapeadorDeConfiguracoesDoSistema.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeEmpresa.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeFornecedor.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGeracaoDeID.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGrupo.vb" />
     <Compile Include="Mapeadores\IMapeadorDeMenu.vb" />
@@ -122,7 +125,6 @@
     <Compile Include="Negocio\ISenha.vb" />
     <Compile Include="Servicos\IServicoDeAutenticacao.vb" />
     <Compile Include="Servicos\IServicoDeAutorizacao.vb" />
-    <Compile Include="Servicos\IServicoDeCliente.vb" />
     <Compile Include="Servicos\IServicoDeConexao.vb" />
     <Compile Include="Servicos\IServicoDeGrupo.vb" />
     <Compile Include="Servicos\IServicoDeMenu.vb" />

@@ -10,6 +10,7 @@ Namespace Mapeadores
                                           ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of ICliente)
         Sub Inserir(ByVal Cliente As ICliente)
         Sub Remover(ByVal ID As Long)
+        Sub Modificar(ByVal Cliente As ICliente)
 
     End Interface
 
