@@ -79,8 +79,11 @@
   <ItemGroup>
     <Compile Include="MapeadorDeAgenda.vb" />
     <Compile Include="MapeadorDeAutorizacao.vb" />
+    <Compile Include="MapeadorDeBancosEAgencias.vb" />
     <Compile Include="MapeadorDeCliente.vb" />
     <Compile Include="MapeadorDeConfiguracoesDoSistema.vb" />
+    <Compile Include="MapeadorDeEmpresa.vb" />
+    <Compile Include="MapeadorDeFornecedor.vb" />
     <Compile Include="MapeadorDeGeracaoDeID.vb" />
     <Compile Include="MapeadorDeGrupo.vb" />
     <Compile Include="MapeadorDeMenu.vb" />

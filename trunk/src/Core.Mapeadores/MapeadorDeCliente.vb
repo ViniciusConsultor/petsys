@@ -15,10 +15,42 @@ Public Class MapeadorDeCliente
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("INSERT INTO NCL_CLIENTE (")
-        Sql.Append("IDPESSOA, TIPOPESSOA)")
+        Sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Cliente.Pessoa.ID.ToString, ", "))
-        Sql.Append(String.Concat(Cliente.Pessoa.Tipo.ID, ")"))
+        Sql.Append(String.Concat(Cliente.Pessoa.Tipo.ID, ", "))
+        Sql.Append(String.Concat(Cliente.DataDoCadastro.Value.ToString("yyyyMMdd"), ", "))
+
+        If String.IsNullOrEmpty(Cliente.InformacoesAdicionais) Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cliente.InformacoesAdicionais), "', "))
+        End If
+
+        If Not Cliente.FaixaSalarial.HasValue Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Cliente.FaixaSalarial.Value), ", "))
+        End If
+
+        If Not Cliente.PorcentagemDeDescontoAutomatico.HasValue Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Cliente.PorcentagemDeDescontoAutomatico.Value), ", "))
+        End If
+
+        If Not Cliente.ValorMaximoParaCompras.HasValue Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Cliente.ValorMaximoParaCompras.Value), ", "))
+        End If
+
+        If Not Cliente.SaldoParaCompras.HasValue Then
+            Sql.Append("NULL) ")
+        Else
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Cliente.SaldoParaCompras.Value), ") "))
+        End If
+
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
@@ -28,7 +60,7 @@ Public Class MapeadorDeCliente
         Dim DBHelper As IDBHelper
         Dim Cliente As ICliente = Nothing
 
-        Sql.Append("SELECT IDPESSOA, TIPOPESSOA FROM NCL_CLIENTE WHERE ")
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS FROM NCL_CLIENTE WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", Pessoa.ID.Value.ToString, " AND "))
         Sql.Append(String.Concat("TIPOPESSOA = ", Pessoa.Tipo.ID.ToString))
 
@@ -36,9 +68,39 @@ Public Class MapeadorDeCliente
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
             If Leitor.Read Then
-                Cliente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICliente)(New Object() {Pessoa})
+                Cliente = MontaObjetoCliente(Leitor, Pessoa)
             End If
         End Using
+
+        Return Cliente
+    End Function
+
+    Private Function MontaObjetoCliente(ByVal Leitor As IDataReader, ByVal Pessoa As IPessoa) As ICliente
+        Dim Cliente As ICliente = Nothing
+
+        Cliente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICliente)(New Object() {Pessoa})
+
+        Cliente.DataDoCadastro = UtilidadesDePersistencia.getValorDate(Leitor, "DTCADASTRO")
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "INFOADICIONAL") Then
+            Cliente.InformacoesAdicionais = UtilidadesDePersistencia.GetValorString(Leitor, "INFOADICIONAL")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "FAIXASALARIAL") Then
+            Cliente.FaixaSalarial = UtilidadesDePersistencia.getValorDouble(Leitor, "FAIXASALARIAL")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "DESCONTOAUTOMATICO") Then
+            Cliente.PorcentagemDeDescontoAutomatico = UtilidadesDePersistencia.getValorDouble(Leitor, "DESCONTOAUTOMATICO")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "VLRMAXCOMPRAS") Then
+            Cliente.ValorMaximoParaCompras = UtilidadesDePersistencia.getValorDouble(Leitor, "VLRMAXCOMPRAS")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "SALDOCOMPRAS") Then
+            Cliente.SaldoParaCompras = UtilidadesDePersistencia.getValorDouble(Leitor, "SALDOCOMPRAS")
+        End If
 
         Return Cliente
     End Function
@@ -88,7 +150,7 @@ Public Class MapeadorDeCliente
                 Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
                 Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
-                Cliente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICliente)(New Object() {Pessoa})
+                Cliente = MontaObjetoCliente(Leitor, Pessoa)
 
                 Clientes.Add(Cliente)
             End While
@@ -126,11 +188,54 @@ Public Class MapeadorDeCliente
                 Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
                 Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
-                Cliente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICliente)(New Object() {Pessoa})
+                Cliente = MontaObjetoCliente(Leitor, Pessoa)
             End If
         End Using
 
         Return Cliente
     End Function
+
+    Public Sub Modificar(ByVal Cliente As ICliente) Implements IMapeadorDeCliente.Modificar
+        Dim Sql As New StringBuilder
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+
+        Sql.Append("UPDATE NCL_CLIENTE SET ")
+
+        If String.IsNullOrEmpty(Cliente.InformacoesAdicionais) Then
+            Sql.Append("INFOADICIONAL = NULL, ")
+        Else
+            Sql.Append(String.Concat("INFOADICIONAL = '", UtilidadesDePersistencia.FiltraApostrofe(Cliente.InformacoesAdicionais), "', "))
+        End If
+
+        If Not Cliente.FaixaSalarial.HasValue Then
+            Sql.Append("FAIXASALARIAL = NULL, ")
+        Else
+            Sql.Append(String.Concat("FAIXASALARIAL = ", UtilidadesDePersistencia.TPVd(Cliente.FaixaSalarial.Value), ", "))
+        End If
+
+        If Not Cliente.PorcentagemDeDescontoAutomatico.HasValue Then
+            Sql.Append("DESCONTOAUTOMATICO = NULL, ")
+        Else
+            Sql.Append(String.Concat("DESCONTOAUTOMATICO = ", UtilidadesDePersistencia.TPVd(Cliente.PorcentagemDeDescontoAutomatico.Value), ", "))
+        End If
+
+        If Not Cliente.ValorMaximoParaCompras.HasValue Then
+            Sql.Append("VLRMAXCOMPRAS = NULL, ")
+        Else
+            Sql.Append(String.Concat("VLRMAXCOMPRAS = ", UtilidadesDePersistencia.TPVd(Cliente.ValorMaximoParaCompras.Value), ", "))
+        End If
+
+        If Not Cliente.SaldoParaCompras.HasValue Then
+            Sql.Append("SALDOCOMPRAS = NULL")
+        Else
+            Sql.Append(String.Concat("SALDOCOMPRAS = ", UtilidadesDePersistencia.TPVd(Cliente.SaldoParaCompras.Value)))
+        End If
+
+        Sql.Append(String.Concat(" WHERE IDPESSOA = ", Cliente.Pessoa.ID.ToString))
+        DBHelper.ExecuteNonQuery(Sql.ToString)
+
+    End Sub
 
 End Class
