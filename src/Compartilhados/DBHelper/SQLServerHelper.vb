@@ -66,6 +66,13 @@ Namespace DBHelper
             Return querySqlString
         End Function
 
+        Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
+            If TypeOf (Ex) Is SqlException Then
+                Return MensagensSQLServer.GetInstancia.ObtenhaMensagemDeErro(CType(Ex, SqlException).Number.ToString)
+            End If
+
+            Return Nothing
+        End Function
     End Class
 
 End Namespace

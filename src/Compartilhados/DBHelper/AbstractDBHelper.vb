@@ -7,15 +7,15 @@ Namespace DBHelper
         Implements IDBHelper
 
         Protected ConexaoPadrao As IDbConnection
-        Private Transacao As IDbTransaction
-        Private SistemaUtilizaSQLUpperCase As Boolean
+        Protected Transacao As IDbTransaction
+        Protected _SistemaUtilizaSQLUpperCase As Boolean
 
         Protected MustOverride Function CrieConexao(ByVal StringDeConexao As String) As IDbConnection
         Protected MustOverride Function CrieDataAdapter(ByVal Comando As IDbCommand) As DbDataAdapter
 
         Public Sub New(ByVal StringDeConexao As String, ByVal SistemaUtilizaSQLUpperCase As Boolean)
             ConexaoPadrao = CrieConexao(StringDeConexao)
-            SistemaUtilizaSQLUpperCase = SistemaUtilizaSQLUpperCase
+            _SistemaUtilizaSQLUpperCase = SistemaUtilizaSQLUpperCase
         End Sub
 
         Public Sub BeginTransaction(ByVal TipoTransacao As IsolationLevel) Implements IDBHelper.BeginTransaction
@@ -35,7 +35,7 @@ Namespace DBHelper
         End Sub
 
         Public Function ExecuteNonQuery(ByVal SQL As String) As Integer Implements IDBHelper.ExecuteNonQuery
-            Return ExecuteNonQuery(SQL, Me.SistemaUtilizaSQLUpperCase)
+            Return ExecuteNonQuery(SQL, _SistemaUtilizaSQLUpperCase)
         End Function
 
         Public Function ExecuteNonQuery(ByVal SQL As String, _
@@ -51,10 +51,19 @@ Namespace DBHelper
                 Comando.CommandText = SQL
 
                 Return Comando.ExecuteNonQuery()
+
             Catch ex As Exception
-                Throw New Exception(ex.Message & vbCrLf _
-                                  & "ORIGEM: DBHelper.ExecuteNonQuery " & vbCrLf _
-                                  & "SQL: " & SQL)
+                Dim Mensagem As String = Nothing
+
+                Mensagem = ObtenhaMensagemDaExcecaoLancada(ex)
+
+                If String.IsNullOrEmpty(Mensagem) Then
+                    Throw New Exception(ex.Message & vbCrLf _
+                                      & "ORIGEM: DBHelper.ExecuteNonQuery " & vbCrLf _
+                                      & "SQL: " & SQL)
+                Else
+                    Throw New BussinesException(Mensagem)
+                End If
             Finally
                 Comando.Dispose()
             End Try
@@ -99,6 +108,8 @@ Namespace DBHelper
                                                           ByVal QuantidadeDeRegistros As Integer) As String Implements IDBHelper.ObtenhaQueryComLimite
             Return QueryOriginal
         End Function
+
+        Public MustOverride Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As Exception) As String Implements IDBHelper.ObtenhaMensagemDaExcecaoLancada
 
     End Class
 

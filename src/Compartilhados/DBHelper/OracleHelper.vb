@@ -37,6 +37,13 @@ Namespace DBHelper
             Return QueryComLimite.ToString
         End Function
 
+        Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
+            If TypeOf (Ex) Is OracleException Then
+                Return MensagensOracle.GetInstancia.ObtenhaMensagemDeErro(CType(Ex, OracleException).Code.ToString)
+            End If
+
+            Return Nothing
+        End Function
     End Class
 
 End Namespace
