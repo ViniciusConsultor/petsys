@@ -70,16 +70,6 @@ Public Class Produto
         End Get
     End Property
 
-    Private _Unidade As String
-    Public Property Unidade() As String Implements IProduto.Unidade
-        Get
-            Return _Unidade
-        End Get
-        Set(ByVal value As String)
-            _Unidade = value
-        End Set
-    End Property
-
     ''' <summary>
     ''' Calcula o valor de venda do produto
     ''' </summary>
@@ -139,6 +129,16 @@ Public Class Produto
         End Get
         Set(ByVal value As Double?)
             _ValorDeVendaMinimo = value
+        End Set
+    End Property
+
+    Private _UnidadeDeMedida As UnidadeDeMedida
+    Public Property UnidadeDeMedida() As UnidadeDeMedida Implements IProduto.UnidadeDeMedida
+        Get
+            Return _UnidadeDeMedida
+        End Get
+        Set(ByVal value As UnidadeDeMedida)
+            _UnidadeDeMedida = value
         End Set
     End Property
 
