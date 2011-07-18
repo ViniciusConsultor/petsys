@@ -25,6 +25,7 @@ Namespace DBHelper
         Function obtenhaReader(ByVal Query As String, ByVal QuantidadeDeRegistros As Integer) As IDataReader
         Function SuporteALimite() As Boolean
         Function ObtenhaQueryComLimite(ByVal QueryOriginal As String, ByVal QuantidadeDeRegistros As Integer) As String
+        Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As Exception) As String
 
     End Interface
 

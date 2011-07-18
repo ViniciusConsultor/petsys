@@ -35,6 +35,11 @@ Namespace DBHelper
             Return QueryComLimite.ToString
         End Function
 
+        'TODO: fazer
+        Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
+            Return Nothing
+        End Function
+
     End Class
 
 End Namespace

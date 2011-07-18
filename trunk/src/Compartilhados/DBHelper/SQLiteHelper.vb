@@ -15,7 +15,6 @@ Namespace DBHelper
             Dim cConexao As IDbConnection = New SQLiteConnection(StringDeConexao)
             cConexao.Open()
             Return cConexao
-            Return Nothing
         End Function
 
         Protected Overrides Function CrieDataAdapter(ByVal Comando As IDbCommand) As DbDataAdapter
@@ -34,6 +33,10 @@ Namespace DBHelper
             QueryComLimite.Append(QuantidadeDeRegistros.ToString)
 
             Return QueryComLimite.ToString
+        End Function
+
+        Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
+            Return Nothing
         End Function
 
     End Class
