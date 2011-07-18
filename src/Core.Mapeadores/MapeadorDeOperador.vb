@@ -74,9 +74,10 @@ Public Class MapeadorDeOperador
     Public Function ObtenhaOperadorPorLogin(ByVal Login As String) As IOperador Implements IMapeadorDeOperador.ObtenhaOperadorPorLogin
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS")
-        Sql.Append(" FROM NCL_OPERADOR")
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS, ID, NOME, TIPO")
+        Sql.Append(" FROM NCL_OPERADOR, NCL_PESSOA")
         Sql.Append(String.Concat(" WHERE LOGIN = '", UtilidadesDePersistencia.FiltraApostrofe(Login), "'"))
+        Sql.Append(" AND ID = IDPESSOA AND TIPO = TIPOPESSOA")
 
         Dim DBHelper As IDBHelper
         Dim Operador As IOperador = Nothing
@@ -104,6 +105,8 @@ Public Class MapeadorDeOperador
         Else
             Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
         End If
+
+        Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
         Operador = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperador)(New Object() {Pessoa})
         Operador.Login = UtilidadesDePersistencia.GetValorString(Leitor, "LOGIN")
@@ -149,9 +152,10 @@ Public Class MapeadorDeOperador
     Public Function ObtenhaOperador(ByVal Pessoa As IPessoa) As IOperador Implements IMapeadorDeOperador.ObtenhaOperador
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS")
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS, ID, TIPO, NOME")
         Sql.Append(" FROM NCL_OPERADOR")
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Pessoa.ID.Value.ToString))
+        Sql.Append(" AND ID = IDPESSOA AND TIPO = TIPOPESSOA")
 
         Dim DBHelper As IDBHelper
         Dim Operador As IOperador = Nothing
@@ -171,7 +175,7 @@ Public Class MapeadorDeOperador
                                       ByVal Quantidade As Integer) As IList(Of IOperador) Implements IMapeadorDeOperador.ObtenhaOperadores
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS, ID, TIPO")
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS, ID, TIPO, NOME")
         Sql.Append(" FROM NCL_OPERADOR, NCL_PESSOA")
         Sql.Append(" WHERE  ID = IDPESSOA AND TIPO = TIPOPESSOA")
 

@@ -6,6 +6,7 @@ Imports Compartilhados.DBHelper
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces
 Imports Compartilhados.Interfaces.Core.Negocio.Telefone
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
     Implements IMapeadorDePessoa(Of T)
@@ -24,7 +25,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         SQL.Append("INSERT INTO NCL_PESSOA (ID, NOME, TIPO, ENDEMAIL,")
         SQL.Append(" LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP,")
-        SQL.Append(" BAIRRO, SITE)")
+        SQL.Append(" BAIRRO, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE)")
         SQL.Append(" VALUES ( ")
         SQL.Append(String.Concat(Pessoa.ID, ", "))
         SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
@@ -68,9 +69,28 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If Not String.IsNullOrEmpty(Pessoa.Site) Then
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "')"))
+            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "', "))
         Else
-            SQL.Append("NULL)")
+            SQL.Append("NULL, ")
+        End If
+
+        If Not Pessoa.DadoBancario Is Nothing Then
+            SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.Banco.Pessoa.ID.Value.ToString, ", "))
+            SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.Pessoa.ID.Value.ToString, ", "))
+
+            If String.IsNullOrEmpty(Pessoa.DadoBancario.Conta.Numero) Then
+                SQL.Append("NULL, ")
+            Else
+                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.DadoBancario.Conta.Numero), "', "))
+            End If
+
+            If Pessoa.DadoBancario.Conta.Tipo.HasValue Then
+                SQL.Append(String.Concat(Pessoa.DadoBancario.Conta.Tipo.Value, ")"))
+            Else
+                SQL.Append("NULL)")
+            End If
+        Else
+            SQL.Append("NULL, NULL, NULL, NULL)")
         End If
 
         DBHelper.ExecuteNonQuery(SQL.ToString)
@@ -168,9 +188,28 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If Not String.IsNullOrEmpty(Pessoa.Site) Then
-            SQL.Append(String.Concat("SITE = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "'"))
+            SQL.Append(String.Concat("SITE = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "',"))
         Else
-            SQL.Append("SITE = NULL")
+            SQL.Append("SITE = NULL,")
+        End If
+
+        If Not Pessoa.DadoBancario Is Nothing Then
+            SQL.Append(String.Concat("IDBANCO  = ", Pessoa.DadoBancario.Agencia.Banco.Pessoa.ID.Value.ToString, ", "))
+            SQL.Append(String.Concat("IDAGENCIA = ", Pessoa.DadoBancario.Agencia.Pessoa.ID.Value.ToString, ", "))
+
+            If String.IsNullOrEmpty(Pessoa.DadoBancario.Conta.Numero) Then
+                SQL.Append("CNTACORRENTE = NULL, ")
+            Else
+                SQL.Append(String.Concat("CNTACORRENTE = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.DadoBancario.Conta.Numero), "', "))
+            End If
+
+            If Pessoa.DadoBancario.Conta.Tipo.HasValue Then
+                SQL.Append(String.Concat("TIPOCNTACORRENTE = ", Pessoa.DadoBancario.Conta.Tipo.Value))
+            Else
+                SQL.Append("TIPOCNTACORRENTE = NULL")
+            End If
+        Else
+            SQL.Append("IDBANCO = NULL, IDAGENCIA = NULL, CNTACORRENTE = NULL, TIPOCNTACORRENTE = NULL")
         End If
 
         SQL.Append(String.Concat(" WHERE ID = ", Pessoa.ID.Value.ToString))
@@ -219,6 +258,37 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "SITE") Then
             Pessoa.Site = UtilidadesDePersistencia.GetValorString(Leitor, "SITE")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDAGENCIA") Then
+            Dim PessoaBanco As IPessoa
+            Dim Banco As IBanco
+            Dim Agencia As IAgencia
+            Dim PessoaAgencia As IPessoa
+
+            PessoaBanco = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDBANCO"))
+            Banco = FabricaGenerica.GetInstancia.CrieObjeto(Of IBanco)(New Object() {PessoaBanco})
+            'TODO: BUSCAR O NUMERO DO BANCO
+
+            PessoaAgencia = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDAGENCIA"))
+            Agencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgencia)(New Object() {PessoaAgencia})
+            Agencia.Banco = Banco
+            'TODO: BUSCAR O NUMERO DA AGENCIA
+
+            Dim DadosBancarios = FabricaGenerica.GetInstancia.CrieObjeto(Of IDadoBancario)()
+            DadosBancarios.Agencia = Agencia
+
+            Dim Conta As IContaBancaria
+
+            Conta = FabricaGenerica.GetInstancia.CrieObjeto(Of IContaBancaria)()
+            Conta.Numero = UtilidadesDePersistencia.GetValorString(Leitor, "CNTACORRENTE")
+
+            If Not UtilidadesDePersistencia.EhNulo(Leitor, "TIPOCNTACORRENTE") Then
+                Conta.Tipo = UtilidadesDePersistencia.getValorInteger(Leitor, "TIPOCNTACORRENTE")
+            End If
+
+            DadosBancarios.Conta = Conta
+            Pessoa.DadoBancario = DadosBancarios
         End If
 
         ObtenhaTelefones(Pessoa)

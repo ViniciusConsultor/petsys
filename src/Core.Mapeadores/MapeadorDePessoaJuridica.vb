@@ -56,7 +56,7 @@ Public Class MapeadorDePessoaJuridica
 
         Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
         Sql.Append("LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, ")
-        Sql.Append("BAIRRO, NOMEFANTASIA, CNPJ, IE, IM, SITE ")
+        Sql.Append("BAIRRO, NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE ")
         Sql.Append("FROM NCL_PESSOA, NCL_PESSOAJURIDICA")
         Sql.Append(" WHERE ID = IDPESSOA ")
         Sql.Append(String.Concat("AND ID = ", Id.ToString))
@@ -83,7 +83,7 @@ Public Class MapeadorDePessoaJuridica
 
         Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
         Sql.Append("LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, ")
-        Sql.Append("BAIRRO, IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM, SITE ")
+        Sql.Append("BAIRRO, IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE ")
         Sql.Append("FROM NCL_PESSOA, NCL_PESSOAJURIDICA")
         Sql.Append(" WHERE ID = IDPESSOA ")
 
