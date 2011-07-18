@@ -5,7 +5,7 @@ Public Class MenuComposto
     Inherits MenuAbstrato
     Implements IMenuComposto
 
-    Private _Itens As IList(Of IMenuAbstrato)
+    Private _Itens As List(Of IMenuAbstrato)
 
     Public Sub New()
         _Itens = New List(Of IMenuAbstrato)
@@ -16,7 +16,29 @@ Public Class MenuComposto
     End Sub
 
     Public Function ObtenhaItens() As IList(Of IMenuAbstrato) Implements IMenuComposto.ObtenhaItens
+        _Itens.Sort(New ComparadorDeMenu())
+
         Return _Itens
     End Function
+
+    Private Class ComparadorDeMenu
+        Implements IComparer(Of IMenuAbstrato)
+
+        Public Function Compare(ByVal x As IMenuAbstrato, ByVal y As IMenuAbstrato) As Integer Implements IComparer(Of IMenuAbstrato).Compare
+            If x Is Nothing Then
+                If y Is Nothing Then
+                    Return 0
+                End If
+
+                Return -1
+            End If
+
+            If y Is Nothing Then
+                Return 1
+            End If
+
+            Return String.Compare(x.Nome, y.Nome)
+        End Function
+    End Class
 
 End Class
