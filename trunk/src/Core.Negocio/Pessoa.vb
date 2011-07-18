@@ -13,13 +13,12 @@ Public MustInherit Class Pessoa
     Private _Telefones As IList(Of ITelefone)
     Private _Documentos As IDictionary(Of TipoDeDocumento, IDocumento)
     Private _Endereco As IEndereco
-    Private _DadosBancarios As IList(Of IDadoBancario)
     Private _Site As String
+    Private _DadoBancario As IDadoBancario
 
     Protected Sub New()
         _Documentos = New Dictionary(Of TipoDeDocumento, IDocumento)
         _Telefones = New List(Of ITelefone)
-        _DadosBancarios = New List(Of IDadoBancario)
     End Sub
 
     Public Property Nome() As String Implements IPessoa.Nome
@@ -92,19 +91,6 @@ Public MustInherit Class Pessoa
         End Set
     End Property
 
-    Public Sub AdicioneDadoBancario(ByVal DadoBancario As IDadoBancario) Implements IPessoa.AdicioneDadoBancario
-        If _DadosBancarios.Contains(DadoBancario) Then
-            _DadosBancarios(_DadosBancarios.IndexOf(DadoBancario)) = DadoBancario
-            Exit Sub
-        End If
-
-        _DadosBancarios.Add(DadoBancario)
-    End Sub
-
-    Public Function ObtenhaDadosBancarios() As IList(Of IDadoBancario) Implements IPessoa.ObtenhaDadosBancarios
-        Return _DadosBancarios
-    End Function
-
     Public Property Site() As String Implements IPessoa.Site
         Get
             Return _Site
@@ -120,7 +106,7 @@ Public MustInherit Class Pessoa
         End If
     End Sub
 
-    Public Function ObtenhaTelelefones(ByVal TipoTelefone As TipoDeTelefone) As IList(Of ITelefone) Implements IPessoa.ObtenhaTelelefones
+    Public Function ObtenhaTelelefones(ByVal TipoTelefone As TipoDeTelefone) As IList(Of ITelefone) Implements IPessoa.ObtenhaTelefones
         If Me._Telefones Is Nothing Then Return Nothing
 
         Dim TelefonesDoTipo As IList(Of ITelefone) = New List(Of ITelefone)
@@ -133,5 +119,14 @@ Public MustInherit Class Pessoa
 
         Return TelefonesDoTipo
     End Function
+
+    Public Property DadoBancario() As IDadoBancario Implements IPessoa.DadoBancario
+        Get
+            Return _DadoBancario
+        End Get
+        Set(ByVal value As IDadoBancario)
+            _DadoBancario = value
+        End Set
+    End Property
 
 End Class

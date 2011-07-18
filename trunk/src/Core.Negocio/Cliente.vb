@@ -20,4 +20,54 @@ Public Class Cliente
         End Set
     End Property
 
+    Private _FaixaSalarial As Nullable(Of Double)
+    Public Property FaixaSalarial() As Double? Implements ICliente.FaixaSalarial
+        Get
+            Return _FaixaSalarial
+        End Get
+        Set(ByVal value As Double?)
+            _FaixaSalarial = value
+        End Set
+    End Property
+
+    Private _InformacoesAdicionais As String
+    Public Property InformacoesAdicionais() As String Implements ICliente.InformacoesAdicionais
+        Get
+            Return _InformacoesAdicionais
+        End Get
+        Set(ByVal value As String)
+            _InformacoesAdicionais = value
+        End Set
+    End Property
+
+    Private _PorcentagemDeDescontoAutomatico As Nullable(Of Double)
+    Public Property PorcentagemDeDescontoAutomatico() As Double? Implements ICliente.PorcentagemDeDescontoAutomatico
+        Get
+            Return _PorcentagemDeDescontoAutomatico
+        End Get
+        Set(ByVal value As Double?)
+            _PorcentagemDeDescontoAutomatico = value
+        End Set
+    End Property
+
+    Private _SaldoParaCompras As Nullable(Of Double)
+    Public Property SaldoParaCompras() As Double? Implements ICliente.SaldoParaCompras
+        Get
+            Return _SaldoParaCompras
+        End Get
+        Set(ByVal value As Double?)
+            _SaldoParaCompras = value
+        End Set
+    End Property
+
+    Private _ValorMaximoParaCompras As Nullable(Of Double)
+    Public Property ValorMaximoParaCompras() As Double? Implements ICliente.ValorMaximoParaCompras
+        Get
+            Return _ValorMaximoParaCompras
+        End Get
+        Set(ByVal value As Double?)
+            _ValorMaximoParaCompras = value
+        End Set
+    End Property
+
 End Class

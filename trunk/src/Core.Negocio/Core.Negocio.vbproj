@@ -77,7 +77,9 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agencia.vb" />
     <Compile Include="Agenda.vb" />
+    <Compile Include="Banco.vb" />
     <Compile Include="Cliente.vb" />
     <Compile Include="Compromisso.vb" />
     <Compile Include="Conexao.vb" />
@@ -91,6 +93,8 @@
     <Compile Include="ConfiguracaoDeAgendaDoUsuario.vb" />
     <Compile Include="ConfiguracaoDeEmailDoSistema.vb" />
     <Compile Include="ConfiguracaoDoSistema.vb" />
+    <Compile Include="ContaBancaria.vb" />
+    <Compile Include="DadoBancario.vb" />
     <Compile Include="DiretivaDeSeguranca.vb" />
     <Compile Include="Documento\CNPJ.vb" />
     <Compile Include="Documento\CPF.vb" />
@@ -98,7 +102,9 @@
     <Compile Include="Documento\InscricaoEstadual.vb" />
     <Compile Include="Documento\InscricaoMunicipal.vb" />
     <Compile Include="Documento\RG.vb" />
+    <Compile Include="Empresa.vb" />
     <Compile Include="Endereco.vb" />
+    <Compile Include="Fornecedor.vb" />
     <Compile Include="Funcao.vb" />
     <Compile Include="Grupo.vb" />
     <Compile Include="LazyLoad\CompromissoLazyLoad.vb" />
