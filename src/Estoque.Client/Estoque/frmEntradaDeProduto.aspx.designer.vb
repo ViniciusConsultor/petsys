@@ -13,16 +13,7 @@ Option Explicit On
 
 
 
-Partial Public Class cdGrupoDeProduto
-
-    '''<summary>
-    '''RadAjaxLoadingPanel1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
+Partial Public Class frmEntradaDeProduto
 
     '''<summary>
     '''rtbToolBar control.
@@ -52,22 +43,22 @@ Partial Public Class cdGrupoDeProduto
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock1 control.
+    '''RadDock2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''pnlGruposDeProduto control.
+    '''pnlDadosDaMovimentacao control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlGruposDeProduto As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlDadosDaMovimentacao As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''Label1 control.
@@ -79,31 +70,13 @@ Partial Public Class cdGrupoDeProduto
     Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboGruposDeProduto control.
+    '''txtDataDaMovimentacao control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboGruposDeProduto As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
-    '''RadDock2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
-    '''pnlCaracteristicasDosGruposDeProduto control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pnlCaracteristicasDosGruposDeProduto As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents txtDataDaMovimentacao As Global.Telerik.Web.UI.RadDateInput
 
     '''<summary>
     '''Label2 control.
@@ -115,11 +88,74 @@ Partial Public Class cdGrupoDeProduto
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtPorcentagemDeComissao control.
+    '''txtNumeroDocumento control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtPorcentagemDeComissao As Global.Telerik.Web.UI.RadNumericTextBox
+    Protected WithEvents txtNumeroDocumento As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboFornecedor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboFornecedor As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtHistorico control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtHistorico As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''RadDock1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
+    '''pnlProdutosDaMovimentacao control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlProdutosDaMovimentacao As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''ctrlProduto1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlProduto1 As Global.Estoque.Client.ctrlProduto
 End Class

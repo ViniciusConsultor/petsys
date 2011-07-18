@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
-    CodeBehind="cdProduto.aspx.vb" Inherits="WorkSpace.cdProduto" %>
+    CodeBehind="cdProduto.aspx.vb" Inherits="Estoque.Client.cdProduto" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
@@ -36,8 +36,8 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3" colspan="2">
-                                    <asp:Label ID="Label1" runat="server" Text="Código "></asp:Label>
-                                    <telerik:RadTextBox ID="txtCodigo" runat="server" AutoPostBack="True">
+                                    <asp:Label ID="Label1" runat="server" Text="Código de barras "></asp:Label>
+                                    <telerik:RadTextBox ID="txtCodigo" runat="server" AutoPostBack="True" Width="200px">
                                     </telerik:RadTextBox>
                                     <asp:Label ID="Label3" runat="server" Text="Nome "></asp:Label>
                                     <telerik:RadComboBox ID="cboProduto" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
@@ -66,15 +66,20 @@
                                         AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
                                         CausesValidation="False" MaxLength="80">
                                     </telerik:RadComboBox>
+                                    <asp:ImageButton ID="btnNovoGrupoDoProduto" runat="server" ImageUrl="~/imagens/new.gif" CausesValidation="False"
+                                        CommandArgument="FUN.ETQ.001" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label4" runat="server" Text="Unidade"></asp:Label>
+                                    <asp:Label ID="Label4" runat="server" Text="Tipo de medida"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtUnidade" runat="server">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadComboBox ID="cboMedida" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
+                                        LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
+                                        CausesValidation="False" MaxLength="80">
+                                    </telerik:RadComboBox>
                                 </td>
                             </tr>
                             <tr>
@@ -91,7 +96,7 @@
                                         CommandArgument="FUN.ETQ.003" />
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="pnlQuantidadeEmEstoque" runat="server">
                                 <td class="th3">
                                     <asp:Label ID="Label10" runat="server" Text="Quantidade em estoque"></asp:Label>
                                 </td>
@@ -179,14 +184,15 @@
             <telerik:RadDock ID="RadDock4" runat="server" Title="Informações" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <asp:Panel ID="Panel1" runat="server">
+                    <asp:Panel ID="pnlObservacoes" runat="server">
                         <table class="tabela">
-                         <tr>
+                            <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label14" runat="server" Text="Observações"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtObservacoes" runat="server">
+                                    <telerik:RadTextBox ID="txtObservacoes" runat="server" MaxLength="4000" 
+                                        Rows="10" TextMode="MultiLine" Width="300px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
