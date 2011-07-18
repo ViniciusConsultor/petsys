@@ -2,6 +2,7 @@
 Imports Core.Interfaces.Servicos
 Imports Core.Servicos.Local
 Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Public Class ServicoDeClienteRemoting
     Inherits ServicoRemoto
