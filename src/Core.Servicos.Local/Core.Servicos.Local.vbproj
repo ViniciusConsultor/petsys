@@ -95,9 +95,12 @@
     <Compile Include="ServicoDeAgendaLocal.vb" />
     <Compile Include="ServicoDeAutenticacaoLocal.vb" />
     <Compile Include="ServicoDeAutorizacaoLocal.vb" />
+    <Compile Include="ServicoDeBancosEAgenciasLocal.vb" />
     <Compile Include="ServicoDeClienteLocal.vb" />
     <Compile Include="ServicoDeConexaoLocal.vb" />
     <Compile Include="ServicoDeConfiguracoesDoSistemaLocal.vb" />
+    <Compile Include="ServicoDeEmpresaLocal.vb" />
+    <Compile Include="ServicoDeFornecedorLocal.vb" />
     <Compile Include="ServicoDeGeracaoDeIDLocal.vb" />
     <Compile Include="ServicoDeGrupoLocal.vb" />
     <Compile Include="ServicoDeMenuLocal.vb" />
