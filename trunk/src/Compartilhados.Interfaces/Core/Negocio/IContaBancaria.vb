@@ -2,7 +2,7 @@
 
     Public Interface IContaBancaria
 
-        Property Tipo() As String
+        Property Tipo() As Nullable(Of Integer)
         Property Numero() As String
 
     End Interface

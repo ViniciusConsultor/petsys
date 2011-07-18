@@ -3,7 +3,7 @@
     Public Interface IBanco
         Inherits IPapelPessoa
 
-        Property Numero() As Short
+        Property Numero() As Integer
         ReadOnly Property Agencias() As IList(Of IAgencia)
 
     End Interface
