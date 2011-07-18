@@ -2,7 +2,6 @@
 
     Public Interface IDadoBancario
 
-        Property Banco() As IBanco
         Property Agencia() As IAgencia
         Property Conta() As IContaBancaria
 

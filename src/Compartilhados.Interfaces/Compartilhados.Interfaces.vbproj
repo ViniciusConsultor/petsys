@@ -97,6 +97,7 @@
     <Compile Include="Core\Negocio\IConfiguracaoDoSistema.vb" />
     <Compile Include="Core\Negocio\IContaBancaria.vb" />
     <Compile Include="Core\Negocio\IDadoBancario.vb" />
+    <Compile Include="Core\Negocio\IEmpresa.vb" />
     <Compile Include="Core\Negocio\IEndereco.vb" />
     <Compile Include="Core\Negocio\IFornecedor.vb" />
     <Compile Include="Core\Negocio\IGrupo.vb" />
@@ -133,7 +134,11 @@
     <Compile Include="Core\Negocio\TipoDeTelefone.vb" />
     <Compile Include="Core\Negocio\UF.vb" />
     <Compile Include="Core\Servicos\IServicoDeAgenda.vb" />
+    <Compile Include="Core\Servicos\IServicoDeBancosEAgencias.vb" />
+    <Compile Include="Core\Servicos\IServicoDeCliente.vb" />
     <Compile Include="Core\Servicos\IServicoDeConfiguracoesDoSistema.vb" />
+    <Compile Include="Core\Servicos\IServicoDeEmpresa.vb" />
+    <Compile Include="Core\Servicos\IServicoDeFornecedor.vb" />
     <Compile Include="Core\Servicos\IServicoDeGeracaoDeID.vb" />
     <Compile Include="Core\Servicos\IServicoDeMunicipio.vb" />
     <Compile Include="Core\Servicos\IServicoDePerfil.vb" />
