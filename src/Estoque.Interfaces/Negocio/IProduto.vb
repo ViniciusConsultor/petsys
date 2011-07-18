@@ -5,7 +5,7 @@
         Property ID() As Nullable(Of Long)
         Property CodigoDeBarras() As String
         Property Nome() As String
-        Property Unidade() As String
+        Property UnidadeDeMedida() As UnidadeDeMedida
         Property Marca() As IMarcaDeProduto
         ReadOnly Property QuantidadeEmEstoque() As Integer
         Property QuantidadeMinimaEmEstoque() As Nullable(Of Double)

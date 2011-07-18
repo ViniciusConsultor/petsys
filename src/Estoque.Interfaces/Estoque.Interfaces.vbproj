@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Compartilhados, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00532d988ee8a0bc, processorArchitecture=MSIL" />
+    <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -86,7 +87,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Negocio\IMarcaDeProduto.vb" />
+    <Compile Include="Negocio\IMovimentacaoDeProduto.vb" />
+    <Compile Include="Negocio\IMovimentacaoDeProdutoEntrada.vb" />
     <Compile Include="Negocio\IProduto.vb" />
+    <Compile Include="Negocio\IProdutoMovimentado.vb" />
+    <Compile Include="Negocio\TipoMovimentacaoDeProduto.vb" />
+    <Compile Include="Negocio\UnidadeDeMedida.vb" />
     <Compile Include="Servicos\IServicoDeGrupoDeProduto.vb" />
     <Compile Include="Servicos\IServicoDeProduto.vb" />
   </ItemGroup>
