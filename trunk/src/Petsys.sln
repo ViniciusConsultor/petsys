@@ -21,6 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", 
 		..\doc\Banco de dados\PetSys\SQL Server\CREATE_PET_SQLServer.sql = ..\doc\Banco de dados\PetSys\SQL Server\CREATE_PET_SQLServer.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{0B62A6EA-9027-4EEF-AAB0-544361B70DB2}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\PetSys\Oracle\CREATE_PET_Oracle.sql = ..\doc\Banco de dados\PetSys\Oracle\CREATE_PET_Oracle.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,5 +58,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D903A286-A268-4878-9738-81CB42F6F83D} = {32D963FA-9227-43B6-83A3-DDB97528E472}
+		{0B62A6EA-9027-4EEF-AAB0-544361B70DB2} = {32D963FA-9227-43B6-83A3-DDB97528E472}
 	EndGlobalSection
 EndGlobal
