@@ -24,12 +24,12 @@ Public Class GrupoDeProduto
         End Set
     End Property
 
-    Private _PorcentagemDeComissao As Double
-    Public Property PorcentagemDeComissao() As Double Implements IGrupoDeProduto.PorcentagemDeComissao
+    Private _PorcentagemDeComissao As Nullable(Of Double)
+    Public Property PorcentagemDeComissao() As Nullable(Of Double) Implements IGrupoDeProduto.PorcentagemDeComissao
         Get
             Return _PorcentagemDeComissao
         End Get
-        Set(ByVal value As Double)
+        Set(ByVal value As Nullable(Of Double))
             _PorcentagemDeComissao = value
         End Set
     End Property
