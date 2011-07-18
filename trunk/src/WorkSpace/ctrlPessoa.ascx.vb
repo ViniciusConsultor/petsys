@@ -18,7 +18,6 @@ Partial Public Class ctrlPessoa
     Public Sub Inicializa()
         LimparControle()
         CarregaTipos()
-        EhObrigatorio = False
     End Sub
 
     Private Sub LimparControle()
@@ -124,8 +123,8 @@ Partial Public Class ctrlPessoa
                 Dim TelefonesComercial As IList(Of ITelefone)
                 Dim TelefonesCelular As IList(Of ITelefone)
 
-                TelefonesComercial = Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
-                TelefonesCelular = Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
+                TelefonesComercial = Pessoa.ObtenhaTelefones(TipoDeTelefone.Comercial)
+                TelefonesCelular = Pessoa.ObtenhaTelefones(TipoDeTelefone.Celular)
 
                 If Not TelefonesComercial Is Nothing Then
                     Dim TelefonesSTR As New StringBuilder
@@ -204,14 +203,6 @@ Partial Public Class ctrlPessoa
     Public WriteOnly Property BotaoDetalharEhVisivel() As Boolean
         Set(ByVal value As Boolean)
             btnDetalhar.Visible = value
-        End Set
-    End Property
-
-    Public WriteOnly Property EhObrigatorio() As Boolean
-        Set(ByVal value As Boolean)
-            If TipoDaPessoa.Equals(TipoDePessoa.Fisica) Then
-                rfvPessoaFisica.Enabled = value
-            End If
         End Set
     End Property
 

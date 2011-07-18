@@ -13,43 +13,61 @@ Option Explicit On
 
 
 
-Partial Public Class ctrlPessoa
+Partial Public Class cdFornecedor
 
     '''<summary>
-    '''pnlPessoa control.
+    '''rtbToolBar control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlPessoa As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents rtbToolBar As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
-    '''pnlTipoDePessoa control.
+    '''RadDockLayout1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlTipoDePessoa As Global.System.Web.UI.HtmlControls.HtmlTableRow
+    Protected WithEvents RadDockLayout1 As Global.Telerik.Web.UI.RadDockLayout
 
     '''<summary>
-    '''Label1 control.
+    '''RadDockZone1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''rblTipo control.
+    '''RadDock1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rblTipo As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
+    '''ctrlPessoa1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
+
+    '''<summary>
+    '''pnlDadosDoFornecedor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlDadosDoFornecedor As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
     '''Label6 control.
@@ -61,38 +79,56 @@ Partial Public Class ctrlPessoa
     Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboPessoaFisica control.
+    '''txtDataDoCadastro control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboPessoaFisica As Global.Telerik.Web.UI.RadComboBox
+    Protected WithEvents txtDataDoCadastro As Global.Telerik.Web.UI.RadDateInput
 
     '''<summary>
-    '''cboPessoaJuridica control.
+    '''RadDock2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboPessoaJuridica As Global.Telerik.Web.UI.RadComboBox
+    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''btnNovo control.
+    '''pnlDadosDosContatos control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnNovo As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents pnlDadosDosContatos As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
-    '''btnDetalhar control.
+    '''ctrlPessoa2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnDetalhar As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents ctrlPessoa2 As Global.WorkSpace.ctrlPessoa
+
+    '''<summary>
+    '''pnlContatos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlContatos As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''grdContato control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdContato As Global.Telerik.Web.UI.RadGrid
 End Class

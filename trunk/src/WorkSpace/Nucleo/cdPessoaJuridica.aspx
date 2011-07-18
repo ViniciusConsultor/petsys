@@ -3,6 +3,7 @@
 
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <%@ Register Src="~/ctrlMunicipios.ascx" TagName="ctrlMunicipios" TagPrefix="uc2" %>
+<%@ Register Src="~/ctrlBancosEAgencias.ascx" TagName="ctrlBancosEAgencias" TagPrefix="uc3" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" AutoPostBack="true" runat="server" Skin="Vista"
@@ -49,6 +50,8 @@
                             <telerik:RadTab Text="Documentos">
                             </telerik:RadTab>
                             <telerik:RadTab Text="Contatos">
+                            </telerik:RadTab>
+                             <telerik:RadTab Text="Dados bancários">
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
@@ -285,6 +288,11 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </asp:Panel>
+                        </telerik:RadPageView>
+                           <telerik:RadPageView ID="RadPageView5" runat="server" SkinID="Vista">
+                            <asp:Panel ID="pnlDadosBancarios" runat="server">
+                                <uc3:ctrlBancosEAgencias ID="ctrlBancosEAgencias1" runat="server" />
                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>

@@ -4,6 +4,7 @@
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <%@ Register Src="~/ctrlMunicipios.ascx" TagName="ctrlMunicipios" TagPrefix="uc2" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="~/ctrlBancosEAgencias.ascx" TagName="ctrlBancosEAgencias" TagPrefix="uc3" %>
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" AutoPostBack="true" runat="server" Skin="Vista"
         Style="width: 100%;">
@@ -53,6 +54,8 @@
                             <telerik:RadTab Text="Documentos">
                             </telerik:RadTab>
                             <telerik:RadTab Text="Contatos">
+                            </telerik:RadTab>
+                            <telerik:RadTab Text="Dados bancários">
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
@@ -266,8 +269,8 @@
                                             <asp:Label ID="Label15" runat="server" Text="Número"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtNumeroRG" runat="server" MaxLength="30" Skin="Vista"
-                                                Width="300px" SelectionOnFocus="CaretToBeginning">
+                                            <telerik:RadTextBox ID="txtNumeroRG" runat="server" MaxLength="30" Skin="Vista" Width="300px"
+                                                SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>
                                     </tr>
@@ -385,6 +388,11 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </asp:Panel>
+                        </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView5" runat="server" SkinID="Vista">
+                            <asp:Panel ID="pnlDadosBancarios" runat="server">
+                                <uc3:ctrlBancosEAgencias ID="ctrlBancosEAgencias1" runat="server" />
                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>

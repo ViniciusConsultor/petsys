@@ -93,8 +93,6 @@
                     CommandArgument="OPE.NCL.006.0001" />
                 <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="imagens/details.gif" ToolTip="Detalhar" CausesValidation="False"
                     CommandArgument="OPE.NCL.006.0002" />
-                <asp:RequiredFieldValidator ID="rfvPessoaFisica" runat="server" ErrorMessage="Campo deve ser informado."
-                    ControlToValidate="cboPessoaFisica"></asp:RequiredFieldValidator>
             </td>
         </tr>
     </table>

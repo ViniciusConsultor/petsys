@@ -79,9 +79,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
-    <Reference Include="Telerik.Web.UI, Version=2009.3.1103.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Web.UI, Version=2011.1.315.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Telerik.Web.UI.dll</HintPath>
-      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +319,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ctrlBancosEAgencias.ascx.designer.vb">
+      <DependentUpon>ctrlBancosEAgencias.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlBancosEAgencias.ascx.vb">
+      <DependentUpon>ctrlBancosEAgencias.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Nucleo\cdAgenda.aspx.designer.vb">
       <DependentUpon>cdAgenda.aspx</DependentUpon>
     </Compile>
@@ -331,7 +338,7 @@
     </Compile>
     <Compile Include="Nucleo\cdBancosEAgencias.aspx.vb">
       <DependentUpon>cdBancosEAgencias.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdCompromisso.aspx.designer.vb">
       <DependentUpon>cdCompromisso.aspx</DependentUpon>
@@ -339,6 +346,13 @@
     <Compile Include="Nucleo\cdCompromisso.aspx.vb">
       <DependentUpon>cdCompromisso.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\cdFornecedor.aspx.designer.vb">
+      <DependentUpon>cdFornecedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdFornecedor.aspx.vb">
+      <DependentUpon>cdFornecedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdLembrete.aspx.designer.vb">
       <DependentUpon>cdLembrete.aspx</DependentUpon>
@@ -535,7 +549,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ctrlBancosEAgencias.ascx" />
     <Content Include="imagens\carregandopagina.gif" />
+    <Content Include="imagens\vazio.gif" />
     <Content Include="imagens\wallpapers\13-daylight_planet_wallpaper_by_janedoe873.jpg" />
     <Content Include="imagens\wallpapers\desktop.gif" />
     <Content Include="imagens\wallpapers\desktop3.jpg" />
@@ -548,6 +564,7 @@
     <Content Include="Nucleo\cdAgenda.aspx" />
     <Content Include="Nucleo\cdBancosEAgencias.aspx" />
     <Content Include="Nucleo\cdCompromisso.aspx" />
+    <Content Include="Nucleo\cdFornecedor.aspx" />
     <Content Include="Nucleo\cdLembrete.aspx" />
     <Content Include="Nucleo\cdTarefa.aspx" />
     <Content Include="Nucleo\frmAgenda.aspx" />
@@ -649,7 +666,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>80</DevelopmentServerPort>
           <DevelopmentServerVPath>/Workspace</DevelopmentServerVPath>

@@ -64,6 +64,7 @@ Partial Public Class cdPessoaFisica
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
+        txtNome.Enabled = True
         CarregueComponentes()
         ViewState(CHAVE_ESTADO) = Estado.Novo
         ViewState(CHAVE_ID) = Nothing
@@ -78,6 +79,7 @@ Partial Public Class cdPessoaFisica
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
+        txtNome.Enabled = True
         ViewState(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
@@ -88,10 +90,9 @@ Partial Public Class cdPessoaFisica
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosPessoais, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlEndereco, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), False)
+        txtNome.Enabled = False
+
         CarregueComponentes()
 
         Dim Pessoa As IPessoaFisica
@@ -274,6 +275,18 @@ Partial Public Class cdPessoaFisica
         Pessoa.Site = txtSite.Text
         Pessoa.AdicioneTelefones(CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone)))
         Pessoa.Foto = imgFoto.ImageUrl
+
+        If Not ctrlBancosEAgencias1.AgenciaSelecionada Is Nothing Then
+            Pessoa.DadoBancario = FabricaGenerica.GetInstancia.CrieObjeto(Of IDadoBancario)()
+            Pessoa.DadoBancario.Agencia = ctrlBancosEAgencias1.AgenciaSelecionada
+            Pessoa.DadoBancario.Conta = FabricaGenerica.GetInstancia.CrieObjeto(Of IContaBancaria)()
+            Pessoa.DadoBancario.Conta.Numero = ctrlBancosEAgencias1.NumeroDaConta
+
+            If ctrlBancosEAgencias1.TipoDaConta.HasValue Then
+                Pessoa.DadoBancario.Conta.Tipo = ctrlBancosEAgencias1.TipoDaConta.Value
+            End If
+        End If
+
         Return Pessoa
     End Function
 
@@ -342,6 +355,16 @@ Partial Public Class cdPessoaFisica
             txtEmail.Text = Pessoa.EnderecoDeEmail.ToString
         End If
 
+        If Not Pessoa.DadoBancario Is Nothing Then
+            ctrlBancosEAgencias1.BancoSelecionado = Pessoa.DadoBancario.Agencia.Banco
+            ctrlBancosEAgencias1.AgenciaSelecionada = Pessoa.DadoBancario.Agencia
+
+            If Not Pessoa.DadoBancario.Conta Is Nothing Then
+                ctrlBancosEAgencias1.NumeroDaConta = Pessoa.DadoBancario.Conta.Numero
+                ctrlBancosEAgencias1.TipoDaConta = Pessoa.DadoBancario.Conta.Tipo
+            End If
+        End If
+
         txtSite.Text = Pessoa.Site
         ExibaTelefones(Pessoa.Telefones)
         imgFoto.ImageUrl = Pessoa.Foto
@@ -375,7 +398,6 @@ Partial Public Class cdPessoaFisica
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
         ViewState(CHAVE_ESTADO) = Estado.Modifica
     End Sub
 
