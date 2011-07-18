@@ -56,6 +56,7 @@ Partial Public Class cdPessoaJuridica
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
         UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
+        txtNome.Enabled = True
         ViewState(CHAVE_ESTADO) = Estado.Novo
         ViewState(CHAVE_TELEFONES) = Nothing
         CarregueUFs()
@@ -76,22 +77,16 @@ Partial Public Class cdPessoaJuridica
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
         ViewState(CHAVE_ESTADO) = Estado.Neutro
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosBasicos, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlEndereco, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlPessoa, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), False)
+        txtNome.Enabled = False
     End Sub
 
     Private Sub ExibaTelaDetalhes(ByVal Id As Long)
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosBasicos, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlEndereco, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), False)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlPessoa, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), False)
+        txtNome.Enabled = False
 
         Dim Pessoa As IPessoaJuridica
 
@@ -108,11 +103,8 @@ Partial Public Class cdPessoaJuridica
     Private Sub ExibaTelaModificar()
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosBasicos, Control), True)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), True)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlEndereco, Control), True)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), True)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlPessoa, Control), True)
+        UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), True)
+        txtNome.Enabled = True
         ViewState(CHAVE_ESTADO) = Estado.Modifica
         cboUFEndereco.Enabled = False
     End Sub
@@ -231,6 +223,17 @@ Partial Public Class cdPessoaJuridica
         Pessoa.Site = txtSite.Text
         Pessoa.AdicioneTelefones(CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone)))
 
+        If Not ctrlBancosEAgencias1.AgenciaSelecionada Is Nothing Then
+            Pessoa.DadoBancario = FabricaGenerica.GetInstancia.CrieObjeto(Of IDadoBancario)()
+            Pessoa.DadoBancario.Agencia = ctrlBancosEAgencias1.AgenciaSelecionada
+            Pessoa.DadoBancario.Conta = FabricaGenerica.GetInstancia.CrieObjeto(Of IContaBancaria)()
+            Pessoa.DadoBancario.Conta.Numero = ctrlBancosEAgencias1.NumeroDaConta
+
+            If ctrlBancosEAgencias1.TipoDaConta.HasValue Then
+                Pessoa.DadoBancario.Conta.Tipo = ctrlBancosEAgencias1.TipoDaConta.Value
+            End If
+        End If
+
         Return Pessoa
     End Function
 
@@ -278,6 +281,16 @@ Partial Public Class cdPessoaJuridica
 
         If Not Pessoa.EnderecoDeEmail Is Nothing Then
             txtEmail.Text = Pessoa.EnderecoDeEmail.ToString
+        End If
+
+        If Not Pessoa.DadoBancario Is Nothing Then
+            ctrlBancosEAgencias1.BancoSelecionado = Pessoa.DadoBancario.Agencia.Banco
+            ctrlBancosEAgencias1.AgenciaSelecionada = Pessoa.DadoBancario.Agencia
+
+            If Not Pessoa.DadoBancario.Conta Is Nothing Then
+                ctrlBancosEAgencias1.NumeroDaConta = Pessoa.DadoBancario.Conta.Numero
+                ctrlBancosEAgencias1.TipoDaConta = Pessoa.DadoBancario.Conta.Tipo
+            End If
         End If
 
         'imgFoto.ImageUrl = Pessoa.Foto

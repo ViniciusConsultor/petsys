@@ -3,6 +3,7 @@ Imports Compartilhados.Fabricas
 Imports Core.Interfaces.Servicos
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Core.Interfaces.Negocio
+Imports Compartilhados.Interfaces.Core.Servicos
 Imports Telerik.Web.UI
 Imports Compartilhados.Componentes.Web
 
@@ -55,6 +56,29 @@ Partial Public Class Login
         Usuario = New Usuario(Operador.Pessoa.ID.Value, Operador.Pessoa.Nome, IDsDiretivas, CType(Operador.Pessoa, IPessoaFisica).Sexo.ID)
         FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario = Usuario
         Response.Redirect("Desktop.aspx")
+    End Sub
+
+    Protected Sub btnLimpar_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnLimpar.Click
+        txtLogin.Text = ""
+        txtSenha.Text = ""
+    End Sub
+
+    Private Sub Login_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
+        If Session.IsNewSession OrElse Not IsPostBack Then
+            Dim Empresa As IEmpresa = Nothing
+
+            Try
+                Using Servico As IServicoDeEmpresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeEmpresa)()
+                    Empresa = Servico.Obtenha()
+                End Using
+            Catch
+
+            End Try
+            
+            lblNomeEmpresa.Text = "EMPRESA NÃO INFORMADA"
+
+            If Not Empresa Is Nothing Then lblNomeEmpresa.Text = Empresa.Pessoa.Nome
+        End If
     End Sub
 
 End Class

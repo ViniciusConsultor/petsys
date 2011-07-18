@@ -13,43 +13,16 @@ Option Explicit On
 
 
 
-Partial Public Class ctrlPessoa
+Partial Public Class ctrlBancosEAgencias
 
     '''<summary>
-    '''pnlPessoa control.
+    '''pnlBancosEAgencias control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlPessoa As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''pnlTipoDePessoa control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pnlTipoDePessoa As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''Label1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''rblTipo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rblTipo As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents pnlBancosEAgencias As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''Label6 control.
@@ -61,38 +34,65 @@ Partial Public Class ctrlPessoa
     Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboPessoaFisica control.
+    '''cboBancos control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboPessoaFisica As Global.Telerik.Web.UI.RadComboBox
+    Protected WithEvents cboBancos As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''cboPessoaJuridica control.
+    '''Label2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboPessoaJuridica As Global.Telerik.Web.UI.RadComboBox
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''btnNovo control.
+    '''cboAgencias control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnNovo As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents cboAgencias As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''btnDetalhar control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnDetalhar As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtNumeroDaConta control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtNumeroDaConta As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtTipoConta control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtTipoConta As Global.Telerik.Web.UI.RadNumericTextBox
 End Class

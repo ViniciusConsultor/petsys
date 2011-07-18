@@ -1,18 +1,20 @@
-﻿Imports Compartilhados.Componentes.Web
+﻿Imports Compartilhados
+Imports Compartilhados.Componentes.Web
+Imports Compartilhados.Interfaces.Core.Negocio
+Imports Compartilhados.Fabricas
+Imports Core.Interfaces.Servicos
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Telerik.Web.UI
-Imports Compartilhados.Interfaces.Core.Negocio
-Imports Compartilhados
-Imports Core.Interfaces.Servicos
-Imports Compartilhados.Fabricas
 
-Partial Public Class cdCliente
+Partial Public Class cdFornecedor
     Inherits SuperPagina
 
-    Private CHAVE_ESTADO_CD_CLIENTE As String = "CHAVE_ESTADO_CD_CLIENTE"
+    Private CHAVE_ESTADO_CD_FORNECEDOR As String = "CHAVE_ESTADO_CD_FORNECEDOR"
+    Private CHAVE_OBJ_FORNECEDOR As String = "CHAVE_OBJ_FORNECEDOR"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ObtenhaCliente
+        AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ObtenhaFornecedor
+        AddHandler ctrlPessoa2.PessoaFoiSelecionada, AddressOf ContatoFoiSelecionado
 
         If Not IsPostBack Then
             ExibaTelaInicial()
@@ -24,7 +26,7 @@ Partial Public Class cdCliente
     End Function
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.NCL.008"
+        Return "FUN.NCL.013"
     End Function
 
     Private Enum Estado As Byte
@@ -43,12 +45,23 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        UtilidadesWeb.LimparComponente(CType(pnlDadosDoCliente, Control))
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoCliente, Control), False)
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDoFornecedor, Control))
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoFornecedor, Control), False)
+        UtilidadesWeb.LimparComponente(CType(pnlDadosDosContatos, Control))
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDosContatos, Control), False)
+
         ctrlPessoa1.Inicializa()
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
-        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Inicial
+
+        ctrlPessoa2.Inicializa()
+        ctrlPessoa2.BotaoDetalharEhVisivel = False
+        ctrlPessoa2.BotaoNovoEhVisivel = True
+        ctrlPessoa2.SetaTipoDePessoaPadrao(TipoDePessoa.Fisica)
+        ctrlPessoa2.OpcaoTipoDaPessoaEhVisivel = False
+        ViewState(CHAVE_ESTADO_CD_FORNECEDOR) = Estado.Inicial
+        ViewState(CHAVE_OBJ_FORNECEDOR) = Nothing
+        MostraContatos(New List(Of IPessoaFisica))
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -63,10 +76,12 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Novo
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoCliente, Control), True)
+        ViewState(CHAVE_ESTADO_CD_FORNECEDOR) = Estado.Novo
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoFornecedor, Control), True)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDosContatos, Control), True)
         txtDataDoCadastro.SelectedDate = Now
         txtDataDoCadastro.Enabled = False
+        ViewState(CHAVE_OBJ_FORNECEDOR) = FabricaGenerica.GetInstancia.CrieObjeto(Of IFornecedor)((New Object() {ctrlPessoa1.PessoaSelecionada}))
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -77,8 +92,9 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Modifica
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoCliente, Control), True)
+        ViewState(CHAVE_ESTADO_CD_FORNECEDOR) = Estado.Modifica
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoFornecedor, Control), True)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDosContatos, Control), True)
         txtDataDoCadastro.Enabled = False
     End Sub
 
@@ -90,7 +106,7 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        ViewState(CHAVE_ESTADO_CD_CLIENTE) = Estado.Remove
+        ViewState(CHAVE_ESTADO_CD_FORNECEDOR) = Estado.Remove
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -101,41 +117,36 @@ Partial Public Class cdCliente
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoCliente, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoFornecedor, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDosContatos, Control), False)
     End Sub
 
     Protected Sub btnCancela_Click()
         ExibaTelaInicial()
     End Sub
 
-    Private Function MontaObjetoCliente() As ICliente
-        Dim Cliente As ICliente
-        Dim Pessoa As IPessoa
+    Private Function MontaObjetoFornecedor() As IFornecedor
+        Dim Fornecedor As IFornecedor
 
-        Pessoa = ctrlPessoa1.PessoaSelecionada
-        Cliente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICliente)((New Object() {Pessoa}))
-        Cliente.DataDoCadastro = txtDataDoCadastro.SelectedDate
-        Cliente.FaixaSalarial = txtFaixaSalarial.Value
-        Cliente.InformacoesAdicionais = txtInformacoesAdicionais.Text
-        Cliente.PorcentagemDeDescontoAutomatico = txtDescontoAutomatico.Value
-        Cliente.SaldoParaCompras = txtSaldoParaCompras.Value
-        Cliente.ValorMaximoParaCompras = txtValorMaximoParaCompras.Value
-
-        Return Cliente
+        Fornecedor = CType(ViewState(CHAVE_OBJ_FORNECEDOR), IFornecedor)
+        Fornecedor.DataDoCadastro = txtDataDoCadastro.SelectedDate.Value
+        Fornecedor.InformacoesAdicionais = ""
+        Return Fornecedor
     End Function
 
     Private Sub btnSalva_Click()
         Dim Mensagem As String
-        Dim Cliente As ICliente = MontaObjetoCliente()
+
+        Dim Fornecedor As IFornecedor = MontaObjetoFornecedor()
 
         Try
-            Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
-                If CByte(ViewState(CHAVE_ESTADO_CD_CLIENTE)) = Estado.Novo Then
-                    Servico.Inserir(Cliente)
-                    Mensagem = "Cliente cadastrado com sucesso."
+            Using Servico As IServicoDeFornecedor = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeFornecedor)()
+                If CByte(ViewState(CHAVE_ESTADO_CD_FORNECEDOR)) = Estado.Novo Then
+                    Servico.Inserir(Fornecedor)
+                    Mensagem = "Fornecedor cadastrado com sucesso."
                 Else
-                    Servico.Modificar(Cliente)
-                    Mensagem = "Cliente modificado com sucesso."
+                    Servico.Modificar(Fornecedor)
+                    Mensagem = "Fornecedor modificado com sucesso."
                 End If
 
             End Using
@@ -162,11 +173,11 @@ Partial Public Class cdCliente
 
     Private Sub btnSim_Click()
         Try
-            Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
+            Using Servico As IServicoDeFornecedor = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeFornecedor)()
                 Servico.Remover(ctrlPessoa1.PessoaSelecionada.ID.Value)
             End Using
 
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Cliente excluido com sucesso."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Fornecedor excluido com sucesso."), False)
             ExibaTelaInicial()
 
         Catch ex As BussinesException
@@ -193,31 +204,47 @@ Partial Public Class cdCliente
         End Select
     End Sub
 
-    Private Sub ObtenhaCliente(ByVal Pessoa As IPessoa)
-        Dim Cliente As ICliente
+    Private Sub ObtenhaFornecedor(ByVal Pessoa As IPessoa)
+        Dim Fornecedor As IFornecedor
 
         ctrlPessoa1.BotaoDetalharEhVisivel = True
 
-        Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
-            Cliente = Servico.Obtenha(Pessoa)
+        Using Servico As IServicoDeFornecedor = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeFornecedor)()
+            Fornecedor = Servico.Obtenha(Pessoa)
         End Using
 
-        If Cliente Is Nothing Then
+        If Fornecedor Is Nothing Then
             CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
             Exit Sub
         End If
 
-        MostreCliente(Cliente)
+        ViewState(CHAVE_OBJ_FORNECEDOR) = Fornecedor
+        MostreFornecedor(Fornecedor)
         ExibaTelaConsultar()
     End Sub
 
-    Private Sub MostreCliente(ByVal Cliente As ICliente)
-        txtDataDoCadastro.SelectedDate = Cliente.DataDoCadastro
-        txtDescontoAutomatico.Value = Cliente.PorcentagemDeDescontoAutomatico
-        txtFaixaSalarial.Value = Cliente.FaixaSalarial
-        txtInformacoesAdicionais.Text = Cliente.InformacoesAdicionais
-        txtSaldoParaCompras.Value = Cliente.SaldoParaCompras
-        txtValorMaximoParaCompras.Value = Cliente.ValorMaximoParaCompras
+    Private Sub ContatoFoiSelecionado(ByVal Pessoa As IPessoa)
+        Dim Fornecedor As IFornecedor = CType(ViewState(CHAVE_OBJ_FORNECEDOR), IFornecedor)
+
+        Try
+            ctrlPessoa2.BotaoDetalharEhVisivel = True
+            Fornecedor.AdicionaContato(CType(Pessoa, IPessoaFisica))
+            ViewState(CHAVE_OBJ_FORNECEDOR) = Fornecedor
+            MostraContatos(Fornecedor.Contatos)
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
+    End Sub
+
+    Private Sub MostraContatos(ByVal Contatos As IList(Of IPessoaFisica))
+        Me.grdContato.DataSource = Contatos
+        Me.grdContato.DataBind()
+    End Sub
+
+    Private Sub MostreFornecedor(ByVal Fornecedor As IFornecedor)
+        txtDataDoCadastro.SelectedDate = Fornecedor.DataDoCadastro
+        MostraContatos(Fornecedor.Contatos)
     End Sub
 
 End Class
