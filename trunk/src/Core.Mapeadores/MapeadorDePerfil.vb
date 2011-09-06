@@ -18,10 +18,15 @@ Public Class MapeadorDePerfil
         Dim DBHelper As IDBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            If Leitor.Read() Then
-                Perfil = New PerfilUsuario(UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEMDESKTOP"), _
-                                           UtilidadesDePersistencia.GetValorString(Leitor, "TEMA"))
-            End If
+            Try
+                If Leitor.Read() Then
+                    Perfil = New PerfilUsuario(UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEMDESKTOP"), _
+                                               UtilidadesDePersistencia.GetValorString(Leitor, "TEMA"))
+                End If
+            Finally
+                Leitor.Close()
+            End Try
+            
         End Using
 
         If Not Perfil Is Nothing Then
@@ -100,23 +105,28 @@ Public Class MapeadorDePerfil
         Dim DBHelper As IDBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read
-                TipoDeAtalho = TipoAtalho.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "TIPO"))
+            Try
+                While Leitor.Read
+                    TipoDeAtalho = TipoAtalho.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "TIPO"))
 
-                If TipoDeAtalho.Equals(TipoAtalho.Externo) Then
-                    Atalho = New AtalhoExterno(UtilidadesDePersistencia.GetValorString(Leitor, "NOME"), _
-                                               UtilidadesDePersistencia.GetValorString(Leitor, "URL"), _
-                                               UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM"))
-                    Atalho.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID")
-                Else
-                    Atalho = New AtalhoSistema(UtilidadesDePersistencia.GetValorString(Leitor, "ID"), _
-                                                UtilidadesDePersistencia.GetValorString(Leitor, "NOME"), _
-                                               UtilidadesDePersistencia.GetValorString(Leitor, "URL"), _
-                                               UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM"))
-                End If
+                    If TipoDeAtalho.Equals(TipoAtalho.Externo) Then
+                        Atalho = New AtalhoExterno(UtilidadesDePersistencia.GetValorString(Leitor, "NOME"), _
+                                                   UtilidadesDePersistencia.GetValorString(Leitor, "URL"), _
+                                                   UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM"))
+                        Atalho.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID")
+                    Else
+                        Atalho = New AtalhoSistema(UtilidadesDePersistencia.GetValorString(Leitor, "ID"), _
+                                                    UtilidadesDePersistencia.GetValorString(Leitor, "NOME"), _
+                                                   UtilidadesDePersistencia.GetValorString(Leitor, "URL"), _
+                                                   UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM"))
+                    End If
 
-                Atalhos.Add(Atalho)
-            End While
+                    Atalhos.Add(Atalho)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+           
         End Using
 
         Return Atalhos

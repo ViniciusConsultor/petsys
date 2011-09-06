@@ -67,9 +67,13 @@ Public Class MapeadorDeCliente
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Cliente = MontaObjetoCliente(Leitor, Pessoa)
-            End If
+            Try
+                If Leitor.Read Then
+                    Cliente = MontaObjetoCliente(Leitor, Pessoa)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Cliente
@@ -138,22 +142,26 @@ Public Class MapeadorDeCliente
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString, QuantidadeMaximaDeRegistros)
-            While Leitor.Read
-                Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
+            Try
+                While Leitor.Read
+                    Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
 
-                If Tipo.Equals(TipoDePessoa.Fisica) Then
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                Else
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
-                End If
+                    If Tipo.Equals(TipoDePessoa.Fisica) Then
+                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
+                    Else
+                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                    End If
 
-                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
-                Cliente = MontaObjetoCliente(Leitor, Pessoa)
+                    Cliente = MontaObjetoCliente(Leitor, Pessoa)
 
-                Clientes.Add(Cliente)
-            End While
+                    Clientes.Add(Cliente)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Clientes
@@ -176,20 +184,24 @@ Public Class MapeadorDeCliente
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
+            Try
+                If Leitor.Read Then
+                    Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
 
-                If Tipo.Equals(TipoDePessoa.Fisica) Then
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                Else
-                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                    If Tipo.Equals(TipoDePessoa.Fisica) Then
+                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
+                    Else
+                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                    End If
+
+                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+
+                    Cliente = MontaObjetoCliente(Leitor, Pessoa)
                 End If
-
-                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-
-                Cliente = MontaObjetoCliente(Leitor, Pessoa)
-            End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Cliente

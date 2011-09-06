@@ -39,14 +39,18 @@ Public Class MapeadorDeEmpresa
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
+            Try
+                If Leitor.Read Then
 
-                Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+                    Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
-                Empresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IEmpresa)(New Object() {Pessoa})
-                Empresa.DataDaAtivacao = UtilidadesDePersistencia.getValorDate(Leitor, "DTATIVACAO").Value
-            End If
+                    Empresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IEmpresa)(New Object() {Pessoa})
+                    Empresa.DataDaAtivacao = UtilidadesDePersistencia.getValorDate(Leitor, "DTATIVACAO").Value
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Empresa

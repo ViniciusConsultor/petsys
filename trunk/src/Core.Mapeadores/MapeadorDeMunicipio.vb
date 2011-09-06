@@ -92,18 +92,23 @@ Public Class MapeadorDeMunicipio
         Municipios = New List(Of IMunicipio)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString, QuantidadeMaxima)
-            While Leitor.Read
-                Municipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMunicipio)()
-                Municipio.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Municipio.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-                Municipio.UF = UF.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "UF"))
+            Try
+                While Leitor.Read
+                    Municipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMunicipio)()
+                    Municipio.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Municipio.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+                    Municipio.UF = UF.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "UF"))
 
-                If Not IsDBNull(Leitor("CEP")) Then
-                    Municipio.CEP = New CEP(UtilidadesDePersistencia.GetValorLong(Leitor, "CEP"))
-                End If
+                    If Not IsDBNull(Leitor("CEP")) Then
+                        Municipio.CEP = New CEP(UtilidadesDePersistencia.GetValorLong(Leitor, "CEP"))
+                    End If
 
-                Municipios.Add(Municipio)
-            End While
+                    Municipios.Add(Municipio)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+            
         End Using
 
         Return Municipios
@@ -137,9 +142,13 @@ Public Class MapeadorDeMunicipio
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            If Leitor.Read Then
-                Return UtilidadesDePersistencia.getValorInteger(Leitor, "QUANTIDADE") <> 0
-            End If
+            Try
+                If Leitor.Read Then
+                    Return UtilidadesDePersistencia.getValorInteger(Leitor, "QUANTIDADE") <> 0
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
     End Function

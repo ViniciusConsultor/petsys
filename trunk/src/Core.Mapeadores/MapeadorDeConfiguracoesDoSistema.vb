@@ -24,47 +24,51 @@ Public Class MapeadorDeConfiguracoesDoSistema
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                ConfiguracaoDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDoSistema)()
-                ConfiguracaoDoSistema.NotificarErrosAutomaticamente = UtilidadesDePersistencia.GetValorBooleano(Leitor, "NOTIFERROSREMAIL")
+            Try
+                If Leitor.Read Then
+                    ConfiguracaoDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDoSistema)()
+                    ConfiguracaoDoSistema.NotificarErrosAutomaticamente = UtilidadesDePersistencia.GetValorBooleano(Leitor, "NOTIFERROSREMAIL")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "EMAILREMETNOTIFERROS") Then
-                    ConfiguracaoDoSistema.RemetenteDaNotificaoDeErros = UtilidadesDePersistencia.GetValorString(Leitor, "EMAILREMETNOTIFERROS")
-                End If
-
-                'OU SEJA TEM CONFIGURACAO DE E-MAIL CADASTRADO
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "REMETENTEPADRAO") Then
-                    ConfiguracaoDeEmail = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeEmailDoSistema)()
-                    ConfiguracaoDeEmail.EmailRemetente = UtilidadesDePersistencia.GetValorString(Leitor, "REMETENTEPADRAO")
-                    ConfiguracaoDeEmail.HabilitarSSL = UtilidadesDePersistencia.GetValorBooleano(Leitor, "HABILITARSSL")
-                    ConfiguracaoDeEmail.Porta = UtilidadesDePersistencia.getValorInteger(Leitor, "PORTA")
-                    ConfiguracaoDeEmail.RequerAutenticacao = UtilidadesDePersistencia.GetValorBooleano(Leitor, "REQUERAUTENTICACAO")
-
-                    If ConfiguracaoDeEmail.RequerAutenticacao Then
-                        ConfiguracaoDeEmail.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida = UtilidadesDePersistencia.GetValorString(Leitor, "SHNUSUSERVSAIDA")
-                        ConfiguracaoDeEmail.UsuarioDeAutenticacaoDoServidorDeSaida = UtilidadesDePersistencia.GetValorString(Leitor, "USUSERVSAIDA")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "EMAILREMETNOTIFERROS") Then
+                        ConfiguracaoDoSistema.RemetenteDaNotificaoDeErros = UtilidadesDePersistencia.GetValorString(Leitor, "EMAILREMETNOTIFERROS")
                     End If
 
-                    ConfiguracaoDeEmail.ServidorDeSaidaDeEmail = UtilidadesDePersistencia.GetValorString(Leitor, "SERVSAIDA")
-                    ConfiguracaoDeEmail.TipoDoServidor = TipoDeServidorDeEmail.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "TIPOSERVSAIDA"))
+                    'OU SEJA TEM CONFIGURACAO DE E-MAIL CADASTRADO
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "REMETENTEPADRAO") Then
+                        ConfiguracaoDeEmail = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeEmailDoSistema)()
+                        ConfiguracaoDeEmail.EmailRemetente = UtilidadesDePersistencia.GetValorString(Leitor, "REMETENTEPADRAO")
+                        ConfiguracaoDeEmail.HabilitarSSL = UtilidadesDePersistencia.GetValorBooleano(Leitor, "HABILITARSSL")
+                        ConfiguracaoDeEmail.Porta = UtilidadesDePersistencia.getValorInteger(Leitor, "PORTA")
+                        ConfiguracaoDeEmail.RequerAutenticacao = UtilidadesDePersistencia.GetValorBooleano(Leitor, "REQUERAUTENTICACAO")
+
+                        If ConfiguracaoDeEmail.RequerAutenticacao Then
+                            ConfiguracaoDeEmail.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida = UtilidadesDePersistencia.GetValorString(Leitor, "SHNUSUSERVSAIDA")
+                            ConfiguracaoDeEmail.UsuarioDeAutenticacaoDoServidorDeSaida = UtilidadesDePersistencia.GetValorString(Leitor, "USUSERVSAIDA")
+                        End If
+
+                        ConfiguracaoDeEmail.ServidorDeSaidaDeEmail = UtilidadesDePersistencia.GetValorString(Leitor, "SERVSAIDA")
+                        ConfiguracaoDeEmail.TipoDoServidor = TipoDeServidorDeEmail.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "TIPOSERVSAIDA"))
+                    End If
+
+                    ConfiguracaoDoSistema.ConfiguracaoDeEmailDoSistema = ConfiguracaoDeEmail
+
+                    ConfiguracaoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoSistema)()
+                    ConfiguracaoDeAgenda.ApresentarLinhasNoCabecalhoDaAgenda = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHCABAGEN")
+                    ConfiguracaoDeAgenda.ApresentarLinhasNoRodapeDaAgenda = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHRODAGEN")
+                    ConfiguracaoDeAgenda.TextoDoCompromissoEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTCOMPROENTRELNH")
+                    ConfiguracaoDeAgenda.TextoDeLembretesEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTLEMBREENTRELNH")
+                    ConfiguracaoDeAgenda.TextoDeTarefasEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTTAREENTRELNH")
+
+                    ConfiguracaoDeAgenda.TextoCabecalhoDaAgenda = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCABAGEN")
+                    ConfiguracaoDeAgenda.TextoCompromissos = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCOMPRO")
+                    ConfiguracaoDeAgenda.TextoLembretes = UtilidadesDePersistencia.GetValorString(Leitor, "TXTLEMBRE")
+                    ConfiguracaoDeAgenda.TextoTarefas = UtilidadesDePersistencia.GetValorString(Leitor, "TXTTARE")
+
+                    ConfiguracaoDoSistema.ConfiguracaoDeAgendaDoSistema = ConfiguracaoDeAgenda
                 End If
-
-                ConfiguracaoDoSistema.ConfiguracaoDeEmailDoSistema = ConfiguracaoDeEmail
-
-                ConfiguracaoDeAgenda = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeAgendaDoSistema)()
-                ConfiguracaoDeAgenda.ApresentarLinhasNoCabecalhoDaAgenda = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHCABAGEN")
-                ConfiguracaoDeAgenda.ApresentarLinhasNoRodapeDaAgenda = UtilidadesDePersistencia.GetValorBooleano(Leitor, "APRELNHRODAGEN")
-                ConfiguracaoDeAgenda.TextoDoCompromissoEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTCOMPROENTRELNH")
-                ConfiguracaoDeAgenda.TextoDeLembretesEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTLEMBREENTRELNH")
-                ConfiguracaoDeAgenda.TextoDeTarefasEntreLinhas = UtilidadesDePersistencia.GetValorBooleano(Leitor, "TXTTAREENTRELNH")
-
-                ConfiguracaoDeAgenda.TextoCabecalhoDaAgenda = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCABAGEN")
-                ConfiguracaoDeAgenda.TextoCompromissos = UtilidadesDePersistencia.GetValorString(Leitor, "TXTCOMPRO")
-                ConfiguracaoDeAgenda.TextoLembretes = UtilidadesDePersistencia.GetValorString(Leitor, "TXTLEMBRE")
-                ConfiguracaoDeAgenda.TextoTarefas = UtilidadesDePersistencia.GetValorString(Leitor, "TXTTARE")
-
-                ConfiguracaoDoSistema.ConfiguracaoDeAgendaDoSistema = ConfiguracaoDeAgenda
-            End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return ConfiguracaoDoSistema

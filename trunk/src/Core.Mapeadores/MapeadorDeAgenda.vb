@@ -113,9 +113,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Return MontaObjetoCompromisso(Leitor)
-            End If
+            Try
+                If Leitor.Read Then
+                    Return MontaObjetoCompromisso(Leitor)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Nothing
@@ -132,9 +136,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read
-                Compromissos.Add(MontaObjetoCompromisso(Leitor))
-            End While
+            Try
+                While Leitor.Read
+                    Compromissos.Add(MontaObjetoCompromisso(Leitor))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Compromissos
@@ -259,9 +267,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Return MontaObjetoTarefa(Leitor)
-            End If
+            Try
+                If Leitor.Read Then
+                    Return MontaObjetoTarefa(Leitor)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Nothing
@@ -278,9 +290,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read
-                Tarefas.Add(MontaObjetoTarefa(Leitor))
-            End While
+            Try
+                While Leitor.Read
+                    Tarefas.Add(MontaObjetoTarefa(Leitor))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Tarefas
@@ -318,9 +334,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read
-                Compromissos.Add(MontaObjetoCompromisso(Leitor))
-            End While
+            Try
+                While Leitor.Read
+                    Compromissos.Add(MontaObjetoCompromisso(Leitor))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Compromissos
@@ -347,9 +367,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read
-                Tarefas.Add(MontaObjetoTarefa(Leitor))
-            End While
+            Try
+                While Leitor.Read
+                    Tarefas.Add(MontaObjetoTarefa(Leitor))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Tarefas
@@ -426,9 +450,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Return MontaObjetoLembrete(Leitor)
-            End If
+            Try
+                If Leitor.Read Then
+                    Return MontaObjetoLembrete(Leitor)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Nothing
@@ -445,9 +473,14 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read
-                Lembretes.Add(MontaObjetoLembrete(Leitor))
-            End While
+            Try
+                While Leitor.Read
+                    Lembretes.Add(MontaObjetoLembrete(Leitor))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+
         End Using
 
         Return Lembretes
@@ -473,9 +506,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read
-                Lembretes.Add(MontaObjetoLembrete(Leitor))
-            End While
+            Try
+                While Leitor.Read
+                    Lembretes.Add(MontaObjetoLembrete(Leitor))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Lembretes
@@ -533,9 +570,13 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Return MontaObjeto(Leitor, Pessoa)
-            End If
+            Try
+                If Leitor.Read Then
+                    Return MontaObjeto(Leitor, Pessoa)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Nothing
@@ -553,13 +594,17 @@ Public Class MapeadorDeAgenda
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Dim Pessoa As IPessoaFisica
-                Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-                Return MontaObjeto(Leitor, Pessoa)
-            End If
+            Try
+                If Leitor.Read Then
+                    Dim Pessoa As IPessoaFisica
+                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
+                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+                    Return MontaObjeto(Leitor, Pessoa)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Nothing

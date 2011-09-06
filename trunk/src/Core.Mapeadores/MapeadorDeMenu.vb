@@ -25,34 +25,39 @@ Public Class MapeadorDeMenu
         Menu = FabricaGenerica.GetInstancia.CrieObjeto(Of IMenuComposto)()
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            Dim MenuComposto As IMenuComposto = Nothing
-            Dim MenuFolha As IMenuFolha = Nothing
+            Try
+                Dim MenuComposto As IMenuComposto = Nothing
+                Dim MenuFolha As IMenuFolha = Nothing
 
-            Dim IdModuloCorrente As String = ""
-            Dim IdFuncaoCorrente As String = ""
+                Dim IdModuloCorrente As String = ""
+                Dim IdFuncaoCorrente As String = ""
 
-            While Leitor.Read
+                While Leitor.Read
 
-                If IdModuloCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO") Then
-                    MenuComposto = FabricaGenerica.GetInstancia.CrieObjeto(Of IMenuComposto)()
-                    MenuComposto.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
-                    MenuComposto.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_MODULO")
-                    MenuComposto.Imagem = UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM_MODULO")
-                    Menu.AdicioneItem(MenuComposto)
-                    IdModuloCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
-                End If
+                    If IdModuloCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO") Then
+                        MenuComposto = FabricaGenerica.GetInstancia.CrieObjeto(Of IMenuComposto)()
+                        MenuComposto.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
+                        MenuComposto.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_MODULO")
+                        MenuComposto.Imagem = UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM_MODULO")
+                        Menu.AdicioneItem(MenuComposto)
+                        IdModuloCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
+                    End If
 
-                If IdFuncaoCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO") Then
-                    MenuFolha = FabricaGenerica.GetInstancia.CrieObjeto(Of IMenuFolha)()
-                    MenuFolha.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
-                    MenuFolha.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_FUNCAO")
-                    MenuFolha.URL = UtilidadesDePersistencia.GetValorString(Leitor, "URL")
-                    MenuFolha.Imagem = UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM_FUNCAO")
-                    MenuComposto.AdicioneItem(MenuFolha)
-                    IdFuncaoCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
-                End If
+                    If IdFuncaoCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO") Then
+                        MenuFolha = FabricaGenerica.GetInstancia.CrieObjeto(Of IMenuFolha)()
+                        MenuFolha.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
+                        MenuFolha.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_FUNCAO")
+                        MenuFolha.URL = UtilidadesDePersistencia.GetValorString(Leitor, "URL")
+                        MenuFolha.Imagem = UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEM_FUNCAO")
+                        MenuComposto.AdicioneItem(MenuFolha)
+                        IdFuncaoCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
+                    End If
 
-            End While
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+            
         End Using
 
         Return Menu

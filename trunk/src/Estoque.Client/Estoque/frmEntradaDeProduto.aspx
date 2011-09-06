@@ -32,7 +32,7 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlDadosDaMovimentacao" runat="server">
-                        <table>
+                        <table class="tabela">
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label1" runat="server" Text="Data da movimentação"></asp:Label>
@@ -47,7 +47,7 @@
                                     <asp:Label ID="Label2" runat="server" Text="Número documento"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNumeroDocumento" Runat="server">
+                                    <telerik:RadTextBox ID="txtNumeroDocumento" runat="server">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -56,8 +56,13 @@
                                     <asp:Label ID="Label3" runat="server" Text="Fornecedor"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboFornecedor" Runat="server">
+                                    <telerik:RadComboBox ID="cboFornecedor" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
+                                        LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
+                                        CausesValidation="False" MaxLength="80">
                                     </telerik:RadComboBox>
+                                    <asp:ImageButton ID="btnNovoFornecedor" runat="server" ImageUrl="~/imagens/new.gif"
+                                        CausesValidation="False" CommandArgument="OPE.NCL.013.0001" />
                                 </td>
                             </tr>
                             <tr>
@@ -65,7 +70,7 @@
                                     <asp:Label ID="Label4" runat="server" Text="Histórico"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtHistorico" Runat="server">
+                                    <telerik:RadTextBox ID="txtHistorico" runat="server">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -78,6 +83,61 @@
                 <ContentTemplate>
                     <asp:Panel ID="pnlProdutosDaMovimentacao" runat="server">
                         <uc1:ctrlProduto ID="ctrlProduto1" runat="server" />
+                    </asp:Panel>
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label5" runat="server" Text="Quantidade"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtQuantidadeDeProdutoMovimentado" runat="server">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label6" runat="server" Text="Preço"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtPrecoProdutoMovimentado" runat="server">
+                                </telerik:RadNumericTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td" colspan="2">
+                                <asp:Button ID="btnAdicionar" runat="server" Text="Adicionar produto" CssClass="RadUploadSubmit" />
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Panel ID="Panel1" runat="server">
+                        <telerik:RadGrid ID="grdItensLancados" runat="server" AutoGenerateColumns="False"
+                            GridLines="None" Skin="Vista">
+                            <MasterTableView GridLines="Both">
+                                <RowIndicatorColumn>
+                                    <HeaderStyle Width="20px" />
+                                </RowIndicatorColumn>
+                                <ExpandCollapseColumn>
+                                    <HeaderStyle Width="20px" />
+                                </ExpandCollapseColumn>
+                                <Columns>
+                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
+                                        ImageUrl="~/imagens/delete.gif">
+                                    </telerik:GridButtonColumn>
+                                    <telerik:GridBoundColumn DataField="Produto.ID" UniqueName="column" Visible="False"
+                                        HeaderText="ID">
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn DataField="Quantidade" UniqueName="column1" Visible="True"
+                                        HeaderText="Quantidade">
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn DataField="Preco" UniqueName="column2" Visible="True" HeaderText="Preço unitário">
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn DataField="Produto.Nome" UniqueName="column3" HeaderText="Produto">
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn DataField="PrecoTotal" UniqueName="column5" HeaderText="Total">
+                                    </telerik:GridBoundColumn>
+                                </Columns>
+                            </MasterTableView>
+                        </telerik:RadGrid>
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>

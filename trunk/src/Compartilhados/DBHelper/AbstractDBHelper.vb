@@ -31,6 +31,7 @@ Namespace DBHelper
         End Sub
 
         Public Sub Dispose() Implements IDBHelper.Dispose
+            ConexaoPadrao.Close()
             ConexaoPadrao.Dispose()
         End Sub
 

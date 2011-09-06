@@ -1,6 +1,7 @@
 ﻿Imports Compartilhados.Componentes.Web
 Imports Estoque.Interfaces.Negocio
 Imports Telerik.Web.UI
+Imports Compartilhados.Fabricas
 
 Partial Public Class frmEntradaDeProduto
     Inherits SuperPagina
@@ -13,8 +14,8 @@ Partial Public Class frmEntradaDeProduto
         Remove
     End Enum
 
-    Private CHAVE_ESTADO As String = "CHAVE_ESTADO_FRMSAIDAPRODUTO"
-    'Private CHAVE_ID As String = "CHAVE_ID_MARCA"
+    Private CHAVE_ESTADO As String = "CHAVE_ESTADO_FRMENTRADADEPRODUTO"
+    Private CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA As String = "CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -30,10 +31,11 @@ Partial Public Class frmEntradaDeProduto
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        ' UtilidadesWeb.LimparComponente(CType(pnlMarca, Control))
-        ' UtilidadesWeb.HabilitaComponentes(CType(pnlMarca, Control), True)
+
         Session(CHAVE_ESTADO) = Estado.Inicial
-        '  cboMarca.EmptyMessage = "Selecione uma marca de produto"
+        Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = Nothing
+        Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = New List(Of IProdutoMovimentado)
+        ExibaItensMovimentados(New List(Of IProdutoMovimentado))
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -49,9 +51,7 @@ Partial Public Class frmEntradaDeProduto
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         Session(CHAVE_ESTADO) = Estado.Novo
-        ' UtilidadesWeb.LimparComponente(CType(pnlMarca, Control))
-        '  UtilidadesWeb.HabilitaComponentes(CType(pnlMarca, Control), True)
-        ' cboMarca.EmptyMessage = ""
+
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -63,8 +63,7 @@ Partial Public Class frmEntradaDeProduto
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         Session(CHAVE_ESTADO) = Estado.Modifica
-        ' UtilidadesWeb.HabilitaComponentes(CType(pnlMarca, Control), True)
-        ' cboMarca.EmptyMessage = ""
+
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -76,8 +75,7 @@ Partial Public Class frmEntradaDeProduto
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
         Session(CHAVE_ESTADO) = Estado.Remove
-        ' UtilidadesWeb.HabilitaComponentes(CType(pnlMarca, Control), False)
-        'cboMarca.EmptyMessage = ""
+
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -88,7 +86,7 @@ Partial Public Class frmEntradaDeProduto
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        '  cboMarca.EmptyMessage = ""
+
     End Sub
 
     Protected Sub btnCancela_Click()
@@ -211,4 +209,30 @@ Partial Public Class frmEntradaDeProduto
         Return rtbToolBar
     End Function
 
+    Private Sub btnAdicionar_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionar.Click
+        Dim ProdutoMovimentado As IProdutoMovimentado
+        Dim ProdutosMovimentados As IList(Of IProdutoMovimentado)
+
+        ProdutoMovimentado = FabricaGenerica.GetInstancia.CrieObjeto(Of IProdutoMovimentado)()
+        ProdutoMovimentado.Preco = txtPrecoProdutoMovimentado.Value.Value
+        ProdutoMovimentado.Produto = ctrlProduto1.ProdutoSelecionado
+        ProdutoMovimentado.Quantidade = txtQuantidadeDeProdutoMovimentado.Value.Value
+
+        ProdutosMovimentados = CType(Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA), IList(Of IProdutoMovimentado))
+        ProdutosMovimentados.Add(ProdutoMovimentado)
+        ExibaItensMovimentados(ProdutosMovimentados)
+        Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = ProdutosMovimentados
+        LimpaCamposProdutoMovimentado()
+    End Sub
+
+    Private Sub LimpaCamposProdutoMovimentado()
+        txtQuantidadeDeProdutoMovimentado.Text = ""
+        txtPrecoProdutoMovimentado.Text = ""
+        ctrlProduto1.LimpaComponente()
+    End Sub
+
+    Private Sub ExibaItensMovimentados(ByVal Itens As IList(Of IProdutoMovimentado))
+        grdItensLancados.DataSource = Itens
+        grdItensLancados.DataBind()
+    End Sub
 End Class

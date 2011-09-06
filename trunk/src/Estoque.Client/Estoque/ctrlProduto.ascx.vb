@@ -33,9 +33,15 @@ Partial Public Class ctrlProduto
         Valor = DirectCast(o, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then Return
 
+        txtCodigo.Text = ""
+
         Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
             Produto = Servico.ObtenhaProduto(CLng(Valor))
         End Using
+
+        If Not String.IsNullOrEmpty(Produto.CodigoDeBarras) Then
+            txtCodigo.Text = Produto.CodigoDeBarras
+        End If
 
         ProdutoSelecionado = Produto
         RaiseEvent ProdutoFoiSelecionado(Produto)
@@ -49,6 +55,13 @@ Partial Public Class ctrlProduto
             ViewState.Add(Me.ClientID, value)
         End Set
     End Property
+
+    Public Sub LimpaComponente()
+        txtCodigo.Text = ""
+        cboProduto.Text = ""
+        ProdutoSelecionado = Nothing
+        cboProduto.SelectedValue = ""
+    End Sub
 
     Private Sub txtCodigo_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtCodigo.TextChanged
         If String.IsNullOrEmpty(txtCodigo.Text) Then Exit Sub

@@ -148,62 +148,67 @@ Public Class MapeadorDePessoaFisica
         Pessoas = New List(Of IPessoaFisica)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql, QuantidadeMaximaDeRegistros)
-            While Leitor.Read
-                Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                MyBase.PreencheDados(Pessoa, Leitor)
+            Try
+                While Leitor.Read
+                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
+                    MyBase.PreencheDados(Pessoa, Leitor)
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "DATANASCIMENTO") Then
-                    Pessoa.DataDeNascimento = UtilidadesDePersistencia.getValorDate(Leitor, "DATANASCIMENTO").Value
-                End If
-
-                Pessoa.EstadoCivil = EstadoCivil.ObtenhaEstadoCivil(UtilidadesDePersistencia.getValorChar(Leitor, "ESTADOCIVIL"))
-                Pessoa.Nacionalidade = Nacionalidade.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "NACIONALIDADE"))
-                Pessoa.Raca = Raca.ObtenhaRaca(UtilidadesDePersistencia.getValorChar(Leitor, "RACA"))
-                Pessoa.Sexo = Sexo.ObtenhaSexo(UtilidadesDePersistencia.getValorChar(Leitor, "SEXO"))
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEMAE") Then
-                    Pessoa.NomeDaMae = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEMAE")
-                End If
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEPAI") Then
-                    Pessoa.NomeDoPai = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPAI")
-                End If
-
-                Dim MapeadorDeMunicipio As IMapeadorDeMunicipio
-
-                MapeadorDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMunicipio)()
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "NATURALIDADE") Then
-                    Pessoa.Naturalidade = MapeadorDeMunicipio.ObtenhaMunicipio(UtilidadesDePersistencia.GetValorLong(Leitor, "NATURALIDADE"))
-                End If
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "FOTO") Then
-                    Pessoa.Foto = UtilidadesDePersistencia.GetValorString(Leitor, "FOTO")
-                End If
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "CPF") Then
-                    Dim CPF As ICPF
-
-                    CPF = FabricaGenerica.GetInstancia.CrieObjeto(Of ICPF)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "CPF")})
-                    Pessoa.AdicioneDocumento(CPF)
-                End If
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "NUMERORG") Then
-                    Dim RG As IRG
-
-                    RG = FabricaGenerica.GetInstancia.CrieObjeto(Of IRG)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "NUMERORG")})
-
-                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "DATAEXP") Then
-                        RG.DataDeEmissao = UtilidadesDePersistencia.getValorDate(Leitor, "DATAEXP")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "DATANASCIMENTO") Then
+                        Pessoa.DataDeNascimento = UtilidadesDePersistencia.getValorDate(Leitor, "DATANASCIMENTO").Value
                     End If
 
-                    RG.OrgaoExpeditor = UtilidadesDePersistencia.GetValorString(Leitor, "ORGEXPEDITOR")
-                    RG.UF = UF.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "UFEXP"))
-                    Pessoa.AdicioneDocumento(RG)
-                End If
+                    Pessoa.EstadoCivil = EstadoCivil.ObtenhaEstadoCivil(UtilidadesDePersistencia.getValorChar(Leitor, "ESTADOCIVIL"))
+                    Pessoa.Nacionalidade = Nacionalidade.Obtenha(UtilidadesDePersistencia.getValorChar(Leitor, "NACIONALIDADE"))
+                    Pessoa.Raca = Raca.ObtenhaRaca(UtilidadesDePersistencia.getValorChar(Leitor, "RACA"))
+                    Pessoa.Sexo = Sexo.ObtenhaSexo(UtilidadesDePersistencia.getValorChar(Leitor, "SEXO"))
 
-                Pessoas.Add(Pessoa)
-            End While
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEMAE") Then
+                        Pessoa.NomeDaMae = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEMAE")
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEPAI") Then
+                        Pessoa.NomeDoPai = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPAI")
+                    End If
+
+                    Dim MapeadorDeMunicipio As IMapeadorDeMunicipio
+
+                    MapeadorDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMunicipio)()
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "NATURALIDADE") Then
+                        Pessoa.Naturalidade = MapeadorDeMunicipio.ObtenhaMunicipio(UtilidadesDePersistencia.GetValorLong(Leitor, "NATURALIDADE"))
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "FOTO") Then
+                        Pessoa.Foto = UtilidadesDePersistencia.GetValorString(Leitor, "FOTO")
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "CPF") Then
+                        Dim CPF As ICPF
+
+                        CPF = FabricaGenerica.GetInstancia.CrieObjeto(Of ICPF)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "CPF")})
+                        Pessoa.AdicioneDocumento(CPF)
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "NUMERORG") Then
+                        Dim RG As IRG
+
+                        RG = FabricaGenerica.GetInstancia.CrieObjeto(Of IRG)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "NUMERORG")})
+
+                        If Not UtilidadesDePersistencia.EhNulo(Leitor, "DATAEXP") Then
+                            RG.DataDeEmissao = UtilidadesDePersistencia.getValorDate(Leitor, "DATAEXP")
+                        End If
+
+                        RG.OrgaoExpeditor = UtilidadesDePersistencia.GetValorString(Leitor, "ORGEXPEDITOR")
+                        RG.UF = UF.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "UFEXP"))
+                        Pessoa.AdicioneDocumento(RG)
+                    End If
+
+                    Pessoas.Add(Pessoa)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+            
         End Using
 
         Return Pessoas

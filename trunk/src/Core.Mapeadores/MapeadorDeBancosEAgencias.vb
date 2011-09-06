@@ -81,9 +81,13 @@ Public Class MapeadorDeBancosEAgencias
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Banco = MontaObjetoBanco(Leitor, Pessoa)
-            End If
+            Try
+                If Leitor.Read Then
+                    Banco = MontaObjetoBanco(Leitor, Pessoa)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Banco
@@ -136,9 +140,13 @@ Public Class MapeadorDeBancosEAgencias
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Agencia = MontaObjetoAgencia(Leitor)
-            End If
+            Try
+                If Leitor.Read Then
+                    Agencia = MontaObjetoAgencia(Leitor)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Agencia
@@ -181,15 +189,18 @@ Public Class MapeadorDeBancosEAgencias
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString, Quantidade)
-            While Leitor.Read
+            Try
+                While Leitor.Read
+                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
-                Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
-                Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-
-                Banco = MontaObjetoBanco(Leitor, Pessoa)
-                Bancos.Add(Banco)
-            End While
+                    Banco = MontaObjetoBanco(Leitor, Pessoa)
+                    Bancos.Add(Banco)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Bancos
@@ -229,16 +240,20 @@ Public Class MapeadorDeBancosEAgencias
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString, Quantidade)
-            While Leitor.Read
-                PessoaAgencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
-                PessoaAgencia.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDAGENCIA")
-                PessoaAgencia.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEAGENCIA")
+            Try
+                While Leitor.Read
+                    PessoaAgencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                    PessoaAgencia.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDAGENCIA")
+                    PessoaAgencia.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEAGENCIA")
 
-                Agencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgencia)(New Object() {PessoaAgencia})
-                Agencia.Numero = UtilidadesDePersistencia.GetValorString(Leitor, "NUMEROAGENCIA")
-                Agencia.Banco = Banco
-                Agencias.Add(Agencia)
-            End While
+                    Agencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgencia)(New Object() {PessoaAgencia})
+                    Agencia.Numero = UtilidadesDePersistencia.GetValorString(Leitor, "NUMEROAGENCIA")
+                    Agencia.Banco = Banco
+                    Agencias.Add(Agencia)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Agencias
