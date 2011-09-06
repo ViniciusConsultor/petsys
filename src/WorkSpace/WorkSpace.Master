@@ -28,7 +28,7 @@
         DisplayAfter="0">
         <ProgressTemplate>
             <div style="background-color: #CC3300; color: white; font-weight: bold; font-family: Arial;
-                font-size: small; display: inline; position: absolute; top: 0px; right: 0px;
+                font-size: small; display: inline; position: fixed; top: 0px; right: 0px;
                 padding: 2px;">
                 Aguarde...
             </div>

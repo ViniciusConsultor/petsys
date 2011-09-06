@@ -85,9 +85,14 @@ Public Class MapeadorDeOperador
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Operador = MontaOperador(Leitor, True)
-            End If
+            Try
+                If Leitor.Read Then
+                    Operador = MontaOperador(Leitor, True)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
+            
         End Using
 
         Return Operador
@@ -135,9 +140,13 @@ Public Class MapeadorDeOperador
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            While Leitor.Read
-                ListaDeIds.Add(UtilidadesDePersistencia.GetValorLong(Leitor, "IDGRUPO"))
-            End While
+            Try
+                While Leitor.Read
+                    ListaDeIds.Add(UtilidadesDePersistencia.GetValorLong(Leitor, "IDGRUPO"))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Dim MapeadorDeGrupo As IMapeadorDeGrupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeGrupo)()
@@ -163,9 +172,13 @@ Public Class MapeadorDeOperador
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Operador = MontaOperador(Leitor, True)
-            End If
+            Try
+                If Leitor.Read Then
+                    Operador = MontaOperador(Leitor, True)
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Operador
@@ -189,9 +202,13 @@ Public Class MapeadorDeOperador
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString, Quantidade)
-            While Leitor.Read
-                Operadores.Add(MontaOperador(Leitor, False))
-            End While
+            Try
+                While Leitor.Read
+                    Operadores.Add(MontaOperador(Leitor, False))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Operadores

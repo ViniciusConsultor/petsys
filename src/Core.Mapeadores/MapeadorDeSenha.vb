@@ -19,11 +19,16 @@ Public Class MapeadorDeSenha
         Sql.Append(String.Concat(" WHERE IDOPERADOR = ", IDOperador.ToString))
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
-            If Leitor.Read Then
-                Senha = FabricaGenerica.GetInstancia.CrieObjeto(Of ISenha)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "SENHA"), _
-                                                                                         UtilidadesDePersistencia.getValorDateHourSec(Leitor, "DATACADASTRO")})
+            Try
+                If Leitor.Read Then
+                    Senha = FabricaGenerica.GetInstancia.CrieObjeto(Of ISenha)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "SENHA"), _
+                                                                                             UtilidadesDePersistencia.getValorDateHourSec(Leitor, "DATACADASTRO")})
 
-            End If
+                End If
+            Finally
+                Leitor.Close()
+            End Try
+            
         End Using
 
         Return Senha

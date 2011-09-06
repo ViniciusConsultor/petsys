@@ -39,7 +39,6 @@ Public Class MapeadorDeProduto
     End Sub
 
     Public Function ObtenhaMarcaDeProduto(ByVal ID As Long) As IMarcaDeProduto Implements IMapeadorDeProduto.ObtenhaMarcaDeProduto
-
         Dim Sql As New StringBuilder
 
         Sql.Append("SELECT ID, NOME")
@@ -58,13 +57,17 @@ Public Class MapeadorDeProduto
         Marcas = New List(Of IMarcaDeProduto)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read AndAlso Marcas.Count < QuantidadeDeRegistros
-                Marca = FabricaGenerica.GetInstancia.CrieObjeto(Of IMarcaDeProduto)()
-                Marca.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Marca.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+            Try
+                While Leitor.Read AndAlso Marcas.Count < QuantidadeDeRegistros
+                    Marca = FabricaGenerica.GetInstancia.CrieObjeto(Of IMarcaDeProduto)()
+                    Marca.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Marca.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
-                Marcas.Add(Marca)
-            End While
+                    Marcas.Add(Marca)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Marcas
@@ -317,30 +320,34 @@ Public Class MapeadorDeProduto
         Produtos = New List(Of IProduto)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read AndAlso Produtos.Count < QuantidadeDeRegistros
-                Produto = FabricaGenerica.GetInstancia.CrieObjeto(Of IProduto)()
+            Try
+                While Leitor.Read AndAlso Produtos.Count < QuantidadeDeRegistros
+                    Produto = FabricaGenerica.GetInstancia.CrieObjeto(Of IProduto)()
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "CODIGOBARRAS") Then Produto.CodigoDeBarras = UtilidadesDePersistencia.GetValorString(Leitor, "CODIGOBARRAS")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "CODIGOBARRAS") Then Produto.CodigoDeBarras = UtilidadesDePersistencia.GetValorString(Leitor, "CODIGOBARRAS")
 
-                Produto.GrupoDeProduto = Me.ObtenhaEMonteGrupoDeProduto(Leitor)
-                Produto.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDPRODUTO")
-                Produto.Marca = Me.ObtenhaEMonteMarcaDeProduto(Leitor)
-                Produto.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPRODUTO")
+                    Produto.GrupoDeProduto = Me.ObtenhaEMonteGrupoDeProduto(Leitor)
+                    Produto.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDPRODUTO")
+                    Produto.Marca = Me.ObtenhaEMonteMarcaDeProduto(Leitor)
+                    Produto.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPRODUTO")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "OBSERVACOES") Then Produto.Observacoes = UtilidadesDePersistencia.GetValorString(Leitor, "OBSERVACOES")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "OBSERVACOES") Then Produto.Observacoes = UtilidadesDePersistencia.GetValorString(Leitor, "OBSERVACOES")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "PORCLUCRO") Then Produto.PorcentagemDeLucro = UtilidadesDePersistencia.getValorDouble(Leitor, "PORCLUCRO")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "PORCLUCRO") Then Produto.PorcentagemDeLucro = UtilidadesDePersistencia.getValorDouble(Leitor, "PORCLUCRO")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "QTDMINESTOQUE") Then Produto.QuantidadeMinimaEmEstoque = UtilidadesDePersistencia.getValorDouble(Leitor, "QTDMINESTOQUE")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "QTDMINESTOQUE") Then Produto.QuantidadeMinimaEmEstoque = UtilidadesDePersistencia.getValorDouble(Leitor, "QTDMINESTOQUE")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "UNIDADE") Then Produto.UnidadeDeMedida = UnidadeDeMedida.ObtenhaTipoDeUnidade(UtilidadesDePersistencia.getValorChar(Leitor, "UNIDADE"))
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "UNIDADE") Then Produto.UnidadeDeMedida = UnidadeDeMedida.ObtenhaTipoDeUnidade(UtilidadesDePersistencia.getValorChar(Leitor, "UNIDADE"))
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "VALORDECUSTO") Then Produto.ValorDeCusto = UtilidadesDePersistencia.getValorDouble(Leitor, "VALORDECUSTO")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "VALORDECUSTO") Then Produto.ValorDeCusto = UtilidadesDePersistencia.getValorDouble(Leitor, "VALORDECUSTO")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "VALORVENDAMIN") Then Produto.ValorDeVendaMinimo = UtilidadesDePersistencia.getValorDouble(Leitor, "VALORVENDAMIN")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "VALORVENDAMIN") Then Produto.ValorDeVendaMinimo = UtilidadesDePersistencia.getValorDouble(Leitor, "VALORVENDAMIN")
 
-                Produtos.Add(Produto)
-            End While
+                    Produtos.Add(Produto)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Produtos

@@ -32,32 +32,36 @@ Public Class MapeadorDeAutorizacao
             Dim IdModuloCorrente As String = ""
             Dim IdFuncaoCorrente As String = ""
 
-            While Leitor.Read
+            Try
+                While Leitor.Read
 
-                If IdModuloCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO") Then
-                    Modulo = FabricaGenerica.GetInstancia.CrieObjeto(Of IModulo)()
-                    Modulo.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
-                    Modulo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_MODULO")
-                    Modulos.Add(Modulo)
-                    IdModuloCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
-                End If
+                    If IdModuloCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO") Then
+                        Modulo = FabricaGenerica.GetInstancia.CrieObjeto(Of IModulo)()
+                        Modulo.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
+                        Modulo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_MODULO")
+                        Modulos.Add(Modulo)
+                        IdModuloCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_MODULO")
+                    End If
 
-                If IdFuncaoCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO") Then
-                    Funcao = FabricaGenerica.GetInstancia.CrieObjeto(Of IFuncao)()
-                    Funcao.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
-                    Funcao.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_FUNCAO")
-                    Modulo.AdicioneFuncao(Funcao)
-                    IdFuncaoCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
-                End If
+                    If IdFuncaoCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO") Then
+                        Funcao = FabricaGenerica.GetInstancia.CrieObjeto(Of IFuncao)()
+                        Funcao.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
+                        Funcao.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_FUNCAO")
+                        Modulo.AdicioneFuncao(Funcao)
+                        IdFuncaoCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO")
+                    End If
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "ID_OPERACAO") Then
-                    Operacao = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperacao)()
-                    Operacao.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_OPERACAO")
-                    Operacao.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_OPERACAO")
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "ID_OPERACAO") Then
+                        Operacao = FabricaGenerica.GetInstancia.CrieObjeto(Of IOperacao)()
+                        Operacao.ID = UtilidadesDePersistencia.GetValorString(Leitor, "ID_OPERACAO")
+                        Operacao.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME_OPERACAO")
 
-                    Funcao.AdicioneOperacao(Operacao)
-                End If
-            End While
+                        Funcao.AdicioneOperacao(Operacao)
+                    End If
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Modulos
@@ -105,11 +109,15 @@ Public Class MapeadorDeAutorizacao
         Diretivas = New List(Of IDiretivaDeSeguranca)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read
-                Diretiva = FabricaGenerica.GetInstancia.CrieObjeto(Of IDiretivaDeSeguranca)()
-                Diretiva.ID = UtilidadesDePersistencia.GetValorString(Leitor, "IDDIRETIVA")
-                Diretivas.Add(Diretiva)
-            End While
+            Try
+                While Leitor.Read
+                    Diretiva = FabricaGenerica.GetInstancia.CrieObjeto(Of IDiretivaDeSeguranca)()
+                    Diretiva.ID = UtilidadesDePersistencia.GetValorString(Leitor, "IDDIRETIVA")
+                    Diretivas.Add(Diretiva)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Diretivas

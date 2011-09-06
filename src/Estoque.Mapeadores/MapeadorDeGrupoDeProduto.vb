@@ -71,17 +71,21 @@ Public Class MapeadorDeGrupoDeProduto
         Grupos = New List(Of IGrupoDeProduto)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read AndAlso Grupos.Count < QuantidadeDeRegistros
-                Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupoDeProduto)()
-                Grupo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Grupo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+            Try
+                While Leitor.Read AndAlso Grupos.Count < QuantidadeDeRegistros
+                    Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupoDeProduto)()
+                    Grupo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Grupo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "PRCCOMISSAO") Then
-                    Grupo.PorcentagemDeComissao = UtilidadesDePersistencia.getValorDouble(Leitor, "PRCCOMISSAO")
-                End If
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "PRCCOMISSAO") Then
+                        Grupo.PorcentagemDeComissao = UtilidadesDePersistencia.getValorDouble(Leitor, "PRCCOMISSAO")
+                    End If
 
-                Grupos.Add(Grupo)
-            End While
+                    Grupos.Add(Grupo)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Grupos

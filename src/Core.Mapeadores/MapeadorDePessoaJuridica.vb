@@ -104,28 +104,32 @@ Public Class MapeadorDePessoaJuridica
         Pessoas = New List(Of IPessoaJuridica)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql, QuantidadeMaximaDeRegistros)
-            While Leitor.Read
-                Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
-                MyBase.PreencheDados(Pessoa, Leitor)
+            Try
+                While Leitor.Read
+                    Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                    MyBase.PreencheDados(Pessoa, Leitor)
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEFANTASIA") Then
-                    Pessoa.NomeFantasia = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEFANTASIA")
-                End If
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEFANTASIA") Then
+                        Pessoa.NomeFantasia = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEFANTASIA")
+                    End If
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "CNPJ") Then
-                    Pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia.CrieObjeto(Of ICNPJ)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "CNPJ")}))
-                End If
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "CNPJ") Then
+                        Pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia.CrieObjeto(Of ICNPJ)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "CNPJ")}))
+                    End If
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "IE") Then
-                    Pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia.CrieObjeto(Of IInscricaoEstadual)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "IE")}))
-                End If
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "IE") Then
+                        Pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia.CrieObjeto(Of IInscricaoEstadual)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "IE")}))
+                    End If
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "IM") Then
-                    Pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia.CrieObjeto(Of IInscricaoMunicipal)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "IM")}))
-                End If
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "IM") Then
+                        Pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia.CrieObjeto(Of IInscricaoMunicipal)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "IM")}))
+                    End If
 
-                Pessoas.Add(Pessoa)
-            End While
+                    Pessoas.Add(Pessoa)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Pessoas

@@ -5,7 +5,7 @@
         Property Produto() As IProduto
         Property Quantidade() As Double
         Property Preco() As Double
-        Function ObtenhaPrecoTotal() As Double
+        ReadOnly Property PrecoTotal() As Double
 
     End Interface
 

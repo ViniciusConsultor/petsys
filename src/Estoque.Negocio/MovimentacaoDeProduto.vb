@@ -53,7 +53,7 @@ Public MustInherit Class MovimentacaoDeProduto
         Dim Total As Double
 
         For Each ProdutoMovimentado As IProdutoMovimentado In ProdutosMovimentados
-            Total += ProdutoMovimentado.ObtenhaPrecoTotal
+            Total += ProdutoMovimentado.PrecoTotal
         Next
 
         Return Total

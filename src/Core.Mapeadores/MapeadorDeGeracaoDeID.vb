@@ -19,19 +19,23 @@ Public Class MapeadorDeGeracaoDeID
     Public Function ObtenhaNumeroHigh() As Integer Implements IMapeadorDeGeracaoDeID.ObtenhaNumeroHigh
         Dim Sql As String
         Dim DBHelper As IDBHelper
-        Dim Leitor As IDataReader
         Dim NumeroHigh As Integer = 0
 
         Sql = "SELECT NUMHIGH FROM NCL_IDENTIFICADOR"
 
         DBHelper = ServerUtils.criarNovoDbHelper
-        Leitor = DBHelper.obtenhaReader(Sql)
 
-        If Leitor.Read Then
-            NumeroHigh = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMHIGH")
-        Else
-            Me.CrieNumeroHigh()
-        End If
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql)
+            Try
+                If Leitor.Read Then
+                    NumeroHigh = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMHIGH")
+                Else
+                    Me.CrieNumeroHigh()
+                End If
+            Finally
+                Leitor.Close()
+            End Try
+        End Using
 
         Return NumeroHigh
     End Function

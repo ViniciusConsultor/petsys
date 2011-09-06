@@ -307,15 +307,20 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         SQL.Append(" ORDER BY INDICE")
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            While Leitor.Read
-                Dim Telefone As ITelefone
+            Try
+                While Leitor.Read
+                    Dim Telefone As ITelefone
 
-                Telefone = FabricaGenerica.GetInstancia.CrieObjeto(Of ITelefone)()
-                Telefone.DDD = UtilidadesDePersistencia.getValorShort(Leitor, "DDD")
-                Telefone.Numero = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMERO")
-                Telefone.Tipo = TipoDeTelefone.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
-                Pessoa.AdicioneTelefone(Telefone)
-            End While
+                    Telefone = FabricaGenerica.GetInstancia.CrieObjeto(Of ITelefone)()
+                    Telefone.DDD = UtilidadesDePersistencia.getValorShort(Leitor, "DDD")
+                    Telefone.Numero = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMERO")
+                    Telefone.Tipo = TipoDeTelefone.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
+                    Pessoa.AdicioneTelefone(Telefone)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+            
         End Using
     End Sub
 

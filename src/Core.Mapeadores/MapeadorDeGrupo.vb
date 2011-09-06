@@ -37,10 +37,15 @@ Public Class MapeadorDeGrupo
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
-            If Leitor.Read Then
-                Return UtilidadesDePersistencia.getValorInteger(Leitor, "QUANTIDADE") <> 0
-            End If
+            Try
+                If Leitor.Read Then
+                    Return UtilidadesDePersistencia.getValorInteger(Leitor, "QUANTIDADE") <> 0
+                End If
+            Finally
+                Leitor.Close()
+            End Try
         End Using
+
     End Function
 
     Public Sub Inserir(ByVal Grupo As IGrupo) Implements IMapeadorDeGrupo.Inserir
@@ -113,14 +118,18 @@ Public Class MapeadorDeGrupo
         Grupos = New List(Of IGrupo)
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString, QuantidadeMaximaDeRegistros)
-            While Leitor.Read
-                Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupo)()
-                Grupo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                Grupo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-                Grupo.Status = StatusDoGrupo.ObtenhaStatus(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))
+            Try
+                While Leitor.Read
+                    Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupo)()
+                    Grupo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Grupo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+                    Grupo.Status = StatusDoGrupo.ObtenhaStatus(UtilidadesDePersistencia.getValorChar(Leitor, "STATUS"))
 
-                Grupos.Add(Grupo)
-            End While
+                    Grupos.Add(Grupo)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
         End Using
 
         Return Grupos
