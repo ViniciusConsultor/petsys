@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeGrupoDeProduto.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeMovimentacaoDeProduto.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeMovimentacaoDeProdutoEntrada.vb" />
     <Compile Include="Mapeadores\IMapeadorDeProduto.vb" />
     <Compile Include="Negocio\IGrupoDeProduto.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

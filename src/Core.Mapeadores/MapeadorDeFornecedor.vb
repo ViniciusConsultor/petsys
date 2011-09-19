@@ -145,38 +145,34 @@ Public Class MapeadorDeFornecedor
         Dim IdCorrente As String = ""
 
         While Leitor.Read
-            Try
-                If IdCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "IDPESSOA") Then
-                    Dim Pessoa As IPessoa
-                    Dim TipoPessoa As TipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPOPESSOA"))
+            If IdCorrente <> UtilidadesDePersistencia.GetValorString(Leitor, "IDPESSOA") Then
+                Dim Pessoa As IPessoa
+                Dim TipoPessoa As TipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPOPESSOA"))
 
-                    If TipoPessoa.Equals(TipoDePessoa.Fisica) Then
-                        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
-                    Else
-                        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
-                    End If
-
-                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEFORNECEDOR")
-
-                    Fornecedor = FabricaGenerica.GetInstancia.CrieObjeto(Of IFornecedor)(New Object() {Pessoa})
-                    Fornecedor.DataDoCadastro = UtilidadesDePersistencia.getValorDate(Leitor, "DTCADASTRO").Value
-
-                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "INFOADICIONAL") Then
-                        Fornecedor.InformacoesAdicionais = UtilidadesDePersistencia.GetValorString(Leitor, "INFOADICIONAL")
-                    End If
-                    Fornecedores.Add(Fornecedor)
-                    IdCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "IDPESSOA")
+                If TipoPessoa.Equals(TipoDePessoa.Fisica) Then
+                    Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
+                Else
+                    Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
                 End If
 
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDPESSOACONTATO") Then
-                    Dim Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOACONTATO"))
+                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEFORNECEDOR")
 
-                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMECONTATO")
-                    Fornecedor.AdicionaContato(Pessoa)
+                Fornecedor = FabricaGenerica.GetInstancia.CrieObjeto(Of IFornecedor)(New Object() {Pessoa})
+                Fornecedor.DataDoCadastro = UtilidadesDePersistencia.getValorDate(Leitor, "DTCADASTRO").Value
+
+                If Not UtilidadesDePersistencia.EhNulo(Leitor, "INFOADICIONAL") Then
+                    Fornecedor.InformacoesAdicionais = UtilidadesDePersistencia.GetValorString(Leitor, "INFOADICIONAL")
                 End If
-            Finally
-                Leitor.Close()
-            End Try
+                Fornecedores.Add(Fornecedor)
+                IdCorrente = UtilidadesDePersistencia.GetValorString(Leitor, "IDPESSOA")
+            End If
+
+            If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDPESSOACONTATO") Then
+                Dim Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOACONTATO"))
+
+                Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMECONTATO")
+                Fornecedor.AdicionaContato(Pessoa)
+            End If
         End While
 
         Return Fornecedores
