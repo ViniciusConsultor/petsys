@@ -5,6 +5,7 @@
         Property ID() As Nullable(Of Long)
         Property Data() As Date
         Property Historico() As String
+        Property NumeroDocumento() As String
         Sub AdicioneProdutoMovimentado(ByVal ProdutoMovimentado As IProdutoMovimentado)
         Function ObtenhaProdutosMovimentados() As IList(Of IProdutoMovimentado)
         Function ObtenhaTotalDaMovimentacao() As Double
