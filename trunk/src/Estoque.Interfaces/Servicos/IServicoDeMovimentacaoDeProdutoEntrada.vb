@@ -3,7 +3,7 @@ Imports Estoque.Interfaces.Negocio
 
 Namespace Servicos
 
-    Public Interface IServicoDeMovimentacaoDeProduto
+    Public Interface IServicoDeMovimentacaoDeProdutoEntrada
         Inherits IServico
 
         Sub InserirMovimentacaoDeEntrada(ByVal Movimentacao As IMovimentacaoDeProdutoEntrada)

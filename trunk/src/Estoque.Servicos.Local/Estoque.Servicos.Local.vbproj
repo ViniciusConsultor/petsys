@@ -81,7 +81,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ServicoDeGrupoDeProdutoLocal.vb" />
-    <Compile Include="ServicoDeMovimentacaoDeProdutoLocal.vb" />
+    <Compile Include="ServicoDeMovimentacaoDeProdutoEntradaLocal.vb" />
     <Compile Include="ServicoDeProdutoLocal.vb" />
   </ItemGroup>
   <ItemGroup>

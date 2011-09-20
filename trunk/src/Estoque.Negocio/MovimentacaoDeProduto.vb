@@ -4,13 +4,14 @@
 Public MustInherit Class MovimentacaoDeProduto
     Implements IMovimentacaoDeProduto
 
-    Private ProdutosMovimentados As IList(Of IProdutoMovimentado)
+    Private _ProdutosMovimentados As IList(Of IProdutoMovimentado)
+
     Public Sub New()
-        ProdutosMovimentados = New List(Of IProdutoMovimentado)
+        _ProdutosMovimentados = New List(Of IProdutoMovimentado)
     End Sub
 
     Public Sub AdicioneProdutoMovimentado(ByVal ProdutoMovimentado As IProdutoMovimentado) Implements IMovimentacaoDeProduto.AdicioneProdutoMovimentado
-        ProdutosMovimentados.Add(ProdutoMovimentado)
+        _ProdutosMovimentados.Add(ProdutoMovimentado)
     End Sub
 
     Private _Data As Date
@@ -44,15 +45,15 @@ Public MustInherit Class MovimentacaoDeProduto
     End Property
 
     Public Function ObtenhaProdutosMovimentados() As IList(Of IProdutoMovimentado) Implements IMovimentacaoDeProduto.ObtenhaProdutosMovimentados
-        Return ProdutosMovimentados
+        Return _ProdutosMovimentados
     End Function
 
     Public Function ObtenhaTotalDaMovimentacao() As Double Implements IMovimentacaoDeProduto.ObtenhaTotalDaMovimentacao
-        If ProdutosMovimentados.Count = 0 Then Return 0
+        If _ProdutosMovimentados.Count = 0 Then Return 0
 
         Dim Total As Double
 
-        For Each ProdutoMovimentado As IProdutoMovimentado In ProdutosMovimentados
+        For Each ProdutoMovimentado As IProdutoMovimentado In _ProdutosMovimentados
             Total += ProdutoMovimentado.PrecoTotal
         Next
 
@@ -60,5 +61,19 @@ Public MustInherit Class MovimentacaoDeProduto
     End Function
 
     Public MustOverride ReadOnly Property Tipo() As TipoMovimentacaoDeProduto Implements IMovimentacaoDeProduto.Tipo
+
+    Private _NumeroDocumento As String
+    Public Property NumeroDocumento() As String Implements IMovimentacaoDeProduto.NumeroDocumento
+        Get
+            Return _NumeroDocumento
+        End Get
+        Set(ByVal value As String)
+            _NumeroDocumento = value
+        End Set
+    End Property
+
+    Public Sub AdicioneProdutosMovimentados(ByVal ProdutosMovimentados As IList(Of IProdutoMovimentado)) Implements IMovimentacaoDeProduto.AdicioneProdutosMovimentados
+        _ProdutosMovimentados = ProdutosMovimentados
+    End Sub
 
 End Class

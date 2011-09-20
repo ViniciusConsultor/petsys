@@ -93,11 +93,12 @@
     <Compile Include="Negocio\IMovimentacaoDeProdutoEntrada.vb" />
     <Compile Include="Negocio\IProduto.vb" />
     <Compile Include="Negocio\IProdutoMovimentado.vb" />
+    <Compile Include="Negocio\LazyLoad\IProdutoLazyLoad.vb" />
     <Compile Include="Negocio\TipoMovimentacaoDeProduto.vb" />
     <Compile Include="Negocio\TipoMovimentacaoEntrada.vb" />
     <Compile Include="Negocio\UnidadeDeMedida.vb" />
     <Compile Include="Servicos\IServicoDeGrupoDeProduto.vb" />
-    <Compile Include="Servicos\IServicoDeMovimentacaoDeProduto.vb" />
+    <Compile Include="Servicos\IServicoDeMovimentacaoDeProdutoEntrada.vb" />
     <Compile Include="Servicos\IServicoDeProduto.vb" />
   </ItemGroup>
   <ItemGroup>
