@@ -7,6 +7,7 @@
         Property Historico() As String
         Property NumeroDocumento() As String
         Sub AdicioneProdutoMovimentado(ByVal ProdutoMovimentado As IProdutoMovimentado)
+        Sub AdicioneProdutosMovimentados(ByVal ProdutosMovimentados As IList(Of IProdutoMovimentado))
         Function ObtenhaProdutosMovimentados() As IList(Of IProdutoMovimentado)
         Function ObtenhaTotalDaMovimentacao() As Double
         ReadOnly Property Tipo() As TipoMovimentacaoDeProduto

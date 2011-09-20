@@ -1,7 +1,10 @@
 ﻿Imports Compartilhados.Componentes.Web
 Imports Estoque.Interfaces.Negocio
+Imports Estoque.Interfaces.Servicos
 Imports Telerik.Web.UI
 Imports Compartilhados.Fabricas
+Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Partial Public Class frmEntradaDeProduto
     Inherits SuperPagina
@@ -10,12 +13,12 @@ Partial Public Class frmEntradaDeProduto
         Inicial = 1
         Novo
         Consulta
-        Modifica
         Remove
     End Enum
 
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_FRMENTRADADEPRODUTO"
     Private CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA As String = "CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA"
+    Private CHAVE_ID As String = "CHAVE_ID_MOVIMENTACAO_PRODUTO_ENTRADA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -51,18 +54,6 @@ Partial Public Class frmEntradaDeProduto
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         Session(CHAVE_ESTADO) = Estado.Novo
-
-    End Sub
-
-    Private Sub ExibaTelaModificar()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO) = Estado.Modifica
 
     End Sub
 
@@ -102,63 +93,61 @@ Partial Public Class frmEntradaDeProduto
     End Function
 
     Private Sub btnSalva_Click()
-        '' Dim MarcaDeProduto As IMarcaDeProduto = Nothing
-        'Dim Mensagem As String
-        'Dim Inconsistencia As String
+        Dim Movimentacao As IMovimentacaoDeProdutoEntrada
+        Dim Mensagem As String
+        Dim Inconsistencia As String
 
-        'Inconsistencia = ValidaDados()
+        Inconsistencia = ValidaDados()
 
-        'If Not String.IsNullOrEmpty(Inconsistencia) Then
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
-        '    Exit Sub
-        'End If
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
 
-        'MarcaDeProduto = MontaObjeto()
+        Movimentacao = MontaObjeto()
 
-        'Try
-        '    Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
-        '        If CByte(Session(CHAVE_ESTADO)) = Estado.Novo Then
-        '            Servico.InserirMarcaDeProduto(MarcaDeProduto)
-        '            Mensagem = "Marca de produto cadastrado com sucesso."
-        '        Else
-        '            Servico.AtualizarMarcaDeProduto(MarcaDeProduto)
-        '            Mensagem = "Marca de produto alterado com sucesso."
-        '        End If
+        Try
+            Using Servico As IServicoDeMovimentacaoDeProdutoEntrada = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMovimentacaoDeProdutoEntrada)()
+                Servico.InserirMovimentacaoDeEntrada(Movimentacao)
+                Mensagem = "Movimentação de entrada cadastrada com sucesso."
+            End Using
 
-        '    End Using
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
+            ExibaTelaInicial()
 
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
-        '    ExibaTelaInicial()
-
-        'Catch ex As BussinesException
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-        'End Try
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
     End Sub
 
-    Private Function MontaObjeto() As IMarcaDeProduto
-        'Dim Marca As IMarcaDeProduto
+    Private Function MontaObjeto() As IMovimentacaoDeProdutoEntrada
+        Dim Movimentacao As IMovimentacaoDeProdutoEntrada
 
-        'Marca = FabricaGenerica.GetInstancia.CrieObjeto(Of IMarcaDeProduto)()
+        Movimentacao = FabricaGenerica.GetInstancia.CrieObjeto(Of IMovimentacaoDeProdutoEntrada)()
 
-        'If CByte(Session(CHAVE_ESTADO)) <> Estado.Novo Then
-        '    Marca.ID = CLng(Session(CHAVE_ID))
-        'End If
+        Movimentacao.Data = txtDataDaMovimentacao.SelectedDate.Value
 
-        'Marca.Nome = cboMarca.Text
+        If Not String.IsNullOrEmpty(cboFornecedor.SelectedValue) Then
+            Using ServicoDeFornecedor As IServicoDeFornecedor = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeFornecedor)()
+                Movimentacao.Fornecedor = ServicoDeFornecedor.Obtenha(CLng(cboFornecedor.SelectedValue))
+            End Using
+        End If
 
-        'Return Marca
+        If CByte(Session(CHAVE_ESTADO)) <> Estado.Novo Then
+            Movimentacao.ID = CLng(Session(CHAVE_ID))
+        End If
 
-        Return Nothing
+        Movimentacao.Historico = txtHistorico.Text
+        Movimentacao.NumeroDocumento = txtNumeroDocumento.Text
+        Movimentacao.AdicioneProdutosMovimentados(CType(Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA), IList(Of IProdutoMovimentado)))
+
+        Return Movimentacao
     End Function
 
     'Private Sub ExibaMarcaDeProduto(ByVal Marca As IMarcaDeProduto)
     '    cboMarca.Text = Marca.Nome
     '    Session(CHAVE_ID) = Marca.ID
     'End Sub
-
-    Private Sub btnModificar_Click()
-        ExibaTelaModificar()
-    End Sub
 
     Private Sub btnExclui_Click()
         ExibaTelaExcluir()
@@ -190,8 +179,6 @@ Partial Public Class frmEntradaDeProduto
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovo"
                 Call btnNovo_Click()
-            Case "btnModificar"
-                Call btnModificar_Click()
             Case "btnExcluir"
                 Call btnExclui_Click()
             Case "btnSalvar"
