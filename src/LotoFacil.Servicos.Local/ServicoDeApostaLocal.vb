@@ -3,6 +3,7 @@ Imports LotoFacil.Interfaces.Servicos
 Imports LotoFacil.Interfaces.Negocio
 Imports LotoFacil.Interfaces.Mapeadores
 Imports Compartilhados.Fabricas
+Imports System.Threading
 
 Public Class ServicoDeApostaLocal
     Inherits Servico
@@ -79,7 +80,9 @@ Public Class ServicoDeApostaLocal
                 ResultadoCombinado(Profundidade) = DezenasEscolhidas.Item(x)
                 Dim Jogo As IJogo = DirectCast(JogoClonavel.Clone, IJogo)
 
-                Jogo.AdicionaDezenas(ResultadoCombinado)
+                Dim CloneDoArray() As IDezena = CType(ResultadoCombinado.Clone, IDezena())
+
+                Jogo.AdicionaDezenas(CloneDoArray)
                 Me.Jogos.Add(Jogo)
             Next
         Else
@@ -89,18 +92,6 @@ Public Class ServicoDeApostaLocal
             Next
         End If
     End Sub
-
-    Private Function ObtenhaDezenas(ByVal ResultadoCombinacao() As Byte) As IList(Of IDezena)
-        Dim Dezenas As IList(Of IDezena)
-
-        Dezenas = New List(Of IDezena)
-
-        For Each Numero As Byte In ResultadoCombinacao
-            Dezenas.Add(FabricaDeDezena.CrieObjeto(Numero))
-        Next
-
-        Return Dezenas
-    End Function
 
     Public Function ObtenhaTempoGastoParaGerarOsJogos() As String Implements IServicoDeAposta.ObtenhaTempoGastoParaGerarOsJogos
         Return TempoParaGerarOsJogos
@@ -112,13 +103,15 @@ Public Class ServicoDeApostaLocal
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeAposta)()
 
-        ServerUtils.BeginTransaction()
+        ' ServerUtils.BeginTransaction()
 
         Try
+          
+
             Mapeador.GraveAposta(Aposta)
-            ServerUtils.CommitTransaction()
+            ' ServerUtils.CommitTransaction()
         Catch
-            ServerUtils.RollbackTransaction()
+            '    ServerUtils.RollbackTransaction()
             Throw
         Finally
             ServerUtils.libereRecursos()
