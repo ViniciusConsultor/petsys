@@ -53,6 +53,7 @@ Public Class MapeadorDeAposta
             Sql.Append(String.Concat("'", Jogo.DezenasToString, "')"))
             DBHelper.ExecuteNonQuery(Sql.ToString)
         Next
+
     End Sub
 
     Public Function ObtenhaAposta(ByVal NumeroDoConcurso As Integer) As IAposta Implements IMapeadorDeAposta.ObtenhaAposta

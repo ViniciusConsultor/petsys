@@ -33,6 +33,7 @@ Partial Public Class frmAposta
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnConferir"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(pnlAposta, Control))
         UtilidadesWeb.LimparComponente(CType(pnlDadosDaAposta, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlAposta, Control), True)
@@ -49,6 +50,7 @@ Partial Public Class frmAposta
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnConferir"), RadToolBarButton).Visible = False
         Session(CHAVE_ESTADO) = Estado.Novo
         Session(CHAVE_JOGOS_DA_APOSTA) = Nothing
     End Sub
@@ -60,6 +62,7 @@ Partial Public Class frmAposta
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
+        CType(rtbToolBar.FindButtonByCommandName("btnConferir"), RadToolBarButton).Visible = False
         Session(CHAVE_ESTADO) = Estado.Remove
         UtilidadesWeb.HabilitaComponentes(CType(pnlAposta, Control), False)
     End Sub
@@ -71,6 +74,7 @@ Partial Public Class frmAposta
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+        CType(rtbToolBar.FindButtonByCommandName("btnConferir"), RadToolBarButton).Visible = True
     End Sub
 
     Private Sub btnCancela_Click()
@@ -82,17 +86,17 @@ Partial Public Class frmAposta
     End Sub
 
     Private Sub btnSim_Click()
-        'Try
-        '    Using Servico As IServico = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMunicipio)()
-        '        Servico.Excluir(ctrlMunicipios1.MunicipioSelecionado.ID.Value)
-        '    End Using
+        Try
+            Using Servico As IServicoDeAposta = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeAposta)()
 
-        '    ExibaTelaInicial()
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Município excluído com sucesso."), False)
+            End Using
 
-        'Catch ex As BussinesException
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-        'End Try
+            ExibaTelaInicial()
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Município excluído com sucesso."), False)
+
+        Catch ex As BussinesException
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+        End Try
     End Sub
 
     Private Function MontaObjeto() As IAposta
@@ -136,7 +140,7 @@ Partial Public Class frmAposta
                 Mensagem = Servico.GraveAposta(Aposta)
             End Using
 
-            UtilidadesWeb.MostraMensagemDeInformacao(Mensagem)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
 
         Catch ex As BussinesException
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
@@ -205,7 +209,8 @@ Partial Public Class frmAposta
         End Using
 
         Session(CHAVE_JOGOS_DA_APOSTA) = JogosDaAposta
-        UtilidadesWeb.MostraMensagemDeInformacao(TempoDeGeracao)
+
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(TempoDeGeracao), False)
     End Sub
 
     Private Function ObtenhaDezenasEscolhidas() As IList(Of IDezena)

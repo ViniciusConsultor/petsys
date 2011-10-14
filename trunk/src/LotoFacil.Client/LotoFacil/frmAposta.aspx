@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
-    CodeBehind="frmAposta.aspx.vb" Inherits="WorkSpace.frmAposta" %>
+    CodeBehind="frmAposta.aspx.vb" Inherits="LotoFacil.Client.frmAposta" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
