@@ -1,5 +1,4 @@
-﻿Imports System.Data.OracleClient
-Imports System.Data.Common
+﻿Imports System.Data.Common
 Imports System.Text
 
 Namespace DBHelper
@@ -12,13 +11,18 @@ Namespace DBHelper
         End Sub
 
         Protected Overrides Function crieConexao(ByVal sStrConn As String) As IDbConnection
-            Dim cConexao As IDbConnection = New OracleConnection(sStrConn)
+            Dim Fabrica As DbProviderFactory = ObtenhaFabricaProviderOracle()
+            Dim cConexao As IDbConnection = Fabrica.CreateConnection()
+            cConexao.ConnectionString = sStrConn
             cConexao.Open()
             Return cConexao
         End Function
 
         Protected Overrides Function crieDataAdapter(ByVal pComando As IDbCommand) As DbDataAdapter
-            Return New OracleDataAdapter(CType(pComando, OracleCommand))
+            Dim Fabrica As DbProviderFactory = ObtenhaFabricaProviderOracle()
+            Dim Adaptador As DbDataAdapter = Fabrica.CreateDataAdapter
+            Adaptador.SelectCommand = CType(pComando, DbCommand)
+            Return Adaptador
         End Function
 
         Public Overrides Function SuporteALimite() As Boolean
@@ -38,12 +42,22 @@ Namespace DBHelper
         End Function
 
         Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
-            If TypeOf (Ex) Is OracleException Then
-                Return MensagensOracle.GetInstancia.ObtenhaMensagemDeErro(CType(Ex, OracleException).Code.ToString)
-            End If
+            'If TypeOf (Ex) Is OracleException Then
+            '    Return MensagensOracle.GetInstancia.ObtenhaMensagemDeErro(CType(Ex, OracleException).Code.ToString)
+            'End If
 
             Return Nothing
         End Function
+
+        Private Function ObtenhaFabricaProviderOracle() As DbProviderFactory
+            Try
+                Return DbProviderFactories.GetFactory("Oracle.DataAccess.Client")
+            Catch ex As Exception
+                Throw New ApplicationException("ODP.NET Oracle Data Provider for .Net não encontrado.")
+            End Try
+
+        End Function
+
     End Class
 
 End Namespace
