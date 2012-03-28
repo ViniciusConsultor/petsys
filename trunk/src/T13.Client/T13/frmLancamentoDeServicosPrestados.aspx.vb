@@ -6,6 +6,7 @@ Imports Compartilhados.Fabricas
 Imports Core.Interfaces.Servicos
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Partial Public Class frmLancamentoDeServicosPrestados
     Inherits SuperPagina

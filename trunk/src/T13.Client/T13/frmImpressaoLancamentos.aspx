@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
-    CodeBehind="frmImpressaoLancamentos.aspx.vb" Inherits="WorkSpace.frmImpressaoLancamentos" %>
+    CodeBehind="frmImpressaoLancamentos.aspx.vb" Inherits="T13.Client.frmImpressaoLancamentos" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
