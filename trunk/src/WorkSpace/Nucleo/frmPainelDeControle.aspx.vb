@@ -192,4 +192,8 @@ Partial Public Class frmPainelDeControle
         Return Configuracao
     End Function
 
+   
+    Protected Sub Button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button1.Click
+        rpvFerramentas.Visible = False
+    End Sub
 End Class

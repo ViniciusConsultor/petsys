@@ -16,6 +16,7 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Painel de controle" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
+                    <asp:Button ID="Button1" runat="server" Text="Button" />
                     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" SelectedIndex="0" MultiPageID="RadMultiPage1">
                         <Tabs>
                             <telerik:RadTab runat="server" Selected="True" Text="Ferramentas administrativas">

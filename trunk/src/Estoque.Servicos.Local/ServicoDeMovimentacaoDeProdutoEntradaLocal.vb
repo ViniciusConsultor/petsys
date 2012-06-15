@@ -35,4 +35,18 @@ Public Class ServicoDeMovimentacaoDeProdutoEntradaLocal
         End Try
     End Sub
 
+    Public Function ObtenhaMovimentacoes(ByVal DataInicio As Date, _
+                                         ByVal DataFinal As Date) As IList(Of IMovimentacaoDeProdutoEntrada) Implements IServicoDeMovimentacaoDeProdutoEntrada.ObtenhaMovimentacoes
+        Dim Mapeador As IMapeadorDeMovimentacaoDeProdutoEntrada
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMovimentacaoDeProdutoEntrada)()
+
+        Try
+            Return Mapeador.ObtenhaMovimentacoes(DataInicio, DataFinal)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
 End Class

@@ -8,6 +8,7 @@ Namespace Mapeadores
         Sub Inserir(ByVal Movimentacao As T)
         Function ObtenhaMovimentacao(ByVal ID As Long) As T
         Function ObtenhaMovimentacoes() As IList(Of T)
+        Function ObtenhaMovimentacoes(ByVal DataInicio As Date, ByVal DataFinal As Date) As IList(Of T)
 
     End Interface
 

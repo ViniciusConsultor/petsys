@@ -118,7 +118,7 @@
     </Compile>
     <Compile Include="Estoque\cdMovimentacaoDeEntradaDeProduto.aspx.vb">
       <DependentUpon>cdMovimentacaoDeEntradaDeProduto.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Estoque\cdProduto.aspx.designer.vb">
       <DependentUpon>cdProduto.aspx</DependentUpon>

@@ -1,6 +1,7 @@
 ﻿Imports Compartilhados.Componentes.Web
 Imports Estoque.Interfaces.Negocio
 Imports Estoque.Interfaces.Servicos
+Imports Compartilhados.Interfaces.Core.Negocio
 Imports Telerik.Web.UI
 Imports Compartilhados.Fabricas
 Imports Compartilhados
@@ -10,15 +11,12 @@ Partial Public Class frmEntradaDeProduto
     Inherits SuperPagina
 
     Private Enum Estado As Byte
-        Inicial = 1
-        Novo
+        Novo = 1
         Consulta
-        Remove
     End Enum
 
-    Private CHAVE_ESTADO As String = "CHAVE_ESTADO_FRMENTRADADEPRODUTO"
     Private CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA As String = "CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA"
-    Private CHAVE_ID As String = "CHAVE_ID_MOVIMENTACAO_PRODUTO_ENTRADA"
+    Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CDMOVIMENTACAOENTRADADEPRODUTO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
@@ -27,16 +25,6 @@ Partial Public Class frmEntradaDeProduto
     End Sub
 
     Private Sub ExibaTelaInicial()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-
-        Session(CHAVE_ESTADO) = Estado.Inicial
-        Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = Nothing
         Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = New List(Of IProdutoMovimentado)
         ExibaItensMovimentados(New List(Of IProdutoMovimentado))
     End Sub
@@ -46,42 +34,12 @@ Partial Public Class frmEntradaDeProduto
     End Sub
 
     Private Sub ExibaTelaNovo()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        Session(CHAVE_ESTADO) = Estado.Novo
-
-    End Sub
-
-    Private Sub ExibaTelaExcluir()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        Session(CHAVE_ESTADO) = Estado.Remove
-
+        txtDataDaMovimentacao.SelectedDate = Now
     End Sub
 
     Private Sub ExibaTelaConsultar()
-        CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
-        CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
-        CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-
-    End Sub
-
-    Protected Sub btnCancela_Click()
-        ExibaTelaInicial()
     End Sub
 
     Private Function ValidaDados() As String
@@ -133,10 +91,6 @@ Partial Public Class frmEntradaDeProduto
             End Using
         End If
 
-        If CByte(Session(CHAVE_ESTADO)) <> Estado.Novo Then
-            Movimentacao.ID = CLng(Session(CHAVE_ID))
-        End If
-
         Movimentacao.Historico = txtHistorico.Text
         Movimentacao.NumeroDocumento = txtNumeroDocumento.Text
         Movimentacao.AdicioneProdutosMovimentados(CType(Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA), IList(Of IProdutoMovimentado)))
@@ -144,51 +98,14 @@ Partial Public Class frmEntradaDeProduto
         Return Movimentacao
     End Function
 
-    'Private Sub ExibaMarcaDeProduto(ByVal Marca As IMarcaDeProduto)
-    '    cboMarca.Text = Marca.Nome
-    '    Session(CHAVE_ID) = Marca.ID
-    'End Sub
-
-    Private Sub btnExclui_Click()
-        ExibaTelaExcluir()
-    End Sub
-
-    Private Sub btnNao_Click()
-        Me.ExibaTelaInicial()
-    End Sub
-
-    Private Sub btnSim_Click()
-        'Try
-        '    Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
-        '        Servico.RemoverMarcaDeProduto(CLng(Session(CHAVE_ID)))
-        '    End Using
-
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Marca de produto removida com sucesso."), False)
-        '    ExibaTelaInicial()
-
-        'Catch ex As BussinesException
-        '    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
-        'End Try
-    End Sub
-
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.ETQ.005"
+        Return ""
     End Function
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
-            Case "btnNovo"
-                Call btnNovo_Click()
-            Case "btnExcluir"
-                Call btnExclui_Click()
             Case "btnSalvar"
                 Call btnSalva_Click()
-            Case "btnCancelar"
-                Call btnCancela_Click()
-            Case "btnSim"
-                Call btnSim_Click()
-            Case "btnNao"
-                Call btnNao_Click()
         End Select
     End Sub
 
@@ -222,4 +139,33 @@ Partial Public Class frmEntradaDeProduto
         grdItensLancados.DataSource = Itens
         grdItensLancados.DataBind()
     End Sub
+
+    Protected Sub btnNovoFornecedor_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnNovoFornecedor.Click
+        Dim URL As String
+
+        URL = ObtenhaURLNovoFornecedor()
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de fornecedor", 650, 450), False)
+    End Sub
+
+    Private Function ObtenhaURLNovoFornecedor() As String
+        Dim URL As String
+
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
+        Return String.Concat(URL, "Nucleo/cdFornecedor.aspx")
+    End Function
+
+    Private Sub cboFornecedor_ItemsRequested(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboFornecedor.ItemsRequested
+        Dim Fornecedores As IList(Of IFornecedor)
+
+        Using Servico As IServicoDeFornecedor = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeFornecedor)()
+            Fornecedores = Servico.ObtenhaPorNomeComoFiltro(e.Text, 50)
+        End Using
+
+        If Not Fornecedores Is Nothing Then
+            For Each Fornecedor As IFornecedor In Fornecedores
+                cboFornecedor.Items.Add(New RadComboBoxItem(Fornecedor.Pessoa.Nome, Fornecedor.Pessoa.ID.ToString))
+            Next
+        End If
+    End Sub
+
 End Class

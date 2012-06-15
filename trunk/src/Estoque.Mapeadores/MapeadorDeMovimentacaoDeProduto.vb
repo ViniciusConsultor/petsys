@@ -10,6 +10,8 @@ Public MustInherit Class MapeadorDeMovimentacaoDeProduto(Of T As IMovimentacaoDe
 
     Protected MustOverride Sub EstorneEspecifico(ByVal Movimentacao As T)
     Protected MustOverride Sub InsiraEspecifico(ByVal Movimentacao As T)
+    Protected MustOverride Function ObtenhaMovimentacoesEspecifico(ByVal DataInicio As Date, _
+                                                                   ByVal DataFinal As Date) As IList(Of T)
 
     Public Sub Estornar(ByVal Movimentacao As T) Implements Interfaces.Mapeadores.IMapeadorDeMovimentacaoDeProduto(Of T).Estornar
 
@@ -70,5 +72,17 @@ Public MustInherit Class MapeadorDeMovimentacaoDeProduto(Of T As IMovimentacaoDe
     Public Function ObtenhaMovimentacoes() As IList(Of T) Implements IMapeadorDeMovimentacaoDeProduto(Of T).ObtenhaMovimentacoes
         Return Nothing
     End Function
+
+    Public Function ObtenhaMovimentacoes(ByVal DataInicio As Date, _
+                                         ByVal DataFinal As Date) As IList(Of T) Implements IMapeadorDeMovimentacaoDeProduto(Of T).ObtenhaMovimentacoes
+        Return ObtenhaMovimentacoesEspecifico(DataInicio, DataFinal)
+    End Function
+
+    Protected Sub PrenchaMovimentacao(ByVal Leitor As IDataReader, ByRef Movimentacao As T)
+        Movimentacao.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+        Movimentacao.Data = UtilidadesDePersistencia.getValorDate(Leitor, "DATA").Value
+        Movimentacao.Historico = UtilidadesDePersistencia.GetValorString(Leitor, "HISTORICO")
+        Movimentacao.NumeroDocumento = UtilidadesDePersistencia.GetValorString(Leitor, "NUMERODOCUMENTO")
+    End Sub
 
 End Class

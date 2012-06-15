@@ -17,7 +17,7 @@ Partial Public Class frmSaidaDeProduto
     End Enum
 
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_FRMSAIDAPRODUTO"
-    'Private CHAVE_ID As String = "CHAVE_ID_MARCA"
+    Private CHAVE_ID As String = "CHAVE_ID_MARCA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then

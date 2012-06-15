@@ -29,4 +29,15 @@ Public Class MapeadorDeMovimentacaoDeProdutoEntrada
         DBHelper.ExecuteNonQuery(SQL.ToString)
     End Sub
 
+    Protected Overrides Function ObtenhaMovimentacoesEspecifico(ByVal DataInicio As Date, _
+                                                                ByVal DataFinal As Date) As IList(Of IMovimentacaoDeProdutoEntrada)
+        Dim SQL As New StringBuilder
+
+        SQL.Append("SELECT ID, DATA, HISTORICO, NUMERODOCUMENTO, TIPO, IDMOVIMENTACAO, IDFORNECEDOR FROM ETQ_MOVPRODUTO, ETQ_MOVPRODENTRADA ")
+        SQL.Append(" WHERE ID = IDMOVIMENTACAO AND DATA BETWEEN '" & DataInicio.ToString("yyyyMMdd") & "' AND '" & DataFinal.ToString("yyyyMMdd") & "'")
+
+
+        Return Nothing
+    End Function
+
 End Class

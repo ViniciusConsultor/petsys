@@ -21,4 +21,5 @@ Public Class MovimentacaoDeProdutoEntrada
             Return TipoMovimentacaoDeProduto.Entrada
         End Get
     End Property
+
 End Class

@@ -118,7 +118,7 @@
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="RadDock3" runat="server" Title="Impostos/Valores" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock3" runat="server" Title="Valores" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlImpostosValores" runat="server">
@@ -129,24 +129,6 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadNumericTextBox ID="txtValorDeCusto" runat="server" AutoPostBack="true">
-                                    </telerik:RadNumericTextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label7" runat="server" Text="% ICMS"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtPorcentagemICMS" runat="server">
-                                    </telerik:RadNumericTextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label8" runat="server" Text="% IPI"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtPorcentagemIPI" runat="server">
                                     </telerik:RadNumericTextBox>
                                 </td>
                             </tr>

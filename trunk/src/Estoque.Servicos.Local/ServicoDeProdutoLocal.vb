@@ -210,4 +210,20 @@ Public Class ServicoDeProdutoLocal
 
     End Sub
 
+    Public Function ObtenhaQuantidadeEmEstoqueDoProduto(ByVal IDProduto As Long) As Double Implements IServicoDeProduto.ObtenhaQuantidadeEmEstoqueDoProduto
+        Dim Mapeador As IMapeadorDeProduto
+        Dim QuantidadeEmEstoque As Double
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeProduto)()
+
+        Try
+            QuantidadeEmEstoque = Mapeador.ObtenhaQuantidadeEmEstoqueDoProduto(IDProduto)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+
+        Return QuantidadeEmEstoque
+    End Function
+
 End Class
