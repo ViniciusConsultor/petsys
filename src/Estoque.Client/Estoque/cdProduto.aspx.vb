@@ -215,6 +215,7 @@ Partial Public Class cdProduto
             cboMarca.Text = Produto.Marca.Nome
         End If
 
+        txtQtdEstoqueMinimo.Value = Produto.QuantidadeMinimaEmEstoque
         txtObservacoes.Text = Produto.Observacoes
         txtPorcentagemDeLucro.Value = Produto.PorcentagemDeLucro
 
@@ -225,6 +226,7 @@ Partial Public Class cdProduto
         txtValorDeCusto.Value = Produto.ValorDeCusto
         txtValorDeVendaMinimo.Value = Produto.ValorDeVendaMinimo
         txtValorDeVenda.Value = Produto.ValorDeVenda
+        txtQtdEstoque.Value = Produto.QuantidadeEmEstoque
     End Sub
 
     Private Sub btnModificar_Click()

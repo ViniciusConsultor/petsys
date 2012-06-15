@@ -1,4 +1,6 @@
 ﻿Imports Estoque.Interfaces.Negocio
+Imports Estoque.Interfaces.Servicos
+Imports Compartilhados.Fabricas
 
 <Serializable()> _
 Public Class Produto
@@ -64,9 +66,11 @@ Public Class Produto
         End Set
     End Property
 
-    Public ReadOnly Property QuantidadeEmEstoque() As Integer Implements IProduto.QuantidadeEmEstoque
+    Public ReadOnly Property QuantidadeEmEstoque() As Double Implements IProduto.QuantidadeEmEstoque
         Get
-
+            Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
+                Return Servico.ObtenhaQuantidadeEmEstoqueDoProduto(ID.Value)
+            End Using
         End Get
     End Property
 

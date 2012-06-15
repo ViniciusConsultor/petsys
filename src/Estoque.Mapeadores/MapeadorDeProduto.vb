@@ -365,4 +365,26 @@ Public Class MapeadorDeProduto
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
 
+    Public Function ObtenhaQuantidadeEmEstoqueDoProduto(ByVal IDProduto As Long) As Double Implements IMapeadorDeProduto.ObtenhaQuantidadeEmEstoqueDoProduto
+        Dim DBHelper As IDBHelper = ServerUtils.criarNovoDbHelper
+        Dim SqlEntrada As String = "SELECT SUM(QUANTIDADE) AS QUANTIDADEENTRADA FROM ETQ_PRODUTOMOV, ETQ_MOVPRODUTO WHERE IDPRODUTO = " & IDProduto.ToString & " AND IDMOVIMENTACAO = ID AND TIPO = '" & TipoMovimentacaoDeProduto.Entrada.ID & "'"
+        Dim SqlSaida As String = "SELECT SUM(QUANTIDADE) AS QUANTIDADESAIDA FROM ETQ_PRODUTOMOV, ETQ_MOVPRODUTO WHERE IDPRODUTO = " & IDProduto.ToString & " AND IDMOVIMENTACAO = ID AND TIPO = '" & TipoMovimentacaoDeProduto.Saida.ID & "'"
+        Dim QuantidadeEntrada As Double = 0
+        Dim QuantidadeSaida As Double = 0
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SqlEntrada)
+            If Leitor.Read Then
+                QuantidadeEntrada = UtilidadesDePersistencia.getValorDouble(Leitor, "QUANTIDADEENTRADA")
+            End If
+        End Using
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SqlSaida)
+            If Leitor.Read Then
+                QuantidadeSaida = UtilidadesDePersistencia.getValorDouble(Leitor, "QUANTIDADESAIDA")
+            End If
+        End Using
+
+        Return QuantidadeEntrada - QuantidadeSaida
+    End Function
+
 End Class

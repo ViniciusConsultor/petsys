@@ -7,7 +7,7 @@
         Property Nome() As String
         Property UnidadeDeMedida() As UnidadeDeMedida
         Property Marca() As IMarcaDeProduto
-        ReadOnly Property QuantidadeEmEstoque() As Integer
+        ReadOnly Property QuantidadeEmEstoque() As Double
         Property QuantidadeMinimaEmEstoque() As Nullable(Of Double)
         Property ValorDeCusto() As Nullable(Of Double)
         Property ValorDeVendaMinimo() As Nullable(Of Double)

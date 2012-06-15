@@ -9,20 +9,8 @@
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;">
         <Items>
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
-                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.ETQ.005.0001" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
-                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.EQT.005.0002" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/delete.gif" Text="Estornar"
-                CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.EQT.005.0003" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/save.gif" Text="Salvar"
                 CommandName="btnSalvar" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Cancelar"
-                CommandName="btnCancelar" CausesValidation="False" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/yes.gif" Text="Sim"
-                CommandName="btnSim" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Não"
-                CommandName="btnNao" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -70,7 +58,8 @@
                                     <asp:Label ID="Label4" runat="server" Text="Histórico"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtHistorico" runat="server">
+                                    <telerik:RadTextBox ID="txtHistorico" runat="server" Rows="5" 
+                                        TextMode="MultiLine" Width="300px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>

@@ -15,6 +15,7 @@ Namespace Mapeadores
         Sub InserirProduto(ByVal Produto As IProduto)
         Sub AtualizarProduto(ByVal Produto As IProduto)
         Sub RemoverProduto(ByVal ID As Long)
+        Function ObtenhaQuantidadeEmEstoqueDoProduto(ByVal IDProduto As Long) As Double
 
     End Interface
 

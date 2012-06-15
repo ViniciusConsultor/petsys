@@ -98,7 +98,7 @@ Namespace LazyLoad
             End Set
         End Property
 
-        Public ReadOnly Property QuantidadeEmEstoque() As Integer Implements IProduto.QuantidadeEmEstoque
+        Public ReadOnly Property QuantidadeEmEstoque() As Double Implements IProduto.QuantidadeEmEstoque
             Get
                 If _ProdutoReal Is Nothing Then CarregueObjetoReal()
                 Return _ProdutoReal.QuantidadeEmEstoque
