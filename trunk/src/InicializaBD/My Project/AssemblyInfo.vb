@@ -15,7 +15,7 @@ Imports System.Security
 <Assembly: AssemblyProduct("InicializaBD")> 
 <Assembly: AssemblyCopyright("Simple TI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
-<Assembly: AllowPartiallyTrustedCallersAttribute()> 
+
 <Assembly: ComVisible(False)> 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM

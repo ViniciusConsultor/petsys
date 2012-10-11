@@ -47,11 +47,7 @@ Partial Public Class Login
             Next
         End Using
 
-        Dim IDsDiretivas As IList(Of String) = New List(Of String)
-
-        For Each Diretiva As IDiretivaDeSeguranca In Diretivas
-            IDsDiretivas.Add(Diretiva.ID)
-        Next
+        Dim IDsDiretivas As IList(Of String) = (From Diretiva In Diretivas Select Diretiva.ID).ToList()
 
         Usuario = New Usuario(Operador.Pessoa.ID.Value, Operador.Pessoa.Nome, IDsDiretivas, CType(Operador.Pessoa, IPessoaFisica).Sexo.ID)
         FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario = Usuario

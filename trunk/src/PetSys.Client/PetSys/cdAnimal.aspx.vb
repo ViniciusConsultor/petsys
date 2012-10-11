@@ -68,8 +68,7 @@ Partial Public Class cdAnimal
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = False
         ctrlPessoa1.EhEditavel = False
-        ctrlPessoa1.EhObrigatorio = False
-
+        
         crtlAnimal1.Inicializa()
         crtlAnimal1.BotaoDetalharEhVisivel = False
         crtlAnimal1.BotaoNovoEhVisivel = False
@@ -132,8 +131,7 @@ Partial Public Class cdAnimal
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
         ctrlPessoa1.EhEditavel = True
-        ctrlPessoa1.EhObrigatorio = True
-    End Sub
+        End Sub
 
     Private Sub ExibaTelaModificar()
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False

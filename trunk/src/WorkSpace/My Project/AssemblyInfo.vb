@@ -14,7 +14,7 @@ Imports System.Security
 <Assembly: AssemblyProduct("WorkSpace")> 
 <Assembly: AssemblyCopyright("Simple TI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
-<Assembly: AllowPartiallyTrustedCallersAttribute()> 
+
 
 <Assembly: ComVisible(False)> 
 
