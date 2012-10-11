@@ -85,12 +85,12 @@ Public Class Form1
 
         VetorA = Split(Linha, vbTab)
 
-        Jogo = New Jogo(Nothing)
+        Jogo = New Jogo()
 
         For Each Numero As String In VetorA
             Dim Dezena As Dezena
 
-            Dezena = New Dezena(CShort(Numero))
+            Dezena = New Dezena(CByte(Numero))
             Jogo.AdicionaDezena(Dezena)
         Next
 

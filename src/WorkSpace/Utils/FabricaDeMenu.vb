@@ -26,8 +26,8 @@ Public Class FabricaDeMenu
         _JsMenu.AppendLine("<script language='javascript' type='text/javascript'>")
         _JsMenu.AppendLine(ObtenhaMenuIniciar())
 
-        For Each MenuModulo As IMenuComposto In _Menu.ObtenhaItens
-            If _Principal.EstaAutorizado(MenuModulo.ID) Then ObtenhaMenuModulo(MenuModulo)
+        For Each MenuModulo As IMenuComposto In From MenuModulo1 In _Menu.ObtenhaItens Where _Principal.EstaAutorizado(MenuModulo1.ID)
+            ObtenhaMenuModulo(MenuModulo)
         Next
 
         _JsMenu.AppendLine("</script>")
@@ -47,8 +47,8 @@ Public Class FabricaDeMenu
 
         If _Menu.ObtenhaItens.Count <> 0 Then
             'Obtem os IDs dos modulos para criar as funções JS dinamicamente
-            For Each MenuComposto As IMenuAbstrato In _Menu.ObtenhaItens
-                If _Principal.EstaAutorizado(MenuComposto.ID) Then NomeDosModulos.Append(String.Concat("new MyDesktop.", MenuComposto.IDSemFormatacao, "(),"))
+            For Each MenuComposto As IMenuAbstrato In From MenuComposto1 In _Menu.ObtenhaItens Where _Principal.EstaAutorizado(MenuComposto1.ID)
+                NomeDosModulos.Append(String.Concat("new MyDesktop.", MenuComposto.IDSemFormatacao, "(),"))
             Next
 
             If NomeDosModulos.Length > 0 Then
@@ -104,32 +104,30 @@ Public Class FabricaDeMenu
         _JsMenu.AppendLine("menu: {")
         _JsMenu.AppendLine("items:[")
 
-        For Each Funcao As IMenuFolha In MenuItemModulo.ObtenhaItens
-            If _Principal.EstaAutorizado(Funcao.ID) Then
-                _JsMenu.AppendLine(String.Concat("{text:'", Funcao.Nome, "',"))
-                _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
+        For Each Funcao As IMenuFolha In From Funcao1 In MenuItemModulo.ObtenhaItens Where _Principal.EstaAutorizado(Funcao1.ID)
+            _JsMenu.AppendLine(String.Concat("{text:'", Funcao.Nome, "',"))
+            _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
 
-                _JsMenu.AppendLine("handler:  function() {")
-                _JsMenu.AppendLine("var desktop = this.app.getDesktop();")
-                _JsMenu.AppendLine(String.Concat("var win = desktop.getWindow('win", Funcao.IDSemFormatacao, "');"))
-                _JsMenu.AppendLine("if(!win){")
-                _JsMenu.AppendLine("win = desktop.createWindow({")
-                _JsMenu.AppendLine(String.Concat("id:'win", Funcao.IDSemFormatacao, "',"))
-                _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
-                _JsMenu.AppendLine("width:800,")
-                _JsMenu.AppendLine("height:550,")
-                _JsMenu.AppendLine(String.Concat("html:'" & CrieHTML(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & Funcao.URL) & "',"))
-                _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
-                _JsMenu.AppendLine("shim:false,")
-                _JsMenu.AppendLine("animCollapse:true,")
-                _JsMenu.AppendLine("constrainHeader:true")
-                _JsMenu.AppendLine("});")
-                _JsMenu.AppendLine("}")
-                _JsMenu.AppendLine("win.show();")
-                _JsMenu.AppendLine("},")
-                _JsMenu.AppendLine("scope: this")
-                _JsMenu.Append("},")
-            End If
+            _JsMenu.AppendLine("handler:  function() {")
+            _JsMenu.AppendLine("var desktop = this.app.getDesktop();")
+            _JsMenu.AppendLine(String.Concat("var win = desktop.getWindow('win", Funcao.IDSemFormatacao, "');"))
+            _JsMenu.AppendLine("if(!win){")
+            _JsMenu.AppendLine("win = desktop.createWindow({")
+            _JsMenu.AppendLine(String.Concat("id:'win", Funcao.IDSemFormatacao, "',"))
+            _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
+            _JsMenu.AppendLine("width:800,")
+            _JsMenu.AppendLine("height:550,")
+            _JsMenu.AppendLine(String.Concat("html:'" & CrieHTML(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & Funcao.URL) & "',"))
+            _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
+            _JsMenu.AppendLine("shim:false,")
+            _JsMenu.AppendLine("animCollapse:true,")
+            _JsMenu.AppendLine("constrainHeader:true")
+            _JsMenu.AppendLine("});")
+            _JsMenu.AppendLine("}")
+            _JsMenu.AppendLine("win.show();")
+            _JsMenu.AppendLine("},")
+            _JsMenu.AppendLine("scope: this")
+            _JsMenu.Append("},")
         Next
 
         'retira a virgula

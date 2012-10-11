@@ -15,7 +15,7 @@ Imports System.Security
 <Assembly: AssemblyProduct("Core.Servicos.Local")> 
 <Assembly: AssemblyCopyright("Simple TI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
-<Assembly: AllowPartiallyTrustedCallersAttribute()> 
+
 
 <Assembly: ComVisible(False)> 
 

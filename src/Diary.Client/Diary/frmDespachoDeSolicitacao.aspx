@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="../WorkSpace.Master"
     CodeBehind="frmDespachoDeSolicitacao.aspx.vb" Inherits="Diary.Client.frmDespachoDeSolicitacao" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>

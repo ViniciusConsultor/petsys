@@ -29,31 +29,28 @@
         Dim Vetor As String() = Texto.Split(CChar(" "))
         Dim Retorno As String = ""
 
-        For Each Pedaco As String In Vetor
-            If Not String.IsNullOrEmpty(Pedaco) Then
-
-                If Pedaco.Equals("DA", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("DE", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("DI", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("D", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("DAS", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("DOS", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("NO", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("NA", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("E", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("A", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("AS", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("À", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("ÀS", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("E", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("É", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("O", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("OS", StringComparison.InvariantCultureIgnoreCase) OrElse _
-                   Pedaco.Equals("DO", StringComparison.InvariantCultureIgnoreCase) Then
-                    Retorno &= LCase(Pedaco) & " "
-                Else
-                    Retorno &= FormataTextoPrimeiraLetraEmMaiusculoRestanteMinusculo(Pedaco, True) & " "
-                End If
+        For Each Pedaco As String In From Pedaco1 In Vetor Where Not String.IsNullOrEmpty(Pedaco1)
+            If Pedaco.Equals("DA", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("DE", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("DI", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("D", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("DAS", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("DOS", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("NO", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("NA", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("E", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("A", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("AS", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("À", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("ÀS", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("E", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("É", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("O", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("OS", StringComparison.InvariantCultureIgnoreCase) OrElse _
+               Pedaco.Equals("DO", StringComparison.InvariantCultureIgnoreCase) Then
+                Retorno &= LCase(Pedaco) & " "
+            Else
+                Retorno &= FormataTextoPrimeiraLetraEmMaiusculoRestanteMinusculo(Pedaco, True) & " "
             End If
         Next
 

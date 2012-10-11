@@ -15,7 +15,7 @@ Imports System.Security
 <Assembly: AssemblyProduct("Core.Negocio")> 
 <Assembly: AssemblyCopyright("Simple TI Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
-<Assembly: AllowPartiallyTrustedCallersAttribute()> 
+
 
 <Assembly: ComVisible(False)> 
 

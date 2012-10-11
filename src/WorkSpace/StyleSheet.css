@@ -1,4 +1,7 @@
-﻿body {
+﻿body 
+{
+    /* Para todos os elementos da página ficarem visíveis caso a barra sobrepor algum elemento */
+   
 }
 
 .tabela {
@@ -51,3 +54,68 @@
 	height: 100%;
 	position: absolute;
 }
+/* fixar no topo */
+        .fixarTopo
+        {
+            /* para o IE 8 */
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=160, Color='#000000')";
+   
+            /* para os outros browsers */
+            -webkit-box-shadow: 0px 0px 8px 0px #000000;
+            -moz-box-shadow: 0px 0px 8px #000000;
+            box-shadow: 0px 0px 8px #000000;
+   
+            position:fixed;
+            bottom:auto;
+            top:0;
+        }
+
+        /* fixar no rodape */
+        .fixarRodape
+        {
+            position: fixed;
+            bottom: 0;
+            top: auto;
+
+            /* para o IE 8 */
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=0, Color='#000000')";
+
+             /* para os outros browsers */
+            -webkit-box-shadow: 0px 0px 8px 0px #000000;
+            -moz-box-shadow: 0px 0px 8px 0px #000000;
+            box-shadow: 0px 0px 8px 0px #000000;
+        }
+
+        /* fixar a esquerda */
+        .fixarEsquerda {position:fixed;right:auto;left:0;}
+
+        /* fixar a direita */
+        .fixarDireita {position:fixed;right:0;left:auto;}
+
+        * html,* html body /* IE6 Manter elemento fixo*/ {background-image:url(about:blank);background-attachment:fixed;}
+
+        /* IE6 fixar no topo */
+        * html .fixarTopo
+        {
+            position:absolute;
+            bottom:auto;
+
+            top:expression(eval(document.documentElement.scrollTop));
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=160, Color='#000000');
+        }
+
+        /* IE6 fixar no rodape */
+        * html .fixarRodape
+        {
+            position:absolute;
+            bottom:auto;
+
+            top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=0, Color='#000000');
+        }
+
+        /* IE6 fixo a direita */
+        * html .fixarDireita {position:absolute;right:auto;left:expression(eval(document.documentElement.scrollLeft+document.documentElement.clientWidth-this.offsetWidth)-(parseInt(this.currentStyle.marginLeft,10)||0)-(parseInt(this.currentStyle.marginRight,10)||0));}
+
+        /* IE6 fixo a esquerda */
+        * html .fixarEsquerda {position:absolute;right:auto;left:expression(eval(document.documentElement.scrollLeft));}

@@ -264,9 +264,9 @@ Partial Public Class frmDespachoDeSolicitacao
         Dim TelefonesComercial As IList(Of ITelefone)
         Dim TelefonesCelular As IList(Of ITelefone)
 
-        TelefonesResidencial = Solicitacao.Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Residencial)
-        TelefonesComercial = Solicitacao.Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
-        TelefonesCelular = Solicitacao.Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
+        TelefonesResidencial = Solicitacao.Contato.Pessoa.ObtenhaTelefones(TipoDeTelefone.Residencial)
+        TelefonesComercial = Solicitacao.Contato.Pessoa.ObtenhaTelefones(TipoDeTelefone.Comercial)
+        TelefonesCelular = Solicitacao.Contato.Pessoa.ObtenhaTelefones(TipoDeTelefone.Celular)
 
         For Each Telefone As ITelefone In TelefonesResidencial
             TelefonesSTR.Append(String.Concat(Telefone.ToString, " "))

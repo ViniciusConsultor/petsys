@@ -34,8 +34,8 @@ Partial Public Class ctrlContato
                 Dim TelefonesCelular As IList(Of ITelefone)
                 Dim TelefonesComercial As IList(Of ITelefone)
 
-                TelefonesCelular = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Celular)
-                TelefonesComercial = Contato.Pessoa.ObtenhaTelelefones(TipoDeTelefone.Comercial)
+                TelefonesCelular = Contato.Pessoa.ObtenhaTelefones(TipoDeTelefone.Celular)
+                TelefonesComercial = Contato.Pessoa.ObtenhaTelefones(TipoDeTelefone.Comercial)
 
                 Dim TelefonesSTR As New StringBuilder
 

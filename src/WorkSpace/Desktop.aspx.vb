@@ -27,7 +27,7 @@ Partial Public Class Desktop
 
         If Atalhos Is Nothing OrElse Atalhos.Count = 0 Then Exit Sub
 
-        For I As Integer = 0 To 3
+        For I = 0 To 3
             Linha = New HtmlTableRow()
             Linha.Cells.Add(New HtmlTableCell())
             Linha.Cells.Add(New HtmlTableCell())

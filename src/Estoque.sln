@@ -1,16 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Interfaces", "Estoque.Interfaces\Estoque.Interfaces.vbproj", "{F7E08A53-2F27-43C8-8C67-B39200BBC1A0}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Mapeadores", "Estoque.Mapeadores\Estoque.Mapeadores.vbproj", "{5F00D436-288C-4024-9612-C97311A06BC1}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Negocio", "Estoque.Negocio\Estoque.Negocio.vbproj", "{BDE48A12-BD95-4BD0-B5A8-8C9F66B7C1D3}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Servicos.Local", "Estoque.Servicos.Local\Estoque.Servicos.Local.vbproj", "{2BC2F3D0-A18D-454E-8F55-5FAFBD21A6D2}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Client", "Estoque.Client\Estoque.Client.vbproj", "{1F123E04-A12A-4025-87DF-EF7F909C9535}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{383B5B62-43FE-4A58-9678-366106D1BB00}"
 	ProjectSection(SolutionItems) = preProject
 		..\doc\Banco de dados\Estoque\INSERT_EQT.SQL = ..\doc\Banco de dados\Estoque\INSERT_EQT.SQL
@@ -25,6 +15,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{B10A44
 	ProjectSection(SolutionItems) = preProject
 		..\doc\Banco de dados\Estoque\Oracle\CREATE_ETQ_Oracle.SQL = ..\doc\Banco de dados\Estoque\Oracle\CREATE_ETQ_Oracle.SQL
 	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Interfaces", "Estoque.Interfaces\Estoque.Interfaces.vbproj", "{F7E08A53-2F27-43C8-8C67-B39200BBC1A0}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Mapeadores", "Estoque.Mapeadores\Estoque.Mapeadores.vbproj", "{5F00D436-288C-4024-9612-C97311A06BC1}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Negocio", "Estoque.Negocio\Estoque.Negocio.vbproj", "{BDE48A12-BD95-4BD0-B5A8-8C9F66B7C1D3}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Servicos.Local", "Estoque.Servicos.Local\Estoque.Servicos.Local.vbproj", "{2BC2F3D0-A18D-454E-8F55-5FAFBD21A6D2}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Estoque.Client", "Estoque.Client\Estoque.Client.vbproj", "{1F123E04-A12A-4025-87DF-EF7F909C9535}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

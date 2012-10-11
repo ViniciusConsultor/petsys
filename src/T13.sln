@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "T13.Interfaces", "T13.Interfaces\T13.Interfaces.vbproj", "{6E50B929-7BCF-45C3-A536-9CE6DE1F7835}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "T13.Mapeadores", "T13.Mapeadores\T13.Mapeadores.vbproj", "{D9D4DBF8-5816-490D-88E1-FC5527CB02AF}"

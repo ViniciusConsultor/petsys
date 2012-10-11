@@ -1,16 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Interfaces", "PetSys.Interfaces\PetSys.Interfaces.vbproj", "{3B0594C1-F788-45D1-8C69-704701DFD63B}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Mapeadores", "PetSys.Mapeadores\PetSys.Mapeadores.vbproj", "{E3AA1F0B-99A2-4820-9DFF-EB3E27950EC5}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Negocio", "PetSys.Negocio\PetSys.Negocio.vbproj", "{5595A133-F94B-4FDF-A7A2-28FE38B30F9D}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Servicos.Local", "PetSys.Servicos.Local\PetSys.Servicos.Local.vbproj", "{CF984B8A-6EC5-4CD0-88CC-DD1D8BAF6294}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Client", "PetSys.Client\PetSys.Client.vbproj", "{D67A6FDC-9C17-41CA-8F1F-A6CE2AEEE634}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{32D963FA-9227-43B6-83A3-DDB97528E472}"
 	ProjectSection(SolutionItems) = preProject
 		..\doc\Banco de dados\PetSys\INSERT_PET.sql = ..\doc\Banco de dados\PetSys\INSERT_PET.sql
@@ -25,6 +15,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{0B62A6
 	ProjectSection(SolutionItems) = preProject
 		..\doc\Banco de dados\PetSys\Oracle\CREATE_PET_Oracle.sql = ..\doc\Banco de dados\PetSys\Oracle\CREATE_PET_Oracle.sql
 	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Interfaces", "PetSys.Interfaces\PetSys.Interfaces.vbproj", "{3B0594C1-F788-45D1-8C69-704701DFD63B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Mapeadores", "PetSys.Mapeadores\PetSys.Mapeadores.vbproj", "{E3AA1F0B-99A2-4820-9DFF-EB3E27950EC5}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Negocio", "PetSys.Negocio\PetSys.Negocio.vbproj", "{5595A133-F94B-4FDF-A7A2-28FE38B30F9D}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Servicos.Local", "PetSys.Servicos.Local\PetSys.Servicos.Local.vbproj", "{CF984B8A-6EC5-4CD0-88CC-DD1D8BAF6294}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PetSys.Client", "PetSys.Client\PetSys.Client.vbproj", "{D67A6FDC-9C17-41CA-8F1F-A6CE2AEEE634}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
