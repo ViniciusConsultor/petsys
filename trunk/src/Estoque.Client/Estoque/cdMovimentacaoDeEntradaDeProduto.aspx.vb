@@ -32,8 +32,8 @@ Partial Public Class cdMovimentacaoDeEntradaDeProduto
     End Sub
 
     Private Sub ExibaMovimentacoes(ByVal Movimentacoes As IList(Of IMovimentacaoDeProdutoEntrada))
-        grdItensLancados.DataSource = Movimentacoes
-        grdItensLancados.DataBind()
+        grdMovimentacoes.DataSource = Movimentacoes
+        grdMovimentacoes.DataBind()
     End Sub
 
     Protected Overrides Function ObtenhaIdFuncao() As String
@@ -42,6 +42,27 @@ Partial Public Class cdMovimentacaoDeEntradaDeProduto
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar
         Return rtbToolBar
+    End Function
+
+    Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
+        Select Case CType(e.Item, RadToolBarButton).CommandName
+            Case "btnNovo"
+                Call btnNovo_Click()
+        End Select
+    End Sub
+
+    Protected Sub btnNovo_Click()
+        Dim URL As String
+
+        URL = ObtenhaURL()
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Movimentação - Entrada", 650, 450), False)
+    End Sub
+
+    Private Function ObtenhaURL() As String
+        Dim URL As String
+
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
+        Return String.Concat(URL, "Estoque/frmEntradaDeProduto.aspx")
     End Function
 
 End Class

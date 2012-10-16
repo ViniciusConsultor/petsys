@@ -54,6 +54,7 @@
                                 <Columns>
                                     <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
                                         ImageUrl="~/imagens/delete.gif">
+                                        </telerik:GridButtonColumn>
                                     <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Detalhar" UniqueName="column7"
                                         ImageUrl="~/imagens/delete.gif">
                                     </telerik:GridButtonColumn>
