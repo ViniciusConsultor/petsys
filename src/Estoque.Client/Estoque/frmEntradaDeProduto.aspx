@@ -102,6 +102,7 @@
                         <telerik:RadGrid ID="grdItensLancados" runat="server" AutoGenerateColumns="False"
                             GridLines="None" Skin="Vista">
                             <MasterTableView GridLines="Both">
+                                <CommandItemSettings ExportToPdfText="Export to PDF" />
                                 <RowIndicatorColumn>
                                     <HeaderStyle Width="20px" />
                                 </RowIndicatorColumn>
@@ -110,8 +111,8 @@
                                 </ExpandCollapseColumn>
                                 <Columns>
                                     <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
-                                        ImageUrl="~/imagens/delete.gif">
-                                    </telerik:GridButtonColumn>
+                                        ImageUrl="~/imagens/delete.gif"></telerik:GridButtonColumn>
+                                 
                                     <telerik:GridBoundColumn DataField="Produto.ID" UniqueName="column" Visible="False"
                                         HeaderText="ID">
                                     </telerik:GridBoundColumn>
@@ -125,7 +126,15 @@
                                     <telerik:GridBoundColumn DataField="PrecoTotal" UniqueName="column5" HeaderText="Total">
                                     </telerik:GridBoundColumn>
                                 </Columns>
+                                <EditFormSettings>
+                                    <EditColumn FilterControlAltText="Filter EditCommandColumn column">
+                                    </EditColumn>
+                                </EditFormSettings>
                             </MasterTableView>
+                            <FilterMenu EnableImageSprites="False">
+                            </FilterMenu>
+                            <HeaderContextMenu CssClass="GridContextMenu GridContextMenu_Vista">
+                            </HeaderContextMenu>
                         </telerik:RadGrid>
                     </asp:Panel>
                 </ContentTemplate>
