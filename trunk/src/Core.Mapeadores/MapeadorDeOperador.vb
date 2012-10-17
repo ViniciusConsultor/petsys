@@ -132,7 +132,6 @@ Public Class MapeadorDeOperador
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
         Dim ListaDeIds As New List(Of Long)
-        Dim Grupos As IList(Of IGrupo) = New List(Of IGrupo)
 
         Sql.Append("SELECT IDGRUPO FROM NCL_GRPOPE ")
         Sql.Append(String.Concat("WHERE IDOPERADOR = ", IdOperador))
@@ -151,18 +150,14 @@ Public Class MapeadorDeOperador
 
         Dim MapeadorDeGrupo As IMapeadorDeGrupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeGrupo)()
 
-        For Each Id As Long In ListaDeIds
-            Grupos.Add(MapeadorDeGrupo.ObtenhaGrupo(Id))
-        Next
-
-        Return Grupos
+        Return (From Id In ListaDeIds Select MapeadorDeGrupo.ObtenhaGrupo(Id)).ToList()
     End Function
 
     Public Function ObtenhaOperador(ByVal Pessoa As IPessoa) As IOperador Implements IMapeadorDeOperador.ObtenhaOperador
         Dim Sql As New StringBuilder
 
         Sql.Append("SELECT IDPESSOA, TIPOPESSOA, LOGIN, STATUS, ID, TIPO, NOME")
-        Sql.Append(" FROM NCL_OPERADOR")
+        Sql.Append(" FROM NCL_OPERADOR, NCL_PESSOA")
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Pessoa.ID.Value.ToString))
         Sql.Append(" AND ID = IDPESSOA AND TIPO = TIPOPESSOA")
 
