@@ -2,9 +2,6 @@
     CodeBehind="cdMovimentacaoDeEntradaDeProduto.aspx.vb" Inherits="Estoque.Client.cdMovimentacaoDeEntradaDeProduto" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
-    TagPrefix="cc1" %>
-<%@ Register Src="ctrlProduto.ascx" TagName="ctrlProduto" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;">
@@ -52,12 +49,12 @@
                                     <HeaderStyle Width="20px" />
                                 </ExpandCollapseColumn>
                                 <Columns>
-                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
+                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Detalhar" UniqueName="column5"
+                                        ImageUrl="~/imagens/details.gif">
+                                    </telerik:GridButtonColumn>
+                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column6"
                                         ImageUrl="~/imagens/delete.gif">
                                         </telerik:GridButtonColumn>
-                                    <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Detalhar" UniqueName="column7"
-                                        ImageUrl="~/imagens/delete.gif">
-                                    </telerik:GridButtonColumn>
                                     <telerik:GridBoundColumn DataField="ID" UniqueName="column" Visible="False"
                                         HeaderText="ID">
                                     </telerik:GridBoundColumn>
@@ -68,7 +65,7 @@
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn DataField="Fornecedor.Pessoa.Nome" UniqueName="column3" HeaderText="Fornecedor">
                                     </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="ObtenhaTotalDaMovimentacao" UniqueName="column5" HeaderText="Total da movimentação">
+                                    <telerik:GridBoundColumn DataField="TotalDaMovimentacao" UniqueName="column4" HeaderText="Total da movimentação">
                                     </telerik:GridBoundColumn>
                                 </Columns>
                             </MasterTableView>

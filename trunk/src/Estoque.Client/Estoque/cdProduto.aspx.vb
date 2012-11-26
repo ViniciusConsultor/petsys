@@ -20,6 +20,8 @@ Partial Public Class cdProduto
     Private CHAVE_OBJETO As String = "CHAVE_OBJETO_PRODUTO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        AddHandler ctrlProduto1.ProdutoFoiSelecionado, AddressOf ExibaProduto
+        
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If
@@ -42,9 +44,8 @@ Partial Public Class cdProduto
         UtilidadesWeb.HabilitaComponentes(CType(pnlCaracteristicasDoProduto, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlObservacoes, Control), False)
         ViewState(CHAVE_ESTADO) = Estado.Inicial
-        cboProduto.EmptyMessage = "Selecione um produto"
-        txtCodigo.EmptyMessage = "Informe o código"
-        cboProduto.EnableLoadOnDemand = True
+        ctrlProduto1.HabilitaEmptyMessage(True)
+        ctrlProduto1.HabilitaEnableLoadOnDemandEAutoPostBack(True)
         Session(CHAVE_OBJETO) = Nothing
         CarregaDadosIniciais()
         pnlQuantidadeEmEstoque.Visible = True
@@ -80,9 +81,8 @@ Partial Public Class cdProduto
         UtilidadesWeb.HabilitaComponentes(CType(pnlImpostosValores, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlCaracteristicasDoProduto, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlObservacoes, Control), True)
-        cboProduto.EmptyMessage = ""
-        txtCodigo.EmptyMessage = ""
-        cboProduto.EnableLoadOnDemand = False
+        ctrlProduto1.HabilitaEmptyMessage(False)
+        ctrlProduto1.HabilitaEnableLoadOnDemandEAutoPostBack(False)
         CarregaDadosIniciais()
         pnlQuantidadeEmEstoque.Visible = False
     End Sub
@@ -99,8 +99,8 @@ Partial Public Class cdProduto
         UtilidadesWeb.HabilitaComponentes(CType(pnlImpostosValores, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlCaracteristicasDoProduto, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlObservacoes, Control), True)
-        cboProduto.EnableLoadOnDemand = False
-        cboProduto.EmptyMessage = ""
+        ctrlProduto1.HabilitaEmptyMessage(False)
+        ctrlProduto1.HabilitaEnableLoadOnDemandEAutoPostBack(False)
         pnlQuantidadeEmEstoque.Visible = True
         txtQtdEstoque.Enabled = False
     End Sub
@@ -115,8 +115,7 @@ Partial Public Class cdProduto
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
         ViewState(CHAVE_ESTADO) = Estado.Remove
         UtilidadesWeb.HabilitaComponentes(CType(pnlProduto, Control), False)
-        cboProduto.EmptyMessage = ""
-        txtCodigo.EmptyMessage = ""
+        ctrlProduto1.HabilitaEmptyMessage(False)
         pnlQuantidadeEmEstoque.Visible = True
     End Sub
 
@@ -128,8 +127,7 @@ Partial Public Class cdProduto
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        cboProduto.EmptyMessage = ""
-        txtCodigo.EmptyMessage = ""
+        ctrlProduto1.HabilitaEmptyMessage(False)
         pnlQuantidadeEmEstoque.Visible = True
     End Sub
 
@@ -140,7 +138,7 @@ Partial Public Class cdProduto
     Private Function ValidaDados() As String
         Dim Inconsistencias As IList(Of String) = New List(Of String)
 
-        If String.IsNullOrEmpty(cboProduto.Text) Then Return "O nome do produto deve ser informado."
+        If String.IsNullOrEmpty(ctrlProduto1.NomeProdutoSelecionado()) Then Return "O nome do produto deve ser informado."
         If String.IsNullOrEmpty(cboGrupoDeProduto.SelectedValue) Then Return "O grupo de produto deve ser informado."
 
         Return Nothing
@@ -185,9 +183,9 @@ Partial Public Class cdProduto
         Dim Produto As IProduto
 
         Produto = CType(Session(CHAVE_OBJETO), IProduto)
-
-        Produto.CodigoDeBarras = txtCodigo.Text
-        Produto.Nome = cboProduto.Text
+        Produto.CodigoDeBarras = ctrlProduto1.CodigoDeBarrasProdutoSelecionado()
+        Produto.Nome = ctrlProduto1.NomeProdutoSelecionado()
+   
         Produto.Observacoes = txtObservacoes.Text
         Produto.PorcentagemDeLucro = txtPorcentagemDeLucro.Value
         Produto.QuantidadeMinimaEmEstoque = txtQtdEstoqueMinimo.Value
@@ -205,8 +203,7 @@ Partial Public Class cdProduto
     Private Sub ExibaProduto(ByVal Produto As IProduto)
         Session(CHAVE_OBJETO) = Produto
 
-        txtCodigo.Text = Produto.CodigoDeBarras
-        cboProduto.Text = Produto.Nome
+        ctrlProduto1.ProdutoSelecionado = Produto
         cboGrupoDeProduto.SelectedValue = Produto.GrupoDeProduto.ID.Value.ToString
         cboGrupoDeProduto.Text = Produto.GrupoDeProduto.Nome
 
@@ -316,52 +313,7 @@ Partial Public Class cdProduto
         Return String.Concat(URL, "Estoque/cdMarca.aspx")
     End Function
 
-    Private Sub cboProduto_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboProduto.ItemsRequested
-        Dim Produtos As IList(Of IProduto)
-
-        Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
-            Produtos = Servico.ObtenhaProdutos(e.Text, 50)
-
-            If Not Produtos Is Nothing Then
-                For Each Produto As IProduto In Produtos
-                    cboProduto.Items.Add(New RadComboBoxItem(Produto.Nome, Produto.ID.ToString))
-                Next
-            End If
-        End Using
-    End Sub
-
-    Private Sub cboProduto_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboProduto.SelectedIndexChanged
-        Dim Produto As IProduto
-        Dim Valor As String
-
-        Valor = DirectCast(o, RadComboBox).SelectedValue
-        If String.IsNullOrEmpty(Valor) Then Return
-
-        Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
-            Produto = Servico.ObtenhaProduto(CLng(Valor))
-        End Using
-
-        Me.ExibaProduto(Produto)
-        Me.ExibaTelaConsultar()
-    End Sub
-
-    Private Sub txtCodigo_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtCodigo.TextChanged
-        If String.IsNullOrEmpty(txtCodigo.Text) Then Exit Sub
-
-        If CByte(ViewState(CHAVE_ESTADO)) = Estado.Inicial Then
-            Dim Produto As IProduto
-
-            Using Servico As IServicoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeProduto)()
-                Produto = Servico.ObtenhaProduto(txtCodigo.Text)
-            End Using
-
-            If Produto Is Nothing Then Exit Sub
-
-            Me.ExibaProduto(Produto)
-        End If
-    End Sub
-
-    Private Sub cboGrupoDeProduto_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboGrupoDeProduto.ItemsRequested
+   Private Sub cboGrupoDeProduto_ItemsRequested(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboGrupoDeProduto.ItemsRequested
         Dim Grupos As IList(Of IGrupoDeProduto)
 
         Using Servico As IServicoDeGrupoDeProduto = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeProduto)()

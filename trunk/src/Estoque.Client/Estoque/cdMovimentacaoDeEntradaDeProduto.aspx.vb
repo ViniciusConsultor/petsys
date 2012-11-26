@@ -65,4 +65,26 @@ Partial Public Class cdMovimentacaoDeEntradaDeProduto
         Return String.Concat(URL, "Estoque/frmEntradaDeProduto.aspx")
     End Function
 
+    Private Sub grdMovimentacoes_ItemCommand(sender As Object, e As GridCommandEventArgs) Handles grdMovimentacoes.ItemCommand
+        Dim ID As Long
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            ID = CLng(e.Item.Cells(4).Text)
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Using Servico As IServicoDeMovimentacaoDeProdutoEntrada = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMovimentacaoDeProdutoEntrada)()
+                Servico.EstornarMovimentacaoDeEntrada(ID)
+            End Using
+
+            ApliqueFiltroMovimentacoesInicial()
+        ElseIf e.CommandName = "Detalhar" Then
+            Dim URL As String
+
+            URL = ObtenhaURL() & "?IdMovimentacao=" & ID
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Movimentação - Entrada", 650, 450), False)
+        End If
+    End Sub
 End Class

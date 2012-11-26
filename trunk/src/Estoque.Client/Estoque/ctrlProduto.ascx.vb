@@ -78,4 +78,28 @@ Partial Public Class ctrlProduto
         RaiseEvent ProdutoFoiSelecionado(Produto)
     End Sub
 
+    Public Sub HabilitaEmptyMessage(Habilita As Boolean)
+        If Habilita Then
+            txtCodigo.EmptyMessage = "Informe o código"
+            cboProduto.EmptyMessage = "Selecione um produto"
+        Else
+            txtCodigo.EmptyMessage = ""
+            cboProduto.EmptyMessage = ""
+        End If
+
+    End Sub
+
+    Public Sub HabilitaEnableLoadOnDemandEAutoPostBack(Habilita As Boolean)
+        cboProduto.EnableLoadOnDemand = Habilita
+        txtCodigo.AutoPostBack = Habilita
+    End Sub
+
+    Public Function NomeProdutoSelecionado() As String
+        Return cboProduto.Text
+    End Function
+
+    Public Function CodigoDeBarrasProdutoSelecionado() As String
+        Return txtCodigo.Text
+    End Function
+
 End Class

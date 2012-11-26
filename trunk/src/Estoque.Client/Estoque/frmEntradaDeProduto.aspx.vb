@@ -10,22 +10,56 @@ Imports Compartilhados.Interfaces.Core.Servicos
 Partial Public Class frmEntradaDeProduto
     Inherits SuperPagina
 
-    Private Enum Estado As Byte
-        Novo = 1
-        Consulta
-    End Enum
-
-    Private CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA As String = "CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA"
-    Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CDMOVIMENTACAOENTRADADEPRODUTO"
+    Private Const CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA As String = "CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
-            ExibaTelaInicial()
+            Dim Id As Nullable(Of Long)
+
+            If Not String.IsNullOrEmpty(Request.QueryString("IdMovimentacao")) Then
+                Id = CLng(Request.QueryString("IdMovimentacao"))
+            End If
+
+
+            If Id Is Nothing Then
+                ExibaTelaInicial()
+            Else
+                ExibaTelaDetalhes(Id.Value)
+            End If
+
         End If
     End Sub
 
+    Private Sub ExibaTelaDetalhes(IdMovimentacao As Long)
+        UtilidadesWeb.HabilitaComponentes(CType(RadDock2, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(RadDock1, Control), False)
+        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
+        
+        Using Servico As IServicoDeMovimentacaoDeProdutoEntrada = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeMovimentacaoDeProdutoEntrada)()
+            Dim Movimentacao As IMovimentacaoDeProdutoEntrada = Servico.ObtenhaMovimentacao(IdMovimentacao)
+            ExibaMovimentacao(Movimentacao)
+        End Using
+    End Sub
+
+    Private Sub ExibaMovimentacao(Movimentacao As IMovimentacaoDeProdutoEntrada)
+        txtDataDaMovimentacao.SelectedDate = Movimentacao.Data
+
+        If Not Movimentacao.Fornecedor Is Nothing Then
+            cboFornecedor.Text = Movimentacao.Fornecedor.Pessoa.Nome
+        End If
+
+        If Not String.IsNullOrEmpty(Movimentacao.Historico) Then
+            txtHistorico.Text = Movimentacao.Historico
+        End If
+        
+        If Not String.IsNullOrEmpty(Movimentacao.NumeroDocumento) Then
+            txtNumeroDocumento.Text = Movimentacao.NumeroDocumento
+        End If
+
+        ExibaItensMovimentados(Movimentacao.ObtenhaProdutosMovimentados())
+    End Sub
+
     Private Sub ExibaTelaInicial()
-        Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = New List(Of IProdutoMovimentado)
         ExibaItensMovimentados(New List(Of IProdutoMovimentado))
     End Sub
 
@@ -34,18 +68,22 @@ Partial Public Class frmEntradaDeProduto
     End Sub
 
     Private Sub ExibaTelaNovo()
+        UtilidadesWeb.HabilitaComponentes(CType(RadDock2, Control), True)
+        UtilidadesWeb.HabilitaComponentes(CType(RadDock1, Control), True)
         CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = True
         txtDataDaMovimentacao.SelectedDate = Now
     End Sub
 
-    Private Sub ExibaTelaConsultar()
-        CType(rtbToolBar.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
-    End Sub
-
     Private Function ValidaDados() As String
-        'If String.IsNullOrEmpty(cboMarca.Text) Then
-        '    Return "O nome da marca do produto deve ser informado."
-        'End If
+        If Not txtDataDaMovimentacao.SelectedDate.HasValue Then
+            Return "A data da movimentação deve ser informada."
+        End If
+
+        Dim ProdutosMovimentados As IList(Of IProdutoMovimentado) = CType(Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA), IList(Of IProdutoMovimentado))
+        
+        If ProdutosMovimentados Is Nothing OrElse ProdutosMovimentados.Count = 0 Then
+            Return "Ao menos um produto deve ser informado."
+        End If
 
         Return Nothing
     End Function
@@ -125,7 +163,6 @@ Partial Public Class frmEntradaDeProduto
         ProdutosMovimentados = CType(Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA), IList(Of IProdutoMovimentado))
         ProdutosMovimentados.Add(ProdutoMovimentado)
         ExibaItensMovimentados(ProdutosMovimentados)
-        Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = ProdutosMovimentados
         LimpaCamposProdutoMovimentado()
     End Sub
 
@@ -136,6 +173,7 @@ Partial Public Class frmEntradaDeProduto
     End Sub
 
     Private Sub ExibaItensMovimentados(ByVal Itens As IList(Of IProdutoMovimentado))
+        Session(CHAVE_PRODUTOS_MOVIMENTADOS_ENTRADA) = Itens
         grdItensLancados.DataSource = Itens
         grdItensLancados.DataBind()
     End Sub
