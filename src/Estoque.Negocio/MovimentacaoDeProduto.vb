@@ -3,7 +3,7 @@
 <Serializable()> _
 Public MustInherit Class MovimentacaoDeProduto
     Implements IMovimentacaoDeProduto
-
+    
     Private _ProdutosMovimentados As IList(Of IProdutoMovimentado)
 
     Public Sub New()
@@ -48,18 +48,6 @@ Public MustInherit Class MovimentacaoDeProduto
         Return _ProdutosMovimentados
     End Function
 
-    Public Function ObtenhaTotalDaMovimentacao() As Double Implements IMovimentacaoDeProduto.ObtenhaTotalDaMovimentacao
-        If _ProdutosMovimentados.Count = 0 Then Return 0
-
-        Dim Total As Double
-
-        For Each ProdutoMovimentado As IProdutoMovimentado In _ProdutosMovimentados
-            Total += ProdutoMovimentado.PrecoTotal
-        Next
-
-        Return Total
-    End Function
-
     Public MustOverride ReadOnly Property Tipo() As TipoMovimentacaoDeProduto Implements IMovimentacaoDeProduto.Tipo
 
     Private _NumeroDocumento As String
@@ -76,4 +64,15 @@ Public MustInherit Class MovimentacaoDeProduto
         _ProdutosMovimentados = ProdutosMovimentados
     End Sub
 
+    Public ReadOnly Property TotalDaMovimentacao As Double Implements IMovimentacaoDeProduto.TotalDaMovimentacao
+        Get
+            If _ProdutosMovimentados.Count = 0 Then Return 0
+
+            Dim Total As Double
+
+            Total += _ProdutosMovimentados.Sum(Function(ProdutoMovimentado) ProdutoMovimentado.PrecoTotal)
+
+            Return Total
+        End Get
+    End Property
 End Class

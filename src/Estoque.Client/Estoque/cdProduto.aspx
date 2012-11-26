@@ -2,8 +2,7 @@
     CodeBehind="cdProduto.aspx.vb" Inherits="Estoque.Client.cdProduto" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
-    TagPrefix="cc1" %>
+<%@ Register TagPrefix="uc1" TagName="ctrlProduto" Src="~/Estoque/ctrlProduto.ascx" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Vista">
     </telerik:RadAjaxLoadingPanel>
@@ -33,21 +32,7 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlProduto" runat="server">
-                        <table class="tabela">
-                            <tr>
-                                <td class="th3" colspan="2">
-                                    <asp:Label ID="Label1" runat="server" Text="Código de barras "></asp:Label>
-                                    <telerik:RadTextBox ID="txtCodigo" runat="server" AutoPostBack="True" Width="200px">
-                                    </telerik:RadTextBox>
-                                    <asp:Label ID="Label3" runat="server" Text="Nome "></asp:Label>
-                                    <telerik:RadComboBox ID="cboProduto" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
-                                        LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
-                                        CausesValidation="False" MaxLength="80">
-                                    </telerik:RadComboBox>
-                                </td>
-                            </tr>
-                        </table>
+                         <uc1:ctrlProduto ID="ctrlProduto1" runat="server" />
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
