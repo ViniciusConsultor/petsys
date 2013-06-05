@@ -29,6 +29,9 @@ Friend Class SessaoWeb
     Public Overrides Function RecupereContexto() As Principal
         Dim HttpContext As HttpContext = HttpContext.Current
 
+
+        If HttpContext.Session Is Nothing Then Return Nothing
+
         If CType(HttpContext.Session(SESSIONCONTEXTO), Principal) Is Nothing Then
             Me.AtualizeContexto(New Principal)
         End If
