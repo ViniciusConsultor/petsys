@@ -78,6 +78,9 @@
       <HintPath>..\..\lib\Telerik.Web.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.Web.UI.Skins">
+      <HintPath>..\..\lib\Telerik.Web.UI.Skins.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -663,7 +666,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
-          <DevelopmentServerPort>80</DevelopmentServerPort>
+          <DevelopmentServerPort>8085</DevelopmentServerPort>
           <DevelopmentServerVPath>/Workspace</DevelopmentServerVPath>
           <IISUrl>http://localhost/WorkSpace</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
