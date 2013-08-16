@@ -6,6 +6,17 @@ Public Class Principal
     Private _Conexao As IConexao
     Private _Usuario As Usuario
     Private _Perfil As Perfil
+    Private _EmpresaLogada As EmpresaVisivel
+
+    Public Property EmpresaLogada() As EmpresaVisivel
+        Get
+            Return _EmpresaLogada
+        End Get
+        Set(value As EmpresaVisivel)
+            _EmpresaLogada = value
+        End Set
+    End Property
+
 
     Public Property Conexao() As IConexao
         Get

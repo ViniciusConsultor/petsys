@@ -146,6 +146,7 @@
     <Compile Include="Core\Servicos\IServicoDePerfil.vb" />
     <Compile Include="Core\Servicos\IServicoDePessoaFisica.vb" />
     <Compile Include="Core\Servicos\IServicoDePessoaJuridica.vb" />
+    <Compile Include="Core\Negocio\SimENao.vb" />
     <Compile Include="GeradorDeID.vb" />
     <Compile Include="GerenciadorDeEmail.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

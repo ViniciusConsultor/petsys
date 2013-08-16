@@ -1,7 +1,6 @@
 <%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Login.Master"
     CodeBehind="Login.aspx.vb" Inherits="WorkSpace.Login" %>
 
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <table id="Table1" height="100%" cellspacing="0" cellpadding="0" width="100%" border="0">
         <tr>
@@ -10,22 +9,6 @@
                     <tr>
                         <td valign="top" align="left">
                             <table id="Table5" cellspacing="0" cellpadding="0" width="100%" border="0">
-                                <tr>
-                                    <td class="label">
-                                        <asp:Label ID="Label1" runat="server">Empresa:</asp:Label>
-                                    </td>
-                                    <td>
-                                        <asp:Image ID="Image18" runat="server" Width="5px" Height="5px" ImageUrl="~/imagens/vazio.gif">
-                                        </asp:Image>
-                                    </td>
-                                    <td>
-                                        <asp:Label ID="lblNomeEmpresa" runat="server">Empresa Demonstração</asp:Label>
-                                    </td>
-                                    <td height="38px">
-                                        <asp:Image ID="Image4" runat="server" Width="10px" Height="5px" ImageUrl="~/imagens/vazio.gif">
-                                        </asp:Image>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td align="right" class="label">
                                         <asp:Label ID="Label5" runat="server">Login:</asp:Label>

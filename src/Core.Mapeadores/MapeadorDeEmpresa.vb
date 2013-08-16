@@ -8,7 +8,7 @@ Imports Compartilhados.Fabricas
 
 Public Class MapeadorDeEmpresa
     Implements IMapeadorDeEmpresa
-
+    
     Public Sub Insira(ByVal Empresa As IEmpresa) Implements IMapeadorDeEmpresa.Insira
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
@@ -23,8 +23,12 @@ Public Class MapeadorDeEmpresa
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
+    
+    Public Sub Modificar(Empresa As IEmpresa) Implements IMapeadorDeEmpresa.Modificar
+        
+    End Sub
 
-    Public Function Obtenha() As IEmpresa Implements IMapeadorDeEmpresa.Obtenha
+    Public Function Obtenha(Pessoa As IPessoa) As IEmpresa Implements IMapeadorDeEmpresa.Obtenha
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
         Dim Empresa As IEmpresa = Nothing
@@ -33,18 +37,13 @@ Public Class MapeadorDeEmpresa
         Sql.Append("NCL_EMPRESA.IDPESSOA, NCL_EMPRESA.DTATIVACAO ")
         Sql.Append("FROM NCL_PESSOA, NCL_EMPRESA ")
         Sql.Append("WHERE NCL_EMPRESA.IDPESSOA = NCL_PESSOA.ID ")
-
-        Dim Pessoa As IPessoa
+        Sql.Append("AND IDPESSOA = " & Pessoa.ID)
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(Sql.ToString)
             Try
                 If Leitor.Read Then
-
-                    Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA"))
-                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
-
                     Empresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IEmpresa)(New Object() {Pessoa})
                     Empresa.DataDaAtivacao = UtilidadesDePersistencia.getValorDate(Leitor, "DTATIVACAO").Value
                 End If
@@ -55,5 +54,12 @@ Public Class MapeadorDeEmpresa
 
         Return Empresa
     End Function
+
+    Public Sub Remover(ID As Long) Implements IMapeadorDeEmpresa.Remover
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.getDBHelper
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_EMPRESA WHERE IDPESSOA = " & ID.ToString())
+    End Sub
 
 End Class

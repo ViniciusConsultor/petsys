@@ -5,8 +5,10 @@ Namespace Core.Servicos
     Public Interface IServicoDeEmpresa
         Inherits IServico
 
-        Function Obtenha() As IEmpresa
         Sub Insira(ByVal Empresa As IEmpresa)
+        Function Obtenha(ByVal Pessoa As IPessoa) As IEmpresa
+        Sub Modificar(ByVal Empresa As IEmpresa)
+        Sub Remover(ByVal ID As Long)
 
     End Interface
 

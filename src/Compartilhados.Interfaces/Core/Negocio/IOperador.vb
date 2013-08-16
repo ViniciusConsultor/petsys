@@ -9,7 +9,7 @@
         Sub AdicioneGrupo(ByVal Grupo As IGrupo)
         Sub AdicioneGrupos(ByVal Grupos As IList(Of IGrupo))
         Sub OperadorPodeEfetuarLogon()
-
+        Function ObtenhaEmpresasVisiveis() As IList(Of IEmpresa)
     End Interface
 
 End Namespace
