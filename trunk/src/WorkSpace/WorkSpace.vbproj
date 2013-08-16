@@ -109,6 +109,7 @@
     <Content Include="desktop.css" />
     <Content Include="Desktop.aspx" />
     <Content Include="ext-all.css" />
+    <Content Include="frmEscolhaDaEmpresa.aspx" />
     <Content Include="imagens\accordian.gif" />
     <Content Include="imagens\add.gif" />
     <Content Include="imagens\arrows.gif" />
@@ -314,6 +315,8 @@
     <Content Include="Logout.aspx" />
     <Content Include="naoautenticado.html" />
     <Content Include="naoautorizado.html" />
+    <Content Include="Nucleo\cdEmpresa.aspx" />
+    <Content Include="Nucleo\frmVisibilidadePorEmpresa.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +325,13 @@
     </Compile>
     <Compile Include="ctrlBancosEAgencias.ascx.vb">
       <DependentUpon>ctrlBancosEAgencias.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmEscolhaDaEmpresa.aspx.designer.vb">
+      <DependentUpon>frmEscolhaDaEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmEscolhaDaEmpresa.aspx.vb">
+      <DependentUpon>frmEscolhaDaEmpresa.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdAgenda.aspx.designer.vb">
@@ -344,6 +354,13 @@
     <Compile Include="Nucleo\cdCompromisso.aspx.vb">
       <DependentUpon>cdCompromisso.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\cdEmpresa.aspx.designer.vb">
+      <DependentUpon>cdEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdEmpresa.aspx.vb">
+      <DependentUpon>cdEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdFornecedor.aspx.designer.vb">
       <DependentUpon>cdFornecedor.aspx</DependentUpon>
@@ -527,6 +544,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Nucleo\frmVisibilidadePorEmpresa.aspx.designer.vb">
+      <DependentUpon>frmVisibilidadePorEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmVisibilidadePorEmpresa.aspx.vb">
+      <DependentUpon>frmVisibilidadePorEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Nucleo\ImpressorDeAgenda.vb" />
     <Compile Include="Utils\FabricaDeMenu.vb" />

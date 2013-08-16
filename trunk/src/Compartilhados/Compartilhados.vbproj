@@ -111,6 +111,7 @@
     <Compile Include="DBHelper\SQLiteHelper.vb" />
     <Compile Include="DBHelper\SQLServerHelper.vb" />
     <Compile Include="DLLNaoEncontradaException.vb" />
+    <Compile Include="EmpresaVisivel.vb" />
     <Compile Include="EscritorDeLog.vb" />
     <Compile Include="Fabricas\FabricaGenerica.vb" />
     <Compile Include="GerenciadorDeGatilhos.vb" />

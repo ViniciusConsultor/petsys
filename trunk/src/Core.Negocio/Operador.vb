@@ -6,7 +6,7 @@ Imports Compartilhados
 Public Class Operador
     Inherits PapelPessoa
     Implements IOperador
-
+    
     Private _Status As StatusDoOperador
     Private _Login As String
     Private _Grupos As IList(Of IGrupo)
@@ -62,5 +62,9 @@ Public Class Operador
         EstaInativo()
         EstaBloqueado()
     End Sub
+
+    Public Function ObtenhaEmpresasVisiveis() As IList(Of IEmpresa) Implements IOperador.ObtenhaEmpresasVisiveis
+        Return New List(Of IEmpresa)()
+    End Function
 
 End Class

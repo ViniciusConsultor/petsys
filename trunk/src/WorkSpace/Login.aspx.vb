@@ -3,12 +3,10 @@ Imports Compartilhados.Fabricas
 Imports Core.Interfaces.Servicos
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Core.Interfaces.Negocio
-Imports Compartilhados.Interfaces.Core.Servicos
-Imports Telerik.Web.UI
 Imports Compartilhados.Componentes.Web
 
 Partial Public Class Login
-    Inherits System.Web.UI.Page
+    Inherits Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session.IsNewSession OrElse Not IsPostBack Then
@@ -47,34 +45,18 @@ Partial Public Class Login
             Next
         End Using
 
+        Dim EmpresasVisiveis As IList(Of EmpresaVisivel) = (From Empresa In Operador.ObtenhaEmpresasVisiveis() Select New EmpresaVisivel(Empresa.Pessoa.ID.Value, Empresa.Pessoa.Nome)).ToList()
+
         Dim IDsDiretivas As IList(Of String) = (From Diretiva In Diretivas Select Diretiva.ID).ToList()
 
-        Usuario = New Usuario(Operador.Pessoa.ID.Value, Operador.Pessoa.Nome, IDsDiretivas, CType(Operador.Pessoa, IPessoaFisica).Sexo.ID)
+        Usuario = New Usuario(Operador.Pessoa.ID.Value, Operador.Pessoa.Nome, IDsDiretivas, CType(Operador.Pessoa, IPessoaFisica).Sexo.ID, EmpresasVisiveis)
         FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario = Usuario
-        Response.Redirect("Desktop.aspx")
+        Response.Redirect("frmEscolhaDaEmpresa.aspx")
     End Sub
 
     Protected Sub btnLimpar_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnLimpar.Click
         txtLogin.Text = ""
         txtSenha.Text = ""
-    End Sub
-
-    Private Sub Login_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
-        If Session.IsNewSession OrElse Not IsPostBack Then
-            Dim Empresa As IEmpresa = Nothing
-
-            Try
-                Using Servico As IServicoDeEmpresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeEmpresa)()
-                    Empresa = Servico.Obtenha()
-                End Using
-            Catch
-
-            End Try
-            
-            lblNomeEmpresa.Text = "EMPRESA NÃO INFORMADA"
-
-            If Not Empresa Is Nothing Then lblNomeEmpresa.Text = Empresa.Pessoa.Nome
-        End If
     End Sub
 
 End Class

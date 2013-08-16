@@ -9,8 +9,9 @@ Public Class Empresa
         MyBase.New(Pessoa)
     End Sub
 
+    Private _PodeUtilizarOSistema As Boolean
     Public Function PodeUtilizarOSistema() As Boolean Implements IEmpresa.PodeUtilizarOSistema
-        Return True
+        Return _PodeUtilizarOSistema
     End Function
 
     Private _DataDaAtivacao As Date

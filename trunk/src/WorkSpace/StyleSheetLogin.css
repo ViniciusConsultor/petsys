@@ -95,6 +95,44 @@ body
 	border-left-style: none;
 }
 
+.containerLogotipo
+{
+    background-image: url('../Imagens/logo.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    position: relative;
+    width: 450px;
+    left: 0px;
+    top: 0px;
+}
+
+.containerTitulo
+{
+    color: #FFFFFF;
+    font-family: Arial;
+    font-style: none;
+    font-weight: bold;
+    font-size: 11px;
+    height: 20px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+    float: none;
+    left: 0px;
+    top: 0px;
+}
+
+
 .containerCopyright 
 {
     position: absolute;
