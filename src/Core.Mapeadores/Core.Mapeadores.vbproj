@@ -95,6 +95,7 @@
     <Compile Include="MapeadorDePessoaFisica.vb" />
     <Compile Include="MapeadorDePessoaJuridica.vb" />
     <Compile Include="MapeadorDeSenha.vb" />
+    <Compile Include="MapeadorDeVisibilidadePorEmpresa.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

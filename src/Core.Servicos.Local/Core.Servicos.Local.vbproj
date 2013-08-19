@@ -111,6 +111,7 @@
     <Compile Include="ServicoDePessoaFisicaLocal.vb" />
     <Compile Include="ServicoDePessoaJuridicaLocal.vb" />
     <Compile Include="ServicoDeSenhaLocal.vb" />
+    <Compile Include="ServicoDeVisibilidadePorEmpresaLocal.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

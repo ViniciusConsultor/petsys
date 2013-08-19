@@ -1,6 +1,8 @@
 ﻿Imports Compartilhados.Interfaces.Core.Negocio
 Imports Core.Interfaces.Negocio
 Imports Compartilhados
+Imports Core.Interfaces.Servicos
+Imports Compartilhados.Fabricas
 
 <Serializable()> _
 Public Class Operador
@@ -64,7 +66,9 @@ Public Class Operador
     End Sub
 
     Public Function ObtenhaEmpresasVisiveis() As IList(Of IEmpresa) Implements IOperador.ObtenhaEmpresasVisiveis
-        Return New List(Of IEmpresa)()
+        Using Servico As IServicoDeVisibilidadePorEmpresa = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeVisibilidadePorEmpresa)()
+            Return Servico.Obtenha(Me.Pessoa.ID.Value)
+        End Using
     End Function
 
 End Class

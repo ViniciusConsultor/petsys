@@ -195,7 +195,7 @@ Public Class cdEmpresa
         ctrlPessoa1.BotaoDetalharEhVisivel = True
 
         Using Servico As IServicoDeEmpresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeEmpresa)()
-            empresa = Servico.Obtenha(Pessoa)
+            empresa = Servico.Obtenha(Pessoa.ID.Value)
         End Using
 
         If empresa Is Nothing Then

@@ -15,7 +15,7 @@ Public Class MapeadorDeCliente
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("INSERT INTO NCL_CLIENTE (")
-        Sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS)")
+        Sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS, IDEMPRESA)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Cliente.Pessoa.ID.ToString, ", "))
         Sql.Append(String.Concat(Cliente.Pessoa.Tipo.ID, ", "))
@@ -46,10 +46,12 @@ Public Class MapeadorDeCliente
         End If
 
         If Not Cliente.SaldoParaCompras.HasValue Then
-            Sql.Append("NULL) ")
+            Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Cliente.SaldoParaCompras.Value), ") "))
+            Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Cliente.SaldoParaCompras.Value), ", "))
         End If
+
+        Sql.Append(ServerUtils.getCredencial().EmpresaLogada.ID & ")")
 
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
@@ -134,9 +136,10 @@ Public Class MapeadorDeCliente
         Sql.Append("FROM NCL_PESSOA, NCL_CLIENTE ")
         Sql.Append("WHERE NCL_CLIENTE.IDPESSOA = NCL_PESSOA.ID ")
         Sql.Append("AND NCL_CLIENTE.TIPOPESSOA = NCL_PESSOA.TIPO ")
+        Sql.Append("AND IDEMPRESA = " & ServerUtils.getCredencial().EmpresaLogada.ID)
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql.Append(String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
+            Sql.Append(String.Concat(" AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         DBHelper = ServerUtils.criarNovoDbHelper
