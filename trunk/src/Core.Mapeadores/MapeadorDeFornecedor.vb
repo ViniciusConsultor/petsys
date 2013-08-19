@@ -22,17 +22,19 @@ Public Class MapeadorDeFornecedor
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("INSERT INTO NCL_FORNECEDOR (")
-        Sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL)")
+        Sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, IDEMPRESA)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Fornecedor.Pessoa.ID.ToString, ", "))
         Sql.Append(String.Concat(Fornecedor.Pessoa.Tipo.ID, ", "))
         Sql.Append(String.Concat(Fornecedor.DataDoCadastro.ToString("yyyyMMdd"), ", "))
 
         If String.IsNullOrEmpty(Fornecedor.InformacoesAdicionais) Then
-            Sql.Append("NULL)")
+            Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Fornecedor.InformacoesAdicionais), "')"))
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Fornecedor.InformacoesAdicionais), "', "))
         End If
+
+        Sql.Append(ServerUtils.getCredencial().EmpresaLogada.ID & ")")
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
         InsiraContatosDoFornecedor(Fornecedor, DBHelper)
@@ -53,10 +55,11 @@ Public Class MapeadorDeFornecedor
             Sql = New StringBuilder
 
             Sql.Append("INSERT INTO NCL_CONTATOFORNECEDOR (")
-            Sql.Append("IDPFORNECEDOR, IDPESSOACONTATO) ")
+            Sql.Append("IDPFORNECEDOR, IDPESSOACONTATO, IDEMPRESA) ")
             Sql.Append("VALUES (")
             Sql.Append(String.Concat(Fornecedor.Pessoa.ID.Value.ToString, ", "))
-            Sql.Append(String.Concat(Contato.ID.Value.ToString, ")"))
+            Sql.Append(String.Concat(Contato.ID.Value.ToString, ", "))
+            Sql.Append(String.Concat(ServerUtils.getCredencial().EmpresaLogada.ID, ")"))
 
             Helper.ExecuteNonQuery(Sql.ToString)
         Next
@@ -187,6 +190,9 @@ Public Class MapeadorDeFornecedor
         If Not String.IsNullOrEmpty(Nome) Then
             Sql.Append(String.Concat("AND P1.NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
+
+        Sql.Append(" AND IDEMPRESA = " & ServerUtils.getCredencial().EmpresaLogada.ID)
+
 
         Dim DBHelper As IDBHelper
 

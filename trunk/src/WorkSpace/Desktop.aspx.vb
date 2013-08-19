@@ -1,7 +1,4 @@
 ﻿Imports Compartilhados
-Imports Compartilhados.Fabricas
-Imports Core.Interfaces.Servicos
-Imports Core.Interfaces.Negocio
 Imports Compartilhados.Componentes.Web
 Imports Compartilhados.Visual
 

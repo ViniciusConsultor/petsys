@@ -49,8 +49,8 @@ Public Class Form1
 
         Try
             InicializaMunicipios()
-            IniciaOperador()
-            IniciaEmpresa()
+            Dim IDOperador = IniciaOperador()
+            IniciaEmpresa(IDOperador)
 
             MsgBox("Base de dados inicializada com sucesso.", MsgBoxStyle.Information, "Inicialização de base de dados.")
         Catch ex As Exception
@@ -58,7 +58,7 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub IniciaEmpresa()
+    Private Sub IniciaEmpresa(IDOperador As Long)
         Dim Pessoa As IPessoaJuridica
         Dim Empresa As IEmpresa
 
@@ -95,6 +95,11 @@ Public Class Form1
             ServicoDeEmpresa.Insira(Empresa)
         End Using
 
+        Using ServicoDeVisibilidadePorEmpresa As IServicoDeVisibilidadePorEmpresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeVisibilidadePorEmpresa)()
+            Dim Empresas As IList(Of IEmpresa) = New List(Of IEmpresa)({Empresa})
+            ServicoDeVisibilidadePorEmpresa.Inserir(IDOperador, Empresas)
+        End Using
+
         ToolStripProgressBar1.Increment(1)
 
         Me.Cursor = Cursors.Default
@@ -103,7 +108,7 @@ Public Class Form1
         ToolStripStatusLabel1.Text = ""
     End Sub
 
-    Private Sub IniciaOperador()
+    Private Function IniciaOperador() As Long
         Dim Pessoa As IPessoaFisica
         Dim Operador As IOperador
         Dim Senha As ISenha
@@ -164,7 +169,7 @@ Public Class Form1
 
         ToolStripStatusLabel1.Text = "Inserindo o Operador ADMINISTRADOR..."
         Using ServicoDeOperador As IServicoDeOperador = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeOperador)()
-            ServicoDeOperador.Inserir(Operador, senha)
+            ServicoDeOperador.Inserir(Operador, Senha)
         End Using
         ToolStripProgressBar1.Increment(1)
 
@@ -178,7 +183,9 @@ Public Class Form1
         Me.ToolStripProgressBar1.Value = 0
         ToolStripProgressBar1.Visible = False
         ToolStripStatusLabel1.Text = ""
-    End Sub
+
+        Return Operador.Pessoa.ID.Value
+    End Function
 
     Private Function ObtenhaDiretivas() As IList(Of IDiretivaDeSeguranca)
         Dim Modulos As IList(Of IModulo)

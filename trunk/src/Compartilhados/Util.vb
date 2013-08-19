@@ -18,7 +18,7 @@ Public Class Util
         End If
 
         Dim Credencial As Credencial = New Credencial(Principal.Conexao, _
-                                                      Principal.Usuario)
+                                                      Principal.Usuario, Principal.EmpresaLogada)
 
         Return Credencial
     End Function

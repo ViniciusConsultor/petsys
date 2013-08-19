@@ -51,20 +51,7 @@ Public Class ServicoDeEmpresaLocal
         End Try
     End Sub
 
-    Public Function Obtenha(Pessoa As IPessoa) As IEmpresa Implements IServicoDeEmpresa.Obtenha
-        Dim Mapeador As IMapeadorDeEmpresa
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeEmpresa)()
-
-        Try
-            Return Mapeador.Obtenha(Pessoa)
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Function
-
-    Public Sub Remover(ID As Long) Implements IServicoDeEmpresa.Remover
+   Public Sub Remover(ID As Long) Implements IServicoDeEmpresa.Remover
         Dim Mapeador As IMapeadorDeEmpresa
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -82,5 +69,31 @@ Public Class ServicoDeEmpresaLocal
             ServerUtils.libereRecursos()
         End Try
     End Sub
+
+    Public Function Obtenha(ID As Long) As IEmpresa Implements IServicoDeEmpresa.Obtenha
+        Dim Mapeador As IMapeadorDeEmpresa
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeEmpresa)()
+
+        Try
+            Return Mapeador.Obtenha(ID)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Function ObtenhaPorNome(Filtro As String, Quantidade As Integer) As IList(Of IEmpresa) Implements IServicoDeEmpresa.ObtenhaPorNome
+        Dim Mapeador As IMapeadorDeEmpresa
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeEmpresa)()
+
+        Try
+            Return Mapeador.ObtenhaPorNome(Filtro, Quantidade)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
 
 End Class

@@ -1,5 +1,4 @@
 ﻿Imports Core.Interfaces.Negocio
-Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados
 
 Namespace Servicos

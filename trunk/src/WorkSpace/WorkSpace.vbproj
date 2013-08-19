@@ -106,6 +106,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ctrlEmpresa.ascx" />
     <Content Include="desktop.css" />
     <Content Include="Desktop.aspx" />
     <Content Include="ext-all.css" />
@@ -325,6 +326,13 @@
     </Compile>
     <Compile Include="ctrlBancosEAgencias.ascx.vb">
       <DependentUpon>ctrlBancosEAgencias.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ctrlEmpresa.ascx.designer.vb">
+      <DependentUpon>ctrlEmpresa.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlEmpresa.ascx.vb">
+      <DependentUpon>ctrlEmpresa.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="frmEscolhaDaEmpresa.aspx.designer.vb">
@@ -550,7 +558,7 @@
     </Compile>
     <Compile Include="Nucleo\frmVisibilidadePorEmpresa.aspx.vb">
       <DependentUpon>frmVisibilidadePorEmpresa.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\ImpressorDeAgenda.vb" />
     <Compile Include="Utils\FabricaDeMenu.vb" />

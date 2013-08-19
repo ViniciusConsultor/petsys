@@ -6,13 +6,12 @@ Public Class frmEscolhaDaEmpresa
     Inherits Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Response.Redirect("Desktop.aspx")
         Dim EmpresasViveis As IList(Of EmpresaVisivel)
 
         If Not IsPostBack Then
             EmpresasViveis = FabricaDeContexto.GetInstancia.GetContextoAtual().Usuario.EmpresasVisiveis
 
-            If EmpresasViveis.Count > 0 Then
+            If EmpresasViveis.Count = 0 Then
                 Exit Sub
             End If
 

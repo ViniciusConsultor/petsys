@@ -2,8 +2,6 @@
     Inherits="WorkSpace.cdOperador" MasterPageFile="~/WorkSpace.Master" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
-    TagPrefix="cc1" %>
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <%@ Register Src="~/ctrlGrupo.ascx" TagName="ctrlGrupo" TagPrefix="uc2" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">

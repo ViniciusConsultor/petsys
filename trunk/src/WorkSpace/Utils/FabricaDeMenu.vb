@@ -75,10 +75,14 @@ Public Class FabricaDeMenu
         End If
 
         Mi.AppendLine("toolItems: [{")
-        'Mi.AppendLine("text: 'Config',")
-        'Mi.AppendLine("iconCls:'settings',")
-        'Mi.AppendLine("scope: this")
-        'Mi.AppendLine("},'-',{")
+        If FabricaDeContexto.GetInstancia().GetContextoAtual().Usuario.EmpresasVisiveis().Count > 1 Then
+            Mi.AppendLine("text: 'Empresas',")
+            Mi.AppendLine("iconCls:'settings',")
+            Mi.AppendLine("scope: this,")
+            Mi.AppendLine("href:'frmEscolhaDaEmpresa.aspx'")
+            Mi.AppendLine("},'-',{")
+        End If
+        
         Mi.AppendLine("text:'Sair',")
         Mi.AppendLine("iconCls:'logout',")
         Mi.AppendLine("scope:this,")
