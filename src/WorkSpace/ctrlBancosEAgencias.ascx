@@ -90,7 +90,7 @@
                 <asp:Label ID="Label3" runat="server" Text="Tipo da conta"></asp:Label>
             </td>
             <td class="td">
-                <telerik:RadNumericTextBox ID="txtTipoConta" runat="server" DataType="System.Int16"
+                <telerik:RadNumericTextBox ID="txtTipoConta" runat="server" 
                     MaxLength="3" Width="65px">
                     <NumberFormat DecimalDigits="0" />
                 </telerik:RadNumericTextBox>

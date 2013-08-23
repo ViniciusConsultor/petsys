@@ -24,7 +24,7 @@ Public Class Util
     End Function
 
     Private Shared Function ObtenhaPastaConfiguradaPorVariavelDeAmbiente() As String
-        Dim environmentVariable As String = Environment.GetEnvironmentVariable("SIMPLE_PATH", EnvironmentVariableTarget.Machine)
+        Dim environmentVariable As String = Environment.CurrentDirectory ' .GetEnvironmentVariable("SIMPLE_PATH", EnvironmentVariableTarget.Machine)
 
         If (environmentVariable Is Nothing) Then
             Throw New ApplicationException("O caminho dos arquivos de configuração não foi configurado corretamente.")
