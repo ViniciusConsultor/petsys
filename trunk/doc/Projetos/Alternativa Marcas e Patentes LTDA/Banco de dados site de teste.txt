@@ -1,0 +1,11 @@
+MS SQL hosting plan: 	MS SQL Plan "Novice"
+MS SQL Server version: 	MS SQL 2008 R2 Express
+  	
+MS SQL Server address: 	Demonstracao.mssql.somee.com
+Login name: 	hermessilvajr_SQLLogin_1
+Login password: 	87g1v5gr2e
+Connection string: 	workstation id=Demonstracao.mssql.somee.com;packet size=4096;user id=hermessilvajr_SQLLogin_1;pwd=87g1v5gr2e;data source=Demonstracao.mssql.somee.com;persist security info=False;initial catalog=Demonstracao
+  	 
+FTP address to backups: 	Demonstracao.backup.somee.com
+FTP username: 	hermessilvajr
+  	FTP credentials (Username and password) are the same as your Username and password.
