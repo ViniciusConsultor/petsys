@@ -18,7 +18,6 @@ Public Class Global_asax
     End Sub
 
     Sub Session_Start(ByVal sender As Object, ByVal e As EventArgs)
-        ' Fires when the session is started
     End Sub
 
     Sub Application_BeginRequest(ByVal sender As Object, ByVal e As EventArgs)
@@ -30,15 +29,16 @@ Public Class Global_asax
     End Sub
 
     Sub Application_Error(ByVal sender As Object, ByVal e As EventArgs)
-        Dim MensagemDeLog As String = ObtenhaMensagemDeLog()
+        Dim Erro As Exception
 
-        EscritorDeLog.escrevaLog(MensagemDeLog)
-        EnviaEmail(MensagemDeLog)
+        Erro = Server.GetLastError
+        Logger.GetInstancia().Erro("Foi gerado uma exceção ", Erro)
+        EnviaEmail(Erro)
         Dim URL As String = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "erro.html"
-        System.Web.HttpContext.Current.Response.Redirect(URL)
+        HttpContext.Current.Response.Redirect(URL)
     End Sub
 
-    Private Sub EnviaEmail(ByVal MensagemDoErro As String)
+    Private Sub EnviaEmail(Erro As Exception)
         Dim Configuracao As IConfiguracaoDoSistema
 
         Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
@@ -50,10 +50,11 @@ Public Class Global_asax
 
             ConfiguracaoDeEmail = Configuracao.ConfiguracaoDeEmailDoSistema
             If Not Configuracao Is Nothing Then
+                Dim mensagemDoErro As String = ObtenhaMensagemDeLog(Erro)
                 GerenciadorDeEmail.EnviaEmail("Erro ocorrido no sistema.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
                                               Configuracao.RemetenteDaNotificaoDeErros, _
-                                              MensagemDoErro)
+                                              mensagemDoErro)
             End If
         End If
     End Sub
@@ -66,18 +67,15 @@ Public Class Global_asax
         ' Fires when the application ends
     End Sub
 
-    Private Function ObtenhaMensagemDeLog() As String
-        Dim Erro As Exception
+    Private Function ObtenhaMensagemDeLog(Erro As Exception) As String
         Dim DataDoErro As Date = Now
         Dim Mensagem As New StringBuilder
         Dim Versao As String
 
-        Dim assembly As Reflection.Assembly = GetType(WorkSpace).Assembly
+        Dim assembly As Assembly = GetType(WorkSpace).Assembly
 
         Versao = CType((assembly.GetCustomAttributes(GetType(AssemblyFileVersionAttribute), False)(0)), AssemblyFileVersionAttribute).Version
-
-        Erro = Server.GetLastError
-
+        
         Mensagem.AppendLine("Foi gerado uma exceção ")
         Mensagem.AppendLine("Versão : " & Versao)
         Mensagem.AppendLine("Data do erro : " & DataDoErro.ToString("dd/MM/yyyy"))
