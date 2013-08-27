@@ -58,6 +58,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\itextsharp.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.0.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\..\lib\MySql.Data.dll</HintPath>
       <Private>True</Private>
@@ -108,7 +112,6 @@
     <Compile Include="DBHelper\SQLServerHelper.vb" />
     <Compile Include="DLLNaoEncontradaException.vb" />
     <Compile Include="EmpresaVisivel.vb" />
-    <Compile Include="EscritorDeLog.vb" />
     <Compile Include="Fabricas\FabricaGenerica.vb" />
     <Compile Include="GerenciadorDeGatilhos.vb" />
     <Compile Include="IConexao.vb" />
@@ -116,6 +119,7 @@
     <Compile Include="IServico.vb" />
     <Compile Include="IServicoRemoto.vb" />
     <Compile Include="iTextSharpUtilidades.vb" />
+    <Compile Include="Logger.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -163,6 +167,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Compartilhados.snk" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
