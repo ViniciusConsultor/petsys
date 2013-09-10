@@ -141,6 +141,7 @@
     <Compile Include="Pessoa.vb" />
     <Compile Include="PessoaFisica.vb" />
     <Compile Include="PessoaJuridica.vb" />
+    <Compile Include="Schedules\ScheduleLimpaLogs.vb" />
     <Compile Include="Senha.vb" />
     <Compile Include="Tarefa.vb" />
     <Compile Include="Telefone\Telefone.vb" />
@@ -179,6 +180,7 @@
       <Name>Core.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

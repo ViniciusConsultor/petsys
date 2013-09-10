@@ -125,6 +125,7 @@
     <Compile Include="Negocio\IModulo.vb" />
     <Compile Include="Negocio\IOperacao.vb" />
     <Compile Include="Negocio\ISenha.vb" />
+    <Compile Include="Negocio\Schedules\IScheduleLimpaLogs.vb" />
     <Compile Include="Servicos\IServicoDeAutenticacao.vb" />
     <Compile Include="Servicos\IServicoDeAutorizacao.vb" />
     <Compile Include="Servicos\IServicoDeConexao.vb" />
@@ -164,6 +165,7 @@
       <Name>Compartilhados</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
