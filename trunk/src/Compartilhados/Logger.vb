@@ -89,5 +89,11 @@ Public Class Logger
             _log.Error(ObtenhaInfoUsuario() & ObtenhaVersao() & MARCADOR_DE_ERRO & mensagem, exc)
         End If
     End Sub
+    
+    Public Sub Erro(mensagem As String)
+        If _log.IsErrorEnabled Then
+            _log.Error(ObtenhaInfoUsuario() & ObtenhaVersao() & MARCADOR_DE_ERRO & mensagem)
+        End If
+    End Sub
 
 End Class

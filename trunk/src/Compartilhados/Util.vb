@@ -27,9 +27,16 @@ Public Class Util
         Dim Caminho As String
 
         If ExecutandoServidorWeb() Then
-            Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
+            'Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
+            Caminho = HttpRuntime.AppDomainAppPath & "bin" & Path.DirectorySeparatorChar
         Else
-            Caminho = Environment.CurrentDirectory()
+
+            Try
+                Caminho = HttpRuntime.AppDomainAppPath & "bin" & Path.DirectorySeparatorChar
+            Catch ex As Exception
+                Caminho = Environment.CurrentDirectory()
+            End Try
+
         End If
 
         Return Caminho
@@ -54,7 +61,11 @@ Public Class Util
         End Sub
 
     Public Shared Function ObtenhaCaminhoArquivoXMLDeGatilho() As String
-        Return ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
+        Return String.Concat(ObtenhaCaminhoDaPastaDoServidorDeAplicacao(), "gatilhos.xml")
+    End Function
+
+    Public Shared Function ObtenhaCaminhoArquivoXMLDeSchedule() As String
+        Return String.Concat(ObtenhaCaminhoDaPastaDoServidorDeAplicacao(), "schedules.xml")
     End Function
 
     Public Shared Function SistemaUtilizaSQLUpperCase() As Boolean
@@ -88,7 +99,7 @@ Public Class Util
     End Function
 
     Public Shared Function GetDiretorioLog() As String
-        Return HttpContext.Current.Request.PhysicalApplicationPath & Path.DirectorySeparatorChar & "LOG" & Path.DirectorySeparatorChar
+        Return HttpRuntime.AppDomainAppPath & Path.DirectorySeparatorChar & "LOG" & Path.DirectorySeparatorChar
     End Function
 
     Public Shared Function ObtenhaSkinPadrao() As String

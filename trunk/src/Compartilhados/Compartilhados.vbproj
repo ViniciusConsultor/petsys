@@ -138,7 +138,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Schedule\SubServico.vb" />
+    <Compile Include="Schedule\GerenciadorDeSchedules.vb" />
+    <Compile Include="Schedule\Schedule.vb" />
     <Compile Include="ServicoRemoto.vb" />
     <Compile Include="TipoDeServidorDeEmail.vb" />
     <Compile Include="UtilitarioDeData.vb" />
@@ -187,6 +188,9 @@
     <Content Include="gatilhos.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="schedules.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
