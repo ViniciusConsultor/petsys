@@ -1,6 +1,6 @@
 <%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Login.Master"
     CodeBehind="Login.aspx.vb" Inherits="WorkSpace.Login" %>
-
+ 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <table id="Table1" height="100%" cellspacing="0" cellpadding="0" width="100%" border="0">
         <tr>
@@ -51,11 +51,11 @@
                                         </asp:Button>
                                         <asp:Button ID="btnLimpar" runat="server" CssClass="botao" Text="Limpar" ToolTip="Clique para limpar o conteúdo dos campos.">
                                         </asp:Button>
-                                        <%-- <br>
+                                         <br>
                                             <asp:LinkButton ID="btnEsqueciMinhaSenha" runat="server" Visible="True" Width="100%"
                                                 Font-Underline="True" ForeColor="Blue">Esqueci minha senha</asp:LinkButton>
                                             <br></br>
-                                        </br>--%>
+                                        </br>
                                     </td>
                                     <td>
                                     </td>
