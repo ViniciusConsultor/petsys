@@ -84,4 +84,13 @@ Partial Public Class Login
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnLimpar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnEsqueciMinhaSenha control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnEsqueciMinhaSenha As Global.System.Web.UI.WebControls.LinkButton
 End Class
