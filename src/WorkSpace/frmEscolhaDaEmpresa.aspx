@@ -19,7 +19,7 @@
                                     <td>
                                     </td>
                                     <td>
-                                        <telerik:RadComboBox ID="cboEmpresas" runat="server">
+                                        <telerik:RadComboBox ID="cboEmpresas" runat="server" Width="300px">
                                         </telerik:RadComboBox>
                                     </td>
                                     <td>

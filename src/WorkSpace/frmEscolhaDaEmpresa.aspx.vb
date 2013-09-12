@@ -46,7 +46,7 @@ Public Class frmEscolhaDaEmpresa
         cboEmpresas.Items.Clear()
 
         For Each Empresa In EmpresasViveis
-            cboEmpresas.Items.Add(New RadComboBoxItem(Empresa.ID.ToString(), Empresa.Nome))
+            cboEmpresas.Items.Add(New RadComboBoxItem(Empresa.Nome, Empresa.ID.ToString()))
         Next
     End Sub
 

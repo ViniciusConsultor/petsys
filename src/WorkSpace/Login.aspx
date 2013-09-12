@@ -51,11 +51,11 @@
                                         </asp:Button>
                                         <asp:Button ID="btnLimpar" runat="server" CssClass="botao" Text="Limpar" ToolTip="Clique para limpar o conteúdo dos campos.">
                                         </asp:Button>
-                                         <br>
+                                         <br/>
                                             <asp:LinkButton ID="btnEsqueciMinhaSenha" runat="server" Visible="True" Width="100%"
-                                                Font-Underline="True" ForeColor="Blue">Esqueci minha senha</asp:LinkButton>
-                                            <br></br>
-                                        </br>
+                                                Font-Underline="True" CausesValidation="false" >Esqueci minha senha</asp:LinkButton>
+                                            
+                                        
                                     </td>
                                     <td>
                                     </td>
