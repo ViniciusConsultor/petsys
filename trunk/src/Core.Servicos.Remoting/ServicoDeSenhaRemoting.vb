@@ -7,7 +7,7 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Public Class ServicoDeSenhaRemoting
     Inherits ServicoRemoto
     Implements IServicoDeSenha
-
+    
     Private _ServicoLocal As ServicoDeSenhaLocal
 
     Public Overrides Sub SetaCredencial(ByVal Credencial As ICredencial)
@@ -25,5 +25,9 @@ Public Class ServicoDeSenhaRemoting
     Public Function ObtenhaSenhaDoOperador(ByVal Operador As IOperador) As ISenha Implements IServicoDeSenha.ObtenhaSenhaDoOperador
         Return _ServicoLocal.ObtenhaSenhaDoOperador(Operador)
     End Function
+
+    Public Sub RegistreDefinicaoDeNovaSenha(Operador As IOperador) Implements IServicoDeSenha.RegistreDefinicaoDeNovaSenha
+        _ServicoLocal.RegistreDefinicaoDeNovaSenha(Operador)
+    End Sub
 
 End Class

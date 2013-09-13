@@ -8,7 +8,7 @@ Imports Compartilhados.Fabricas
 Public Class ServicoDeSenhaLocal
     Inherits Servico
     Implements IServicoDeSenha
-
+    
     Public Sub New(ByVal Credencial As ICredencial)
         MyBase.New(Credencial)
     End Sub
@@ -86,6 +86,19 @@ Public Class ServicoDeSenhaLocal
         If SenhaAntigaGravada.ToString.Equals(NovaSenha.ToString) Then
             Throw New BussinesException("A nova senha não deve ser igual a senha antiga.")
         End If
+    End Sub
+
+    Public Sub RegistreDefinicaoDeNovaSenha(Operador As IOperador) Implements IServicoDeSenha.RegistreDefinicaoDeNovaSenha
+        Dim Mapeador As IMapeadorDeSenha
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSenha)()
+
+        Try
+            Mapeador.RegistreDefinicaoDeNovaSenha(Operador)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Sub
 
 End Class

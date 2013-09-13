@@ -8,7 +8,7 @@ Imports Compartilhados.Fabricas
 
 Public Class MapeadorDeSenha
     Implements IMapeadorDeSenha
-
+    
     Public Function ObtenhaSenhaDoOperador(ByVal IDOperador As Long) As ISenha Implements IMapeadorDeSenha.ObtenhaSenhaDoOperador
         Dim Sql As New StringBuilder
         Dim Senha As ISenha = Nothing
@@ -28,7 +28,7 @@ Public Class MapeadorDeSenha
             Finally
                 Leitor.Close()
             End Try
-            
+
         End Using
 
         Return Senha
@@ -68,4 +68,7 @@ Public Class MapeadorDeSenha
         DBHelper.ExecuteNonQuery("DELETE FROM NCL_SNHOP WHERE IDOPERADOR = " & IDOperador.ToString)
     End Sub
 
+    Public Sub RegistreDefinicaoDeNovaSenha(Operador As Compartilhados.Interfaces.Core.Negocio.IOperador) Implements Interfaces.Mapeadores.IMapeadorDeSenha.RegistreDefinicaoDeNovaSenha
+
+    End Sub
 End Class
