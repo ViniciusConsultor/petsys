@@ -41,6 +41,7 @@ Partial Public Class cdOperador
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoOperador, Control))
         UtilidadesWeb.LimparComponente(CType(pnlSenha, Control))
         UtilidadesWeb.LimparComponente(CType(pnlGruposDoOperador, Control))
+        UtilidadesWeb.LimparComponente(CType(grdGrupos, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGruposDoOperador, Control), False)
         DokSenha.Visible = False
@@ -83,7 +84,7 @@ Partial Public Class cdOperador
     End Sub
 
     Private Sub ExibaTelaModificar()
-        grdGrupos.Columns(0).Visible = True
+        grdGrupos.Columns(0).Display = True
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
@@ -113,7 +114,7 @@ Partial Public Class cdOperador
     End Sub
 
     Private Sub ExibaTelaConsultar()
-        grdGrupos.Columns(0).Visible = False
+        grdGrupos.Columns(0).Display = False
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True

@@ -100,8 +100,9 @@
                                 </td>
                             </tr>
                         </table>
+                        </br>
                         <telerik:RadGrid ID="grdGrupos" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                            PageSize="10" GridLines="None" Width="100%">
+                            PageSize="10" GridLines="None" Width="98%">
                             <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                             <MasterTableView GridLines="Both">
                                 <RowIndicatorColumn>

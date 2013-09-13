@@ -53,11 +53,11 @@
                                 <uc1:ctrlPessoa ID="ctrlPessoa2" runat="server" />
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="2">
+                       </table>
+
                                 <asp:Panel ID="pnlContatos" runat="server">
                                     <telerik:RadGrid ID="grdContato" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                                        PageSize="10" GridLines="None" Width="100%">
+                                        PageSize="10" GridLines="None" Width="98%">
                                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                         <MasterTableView GridLines="Both">
                                             <RowIndicatorColumn>
@@ -78,9 +78,7 @@
                                         </MasterTableView>
                                     </telerik:RadGrid>
                                 </asp:Panel>
-                            </td>
-                        </tr>
-                    </table>
+                           
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>

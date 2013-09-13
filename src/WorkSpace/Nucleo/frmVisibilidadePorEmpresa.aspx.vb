@@ -36,6 +36,7 @@ Public Class frmVisibilidadePorEmpresa
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoOperador, Control))
         UtilidadesWeb.LimparComponente(CType(pnlEmpresasVisiveis, Control))
+        UtilidadesWeb.LimparComponente(CType(grdEmpresasVisiveis, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlEmpresasVisiveis, Control), False)
         ViewState(CHAVE_ESTADO_FRM_VISIBILIDADE_EMPRESA) = Estado.Inicial
@@ -60,7 +61,6 @@ Public Class frmVisibilidadePorEmpresa
     End Sub
 
     Private Sub ExibaTelaModificar()
-        grdEmpresasVisiveis.Columns(0).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
@@ -70,6 +70,7 @@ Public Class frmVisibilidadePorEmpresa
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlEmpresasVisiveis, Control), True)
+        grdEmpresasVisiveis.Columns(0).Display = True
         ViewState(CHAVE_ESTADO_FRM_VISIBILIDADE_EMPRESA) = Estado.Modifica
     End Sub
 
@@ -84,10 +85,11 @@ Public Class frmVisibilidadePorEmpresa
         ViewState(CHAVE_ESTADO_FRM_VISIBILIDADE_EMPRESA) = Estado.Remove
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlEmpresasVisiveis, Control), False)
+
     End Sub
 
     Private Sub ExibaTelaConsultar()
-        grdEmpresasVisiveis.Columns(0).Visible = False
+        grdEmpresasVisiveis.Columns(0).Display = False
         CType(rtbToolBar.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = True
@@ -113,7 +115,7 @@ Public Class frmVisibilidadePorEmpresa
                     Mensagem = "Visibilidade cadastrada com sucesso."
                 Else
                     Servico.Modifique(CLng(cboOperador.SelectedValue), CType(ViewState(CHAVE_EMPRESAS_VISIVEIS), IList(Of IEmpresa)))
-                    Mensagem = "Grupo modificado com sucesso."
+                    Mensagem = "Visibilidade modificada com sucesso."
                 End If
 
             End Using
@@ -202,19 +204,14 @@ Public Class frmVisibilidadePorEmpresa
     End Function
 
     Private Sub grdGrupos_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdEmpresasVisiveis.ItemCommand
-        Dim ID As Long
         Dim IndiceSelecionado As Integer
-
-        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
-            ID = CLng(e.Item.Cells(3).Text)
-            IndiceSelecionado = e.Item().ItemIndex
-        End If
 
         If e.CommandName = "Excluir" Then
             Dim Empresas As IList(Of IEmpresa)
             Empresas = CType(ViewState(CHAVE_EMPRESAS_VISIVEIS), IList(Of IEmpresa))
             Empresas.RemoveAt(IndiceSelecionado)
             MostraEmpresasVisiveis(Empresas)
+            Exit Sub
         End If
     End Sub
 

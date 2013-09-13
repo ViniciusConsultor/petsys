@@ -4,7 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlEmpresa.ascx" TagName="ctrlEmpresa" TagPrefix="uc2" %>
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
+    <telerik:radtoolbar id="rtbToolBar" runat="server" skin="Vista" style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.NCL.015.0001" />
@@ -22,43 +22,52 @@
                 CommandName="btnNao" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
-    </telerik:RadToolBar>
-    <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
+    </telerik:radtoolbar>
+    <telerik:raddocklayout id="RadDockLayout1" runat="server" skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Operador" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Operadores" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <asp:Panel ID="pnlDadosDoOperador" runat="server">
-                        <telerik:RadComboBox ID="cboOperador" runat="server" EmptyMessage="Selecione um operador"
-                            EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
-                            ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-                            Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
-                            <HeaderTemplate>
-                                <table width="96%">
-                                    <tr>
-                                        <td width="43%">
-                                            Nome
-                                        </td>
-                                        <td width="43%">
-                                            Login
-                                        </td>
-                                    </tr>
-                                </table>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="50%">
-                                            <%# DataBinder.Eval(Container, "Text")%>
-                                        </td>
-                                        <td width="50%">
-                                            <%#DataBinder.Eval(Container, "Attributes['Login']")%>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </ItemTemplate>
-                        </telerik:RadComboBox>
-                    </asp:Panel>
+                 <asp:Panel ID="pnlDadosDoOperador" runat="server">
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label7" runat="server" Text="Operador"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadComboBox ID="cboOperador" runat="server" EmptyMessage="Selecione um operador"
+                                    EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
+                                    ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
+                                    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
+                                    <HeaderTemplate>
+                                        <table width="96%">
+                                            <tr>
+                                                <td width="43%">
+                                                    Nome
+                                                </td>
+                                                <td width="43%">
+                                                    Login
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="50%">
+                                                    <%# DataBinder.Eval(Container, "Text")%>
+                                                </td>
+                                                <td width="50%">
+                                                    <%#DataBinder.Eval(Container, "Attributes['Login']")%>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ItemTemplate>
+                                </telerik:RadComboBox>
+                            </td>
+                         </tr>
+                        </table>
+                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="DokEmpresasVisiveis" runat="server" Title="Empresas visíveis"
@@ -74,9 +83,11 @@
                                     <uc2:ctrlEmpresa ID="ctrlEmpresa1" runat="server" />
                                 </td>
                             </tr>
-                        </table>
-                        <telerik:RadGrid ID="grdEmpresasVisiveis" runat="server" AutoGenerateColumns="False"
-                            AllowPaging="True" PageSize="10" GridLines="None" Width="100%">
+                          </table>
+                    </asp:Panel>
+                    </br>
+                     <telerik:RadGrid ID="grdEmpresasVisiveis" runat="server" AutoGenerateColumns="False"
+                            AllowPaging="True" PageSize="5" GridLines="None" Width="98%">
                             <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                             <MasterTableView GridLines="Both">
                                 <RowIndicatorColumn>
@@ -87,7 +98,7 @@
                                 </ExpandCollapseColumn>
                                 <Columns>
                                     <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                        HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                        HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8"  >
                                     </telerik:GridButtonColumn>
                                     <telerik:GridBoundColumn DataField="Pessoa.ID" HeaderText="ID" UniqueName="column" Visible="False">
                                     </telerik:GridBoundColumn>
@@ -96,9 +107,8 @@
                                 </Columns>
                             </MasterTableView>
                         </telerik:RadGrid>
-                    </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>
-    </telerik:RadDockLayout>
+    </telerik:raddocklayout>
 </asp:Content>

@@ -16,24 +16,11 @@ Partial Public Class ctrlGrupo
     Public Sub LimparControle()
         UtilidadesWeb.LimparComponente(CType(pnlGrupo, Control))
         GrupoSelecionado = Nothing
-        EhObrigatorio = False
     End Sub
 
     Public Sub HabiliteComponente(ByVal Habilitar As Boolean)
         UtilidadesWeb.HabilitaComponentes(CType(pnlGrupo, Control), Habilitar)
     End Sub
-
-    Public WriteOnly Property EnableLoadOnDemand() As Boolean
-        Set(ByVal value As Boolean)
-            cboGrupos.EnableLoadOnDemand = value
-        End Set
-    End Property
-
-    Public WriteOnly Property ShowDropDownOnTextboxClick() As Boolean
-        Set(ByVal value As Boolean)
-            cboGrupos.ShowDropDownOnTextboxClick = value
-        End Set
-    End Property
 
     Public Property NomeDoGrupo() As String
         Get
@@ -83,9 +70,31 @@ Partial Public Class ctrlGrupo
         RaiseEvent GrupoFoiSelecionado(Grupo)
     End Sub
 
-    Public WriteOnly Property EhObrigatorio() As Boolean
+    Public WriteOnly Property ExibeTituloParaSelecionarUmItem() As Boolean
         Set(ByVal value As Boolean)
-            cboGrupos.CausesValidation = value
+            If value Then
+                cboGrupos.EmptyMessage = "Selecione um grupo"
+                Exit Property
+            End If
+            cboGrupos.EmptyMessage = ""
+        End Set
+    End Property
+
+    Public WriteOnly Property AutoPostBack() As Boolean
+        Set(ByVal value As Boolean)
+            cboGrupos.AutoPostBack = value
+        End Set
+    End Property
+
+    Public WriteOnly Property EnableLoadOnDemand() As Boolean
+        Set(ByVal value As Boolean)
+            cboGrupos.EnableLoadOnDemand = value
+        End Set
+    End Property
+
+    Public WriteOnly Property ShowDropDownOnTextboxClick() As Boolean
+        Set(ByVal value As Boolean)
+            cboGrupos.ShowDropDownOnTextboxClick = value
         End Set
     End Property
 End Class
