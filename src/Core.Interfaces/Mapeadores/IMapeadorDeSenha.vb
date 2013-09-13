@@ -9,6 +9,7 @@ Namespace Mapeadores
         Sub Altere(ByVal IDOperador As Long, ByVal Senha As ISenha)
         Sub Insira(ByVal IDOperador As Long, ByVal Senha As ISenha)
         Sub Remova(ByVal IDOperador As Long)
+        Sub RegistreDefinicaoDeNovaSenha(Operador As IOperador)
 
     End Interface
 

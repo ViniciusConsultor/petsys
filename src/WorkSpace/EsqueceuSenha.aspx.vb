@@ -36,13 +36,13 @@ Public Class EsqueceuSenha
 
     End Sub
 
-    Private Function ObtenhaEmailParaDefinicaoDaNovaSenha(operador As IOperador) As String
+    Private Sub ObtenhaEmailParaDefinicaoDaNovaSenha(operador As IOperador)
         Dim link As String
 
 
-        link = "http://localhost/workspace/DefinicaoDeNovaSenha.aspx?id="
 
-        
-    End Function
+        link = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "DefinicaoDeNovaSenha.aspx?id="
+
+    End Sub
 
 End Class

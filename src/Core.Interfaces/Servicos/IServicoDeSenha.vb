@@ -16,6 +16,8 @@ Namespace Servicos
                    ByVal NovaSenha As ISenha, _
                    ByVal ConfirmacaoNovaSenha As ISenha)
 
+        Sub RegistreDefinicaoDeNovaSenha(Operador As IOperador)
+
     End Interface
 
 End Namespace
