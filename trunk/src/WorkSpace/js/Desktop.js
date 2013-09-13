@@ -224,7 +224,7 @@ Ext.Desktop = function(app) {
                         title: t.innerText,
                         width: 800,
                         height: 550,
-                        html: '<div id="div_' + t.id + '" style="position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"> <div style="position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"> <img src="imagens/carregandopagina.gif" alt=""></div></div>  <iframe src="' + t.firstChild.href + '" width="100%" height="100%" onload="hideLoading(div_' + t.id + ')"></iframe>', 
+                        html: '<div id="div_' + t.id + '" style="position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"> <div style="position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"> <img src="imagens/carregandopagina.gif" alt=""></div></div>  <iframe src="' + t.firstChild.href + '" style="width: 100%; height: 100%; background-color: white;" onload="hideLoading(div_' + t.id + ')"></iframe>', 
                         iconCls: 'bogus',
                         shim: false,
                         animCollapse: false,
