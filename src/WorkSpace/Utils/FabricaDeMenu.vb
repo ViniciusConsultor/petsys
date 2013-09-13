@@ -156,7 +156,7 @@ Public Class FabricaDeMenu
         HTML.Append("<img src=""imagens/carregandopagina.gif"" alt="""">")
         HTML.Append("</div>")
         HTML.Append("</div>")
-        HTML.Append("<iframe src=""" & URL & """ & frameborder=""0""  onload=""hideLoading(" & IDDiv & ")""  width=""100%"" height=""100%""/>")
+        HTML.Append("<iframe src=""" & URL & """ & frameborder=""0""  onload=""hideLoading(" & IDDiv & ")""  style=""width: 100%; height: 100%; background-color: white;""/>")
 
         Return HTML.ToString
     End Function
