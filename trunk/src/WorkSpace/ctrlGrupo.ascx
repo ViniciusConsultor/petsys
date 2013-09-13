@@ -7,6 +7,5 @@
         AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
         CausesValidation="False" EmptyMessage="Selecione um grupo" MaxLength="30">
     </telerik:RadComboBox>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Campo deve ser informado."
-        ControlToValidate="cboGrupos"></asp:RequiredFieldValidator>
+   
 </asp:Panel>

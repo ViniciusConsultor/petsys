@@ -59,6 +59,15 @@ Partial Public Class frmVisibilidadePorEmpresa
     Protected WithEvents pnlDadosDoOperador As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''Label7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cboOperador control.
     '''</summary>
     '''<remarks>

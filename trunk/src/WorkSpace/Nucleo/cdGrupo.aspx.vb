@@ -44,6 +44,8 @@ Partial Public Class cdGrupo
         rblStatus.SelectedValue = StatusDoGrupo.Ativo.ID
         ctrlGrupo1.EnableLoadOnDemand = True
         ctrlGrupo1.ShowDropDownOnTextboxClick = True
+        ctrlGrupo1.AutoPostBack = True
+        ctrlGrupo1.ExibeTituloParaSelecionarUmItem = True
     End Sub
 
     Private Sub CarregaStatus()
@@ -68,11 +70,13 @@ Partial Public Class cdGrupo
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         ctrlGrupo1.LimparControle()
         ctrlGrupo1.HabiliteComponente(True)
+
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoGrupo, Control), True)
         ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Novo
         ctrlGrupo1.EnableLoadOnDemand = False
         ctrlGrupo1.ShowDropDownOnTextboxClick = False
-        ctrlGrupo1.EhObrigatorio = True
+        ctrlGrupo1.AutoPostBack = False
+        ctrlGrupo1.ExibeTituloParaSelecionarUmItem = False
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -88,7 +92,7 @@ Partial Public Class cdGrupo
         ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Modifica
         ctrlGrupo1.EnableLoadOnDemand = False
         ctrlGrupo1.ShowDropDownOnTextboxClick = False
-        ctrlGrupo1.EhObrigatorio = True
+        ctrlGrupo1.ExibeTituloParaSelecionarUmItem = False
     End Sub
 
     Private Sub ExibaTelaExcluir()
