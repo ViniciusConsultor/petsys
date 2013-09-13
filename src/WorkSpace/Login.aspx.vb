@@ -59,4 +59,8 @@ Partial Public Class Login
         txtSenha.Text = ""
     End Sub
 
+    Private Sub btnEsqueciMinhaSenha_Click(sender As Object, e As System.EventArgs) Handles btnEsqueciMinhaSenha.Click
+        Response.Redirect("EsqueceuSenha.aspx")
+    End Sub
+
 End Class

@@ -84,6 +84,22 @@ body
 	background-position: left bottom;
 }
 
+.botao130X30
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-align: center;
+	color: #FFFFFF;
+	font-weight: bold;
+	background-color: transparent;
+	height: 30px;
+	width: 130px;
+	border: 1px solid #FFFFFF;
+	background-image: url('imagens/bg_botao.jpg');
+	background-repeat: repeat-x;
+	background-position: left bottom;
+}
+
 .containertabela
 {
 	position: absolute;

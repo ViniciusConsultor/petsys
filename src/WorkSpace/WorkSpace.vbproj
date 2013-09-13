@@ -106,8 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ctrlEmpresa.ascx" />
+    <Content Include="DefinicaoDeNovaSenha.aspx" />
     <Content Include="desktop.css" />
     <Content Include="Desktop.aspx" />
+    <Content Include="EsqueceuSenha.aspx" />
     <Content Include="ext-all.css" />
     <Content Include="frmEscolhaDaEmpresa.aspx" />
     <Content Include="imagens\accordian.gif" />
@@ -335,6 +337,20 @@
     <Compile Include="ctrlEmpresa.ascx.vb">
       <DependentUpon>ctrlEmpresa.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DefinicaoDeNovaSenha.aspx.designer.vb">
+      <DependentUpon>DefinicaoDeNovaSenha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DefinicaoDeNovaSenha.aspx.vb">
+      <DependentUpon>DefinicaoDeNovaSenha.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="EsqueceuSenha.aspx.designer.vb">
+      <DependentUpon>EsqueceuSenha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EsqueceuSenha.aspx.vb">
+      <DependentUpon>EsqueceuSenha.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="frmEscolhaDaEmpresa.aspx.designer.vb">
       <DependentUpon>frmEscolhaDaEmpresa.aspx</DependentUpon>
