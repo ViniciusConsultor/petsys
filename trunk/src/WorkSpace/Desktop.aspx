@@ -26,7 +26,7 @@
 
 </head>
 <body scroll="no" runat="server" id="Corpo">
-    <div id="desktop">
+    <div id="x-desktop">
         <dl id="shortcuts" runat="server">
         </dl>
     </div>
