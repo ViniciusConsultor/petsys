@@ -1,0 +1,1 @@
+Backup Database MP to disk="c:\backup\NomeBanco.bak"
