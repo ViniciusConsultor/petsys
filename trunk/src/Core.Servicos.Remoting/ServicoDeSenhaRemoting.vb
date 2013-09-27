@@ -30,4 +30,14 @@ Public Class ServicoDeSenhaRemoting
         _ServicoLocal.RegistreDefinicaoDeNovaSenha(Operador, Link)
     End Sub
 
+    Public Function ObtenhaIDOperadorParaRedifinirSenha(IDRedefinicaoDeSenha As Long) As Long? Implements IServicoDeSenha.ObtenhaIDOperadorParaRedifinirSenha
+        Return _ServicoLocal.ObtenhaIDOperadorParaRedifinirSenha(IDRedefinicaoDeSenha)
+    End Function
+
+    Public Sub RedefinaSenha(IDRedefinicaoDeSenha As Long, _
+                             IDOperador As Long, _
+                             NovaSenha As ISenha, _
+                             ConfirmacaoNovaSenha As ISenha) Implements IServicoDeSenha.RedefinaSenha
+        _ServicoLocal.RedefinaSenha(IDRedefinicaoDeSenha, IDOperador, NovaSenha, ConfirmacaoNovaSenha)
+    End Sub
 End Class

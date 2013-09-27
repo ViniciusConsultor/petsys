@@ -10,7 +10,7 @@ Imports Compartilhados.Interfaces.Core.Servicos
 Public Class ServicoDeSenhaLocal
     Inherits Servico
     Implements IServicoDeSenha
-
+    
     Public Sub New(ByVal Credencial As ICredencial)
         MyBase.New(Credencial)
     End Sub
@@ -133,4 +133,46 @@ Public Class ServicoDeSenhaLocal
         End If
     End Sub
 
+    Public Function ObtenhaIDOperadorParaRedifinirSenha(IDRedefinicaoDeSenha As Long) As Long? Implements IServicoDeSenha.ObtenhaIDOperadorParaRedifinirSenha
+        Dim Mapeador As IMapeadorDeSenha
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSenha)()
+
+        Try
+            Return Mapeador.ObtenhaIDOperadorParaRedifinirSenha(IDRedefinicaoDeSenha)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Sub RedefinaSenha(ByVal IDRedefinicaoDeSenha As Long,
+                             ByVal IDOperador As Long, _
+                             ByVal NovaSenha As ISenha, _
+                             ByVal ConfirmacaoNovaSenha As ISenha) Implements IServicoDeSenha.RedefinaSenha
+        Dim SenhaAntigaGravada As ISenha = Nothing
+        Dim Mapeador As IMapeadorDeSenha
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSenha)()
+
+        Try
+            ServerUtils.BeginTransaction()
+
+            SenhaAntigaGravada = Mapeador.ObtenhaSenhaDoOperador(IDOperador)
+            ValidaRegras(SenhaAntigaGravada, SenhaAntigaGravada, NovaSenha, ConfirmacaoNovaSenha)
+            Mapeador.Altere(IDOperador, NovaSenha)
+
+            Mapeador.ExcluaRefinicaoDeSenha(IDRedefinicaoDeSenha)
+
+            ServerUtils.CommitTransaction()
+
+        Catch ex As Exception
+            ServerUtils.RollbackTransaction()
+            Throw
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Sub
 End Class
