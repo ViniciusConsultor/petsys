@@ -264,7 +264,7 @@ Partial Public Class frmConfiguracoesPessoais
         Me.txtURLAtalhoExterno.Text = ""
     End Sub
 
-    Protected Sub ButtonSubmit_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ButtonSubmit.Click
+    Protected Sub ButtonSubmit_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ButtonSubmit2.Click
         If uplFoto.UploadedFiles.Count > 0 Then
             Dim file As UploadedFile = uplFoto.UploadedFiles(0)
             Dim targetFolder As String = Server.MapPath(uplFoto.TargetFolder)

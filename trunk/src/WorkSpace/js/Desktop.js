@@ -18,7 +18,7 @@ at http://www.sencha.com/contact.
 
 Build date: 2013-04-03 15:07:25
 */
-Ext.Desktop = function(app) {
+Ext.Desktop = function (app) {
     this.taskbar = new Ext.ux.TaskBar(app);
     this.xTickSize = this.yTickSize = 1;
     var taskbar = this.taskbar;
@@ -64,8 +64,8 @@ Ext.Desktop = function(app) {
 
     this.layout = layout;
 
-    this.createWindow = function(config, cls) {
-        var win = new(cls || Ext.Window)(
+    this.createWindow = function (config, cls) {
+        var win = new (cls || Ext.Window)(
         Ext.applyIf(config || {},
         {
             renderTo: desktopEl,
@@ -113,40 +113,40 @@ Ext.Desktop = function(app) {
         return win;
     };
 
-    this.getManager = function() {
+    this.getManager = function () {
         return windows;
     };
 
-    this.getWindow = function(id) {
+    this.getWindow = function (id) {
         return windows.get(id);
     };
 
-    this.getWinWidth = function() {
+    this.getWinWidth = function () {
         var width = Ext.lib.Dom.getViewWidth();
-        return width < 200 ? 200: width;
+        return width < 200 ? 200 : width;
     };
 
-    this.getWinHeight = function() {
+    this.getWinHeight = function () {
         var height = (Ext.lib.Dom.getViewHeight() - taskbarEl.getHeight());
-        return height < 100 ? 100: height;
+        return height < 100 ? 100 : height;
     };
 
-    this.getWinX = function(width) {
+    this.getWinX = function (width) {
         return (Ext.lib.Dom.getViewWidth() - width) / 2;
     };
 
-    this.getWinY = function(height) {
+    this.getWinY = function (height) {
         return (Ext.lib.Dom.getViewHeight() - taskbarEl.getHeight() - height) / 2;
     };
 
-    this.setTickSize = function(xTickSize, yTickSize) {
+    this.setTickSize = function (xTickSize, yTickSize) {
         this.xTickSize = xTickSize;
         if (arguments.length == 1) {
             this.yTickSize = xTickSize;
         } else {
             this.yTickSize = yTickSize;
         }
-        windows.each(function(win) {
+        windows.each(function (win) {
             win.dd.xTickSize = this.xTickSize;
             win.dd.yTickSize = this.yTickSize;
             win.resizer.widthIncrement = this.xTickSize;
@@ -155,10 +155,10 @@ Ext.Desktop = function(app) {
         this);
     };
 
-    this.cascade = function() {
+    this.cascade = function () {
         var x = 0,
         y = 0;
-        windows.each(function(win) {
+        windows.each(function (win) {
             if (win.isVisible() && !win.maximized) {
                 win.setPosition(x, y);
                 x += 20;
@@ -168,12 +168,12 @@ Ext.Desktop = function(app) {
         this);
     };
 
-    this.tile = function() {
+    this.tile = function () {
         var availWidth = desktopEl.getWidth(true);
         var x = this.xTickSize;
         var y = this.yTickSize;
         var nextY = y;
-        windows.each(function(win) {
+        windows.each(function (win) {
             if (win.isVisible() && !win.maximized) {
                 var w = win.el.getWidth();
 
@@ -193,18 +193,18 @@ Ext.Desktop = function(app) {
 
     this.contextMenu = new Ext.menu.Menu({
         items: [{
-            text: 'Tile',
+            text: 'Titulo',
             handler: this.tile,
             scope: this
         },
         {
-            text: 'Cascade',
+            text: 'Cascata',
             handler: this.cascade,
             scope: this
         }]
     });
     desktopEl.on('contextmenu',
-        function(e) {
+        function (e) {
             e.stopEvent();
             this.contextMenu.showAt(e.getXY());
         },
@@ -213,23 +213,30 @@ Ext.Desktop = function(app) {
     layout();
 
     if (shortcuts) {
-        shortcuts.on('click', function(e, t) {
+        shortcuts.on('click', function (e, t) {
             if (t = e.getTarget('dt', shortcuts)) {
                 e.stopEvent();
                 var desktop = app.getDesktop();
+                var htm = '<div id="div_' + t.id + '" style="position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"> <div style="position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"> <img src="imagens/carregandopagina.gif" alt=""></div></div>  <iframe src="' + t.firstChild.href + '" style="width: 100%; height: 100%; background-color: white;" onload="hideLoading(div_' + t.id + ')"></iframe>';
+
+                if (t.id.indexOf('externo') != -1)
+                    htm =  '<iframe src="' + t.firstChild.href + '" style="width: 100%; height: 100%; background-color: white;"></iframe>'                              
+
                 var win = desktop.getWindow('win' + t.id);
                 if (!win) {
+
+
                     win = desktop.createWindow({
                         id: 'win' + t.id,
                         title: t.innerText,
                         width: 800,
                         height: 550,
-                        html: '<div id="div_' + t.id + '" style="position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"> <div style="position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"> <img src="imagens/carregandopagina.gif" alt=""></div></div>  <iframe src="' + t.firstChild.href + '" style="width: 100%; height: 100%; background-color: white;" onload="hideLoading(div_' + t.id + ')"></iframe>', 
+                        html: htm,
                         iconCls: 'bogus',
                         shim: false,
                         animCollapse: false,
                         constrainHeader: true
-                                               
+
                     });
                 }
                 win.show();

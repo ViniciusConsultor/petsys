@@ -4,11 +4,13 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Imports Core.Interfaces.Negocio
 Imports Core.Interfaces.Mapeadores
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces
+Imports Compartilhados.Interfaces.Core.Servicos
 
 Public Class ServicoDeSenhaLocal
     Inherits Servico
     Implements IServicoDeSenha
-    
+
     Public Sub New(ByVal Credencial As ICredencial)
         MyBase.New(Credencial)
     End Sub
@@ -88,17 +90,47 @@ Public Class ServicoDeSenhaLocal
         End If
     End Sub
 
-    Public Sub RegistreDefinicaoDeNovaSenha(Operador As IOperador) Implements IServicoDeSenha.RegistreDefinicaoDeNovaSenha
+    Public Sub RegistreDefinicaoDeNovaSenha(ByVal Operador As IOperador, _
+                                            ByVal Link As String) Implements IServicoDeSenha.RegistreDefinicaoDeNovaSenha
         Dim Mapeador As IMapeadorDeSenha
 
         ServerUtils.setCredencial(MyBase._Credencial)
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeSenha)()
 
         Try
-            Mapeador.RegistreDefinicaoDeNovaSenha(Operador)
+            ServerUtils.BeginTransaction()
+
+            Dim id As Long = Mapeador.RegistreDefinicaoDeNovaSenha(Operador)
+            EnviaEmailDeDefinicaoDaSenha(id, Link)
+            ServerUtils.CommitTransaction()
+
+        Catch ex As Exception
+            ServerUtils.RollbackTransaction()
+            Throw
         Finally
             ServerUtils.libereRecursos()
         End Try
+    End Sub
+
+    Private Sub EnviaEmailDeDefinicaoDaSenha(ByVal Id As Long, ByVal Link As String)
+        Dim Configuracao As IConfiguracaoDoSistema
+
+        Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
+            Configuracao = ServicoDeConfiguracao.ObtenhaConfiguracaoDoSistema()
+        End Using
+
+        If Not Configuracao Is Nothing AndAlso Configuracao.NotificarErrosAutomaticamente Then
+            Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema
+
+            ConfiguracaoDeEmail = Configuracao.ConfiguracaoDeEmailDoSistema
+            If Not Configuracao Is Nothing Then
+                Dim CorpoDoEmail As String = Link & Id
+                GerenciadorDeEmail.EnviaEmail("Redefinição de senha.", _
+                                              ConfiguracaoDeEmail.EmailRemetente, _
+                                              Configuracao.RemetenteDaNotificaoDeErros, _
+                                              CorpoDoEmail)
+            End If
+        End If
     End Sub
 
 End Class

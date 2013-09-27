@@ -26,8 +26,8 @@ Public Class ServicoDeSenhaRemoting
         Return _ServicoLocal.ObtenhaSenhaDoOperador(Operador)
     End Function
 
-    Public Sub RegistreDefinicaoDeNovaSenha(Operador As IOperador) Implements IServicoDeSenha.RegistreDefinicaoDeNovaSenha
-        _ServicoLocal.RegistreDefinicaoDeNovaSenha(Operador)
+    Public Sub RegistreDefinicaoDeNovaSenha(ByVal Operador As IOperador, ByVal Link As String) Implements IServicoDeSenha.RegistreDefinicaoDeNovaSenha
+        _ServicoLocal.RegistreDefinicaoDeNovaSenha(Operador, Link)
     End Sub
 
 End Class

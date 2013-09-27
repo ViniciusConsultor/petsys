@@ -50,11 +50,11 @@
                             <table class="tabela">
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label5" runat="server" Text="Nome"></asp:Label>
+                                        <asp:Label ID="Label5" runat="server" Text="Nome" ></asp:Label>
                                     </td>
                                     <td class="td">
                                         <telerik:RadTextBox ID="txtNomeAtalhoExterno" runat="server" MaxLength="30" Skin="Vista"
-                                            Width="50px" SelectionOnFocus="CaretToBeginning">
+                                            Width="300px" SelectionOnFocus="CaretToBeginning">
                                         </telerik:RadTextBox>
                                     </td>
                                 </tr>
@@ -66,7 +66,7 @@
                                         <radscriptblock id="RadScriptBlock1" runat="server">
                                                 <script type="text/javascript">
                                                     function conditionalPostback(sender, args) {
-                                                        if (args.get_eventTarget() == "<%= ButtonSubmit.UniqueID %>") {
+                                                        if (args.get_eventTarget() == "<%= ButtonSubmit2.UniqueID %>") {
                                                             args.set_enableAjax(false);
                                                         }
                                                     }
@@ -84,7 +84,7 @@
                                                         </telerik:RadUpload>
                                                     </td>
                                                     <td valign="top">
-                                                        <asp:Button ID="ButtonSubmit" runat="server" Text="Salvar foto" CausesValidation="False"
+                                                        <asp:Button ID="ButtonSubmit2" runat="server" Text="Salvar foto" CausesValidation="False"
                                                             CssClass="RadUploadSubmit" />
                                                     </td>
                                                 </tr>
@@ -162,7 +162,7 @@
                         <radscriptblock id="RadScriptBlock2" runat="server">
                                                 <script type="text/javascript">
                                                     function conditionalPostback(sender, args) {
-                                                        if (args.get_eventTarget() == "<%= ButtonSubmit.UniqueID %>") {
+                                                        if (args.get_eventTarget() == "<%= btnSalvarPapelDeParede.UniqueID %>") {
                                                             args.set_enableAjax(false);
                                                         }
                                                     }
@@ -174,7 +174,7 @@
                                 ControlObjectsVisibility="None" Culture="Portuguese (Brazil)" OverwriteExistingFiles="True"
                                 Skin="Vista" TargetFolder="~/Loads">
                             </telerik:RadUpload>
-                            <asp:Button ID="Button1" runat="server" Text="Button" CausesValidation="False" />
+                            <asp:Button ID="btnSalvarPapelDeParede" runat="server" Text="Salvar" CausesValidation="False" />
                         </telerik:RadAjaxPanel>
                     </td>
                 </tr>
