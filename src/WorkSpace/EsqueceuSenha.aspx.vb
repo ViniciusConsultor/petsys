@@ -18,9 +18,10 @@ Public Class EsqueceuSenha
     End Sub
 
     Private Sub btnEnviarEmail_Click(sender As Object, e As System.EventArgs) Handles btnEnviarEmail.Click
-        Using Servico As IServicoDeOperador = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeOperador)()
+        Dim operador As IOperador
 
-            Dim operador = Servico.ObtenhaOperadorPorLogin(txtLogin.Text)
+        Using Servico As IServicoDeOperador = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeOperador)()
+            operador = Servico.ObtenhaOperadorPorLogin(txtLogin.Text)
 
             If operador Is Nothing Then
                 ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("Login inválido."), False)
@@ -31,17 +32,11 @@ Public Class EsqueceuSenha
                 ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Você não possui e-mail cadastrado. Peça para o adminitrador do sistema cadastrá-lo ou modificar a sua senha."), False)
                 Exit Sub
             End If
-            
         End Using
 
-    End Sub
-
-    Private Sub ObtenhaEmailParaDefinicaoDaNovaSenha(operador As IOperador)
-        Dim link As String
-
-
-
-        link = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "DefinicaoDeNovaSenha.aspx?id="
+        Using Servico As IServicoDeSenha = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSenha)()
+            Servico.RegistreDefinicaoDeNovaSenha(operador, UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "DefinicaoDeNovaSenha.aspx?id=")
+        End Using
 
     End Sub
 

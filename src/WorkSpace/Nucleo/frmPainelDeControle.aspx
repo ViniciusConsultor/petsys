@@ -75,7 +75,7 @@
                                         <asp:Label ID="Label1" runat="server" Text="Porta"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <telerik:RadNumericTextBox ID="txtPorta" runat="server" DataType="System.Int16" Skin="Vista">
+                                        <telerik:RadNumericTextBox ID="txtPorta" runat="server" Skin="Vista">
                                         </telerik:RadNumericTextBox>
                                     </td>
                                 </tr>
