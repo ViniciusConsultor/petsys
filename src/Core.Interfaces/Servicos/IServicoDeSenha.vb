@@ -18,6 +18,13 @@ Namespace Servicos
 
         Sub RegistreDefinicaoDeNovaSenha(ByVal Operador As IOperador, ByVal Link As String)
 
+        Function ObtenhaIDOperadorParaRedifinirSenha(IDRedefinicaoDeSenha As Long) As Nullable(Of Long)
+
+        Sub RedefinaSenha(ByVal IDRedefinicaoDeSenha As Long, _
+                          ByVal IDOperador As Long, _
+                          ByVal NovaSenha As ISenha, _
+                          ByVal ConfirmacaoNovaSenha As ISenha)
+
     End Interface
 
 End Namespace
