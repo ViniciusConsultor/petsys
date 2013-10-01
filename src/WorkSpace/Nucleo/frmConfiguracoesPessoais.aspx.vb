@@ -264,18 +264,7 @@ Partial Public Class frmConfiguracoesPessoais
         Me.txtURLAtalhoExterno.Text = ""
     End Sub
 
-    Protected Sub ButtonSubmit_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ButtonSubmit2.Click
-        If uplFoto.UploadedFiles.Count > 0 Then
-            Dim file As UploadedFile = uplFoto.UploadedFiles(0)
-            Dim targetFolder As String = Server.MapPath(uplFoto.TargetFolder)
-            Dim targetFileName As String = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension())
-            file.SaveAs(targetFileName)
-
-            imgPapelDeParede.ImageUrl = String.Concat(uplFoto.TargetFolder, "/", file.GetNameWithoutExtension() + file.GetExtension())
-        End If
-    End Sub
-
-    Private Function ConsisteDados() As String
+   Private Function ConsisteDados() As String
         If ctrlPessoa1.PessoaSelecionada Is Nothing Then Return "Proprietário da agenda deve ser selecionado."
         If Not txtHorarioDeInicio.SelectedDate.HasValue Then Return "O horário de início deve ser informado."
         If Not txtHorarioFinal.SelectedDate.HasValue Then Return "O horário final deve ser informado."
@@ -355,6 +344,20 @@ Partial Public Class frmConfiguracoesPessoais
 
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDaAgenda, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), True)
+    End Sub
+
+    Protected Sub AsyncUpload1_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles AsyncUpload1.FileUploaded
+  
+    End Sub
+
+    Protected Sub RadAsyncUpload2_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles RadAsyncUpload2.FileUploaded
+        If RadAsyncUpload2.UploadedFiles.Count > 0 Then
+            Dim file As UploadedFile = RadAsyncUpload2.UploadedFiles(0)
+            Dim targetFolder As String = Server.MapPath(RadAsyncUpload2.TargetFolder)
+            Dim targetFileName As String = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension())
+            file.SaveAs(targetFileName)
+            imgPapelDeParede.ImageUrl = String.Concat(RadAsyncUpload2.TargetFolder, "/", file.GetNameWithoutExtension() + file.GetExtension())
+        End If
     End Sub
 
 End Class
