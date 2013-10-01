@@ -12,8 +12,8 @@
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
- 
-    <telerik:RadTabStrip ID="tabStrip" runat="server" MultiPageID="mltPage" SelectedIndex="0" CausesValidation="false">
+    <telerik:RadTabStrip ID="tabStrip" runat="server" MultiPageID="mltPage" SelectedIndex="0"
+        CausesValidation="false">
         <Tabs>
             <telerik:RadTab runat="server" Text="Atalhos" Selected="true">
             </telerik:RadTab>
@@ -50,7 +50,7 @@
                             <table class="tabela">
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label5" runat="server" Text="Nome" ></asp:Label>
+                                        <asp:Label ID="Label5" runat="server" Text="Nome"></asp:Label>
                                     </td>
                                     <td class="td">
                                         <telerik:RadTextBox ID="txtNomeAtalhoExterno" runat="server" MaxLength="30" Skin="Vista"
@@ -63,33 +63,10 @@
                                         <asp:Label ID="Label40" runat="server" Text="Imagem"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <radscriptblock id="RadScriptBlock1" runat="server">
-                                                <script type="text/javascript">
-                                                    function conditionalPostback(sender, args) {
-                                                        if (args.get_eventTarget() == "<%= ButtonSubmit2.UniqueID %>") {
-                                                            args.set_enableAjax(false);
-                                                        }
-                                                    }
-                                                </script>
-                                            </radscriptblock>
                                         <asp:Image ID="imgFoto" runat="server" />
-                                        <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1" ClientEvents-OnRequestStart="conditionalPostback">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <telerik:RadUpload ID="uplFoto" runat="server" AllowedFileExtensions=".jpg,.jpeg,.gif,.bmp"
-                                                            ControlObjectsVisibility="None" Culture="Portuguese (Brazil)" OverwriteExistingFiles="True"
-                                                            Skin="Vista" Width="225px">
-                                                            <Localization Select="Procurar" />
-                                                        </telerik:RadUpload>
-                                                    </td>
-                                                    <td valign="top">
-                                                        <asp:Button ID="ButtonSubmit2" runat="server" Text="Salvar foto" CausesValidation="False"
-                                                            CssClass="RadUploadSubmit" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </telerik:RadAjaxPanel>
+                                        <telerik:RadAsyncUpload runat="server" ID="AsyncUpload1"  Skin="Vista"
+                                            MultipleFileSelection="Disabled" AllowedFileExtensions="jpg,png,gif,bmp"  AutoAddFileInputs="false" 
+                                             Localization-Select="Upload Image" OnFileUploaded="AsyncUpload1_FileUploaded" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -159,23 +136,11 @@
                         <asp:Label ID="Label6" runat="server" Text="Papel de parede:"></asp:Label>
                     </td>
                     <td class="td">
-                        <radscriptblock id="RadScriptBlock2" runat="server">
-                                                <script type="text/javascript">
-                                                    function conditionalPostback(sender, args) {
-                                                        if (args.get_eventTarget() == "<%= btnSalvarPapelDeParede.UniqueID %>") {
-                                                            args.set_enableAjax(false);
-                                                        }
-                                                    }
-                                                </script>
-                                            </radscriptblock>
                         <asp:Image ID="imgPapelDeParede" runat="server" />
-                        <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" ClientEvents-OnRequestStart="conditionalPostback">
-                            <telerik:RadUpload ID="RadUpload1" runat="server" AllowedFileExtensions=".jpg,.jpeg,.gif,.bmp"
-                                ControlObjectsVisibility="None" Culture="Portuguese (Brazil)" OverwriteExistingFiles="True"
-                                Skin="Vista" TargetFolder="~/Loads">
-                            </telerik:RadUpload>
-                            <asp:Button ID="btnSalvarPapelDeParede" runat="server" Text="Salvar" CausesValidation="False" />
-                        </telerik:RadAjaxPanel>
+                        <telerik:RadAsyncUpload runat="server" ID="RadAsyncUpload2"  Skin="Vista"
+                                            MultipleFileSelection="Disabled" AllowedFileExtensions="jpg,png,gif,bmp"  AutoAddFileInputs="false" 
+                                             Localization-Select="Upload Image" OnFileUploaded="RadAsyncUpload2_FileUploaded" />
+                        
                     </td>
                 </tr>
             </table>

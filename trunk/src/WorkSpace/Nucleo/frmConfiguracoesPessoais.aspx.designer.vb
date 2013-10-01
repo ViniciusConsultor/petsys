@@ -122,15 +122,6 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents Label40 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''RadScriptBlock1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadScriptBlock1 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
     '''imgFoto control.
     '''</summary>
     '''<remarks>
@@ -140,31 +131,13 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents imgFoto As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''RadAjaxPanel1 control.
+    '''AsyncUpload1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadAjaxPanel1 As Global.Telerik.Web.UI.RadAjaxPanel
-
-    '''<summary>
-    '''uplFoto control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents uplFoto As Global.Telerik.Web.UI.RadUpload
-
-    '''<summary>
-    '''ButtonSubmit2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ButtonSubmit2 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents AsyncUpload1 As Global.Telerik.Web.UI.RadAsyncUpload
 
     '''<summary>
     '''Label50 control.
@@ -248,15 +221,6 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''RadScriptBlock2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadScriptBlock2 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
     '''imgPapelDeParede control.
     '''</summary>
     '''<remarks>
@@ -266,31 +230,13 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents imgPapelDeParede As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''RadAjaxPanel2 control.
+    '''RadAsyncUpload2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadAjaxPanel2 As Global.Telerik.Web.UI.RadAjaxPanel
-
-    '''<summary>
-    '''RadUpload1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadUpload1 As Global.Telerik.Web.UI.RadUpload
-
-    '''<summary>
-    '''btnSalvarPapelDeParede control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnSalvarPapelDeParede As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents RadAsyncUpload2 As Global.Telerik.Web.UI.RadAsyncUpload
 
     '''<summary>
     '''rpvAgenda control.
