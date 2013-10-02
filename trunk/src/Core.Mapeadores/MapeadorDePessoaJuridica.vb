@@ -41,9 +41,15 @@ Public Class MapeadorDePessoaJuridica
         Dim InscricaoMunicipal As IInscricaoMunicipal = CType(Pessoa.ObtenhaDocumento(TipoDeDocumento.IM), IInscricaoMunicipal)
 
         If Not InscricaoMunicipal Is Nothing Then
-            Sql.Append(String.Concat("IM='", InscricaoMunicipal.Numero, "' "))
+            Sql.Append(String.Concat("IM='", InscricaoMunicipal.Numero, "', "))
         Else
-            Sql.Append("IM=NULL ")
+            Sql.Append("IM=NULL, ")
+        End If
+
+        If Not String.IsNullOrEmpty(Pessoa.Logomarca) Then
+            Sql.Append(String.Concat("LOGOMARCA='", Pessoa.Logomarca, "' "))
+        Else
+            Sql.Append("LOGOMARCA=NULL ")
         End If
 
 
@@ -56,7 +62,7 @@ Public Class MapeadorDePessoaJuridica
 
         Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
         Sql.Append("LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, ")
-        Sql.Append("BAIRRO, NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE ")
+        Sql.Append("BAIRRO, NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, LOGOMARCA ")
         Sql.Append("FROM NCL_PESSOA, NCL_PESSOAJURIDICA")
         Sql.Append(" WHERE ID = IDPESSOA ")
         Sql.Append(String.Concat("AND ID = ", Id.ToString))
@@ -83,7 +89,7 @@ Public Class MapeadorDePessoaJuridica
 
         Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
         Sql.Append("LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, ")
-        Sql.Append("BAIRRO, IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE ")
+        Sql.Append("BAIRRO, IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, LOGOMARCA ")
         Sql.Append("FROM NCL_PESSOA, NCL_PESSOAJURIDICA")
         Sql.Append(" WHERE ID = IDPESSOA ")
 
@@ -125,6 +131,10 @@ Public Class MapeadorDePessoaJuridica
                         Pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia.CrieObjeto(Of IInscricaoMunicipal)(New Object() {UtilidadesDePersistencia.GetValorString(Leitor, "IM")}))
                     End If
 
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "LOGOMARCA") Then
+                        Pessoa.Logomarca = UtilidadesDePersistencia.GetValorString(Leitor, "LOGOMARCA")
+                    End If
+
                     Pessoas.Add(Pessoa)
                 End While
             Finally
@@ -141,7 +151,7 @@ Public Class MapeadorDePessoaJuridica
 
         DBHelper = ServerUtils.getDBHelper
 
-        Sql.Append("INSERT INTO NCL_PESSOAJURIDICA (IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM) ")
+        Sql.Append("INSERT INTO NCL_PESSOAJURIDICA (IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM, LOGOMARCA) ")
         Sql.Append("VALUES (")
         Sql.Append(String.Concat(Pessoa.ID.Value, ", "))
 
@@ -170,7 +180,13 @@ Public Class MapeadorDePessoaJuridica
         Dim InscricaoMunicipal As IInscricaoMunicipal = CType(Pessoa.ObtenhaDocumento(TipoDeDocumento.IM), IInscricaoMunicipal)
 
         If Not InscricaoMunicipal Is Nothing Then
-            Sql.Append(String.Concat("'", InscricaoMunicipal.Numero, "'"))
+            Sql.Append(String.Concat("'", InscricaoMunicipal.Numero, "', "))
+        Else
+            Sql.Append("NULL, ")
+        End If
+
+        If Not String.IsNullOrEmpty(Pessoa.Logomarca) Then
+            Sql.Append(String.Concat("'", Pessoa.Logomarca, "'"))
         Else
             Sql.Append("NULL")
         End If
