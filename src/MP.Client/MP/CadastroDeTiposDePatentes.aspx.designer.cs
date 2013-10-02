@@ -31,31 +31,22 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDockLayout RadDockLayout1;
         
         /// <summary>
-        /// RadDockZone1 control.
+        /// Panel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDockZone RadDockZone1;
+        protected global::System.Web.UI.WebControls.Panel Panel1;
         
         /// <summary>
-        /// RadDock1 control.
+        /// PanelTipoDePatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDock RadDock1;
-        
-        /// <summary>
-        /// PanelTiposDePatentes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelTiposDePatentes;
+        protected global::System.Web.UI.WebControls.Panel PanelTipoDePatente;
         
         /// <summary>
         /// Label1 control.
@@ -94,22 +85,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.TextBox txtSigla;
         
         /// <summary>
-        /// RadDock2 control.
+        /// PanelConfigObrigaTipoDePatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDock RadDock2;
-        
-        /// <summary>
-        /// PanelConfigTipoPatente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelConfigTipoPatente;
+        protected global::System.Web.UI.WebControls.Panel PanelConfigObrigaTipoDePatente;
         
         /// <summary>
         /// Label3 control.
