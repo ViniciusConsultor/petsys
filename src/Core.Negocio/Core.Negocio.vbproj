@@ -108,6 +108,7 @@
     <Compile Include="Fornecedor.vb" />
     <Compile Include="Funcao.vb" />
     <Compile Include="Grupo.vb" />
+    <Compile Include="GrupoDeAtividade.vb" />
     <Compile Include="LazyLoad\CompromissoLazyLoad.vb" />
     <Compile Include="LazyLoad\FornecedorLazyLoad.vb" />
     <Compile Include="LazyLoad\LembreteLazyLoad.vb" />

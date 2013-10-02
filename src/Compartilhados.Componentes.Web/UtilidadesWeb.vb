@@ -15,9 +15,9 @@ Public Class UtilidadesWeb
     Public Const URL_IMAGEM_SEM_FOTO As String = "~/Loads/Imagens/sem_foto_g.gif"
     Public Const URL_FOTO_ANIMAL As String = "~/Loads/Fotos/Animais"
     Public Const URL_FOTO_PESSOA As String = "~/Loads/Fotos/Pessoas"
-
-    Public Const PASTA_FOTO_ANIMAL As String = "Loads\Fotos\Animais"
-    Public Const PASTA_FOTO_PESSOA As String = "Loads\Fotos\Pessoas"
+    Public Const URL_PAPEIS_DE_PAREDE As String = "~/Loads/Imagens/PapeisDeParede"
+    Public Const URL_ATALHOS As String = "~/Loads/Imagens/Atalhos"
+    
     Public Const PASTA_LOADS As String = "Loads"
 
     Public Shared Sub HabilitaComponentes(ByRef Componente As Control, _

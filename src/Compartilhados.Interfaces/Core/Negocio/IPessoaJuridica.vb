@@ -6,7 +6,7 @@ Namespace Core.Negocio
         Inherits IPessoa
 
         Property NomeFantasia() As String
-
+        Property Logomarca As String
     End Interface
 
 End Namespace

@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ctrlEmpresa.ascx" />
+    <Content Include="ctrlGrupoDeAtividade.ascx" />
     <Content Include="DefinicaoDeNovaSenha.aspx" />
     <Content Include="desktop.css" />
     <Content Include="Desktop.aspx" />
@@ -318,12 +319,16 @@
     <Content Include="naoautenticado.html" />
     <Content Include="naoautorizado.html" />
     <Content Include="Nucleo\cdEmpresa.aspx" />
+    <Content Include="Nucleo\cdGrupoDeAtividade.aspx" />
     <Content Include="Nucleo\frmVisibilidadePorEmpresa.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncUploadHandlerCustom.ashx.vb">
+      <DependentUpon>AsyncUploadHandlerCustom.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ctrlBancosEAgencias.ascx.designer.vb">
       <DependentUpon>ctrlBancosEAgencias.ascx</DependentUpon>
     </Compile>
@@ -336,6 +341,13 @@
     </Compile>
     <Compile Include="ctrlEmpresa.ascx.vb">
       <DependentUpon>ctrlEmpresa.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ctrlGrupoDeAtividade.ascx.designer.vb">
+      <DependentUpon>ctrlGrupoDeAtividade.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlGrupoDeAtividade.ascx.vb">
+      <DependentUpon>ctrlGrupoDeAtividade.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DefinicaoDeNovaSenha.aspx.designer.vb">
@@ -392,6 +404,13 @@
     </Compile>
     <Compile Include="Nucleo\cdFornecedor.aspx.vb">
       <DependentUpon>cdFornecedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\cdGrupoDeAtividade.aspx.designer.vb">
+      <DependentUpon>cdGrupoDeAtividade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdGrupoDeAtividade.aspx.vb">
+      <DependentUpon>cdGrupoDeAtividade.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdLembrete.aspx.designer.vb">
@@ -658,6 +677,7 @@
     <Content Include="Loads\Imagens\sem_foto_g.gif" />
     <Content Include="Login.aspx" />
     <Content Include="Login.Master" />
+    <Content Include="AsyncUploadHandlerCustom.ashx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -698,6 +718,7 @@
     <Folder Include="Loads\Fotos\Animais\" />
     <Folder Include="Loads\Fotos\Pessoas\" />
     <Folder Include="Loads\Imagens\Atalhos\" />
+    <Folder Include="Loads\Imagens\PapeisDeParede\" />
     <Folder Include="LOG\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

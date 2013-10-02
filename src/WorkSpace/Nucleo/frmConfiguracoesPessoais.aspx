@@ -64,9 +64,27 @@
                                     </td>
                                     <td class="td">
                                         <asp:Image ID="imgFoto" runat="server" />
-                                        <telerik:RadAsyncUpload runat="server" ID="AsyncUpload1"  Skin="Vista"
-                                            MultipleFileSelection="Disabled" AllowedFileExtensions="jpg,png,gif,bmp"  AutoAddFileInputs="false" 
-                                             Localization-Select="Upload Image" OnFileUploaded="AsyncUpload1_FileUploaded" />
+                                        <telerik:RadScriptBlock ID="RadScriptBlock2" runat="server">
+                                            <script type="text/javascript">
+                                //<![CDATA[
+
+                                                function updateAtalhos() {
+                                                    var upload = $find("<%=uplAtalho.ClientID %>");
+
+                                                    if (upload.getUploadedFiles().length > 0) {
+                                                        __doPostBack('btnSalvarAtalho', 'RadButton1Args');
+                                                    }
+                                                    else {
+                                                        Ext.MessageBox.show({ title: 'Informação', msg: 'Selecione um icone para o atalho', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+                                                    }
+                                                }
+                          //]]>
+                                            </script>
+                                        </telerik:RadScriptBlock>
+                                        <telerik:RadAsyncUpload runat="server" ID="uplAtalho" MaxFileInputsCount="1" AllowedFileExtensions=".gif"
+                                            PostbackTriggers="btnSalvarAtalho" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
+                                            Localization-Select="Selecione um icone" />
+                                        <asp:Button runat="server" ID="btnSalvarAtalho" Text="Enviar para o servidor" OnClientClick="updateAtalhos(); return false;" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -136,11 +154,29 @@
                         <asp:Label ID="Label6" runat="server" Text="Papel de parede:"></asp:Label>
                     </td>
                     <td class="td">
+                        <telerik:RadScriptBlock ID="RadScriptBlock1" runat="server">
+                            <script type="text/javascript">
+                                //<![CDATA[
+
+                                function updatePapelDeParede() {
+                                    var upload = $find("<%=uplPapelParede.ClientID %>");
+
+                                    if (upload.getUploadedFiles().length > 0) {
+                                        __doPostBack('btnSalvarPapelParede', 'RadButton1Args');
+                                    }
+                                    else {
+                                        Ext.MessageBox.show({ title: 'Informação', msg: 'Selecione uma imagem para o papel de parede', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+                                    }
+                                }
+                          //]]>
+                            </script>
+                        </telerik:RadScriptBlock>
                         <asp:Image ID="imgPapelDeParede" runat="server" />
-                        <telerik:RadAsyncUpload runat="server" ID="RadAsyncUpload2"  Skin="Vista"
-                                            MultipleFileSelection="Disabled" AllowedFileExtensions="jpg,png,gif,bmp"  AutoAddFileInputs="false" 
-                                             Localization-Select="Upload Image" OnFileUploaded="RadAsyncUpload2_FileUploaded" />
-                        
+                        <telerik:RadAsyncUpload runat="server" ID="uplPapelParede" MaxFileInputsCount="1"
+                            AllowedFileExtensions=".jpg,.jpeg,.png" PostbackTriggers="btnSalvarPapelParede"
+                            Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Selecione uma imagem" />
+                        <asp:Button runat="server" ID="btnSalvarPapelParede" Text="Enviar para o servidor"
+                            OnClientClick="updatePapelDeParede(); return false;" />
                     </td>
                 </tr>
             </table>

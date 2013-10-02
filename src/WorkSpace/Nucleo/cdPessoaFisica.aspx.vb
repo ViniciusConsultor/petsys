@@ -415,20 +415,6 @@ Partial Public Class cdPessoaFisica
         End Try
     End Sub
 
-    Protected Sub ButtonSubmit_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ButtonSubmit.Click
-        If uplFoto.UploadedFiles.Count > 0 Then
-            For Each validFile As UploadedFile In uplFoto.UploadedFiles
-                Dim PastaDeDestino As String = Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_FOTO_PESSOA)
-                validFile.SaveAs(Path.Combine(PastaDeDestino, validFile.GetName()), True)
-                UtilidadesWeb.redimensionaImagem(PastaDeDestino, _
-                                                  validFile.GetName(), _
-                                                  200, _
-                                                  200)
-                imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_FOTO_PESSOA, "/" & validFile.GetName())
-            Next
-        End If
-    End Sub
-
     Private Sub btnAdicionarTelefone_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionarTelefone.Click
         Dim Telefones As IList(Of ITelefone)
         Dim Inconsistencia As String
@@ -495,7 +481,7 @@ Partial Public Class cdPessoaFisica
         End If
     End Sub
 
-    Private Sub grdTelefones_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdTelefones.ItemCreated
+    Private Sub grdTelefones_ItemCreated(ByVal sender As Object, ByVal e As GridItemEventArgs) Handles grdTelefones.ItemCreated
         If (TypeOf e.Item Is GridDataItem) Then
             Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
 
@@ -506,4 +492,18 @@ Partial Public Class cdPessoaFisica
             Next
         End If
     End Sub
+
+    Private Sub uplFoto_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles uplFoto.FileUploaded
+        If uplFoto.UploadedFiles.Count > 0 Then
+            Dim validFile As UploadedFile = uplFoto.UploadedFiles(0)
+            Dim PastaDeDestino As String = Server.MapPath(UtilidadesWeb.URL_FOTO_PESSOA)
+            validFile.SaveAs(Path.Combine(PastaDeDestino, validFile.GetName()), True)
+            UtilidadesWeb.redimensionaImagem(PastaDeDestino, _
+                                              validFile.GetName(), _
+                                              200, _
+                                              200)
+            imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_FOTO_PESSOA, "/" & validFile.GetName())
+        End If
+    End Sub
+
 End Class

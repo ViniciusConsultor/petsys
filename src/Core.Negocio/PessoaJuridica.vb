@@ -5,7 +5,7 @@ Imports Compartilhados.Interfaces.Core.Negocio.Documento
 Public Class PessoaJuridica
     Inherits Pessoa
     Implements IPessoaJuridica
-
+    
     Private _NomeFantasia As String
 
     Public Overrides ReadOnly Property Tipo() As TipoDePessoa
@@ -20,6 +20,16 @@ Public Class PessoaJuridica
         End Get
         Set(ByVal value As String)
             _NomeFantasia = value
+        End Set
+    End Property
+
+    Private _Logomarca As String
+    Public Property Logomarca As String Implements IPessoaJuridica.Logomarca
+        Get
+            Return _Logomarca
+        End Get
+        Set(value As String)
+            _Logomarca = value
         End Set
     End Property
 

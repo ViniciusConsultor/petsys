@@ -1,7 +1,6 @@
 <%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
     CodeBehind="cdPessoaFisica.aspx.vb" Inherits="WorkSpace.cdPessoaFisica" %>
 
-<%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <%@ Register Src="~/ctrlMunicipios.ascx" TagName="ctrlMunicipios" TagPrefix="uc2" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlBancosEAgencias.ascx" TagName="ctrlBancosEAgencias" TagPrefix="uc3" %>
@@ -68,33 +67,37 @@
                                             <asp:Label ID="Label23" runat="server" Text="Foto"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <radscriptblock id="RadScriptBlock1" runat="server">
+                                            <asp:Image ID="imgFoto" runat="server" />
+                                            <telerik:RadScriptBlock ID="RadScriptBlock2" runat="server">
                                                 <script type="text/javascript">
-                                                    function conditionalPostback(sender, args) {
-                                                        if (args.get_eventTarget() == "<%= ButtonSubmit.UniqueID %>") {
-                                                            args.set_enableAjax(false);
+                                //<![CDATA[
+
+                                                    function updateFotoPessoa() {
+                                                        var upload = $find("<%=uplFoto.ClientID %>");
+
+                                                        if (upload.getUploadedFiles().length > 0) {
+                                                            __doPostBack('ButtonSubmit', 'RadButton1Args');
+                                                        }
+                                                        else {
+                                                            Ext.MessageBox.show({ title: 'Informação', msg: 'Selecione uma foto', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
                                                         }
                                                     }
+                          //]]>
                                                 </script>
-                                            </radscriptblock>
-                                            <asp:Image ID="imgFoto" runat="server" />
-                                            <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1" ClientEvents-OnRequestStart="conditionalPostback">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <telerik:RadUpload ID="uplFoto" runat="server" AllowedFileExtensions=".jpg,.jpeg,.gif,.bmp"
-                                                                ControlObjectsVisibility="None" Culture="Portuguese (Brazil)" OverwriteExistingFiles="True"
-                                                                Skin="Vista" Width="225px">
-                                                                <Localization Select="Procurar" />
-                                                            </telerik:RadUpload>
-                                                        </td>
-                                                        <td valign="top">
-                                                            <asp:Button ID="ButtonSubmit" runat="server" Text="Salvar foto" CausesValidation="False"
-                                                                CssClass="RadUploadSubmit" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </telerik:RadAjaxPanel>
+                                            </telerik:RadScriptBlock>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <telerik:RadAsyncUpload runat="server" ID="uplFoto" MaxFileInputsCount="1" AllowedFileExtensions=".jpg,.jpeg,.bmp,.png"
+                                                            PostbackTriggers="ButtonSubmit" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
+                                                            Localization-Select="Procurar" />
+                                                    </td>
+                                                    <td valign="top">
+                                                        <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateFotoPessoa(); return false;"
+                                                            CausesValidation="False" CssClass="RadUploadSubmit" />
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
                                     <tr>
