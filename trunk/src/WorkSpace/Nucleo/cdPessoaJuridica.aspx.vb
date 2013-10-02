@@ -62,7 +62,7 @@ Partial Public Class cdPessoaJuridica
         CarregueUFs()
         CarregaTiposDeTelefone()
         cboUFEndereco.Enabled = False
-        'imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
+        imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
     End Sub
 
     Private Sub CarregaTiposDeTelefone()
@@ -234,6 +234,8 @@ Partial Public Class cdPessoaJuridica
             End If
         End If
 
+        Pessoa.Logomarca = imgFoto.ImageUrl
+
         Return Pessoa
     End Function
 
@@ -293,7 +295,7 @@ Partial Public Class cdPessoaJuridica
             End If
         End If
 
-        'imgFoto.ImageUrl = Pessoa.Foto
+        imgFoto.ImageUrl = Pessoa.Logomarca
 
         txtSite.Text = Pessoa.Site
         ExibaTelefones(Pessoa.Telefones)
@@ -309,20 +311,6 @@ Partial Public Class cdPessoaJuridica
                 Call ExibaTelaModificar()
         End Select
     End Sub
-
-    'Protected Sub ButtonSubmit_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ButtonSubmit.Click
-    '    If uplFoto.UploadedFiles.Count > 0 Then
-    '        For Each validFile As UploadedFile In uplFoto.UploadedFiles
-    '            Dim PastaDeDestino As String = Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_FOTO_PESSOA)
-    '            validFile.SaveAs(Path.Combine(PastaDeDestino, validFile.GetName()), True)
-    '            UtilidadesWeb.redimensionaImagem(PastaDeDestino, _
-    '                                              validFile.GetName(), _
-    '                                              200, _
-    '                                              200)
-    '            imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_FOTO_PESSOA, "/" & validFile.GetName())
-    '        Next
-    '    End If
-    'End Sub
 
     Private Sub CarregueUFs()
         cboUFEndereco.Items.Clear()
@@ -416,4 +404,16 @@ Partial Public Class cdPessoaJuridica
         ViewState(CHAVE_TELEFONES) = Telefones
     End Sub
 
+    Private Sub uplFoto_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles uplFoto.FileUploaded
+        If uplFoto.UploadedFiles.Count > 0 Then
+            Dim validFile As UploadedFile = uplFoto.UploadedFiles(0)
+            Dim PastaDeDestino As String = Server.MapPath(UtilidadesWeb.URL_FOTO_PESSOA)
+            validFile.SaveAs(Path.Combine(PastaDeDestino, validFile.GetName()), True)
+            UtilidadesWeb.redimensionaImagem(PastaDeDestino, _
+                                              validFile.GetName(), _
+                                              200, _
+                                              200)
+            imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_FOTO_PESSOA, "/" & validFile.GetName())
+        End If
+    End Sub
 End Class

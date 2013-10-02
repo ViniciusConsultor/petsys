@@ -9,7 +9,7 @@ Namespace LazyLoad
     <Serializable()> _
     Public Class PessoaJuridicaLazyLoad
         Implements IPessoaJuridicaLazyLoad
-
+        
         Private _Pessoa As IPessoaJuridica
 
         Public Sub New(ByVal ID As Long)
@@ -138,11 +138,23 @@ Namespace LazyLoad
                 If _Pessoa Is Nothing Then CarregueObjetoReal()
                 Return _Pessoa.DadoBancario
             End Get
-            Set(ByVal value As Compartilhados.Interfaces.Core.Negocio.IDadoBancario)
+            Set(ByVal value As IDadoBancario)
                 If _Pessoa Is Nothing Then CarregueObjetoReal()
                 _Pessoa.DadoBancario = value
             End Set
         End Property
 
+        Public Property Logomarca As String Implements IPessoaJuridica.Logomarca
+            Get
+                If _Pessoa Is Nothing Then CarregueObjetoReal()
+                Return _Pessoa.Logomarca
+            End Get
+            Set(value As String)
+                If _Pessoa Is Nothing Then CarregueObjetoReal()
+                _Pessoa.Logomarca = value
+            End Set
+        End Property
+
     End Class
+
 End Namespace

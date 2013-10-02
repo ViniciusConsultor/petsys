@@ -102,6 +102,7 @@
     <Compile Include="Core\Negocio\IEndereco.vb" />
     <Compile Include="Core\Negocio\IFornecedor.vb" />
     <Compile Include="Core\Negocio\IGrupo.vb" />
+    <Compile Include="Core\Negocio\IGrupoDeAtividade.vb" />
     <Compile Include="Core\Negocio\ILembrete.vb" />
     <Compile Include="Core\Negocio\IMunicipio.vb" />
     <Compile Include="Core\Negocio\IOperador.vb" />
@@ -142,6 +143,7 @@
     <Compile Include="Core\Servicos\IServicoDeEmpresa.vb" />
     <Compile Include="Core\Servicos\IServicoDeFornecedor.vb" />
     <Compile Include="Core\Servicos\IServicoDeGeracaoDeID.vb" />
+    <Compile Include="Core\Servicos\IServicoDeGrupoDeAtividade.vb" />
     <Compile Include="Core\Servicos\IServicoDeMunicipio.vb" />
     <Compile Include="Core\Servicos\IServicoDePerfil.vb" />
     <Compile Include="Core\Servicos\IServicoDePessoaFisica.vb" />

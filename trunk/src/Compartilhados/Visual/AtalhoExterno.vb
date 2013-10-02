@@ -21,7 +21,7 @@
         End Function
 
         Public Overrides Function ObtenhaURLImagemCompleta() As String
-            Return MyBase.Imagem
+            Return Imagem
         End Function
 
     End Class

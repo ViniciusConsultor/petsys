@@ -240,7 +240,13 @@ Partial Public Class frmConfiguracoesPessoais
     Private Function CriaAtalhoExterno() As AtalhoExterno
         Dim Atalho As AtalhoExterno
 
-        Atalho = New AtalhoExterno(txtNomeAtalhoExterno.Text, txtURLAtalhoExterno.Text, Nothing)
+        Dim imagem As String = Nothing
+
+        If Not String.IsNullOrEmpty(imgFoto.ImageUrl) Then
+            imagem = imgFoto.ImageUrl.Remove(0, 2)
+        End If
+        
+        Atalho = New AtalhoExterno(txtNomeAtalhoExterno.Text, txtURLAtalhoExterno.Text, imagem)
 
         Return Atalho
     End Function
@@ -262,6 +268,7 @@ Partial Public Class frmConfiguracoesPessoais
     Private Sub LimpaCamposDoAtalhoExterno()
         Me.txtNomeAtalhoExterno.Text = ""
         Me.txtURLAtalhoExterno.Text = ""
+        Me.imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
     End Sub
 
    Private Function ConsisteDados() As String
@@ -346,18 +353,41 @@ Partial Public Class frmConfiguracoesPessoais
         UtilidadesWeb.HabilitaComponentes(CType(pnlPessoaPadraoDaAgenda, Control), True)
     End Sub
 
-    Protected Sub AsyncUpload1_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles AsyncUpload1.FileUploaded
-  
-    End Sub
-
-    Protected Sub RadAsyncUpload2_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles RadAsyncUpload2.FileUploaded
-        If RadAsyncUpload2.UploadedFiles.Count > 0 Then
-            Dim file As UploadedFile = RadAsyncUpload2.UploadedFiles(0)
-            Dim targetFolder As String = Server.MapPath(RadAsyncUpload2.TargetFolder)
+    Private Sub uplPapelParede_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles uplPapelParede.FileUploaded
+        If uplPapelParede.UploadedFiles.Count > 0 Then
+            Dim file As UploadedFile = uplPapelParede.UploadedFiles(0)
+            Dim targetFolder As String = Server.MapPath(UtilidadesWeb.URL_PAPEIS_DE_PAREDE)
             Dim targetFileName As String = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension())
             file.SaveAs(targetFileName)
-            imgPapelDeParede.ImageUrl = String.Concat(RadAsyncUpload2.TargetFolder, "/", file.GetNameWithoutExtension() + file.GetExtension())
+            imgPapelDeParede.ImageUrl = String.Concat(UtilidadesWeb.URL_PAPEIS_DE_PAREDE, "/", file.GetNameWithoutExtension() + file.GetExtension())
         End If
+    End Sub
+
+    Private Sub uplAtalho_FileUploaded(sender As Object, e As FileUploadedEventArgs) Handles uplAtalho.FileUploaded
+        If uplAtalho.UploadedFiles.Count > 0 Then
+            Dim file As UploadedFile = uplAtalho.UploadedFiles(0)
+            Dim targetFolder As String = Server.MapPath(UtilidadesWeb.URL_ATALHOS)
+            Dim targetFileName As String = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension())
+            file.SaveAs(targetFileName)
+            imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_ATALHOS, "/", file.GetNameWithoutExtension() + file.GetExtension())
+        End If
+    End Sub
+
+    Private Sub grdAtalhosExternos_ItemCommand(sender As Object, e As GridCommandEventArgs) Handles grdAtalhosExternos.ItemCommand
+        Dim IndiceSelecionado As Integer
+
+        IndiceSelecionado = e.Item().ItemIndex
+
+        If e.CommandName = "Excluir" Then
+            Dim AtalhosExternos = CType(ViewState(CHAVE_ATALHOS_EXTERNOS), IList(Of Atalho))
+
+            AtalhosExternos.RemoveAt(IndiceSelecionado)
+            ExibaAtalhosExternos(AtalhosExternos)
+        End If
+    End Sub
+
+    Private Sub grdAtalhosExternos_PageIndexChanged(sender As Object, e As GridPageChangedEventArgs) Handles grdAtalhosExternos.PageIndexChanged
+        UtilidadesWeb.PaginacaoDataGrid(grdAtalhosExternos, ViewState(CHAVE_ATALHOS_EXTERNOS), e)
     End Sub
 
 End Class
