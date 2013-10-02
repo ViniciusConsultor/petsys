@@ -50,15 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapeadores\IMapeadorTipoDePatente.cs" />
+    <Compile Include="Negocio\ITipoDePatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servicos\IServicoDeTipoDePatente.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Interfaces.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mapeadores\" />
-    <Folder Include="Negocio\" />
-    <Folder Include="Servicos\" />
     <Folder Include="Utilidades\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
