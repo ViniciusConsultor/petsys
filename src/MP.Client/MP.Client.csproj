@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Compartilhados.dll</HintPath>
     </Reference>
+    <Reference Include="Compartilhados.Componentes.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ef9a14a1e9ced6a8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Compartilhados.Componentes.Web.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -104,7 +108,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60376</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
