@@ -108,6 +108,7 @@
     <Content Include="MP\CadastroDeTiposDePatentes.aspx" />
     <Content Include="MP\TiposDePatenteCadastrado.aspx" />
     <Content Include="WorkSpace.Master" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

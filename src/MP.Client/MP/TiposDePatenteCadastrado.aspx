@@ -5,12 +5,9 @@
     Style="width: 100%;" onbuttonclick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
-                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.CTP.001.0001" />
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
-                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.CTP.001.0002" />            
+                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.CTP.001.0001" />          
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Cancelar"
                 CommandName="btnCancelar" CausesValidation="False" />
-            <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
@@ -19,7 +16,9 @@
             <table class="tabela">
                 <tr>
                     <td colspan="2">
-                        <telerik:RadGrid ID="RadGridTipoDePatente" runat="server" AutoGenerateColumns="False" GridLines="None" Skin="Vista">
+                        <telerik:RadGrid ID="RadGridTipoDePatente" runat="server" AutoGenerateColumns="False" AllowPaging="True" GridLines="None" 
+                        PageSize="10" Skin="Vista">
+                        <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                             <MasterTableView GridLines="Both">
                                     <RowIndicatorColumn>
                                         <HeaderStyle Width="20px" />
@@ -28,9 +27,9 @@
                                         <HeaderStyle Width="20px" />
                                     </ExpandCollapseColumn>
                                     <Columns>
-                                        <telerik:GridBoundColumn DataField="DESCRICAO_TIPO_PATENTE" UniqueName="column1" Visible="True" HeaderText="Descrição do Tipo de Patente">
+                                        <telerik:GridBoundColumn DataField="DescricaoTipoDePatente" UniqueName="column1" Visible="True" HeaderText="Descrição do Tipo de Patente">
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn DataField="SIGLA_TIPO" UniqueName="column2" Visible="True" HeaderText="Sigla">
+                                        <telerik:GridBoundColumn DataField="SiglaTipo" UniqueName="column2" Visible="True" HeaderText="Sigla">
                                         </telerik:GridBoundColumn>
                                     </Columns>
                           </MasterTableView>
