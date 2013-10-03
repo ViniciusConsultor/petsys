@@ -4,6 +4,8 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
     TagPrefix="cc1" %>
+<%@ Register Src="~/ctrlGrupoDeAtividade.ascx" TagName="ctrlGrupo" TagPrefix="uc1" %>
+
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
@@ -41,6 +43,35 @@
                                 </telerik:RadDateInput>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label7" runat="server" Text="Número do registro"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadTextBox ID="txtNumeroDoRegistro" runat="server">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label8" runat="server" Text="Data do registro"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadDateInput ID="txtDataDoRegistro" runat="server">
+                                </telerik:RadDateInput>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label9" runat="server" Text="Grupo de atividade"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc1:ctrlGrupo ID="ctrlGrupo1" runat="server" /><asp:ImageButton ID="btnNovoGrupoDeAtividade" runat="server" ImageUrl="~/imagens/new.gif" ToolTip="Novo" CausesValidation="False"
+                    CommandArgument="OPE.NCL.016.0001" />
+                            </td>
+                        </tr>
+
                         <tr>
                             <td class="th3">
                                 <asp:Label ID="Label1" runat="server" Text="Informações adicionais"></asp:Label>

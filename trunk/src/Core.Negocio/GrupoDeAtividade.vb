@@ -1,5 +1,6 @@
 ﻿Imports Compartilhados.Interfaces.Core.Negocio
 
+<Serializable()> _
 Public Class GrupoDeAtividade
     Implements IGrupoDeAtividade
 
