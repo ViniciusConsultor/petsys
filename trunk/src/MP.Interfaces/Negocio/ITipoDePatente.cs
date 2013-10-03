@@ -7,19 +7,19 @@ namespace MP.Interfaces.Negocio
 {
     public interface ITipoDePatente
     {
-        long? IdTipoPatente { get; set; }
+        long? IdTipoDePatente { get; set; }
         string DescricaoTipoDePatente { get; set; }
-        char SiglaTipo { get; set; }
+        string SiglaTipo { get; set; }
         int TempoInicioAnos { get; set;}
-        int QuantidadePagto { get; set; }
-        int TempoEntrePagto { get; set; }
-        int SequenciaInicioPagto { get; set; }
-        bool TemPagtoIntermediario { get; set; }
-        int InicioIntermedSequencia { get; set; }
-        int QuantidadePagtoIntermed { get; set; }
-        int TempoEntrePagtoIntermed { get; set; }
-        string DescricaoPagto { get; set; }
-        string DescricaoPagtoIntermed { get; set; }
-        bool TemPedExame { get; set; }
+        int QuantidadePagamento { get; set; }
+        int TempoEntrePagamento { get; set; }
+        int SequenciaInicioPagamento { get; set; }
+        bool TemPagamentoIntermediario { get; set; }
+        int InicioIntermediarioSequencia { get; set; }
+        int QuantidadePagamentoIntermediario { get; set; }
+        int TempoEntrePagamentoIntermediario { get; set; }
+        string DescricaoPagamento { get; set; }
+        string DescricaoPagamentoIntermediario { get; set; }
+        bool TemPedidoDeExame { get; set; }
     }
 }

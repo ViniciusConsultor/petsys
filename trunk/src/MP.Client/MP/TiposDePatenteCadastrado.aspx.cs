@@ -29,15 +29,9 @@ namespace MP.Client.MP
         private void ExibaTelaInicial()
         {
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
-
-            Session[CHAVE_ESTADO] = Estado.Inicial;
-            Session[ID_OBJETO] = null;
+            ViewState[CHAVE_ESTADO] = Estado.Inicial;
+            ViewState[ID_OBJETO] = null;
 
             CarregueGridTipoDePatente();
         }
@@ -81,7 +75,7 @@ namespace MP.Client.MP
 
         private void ExibaTelaNovo()
         {
-            Session[CHAVE_ESTADO] = Estado.Novo;
+            ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             var URL = ObtenhaURL();
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), new Guid().ToString(), UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de Tipos de Patentes", 650, 450), false);
@@ -98,17 +92,17 @@ namespace MP.Client.MP
         public ITipoDePatente TipoPatenteSelecionada
         {
             get { return (ITipoDePatente)Session[ClientID]; }
-            set { Session.Add(this.ClientID, value); }
+            set { ViewState.Add(this.ClientID, value); }
         }
 
         private void ExibaTelaModificar()
         {
-            Session[CHAVE_ESTADO] = Estado.Modifica;
+            ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
             var idSelecionado = this.RadGridTipoDePatente.SelectedValue;
 
             var URL = ObtenhaURL();
-            URL = string.Concat(URL, "?Id=", TipoPatenteSelecionada.IdTipoPatente.ToString());
+            URL = string.Concat(URL, "?Id=", TipoPatenteSelecionada.IdTipoDePatente.ToString());
             ScriptManager.RegisterClientScriptBlock(this, GetType(), new Guid().ToString(), UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de Tipos de Patentes", 650, 450), false);
         }
 
@@ -126,8 +120,8 @@ namespace MP.Client.MP
         {
             switch (((RadToolBarButton)e.Item).CommandName)
             {
-                case "btnModificar":
-                    btnModificar_Click();
+                case "btnNovo":
+                    btnNovo_Click();
                     break;
                 case "btnCancelar":
                     btnCancela_Click();

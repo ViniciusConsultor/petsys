@@ -103,13 +103,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// txtTempoInicioPgtos control.
+        /// txtTempoInicioPagamentos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTempoInicioPgtos;
+        protected global::System.Web.UI.WebControls.TextBox txtTempoInicioPagamentos;
         
         /// <summary>
         /// Label4 control.
@@ -121,13 +121,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// txtQtdPgto control.
+        /// txtQuantidadePagamentos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQtdPgto;
+        protected global::System.Web.UI.WebControls.TextBox txtQuantidadePagamentos;
         
         /// <summary>
         /// Label5 control.
@@ -139,13 +139,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// txtIntervaloPgto control.
+        /// txtIntervaloPagamentos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIntervaloPgto;
+        protected global::System.Web.UI.WebControls.TextBox txtIntervaloPagamentos;
         
         /// <summary>
         /// Label6 control.
@@ -157,13 +157,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// txtIniciarPgto control.
+        /// txtIniciarPagamentoSequencia control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIniciarPgto;
+        protected global::System.Web.UI.WebControls.TextBox txtIniciarPagamentoSequencia;
         
         /// <summary>
         /// Label7 control.
@@ -175,13 +175,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
-        /// txtDescPgto control.
+        /// txtDescricaoPagamento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescPgto;
+        protected global::System.Web.UI.WebControls.TextBox txtDescricaoPagamento;
         
         /// <summary>
         /// Label8 control.
@@ -211,13 +211,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label9;
         
         /// <summary>
-        /// txtSeqIniPgtoInter control.
+        /// txtSequenciaInicioPagamentoIntermediario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSeqIniPgtoInter;
+        protected global::System.Web.UI.WebControls.TextBox txtSequenciaInicioPagamentoIntermediario;
         
         /// <summary>
         /// Label10 control.
@@ -229,13 +229,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label10;
         
         /// <summary>
-        /// txtQtdPgtoInter control.
+        /// txtQuantidadePagamentoIntermediario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQtdPgtoInter;
+        protected global::System.Web.UI.WebControls.TextBox txtQuantidadePagamentoIntermediario;
         
         /// <summary>
         /// Label11 control.
@@ -247,13 +247,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label11;
         
         /// <summary>
-        /// txtIntervaloPgtoInter control.
+        /// txtIntervaloPagamentoIntermediario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIntervaloPgtoInter;
+        protected global::System.Web.UI.WebControls.TextBox txtIntervaloPagamentoIntermediario;
         
         /// <summary>
         /// Label12 control.
@@ -283,12 +283,12 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label13;
         
         /// <summary>
-        /// txtDescPgtoInterm control.
+        /// txtDescricaoPagamentoIntermediario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescPgtoInterm;
+        protected global::System.Web.UI.WebControls.TextBox txtDescricaoPagamentoIntermediario;
     }
 }

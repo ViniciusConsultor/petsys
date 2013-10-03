@@ -1,9 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="CadastroDeTiposDePatentes.aspx.cs" Inherits="MP.Client.MP.CadastroDeTiposDePatentes" %>
-<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" 
     Style="width: 100%;" onbuttonclick="rtbToolBar_ButtonClick">
         <Items>
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
+                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.CTP.001.0001" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
+                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.CTP.001.0002" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/delete.gif" Text="Excluir"
                 CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.CTP.001.0003" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/save.gif" Text="Salvar"
@@ -14,7 +18,6 @@
                 CommandName="btnSim" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Não"
                 CommandName="btnNao" CausesValidation="False" />
-            <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
@@ -25,13 +28,13 @@
                     <asp:Panel ID="PanelTipoDePatente" runat="server" GroupingText="Tipo de Patente">
                     <table class="tabela">
                         <tr>
-                            <td class="th3">
+                            <td class="th3" style="width: 2%">
                             <asp:Label ID="Label1" runat="server" Text="Descrição:"></asp:Label>
                             </td>
-                            <td class="th3">
-                            <asp:TextBox ID="txtDescricao" runat="server" Width="254px"></asp:TextBox>
+                            <td class="th3" style="width: 8%">
+                            <asp:TextBox ID="txtDescricao" runat="server" Width="310px"></asp:TextBox>
                             </td>
-                            <td class="th3">
+                            <td class="th3" style="width: 1%">
                             <asp:Label ID="Label2" runat="server" Text="Sigla:"></asp:Label>
                             </td>
                             <td class="th3">
@@ -47,49 +50,49 @@
                     <asp:Panel ID="PanelConfigObrigaTipoDePatente" runat="server" GroupingText="Configuração de obrigações para o tipo de patente">
                     <table class="tabela">
                         <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label3" runat="server" Text="Tempo (em anos) da data de Protocolo para início dos Pagtos.:"></asp:Label>
+                            <td class="th3" style="width: 10%">
+                                <asp:Label ID="Label3" runat="server" Text="Tempo (em anos) da data de protocolo para início dos pagamentos:"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
-                                <asp:TextBox ID="txtTempoInicioPgtos" runat="server" Width="80px"></asp:TextBox>
+                                <asp:TextBox ID="txtTempoInicioPagamentos" runat="server" Width="80px"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label4" runat="server" Text="Quantidade de Pagtos.:"></asp:Label>
+                            <td class="th3" style="width: 10%">
+                                <asp:Label ID="Label4" runat="server" Text="Quantidade de pagamentos:"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
-                                <asp:TextBox ID="txtQtdPgto" runat="server" Width="80px"></asp:TextBox>
+                                <asp:TextBox ID="txtQuantidadePagamentos" runat="server" Width="80px"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label5" runat="server" Text="Intervalo entre os Pagtos. (em anos):"></asp:Label>
+                            <td class="th3" style="width: 10%">
+                                <asp:Label ID="Label5" runat="server" Text="Intervalo entre os pagamentos (em anos):"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
-                                <asp:TextBox ID="txtIntervaloPgto" runat="server" Width="80px"></asp:TextBox>
+                                <asp:TextBox ID="txtIntervaloPagamentos" runat="server" Width="80px"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label6" runat="server" Text="Iniciar Pagtos. da sequência (Ex: 2ª...,3ª...):"></asp:Label>
+                            <td class="th3" style="width: 10%">
+                                <asp:Label ID="Label6" runat="server" Text="Iniciar pagamentos da sequência (Ex: 2ª...,3ª...):"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
-                                <asp:TextBox ID="txtIniciarPgto" runat="server" Width="80px"></asp:TextBox>
+                                <asp:TextBox ID="txtIniciarPagamentoSequencia" runat="server" Width="80px"></asp:TextBox>
                             </td>   
                         </tr>
                         <tr>
                             <td class="th3" colspan="2">
-                                <asp:Label ID="Label7" runat="server" Text="Descrição para o Pagto.:"></asp:Label>
+                                <asp:Label ID="Label7" runat="server" Text="Descrição para o Pagamento:"></asp:Label>
                             </td>   
                         </tr>
                         <tr>
                             <td class="th3" colspan="2">
-                                <asp:TextBox ID="txtDescPgto" runat="server" Width="254px"></asp:TextBox>
+                                <asp:TextBox ID="txtDescricaoPagamento" runat="server" Width="485px"></asp:TextBox>
                             </td>   
                         </tr>
                         <tr>
-                            <td class="th3">
+                            <td class="th3" style="width: 10%">
                                 <asp:Label ID="Label8" runat="server" Text="Possui pagamentos intermediários:"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
@@ -102,31 +105,31 @@
                             </td>   
                         </tr>
                         <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label9" runat="server" Text="Número de sequência que inicia o(s) Pagto(s) intermediário(s):"></asp:Label>
+                            <td class="th3" style="width: 10%">
+                                <asp:Label ID="Label9" runat="server" Text="Número de sequência que inicia o(s) pagamento(s) intermediário(s):"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
-                                <asp:TextBox ID="txtSeqIniPgtoInter" runat="server" Width="80px"></asp:TextBox>
+                                <asp:TextBox ID="txtSequenciaInicioPagamentoIntermediario" runat="server" Width="80px"></asp:TextBox>
                             </td>   
                         </tr>
                         <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label10" runat="server" Text="Quantidade de Pagtos intermediários:"></asp:Label>
+                            <td class="th3" style="width: 10%">
+                                <asp:Label ID="Label10" runat="server" Text="Quantidade de pagamentos intermediários:"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
-                                <asp:TextBox ID="txtQtdPgtoInter" runat="server" Width="80px"></asp:TextBox>
+                                <asp:TextBox ID="txtQuantidadePagamentoIntermediario" runat="server" Width="80px"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td class="th3">
-                                <asp:Label ID="Label11" runat="server" Text="Intervalo entre os Pagtos. Intermediários (em anos):"></asp:Label>
+                            <td class="th3" style="width: 10%">
+                                <asp:Label ID="Label11" runat="server" Text="Intervalo entre os pagamentos intermediários (em anos):"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
-                                <asp:TextBox ID="txtIntervaloPgtoInter" runat="server" Width="80px"></asp:TextBox>
+                                <asp:TextBox ID="txtIntervaloPagamentoIntermediario" runat="server" Width="80px"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td class="th3">
+                            <td class="th3" style="width: 10%">
                                 <asp:Label ID="Label12" runat="server" Text="O pagamento intermediário é o pedido de exame:"></asp:Label>
                             </td>
                             <td class="td" style="height: 24px">
@@ -140,12 +143,12 @@
                         </tr>
                         <tr>
                             <td class="th3" colspan="2">
-                                <asp:Label ID="Label13" runat="server" Text="Descrição para o Pagto. internediário:"></asp:Label>
+                                <asp:Label ID="Label13" runat="server" Text="Descrição para o pagamento internediário:"></asp:Label>
                             </td>
                         </tr>
                         <tr>
                             <td class="th3" colspan="2">
-                                <asp:TextBox ID="txtDescPgtoInterm" runat="server" Width="254px"></asp:TextBox>
+                                <asp:TextBox ID="txtDescricaoPagamentoIntermediario" runat="server" Width="485px"></asp:TextBox>
                             </td>
                         </tr>
                 </table>

@@ -8,26 +8,26 @@ namespace MP.Negocio
 {
     public class TipoDePatente : ITipoDePatente
     {
-        private long? _idTipoPatente;
+        private long? _idTipoDePatente;
         private string _descricaoTipoDePatente;
-        private char _siglaTipo;
+        private string _siglaTipo;
         private int _tempoInicioAnos;
-        private int _quantidadePagto;
-        private int _tempoEntrePagto;
-        private int _sequenciaInicioPagto;
-        private bool _temPagtoIntermediario; // tipo bit
-        private int _inicioIntermedSequencia;
-        private int _quantidadePagtoIntermed;
-        private int _tempoEntrePagtoIntermed;
-        private string _descricaoPagto;
-        private string _descricaoPagtoIntermed;
-        private bool _temPedExame; // tipo bit
+        private int _quantidadePagamento;
+        private int _tempoEntrePagamento;
+        private int _sequenciaInicioPagamento;
+        private bool _temPagamentoIntermediario;
+        private int _inicioIntermediarioSequencia;
+        private int _quantidadePagamentoIntermediario;
+        private int _tempoEntrePagamentoIntermediario;
+        private string _descricaoPagamento;
+        private string _descricaoPagamentoIntermediario;
+        private bool _temPedidoDeExame;
+        
 
-
-        public long? IdTipoPatente
+        public long? IdTipoDePatente
         {
-            get { return _idTipoPatente; }
-            set { _idTipoPatente = value; }
+            get { return _idTipoDePatente; }
+            set { _idTipoDePatente = value; }
         }
 
         public string DescricaoTipoDePatente
@@ -36,7 +36,7 @@ namespace MP.Negocio
             set { _descricaoTipoDePatente = value; }
         }
 
-        public char SiglaTipo
+        public string SiglaTipo
         {
             get { return _siglaTipo; }
             set { _siglaTipo = value; }
@@ -48,64 +48,64 @@ namespace MP.Negocio
             set { _tempoInicioAnos = value; }
         }
 
-        public int QuantidadePagto
+        public int QuantidadePagamento
         {
-            get { return _quantidadePagto; }
-            set { _quantidadePagto = value; }
+            get { return _quantidadePagamento; }
+            set { _quantidadePagamento = value; }
         }
 
-        public int TempoEntrePagto
+        public int TempoEntrePagamento
         {
-            get { return _tempoEntrePagto; }
-            set { _tempoEntrePagto = value; }
+            get { return _tempoEntrePagamento; }
+            set { _tempoEntrePagamento = value; }
         }
 
-        public int SequenciaInicioPagto
+        public int SequenciaInicioPagamento
         {
-            get { return _sequenciaInicioPagto; }
-            set { _sequenciaInicioPagto = value; }
+            get { return _sequenciaInicioPagamento; }
+            set { _sequenciaInicioPagamento = value; }
         }
 
-        public bool TemPagtoIntermediario
+        public bool TemPagamentoIntermediario
         {
-            get { return _temPagtoIntermediario; }
-            set { _temPagtoIntermediario = value; }
+            get { return _temPagamentoIntermediario; }
+            set { _temPagamentoIntermediario = value; }
         }
 
-        public int InicioIntermedSequencia
+        public int InicioIntermediarioSequencia
         {
-            get { return _inicioIntermedSequencia; }
-            set { _inicioIntermedSequencia = value; }
+            get { return _inicioIntermediarioSequencia; }
+            set { _inicioIntermediarioSequencia = value; }
         }
 
-        public int QuantidadePagtoIntermed
+        public int QuantidadePagamentoIntermediario
         {
-            get { return _quantidadePagtoIntermed; }
-            set { _quantidadePagtoIntermed = value; }
+            get { return _quantidadePagamentoIntermediario; }
+            set { _quantidadePagamentoIntermediario = value; }
         }
 
-        public int TempoEntrePagtoIntermed
+        public int TempoEntrePagamentoIntermediario
         {
-            get { return _tempoEntrePagtoIntermed; }
-            set { _tempoEntrePagtoIntermed = value; }
+            get { return _tempoEntrePagamentoIntermediario; }
+            set { _tempoEntrePagamentoIntermediario = value; }
         }
 
-        public string DescricaoPagto
+        public string DescricaoPagamento
         {
-            get { return _descricaoPagto; }
-            set { _descricaoPagto = value; }
+            get { return _descricaoPagamento; }
+            set { _descricaoPagamento = value; }
         }
 
-        public string DescricaoPagtoIntermed
+        public string DescricaoPagamentoIntermediario
         {
-            get { return _descricaoPagtoIntermed; }
-            set { _descricaoPagtoIntermed = value; }
+            get { return _descricaoPagamentoIntermediario; }
+            set { _descricaoPagamentoIntermediario = value; }
         }
 
-        public bool TemPedExame
+        public bool TemPedidoDeExame
         {
-            get { return _temPedExame; }
-            set { _temPedExame = value; }
+            get { return _temPedidoDeExame; }
+            set { _temPedidoDeExame = value; }
         }
     }
 }
