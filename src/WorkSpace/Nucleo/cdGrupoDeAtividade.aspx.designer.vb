@@ -50,13 +50,13 @@ Partial Public Class cdGrupoDeAtividade
     Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''pnlDadosDoGrupoDeAtividade control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlDadosDoGrupoDeAtividade As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''ctrlGrupo1 control.

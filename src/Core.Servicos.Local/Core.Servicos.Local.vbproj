@@ -103,6 +103,7 @@
     <Compile Include="ServicoDeEmpresaLocal.vb" />
     <Compile Include="ServicoDeFornecedorLocal.vb" />
     <Compile Include="ServicoDeGeracaoDeIDLocal.vb" />
+    <Compile Include="ServicoDeGrupoDeAtividadeLocal.vb" />
     <Compile Include="ServicoDeGrupoLocal.vb" />
     <Compile Include="ServicoDeMenuLocal.vb" />
     <Compile Include="ServicoDeMunicipioLocal.vb" />

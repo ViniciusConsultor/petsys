@@ -120,6 +120,9 @@ Partial Public Class cdCliente
         Cliente.PorcentagemDeDescontoAutomatico = txtDescontoAutomatico.Value
         Cliente.SaldoParaCompras = txtSaldoParaCompras.Value
         Cliente.ValorMaximoParaCompras = txtValorMaximoParaCompras.Value
+        Cliente.DataDoRegistro = txtDataDoRegistro.SelectedDate
+        Cliente.NumeroDoRegistro = txtNumeroDoRegistro.Text
+        Cliente.GrupoDeAtividade = ctrlGrupo1.GrupoSelecionado
 
         Return Cliente
     End Function
@@ -218,6 +221,19 @@ Partial Public Class cdCliente
         txtInformacoesAdicionais.Text = Cliente.InformacoesAdicionais
         txtSaldoParaCompras.Value = Cliente.SaldoParaCompras
         txtValorMaximoParaCompras.Value = Cliente.ValorMaximoParaCompras
+        txtNumeroDoRegistro.Text = Cliente.NumeroDoRegistro
+        txtDataDoRegistro.SelectedDate = Cliente.DataDoRegistro
+        ctrlGrupo1.GrupoSelecionado = Cliente.GrupoDeAtividade
+        ctrlGrupo1.NomeDoGrupo = Cliente.GrupoDeAtividade.Nome
+    End Sub
+
+    Private Sub btnNovoGrupoDeAtividade_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnNovoGrupoDeAtividade.Click
+        Dim URL As String
+
+        URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
+        URL = String.Concat(URL, "Nucleo/cdGrupoDeAtividade.aspx")
+
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de grupo de atividade", 650, 450), False)
     End Sub
 
 End Class

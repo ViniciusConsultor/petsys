@@ -14,12 +14,12 @@ Public Class ctrlGrupoDeAtividade
     End Sub
 
     Public Sub LimparControle()
-        UtilidadesWeb.LimparComponente(CType(pnlGrupo, Control))
+        UtilidadesWeb.LimparComponente(CType(cboGrupos, Control))
         GrupoSelecionado = Nothing
     End Sub
 
     Public Sub HabiliteComponente(ByVal Habilitar As Boolean)
-        UtilidadesWeb.HabilitaComponentes(CType(pnlGrupo, Control), Habilitar)
+        UtilidadesWeb.HabilitaComponentes(CType(cboGrupos, Control), Habilitar)
     End Sub
 
     Public Property NomeDoGrupo() As String

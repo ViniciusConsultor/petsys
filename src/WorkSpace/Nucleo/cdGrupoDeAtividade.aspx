@@ -28,13 +28,16 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Grupo de atividade" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <asp:Panel runat="server" id="pnlDadosDoGrupoDeAtividade">
-                       
-                              <uc1:ctrlGrupo ID="ctrlGrupo1" runat="server" />
-
-                              </asp:Panel>
-                            
-                       
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label1" runat="server" Text="Nome"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc1:ctrlGrupo ID="ctrlGrupo1" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>

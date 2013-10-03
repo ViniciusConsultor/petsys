@@ -15,7 +15,7 @@ Public Class MapeadorDeCliente
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("INSERT INTO NCL_CLIENTE (")
-        Sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS, IDEMPRESA)")
+        Sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS, NUMREGISTRO, DTREGISTRO, IDGRPATIVIDADE, IDEMPRESA)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Cliente.Pessoa.ID.ToString, ", "))
         Sql.Append(String.Concat(Cliente.Pessoa.Tipo.ID, ", "))
@@ -51,6 +51,25 @@ Public Class MapeadorDeCliente
             Sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(Cliente.SaldoParaCompras.Value), ", "))
         End If
 
+        If String.IsNullOrEmpty(Cliente.NumeroDoRegistro) Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cliente.NumeroDoRegistro), "', "))
+        End If
+
+        If Not Cliente.DataDoRegistro.HasValue Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(Cliente.DataDoRegistro.Value.ToString("yyyyMMdd"), ", "))
+        End If
+
+        If Cliente.GrupoDeAtividade Is Nothing Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat(Cliente.GrupoDeAtividade.ID, ", "))
+        End If
+
+
         Sql.Append(ServerUtils.getCredencial().EmpresaLogada.ID & ")")
 
 
@@ -62,7 +81,9 @@ Public Class MapeadorDeCliente
         Dim DBHelper As IDBHelper
         Dim Cliente As ICliente = Nothing
 
-        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS FROM NCL_CLIENTE WHERE ")
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL, FAIXASALARIAL, DESCONTOAUTOMATICO, VLRMAXCOMPRAS, SALDOCOMPRAS, NUMREGISTRO, DTREGISTRO, IDGRPATIVIDADE, NOME FROM NCL_CLIENTE ")
+        Sql.Append("LEFT JOIN NCL_GRUPO_DE_ATIVIDADE ON IDGRPATIVIDADE = ID ")
+        Sql.Append("WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", Pessoa.ID.Value.ToString, " AND "))
         Sql.Append(String.Concat("TIPOPESSOA = ", Pessoa.Tipo.ID.ToString))
 
@@ -106,6 +127,22 @@ Public Class MapeadorDeCliente
 
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "SALDOCOMPRAS") Then
             Cliente.SaldoParaCompras = UtilidadesDePersistencia.getValorDouble(Leitor, "SALDOCOMPRAS")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "NUMREGISTRO") Then
+            Cliente.NumeroDoRegistro = UtilidadesDePersistencia.GetValorString(Leitor, "NUMREGISTRO")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "DTREGISTRO") Then
+            Cliente.DataDoRegistro = UtilidadesDePersistencia.getValorDate(Leitor, "DTREGISTRO")
+        End If
+
+        If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDGRPATIVIDADE") Then
+            Dim GrupoDeAtividade As IGrupoDeAtividade = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupoDeAtividade)()
+            GrupoDeAtividade.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDGRPATIVIDADE")
+            GrupoDeAtividade.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+
+            Cliente.GrupoDeAtividade = GrupoDeAtividade
         End If
 
         Return Cliente
@@ -243,9 +280,27 @@ Public Class MapeadorDeCliente
         End If
 
         If Not Cliente.SaldoParaCompras.HasValue Then
-            Sql.Append("SALDOCOMPRAS = NULL")
+            Sql.Append("SALDOCOMPRAS = NULL, ")
         Else
-            Sql.Append(String.Concat("SALDOCOMPRAS = ", UtilidadesDePersistencia.TPVd(Cliente.SaldoParaCompras.Value)))
+            Sql.Append(String.Concat("SALDOCOMPRAS = ", UtilidadesDePersistencia.TPVd(Cliente.SaldoParaCompras.Value), ", "))
+        End If
+
+        If String.IsNullOrEmpty(Cliente.NumeroDoRegistro) Then
+            Sql.Append("NUMREGISTRO = NULL, ")
+        Else
+            Sql.Append(String.Concat("NUMREGISTRO = '", UtilidadesDePersistencia.FiltraApostrofe(Cliente.NumeroDoRegistro), "', "))
+        End If
+
+        If Not Cliente.DataDoRegistro.HasValue Then
+            Sql.Append("DTREGISTRO = NULL, ")
+        Else
+            Sql.Append(String.Concat("DTREGISTRO = ", Cliente.DataDoRegistro.Value.ToString("yyyyMMdd"), ", "))
+        End If
+
+        If Cliente.GrupoDeAtividade Is Nothing Then
+            Sql.Append("IDGRPATIVIDADE = NULL")
+        Else
+            Sql.Append(String.Concat("IDGRPATIVIDADE = ", Cliente.GrupoDeAtividade.ID))
         End If
 
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Cliente.Pessoa.ID.ToString))

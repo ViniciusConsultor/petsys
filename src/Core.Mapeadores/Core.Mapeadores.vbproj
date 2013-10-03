@@ -87,6 +87,7 @@
     <Compile Include="MapeadorDeFornecedor.vb" />
     <Compile Include="MapeadorDeGeracaoDeID.vb" />
     <Compile Include="MapeadorDeGrupo.vb" />
+    <Compile Include="MapeadorDeGrupoDeAtividade.vb" />
     <Compile Include="MapeadorDeMenu.vb" />
     <Compile Include="MapeadorDeMunicipio.vb" />
     <Compile Include="MapeadorDeOperador.vb" />

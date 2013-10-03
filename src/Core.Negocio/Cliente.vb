@@ -70,4 +70,34 @@ Public Class Cliente
         End Set
     End Property
 
+    Private _DataDoRegistro As Nullable(Of Date)
+    Public Property DataDoRegistro As Date? Implements ICliente.DataDoRegistro
+        Get
+            Return _DataDoRegistro
+        End Get
+        Set(ByVal value As Date?)
+            _DataDoRegistro = value
+        End Set
+    End Property
+
+    Private _GrupoDeAtividade As IGrupoDeAtividade
+    Public Property GrupoDeAtividade As IGrupoDeAtividade Implements ICliente.GrupoDeAtividade
+        Get
+            Return _GrupoDeAtividade
+        End Get
+        Set(ByVal value As IGrupoDeAtividade)
+            _GrupoDeAtividade = value
+        End Set
+    End Property
+
+    Private _NumeroDoRegistro As String
+    Public Property NumeroDoRegistro As String Implements ICliente.NumeroDoRegistro
+        Get
+            Return _NumeroDoRegistro
+        End Get
+        Set(ByVal value As String)
+            _NumeroDoRegistro = value
+        End Set
+    End Property
+
 End Class
