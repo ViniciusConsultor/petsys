@@ -73,6 +73,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MP\CadastroDeProcuradores.aspx.cs">
+      <DependentUpon>CadastroDeProcuradores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\CadastroDeProcuradores.aspx.designer.cs">
+      <DependentUpon>CadastroDeProcuradores.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\CadastroDeTiposDePatentes.aspx.cs">
       <DependentUpon>CadastroDeTiposDePatentes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -97,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Client.snk" />
+    <Content Include="MP\CadastroDeProcuradores.aspx" />
     <Content Include="MP\CadastroDeTiposDePatentes.aspx" />
     <Content Include="MP\TiposDePatenteCadastrado.aspx" />
     <Content Include="WorkSpace.Master" />
