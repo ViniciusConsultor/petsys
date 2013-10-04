@@ -6,7 +6,7 @@ Namespace DBHelper
 
     Friend Class MySQLHelper
         Inherits AbstractDBHelper
-
+        
         Public Sub New(ByVal sStrConn As String, ByVal SistemaUtilizaSQLUpperCase As Boolean)
             MyBase.New(sStrConn, SistemaUtilizaSQLUpperCase)
         End Sub
@@ -38,6 +38,10 @@ Namespace DBHelper
         'TODO: fazer
         Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
             Return Nothing
+        End Function
+
+        Public Overrides Function SuporteAOffSet() As Boolean
+            Return False
         End Function
 
     End Class

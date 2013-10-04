@@ -7,9 +7,9 @@ Namespace DBHelper
 
     Public Class SQLiteHelper
         Inherits AbstractDBHelper
-
-        Private _DllSQLLite As Assembly
         
+        Private _DllSQLLite As Assembly
+
         Public Sub New(ByVal sStrConn As String, ByVal SistemaUtilizaSQLUpperCase As Boolean)
             MyBase.New(sStrConn, SistemaUtilizaSQLUpperCase)
             CarregueAssemblyCorreto()
@@ -18,13 +18,13 @@ Namespace DBHelper
         Private Sub CarregueAssemblyCorreto()
 
             If Not _DllSQLLite Is Nothing Then Exit Sub
-                
+
             Dim CaminhoBase = Path.Combine(Util.ObtenhaCaminhoDaPastaDoServidorDeAplicacao(), "SQLite")
 
             If IntPtr.Size = 8 Then
                 ' 64 bits 
                 CaminhoBase = Path.Combine(CaminhoBase, "x64")
-            Else If IntPtr.Size = 4 Then 
+            ElseIf IntPtr.Size = 4 Then
                 '32 bits
                 CaminhoBase = Path.Combine(CaminhoBase, "x86")
             Else
@@ -69,6 +69,10 @@ Namespace DBHelper
 
         Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
             Return Nothing
+        End Function
+
+        Public Overrides Function SuporteAOffSet() As Boolean
+            Return False
         End Function
 
     End Class

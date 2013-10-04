@@ -5,7 +5,7 @@ Namespace DBHelper
 
     Public Class OracleHelper
         Inherits AbstractDBHelper
-
+        
         Public Sub New(ByVal sStrConn As String, ByVal SistemaUtilizaSQLUpperCase As Boolean)
             MyBase.New(sStrConn, SistemaUtilizaSQLUpperCase)
         End Sub
@@ -56,6 +56,28 @@ Namespace DBHelper
                 Throw New ApplicationException("ODP.NET Oracle Data Provider for .Net não encontrado.")
             End Try
 
+        End Function
+
+        Public Overrides Function SuporteAOffSet() As Boolean
+            Return True
+        End Function
+
+        Public Overrides Function ObtenhaQueryComLimiteEOffset(QueryOriginal As String, QuantidadeDeRegistros As Integer, OffSet As Integer) As String
+            Dim QueryComLimite As StringBuilder = New StringBuilder
+
+            If QueryOriginal.ToLower().IndexOf("order") <= 0 Then
+                Throw New Exception("Para utilizar offset é necessário ter uma ordenação na query.")
+            End If
+            
+            With QueryComLimite
+                .Append("SELECT * FROM (")
+                .Append("SELECT a.*, ROWNUM rnum FROM (")
+                .Append(QueryOriginal)
+                .Append(") a WHERE ROWNUM <= " & QuantidadeDeRegistros)
+                .Append(") WHERE rnum >= " & OffSet)
+            End With
+
+            Return QueryComLimite.ToString()
         End Function
 
     End Class

@@ -73,7 +73,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         Dim SQL As StringBuilder
         Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
 
-        RemovaTelefones(Pessoa.ID.Value)
+        RemovaEnderecos(Pessoa.ID.Value)
 
         If Not Pessoa.Enderecos Is Nothing AndAlso Not Pessoa.Enderecos.Count = 0 Then
             For Each Endereco As IEndereco In Pessoa.Enderecos

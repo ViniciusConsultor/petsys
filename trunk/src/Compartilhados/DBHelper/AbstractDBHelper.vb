@@ -112,6 +112,23 @@ Namespace DBHelper
 
         Public MustOverride Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As Exception) As String Implements IDBHelper.ObtenhaMensagemDaExcecaoLancada
 
+        Public Overridable Function ObtenhaQueryComLimiteEOffset(QueryOriginal As String, QuantidadeDeRegistros As Integer, OffSet As Integer) As String Implements IDBHelper.ObtenhaQueryComLimiteEOffset
+            Return QueryOriginal
+        End Function
+
+        Public Function obtenhaReader(Query As String, _
+                                      QuantidadeDeRegistros As Integer, _
+                                      OffSet As Integer) As IDataReader Implements IDBHelper.obtenhaReader
+
+            If SuporteALimite() AndAlso SuporteAOffSet() Then
+                Return obtenhaReader(ObtenhaQueryComLimiteEOffset(Query, QuantidadeDeRegistros, OffSet))
+            End If
+
+            Return obtenhaReader(Query)
+        End Function
+
+        Public MustOverride Function SuporteAOffSet() As Boolean Implements IDBHelper.SuporteAOffSet
+
     End Class
 
 End Namespace
