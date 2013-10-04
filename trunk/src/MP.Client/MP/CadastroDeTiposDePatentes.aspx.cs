@@ -158,15 +158,15 @@ namespace MP.Client.MP
             tipoDePatente.SiglaTipo = this.txtSigla.Text;
             tipoDePatente.TempoInicioAnos = Convert.ToInt32(this.txtTempoInicioPagamentos.Text);
 
-            //if (cbPgtoIntermediario.SelectedValue.Equals("SIM"))
-            //    tipoDePatente.TemPagamentoIntermediario = 1;
-            //else
-            //    tipoDePatente.TemPagamentoIntermediario = 0;
+            if (cbPgtoIntermediario.SelectedValue.Equals("SIM"))
+                tipoDePatente.TemPagamentoIntermediario = true;
+            else
+                tipoDePatente.TemPagamentoIntermediario = false;
 
-            //if (cbPgtoInterPedidoExame.SelectedValue.Equals("SIM"))
-            //    tipoDePatente.TemPedidoDeExame = 1;
-            //else
-            //    tipoDePatente.TemPedidoDeExame = 0;
+            if (cbPgtoInterPedidoExame.SelectedValue.Equals("NAO"))
+                tipoDePatente.TemPedidoDeExame = false;
+            else
+                tipoDePatente.TemPedidoDeExame = true;
 
             return tipoDePatente;
         }

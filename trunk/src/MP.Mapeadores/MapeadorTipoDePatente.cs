@@ -145,7 +145,7 @@ namespace MP.Mapeadores
             sql.Append("INSERT INTO MP_TIPO_PATENTE (");
             sql.Append("IDTIPO_PATENTE, DESCRICAO_TIPO_PATENTE, SIGLA_TIPO, TEMPO_INICIO_ANOS, QUANTIDADE_PAGTO, ");
             sql.Append("TEMPO_ENTRE_PAGTO, SEQUENCIA_INICIO_PAGTO, TEM_PAGTO_INTERMEDIARIO, INICIO_INTERMED_SEQUENCIA, QUANTIDADE_PAGTO_INTERMED, ");
-            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED, DESCRICAO_PAGTO, DESCRICAO_PAGTO_INTERMED, TEM_PED_EXAME ");
+            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED, DESCRICAO_PAGTO, DESCRICAO_PAGTO_INTERMED, TEM_PED_EXAME) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(tipoPatente.IdTipoDePatente.Value.ToString(), ", "));
             sql.Append(String.Concat("'", tipoPatente.DescricaoTipoDePatente, "', "));
