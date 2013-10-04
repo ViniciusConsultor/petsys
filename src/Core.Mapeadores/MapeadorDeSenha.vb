@@ -42,7 +42,7 @@ Public Class MapeadorDeSenha
 
         Sql.Append("UPDATE NCL_SNHOP SET ")
         Sql.Append(String.Concat("SENHA = '", Senha.ToString, "', "))
-        Sql.Append(String.Concat("DATACADASTRO = ", Senha.DataDeCadastro.ToString("yyyyMMddhhmmss")))
+        Sql.Append(String.Concat("DATACADASTRO = '", Senha.DataDeCadastro.ToString("yyyyMMddhhmmss"), "'"))
         Sql.Append(" WHERE ")
         Sql.Append(String.Concat("IDOPERADOR = ", IDOperador.ToString))
 
@@ -58,7 +58,7 @@ Public Class MapeadorDeSenha
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(IDOperador.ToString, ", "))
         Sql.Append(String.Concat("'", Senha.ToString, "', "))
-        Sql.Append(Senha.DataDeCadastro.ToString("yyyyMMddhhmmss"))
+        Sql.Append(String.Concat("'", Senha.DataDeCadastro.ToString("yyyyMMddhhmmss"), "'"))
         Sql.Append(")")
 
         DBHelper.ExecuteNonQuery(Sql.ToString, False)
@@ -79,7 +79,7 @@ Public Class MapeadorDeSenha
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(idRequisicaoReDefinicao.ToString, ", "))
         Sql.Append(String.Concat(Operador.Pessoa.ID.ToString(), ", "))
-        Sql.Append(Now.ToString("yyyyMMddhhmmss"))
+        Sql.Append(String.Concat("'", Now.ToString("yyyyMMddhhmmss"), "',"))
         Sql.Append(")")
 
         DBHelper.ExecuteNonQuery(Sql.ToString, False)

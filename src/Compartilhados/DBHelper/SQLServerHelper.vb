@@ -49,6 +49,17 @@ Namespace DBHelper
             Return String.Empty
         End Function
 
+        Private Function ObtenhaParteSelect(querySqlString As String) As String
+            Return querySqlString.Substring(0, ObtenhaIndiceParteFrom(querySqlString))
+        End Function
+
+        Private Function ObtenhaIndiceParteFrom(querySqlString As String) As Integer
+            Dim Indice As Integer
+
+            Indice = querySqlString.IndexOf("from", StringComparison.InvariantCultureIgnoreCase)
+            Return Indice
+        End Function
+
         Private Function ObtenhaIndiceParteOrderBy(ByVal querySqlString As String) As Integer
             Dim IndiceOrderBy As Integer
 
@@ -66,13 +77,46 @@ Namespace DBHelper
             Return querySqlString
         End Function
 
-        Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As System.Exception) As String
+        Private Function ObtenhaParteFromWhere(querySqlString As String) As String
+            Dim IndiceOrderBy As Integer = ObtenhaIndiceParteOrderBy(querySqlString)
+
+            If IndiceOrderBy > 0 Then
+                querySqlString = querySqlString.ToString().Remove(IndiceOrderBy)
+            End If
+
+            Return querySqlString.Remove(0, ObtenhaIndiceParteFrom(querySqlString))
+        End Function
+
+
+        Public Overrides Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As Exception) As String
             If TypeOf (Ex) Is SqlException Then
                 Return MensagensSQLServer.GetInstancia.ObtenhaMensagemDeErro(CType(Ex, SqlException).Number.ToString)
             End If
 
             Return Nothing
         End Function
+
+        Public Overrides Function ObtenhaQueryComLimiteEOffset(QueryOriginal As String, QuantidadeDeRegistros As Integer, OffSet As Integer) As String
+            Dim QueryComLimite As StringBuilder = New StringBuilder
+
+            If ObtenhaIndiceParteOrderBy(QueryOriginal) <= 0 Then Throw New Exception("Para utilizar offset é necessário ter uma ordenação na query.")
+            
+            With QueryComLimite
+                .Append("SELECT TOP (")
+                .Append(QuantidadeDeRegistros.ToString() + ") * ")
+                .Append("FROM ( ")
+                .Append(ObtenhaParteSelect(QueryOriginal) & ",  ROW_NUMBER() OVER(" & ObtenhaParteOrderBy(QueryOriginal) & ") AS _SORT_ROW ")
+                .Append(ObtenhaParteFromWhere(QueryOriginal) & ") AS QUERY WHERE QUERY._SORT_ROW > " & OffSet)
+                .Append(" ORDER BY QUERY._SORT_ROW")
+            End With
+
+            Return QueryComLimite.ToString()
+        End Function
+
+        Public Overrides Function SuporteAOffSet() As Boolean
+            Return True
+        End Function
+
     End Class
 
 End Namespace
