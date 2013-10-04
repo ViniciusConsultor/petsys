@@ -12,11 +12,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP.Servicos.Local", "MP.Servicos.Local\MP.Servicos.Local.csproj", "{9EFBACE1-60DC-4121-8142-00BE1306A5D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{52355709-14DD-4BD1-9C00-CB96BE85E730}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{2C9284F2-DA1C-486C-954E-26F458C8BFAF}"
 	ProjectSection(SolutionItems) = preProject
-		CREATE_TIPODEPATENTE_SQLServer.sql = CREATE_TIPODEPATENTE_SQLServer.sql
-		INSERT_TIPODEPATENTE.sql = INSERT_TIPODEPATENTE.sql
+		..\doc\Banco de dados\MP\INSERT_MP.sql = ..\doc\Banco de dados\MP\INSERT_MP.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{2BD549CC-6EBE-470A-B8A0-25A7EA8B2E70}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\MP\SQL Server\CREATE_MP_SQLServer.sql = ..\doc\Banco de dados\MP\SQL Server\CREATE_MP_SQLServer.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{FD1D1018-784F-45DD-B111-C4EFE4D683B0}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\MP\Oracle\CREATE_MP_Oracle.sql = ..\doc\Banco de dados\MP\Oracle\CREATE_MP_Oracle.sql
 	EndProjectSection
 EndProject
 Global
@@ -50,6 +57,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2C9284F2-DA1C-486C-954E-26F458C8BFAF} = {52355709-14DD-4BD1-9C00-CB96BE85E730}
+		{2BD549CC-6EBE-470A-B8A0-25A7EA8B2E70} = {52355709-14DD-4BD1-9C00-CB96BE85E730}
+		{FD1D1018-784F-45DD-B111-C4EFE4D683B0} = {52355709-14DD-4BD1-9C00-CB96BE85E730}
 	EndGlobalSection
 EndGlobal
