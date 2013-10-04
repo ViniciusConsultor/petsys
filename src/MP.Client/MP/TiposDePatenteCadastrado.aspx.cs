@@ -15,10 +15,20 @@ namespace MP.Client.MP
     public partial class TiposDePatenteCadastrado : SuperPagina
     {
         private const string ID_OBJETO = "ID_OBJETO";
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO";
+        private const string CHAVE_ESTADO_CD_TIPODEPATENTE = "CHAVE_ESTADO_CD_TIPODEPATENTE";
+
+        private enum Estado : byte
+        {
+            Inicial = 1,
+            Novo,
+            Modifica,
+            Remove
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //ctrlTipoDePatente1.TipoDePatenteFoiSelecionado += TipoDePatenteFoiSelecionado;
+
             if (!IsPostBack)
             {
                 this.ExibaTelaInicial();
@@ -26,46 +36,32 @@ namespace MP.Client.MP
             
         }
 
+        private void TipoDePatenteFoiSelecionado(ITipoDePatente tipodepatente)
+        {
+            throw new NotImplementedException();
+        }
+
         private void ExibaTelaInicial()
         {
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
-            ViewState[CHAVE_ESTADO] = Estado.Inicial;
-            ViewState[ID_OBJETO] = null;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            CarregueGridTipoDePatente();
-        }
+            //ctrlTipoDePatente1.LimparControle();
+            //ctrlTipoDePatente1.HabiliteComponente(true);
 
-        private void CarregueGridTipoDePatente()
-        {
-            try
-            {
-                IList<ITipoDePatente> listaTipoDePatente = new List<ITipoDePatente>();
+            //ViewState[CHAVE_ESTADO_CD_TIPODEPATENTE] = Estado.Inicial;
 
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
-                {
-                    listaTipoDePatente = servico.obtenhaTodosTiposDePatentes();
-                }
+            //ctrlTipoDePatente1.EnableLoadOnDemand = true;
+            //ctrlTipoDePatente1.ShowDropDownOnTextboxClick = true;
+            //ctrlTipoDePatente1.AutoPostBack = true;
+            //ctrlTipoDePatente1.ExibeTituloParaSelecionarUmItem = true;
 
-                if(listaTipoDePatente.Count > 0)
-                {
-                    this.RadGridTipoDePatente.DataSource = listaTipoDePatente;
-                    this.RadGridTipoDePatente.DataBind();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        private enum Estado : byte
-        {
-            Inicial = 1,
-            Novo,
-            Consulta,
-            Modifica,
-            Remove
+            //CarregueGridTipoDePatente();
         }
 
         protected void btnNovo_Click()
@@ -75,11 +71,38 @@ namespace MP.Client.MP
 
         private void ExibaTelaNovo()
         {
-            ViewState[CHAVE_ESTADO] = Estado.Novo;
+            //ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             var URL = ObtenhaURL();
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), new Guid().ToString(), UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de Tipos de Patentes", 650, 450), false);
         }
+
+        //private void CarregueGridTipoDePatente()
+        //{
+        //    try
+        //    {
+        //        IList<ITipoDePatente> listaTipoDePatente = new List<ITipoDePatente>();
+
+        //        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
+        //        {
+        //            listaTipoDePatente = servico.obtenhaTodosTiposDePatentes();
+        //        }
+
+        //        if(listaTipoDePatente.Count > 0)
+        //        {
+        //            this.RadGridTipoDePatente.DataSource = listaTipoDePatente;
+        //            this.RadGridTipoDePatente.DataBind();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        
+
+        
 
         private string ObtenhaURL()
         {
@@ -97,9 +120,9 @@ namespace MP.Client.MP
 
         private void ExibaTelaModificar()
         {
-            ViewState[CHAVE_ESTADO] = Estado.Modifica;
+            //ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
-            var idSelecionado = this.RadGridTipoDePatente.SelectedValue;
+            //var idSelecionado = this.RadGridTipoDePatente.SelectedValue;
 
             var URL = ObtenhaURL();
             URL = string.Concat(URL, "?Id=", TipoPatenteSelecionada.IdTipoDePatente.ToString());

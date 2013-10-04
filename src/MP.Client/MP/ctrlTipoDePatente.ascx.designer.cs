@@ -10,51 +10,60 @@
 namespace MP.Client.MP {
     
     
-    public partial class TiposDePatenteCadastrado {
+    public partial class ctrlTipoDePatente {
         
         /// <summary>
-        /// rtbToolBar control.
+        /// pnlTipoDePatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolBar rtbToolBar;
+        protected global::System.Web.UI.WebControls.Panel pnlTipoDePatente;
         
         /// <summary>
-        /// RadDockLayout1 control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDockLayout RadDockLayout1;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// PanelTpoDePatenteCadastrada control.
+        /// cboTipoDePatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelTpoDePatenteCadastrada;
+        protected global::Telerik.Web.UI.RadComboBox cboTipoDePatente;
         
         /// <summary>
-        /// Label1 control.
+        /// btnNovo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.ImageButton btnNovo;
         
         /// <summary>
-        /// ctrlTipoDePatente1 control.
+        /// btnDetalhar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlTipoDePatente ctrlTipoDePatente1;
+        protected global::System.Web.UI.WebControls.ImageButton btnDetalhar;
+        
+        /// <summary>
+        /// rfvTipoDePatente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTipoDePatente;
     }
 }

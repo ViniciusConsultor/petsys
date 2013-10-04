@@ -87,6 +87,20 @@
     <Compile Include="MP\CadastroDeTiposDePatentes.aspx.designer.cs">
       <DependentUpon>CadastroDeTiposDePatentes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdTipoDePatente.aspx.cs">
+      <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdTipoDePatente.aspx.designer.cs">
+      <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlTipoDePatente.ascx.cs">
+      <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlTipoDePatente.ascx.designer.cs">
+      <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\TiposDePatenteCadastrado.aspx.cs">
       <DependentUpon>TiposDePatenteCadastrado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -106,6 +120,8 @@
     <None Include="MP.Client.snk" />
     <Content Include="MP\CadastroDeProcuradores.aspx" />
     <Content Include="MP\CadastroDeTiposDePatentes.aspx" />
+    <Content Include="MP\cdTipoDePatente.aspx" />
+    <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="MP\TiposDePatenteCadastrado.aspx" />
     <Content Include="WorkSpace.Master" />
     <Content Include="Web.config" />
