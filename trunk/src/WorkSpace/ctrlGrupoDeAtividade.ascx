@@ -1,11 +1,8 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ctrlGrupoDeAtividade.ascx.vb" Inherits="WorkSpace.ctrlGrupoDeAtividade" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ctrlGrupoDeAtividade.ascx.vb"
+    Inherits="WorkSpace.ctrlGrupoDeAtividade" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
-        
-                    <telerik:RadComboBox ID="cboGrupos" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
-        LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-        AllowCustomText="True" HighlightTemplatedItems="True" Width="90%" Skin="Vista"
-        CausesValidation="False" EmptyMessage="Selecione um grupo de atividade" MaxLength="255">
-    </telerik:RadComboBox>            
-        
-   
+<telerik:radcombobox id="cboGrupos" runat="server" autopostback="True" enableloadondemand="True"
+    loadingmessage="Carregando..." markfirstmatch="false" showdropdownontextboxclick="False"
+    allowcustomtext="True" highlighttemplateditems="True" width="90%" skin="Vista"
+    causesvalidation="False" emptymessage="Selecione um grupo de atividade" maxlength="255">
+    </telerik:radcombobox>

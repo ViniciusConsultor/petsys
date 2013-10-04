@@ -11,23 +11,14 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class ctrlMunicipios
+Partial Public Class ctrlTipoEndereco
 
     '''<summary>
-    '''pnlMunicipio control.
+    '''cboTiposDeEndereco control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlMunicipio As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cboMunicipios control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboMunicipios As Global.Telerik.Web.UI.RadComboBox
+    Protected WithEvents cboTiposDeEndereco As Global.Telerik.Web.UI.RadComboBox
 End Class

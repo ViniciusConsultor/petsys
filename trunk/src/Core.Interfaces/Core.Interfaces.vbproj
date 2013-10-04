@@ -96,6 +96,7 @@
     <Compile Include="Mapeadores\IMapeadorDePessoaFisica.vb" />
     <Compile Include="Mapeadores\IMapeadorDePessoaJuridica.vb" />
     <Compile Include="Mapeadores\IMapeadorDeSenha.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeTipoDeEndereco.vb" />
     <Compile Include="Mapeadores\IMapeadorDeVisibilidadePorEmpresa.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

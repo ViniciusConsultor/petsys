@@ -10,27 +10,27 @@
             <td class="td">
                 <telerik:RadComboBox ID="cboBancos" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
                     LoadingMessage="Carregando..." ShowDropDownOnTextboxClick="False" MarkFirstMatch="false"
-                    AllowCustomText="True" HighlightTemplatedItems="True" Width="500px" Skin="Vista"
+                    AllowCustomText="True" HighlightTemplatedItems="True"  Width="90%" Skin="Vista"
                     CausesValidation="False" EmptyMessage="Selecione um banco" MaxLength="50">
                     <HeaderTemplate>
-                        <table style="width: 450px" cellspacing="0" cellpadding="0">
+                        <table style="width: 96%" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td style="width: 150px;">
+                                <td style="width: 60%;">
                                     Nome
                                 </td>
-                                <td style="width: 300px;">
+                                <td style="width: 40%;">
                                     Número
                                 </td>
                             </tr>
                         </table>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <table style="width: 450px" cellspacing="0" cellpadding="0">
+                        <table style="width: 100%" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td style="width: 150px;">
+                                <td style="width: 60%;">
                                     <%#DataBinder.Eval(Container, "Text")%>
                                 </td>
-                                <td style="width: 300px;">
+                                <td style="width: 40%;">
                                     <%#DataBinder.Eval(Container, "Attributes['Numero']")%>
                                 </td>
                             </tr>
@@ -46,27 +46,27 @@
             <td class="td">
                 <telerik:RadComboBox ID="cboAgencias" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
                     LoadingMessage="Carregando..." ShowDropDownOnTextboxClick="False" MarkFirstMatch="false"
-                    AllowCustomText="True" HighlightTemplatedItems="True" Width="500px" Skin="Vista"
+                    AllowCustomText="True" HighlightTemplatedItems="True"  Width="90%" Skin="Vista"
                     CausesValidation="False" EmptyMessage="Selecione uma agência" MaxLength="50">
                     <HeaderTemplate>
-                        <table style="width: 450px" cellspacing="0" cellpadding="0">
+                        <table style="width: 96%" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td style="width: 150px;">
+                                <td style="width: 60%;">
                                     Nome
                                 </td>
-                                <td style="width: 300px;">
+                                <td style="width: 40%;">
                                     Número
                                 </td>
                             </tr>
                         </table>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <table style="width: 450px" cellspacing="0" cellpadding="0">
+                        <table style="width: 100%" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td style="width: 150px;">
+                                <td style="width: 60%;">
                                     <%#DataBinder.Eval(Container, "Text")%>
                                 </td>
-                                <td style="width: 300px;">
+                                <td style="width: 40%;">
                                     <%#DataBinder.Eval(Container, "Attributes['Numero']")%>
                                 </td>
                             </tr>

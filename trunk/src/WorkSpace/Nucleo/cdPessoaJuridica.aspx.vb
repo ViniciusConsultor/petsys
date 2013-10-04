@@ -20,6 +20,7 @@ Partial Public Class cdPessoaJuridica
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_PESSOA_JURIDICA"
     Private CHAVE_ID As String = "CHAVE_ID_CD_PESSOA_JURIDICA"
     Private CHAVE_TELEFONES As String = "CHAVE_TELEFONES_PESSOA_JURIDICA"
+    Private CHAVE_ENDERECOS As String = "CHAVE_ENDERECOS_PESSOA_JURIDICA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlMunicipios2.MunicipioFoiSelecionado, AddressOf MunicipioDeEnderecoFoiSelecionado
@@ -181,19 +182,7 @@ Partial Public Class cdPessoaJuridica
         Pessoa.Nome = txtNome.Text
         Pessoa.NomeFantasia = txtNomeFantasia.Text
 
-        If Not String.IsNullOrEmpty(txtLogradouro.Text) Then
-            Dim Endereco As IEndereco
-
-            Endereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IEndereco)()
-
-            Endereco.Bairro = txtBairro.Text
-            Endereco.CEP = New CEP(CLng(txtCEPEndereco.Text))
-            Endereco.Complemento = txtComplemento.Text
-            Endereco.Logradouro = txtLogradouro.Text
-            Endereco.Municipio = ctrlMunicipios2.MunicipioSelecionado
-
-            Pessoa.Endereco = Endereco
-        End If
+        Pessoa.AdicioneEnderecos(CType(ViewState(CHAVE_ENDERECOS), IList(Of IEndereco)))
 
         If Not String.IsNullOrEmpty(txtEmail.Text) Then
             Pessoa.EnderecoDeEmail = txtEmail.Text
@@ -242,16 +231,6 @@ Partial Public Class cdPessoaJuridica
     Private Sub ExibaObjeto(ByVal Pessoa As IPessoaJuridica)
         txtNome.Text = Pessoa.Nome
         txtNomeFantasia.Text = Pessoa.NomeFantasia
-
-        If Not Pessoa.Endereco Is Nothing Then
-            txtLogradouro.Text = Pessoa.Endereco.Logradouro
-            txtComplemento.Text = Pessoa.Endereco.Complemento
-            txtBairro.Text = Pessoa.Endereco.Bairro
-            ctrlMunicipios2.MunicipioSelecionado = Pessoa.Endereco.Municipio
-            ctrlMunicipios2.NomeDoMunicipio = Pessoa.Endereco.Municipio.Nome
-            cboUFEndereco.SelectedValue = Pessoa.Endereco.Municipio.UF.ID.ToString
-            txtCEPEndereco.Text = Pessoa.Endereco.CEP.Numero.Value.ToString
-        End If
 
         Dim CNPJ As ICNPJ
 

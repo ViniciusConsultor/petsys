@@ -12,13 +12,14 @@ Public MustInherit Class Pessoa
     Private _EnderecoDeEmail As EnderecoDeEmail
     Private _Telefones As IList(Of ITelefone)
     Private _Documentos As IDictionary(Of TipoDeDocumento, IDocumento)
-    Private _Endereco As IEndereco
+    Private _Enderecos As IList(Of IEndereco)
     Private _Site As String
     Private _DadoBancario As IDadoBancario
 
     Protected Sub New()
         _Documentos = New Dictionary(Of TipoDeDocumento, IDocumento)
         _Telefones = New List(Of ITelefone)
+        _Enderecos = New List(Of IEndereco)
     End Sub
 
     Public Property Nome() As String Implements IPessoa.Nome
@@ -57,15 +58,6 @@ Public MustInherit Class Pessoa
 
         Return Documento
     End Function
-
-    Public Property Endereco() As IEndereco Implements IPessoa.Endereco
-        Get
-            Return _Endereco
-        End Get
-        Set(ByVal value As IEndereco)
-            _Endereco = value
-        End Set
-    End Property
 
     Public Sub AdicioneTelefone(ByVal Telefone As ITelefone) Implements IPessoa.AdicioneTelefone
         If _Telefones.Contains(Telefone) Then
@@ -128,5 +120,40 @@ Public MustInherit Class Pessoa
             _DadoBancario = value
         End Set
     End Property
+
+    Public Sub AdicioneEndereco(ByVal Endereco As IEndereco) Implements IPessoa.AdicioneEndereco
+        If _Enderecos.Contains(Endereco) Then
+            _Enderecos(_Enderecos.IndexOf(Endereco)) = Endereco
+            Exit Sub
+        End If
+
+        _Enderecos.Add(Endereco)
+    End Sub
+
+    Public Sub AdicioneEnderecos(ByVal Enderecos As IList(Of IEndereco)) Implements IPessoa.AdicioneEnderecos
+        If Not Enderecos Is Nothing Then
+            CType(_Enderecos, List(Of IEndereco)).AddRange(Enderecos)
+        End If
+    End Sub
+
+    Public ReadOnly Property Enderecos As IList(Of IEndereco) Implements IPessoa.Enderecos
+        Get
+            Return _Enderecos
+        End Get
+    End Property
+
+    Public Function ObtenhaEnderecos(ByVal TipoDeEndereco As ITipoDeEndereco) As IList(Of IEndereco) Implements IPessoa.ObtenhaEnderecos
+        If Me._Enderecos Is Nothing Then Return Nothing
+
+        Dim EnderecosDoTipo As IList(Of IEndereco) = New List(Of IEndereco)
+
+        For Each Item As IEndereco In Me._Enderecos
+            If Item.TipoDeEndereco.Equals(TipoDeEndereco) Then
+                EnderecosDoTipo.Add(Item)
+            End If
+        Next
+
+        Return EnderecosDoTipo
+    End Function
 
 End Class

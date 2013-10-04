@@ -146,6 +146,7 @@
     <Compile Include="Senha.vb" />
     <Compile Include="Tarefa.vb" />
     <Compile Include="Telefone\Telefone.vb" />
+    <Compile Include="TipoDeEndereco.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

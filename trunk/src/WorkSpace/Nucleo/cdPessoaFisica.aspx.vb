@@ -20,6 +20,8 @@ Partial Public Class cdPessoaFisica
     Private CHAVE_ESTADO As String = "CHAVE_ESTADO_CD_PESSOA_FISICA"
     Private CHAVE_ID As String = "CHAVE_ID_CD_PESSOA_FISICA"
     Private CHAVE_TELEFONES As String = "CHAVE_TELEFONES_PESSOA_FISICA"
+    Private CHAVE_ENDERECOS As String = "CHAVE_ENDERECOS_PESSOA_FISICA"
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlMunicipios1.MunicipioFoiSelecionado, AddressOf MunicipioDeNascimentoFoiSelecionado
@@ -69,6 +71,7 @@ Partial Public Class cdPessoaFisica
         ViewState(CHAVE_ESTADO) = Estado.Novo
         ViewState(CHAVE_ID) = Nothing
         ViewState(CHAVE_TELEFONES) = Nothing
+        ViewState(CHAVE_ENDERECOS) = Nothing
         imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
     End Sub
 
@@ -247,7 +250,7 @@ Partial Public Class cdPessoaFisica
             Endereco.Logradouro = txtLogradouro.Text
             Endereco.Municipio = ctrlMunicipios2.MunicipioSelecionado
 
-            Pessoa.Endereco = Endereco
+
         End If
 
         If Not String.IsNullOrEmpty(txtEmail.Text) Then
@@ -274,6 +277,7 @@ Partial Public Class cdPessoaFisica
 
         Pessoa.Site = txtSite.Text
         Pessoa.AdicioneTelefones(CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone)))
+        Pessoa.AdicioneEnderecos(CType(ViewState(CHAVE_ENDERECOS), IList(Of IEndereco)))
         Pessoa.Foto = imgFoto.ImageUrl
 
         If Not ctrlBancosEAgencias1.AgenciaSelecionada Is Nothing Then
@@ -310,23 +314,6 @@ Partial Public Class cdPessoaFisica
         End If
 
         rblSexo.SelectedValue = Pessoa.Sexo.ID
-
-        If Not Pessoa.Endereco Is Nothing Then
-            txtLogradouro.Text = Pessoa.Endereco.Logradouro
-            txtComplemento.Text = Pessoa.Endereco.Complemento
-            txtBairro.Text = Pessoa.Endereco.Bairro
-
-            If Not Pessoa.Endereco.Municipio Is Nothing Then
-                ctrlMunicipios2.MunicipioSelecionado = Pessoa.Endereco.Municipio
-                ctrlMunicipios2.NomeDoMunicipio = Pessoa.Endereco.Municipio.Nome
-                cboUFEndereco.SelectedValue = Pessoa.Endereco.Municipio.UF.ID.ToString
-            End If
-
-            If Not Pessoa.Endereco.CEP Is Nothing Then
-                txtCEPEndereco.Text = Pessoa.Endereco.CEP.Numero.Value.ToString
-            End If
-
-        End If
 
         Dim CPF As ICPF
 
@@ -375,6 +362,12 @@ Partial Public Class cdPessoaFisica
         grdTelefones.DataSource = Telefones
         grdTelefones.DataBind()
         ViewState(CHAVE_TELEFONES) = Telefones
+    End Sub
+
+    Private Sub ExibaEnderecos(ByVal Enderecos As IList(Of IEndereco))
+        grdEnderecos.DataSource = Enderecos
+        grdEnderecos.DataBind()
+        ViewState(CHAVE_ENDERECOS) = Enderecos
     End Sub
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -503,6 +496,98 @@ Partial Public Class cdPessoaFisica
                                               200, _
                                               200)
             imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_FOTO_PESSOA, "/" & validFile.GetName())
+        End If
+    End Sub
+
+    Private Sub btnAdicionarEndereco_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionarEndereco.Click
+        Dim Enderecos As IList(Of IEndereco)
+        Dim Inconsistencia As String
+
+        Inconsistencia = ValidaDadosDoEndereco()
+
+        If Not String.IsNullOrEmpty(Inconsistencia) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Inconsistencia), False)
+            Exit Sub
+        End If
+
+        Enderecos = CType(ViewState(CHAVE_ENDERECOS), IList(Of IEndereco))
+
+        If Enderecos Is Nothing Then Enderecos = New List(Of IEndereco)
+
+        Dim Endereco As IEndereco
+
+        Endereco = ObtenhaObjetoEndereco()
+
+        If Enderecos.Contains(Endereco) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O endereço informado já existe para esta pessoa."), False)
+            Exit Sub
+        End If
+
+        Enderecos.Add(Endereco)
+        ExibaEnderecos(Enderecos)
+        LimpaDadosDoEndereco()
+    End Sub
+
+    Private Sub LimpaDadosDoEndereco()
+        ctrlTipoEndereco1.LimparControle()
+        txtBairro.Text = ""
+        txtComplemento.Text = ""
+        txtCEPEndereco.Text = ""
+        txtLogradouro.Text = ""
+        ctrlMunicipios2.LimparControle()
+    End Sub
+
+    Private Function ObtenhaObjetoEndereco() As IEndereco
+        Dim Endereco As IEndereco
+
+        Endereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IEndereco)()
+        Endereco.Bairro = txtBairro.Text
+        Endereco.Complemento = txtComplemento.Text
+        Endereco.Logradouro = txtLogradouro.Text
+        Endereco.TipoDeEndereco = ctrlTipoEndereco1.TipoSelecionado
+
+        If Not ctrlMunicipios2.MunicipioSelecionado Is Nothing Then
+            Endereco.Municipio = ctrlMunicipios2.MunicipioSelecionado
+        End If
+
+
+        If Not String.IsNullOrEmpty(txtCEPEndereco.Text) Then
+            Endereco.CEP = New CEP(CLng(txtCEPEndereco.Text))
+        End If
+
+        Return Endereco
+    End Function
+
+    Private Function ValidaDadosDoEndereco() As String
+        If ctrlTipoEndereco1.TipoSelecionado Is Nothing Then Return "O tipo do endereço deve ser informado."
+
+        Return Nothing
+    End Function
+
+    Private Sub grdEnderecos_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdEnderecos.ItemCommand
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Dim Enderecos As IList(Of IEndereco)
+            Enderecos = CType(ViewState(CHAVE_ENDERECOS), IList(Of IEndereco))
+            Enderecos.RemoveAt(IndiceSelecionado)
+            ExibaEnderecos(Enderecos)
+        End If
+    End Sub
+
+    Private Sub grdEnderecos_ItemCreated(ByVal sender As Object, ByVal e As GridItemEventArgs) Handles grdEnderecos.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdTelefones.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
+            Next
         End If
     End Sub
 

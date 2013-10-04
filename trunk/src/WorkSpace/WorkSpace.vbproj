@@ -105,6 +105,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ctrlTipoEndereco.ascx" />
     <Content Include="ctrlEmpresa.ascx" />
     <Content Include="ctrlGrupoDeAtividade.ascx" />
     <Content Include="DefinicaoDeNovaSenha.aspx" />
@@ -320,6 +321,7 @@
     <Content Include="naoautorizado.html" />
     <Content Include="Nucleo\cdEmpresa.aspx" />
     <Content Include="Nucleo\cdGrupoDeAtividade.aspx" />
+    <Content Include="Nucleo\cdTipoDeEndereco.aspx" />
     <Content Include="Nucleo\frmVisibilidadePorEmpresa.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -328,6 +330,13 @@
   <ItemGroup>
     <Compile Include="AsyncUploadHandlerCustom.ashx.vb">
       <DependentUpon>AsyncUploadHandlerCustom.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlTipoEndereco.ascx.designer.vb">
+      <DependentUpon>ctrlTipoEndereco.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlTipoEndereco.ascx.vb">
+      <DependentUpon>ctrlTipoEndereco.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ctrlBancosEAgencias.ascx.designer.vb">
       <DependentUpon>ctrlBancosEAgencias.ascx</DependentUpon>
@@ -426,6 +435,13 @@
     <Compile Include="Nucleo\cdTarefa.aspx.vb">
       <DependentUpon>cdTarefa.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\cdTipoDeEndereco.aspx.designer.vb">
+      <DependentUpon>cdTipoDeEndereco.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdTipoDeEndereco.aspx.vb">
+      <DependentUpon>cdTipoDeEndereco.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmAgenda.aspx.designer.vb">
       <DependentUpon>frmAgenda.aspx</DependentUpon>

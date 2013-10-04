@@ -55,4 +55,14 @@ Public Class Endereco
         End Set
     End Property
 
+    Private _TipoDeEndereco As ITipoDeEndereco
+    Public Property TipoDeEndereco As ITipoDeEndereco Implements IEndereco.TipoDeEndereco
+        Get
+            Return _TipoDeEndereco
+        End Get
+        Set(ByVal value As ITipoDeEndereco)
+            _TipoDeEndereco = value
+        End Set
+    End Property
+
 End Class
