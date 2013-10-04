@@ -86,19 +86,12 @@
                           //]]>
                                                 </script>
                                             </telerik:RadScriptBlock>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <telerik:RadAsyncUpload runat="server" ID="uplFoto" MaxFileInputsCount="1" AllowedFileExtensions=".jpg,.jpeg,.bmp,.png"
+                                            <telerik:RadAsyncUpload runat="server" ID="uplFoto" MaxFileInputsCount="1" AllowedFileExtensions=".jpg,.jpeg,.bmp,.png"
                                                             PostbackTriggers="ButtonSubmit" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
                                                             Localization-Select="Procurar" />
-                                                    </td>
-                                                    <td valign="top">
-                                                        <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateFotoPessoa(); return false;"
+                                             <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateFotoPessoa(); return false;"
                                                             CausesValidation="False" CssClass="RadUploadSubmit" />
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                            
                                         </td>
                                     </tr>
                                     <tr>
