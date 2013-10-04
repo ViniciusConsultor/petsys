@@ -93,7 +93,11 @@ Partial Public Class cdPessoaFisica
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(rdkDadosPessoa, Control))
-        UtilidadesWeb.HabilitaComponentes(CType(rdkDadosPessoa, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosPessoais, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlEndereco, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosBancarios, Control), False)
         txtNome.Enabled = False
 
         CarregueComponentes()
@@ -354,6 +358,7 @@ Partial Public Class cdPessoaFisica
 
         txtSite.Text = Pessoa.Site
         ExibaTelefones(Pessoa.Telefones)
+        ExibaEnderecos(Pessoa.Enderecos)
         imgFoto.ImageUrl = Pessoa.Foto
         ViewState(CHAVE_ID) = Pessoa.ID.Value
     End Sub
