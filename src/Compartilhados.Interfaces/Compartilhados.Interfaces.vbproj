@@ -132,6 +132,7 @@
     <Compile Include="Core\Negocio\StatusDoGrupo.vb" />
     <Compile Include="Core\Negocio\StatusDoOperador.vb" />
     <Compile Include="Core\Negocio\TipoDeDocumento.vb" />
+    <Compile Include="Core\Negocio\ITipoDeEndereco.vb" />
     <Compile Include="Core\Negocio\TipoDeFormatoDeSaidaDoDocumento.vb" />
     <Compile Include="Core\Negocio\TipoDePessoa.vb" />
     <Compile Include="Core\Negocio\TipoDeTelefone.vb" />
@@ -149,6 +150,7 @@
     <Compile Include="Core\Servicos\IServicoDePessoaFisica.vb" />
     <Compile Include="Core\Servicos\IServicoDePessoaJuridica.vb" />
     <Compile Include="Core\Negocio\SimENao.vb" />
+    <Compile Include="Core\Servicos\IServicoDeTipoDeEndereco.vb" />
     <Compile Include="GeradorDeID.vb" />
     <Compile Include="GerenciadorDeEmail.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

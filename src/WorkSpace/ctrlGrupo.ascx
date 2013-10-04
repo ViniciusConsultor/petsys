@@ -4,7 +4,7 @@
 <asp:Panel ID="pnlGrupo" runat="server">
     <telerik:RadComboBox ID="cboGrupos" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
         LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-        AllowCustomText="True" HighlightTemplatedItems="True" Width="400px" Skin="Vista"
+        AllowCustomText="True" HighlightTemplatedItems="True"  Width="90%" Skin="Vista"
         CausesValidation="False" EmptyMessage="Selecione um grupo" MaxLength="30">
     </telerik:RadComboBox>
    

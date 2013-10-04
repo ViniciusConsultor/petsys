@@ -26,17 +26,6 @@ Namespace LazyLoad
             _Pessoa.AdicioneTelefone(Telefone)
         End Sub
 
-        Public Property Endereco() As IEndereco Implements IPessoa.Endereco
-            Get
-                If _Pessoa Is Nothing Then CarregueObjetoReal()
-                Return _Pessoa.Endereco
-            End Get
-            Set(ByVal value As IEndereco)
-                If _Pessoa Is Nothing Then CarregueObjetoReal()
-                _Pessoa.Endereco = value
-            End Set
-        End Property
-
         Public Property EnderecoDeEmail() As EnderecoDeEmail Implements IPessoa.EnderecoDeEmail
             Get
                 If _Pessoa Is Nothing Then CarregueObjetoReal()
@@ -217,7 +206,7 @@ Namespace LazyLoad
             _Pessoa.AdicioneTelefones(Telefones)
         End Sub
 
-        Public Sub CarregueObjetoReal() Implements Compartilhados.Interfaces.Core.Negocio.LazyLoad.IObjetoLazyLoad.CarregueObjetoReal
+        Public Sub CarregueObjetoReal() Implements IObjetoLazyLoad.CarregueObjetoReal
             Using Servico As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
                 _Pessoa = Servico.ObtenhaPessoa(Me._ID.Value)
             End Using
@@ -239,5 +228,28 @@ Namespace LazyLoad
             End Set
         End Property
 
+        Public Sub AdicioneEndereco(ByVal Endereco As IEndereco) Implements IPessoa.AdicioneEndereco
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            _Pessoa.AdicioneEndereco(Endereco)
+        End Sub
+
+        Public Sub AdicioneEnderecos(ByVal Enderecos As IList(Of IEndereco)) Implements IPessoa.AdicioneEnderecos
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            _Pessoa.AdicioneEnderecos(Enderecos)
+        End Sub
+
+        Public ReadOnly Property Enderecos As IList(Of IEndereco) Implements IPessoa.Enderecos
+            Get
+                If _Pessoa Is Nothing Then CarregueObjetoReal()
+                Return _Pessoa.Enderecos
+            End Get
+        End Property
+
+        Public Function ObtenhaEnderecos(ByVal TipoDeEndereco As ITipoDeEndereco) As IList(Of IEndereco) Implements IPessoa.ObtenhaEnderecos
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            Return _Pessoa.ObtenhaEnderecos(TipoDeEndereco)
+        End Function
+
     End Class
+
 End Namespace

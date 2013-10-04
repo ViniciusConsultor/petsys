@@ -5,7 +5,7 @@ Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados
 
-Public Class cdGrupoDeAtividade
+Public Class cdTipoDeEndereco
     Inherits SuperPagina
 
     Private Enum Estado As Byte
@@ -16,10 +16,10 @@ Public Class cdGrupoDeAtividade
         Remove
     End Enum
 
-    Private CHAVE_ESTADO_CD_GRUPO As String = "CHAVE_ESTADO_CD_GRUPO_DE_ATIVIDADE"
+    Private CHAVE_ESTADO_CD_TIPO_DE_ENDERECO As String = "CHAVE_ESTADO_CD_TIPO_DE_ENDERECO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        AddHandler ctrlGrupo1.GrupoFoiSelecionado, AddressOf GrupoFoiSelecionado
+        AddHandler ctrlTipoDeAtividade1.TipoFoiSelecionado, AddressOf TipoFoiSelecionado
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If
@@ -33,13 +33,13 @@ Public Class cdGrupoDeAtividade
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        ctrlGrupo1.LimparControle()
-        ctrlGrupo1.HabiliteComponente(True)
-        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Inicial
-        ctrlGrupo1.EnableLoadOnDemand = True
-        ctrlGrupo1.ShowDropDownOnTextboxClick = True
-        ctrlGrupo1.AutoPostBack = True
-        ctrlGrupo1.ExibeTituloParaSelecionarUmItem = True
+        ctrlTipoDeAtividade1.LimparControle()
+        ctrlTipoDeAtividade1.HabiliteComponente(True)
+        ViewState(CHAVE_ESTADO_CD_TIPO_DE_ENDERECO) = Estado.Inicial
+        ctrlTipoDeAtividade1.EnableLoadOnDemand = True
+        ctrlTipoDeAtividade1.ShowDropDownOnTextboxClick = True
+        ctrlTipoDeAtividade1.AutoPostBack = True
+        ctrlTipoDeAtividade1.ExibeTituloParaSelecionarUmItem = True
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -54,14 +54,14 @@ Public Class cdGrupoDeAtividade
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        ctrlGrupo1.LimparControle()
-        ctrlGrupo1.HabiliteComponente(True)
+        ctrlTipoDeAtividade1.LimparControle()
+        ctrlTipoDeAtividade1.HabiliteComponente(True)
 
-        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Novo
-        ctrlGrupo1.EnableLoadOnDemand = False
-        ctrlGrupo1.ShowDropDownOnTextboxClick = False
-        ctrlGrupo1.AutoPostBack = False
-        ctrlGrupo1.ExibeTituloParaSelecionarUmItem = False
+        ViewState(CHAVE_ESTADO_CD_TIPO_DE_ENDERECO) = Estado.Novo
+        ctrlTipoDeAtividade1.EnableLoadOnDemand = False
+        ctrlTipoDeAtividade1.ShowDropDownOnTextboxClick = False
+        ctrlTipoDeAtividade1.AutoPostBack = False
+        ctrlTipoDeAtividade1.ExibeTituloParaSelecionarUmItem = False
     End Sub
 
     Private Sub ExibaTelaModificar()
@@ -72,11 +72,11 @@ Public Class cdGrupoDeAtividade
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        ctrlGrupo1.HabiliteComponente(True)
-        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Modifica
-        ctrlGrupo1.EnableLoadOnDemand = False
-        ctrlGrupo1.ShowDropDownOnTextboxClick = False
-        ctrlGrupo1.ExibeTituloParaSelecionarUmItem = False
+        ctrlTipoDeAtividade1.HabiliteComponente(True)
+        ViewState(CHAVE_ESTADO_CD_TIPO_DE_ENDERECO) = Estado.Modifica
+        ctrlTipoDeAtividade1.EnableLoadOnDemand = False
+        ctrlTipoDeAtividade1.ShowDropDownOnTextboxClick = False
+        ctrlTipoDeAtividade1.ExibeTituloParaSelecionarUmItem = False
     End Sub
 
     Private Sub ExibaTelaExcluir()
@@ -87,8 +87,8 @@ Public Class cdGrupoDeAtividade
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
-        ViewState(CHAVE_ESTADO_CD_GRUPO) = Estado.Remove
-        ctrlGrupo1.HabiliteComponente(False)
+        ViewState(CHAVE_ESTADO_CD_TIPO_DE_ENDERECO) = Estado.Remove
+        ctrlTipoDeAtividade1.HabiliteComponente(False)
     End Sub
 
     Private Sub ExibaTelaConsultar()
@@ -99,7 +99,7 @@ Public Class cdGrupoDeAtividade
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = True
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        ctrlGrupo1.HabiliteComponente(True)
+        ctrlTipoDeAtividade1.HabiliteComponente(True)
     End Sub
 
     Protected Sub btnCancela_Click()
@@ -107,7 +107,7 @@ Public Class cdGrupoDeAtividade
     End Sub
 
     Private Sub btnSalva_Click()
-        Dim Grupo As IGrupoDeAtividade = Nothing
+        Dim Tipo As ITipoDeEndereco = Nothing
         Dim Mensagem As String
         Dim Inconsistencia As String = VerifiqueCamposObrigatorios()
 
@@ -116,16 +116,16 @@ Public Class cdGrupoDeAtividade
             Exit Sub
         End If
 
-        Grupo = MontaObjeto()
+        Tipo = MontaObjeto()
 
         Try
-            Using Servico As IServicoDeGrupoDeAtividade = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeAtividade)()
-                If CByte(ViewState(CHAVE_ESTADO_CD_GRUPO)) = Estado.Novo Then
-                    Servico.Insira(Grupo)
-                    Mensagem = "Grupo de atividade cadastrado com sucesso."
+            Using Servico As IServicoDeTipoDeEndereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeTipoDeEndereco)()
+                If CByte(ViewState(CHAVE_ESTADO_CD_TIPO_DE_ENDERECO)) = Estado.Novo Then
+                    Servico.Insira(Tipo)
+                    Mensagem = "Tipo de endereço cadastrado com sucesso."
                 Else
-                    Servico.Modificar(Grupo)
-                    Mensagem = "Grupo de atividade modificado com sucesso."
+                    Servico.Modificar(Tipo)
+                    Mensagem = "Tipo de endereço modificado com sucesso."
                 End If
 
             End Using
@@ -139,26 +139,26 @@ Public Class cdGrupoDeAtividade
     End Sub
 
     Private Function VerifiqueCamposObrigatorios() As String
-        If String.IsNullOrEmpty(ctrlGrupo1.NomeDoGrupo) Then Return "O nome do grupo de atividade deve ser informado."
+        If String.IsNullOrEmpty(ctrlTipoDeAtividade1.Nome) Then Return "O nome do tipo de endereço deve ser informado."
 
         Return Nothing
     End Function
 
-    Private Function MontaObjeto() As IGrupoDeAtividade
-        Dim Grupo As IGrupoDeAtividade
+    Private Function MontaObjeto() As ITipoDeEndereco
+        Dim Tipo As ITipoDeEndereco
 
-        Grupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IGrupoDeAtividade)()
+        Tipo = FabricaGenerica.GetInstancia.CrieObjeto(Of ITipoDeEndereco)()
 
-        If CByte(ViewState(CHAVE_ESTADO_CD_GRUPO)) <> Estado.Novo Then
-            Grupo.ID = ctrlGrupo1.GrupoSelecionado.ID.Value
+        If CByte(ViewState(CHAVE_ESTADO_CD_TIPO_DE_ENDERECO)) <> Estado.Novo Then
+            Tipo.ID = ctrlTipoDeAtividade1.TipoSelecionado.ID.Value
         End If
 
-        Grupo.Nome = ctrlGrupo1.NomeDoGrupo
-        Return Grupo
+        Tipo.Nome = ctrlTipoDeAtividade1.Nome
+        Return Tipo
     End Function
 
-    Private Sub ExibaGrupo(ByVal Grupo As IGrupoDeAtividade)
-        ctrlGrupo1.NomeDoGrupo = Grupo.Nome
+    Private Sub ExibaTipo(ByVal Tipo As ITipoDeEndereco)
+        ctrlTipoDeAtividade1.Nome = Tipo.Nome
     End Sub
 
     Private Sub btnModificar_Click()
@@ -175,11 +175,11 @@ Public Class cdGrupoDeAtividade
 
     Private Sub btnSim_Click()
         Try
-            Using Servico As IServicoDeGrupoDeAtividade = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeAtividade)()
-                Servico.Remover(ctrlGrupo1.GrupoSelecionado.ID.Value)
+            Using Servico As IServicoDeTipoDeEndereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeTipoDeEndereco)()
+                Servico.Remover(ctrlTipoDeAtividade1.TipoSelecionado.ID.Value)
             End Using
 
-            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Grupo de atividade excluído com sucesso."), False)
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Tipo de atividade excluído com sucesso."), False)
             ExibaTelaInicial()
 
         Catch ex As BussinesException
@@ -188,7 +188,7 @@ Public Class cdGrupoDeAtividade
     End Sub
 
     Protected Overrides Function ObtenhaIdFuncao() As String
-        Return "FUN.NCL.016"
+        Return "FUN.NCL.017"
     End Function
 
     Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
@@ -210,9 +210,9 @@ Public Class cdGrupoDeAtividade
         End Select
     End Sub
 
-    Private Sub GrupoFoiSelecionado(ByVal Grupo As IGrupoDeAtividade)
+    Private Sub TipoFoiSelecionado(ByVal Tipo As ITipoDeEndereco)
         ExibaTelaConsultar()
-        ExibaGrupo(Grupo)
+        ExibaTipo(Tipo)
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar

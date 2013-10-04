@@ -112,6 +112,7 @@
     <Compile Include="ServicoDePessoaFisicaLocal.vb" />
     <Compile Include="ServicoDePessoaJuridicaLocal.vb" />
     <Compile Include="ServicoDeSenhaLocal.vb" />
+    <Compile Include="ServicoDeTipoDeEnderecoLocal.vb" />
     <Compile Include="ServicoDeVisibilidadePorEmpresaLocal.vb" />
   </ItemGroup>
   <ItemGroup>

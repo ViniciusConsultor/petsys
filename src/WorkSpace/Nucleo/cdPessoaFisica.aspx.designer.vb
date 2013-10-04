@@ -338,6 +338,24 @@ Partial Public Class cdPessoaFisica
     Protected WithEvents pnlEndereco As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''Label30 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label30 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ctrlTipoEndereco1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ctrlTipoEndereco1 As Global.WorkSpace.ctrlTipoEndereco
+
+    '''<summary>
     '''Label8 control.
     '''</summary>
     '''<remarks>
@@ -444,6 +462,24 @@ Partial Public Class cdPessoaFisica
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtCEPEndereco As Global.Telerik.Web.UI.RadMaskedTextBox
+
+    '''<summary>
+    '''btnAdicionarEndereco control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdicionarEndereco As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''grdEnderecos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdEnderecos As Global.Telerik.Web.UI.RadGrid
 
     '''<summary>
     '''RadPageView3 control.

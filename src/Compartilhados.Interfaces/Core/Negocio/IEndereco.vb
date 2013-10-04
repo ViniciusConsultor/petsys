@@ -7,6 +7,7 @@
         Property Municipio() As IMunicipio
         Property CEP() As CEP
         Property Bairro() As String
+        Property TipoDeEndereco As ITipoDeEndereco
 
     End Interface
 

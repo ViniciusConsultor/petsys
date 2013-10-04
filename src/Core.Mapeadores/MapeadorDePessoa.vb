@@ -24,8 +24,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         Pessoa.ID = GeradorDeID.getInstancia.getProximoID
 
         SQL.Append("INSERT INTO NCL_PESSOA (ID, NOME, TIPO, ENDEMAIL,")
-        SQL.Append(" LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP,")
-        SQL.Append(" BAIRRO, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE)")
+        SQL.Append(" SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE)")
         SQL.Append(" VALUES ( ")
         SQL.Append(String.Concat(Pessoa.ID, ", "))
         SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
@@ -35,37 +34,6 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.EnderecoDeEmail.ToString), "', "))
         Else
             SQL.Append("NULL, ")
-        End If
-
-        If Not Pessoa.Endereco Is Nothing Then
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Logradouro), "', "))
-
-            If Not String.IsNullOrEmpty(Pessoa.Endereco.Complemento) Then
-                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Complemento), "', "))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-            If Not Pessoa.Endereco.Municipio Is Nothing Then
-                SQL.Append(String.Concat(Pessoa.Endereco.Municipio.ID.Value, ", "))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-            If Not Pessoa.Endereco.CEP Is Nothing Then
-                SQL.Append(String.Concat(Pessoa.Endereco.CEP.Numero.Value, ", "))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-            If Not String.IsNullOrEmpty(Pessoa.Endereco.Bairro) Then
-                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "',"))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-        Else
-            SQL.Append("NULL, NULL, NULL, NULL, NULL,")
         End If
 
         If Not String.IsNullOrEmpty(Pessoa.Site) Then
@@ -96,9 +64,65 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         DBHelper.ExecuteNonQuery(SQL.ToString)
 
         InsiraTelefones(Pessoa)
+        InsiraEnderecos(Pessoa)
         Me.Insira(Pessoa)
         Return Pessoa.ID.Value
     End Function
+
+    Private Sub InsiraEnderecos(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+
+        RemovaTelefones(Pessoa.ID.Value)
+
+        If Not Pessoa.Enderecos Is Nothing AndAlso Not Pessoa.Enderecos.Count = 0 Then
+            For Each Endereco As IEndereco In Pessoa.Enderecos
+                SQL = New StringBuilder
+                SQL.Append("INSERT INTO NCL_PESSOAENDERECO (IDPESSOA, TIPO, LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, BAIRRO)")
+                SQL.Append(" VALUES ( ")
+                SQL.Append(String.Concat(Pessoa.ID, ", "))
+                SQL.Append(String.Concat(Endereco.TipoDeEndereco.ID, ", "))
+
+                If String.IsNullOrEmpty(Endereco.Logradouro) Then
+                    SQL.Append("NULL, ")
+                Else
+                    SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Endereco.Logradouro), "', "))
+                End If
+
+                If String.IsNullOrEmpty(Endereco.Complemento) Then
+                    SQL.Append("NULL, ")
+                Else
+                    SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Endereco.Complemento), "', "))
+                End If
+
+                If Endereco.Municipio Is Nothing Then
+                    SQL.Append("NULL, ")
+                Else
+                    SQL.Append(String.Concat(Endereco.Municipio.ID, ", "))
+                End If
+
+                If Endereco.CEP Is Nothing Then
+                    SQL.Append("NULL, ")
+                Else
+                    SQL.Append(String.Concat(Endereco.CEP.Numero.Value, ", "))
+                End If
+
+                If String.IsNullOrEmpty(Endereco.Bairro) Then
+                    SQL.Append("NULL, ")
+                Else
+                    SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Endereco.Bairro), "') "))
+                End If
+
+                DBHelper.ExecuteNonQuery(SQL.ToString)
+            Next
+        End If
+    End Sub
+
+    Private Sub RemovaEnderecos(ByVal IDPessoa As Long)
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_PESSOAENDERECO WHERE IDPESSOA = " & IDPessoa)
+    End Sub
 
     Private Sub InsiraTelefones(ByVal Pessoa As IPessoa)
         Dim SQL As StringBuilder
@@ -136,6 +160,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         Dim DBHelper As IDBHelper
 
         Me.InsiraTelefones(Pessoa)
+        Me.InsiraEnderecos(Pessoa)
         Me.Atualize(Pessoa)
         DBHelper = ServerUtils.getDBHelper
         SQL.Append(String.Concat("UPDATE NCL_PESSOA SET NOME = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
@@ -146,45 +171,6 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.EnderecoDeEmail.ToString), "', "))
         Else
             SQL.Append("NULL, ")
-        End If
-
-        If Not Pessoa.Endereco Is Nothing Then
-            SQL.Append(String.Concat("LOGRADOURO = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Logradouro), "', "))
-
-            SQL.Append(" COMPLEMENTO = ")
-
-            If Not String.IsNullOrEmpty(Pessoa.Endereco.Complemento) Then
-                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Complemento), "', "))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-            SQL.Append(" IDMUNICIPIO = ")
-
-            If Not Pessoa.Endereco.Municipio Is Nothing Then
-                SQL.Append(String.Concat(Pessoa.Endereco.Municipio.ID.Value, ", "))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-            SQL.Append(" CEP = ")
-
-            If Not Pessoa.Endereco.CEP Is Nothing Then
-                SQL.Append(String.Concat(Pessoa.Endereco.CEP.Numero.Value, ", "))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-            SQL.Append(" BAIRRO = ")
-
-            If Not String.IsNullOrEmpty(Pessoa.Endereco.Bairro) Then
-                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Endereco.Bairro), "',"))
-            Else
-                SQL.Append("NULL, ")
-            End If
-
-        Else
-            SQL.Append("LOGRADOURO = NULL, COMPLEMENTO = NULL, IDMUNICIPIO = NULL, CEP = NULL, BAIRRO = NULL,")
         End If
 
         If Not String.IsNullOrEmpty(Pessoa.Site) Then
@@ -241,21 +227,6 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             Pessoa.EnderecoDeEmail = UtilidadesDePersistencia.GetValorString(Leitor, "ENDEMAIL")
         End If
 
-        If Not UtilidadesDePersistencia.EhNulo(Leitor, "LOGRADOURO") Then
-            Dim Endereco As IEndereco
-            Dim MapeadorDeMunicipio As IMapeadorDeMunicipio
-
-            Endereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IEndereco)()
-            Endereco.Bairro = UtilidadesDePersistencia.GetValorString(Leitor, "BAIRRO")
-            Endereco.CEP = New CEP(UtilidadesDePersistencia.GetValorLong(Leitor, "CEP"))
-            Endereco.Complemento = UtilidadesDePersistencia.GetValorString(Leitor, "COMPLEMENTO")
-            Endereco.Logradouro = UtilidadesDePersistencia.GetValorString(Leitor, "LOGRADOURO")
-
-            MapeadorDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMunicipio)()
-            Endereco.Municipio = MapeadorDeMunicipio.ObtenhaMunicipio(UtilidadesDePersistencia.GetValorLong(Leitor, "IDMUNICIPIO"))
-            Pessoa.Endereco = Endereco
-        End If
-
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "SITE") Then
             Pessoa.Site = UtilidadesDePersistencia.GetValorString(Leitor, "SITE")
         End If
@@ -292,6 +263,65 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         ObtenhaTelefones(Pessoa)
+        ObtenhaEnderecos(Pessoa)
+    End Sub
+
+    Private Sub ObtenhaEnderecos(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper
+
+        SQL = New StringBuilder
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        SQL.Append("SELECT IDPESSOA, TIPO, LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, BAIRRO, ID, NOME FROM NCL_PESSOAENDERECO, NCL_TIPO_ENDERECO")
+        SQL.Append(" WHERE IDPESSOA = " & Pessoa.ID.Value.ToString)
+        SQL.Append(" AND TIPO = NCL_TIPO_ENDERECO.ID")
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
+            Try
+                While Leitor.Read
+                    Dim Endereco As IEndereco
+                    Dim MapeadorDeMunicipio As IMapeadorDeMunicipio
+                    Dim Tipo As ITipoDeEndereco = FabricaGenerica.GetInstancia.CrieObjeto(Of ITipoDeEndereco)()
+
+                    Endereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IEndereco)()
+
+                    Tipo.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
+                    Tipo.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+
+                    Endereco.TipoDeEndereco = Tipo
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "BAIRRO") Then
+                        Endereco.Bairro = UtilidadesDePersistencia.GetValorString(Leitor, "BAIRRO")
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "CEP") Then
+                        Endereco.CEP = New CEP(UtilidadesDePersistencia.GetValorLong(Leitor, "CEP"))
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "COMPLEMENTO") Then
+                        Endereco.Complemento = UtilidadesDePersistencia.GetValorString(Leitor, "COMPLEMENTO")
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "LOGRADOURO") Then
+                        Endereco.Logradouro = UtilidadesDePersistencia.GetValorString(Leitor, "LOGRADOURO")
+                    End If
+
+                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDMUNICIPIO") Then
+                        MapeadorDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMunicipio)()
+                        Endereco.Municipio = MapeadorDeMunicipio.ObtenhaMunicipio(UtilidadesDePersistencia.GetValorLong(Leitor, "IDMUNICIPIO"))
+                    End If
+
+                    Pessoa.AdicioneEndereco(Endereco)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+
+        End Using
+
+        
     End Sub
 
     Private Sub ObtenhaTelefones(ByVal Pessoa As IPessoa)
