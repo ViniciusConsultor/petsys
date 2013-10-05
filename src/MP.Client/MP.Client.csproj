@@ -87,6 +87,13 @@
     <Compile Include="MP\CadastroDeTiposDePatentes.aspx.designer.cs">
       <DependentUpon>CadastroDeTiposDePatentes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdInventor.aspx.cs">
+      <DependentUpon>cdInventor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdInventor.aspx.designer.cs">
+      <DependentUpon>cdInventor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\cdTipoDePatente.aspx.cs">
       <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -120,11 +127,12 @@
     <None Include="MP.Client.snk" />
     <Content Include="MP\CadastroDeProcuradores.aspx" />
     <Content Include="MP\CadastroDeTiposDePatentes.aspx" />
+    <Content Include="MP\cdInventor.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="MP\TiposDePatenteCadastrado.aspx" />
-    <Content Include="WorkSpace.Master" />
     <Content Include="Web.config" />
+    <Content Include="WorkSpace.Master" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
