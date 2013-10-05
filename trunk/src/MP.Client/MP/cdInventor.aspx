@@ -4,7 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista">
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" onbuttonclick="rtbToolBar_ButtonClick" >
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.002.0001" />
