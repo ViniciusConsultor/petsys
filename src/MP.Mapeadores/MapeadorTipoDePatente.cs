@@ -38,13 +38,13 @@ namespace MP.Mapeadores
                     tipoDePatente.QuantidadePagamento = UtilidadesDePersistencia.getValorInteger(leitor, "QuantidadePagamento");
                     tipoDePatente.TempoEntrePagamento = UtilidadesDePersistencia.getValorInteger(leitor, "TempoEntrePagamento");
                     tipoDePatente.SequenciaInicioPagamento = UtilidadesDePersistencia.getValorInteger(leitor, "SequenciaInicioPagamento");
-                    tipoDePatente.TemPagamentoIntermediario = UtilidadesDePersistencia.GetValorBooleano(leitor, "TemPagamentoIntermediario");
+                    tipoDePatente.TemPagamentoIntermediario = UtilidadesDePersistencia.GetValorString(leitor, "TemPagamentoIntermediario");
                     tipoDePatente.InicioIntermediarioSequencia = UtilidadesDePersistencia.getValorInteger(leitor, "InicioIntermediarioSequencia");
                     tipoDePatente.QuantidadePagamentoIntermediario = UtilidadesDePersistencia.getValorInteger(leitor, "QuantidadePagamentoIntermediario");
                     tipoDePatente.TempoEntrePagamentoIntermediario = UtilidadesDePersistencia.getValorInteger(leitor, "TempoEntrePagamentoIntermediario");
                     tipoDePatente.DescricaoPagamento = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoPagamento");
                     tipoDePatente.DescricaoPagamentoIntermediario = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoPagamentoIntermediario");
-                    tipoDePatente.TemPedidoDeExame = UtilidadesDePersistencia.GetValorBooleano(leitor, "TemPedidoDeExame");
+                    tipoDePatente.TemPedidoDeExame = UtilidadesDePersistencia.GetValorString(leitor, "TemPedidoDeExame");
 
                     listaDeTiposDePatentes.Add(tipoDePatente);
                 }
@@ -60,7 +60,7 @@ namespace MP.Mapeadores
             sql.Append("SELECT IDTIPO_PATENTE as IdTipoDePatente, DESCRICAO_TIPO_PATENTE as DescricaoTipoDePatente, SIGLA_TIPO as SiglaTipo, TEMPO_INICIO_ANOS as TempoInicioAnos, QUANTIDADE_PAGTO as QuantidadePagamento, ");
             sql.Append("TEMPO_ENTRE_PAGTO as TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO as SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO as TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA as InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED as QuantidadePagamentoIntermediario, ");
             sql.Append("TEMPO_ENTRE_PAGTO_INTERMED as TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO as DescricaoPagamento, DESCRICAO_PAGTO_INTERMED as DescricaoPagamentoIntermediario, TEM_PED_EXAME as TemPedidoDeExame ");
-            sql.Append("FROM MP_TIPO_PATENTE");
+            sql.Append("FROM MP_TIPO_PATENTE ");
             sql.Append("WHERE IDTIPO_PATENTE = " + idTipoPatente);
 
             ITipoDePatente tipoDePatente = null;
@@ -92,13 +92,13 @@ namespace MP.Mapeadores
                     tipoDePatente.QuantidadePagamento = UtilidadesDePersistencia.getValorInteger(leitor, "QuantidadePagamento");
                     tipoDePatente.TempoEntrePagamento = UtilidadesDePersistencia.getValorInteger(leitor, "TempoEntrePagamento");
                     tipoDePatente.SequenciaInicioPagamento = UtilidadesDePersistencia.getValorInteger(leitor, "SequenciaInicioPagamento");
-                    tipoDePatente.TemPagamentoIntermediario = UtilidadesDePersistencia.GetValorBooleano(leitor, "TemPagamentoIntermediario");
+                    tipoDePatente.TemPagamentoIntermediario = UtilidadesDePersistencia.GetValorString(leitor, "TemPagamentoIntermediario");
                     tipoDePatente.InicioIntermediarioSequencia = UtilidadesDePersistencia.getValorInteger(leitor, "InicioIntermediarioSequencia");
                     tipoDePatente.QuantidadePagamentoIntermediario = UtilidadesDePersistencia.getValorInteger(leitor, "QuantidadePagamentoIntermediario");
                     tipoDePatente.TempoEntrePagamentoIntermediario = UtilidadesDePersistencia.getValorInteger(leitor, "TempoEntrePagamentoIntermediario");
                     tipoDePatente.DescricaoPagamento = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoPagamento");
                     tipoDePatente.DescricaoPagamentoIntermediario = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoPagamentoIntermediario");
-                    tipoDePatente.TemPedidoDeExame = UtilidadesDePersistencia.GetValorBooleano(leitor, "TemPedidoDeExame");
+                    tipoDePatente.TemPedidoDeExame = UtilidadesDePersistencia.GetValorString(leitor, "TemPedidoDeExame");
 
                     listaDeTiposDePatentes.Add(tipoDePatente);
                 }
@@ -154,13 +154,13 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", tipoPatente.QuantidadePagamento.ToString(), "', "));
             sql.Append(String.Concat("'", tipoPatente.TempoEntrePagamento.ToString(), "', "));
             sql.Append(String.Concat("'", tipoPatente.SequenciaInicioPagamento.ToString(), "', "));
-            sql.Append(String.Concat("'", tipoPatente.TemPagamentoIntermediario.ToString(), "', "));
+            sql.Append(String.Concat("'", tipoPatente.TemPagamentoIntermediario, "', "));
             sql.Append(String.Concat("'", tipoPatente.InicioIntermediarioSequencia.ToString(), "', "));
             sql.Append(String.Concat("'", tipoPatente.QuantidadePagamentoIntermediario.ToString(), "', "));
             sql.Append(String.Concat("'", tipoPatente.TempoEntrePagamentoIntermediario.ToString(), "', "));
             sql.Append(String.Concat("'", tipoPatente.DescricaoPagamento, "', "));
             sql.Append(String.Concat("'", tipoPatente.DescricaoPagamentoIntermediario, "', "));
-            sql.Append(String.Concat("'", tipoPatente.TemPedidoDeExame.ToString(), "') "));
+            sql.Append(String.Concat("'", tipoPatente.TemPedidoDeExame, "') "));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }

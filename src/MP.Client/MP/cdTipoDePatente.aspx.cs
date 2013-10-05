@@ -78,13 +78,10 @@ namespace MP.Client.MP
             Control controlePanel = this.PanelCdTipoDePatente;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+            ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             PanelCdTipoDePatente.Visible = true;
             ctrlTipoDePatente.Visible = false;
-            //ctrlTipoDePatente.vi
-
-
-            ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             ctrlTipoDePatente.Inicializa();
             ctrlTipoDePatente.EnableLoadOnDemand = false;
@@ -98,35 +95,31 @@ namespace MP.Client.MP
 
         private void CarregueCombosFormulario()
         {
-            var itemNaoInterPedidoExame = new RadComboBoxItem("Não", "0");
-            var itemSimInterPedidoExame = new RadComboBoxItem("Sim", "1");
+            var itemNaoPgtoIntermediario = new RadComboBoxItem("Não", "0");
+            var itemSimPgtoIntermediario = new RadComboBoxItem("Sim", "1");
 
-            cbPgtoInterPedidoExame.Items.Add(itemNaoInterPedidoExame);
-            cbPgtoInterPedidoExame.Items.Add(itemSimInterPedidoExame);
+            this.cbPgtoIntermediario.Items.Add(itemNaoPgtoIntermediario);
+            this.cbPgtoIntermediario.Items.Add(itemSimPgtoIntermediario);
 
-            itemNaoInterPedidoExame.DataBind();
-            itemSimInterPedidoExame.DataBind();
+            itemNaoPgtoIntermediario.DataBind();
+            itemSimPgtoIntermediario.DataBind();
 
-            cbPgtoInterPedidoExame.ClearSelection();
+            var itemNaoPgtoInterPedidoExame = new RadComboBoxItem("Não", "0");
+            var itemSimPgtoInterPedidoExame = new RadComboBoxItem("Sim", "1");
 
-            var itemNaoIntermediario = new RadComboBoxItem("Não", "0");
-            var itemSimIntermediario = new RadComboBoxItem("Sim", "1");
+            this.cbPgtoInterPedidoExame.Items.Add(itemNaoPgtoInterPedidoExame);
+            this.cbPgtoInterPedidoExame.Items.Add(itemSimPgtoInterPedidoExame);
 
-            cbPgtoIntermediario.Items.Add(itemNaoIntermediario);
-            cbPgtoIntermediario.Items.Add(itemSimIntermediario);
-
-            itemNaoIntermediario.DataBind();
-            itemNaoIntermediario.DataBind();
-
-            cbPgtoIntermediario.ClearSelection();
+            itemNaoPgtoInterPedidoExame.DataBind();
+            itemSimPgtoInterPedidoExame.DataBind();
         }
 
         private void ExibaTelaModificar()
         {
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
@@ -135,6 +128,9 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
+
+            PanelCdTipoDePatente.Visible = true;
+            ctrlTipoDePatente.Visible = false;
 
             ctrlTipoDePatente.EnableLoadOnDemand = false;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
@@ -155,6 +151,8 @@ namespace MP.Client.MP
             Control controlePanel = this.PanelCdTipoDePatente;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+
+            PanelCdTipoDePatente.Visible = false;
         }
 
         protected void btnCancela_Click()
@@ -166,14 +164,14 @@ namespace MP.Client.MP
         {
             var tipoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDePatente>();
 
-            if (!Convert.ToByte(ViewState[CHAVE_ESTADO]).Equals(Estado.Novo))
+            if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
             {
                 tipoDePatente.IdTipoDePatente = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
             tipoDePatente.DescricaoTipoDePatente = this.txtDescricao.Text;
-            tipoDePatente.SiglaTipo = this.txtSigla.Text;
-
+            tipoDePatente.SiglaTipo = txtSigla.Text;
+            tipoDePatente.DescricaoPagamento = this.txtDescricaoPagamento.Text;
             tipoDePatente.DescricaoPagamentoIntermediario = this.txtDescricaoPagamentoIntermediario.Text;
             tipoDePatente.SequenciaInicioPagamento = Convert.ToInt32(this.txtIniciarPagamentoSequencia.Text);
             tipoDePatente.TempoEntrePagamento = Convert.ToInt32(this.txtIntervaloPagamentos.Text);
@@ -182,25 +180,25 @@ namespace MP.Client.MP
             tipoDePatente.QuantidadePagamentoIntermediario =
                 Convert.ToInt32(this.txtQuantidadePagamentoIntermediario.Text);
             tipoDePatente.InicioIntermediarioSequencia = Convert.ToInt32(this.txtSequenciaInicioPagamentoIntermediario.Text);
-
+          
             tipoDePatente.TempoInicioAnos = Convert.ToInt32(this.txtTempoInicioPagamentos.Text);
 
-            if(cbPgtoInterPedidoExame.SelectedValue == "0" )
+            if(cbPgtoInterPedidoExame.SelectedValue == "0")
             {
-                //tipoDePatente.TemPedidoDeExame = "0"
+                tipoDePatente.TemPedidoDeExame = "0";
             }
             else
             {
-                
+                tipoDePatente.TemPedidoDeExame = "1";
             }
 
             if(cbPgtoIntermediario.SelectedValue == "0")
             {
-                
+                tipoDePatente.TemPagamentoIntermediario = "0";
             }
             else
             {
-                
+                tipoDePatente.TemPagamentoIntermediario = "1";
             }
 
             return tipoDePatente;
@@ -215,15 +213,15 @@ namespace MP.Client.MP
             {
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
                 {
-                    if (!Convert.ToByte(ViewState[CHAVE_ESTADO]).Equals(Estado.Novo))
+                    if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
                         servico.Inserir(tipoDePatente);
-                        mensagem = "Tipo de patente cadastrada com sucesso.";
+                        mensagem = "Tipo de patente cadastrado com sucesso.";
                     }
                     else
                     {
                         servico.Modificar(tipoDePatente);
-                        mensagem = "Tipo de patente modificada com sucesso.";
+                        mensagem = "Tipo de patente modificado com sucesso.";
                     }
                 }
 
@@ -265,7 +263,7 @@ namespace MP.Client.MP
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(
-                                                            "Pessoa excluida com sucesso."), false);
+                                                            "Tipo de patente excluído com sucesso."), false);
                 ExibaTelaInicial();
             }
             catch (BussinesException ex)
@@ -309,6 +307,7 @@ namespace MP.Client.MP
 
             ctrlTipoDePatente.DescricaoTipoDePatente = tipoDePatente.DescricaoTipoDePatente;
             ctrlTipoDePatente.SiglaTipo = tipoDePatente.SiglaTipo;
+
             this.txtDescricaoPagamento.Text = tipoDePatente.DescricaoPagamento;
             this.txtDescricaoPagamentoIntermediario.Text = tipoDePatente.DescricaoPagamentoIntermediario;
             this.txtDescricao.Text = tipoDePatente.DescricaoTipoDePatente;
@@ -321,25 +320,27 @@ namespace MP.Client.MP
             this.txtSigla.Text = tipoDePatente.SiglaTipo;
             this.txtTempoInicioPagamentos.Text = tipoDePatente.TempoInicioAnos.ToString();
 
-            if (tipoDePatente.TemPedidoDeExame)
+            CarregueCombosFormulario();
+            
+            if (tipoDePatente.TemPedidoDeExame == "0")
             {
-                this.cbPgtoInterPedidoExame.SelectedValue = "SIM";
+                this.cbPgtoInterPedidoExame.SelectedValue = "0";
             }
             else
             {
-                this.cbPgtoInterPedidoExame.SelectedValue = "NAO";
+                this.cbPgtoInterPedidoExame.SelectedValue = "1";
             }
 
-            if (tipoDePatente.TemPagamentoIntermediario)
+            if (tipoDePatente.TemPagamentoIntermediario == "0")
             {
-                this.cbPgtoIntermediario.SelectedValue = "SIM";
+                this.cbPgtoIntermediario.SelectedValue = "0";
             }
             else
             {
-                this.cbPgtoIntermediario.SelectedValue = "NAO";
+                this.cbPgtoIntermediario.SelectedValue = "1";
             }
 
-            //ExibaTelaConsultar();
+            ExibaTelaModificar();
         }
 
         protected override string ObtenhaIdFuncao()
@@ -349,7 +350,7 @@ namespace MP.Client.MP
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()
         {
-            return rtbToolBar;
+            return rtbToolBar; 
         }
 
         private enum Estado : byte
