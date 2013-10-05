@@ -254,7 +254,7 @@ namespace MP.Client.MP
                 inventor = servico.Obtenha(pessoa);
             }
 
-            if (inventor != null)
+            if (inventor == null)
             {
                 ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
                 return;
@@ -266,9 +266,9 @@ namespace MP.Client.MP
 
         private void MostreInventor(IInventor inventor)
         {
-            
+            ctrlPessoa1.PessoaSelecionada = inventor.Pessoa;
+            txtDataDoCadastro.SelectedDate = inventor.DataDoCadastro;
+            txtInformacoesAdicionais.Text = inventor.InformacoesAdicionais;
         }
-
-
     }
 }
