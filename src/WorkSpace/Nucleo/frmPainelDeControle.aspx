@@ -75,7 +75,8 @@
                                         <asp:Label ID="Label1" runat="server" Text="Porta"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <telerik:RadNumericTextBox ID="txtPorta" runat="server" Skin="Vista">
+                                        <telerik:RadNumericTextBox ID="txtPorta" runat="server" Skin="Vista"  >
+                                            <NumberFormat DecimalDigits="0" />
                                         </telerik:RadNumericTextBox>
                                     </td>
                                 </tr>

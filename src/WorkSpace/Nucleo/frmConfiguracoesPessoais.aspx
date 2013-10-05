@@ -83,8 +83,8 @@
                                         </telerik:RadScriptBlock>
                                         <telerik:RadAsyncUpload runat="server" ID="uplAtalho" MaxFileInputsCount="1" AllowedFileExtensions=".gif"
                                             PostbackTriggers="btnSalvarAtalho" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
-                                            Localization-Select="Selecione um icone" />
-                                        <asp:Button runat="server" ID="btnSalvarAtalho" Text="Enviar para o servidor" OnClientClick="updateAtalhos(); return false;" />
+                                            Localization-Select="Procurar" />
+                                        <asp:Button runat="server" ID="btnSalvarAtalho" Text="Enviar para o servidor" OnClientClick="updateAtalhos(); return false;" CssClass="RadUploadSubmit" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -173,10 +173,10 @@
                         </telerik:RadScriptBlock>
                         <asp:Image ID="imgPapelDeParede" runat="server" />
                         <telerik:RadAsyncUpload runat="server" ID="uplPapelParede" MaxFileInputsCount="1"
-                            AllowedFileExtensions=".jpg,.jpeg,.png" PostbackTriggers="btnSalvarPapelParede"
-                            Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Selecione uma imagem" />
+                            AllowedFileExtensions=".jpg,.jpeg,.png,.bmp" PostbackTriggers="btnSalvarPapelParede"
+                            Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Procurar" />
                         <asp:Button runat="server" ID="btnSalvarPapelParede" Text="Enviar para o servidor"
-                            OnClientClick="updatePapelDeParede(); return false;" />
+                            OnClientClick="updatePapelDeParede(); return false;" CssClass="RadUploadSubmit"  />
                     </td>
                 </tr>
             </table>
