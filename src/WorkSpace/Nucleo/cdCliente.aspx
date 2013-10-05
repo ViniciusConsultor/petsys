@@ -2,10 +2,7 @@
     CodeBehind="cdCliente.aspx.vb" Inherits="WorkSpace.cdCliente" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
-    TagPrefix="cc1" %>
 <%@ Register Src="~/ctrlGrupoDeAtividade.ascx" TagName="ctrlGrupo" TagPrefix="uc1" %>
-
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
