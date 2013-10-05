@@ -4,9 +4,10 @@
 <%@ Register Src="~/ctrlMunicipios.ascx" TagName="ctrlMunicipios" TagPrefix="uc2" %>
 <%@ Register Src="~/ctrlBancosEAgencias.ascx" TagName="ctrlBancosEAgencias" TagPrefix="uc3" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="~/ctrlTipoEndereco.ascx" TagName="ctrlTipoEndereco" TagPrefix="uc1" %>
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <telerik:RadToolBar ID="rtbToolBar" AutoPostBack="true" runat="server" Skin="Vista"
-        Style="width: 100%;">
+    <telerik:radtoolbar id="rtbToolBar" autopostback="true" runat="server" skin="Vista"
+        style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
                 CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.NCL.006.0003" />
@@ -14,8 +15,8 @@
                 CommandName="btnSalvar" CausesValidation="True" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
-    </telerik:RadToolBar>
-    <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
+    </telerik:radtoolbar>
+    <telerik:raddocklayout id="RadDockLayout1" runat="server" skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
             <telerik:RadDock ID="rdkPessoa" runat="server" Title="Pessoa" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
@@ -81,19 +82,11 @@
                           //]]>
                                                 </script>
                                             </telerik:RadScriptBlock>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <telerik:RadAsyncUpload runat="server" ID="uplFoto" MaxFileInputsCount="1" AllowedFileExtensions=".jpg,.jpeg,.bmp,.png"
+                                            <telerik:RadAsyncUpload runat="server" ID="uplFoto" MaxFileInputsCount="1" AllowedFileExtensions=".jpg,.jpeg,.bmp,.png"
                                                             PostbackTriggers="ButtonSubmit" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
                                                             Localization-Select="Procurar" />
-                                                    </td>
-                                                    <td valign="top">
-                                                        <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateFotoPessoa(); return false;"
+                                            <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateFotoPessoa(); return false;"
                                                             CausesValidation="False" CssClass="RadUploadSubmit" />
-                                                    </td>
-                                                </tr>
-                                            </table>
                                         </td>
                                     </tr>
                                     <tr>
@@ -102,7 +95,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtNomeFantasia" runat="server" MaxLength="100" Skin="Vista"
-                                                Width="300px" SelectionOnFocus="CaretToBeginning">
+                                                Width="400px" SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
                                         </td>
                                     </tr>
@@ -112,6 +105,15 @@
                         <telerik:RadPageView ID="RadPageView2" runat="server" SkinID="Vista">
                             <asp:Panel ID="pnlEndereco" runat="server">
                                 <table class="tabela">
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label30" runat="server" Text="Tipo de endereço"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <uc1:ctrlTipoEndereco ID="ctrlTipoEndereco1" runat="server" />
+                                             
+                                        </td>
+                                    </tr>   
                                     <tr>
                                         <td class="th3">
                                             <asp:Label ID="Label8" runat="server" Text="Logradouro"></asp:Label>
@@ -167,6 +169,39 @@
                                             <telerik:RadMaskedTextBox ID="txtCEPEndereco" runat="server" Mask="##.###-###" Skin="Vista"
                                                 LabelCssClass="radLabelCss_Vista">
                                             </telerik:RadMaskedTextBox>
+                                             <asp:Button ID="btnAdicionarEndereco" runat="server" CssClass="RadUploadSubmit" Text="Adicionar endereço" />
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td colspan="2">
+                                            <telerik:RadGrid ID="grdEnderecos" runat="server" AutoGenerateColumns="False" GridLines="None"
+                                                Skin="Vista">
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
+                                                            ImageUrl="~/imagens/delete.gif">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn DataField="Logradouro" UniqueName="column1" Visible="True" HeaderText="Logradouro">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Complemento" UniqueName="column2" Visible="True" HeaderText="Complemento">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Municipio.Nome" UniqueName="column3" Visible="True" HeaderText="Município">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="CEP" UniqueName="column4" HeaderText="CEP">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Bairro" UniqueName="column5" HeaderText="Bairro">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="TipoDeEndereco.Nome" UniqueName="column6" HeaderText="Tipo">
+                                                        </telerik:GridBoundColumn>
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
                                         </td>
                                     </tr>
                                 </table>
@@ -302,5 +337,5 @@
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>
-    </telerik:RadDockLayout>
+    </telerik:raddocklayout>
 </asp:Content>
