@@ -15,6 +15,7 @@ Public Class ctrlTipoEndereco
 
     Public Sub LimparControle()
         UtilidadesWeb.LimparComponente(CType(cboTiposDeEndereco, Control))
+        cboTiposDeEndereco.ClearSelection()
         TipoSelecionado = Nothing
     End Sub
 

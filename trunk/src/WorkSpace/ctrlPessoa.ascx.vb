@@ -23,6 +23,8 @@ Partial Public Class ctrlPessoa
     Private Sub LimparControle()
         UtilidadesWeb.LimparComponente(CType(pnlPessoa, Control))
         PessoaSelecionada = Nothing
+        cboPessoaFisica.ClearSelection()
+        cboPessoaJuridica.ClearSelection()
     End Sub
 
     Private WriteOnly Property HabilitaControles() As Boolean

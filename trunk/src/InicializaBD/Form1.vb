@@ -49,6 +49,8 @@ Public Class Form1
 
         Try
             InicializaMunicipios()
+            InicializaGruposDeAtividade()
+            InicializaTiposDeEndereco()
             Dim IDOperador = IniciaOperador()
             IniciaEmpresa(IDOperador)
 
@@ -229,6 +231,98 @@ Public Class Form1
         Senha = FabricaGenerica.GetInstancia.CrieObjeto(Of ISenha)(New Object() {SenhaTXTCript, Now})
         Return Senha
     End Function
+
+    Private Sub InicializaGruposDeAtividade()
+        Me.Cursor = Cursors.WaitCursor
+        ToolStripStatusLabel1.Text = "Abrindo arquivo de grupos de atividade..."
+
+        Dim Diretorio As String = Environment.CurrentDirectory
+
+        Dim Arquivo As New StreamReader(Diretorio & "\GruposDeAtividade.txt")
+        Dim GruposDeAtividade As IList(Of IGrupoDeAtividade) = New List(Of IGrupoDeAtividade)
+
+        ToolStripStatusLabel1.Text = "Iniciando a leitura do arquivo..."
+        While Not Arquivo.EndOfStream
+            Dim Linha As String
+
+            Linha = Arquivo.ReadLine()
+
+            If Not String.IsNullOrEmpty(Linha) Then
+                Dim grupoDeAtividade = FabricaGenerica.GetInstancia().CrieObjeto(Of IGrupoDeAtividade)()
+                grupoDeAtividade.Nome = Linha
+                GruposDeAtividade.Add(grupoDeAtividade)
+            End If
+        End While
+
+        ToolStripStatusLabel1.Text = "Dados carregados com sucesso.."
+        ToolStripStatusLabel1.Text = "Iniciando processamento.."
+        ToolStripProgressBar1.Visible = True
+        ToolStripProgressBar1.Maximum = GruposDeAtividade.Count
+        Me.Activate()
+        ToolStripStatusLabel1.Text = "Inserindo grupos de atividade"
+
+        Using Servico As IServicoDeGrupoDeAtividade = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupoDeAtividade)()
+            For Each Grupo As IGrupoDeAtividade In GruposDeAtividade
+                Application.DoEvents()
+                Servico.Insira(Grupo)
+                ToolStripStatusLabel1.Text = "Grupo de atvidade  - " & Grupo.Nome & " inserido com sucesso..."
+                ToolStripProgressBar1.Increment(1)
+            Next
+        End Using
+
+        ToolStripStatusLabel1.Text = "Total de grupos de atividade inseridos: " & GruposDeAtividade.Count
+
+        Me.Cursor = Cursors.Default
+        Me.ToolStripProgressBar1.Value = 0
+        ToolStripProgressBar1.Visible = False
+        ToolStripStatusLabel1.Text = ""
+    End Sub
+
+    Private Sub InicializaTiposDeEndereco()
+        Me.Cursor = Cursors.WaitCursor
+        ToolStripStatusLabel1.Text = "Abrindo arquivo de tipos de endereco..."
+
+        Dim Diretorio As String = Environment.CurrentDirectory
+
+        Dim Arquivo As New StreamReader(Diretorio & "\TiposDeEndereco.txt")
+        Dim TiposDeEndereco As IList(Of ITipoDeEndereco) = New List(Of ITipoDeEndereco)
+
+        ToolStripStatusLabel1.Text = "Iniciando a leitura do arquivo..."
+        While Not Arquivo.EndOfStream
+            Dim Linha As String
+
+            Linha = Arquivo.ReadLine()
+
+            If Not String.IsNullOrEmpty(Linha) Then
+                Dim tipo = FabricaGenerica.GetInstancia().CrieObjeto(Of ITipoDeEndereco)()
+                tipo.Nome = Linha
+                TiposDeEndereco.Add(tipo)
+            End If
+        End While
+
+        ToolStripStatusLabel1.Text = "Dados carregados com sucesso.."
+        ToolStripStatusLabel1.Text = "Iniciando processamento.."
+        ToolStripProgressBar1.Visible = True
+        ToolStripProgressBar1.Maximum = TiposDeEndereco.Count
+        Me.Activate()
+        ToolStripStatusLabel1.Text = "Inserindo tipos de endereço"
+
+        Using Servico As IServicoDeTipoDeEndereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeTipoDeEndereco)()
+            For Each Tipo As ITipoDeEndereco In TiposDeEndereco
+                Application.DoEvents()
+                Servico.Insira(Tipo)
+                ToolStripStatusLabel1.Text = "Tipo de endereço  - " & Tipo.Nome & " inserido com sucesso..."
+                ToolStripProgressBar1.Increment(1)
+            Next
+        End Using
+
+        ToolStripStatusLabel1.Text = "Total de tipos de endereços inseridos: " & TiposDeEndereco.Count
+
+        Me.Cursor = Cursors.Default
+        Me.ToolStripProgressBar1.Value = 0
+        ToolStripProgressBar1.Visible = False
+        ToolStripStatusLabel1.Text = ""
+    End Sub
 
     Private Sub InicializaMunicipios()
         Me.Cursor = Cursors.WaitCursor

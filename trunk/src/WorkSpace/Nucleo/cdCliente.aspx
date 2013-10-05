@@ -48,7 +48,7 @@
                                 <asp:Label ID="Label7" runat="server" Text="Número do registro"></asp:Label>
                             </td>
                             <td class="td">
-                                <telerik:RadTextBox ID="txtNumeroDoRegistro" runat="server">
+                                <telerik:RadTextBox ID="txtNumeroDoRegistro" runat="server" MaxLength="20">
                                 </telerik:RadTextBox>
                             </td>
                         </tr>

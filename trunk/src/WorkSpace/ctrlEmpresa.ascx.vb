@@ -16,6 +16,7 @@ Public Class ctrlEmpresa
     Public Sub LimparControle()
         UtilidadesWeb.LimparComponente(CType(pnlEmpresa, Control))
         EmpresaSelecionada = Nothing
+        cboEmpresa.ClearSelection()
     End Sub
 
     Public Sub HabiliteComponente(ByVal Habilitar As Boolean)
