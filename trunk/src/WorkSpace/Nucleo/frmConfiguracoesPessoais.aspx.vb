@@ -269,6 +269,7 @@ Partial Public Class frmConfiguracoesPessoais
         Me.txtNomeAtalhoExterno.Text = ""
         Me.txtURLAtalhoExterno.Text = ""
         Me.imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
+        UtilidadesWeb.LimparComponente(CType(grdAtalhosExternos, Control))
     End Sub
 
    Private Function ConsisteDados() As String
