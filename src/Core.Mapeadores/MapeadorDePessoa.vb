@@ -78,10 +78,11 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         If Not Pessoa.Enderecos Is Nothing AndAlso Not Pessoa.Enderecos.Count = 0 Then
             For Each Endereco As IEndereco In Pessoa.Enderecos
                 SQL = New StringBuilder
-                SQL.Append("INSERT INTO NCL_PESSOAENDERECO (IDPESSOA, TIPO, LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, BAIRRO)")
+                SQL.Append("INSERT INTO NCL_PESSOAENDERECO (IDPESSOA, TIPO, INDICE, LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, BAIRRO)")
                 SQL.Append(" VALUES ( ")
                 SQL.Append(String.Concat(Pessoa.ID, ", "))
                 SQL.Append(String.Concat(Endereco.TipoDeEndereco.ID, ", "))
+                SQL.Append(String.Concat(Pessoa.Enderecos.IndexOf(Endereco), ", "))
 
                 If String.IsNullOrEmpty(Endereco.Logradouro) Then
                     SQL.Append("NULL, ")
@@ -274,9 +275,10 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
-        SQL.Append("SELECT IDPESSOA, TIPO, LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, BAIRRO, ID, NOME FROM NCL_PESSOAENDERECO, NCL_TIPO_ENDERECO")
+        SQL.Append("SELECT IDPESSOA, TIPO, INDICE, LOGRADOURO, COMPLEMENTO, IDMUNICIPIO, CEP, BAIRRO, ID, NOME FROM NCL_PESSOAENDERECO, NCL_TIPO_ENDERECO")
         SQL.Append(" WHERE IDPESSOA = " & Pessoa.ID.Value.ToString)
-        SQL.Append(" AND TIPO = NCL_TIPO_ENDERECO.ID")
+        SQL.Append(" AND TIPO = NCL_TIPO_ENDERECO.ID ")
+        SQL.Append(" ORDER BY INDICE")
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
             Try

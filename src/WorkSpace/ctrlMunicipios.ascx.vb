@@ -62,6 +62,7 @@ Partial Public Class ctrlMunicipios
     Public Sub LimparControle()
         UtilidadesWeb.LimparComponente(CType(pnlMunicipio, Control))
         MunicipioSelecionado = Nothing
+        cboMunicipios.ClearSelection()
     End Sub
 
     Public Sub HabiliteComponente(ByVal Habilitar As Boolean)

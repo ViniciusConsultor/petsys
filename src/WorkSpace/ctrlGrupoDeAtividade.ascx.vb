@@ -16,6 +16,7 @@ Public Class ctrlGrupoDeAtividade
     Public Sub LimparControle()
         UtilidadesWeb.LimparComponente(CType(cboGrupos, Control))
         GrupoSelecionado = Nothing
+        cboGrupos.ClearSelection()
     End Sub
 
     Public Sub HabiliteComponente(ByVal Habilitar As Boolean)

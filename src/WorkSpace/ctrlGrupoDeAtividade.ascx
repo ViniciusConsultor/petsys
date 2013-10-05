@@ -4,5 +4,5 @@
 <telerik:radcombobox id="cboGrupos" runat="server" autopostback="True" enableloadondemand="True"
     loadingmessage="Carregando..." markfirstmatch="false" showdropdownontextboxclick="False"
     allowcustomtext="True" highlighttemplateditems="True" width="90%" skin="Vista"
-    causesvalidation="False" emptymessage="Selecione um grupo de atividade" maxlength="255">
+    causesvalidation="False" emptymessage="Selecione um grupo de atividade" maxlength="100">
     </telerik:radcombobox>
