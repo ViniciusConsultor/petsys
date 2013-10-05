@@ -14,12 +14,12 @@ namespace MP.Interfaces.Negocio
         int QuantidadePagamento { get; set; }
         int TempoEntrePagamento { get; set; }
         int SequenciaInicioPagamento { get; set; }
-        bool TemPagamentoIntermediario { get; set; }
+        string TemPagamentoIntermediario { get; set; }
         int InicioIntermediarioSequencia { get; set; }
         int QuantidadePagamentoIntermediario { get; set; }
         int TempoEntrePagamentoIntermediario { get; set; }
         string DescricaoPagamento { get; set; }
         string DescricaoPagamentoIntermediario { get; set; }
-        bool TemPedidoDeExame { get; set; }
+        string TemPedidoDeExame { get; set; }
     }
 }

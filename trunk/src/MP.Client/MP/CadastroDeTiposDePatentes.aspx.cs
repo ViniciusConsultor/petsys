@@ -75,23 +75,23 @@ namespace MP.Client.MP
                 this.txtSigla.Text = tipoDePatente.SiglaTipo;
                 this.txtTempoInicioPagamentos.Text = tipoDePatente.TempoInicioAnos.ToString();
 
-                if(tipoDePatente.TemPedidoDeExame)
-                {
-                    this.cbPgtoInterPedidoExame.SelectedValue = "SIM";
-                }
-                else
-                {
-                    this.cbPgtoInterPedidoExame.SelectedValue = "NAO";
-                }
+                //if(tipoDePatente.TemPedidoDeExame)
+                //{
+                //    this.cbPgtoInterPedidoExame.SelectedValue = "SIM";
+                //}
+                //else
+                //{
+                //    this.cbPgtoInterPedidoExame.SelectedValue = "NAO";
+                //}
                 
-                if(tipoDePatente.TemPagamentoIntermediario)
-                {
-                    this.cbPgtoIntermediario.SelectedValue = "SIM";
-                }
-                else
-                {
-                    this.cbPgtoIntermediario.SelectedValue = "NAO";
-                }
+                //if(tipoDePatente.TemPagamentoIntermediario)
+                //{
+                //    this.cbPgtoIntermediario.SelectedValue = "SIM";
+                //}
+                //else
+                //{
+                //    this.cbPgtoIntermediario.SelectedValue = "NAO";
+                //}
 
                 ViewState[CHAVE_ID_TIPOPATENTE] = tipoDePatente.IdTipoDePatente.Value.ToString();
             }
@@ -158,15 +158,15 @@ namespace MP.Client.MP
             tipoDePatente.SiglaTipo = this.txtSigla.Text;
             tipoDePatente.TempoInicioAnos = Convert.ToInt32(this.txtTempoInicioPagamentos.Text);
 
-            if (cbPgtoIntermediario.SelectedValue.Equals("SIM"))
-                tipoDePatente.TemPagamentoIntermediario = true;
-            else
-                tipoDePatente.TemPagamentoIntermediario = false;
+            //if (cbPgtoIntermediario.SelectedValue.Equals("SIM"))
+            //    tipoDePatente.TemPagamentoIntermediario = true;
+            //else
+            //    tipoDePatente.TemPagamentoIntermediario = false;
 
-            if (cbPgtoInterPedidoExame.SelectedValue.Equals("NAO"))
-                tipoDePatente.TemPedidoDeExame = false;
-            else
-                tipoDePatente.TemPedidoDeExame = true;
+            //if (cbPgtoInterPedidoExame.SelectedValue.Equals("NAO"))
+            //    tipoDePatente.TemPedidoDeExame = false;
+            //else
+            //    tipoDePatente.TemPedidoDeExame = true;
 
             return tipoDePatente;
         }

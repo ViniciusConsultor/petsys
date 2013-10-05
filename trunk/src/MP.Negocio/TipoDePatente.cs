@@ -6,6 +6,7 @@ using MP.Interfaces.Negocio;
 
 namespace MP.Negocio
 {
+    [Serializable]
     public class TipoDePatente : ITipoDePatente
     {
         private long? _idTipoDePatente;
@@ -15,13 +16,13 @@ namespace MP.Negocio
         private int _quantidadePagamento;
         private int _tempoEntrePagamento;
         private int _sequenciaInicioPagamento;
-        private bool _temPagamentoIntermediario;
+        private string _temPagamentoIntermediario;
         private int _inicioIntermediarioSequencia;
         private int _quantidadePagamentoIntermediario;
         private int _tempoEntrePagamentoIntermediario;
         private string _descricaoPagamento;
         private string _descricaoPagamentoIntermediario;
-        private bool _temPedidoDeExame;
+        private string _temPedidoDeExame;
         
 
         public long? IdTipoDePatente
@@ -66,7 +67,7 @@ namespace MP.Negocio
             set { _sequenciaInicioPagamento = value; }
         }
 
-        public bool TemPagamentoIntermediario
+        public string TemPagamentoIntermediario
         {
             get { return _temPagamentoIntermediario; }
             set { _temPagamentoIntermediario = value; }
@@ -102,7 +103,7 @@ namespace MP.Negocio
             set { _descricaoPagamentoIntermediario = value; }
         }
 
-        public bool TemPedidoDeExame
+        public string TemPedidoDeExame
         {
             get { return _temPedidoDeExame; }
             set { _temPedidoDeExame = value; }

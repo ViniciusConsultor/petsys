@@ -40,24 +40,6 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadComboBox cboTipoDePatente;
         
         /// <summary>
-        /// btnNovo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnNovo;
-        
-        /// <summary>
-        /// btnDetalhar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnDetalhar;
-        
-        /// <summary>
         /// rfvTipoDePatente control.
         /// </summary>
         /// <remarks>

@@ -124,19 +124,8 @@ namespace MP.Client.MP
         }
 
         public ctrlTipoDePatente()
-        {
-            //PreRender += Page_PreRender;
-            Load += Page_Load;
-        }
-
-        protected void btnNovo_Click(object sender, ImageClickEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected void btnDetalhar_Click(object sender, ImageClickEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+	    {
+		    Load += Page_Load;
+	    }
     }
 }

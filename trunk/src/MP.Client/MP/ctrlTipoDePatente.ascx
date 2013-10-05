@@ -37,12 +37,7 @@
                             </tr>
                         </table>
                     </ItemTemplate>
-                </telerik:RadComboBox>
-                <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="~/imagens/new.gif" CausesValidation="False"
-                    CommandArgument="OPE.CTP.001.0001" onclick="btnNovo_Click" />
-                <asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="~/imagens/details.gif"
-                    CausesValidation="False" CommandArgument="OPE.CTP.001.0004" 
-                    onclick="btnDetalhar_Click" />
+                </telerik:RadComboBox>                
                 <asp:RequiredFieldValidator ID="rfvTipoDePatente" runat="server" ErrorMessage="Campo deve ser informado."
                     ControlToValidate="cboTipoDePatente"></asp:RequiredFieldValidator>
             </td>
