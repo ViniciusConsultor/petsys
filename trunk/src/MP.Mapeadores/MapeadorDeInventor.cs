@@ -78,12 +78,95 @@ namespace MP.Mapeadores
 
         public IList<IInventor> ObtenhaPorNomeComoFiltro(string nome, int quantidadeMaxima)
         {
-            throw new NotImplementedException();
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+            IList<IInventor> inventores = new List<IInventor>(); 
+            
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            sql.Append("SELECT NCL_PESSOA.ID, NCL_PESSOA.NOME, NCL_PESSOA.TIPO,");
+            sql.Append("MP_INVENTOR.IDPESSOA, MP_INVENTOR.TIPOPESSOA ");
+            sql.Append("FROM NCL_PESSOA, MP_INVENTOR ");
+            sql.Append("WHERE MP_INVENTOR.IDPESSOA = NCL_PESSOA.ID ");
+            sql.Append("AND MP_INVENTOR.TIPOPESSOA = NCL_PESSOA.TIPO ");
+            
+            if (!string.IsNullOrEmpty(nome))
+                sql.Append(String.Concat(" AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(nome), "%'"));
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaxima))
+            {
+                try
+                {
+                    while (leitor.Read())
+                    {
+                        IPessoa pessoa;
+                        IInventor inventor = null;
+
+                        var tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPO"));
+
+                    if (tipo.Equals(TipoDePessoa.Fisica))
+                        pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>();
+                    else
+                        pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
+
+
+                        pessoa.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
+                        pessoa.Nome = UtilidadesDePersistencia.GetValorString(leitor, "NOME");
+                        inventor = MontaObjetoInvetor(leitor, pessoa);
+                        inventores.Add(inventor);
+                    }
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return inventores;
+
         }
 
         public IInventor Obtenha(long ID)
         {
-            throw new NotImplementedException();
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+            IInventor inventor = null;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            sql.Append("SELECT NCL_PESSOA.ID, NCL_PESSOA.NOME, NCL_PESSOA.TIPO,");
+            sql.Append("MP_INVENTOR.IDPESSOA, MP_INVENTOR.TIPOPESSOA ");
+            sql.Append("FROM NCL_PESSOA, MP_INVENTOR ");
+            sql.Append("WHERE MP_INVENTOR.IDPESSOA = NCL_PESSOA.ID ");
+            sql.Append("AND MP_INVENTOR.TIPOPESSOA = NCL_PESSOA.TIPO ");
+            sql.Append(String.Concat("AND IDPESSOA = ", ID.ToString()));
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), int.MaxValue))
+            {
+                try
+                {
+                    if (leitor.Read())
+                    {
+                        IPessoa pessoa;
+                       
+                        var tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPO"));
+
+                        if (tipo.Equals(TipoDePessoa.Fisica))
+                            pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>();
+                        else
+                            pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
+
+                        pessoa.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
+                        pessoa.Nome = UtilidadesDePersistencia.GetValorString(leitor, "NOME");
+                        inventor = MontaObjetoInvetor(leitor, pessoa);
+                    }
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return inventor;
         }
 
         public IInventor Obtenha(IPessoa pessoa)
