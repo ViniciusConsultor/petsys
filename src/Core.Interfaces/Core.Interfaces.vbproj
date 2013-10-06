@@ -91,6 +91,7 @@
     <Compile Include="Mapeadores\IMapeadorDeMenu.vb" />
     <Compile Include="Mapeadores\IMapeadorDeMunicipio.vb" />
     <Compile Include="Mapeadores\IMapeadorDeOperador.vb" />
+    <Compile Include="Mapeadores\IMapeadorDePais.vb" />
     <Compile Include="Mapeadores\IMapeadorDePerfil.vb" />
     <Compile Include="Mapeadores\IMapeadorDePessoa.vb" />
     <Compile Include="Mapeadores\IMapeadorDePessoaFisica.vb" />

@@ -108,6 +108,7 @@
     <Compile Include="ServicoDeMenuLocal.vb" />
     <Compile Include="ServicoDeMunicipioLocal.vb" />
     <Compile Include="ServicoDeOperadorLocal.vb" />
+    <Compile Include="ServicoDePaisLocal.vb" />
     <Compile Include="ServicoDePerfilLocal.vb" />
     <Compile Include="ServicoDePessoaFisicaLocal.vb" />
     <Compile Include="ServicoDePessoaJuridicaLocal.vb" />
