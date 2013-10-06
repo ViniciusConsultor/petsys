@@ -105,6 +105,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ctrlPais.ascx" />
     <Content Include="ctrlTipoEndereco.ascx" />
     <Content Include="ctrlEmpresa.ascx" />
     <Content Include="ctrlGrupoDeAtividade.ascx" />
@@ -321,6 +322,7 @@
     <Content Include="naoautorizado.html" />
     <Content Include="Nucleo\cdEmpresa.aspx" />
     <Content Include="Nucleo\cdGrupoDeAtividade.aspx" />
+    <Content Include="Nucleo\cdPaises.aspx" />
     <Content Include="Nucleo\cdTipoDeEndereco.aspx" />
     <Content Include="Nucleo\frmVisibilidadePorEmpresa.aspx" />
     <Content Include="Web.config">
@@ -330,6 +332,13 @@
   <ItemGroup>
     <Compile Include="AsyncUploadHandlerCustom.ashx.vb">
       <DependentUpon>AsyncUploadHandlerCustom.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlPais.ascx.designer.vb">
+      <DependentUpon>ctrlPais.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlPais.ascx.vb">
+      <DependentUpon>ctrlPais.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ctrlTipoEndereco.ascx.designer.vb">
       <DependentUpon>ctrlTipoEndereco.ascx</DependentUpon>
@@ -427,6 +436,13 @@
     </Compile>
     <Compile Include="Nucleo\cdLembrete.aspx.vb">
       <DependentUpon>cdLembrete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\cdPaises.aspx.designer.vb">
+      <DependentUpon>cdPaises.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdPaises.aspx.vb">
+      <DependentUpon>cdPaises.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdTarefa.aspx.designer.vb">

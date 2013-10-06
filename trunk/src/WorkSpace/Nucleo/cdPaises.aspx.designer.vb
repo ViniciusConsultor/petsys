@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class cdMunicipio
+Partial Public Class cdPaises
 
     '''<summary>
     '''RadAjaxLoadingPanel1 control.
@@ -68,13 +68,13 @@ Partial Public Class cdMunicipio
     Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''ctrlMunicipios1 control.
+    '''ctrlPais1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ctrlMunicipios1 As Global.WorkSpace.ctrlMunicipios
+    Protected WithEvents ctrlPais1 As Global.WorkSpace.ctrlPais
 
     '''<summary>
     '''RadDock2 control.
@@ -86,13 +86,13 @@ Partial Public Class cdMunicipio
     Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''pnlDadosDoMunicipio control.
+    '''pnlDadosDoPais control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlDadosDoMunicipio As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlDadosDoPais As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''Label7 control.
@@ -104,29 +104,11 @@ Partial Public Class cdMunicipio
     Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboUF control.
+    '''txtSigla control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboUF As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
-    '''Label8 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtCep control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtCep As Global.Telerik.Web.UI.RadMaskedTextBox
+    Protected WithEvents txtSigla As Global.Telerik.Web.UI.RadTextBox
 End Class

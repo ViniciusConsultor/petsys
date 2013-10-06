@@ -138,6 +138,7 @@
     </Compile>
     <Compile Include="Operacao.vb" />
     <Compile Include="Operador.vb" />
+    <Compile Include="Pais.vb" />
     <Compile Include="PapelPessoa.vb" />
     <Compile Include="Pessoa.vb" />
     <Compile Include="PessoaFisica.vb" />
