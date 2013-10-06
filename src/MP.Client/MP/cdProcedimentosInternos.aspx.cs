@@ -13,14 +13,14 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class cdTipoDePatente : SuperPagina
+    public partial class cdProcedimentosInternos : SuperPagina
     {
-        private const string ID_OBJETO = "ID_OBJETO_CD_TIPODEPATENTE";
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_TIPODEPATENTE";
+        private const string ID_OBJETO = "ID_OBJETO_CD_PROCEDIMENTOINTERNO";
+        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCEDIMENTOINTERNO";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlTipoDePatente.TipoDePatenteFoiSelecionada += MostreTipoDePatente;
+            ctrlProcedimentosInternos.ProcedimentosInternosFoiSelecionado += MostreProcedimentoInterno;
 
             if (!IsPostBack)
             {
@@ -38,26 +38,22 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
-            PanelCdTipoDePatente.Visible = false;
-            ctrlTipoDePatente.Visible = true;
+            PanelCdProcedimentosInternos.Visible = false;
+            ctrlProcedimentosInternos.Visible = true;
 
-            ctrlTipoDePatente.Inicializa();
-            //ctrlTipoDePatente.BotaoDetalharEhVisivel = false;
-            //ctrlTipoDePatente.BotaoNovoEhVisivel = true;
-            ctrlTipoDePatente.EnableLoadOnDemand = true;
-            ctrlTipoDePatente.ShowDropDownOnTextboxClick = true;
-            ctrlTipoDePatente.AutoPostBack = true;
-            ctrlTipoDePatente.EhObrigatorio = false;
+            ctrlProcedimentosInternos.Inicializa();
+            ctrlProcedimentosInternos.EnableLoadOnDemand = true;
+            ctrlProcedimentosInternos.ShowDropDownOnTextboxClick = true;
+            ctrlProcedimentosInternos.AutoPostBack = true;
+            ctrlProcedimentosInternos.EhObrigatorio = false;
 
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
-
-            // talvez carregue combo
         }
 
         protected void btnNovo_Click()
@@ -75,44 +71,20 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
-            PanelCdTipoDePatente.Visible = true;
-            ctrlTipoDePatente.Visible = false;
+            PanelCdProcedimentosInternos.Visible = true;
+            ctrlProcedimentosInternos.Visible = false;
 
-            ctrlTipoDePatente.Inicializa();
-            ctrlTipoDePatente.EnableLoadOnDemand = false;
-            ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
-            ctrlTipoDePatente.AutoPostBack = false;
-            ctrlTipoDePatente.EhObrigatorio = true;
-            ctrlTipoDePatente.TextoItemVazio = string.Empty;
-
-            CarregueCombosFormulario();
-        }
-
-        // alterar este método
-        private void CarregueCombosFormulario()
-        {
-            var itemNaoPgtoIntermediario = new RadComboBoxItem("Não", "0");
-            var itemSimPgtoIntermediario = new RadComboBoxItem("Sim", "1");
-
-            this.cbPgtoIntermediario.Items.Add(itemNaoPgtoIntermediario);
-            this.cbPgtoIntermediario.Items.Add(itemSimPgtoIntermediario);
-
-            itemNaoPgtoIntermediario.DataBind();
-            itemSimPgtoIntermediario.DataBind();
-
-            var itemNaoPgtoInterPedidoExame = new RadComboBoxItem("Não", "0");
-            var itemSimPgtoInterPedidoExame = new RadComboBoxItem("Sim", "1");
-
-            this.cbPgtoInterPedidoExame.Items.Add(itemNaoPgtoInterPedidoExame);
-            this.cbPgtoInterPedidoExame.Items.Add(itemSimPgtoInterPedidoExame);
-
-            itemNaoPgtoInterPedidoExame.DataBind();
-            itemSimPgtoInterPedidoExame.DataBind();
+            ctrlProcedimentosInternos.Inicializa();
+            ctrlProcedimentosInternos.EnableLoadOnDemand = false;
+            ctrlProcedimentosInternos.ShowDropDownOnTextboxClick = false;
+            ctrlProcedimentosInternos.AutoPostBack = false;
+            ctrlProcedimentosInternos.EhObrigatorio = true;
+            ctrlProcedimentosInternos.TextoItemVazio = string.Empty;
         }
 
         private void ExibaTelaModificar()
@@ -125,16 +97,16 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
-            PanelCdTipoDePatente.Visible = true;
-            ctrlTipoDePatente.Visible = false;
+            PanelCdProcedimentosInternos.Visible = true;
+            ctrlProcedimentosInternos.Visible = false;
 
-            ctrlTipoDePatente.EnableLoadOnDemand = false;
-            ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
+            ctrlProcedimentosInternos.EnableLoadOnDemand = false;
+            ctrlProcedimentosInternos.ShowDropDownOnTextboxClick = false;
         }
 
         private void ExibaTelaExcluir()
@@ -149,11 +121,11 @@ namespace MP.Client.MP
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
-            PanelCdTipoDePatente.Visible = false;
+            PanelCdProcedimentosInternos.Visible = false;
         }
 
         protected void btnCancela_Click()
@@ -161,68 +133,38 @@ namespace MP.Client.MP
             ExibaTelaInicial();
         }
 
-        private ITipoDePatente MontaObjetoTipoDePatente()
+        private IProcedimentosInternos MontaObjetoProcedimentosInternos()
         {
-            var tipoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDePatente>();
+            var procedimentosInternos = FabricaGenerica.GetInstancia().CrieObjeto<IProcedimentosInternos>();
 
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
             {
-                tipoDePatente.IdTipoDePatente = Convert.ToInt64(ViewState[ID_OBJETO]);
+                procedimentosInternos.IdTipoAndamentoInterno = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
-            tipoDePatente.DescricaoTipoDePatente = this.txtDescricao.Text;
-            tipoDePatente.SiglaTipo = txtSigla.Text;
-            tipoDePatente.DescricaoPagamento = this.txtDescricaoPagamento.Text;
-            tipoDePatente.DescricaoPagamentoIntermediario = this.txtDescricaoPagamentoIntermediario.Text;
-            tipoDePatente.SequenciaInicioPagamento = Convert.ToInt32(this.txtIniciarPagamentoSequencia.Text);
-            tipoDePatente.TempoEntrePagamento = Convert.ToInt32(this.txtIntervaloPagamentos.Text);
-            tipoDePatente.TempoEntrePagamentoIntermediario = Convert.ToInt32(txtIntervaloPagamentoIntermediario.Text);
-            tipoDePatente.QuantidadePagamento = Convert.ToInt32(this.txtQuantidadePagamentos.Text);
-            tipoDePatente.QuantidadePagamentoIntermediario =
-                Convert.ToInt32(this.txtQuantidadePagamentoIntermediario.Text);
-            tipoDePatente.InicioIntermediarioSequencia = Convert.ToInt32(this.txtSequenciaInicioPagamentoIntermediario.Text);
-          
-            tipoDePatente.TempoInicioAnos = Convert.ToInt32(this.txtTempoInicioPagamentos.Text);
+            procedimentosInternos.DescricaoTipo = this.txtDescricaoTipo.Text;
 
-            if(cbPgtoInterPedidoExame.SelectedValue == "0")
-            {
-                tipoDePatente.TemPedidoDeExame = "0";
-            }
-            else
-            {
-                tipoDePatente.TemPedidoDeExame = "1";
-            }
-
-            if(cbPgtoIntermediario.SelectedValue == "0")
-            {
-                tipoDePatente.TemPagamentoIntermediario = "0";
-            }
-            else
-            {
-                tipoDePatente.TemPagamentoIntermediario = "1";
-            }
-
-            return tipoDePatente;
+            return procedimentosInternos;
         }
 
         private void btnSalva_Click()
         {
             string mensagem;
-            var tipoDePatente = MontaObjetoTipoDePatente();
+            var procedimentoInterno = MontaObjetoProcedimentosInternos();
 
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcedimentosInternos>())
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
-                        servico.Inserir(tipoDePatente);
-                        mensagem = "Tipo de patente cadastrado com sucesso.";
+                        servico.Inserir(procedimentoInterno);
+                        mensagem = "Procedimento interno cadastrado com sucesso.";
                     }
                     else
                     {
-                        servico.Modificar(tipoDePatente);
-                        mensagem = "Tipo de patente modificado com sucesso.";
+                        servico.Modificar(procedimentoInterno);
+                        mensagem = "Procedimento interno modificado com sucesso.";
                     }
                 }
 
@@ -257,14 +199,14 @@ namespace MP.Client.MP
         {
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcedimentosInternos>())
                 {
                     servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
                 }
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(
-                                                            "Tipo de patente excluído com sucesso."), false);
+                                                            "Procedimento interno excluído com sucesso."), false);
                 ExibaTelaInicial();
             }
             catch (BussinesException ex)
@@ -273,7 +215,7 @@ namespace MP.Client.MP
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
         }
-
+        
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
         {
             switch (((RadToolBarButton)e.Item).CommandName)
@@ -302,44 +244,13 @@ namespace MP.Client.MP
             }
         }
 
-        private void MostreTipoDePatente(ITipoDePatente tipoDePatente)
+        private void MostreProcedimentoInterno(IProcedimentosInternos procedimentoInterno)
         {
-            ViewState[ID_OBJETO] = tipoDePatente.IdTipoDePatente.Value.ToString();
+            ViewState[ID_OBJETO] = procedimentoInterno.IdTipoAndamentoInterno.Value.ToString();
 
-            ctrlTipoDePatente.DescricaoTipoDePatente = tipoDePatente.DescricaoTipoDePatente;
-            ctrlTipoDePatente.SiglaTipo = tipoDePatente.SiglaTipo;
+            ctrlProcedimentosInternos.DescricaoTipo = procedimentoInterno.DescricaoTipo;
 
-            this.txtDescricaoPagamento.Text = tipoDePatente.DescricaoPagamento;
-            this.txtDescricaoPagamentoIntermediario.Text = tipoDePatente.DescricaoPagamentoIntermediario;
-            this.txtDescricao.Text = tipoDePatente.DescricaoTipoDePatente;
-            this.txtIniciarPagamentoSequencia.Text = tipoDePatente.SequenciaInicioPagamento.ToString();
-            this.txtIntervaloPagamentos.Text = tipoDePatente.TempoEntrePagamento.ToString();
-            this.txtIntervaloPagamentoIntermediario.Text = tipoDePatente.TempoEntrePagamentoIntermediario.ToString();
-            this.txtQuantidadePagamentos.Text = tipoDePatente.QuantidadePagamento.ToString();
-            this.txtQuantidadePagamentoIntermediario.Text = tipoDePatente.QuantidadePagamentoIntermediario.ToString();
-            this.txtSequenciaInicioPagamentoIntermediario.Text = tipoDePatente.InicioIntermediarioSequencia.ToString();
-            this.txtSigla.Text = tipoDePatente.SiglaTipo;
-            this.txtTempoInicioPagamentos.Text = tipoDePatente.TempoInicioAnos.ToString();
-
-            CarregueCombosFormulario();
-            
-            if (tipoDePatente.TemPedidoDeExame == "0")
-            {
-                this.cbPgtoInterPedidoExame.SelectedValue = "0";
-            }
-            else
-            {
-                this.cbPgtoInterPedidoExame.SelectedValue = "1";
-            }
-
-            if (tipoDePatente.TemPagamentoIntermediario == "0")
-            {
-                this.cbPgtoIntermediario.SelectedValue = "0";
-            }
-            else
-            {
-                this.cbPgtoIntermediario.SelectedValue = "1";
-            }
+            this.txtDescricaoTipo.Text = procedimentoInterno.DescricaoTipo;
 
             ExibaTelaModificar();
         }
