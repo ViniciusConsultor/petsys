@@ -21,10 +21,10 @@ namespace MP.Negocio
             throw new NotImplementedException();
         }
 
-        public IList<IEndereco> ObtenhaEnderecos(ITipoDeEndereco TipoDeEndereco)
-        {
-            throw new NotImplementedException();
-        }
+        //public IList<IEndereco> ObtenhaEnderecos(ITipoDeEndereco TipoDeEndereco)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void AdicioneDocumento(IDocumento Documento)
         {
@@ -77,6 +77,12 @@ namespace MP.Negocio
         public IList<ITelefone> Telefones
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public IEndereco Endereco
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         public IList<IEndereco> Enderecos

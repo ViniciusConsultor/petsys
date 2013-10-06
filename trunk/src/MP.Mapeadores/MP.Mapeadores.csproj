@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapeadorDeInventor.cs" />
+    <Compile Include="MapeadorDeProcedimentosInternos.cs" />
     <Compile Include="MapeadorDeProcurador.cs" />
     <Compile Include="MapeadorTipoDePatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

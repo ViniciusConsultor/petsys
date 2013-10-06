@@ -88,12 +88,26 @@
     <Compile Include="MP\cdInventor.aspx.designer.cs">
       <DependentUpon>cdInventor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdProcedimentosInternos.aspx.cs">
+      <DependentUpon>cdProcedimentosInternos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdProcedimentosInternos.aspx.designer.cs">
+      <DependentUpon>cdProcedimentosInternos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\cdTipoDePatente.aspx.cs">
       <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MP\cdTipoDePatente.aspx.designer.cs">
       <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlProcedimentosInternos.ascx.cs">
+      <DependentUpon>ctrlProcedimentosInternos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlProcedimentosInternos.ascx.designer.cs">
+      <DependentUpon>ctrlProcedimentosInternos.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlTipoDePatente.ascx.cs">
       <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
@@ -114,7 +128,9 @@
     <None Include="MP.Client.snk" />
     <Content Include="MP\CadastroDeProcuradores.aspx" />
     <Content Include="MP\cdInventor.aspx" />
+    <Content Include="MP\cdProcedimentosInternos.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
+    <Content Include="MP\ctrlProcedimentosInternos.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />

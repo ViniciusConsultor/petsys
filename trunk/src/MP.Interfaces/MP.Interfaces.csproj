@@ -55,13 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeInventor.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeProcedimentosInternos.cs" />
     <Compile Include="Mapeadores\IMapeadorDeProcurador.cs" />
     <Compile Include="Mapeadores\IMapeadorTipoDePatente.cs" />
     <Compile Include="Negocio\IInventor.cs" />
+    <Compile Include="Negocio\IProcedimentosInternos.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\ITipoDePatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />
+    <Compile Include="Servicos\IServicoDeProcedimentosInternos.cs" />
     <Compile Include="Servicos\IServicoDeProcurador.cs" />
     <Compile Include="Servicos\IServicoDeTipoDePatente.cs" />
   </ItemGroup>
