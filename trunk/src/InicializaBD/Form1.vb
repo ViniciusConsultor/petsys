@@ -48,6 +48,7 @@ Public Class Form1
         End If
 
         Try
+            InicializaPaises()
             InicializaMunicipios()
             InicializaGruposDeAtividade()
             InicializaTiposDeEndereco()
@@ -324,6 +325,51 @@ Public Class Form1
         ToolStripStatusLabel1.Text = ""
     End Sub
 
+    Private Sub InicializaPaises()
+        Me.Cursor = Cursors.WaitCursor
+        ToolStripStatusLabel1.Text = "Abrindo arquivo de países..."
+
+        Dim Diretorio As String = Environment.CurrentDirectory
+
+        Dim Arquivo As New StreamReader(Diretorio & "\Paises.csv")
+        Dim Paises As IList(Of IPais) = New List(Of IPais)
+
+        ToolStripStatusLabel1.Text = "Iniciando a leitura do arquivo..."
+        While Not Arquivo.EndOfStream
+            Dim Linha As String
+
+            Linha = Arquivo.ReadLine()
+
+            If Not String.IsNullOrEmpty(Linha) AndAlso Not Linha.Equals(";") Then
+                Paises.Add(CriaPais(Linha))
+            End If
+        End While
+
+        ToolStripStatusLabel1.Text = "Dados carregados com sucesso.."
+        ToolStripStatusLabel1.Text = "Iniciando processamento.."
+        ToolStripProgressBar1.Visible = True
+        ToolStripProgressBar1.Maximum = Paises.Count
+        Me.Activate()
+        ToolStripStatusLabel1.Text = "Inserindo países"
+
+        Using Servico As IServicoDePais = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePais)()
+            For Each Pais As IPais In Paises
+                Application.DoEvents()
+                Servico.Inserir(Pais)
+                ToolStripStatusLabel1.Text = "País - " & Pais.Nome & " inserido com sucesso..."
+                ToolStripProgressBar1.Increment(1)
+            Next
+        End Using
+
+        ToolStripStatusLabel1.Text = "Total de Países inseridos: " & Paises.Count
+
+        Me.Cursor = Cursors.Default
+        Me.ToolStripProgressBar1.Value = 0
+        ToolStripProgressBar1.Visible = False
+        ToolStripStatusLabel1.Text = ""
+    End Sub
+
+
     Private Sub InicializaMunicipios()
         Me.Cursor = Cursors.WaitCursor
         ToolStripStatusLabel1.Text = "Abrindo arquivo de municípios..."
@@ -367,6 +413,19 @@ Public Class Form1
         ToolStripProgressBar1.Visible = False
         ToolStripStatusLabel1.Text = ""
     End Sub
+
+    Private Function CriaPais(ByVal Linha As String) As IPais
+        Dim Pais As IPais = Nothing
+        Dim Vetor() As String
+        
+        Vetor = Split(Linha, ";")
+        
+        Pais = FabricaGenerica.GetInstancia.CrieObjeto(Of IPais)()
+        Pais.Nome = ObtenhaValor(Vetor(1))
+        Pais.Sigla = ObtenhaValor(Vetor(0))
+
+        Return Pais
+    End Function
 
     Private Function CriaMunicipio(ByVal LinhaMunicipio As String) As IMunicipio
         Dim Municipio As IMunicipio = Nothing

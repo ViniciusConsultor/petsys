@@ -4,7 +4,7 @@
     <telerik:RadComboBox ID="cboPais" runat="server" AutoPostBack="True" EnableLoadOnDemand="True"
         LoadingMessage="Carregando..." ShowDropDownOnTextboxClick="False" MarkFirstMatch="false"
         AllowCustomText="True" HighlightTemplatedItems="True"  Width="90%" 
-        Skin="Vista" CausesValidation="False" EmptyMessage="Selecione um país" MaxLength="50">
+        Skin="Vista" CausesValidation="False" EmptyMessage="Selecione um país" MaxLength="100">
         <HeaderTemplate>
             <table style="width: 96%" cellspacing="0" cellpadding="0">
                 <tr>
