@@ -58,22 +58,22 @@ namespace MP.Client.MP {
         protected global::MP.Client.MP.ctrlTipoDePatente ctrlTipoDePatente;
         
         /// <summary>
-        /// PanelCdTipoDePatente control.
+        /// RadDock2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelCdTipoDePatente;
+        protected global::Telerik.Web.UI.RadDock RadDock2;
         
         /// <summary>
-        /// PanelTipoDePatente control.
+        /// pnlDadosDoTipo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelTipoDePatente;
+        protected global::System.Web.UI.WebControls.Panel pnlDadosDoTipo;
         
         /// <summary>
         /// Label1 control.
@@ -85,58 +85,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// txtDescricao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescricao;
-        
-        /// <summary>
-        /// RequiredFieldValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
         /// txtSigla control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSigla;
-        
-        /// <summary>
-        /// RequiredFieldValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
-        /// <summary>
-        /// PanelConfigObrigaTipoDePatente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelConfigObrigaTipoDePatente;
+        protected global::Telerik.Web.UI.RadTextBox txtSigla;
         
         /// <summary>
         /// Label3 control.
@@ -154,16 +109,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTempoInicioPagamentos;
-        
-        /// <summary>
-        /// RequiredFieldValidator3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        protected global::Telerik.Web.UI.RadTextBox txtTempoInicioPagamentos;
         
         /// <summary>
         /// Label4 control.
@@ -181,16 +127,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQuantidadePagamentos;
-        
-        /// <summary>
-        /// RequiredFieldValidator4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
+        protected global::Telerik.Web.UI.RadTextBox txtQuantidadePagamentos;
         
         /// <summary>
         /// Label5 control.
@@ -208,16 +145,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIntervaloPagamentos;
-        
-        /// <summary>
-        /// RequiredFieldValidator5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
+        protected global::Telerik.Web.UI.RadTextBox txtIntervaloPagamentos;
         
         /// <summary>
         /// Label6 control.
@@ -235,16 +163,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIniciarPagamentoSequencia;
-        
-        /// <summary>
-        /// RequiredFieldValidator6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
+        protected global::Telerik.Web.UI.RadTextBox txtIniciarPagamentoSequencia;
         
         /// <summary>
         /// Label7 control.
@@ -262,16 +181,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescricaoPagamento;
-        
-        /// <summary>
-        /// RequiredFieldValidator7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator7;
+        protected global::Telerik.Web.UI.RadTextBox txtDescricaoPagamento;
         
         /// <summary>
         /// Label8 control.
@@ -307,16 +217,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSequenciaInicioPagamentoIntermediario;
-        
-        /// <summary>
-        /// RequiredFieldValidator8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator8;
+        protected global::Telerik.Web.UI.RadTextBox txtSequenciaInicioPagamentoIntermediario;
         
         /// <summary>
         /// Label10 control.
@@ -334,16 +235,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQuantidadePagamentoIntermediario;
-        
-        /// <summary>
-        /// RequiredFieldValidator9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
+        protected global::Telerik.Web.UI.RadTextBox txtQuantidadePagamentoIntermediario;
         
         /// <summary>
         /// Label11 control.
@@ -361,16 +253,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIntervaloPagamentoIntermediario;
-        
-        /// <summary>
-        /// RequiredFieldValidator10 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator10;
+        protected global::Telerik.Web.UI.RadTextBox txtIntervaloPagamentoIntermediario;
         
         /// <summary>
         /// Label12 control.
@@ -406,15 +289,6 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescricaoPagamentoIntermediario;
-        
-        /// <summary>
-        /// RequiredFieldValidator11 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator11;
+        protected global::Telerik.Web.UI.RadTextBox txtDescricaoPagamentoIntermediario;
     }
 }

@@ -38,26 +38,17 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
+            Control controlePanel = this.pnlDadosDoTipo;
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
-            PanelCdTipoDePatente.Visible = false;
-            ctrlTipoDePatente.Visible = true;
-
+            
             ctrlTipoDePatente.Inicializa();
-            //ctrlTipoDePatente.BotaoDetalharEhVisivel = false;
-            //ctrlTipoDePatente.BotaoNovoEhVisivel = true;
             ctrlTipoDePatente.EnableLoadOnDemand = true;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = true;
             ctrlTipoDePatente.AutoPostBack = true;
-            ctrlTipoDePatente.EhObrigatorio = false;
-
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
-
-            // talvez carregue combo
         }
 
         protected void btnNovo_Click()
@@ -75,21 +66,16 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
+            Control controlePanel = this.pnlDadosDoTipo;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
-
-            PanelCdTipoDePatente.Visible = true;
-            ctrlTipoDePatente.Visible = false;
 
             ctrlTipoDePatente.Inicializa();
             ctrlTipoDePatente.EnableLoadOnDemand = false;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
             ctrlTipoDePatente.AutoPostBack = false;
-            ctrlTipoDePatente.EhObrigatorio = true;
             ctrlTipoDePatente.TextoItemVazio = string.Empty;
-
             CarregueCombosFormulario();
         }
 
@@ -125,14 +111,10 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
-
+            Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
-
-            PanelCdTipoDePatente.Visible = true;
             ctrlTipoDePatente.Visible = false;
-
             ctrlTipoDePatente.EnableLoadOnDemand = false;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
         }
@@ -149,11 +131,8 @@ namespace MP.Client.MP
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
 
-            Control controlePanel = this.PanelCdTipoDePatente;
-
+            Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
-            PanelCdTipoDePatente.Visible = false;
         }
 
         protected void btnCancela_Click()
@@ -170,7 +149,7 @@ namespace MP.Client.MP
                 tipoDePatente.IdTipoDePatente = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
-            tipoDePatente.DescricaoTipoDePatente = this.txtDescricao.Text;
+            tipoDePatente.DescricaoTipoDePatente = ctrlTipoDePatente.DescricaoTipoDePatente;
             tipoDePatente.SiglaTipo = txtSigla.Text;
             tipoDePatente.DescricaoPagamento = this.txtDescricaoPagamento.Text;
             tipoDePatente.DescricaoPagamentoIntermediario = this.txtDescricaoPagamentoIntermediario.Text;
@@ -178,8 +157,7 @@ namespace MP.Client.MP
             tipoDePatente.TempoEntrePagamento = Convert.ToInt32(this.txtIntervaloPagamentos.Text);
             tipoDePatente.TempoEntrePagamentoIntermediario = Convert.ToInt32(txtIntervaloPagamentoIntermediario.Text);
             tipoDePatente.QuantidadePagamento = Convert.ToInt32(this.txtQuantidadePagamentos.Text);
-            tipoDePatente.QuantidadePagamentoIntermediario =
-                Convert.ToInt32(this.txtQuantidadePagamentoIntermediario.Text);
+            tipoDePatente.QuantidadePagamentoIntermediario = Convert.ToInt32(this.txtQuantidadePagamentoIntermediario.Text);
             tipoDePatente.InicioIntermediarioSequencia = Convert.ToInt32(this.txtSequenciaInicioPagamentoIntermediario.Text);
           
             tipoDePatente.TempoInicioAnos = Convert.ToInt32(this.txtTempoInicioPagamentos.Text);
@@ -311,7 +289,6 @@ namespace MP.Client.MP
 
             this.txtDescricaoPagamento.Text = tipoDePatente.DescricaoPagamento;
             this.txtDescricaoPagamentoIntermediario.Text = tipoDePatente.DescricaoPagamentoIntermediario;
-            this.txtDescricao.Text = tipoDePatente.DescricaoTipoDePatente;
             this.txtIniciarPagamentoSequencia.Text = tipoDePatente.SequenciaInicioPagamento.ToString();
             this.txtIntervaloPagamentos.Text = tipoDePatente.TempoEntrePagamento.ToString();
             this.txtIntervaloPagamentoIntermediario.Text = tipoDePatente.TempoEntrePagamentoIntermediario.ToString();
@@ -346,7 +323,7 @@ namespace MP.Client.MP
 
         protected override string ObtenhaIdFuncao()
         {
-            return string.Empty;
+            return "FUN.MP.001";
         }
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()
