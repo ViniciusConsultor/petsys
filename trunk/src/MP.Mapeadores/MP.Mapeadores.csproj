@@ -54,9 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapeadorDeDespachoDeMarcas.cs" />
     <Compile Include="MapeadorDeInventor.cs" />
     <Compile Include="MapeadorDeProcedimentosInternos.cs" />
     <Compile Include="MapeadorDeProcurador.cs" />
+    <Compile Include="MapeadorDeSituacaoDoProcesso.cs" />
     <Compile Include="MapeadorTipoDePatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

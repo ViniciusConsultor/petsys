@@ -21,10 +21,10 @@ namespace MP.Negocio
             throw new NotImplementedException();
         }
 
-        //public IList<IEndereco> ObtenhaEnderecos(ITipoDeEndereco TipoDeEndereco)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public IList<IEndereco> ObtenhaEnderecos(ITipoDeEndereco TipoDeEndereco)
+        {
+            throw new NotImplementedException();
+        }
 
         public void AdicioneDocumento(IDocumento Documento)
         {
