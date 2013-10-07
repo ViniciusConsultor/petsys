@@ -55,9 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicoDeDespachoDeMarcasLocal.cs" />
     <Compile Include="ServicoDeInventorLocal.cs" />
     <Compile Include="ServicoDeProcedimentosInternosLocal.cs" />
     <Compile Include="ServicoDeProcurador.cs" />
+    <Compile Include="ServicoDeSituacaoDoProcessoLocal.cs" />
     <Compile Include="ServicoDeTipoDePatenteLocal.cs" />
   </ItemGroup>
   <ItemGroup>

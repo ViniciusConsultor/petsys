@@ -81,6 +81,13 @@
     <Compile Include="MP\CadastroDeProcuradores.aspx.designer.cs">
       <DependentUpon>CadastroDeProcuradores.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdDespachoDeMarcas.aspx.cs">
+      <DependentUpon>cdDespachoDeMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdDespachoDeMarcas.aspx.designer.cs">
+      <DependentUpon>cdDespachoDeMarcas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\cdInventor.aspx.cs">
       <DependentUpon>cdInventor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -102,12 +109,26 @@
     <Compile Include="MP\cdTipoDePatente.aspx.designer.cs">
       <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlDespachoDeMarcas.ascx.cs">
+      <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlDespachoDeMarcas.ascx.designer.cs">
+      <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlProcedimentosInternos.ascx.cs">
       <DependentUpon>ctrlProcedimentosInternos.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MP\ctrlProcedimentosInternos.ascx.designer.cs">
       <DependentUpon>ctrlProcedimentosInternos.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.cs">
+      <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.designer.cs">
+      <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlTipoDePatente.ascx.cs">
       <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
@@ -127,10 +148,13 @@
   <ItemGroup>
     <None Include="MP.Client.snk" />
     <Content Include="MP\CadastroDeProcuradores.aspx" />
+    <Content Include="MP\cdDespachoDeMarcas.aspx" />
     <Content Include="MP\cdInventor.aspx" />
     <Content Include="MP\cdProcedimentosInternos.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
+    <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlProcedimentosInternos.ascx" />
+    <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />
