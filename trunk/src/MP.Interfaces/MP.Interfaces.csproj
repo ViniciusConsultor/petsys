@@ -61,6 +61,7 @@
     <Compile Include="Mapeadores\IMapeadorDeSituacaoDoProcesso.cs" />
     <Compile Include="Mapeadores\IMapeadorLayoutRevistaPatente.cs" />
     <Compile Include="Mapeadores\IMapeadorTipoDePatente.cs" />
+    <Compile Include="Negocio\Apresentacao.cs" />
     <Compile Include="Negocio\IDespachoDeMarcas.cs" />
     <Compile Include="Negocio\IInventor.cs" />
     <Compile Include="Negocio\ILayoutRevistaPatente.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\ISituacaoDoProcesso.cs" />
     <Compile Include="Negocio\ITipoDePatente.cs" />
+    <Compile Include="Negocio\Natureza.cs" />
+    <Compile Include="Negocio\NCL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />
