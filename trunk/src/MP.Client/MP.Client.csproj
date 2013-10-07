@@ -95,6 +95,13 @@
     <Compile Include="MP\cdInventor.aspx.designer.cs">
       <DependentUpon>cdInventor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdLayoutRevistaPatente.aspx.cs">
+      <DependentUpon>cdLayoutRevistaPatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdLayoutRevistaPatente.aspx.designer.cs">
+      <DependentUpon>cdLayoutRevistaPatente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\cdProcedimentosInternos.aspx.cs">
       <DependentUpon>cdProcedimentosInternos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -115,6 +122,13 @@
     </Compile>
     <Compile Include="MP\ctrlDespachoDeMarcas.ascx.designer.cs">
       <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlLayoutRevistaPatente.ascx.cs">
+      <DependentUpon>ctrlLayoutRevistaPatente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlLayoutRevistaPatente.ascx.designer.cs">
+      <DependentUpon>ctrlLayoutRevistaPatente.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlProcedimentosInternos.ascx.cs">
       <DependentUpon>ctrlProcedimentosInternos.ascx</DependentUpon>
@@ -157,9 +171,11 @@
     <Content Include="MP\cdCadastroDeProcuradores.aspx" />
     <Content Include="MP\cdDespachoDeMarcas.aspx" />
     <Content Include="MP\cdInventor.aspx" />
+    <Content Include="MP\cdLayoutRevistaPatente.aspx" />
     <Content Include="MP\cdProcedimentosInternos.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
+    <Content Include="MP\ctrlLayoutRevistaPatente.ascx" />
     <Content Include="MP\ctrlProcedimentosInternos.ascx" />
     <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
     <Content Include="MP\ctrlProcuradores.ascx" />
