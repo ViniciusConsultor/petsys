@@ -33,8 +33,8 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
             comandoSQL.Append("INSERT INTO MP_PROCURADORES(IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO) ");
-            comandoSQL.Append(procurador.ID + ", ");
-            comandoSQL.Append(procurador.Tipo.ID + ", ");
+            comandoSQL.Append(procurador.Pessoa.ID + ", ");
+            comandoSQL.Append(procurador.Pessoa.Tipo.ID + ", ");
             comandoSQL.Append("'" + procurador.MatriculaAPI + "', ");
             comandoSQL.Append("'" + procurador.SiglaOrgaoProfissional + "', ");
             comandoSQL.Append("'" + procurador.NumeroRegistroProfissional + "', ");
@@ -44,12 +44,12 @@ namespace MP.Mapeadores
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
 
-        public void Remover(IProcurador procurador)
+        public void Remover(long idProcurador)
         {
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("DELETE FROM MP_PROCURADORES WHERE IDPESSOA = " + procurador.ID);
+            comandoSQL.Append("DELETE FROM MP_PROCURADORES WHERE IDPESSOA = " + idProcurador);    
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -65,7 +65,7 @@ namespace MP.Mapeadores
             comandoSQL.Append("NRREGISTROORGAO = '" + procurador.NumeroRegistroProfissional + "' ");
             comandoSQL.Append("DATAREGISTROORGAO = '" + procurador.DataRegistroProfissional + "' ");
             comandoSQL.Append("OBSCONTATO = '" + procurador.ObservacaoContato + "' ");
-            comandoSQL.Append("WHERE = '" + procurador.ID + "' ");
+            comandoSQL.Append("WHERE = '" + procurador.Pessoa.ID + "' ");
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -102,7 +102,7 @@ namespace MP.Mapeadores
 
             comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
             comandoSQL.Append("FROM MP_PROCURADORES");
-            comandoSQL.Append("WHERE IDPESSOA = " + procurador.ID);
+            comandoSQL.Append("WHERE IDPESSOA = " + procurador.Pessoa.ID);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
@@ -118,6 +118,32 @@ namespace MP.Mapeadores
                 }
 
             return procuradorRetorno;
+        }
+
+        public IProcurador ObtenhaProcuradorPeloId(long identificador)
+        {
+            var procuradorRetorno = FabricaGenerica.GetInstancia().CrieObjeto<IProcurador>();
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
+            comandoSQL.Append("FROM MP_PROCURADORES");
+            comandoSQL.Append("WHERE IDPESSOA = " + identificador);
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
+                while (reader.Read())
+                {
+                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
+                    IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa)FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
+                                                                                FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
+
+                    pessoa.ID = UtilidadesDePersistencia.GetValorLong(reader, "ID");
+                    pessoa.Nome = UtilidadesDePersistencia.GetValorString(reader, "NOME");
+
+                    procuradorRetorno = MapeieObjetoProcurador(reader, pessoa);
+                }
+
+            return procuradorRetorno;            
         }
     }
 }

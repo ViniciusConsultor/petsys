@@ -9,9 +9,10 @@ namespace MP.Interfaces.Mapeadores
     public interface IMapeadorDeProcurador
     {
         void Inserir(IProcurador procurador);
-        void Remover(IProcurador procurador);
+        void Remover(long idProcurador);
         void Atualizar(IProcurador procurador);
         List<IProcurador> ObtenhaTodosProcuradores();
         IProcurador ObtenhaProcurador(IProcurador procurador);
+        IProcurador ObtenhaProcuradorPeloId(long identificador);
     }
 }

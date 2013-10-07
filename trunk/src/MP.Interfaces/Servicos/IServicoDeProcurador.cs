@@ -10,9 +10,10 @@ namespace MP.Interfaces.Servicos
     public interface IServicoDeProcurador : IServico
     {
         void Inserir(IProcurador procurador);
-        void Remover(IProcurador procurador);
+        void Remover(long idProcurador);
         void Atualizar(IProcurador procurador);
         List<IProcurador> ObtenhaTodosProcuradores();
         IProcurador ObtenhaProcurador(IProcurador procurador);
+        IProcurador ObtenhaProcuradorPeloId(long identificador);
     }
 }

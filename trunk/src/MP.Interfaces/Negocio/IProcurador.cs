@@ -6,7 +6,7 @@ using Compartilhados.Interfaces.Core.Negocio;
 
 namespace MP.Interfaces.Negocio
 {
-    public interface IProcurador : IPessoaFisica
+    public interface IProcurador : IPapelPessoa
     {
         string MatriculaAPI { get; set; }
         string SiglaOrgaoProfissional { get; set; }
