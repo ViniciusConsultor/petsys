@@ -74,12 +74,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MP\CadastroDeProcuradores.aspx.cs">
-      <DependentUpon>CadastroDeProcuradores.aspx</DependentUpon>
+    <Compile Include="MP\cdCadastroDeProcuradores.aspx.cs">
+      <DependentUpon>cdCadastroDeProcuradores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MP\CadastroDeProcuradores.aspx.designer.cs">
-      <DependentUpon>CadastroDeProcuradores.aspx</DependentUpon>
+    <Compile Include="MP\cdCadastroDeProcuradores.aspx.designer.cs">
+      <DependentUpon>cdCadastroDeProcuradores.aspx</DependentUpon>
     </Compile>
     <Compile Include="MP\cdDespachoDeMarcas.aspx.cs">
       <DependentUpon>cdDespachoDeMarcas.aspx</DependentUpon>
@@ -130,6 +130,13 @@
     <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.designer.cs">
       <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlProcuradores.ascx.cs">
+      <DependentUpon>ctrlProcuradores.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlProcuradores.ascx.designer.cs">
+      <DependentUpon>ctrlProcuradores.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlTipoDePatente.ascx.cs">
       <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -147,7 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Client.snk" />
-    <Content Include="MP\CadastroDeProcuradores.aspx" />
+    <Content Include="MP\cdCadastroDeProcuradores.aspx" />
     <Content Include="MP\cdDespachoDeMarcas.aspx" />
     <Content Include="MP\cdInventor.aspx" />
     <Content Include="MP\cdProcedimentosInternos.aspx" />
@@ -155,6 +162,7 @@
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlProcedimentosInternos.ascx" />
     <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
+    <Content Include="MP\ctrlProcuradores.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />
