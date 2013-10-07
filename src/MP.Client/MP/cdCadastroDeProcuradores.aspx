@@ -6,11 +6,11 @@
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;" onbuttonclick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
-                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.004.0001" />
+                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.005.0001" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
-                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.MP.004.0002" />
+                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.MP.005.0002" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/delete.gif" Text="Excluir"
-                CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.MP.004.0003" />
+                CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.MP.005.0003" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/save.gif" Text="Salvar"
                 CommandName="btnSalvar" CausesValidation="True" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Cancelar"
