@@ -59,6 +59,7 @@
     <Compile Include="MapeadorDeProcedimentosInternos.cs" />
     <Compile Include="MapeadorDeProcurador.cs" />
     <Compile Include="MapeadorDeSituacaoDoProcesso.cs" />
+    <Compile Include="MapeadorLayoutRevistaPatente.cs" />
     <Compile Include="MapeadorTipoDePatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="DespachoDeMarcas.cs" />
     <Compile Include="Inventor.cs" />
+    <Compile Include="LayoutRevistaPatente.cs" />
     <Compile Include="ProcedimentosInternos.cs" />
     <Compile Include="Procurador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
