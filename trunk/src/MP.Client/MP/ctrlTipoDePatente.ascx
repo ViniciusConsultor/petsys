@@ -1,10 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlTipoDePatente.ascx.cs" Inherits="MP.Client.MP.ctrlTipoDePatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<asp:Panel ID="pnlTipoDePatente" runat="server">
+<asp:Panel ID="pnlTipoDePatente" runat="server" Width="100%">
 <table class="tabela">
         <tr>
             <td class="th3">
-                <asp:Label ID="Label6" runat="server" Text="Tipo de patente:"></asp:Label>
+                <asp:Label ID="Label6" runat="server" Text="Tipo de patente"></asp:Label>
             </td>
             <td class="td">
                 <telerik:RadComboBox ID="cboTipoDePatente" runat="server" EmptyMessage="Selecione um tipo de patente"
@@ -16,7 +16,7 @@
                     <HeaderTemplate>
                         <table width="96%">
                             <tr>
-                                <td width="40%">
+                                <td width="80%">
                                     Descrição do tipo da patente
                                 </td>
                                 <td width="16%">
@@ -28,7 +28,7 @@
                     <ItemTemplate>
                         <table width="100%">
                             <tr>
-                                <td width="40%">
+                                <td width="80%">
                                     <%# DataBinder.Eval(Container, "Text")%>
                                 </td>
                                 <td width="16%">
@@ -38,8 +38,7 @@
                         </table>
                     </ItemTemplate>
                 </telerik:RadComboBox>                
-                <asp:RequiredFieldValidator ID="rfvTipoDePatente" runat="server" ErrorMessage="Campo deve ser informado."
-                    ControlToValidate="cboTipoDePatente"></asp:RequiredFieldValidator>
+               
             </td>
         </tr>
     </table>

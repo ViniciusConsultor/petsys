@@ -19,12 +19,10 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         public void Inicializa()
         {
-            EhObrigatorio = false;
             AutoPostBack = true;
             LimparControle();
         }
@@ -34,6 +32,7 @@ namespace MP.Client.MP
             Control controlePanel = pnlTipoDePatente;
             UtilidadesWeb.LimparComponente(ref controlePanel);
             TipoDePatenteSelecionada = null;
+            cboTipoDePatente.ClearSelection();
         }
 
         public bool EnableLoadOnDemand
@@ -62,11 +61,6 @@ namespace MP.Client.MP
         {
             get { return (ITipoDePatente)ViewState[ClientID]; }
             set { ViewState.Add(this.ClientID, value); }
-        }
-
-        public bool EhObrigatorio
-        {
-            set { rfvTipoDePatente.Enabled = value; }
         }
 
         public string TextoItemVazio
