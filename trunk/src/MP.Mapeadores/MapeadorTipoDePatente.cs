@@ -107,7 +107,7 @@ namespace MP.Mapeadores
             return listaDeTiposDePatentes;
         }
 
-        public ITipoDePatente obtenhaTipoDePatentePelaDescricao(string descricaoTipoDePatente)
+        public ITipoDePatente obtenhaTipoDePatentePelaDescricaoOuSigla(string descricaoTipoDePatente, string siglaTipo)
         {
             var sql = new StringBuilder();
 
@@ -118,7 +118,8 @@ namespace MP.Mapeadores
 
             if(!string.IsNullOrEmpty(descricaoTipoDePatente))
             {
-                sql.Append(string.Concat("WHERE DESCRICAO_TIPO_PATENTE LIKE '", UtilidadesDePersistencia.FiltraApostrofe(descricaoTipoDePatente), "%'"));
+                sql.Append(string.Concat("WHERE DESCRICAO_TIPO_PATENTE = '", UtilidadesDePersistencia.FiltraApostrofe(descricaoTipoDePatente), "' "));
+                sql.Append(string.Concat("OR SIGLA_TIPO = '", UtilidadesDePersistencia.FiltraApostrofe(siglaTipo), "'"));
             }
 
             ITipoDePatente tipoDePatente = null;

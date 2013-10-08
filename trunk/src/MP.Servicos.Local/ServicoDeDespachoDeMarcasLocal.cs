@@ -48,22 +48,6 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IDespachoDeMarcas obtenhaDespachoDeMarcasPelaDescricao(string descricaoDespachoDeMarcas)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeDespachoDeMarcas>();
-
-            try
-            {
-                return mapeador.obtenhaDespachoDeMarcasPelaDescricao(descricaoDespachoDeMarcas);
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
         public IList<IDespachoDeMarcas> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);

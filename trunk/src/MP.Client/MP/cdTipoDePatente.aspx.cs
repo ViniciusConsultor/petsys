@@ -255,6 +255,17 @@ namespace MP.Client.MP
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
+                        ITipoDePatente tipoDePatenteExistente = verificaSeJaExisteTipoDePatenteCadastrado(tipoDePatente.DescricaoTipoDePatente, tipoDePatente.SiglaTipo, servico);
+
+                        if(tipoDePatenteExistente != null)
+                        {
+                            mensagem = "Já existe um tipo de patente cadastrado com esta descrição ou sigla";
+
+                            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
+                            return;
+                        }
+
                         servico.Inserir(tipoDePatente);
                         mensagem = "Tipo de patente cadastrado com sucesso.";
                     }
@@ -275,6 +286,13 @@ namespace MP.Client.MP
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
+        }
+
+        private ITipoDePatente verificaSeJaExisteTipoDePatenteCadastrado(string descricaoTipoDePatente, string siglaTipo, IServicoDeTipoDePatente servico)
+        {
+            var tipoDePatente = servico.obtenhaTipoDePatentePelaDescricaoOuSigla(descricaoTipoDePatente, siglaTipo);
+
+            return tipoDePatente;
         }
 
         private void btnModificar_Click()

@@ -10,7 +10,7 @@ namespace MP.Interfaces.Mapeadores
     {
         IList<ITipoDePatente> obtenhaTodosTiposDePatentes();
         ITipoDePatente obtenhaTipoDePatentePeloId(long idTipoPatente);
-        ITipoDePatente obtenhaTipoDePatentePelaDescricao(string descricaoTipoDePatente);
+        ITipoDePatente obtenhaTipoDePatentePelaDescricaoOuSigla(string descricaoTipoDePatente, string siglaTipo);
         void Inserir(ITipoDePatente tipoPatente);
         void Modificar(ITipoDePatente tipoPatente);
         void Excluir(long idTipoPatente);
