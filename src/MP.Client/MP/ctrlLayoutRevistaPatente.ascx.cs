@@ -48,13 +48,9 @@ namespace MP.Client.MP
                 foreach (ILayoutRevistaPatente layout in servico.ObtenhaTodos())
                 {
                     var item = new RadComboBoxItem(layout.NomeDoCampo, layout.NomeDoCampo);
-
-                    item.Attributes.Add("NomeDoCampo", layout.NomeDoCampo);
+                    
                     item.Attributes.Add("DescricaoResumida", layout.DescricaoResumida);
                     item.Attributes.Add("TamanhoDoCampo", layout.TamanhoDoCampo.ToString());
-                    item.Attributes.Add("CampoDelimitadorDoRegistro", layout.CampoDelimitadorDoRegistro.ToString());
-                    item.Attributes.Add("CampoIdentificadorDoProcesso", layout.CampoIdentificadorDoProcesso.ToString());
-                    item.Attributes.Add("CampoIdentificadorDeColidencia", layout.CampoIdentificadorDeColidencia.ToString());
 
                     cboLayoutPatente.Items.Add(item);
                     item.DataBind();

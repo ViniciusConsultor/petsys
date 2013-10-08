@@ -17,23 +17,26 @@ namespace MP.Client.MP
     {
         private const string ID_OBJETO = "ID_OBJETO_CD_PROCURADOR";
         private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCURADOR";
-        private const string MSG_CADASTRO_SUCESSO = "Procurador cadastrado com sucesso.";
-        private const string MSG_MODIFICADO_SUCESSO = "Procurador modificado com sucesso.";
-        private const string MSG_EXCLUIDO_SUCESSO = "Procurador excluído com sucesso.";
+        private const string MSG_CADASTRO_SUCESSO = "Layout cadastrado com sucesso.";
+        private const string MSG_MODIFICADO_SUCESSO = "Layout modificado com sucesso.";
+        private const string MSG_EXCLUIDO_SUCESSO = "Layout excluído com sucesso.";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlLayoutRevistaPatente.LayoutPatenteFoiSelecionado += ObtenhaLayoutRevistaPatente;
+            ctrlLayoutRevistaPatente.LayoutPatenteFoiSelecionado += MostreLayoutRevistaPatente;
+
+            if(!IsPostBack)
+                ExibaTelaInicial();
         }
 
-        private void ObtenhaLayoutRevistaPatente(ILayoutRevistaPatente layoutRevistaPatente)
+        private void MostreLayoutRevistaPatente(ILayoutRevistaPatente layoutRevistaPatente)
         {
-
+            
         }
 
         private void ExibaTelaInicial()
         {
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
@@ -46,11 +49,12 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
             ctrlLayoutRevistaPatente.Inicializa();
-
+            ctrlLayoutRevistaPatente.Visible = true;
             PanelDadosDoLayout.Visible = false;
 
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
+            CarregueCombosLayout();
         }
 
         protected void btnNovo_Click()
@@ -72,6 +76,7 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
+            ctrlLayoutRevistaPatente.Visible = false;
 
             PanelDadosDoLayout.Visible = true;
         }
@@ -133,32 +138,32 @@ namespace MP.Client.MP
             //if (!PodeSalvarOuModificar())
             //    return;
 
-            //string mensagem;
-            //var procurador = MontaObjetoProcurador();
+            string mensagem;
+            var layoutPatente = MonteObjetoLayoutPatente();
 
-            //try
-            //{
-            //    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
-            //    {
-            //        if (ViewState[CHAVE_ESTADO].Equals(cdCadastroDeProcuradores.Estado.Novo))
-            //        {
-            //            servico.Inserir(procurador);
-            //            mensagem = MSG_CADASTRO_SUCESSO;
-            //        }
-            //        else
-            //        {
-            //            servico.Atualizar(procurador);
-            //            mensagem = MSG_MODIFICADO_SUCESSO;
-            //        }
-            //    }
+            try
+            {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeLayoutRevistaPatente>())
+                {
+                    if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
+                    {
+                        servico.Inserir(layoutPatente);
+                        mensagem = MSG_CADASTRO_SUCESSO;
+                    }
+                    else
+                    {
+                        servico.Modificar(layoutPatente);
+                        mensagem = MSG_MODIFICADO_SUCESSO;
+                    }
+                }
 
-            //    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
-            //    ExibaTelaInicial();
-            //}
-            //catch (BussinesException ex)
-            //{
-            //    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
-            //}
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
+                ExibaTelaInicial();
+            }
+            catch (BussinesException ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+            }
         }
 
         private void btnModificar_Click()
@@ -180,8 +185,8 @@ namespace MP.Client.MP
         {
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
-                    servico.Remover(Convert.ToInt64(ViewState[ID_OBJETO]));
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeLayoutRevistaPatente>())
+                    servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInformacao(MSG_EXCLUIDO_SUCESSO), false);
                 ExibaTelaInicial();
@@ -220,13 +225,44 @@ namespace MP.Client.MP
             }
         }
 
+        private ILayoutRevistaPatente MonteObjetoLayoutPatente()
+        {
+            var layoutPatente = FabricaGenerica.GetInstancia().CrieObjeto<ILayoutRevistaPatente>();
+
+            layoutPatente.NomeDoCampo = txtNomeDoCampo.Text;
+            layoutPatente.DescricaoResumida = txtDescricaoResumida.Text;
+            layoutPatente.DescricaoDoCampo = txtDescricaoDoCampo.Text;
+            layoutPatente.TamanhoDoCampo = int.Parse(txtTamanhoDoCampo.Text);
+            layoutPatente.CampoDelimitadorDoRegistro = cboCampoDelimitadorDoRegistro.SelectedValue.Equals("Sim");
+            layoutPatente.CampoIdentificadorDeColidencia = cboCampoIdentificadorDeColidencia.SelectedValue.Equals("Sim");
+            layoutPatente.CampoIdentificadorDoProcesso = cboCampoIdentificadorDoProcesso.SelectedValue.Equals("Sim");
+
+            return layoutPatente;
+        }
+
         private enum Estado : byte
         {
             Inicial = 1,
             Novo,
-            Consulta,
             Modifica,
             Remove
+        }
+
+        private void CarregueCombosLayout()
+        {
+            IList<string> valoresDaCombo = new List<string>();
+
+            valoresDaCombo.Add("Sim"); 
+            valoresDaCombo.Add("Não");
+
+            cboCampoDelimitadorDoRegistro.DataSource = valoresDaCombo;
+            cboCampoDelimitadorDoRegistro.DataBind();
+
+            cboCampoIdentificadorDoProcesso.DataSource = valoresDaCombo;
+            cboCampoIdentificadorDoProcesso.DataBind();
+            
+            cboCampoIdentificadorDeColidencia.DataSource = valoresDaCombo;
+            cboCampoIdentificadorDeColidencia.DataBind();
         }
     }
 }
