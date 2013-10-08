@@ -257,7 +257,7 @@ namespace MP.Client.MP
 
         protected override string ObtenhaIdFuncao()
         {
-            return string.Empty;
+            return "FUN.MP.003";
         }
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()

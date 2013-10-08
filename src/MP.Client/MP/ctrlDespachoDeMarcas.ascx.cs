@@ -116,8 +116,17 @@ namespace MP.Client.MP
                         }
                     }
 
-                    item.Attributes.Add("Registro",
-                                        despachoDeMarcas.Registro ?? "Não informada");
+                    if (despachoDeMarcas.Registro)
+                    {
+                        item.Attributes.Add("Registro",
+                                            "Sim" ?? "Não informada");
+                    }
+                    else
+                    {
+                        item.Attributes.Add("Registro",
+                                            "Não" ?? "Não informada");
+                    }
+
 
                     this.cboDespachoDeMarcas.Items.Add(item);
                     item.DataBind();

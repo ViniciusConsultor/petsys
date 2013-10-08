@@ -41,7 +41,7 @@
             Return False
         End If
 
-        If Valor.Equals("S") Or Valor.Equals(1) Then
+        If Valor.Equals("S") Or Valor.Equals(1) Or Valor.Equals("1") Then
             Return True
         End If
 

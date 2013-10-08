@@ -42,6 +42,9 @@ namespace MP.Client.MP
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+
+            pnlDadosDoTipo.Visible = false;
+            ctrlTipoDePatente.Visible = true;
             
             ctrlTipoDePatente.Inicializa();
             ctrlTipoDePatente.EnableLoadOnDemand = true;
@@ -70,6 +73,9 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
+
+            pnlDadosDoTipo.Visible = true;
+            ctrlTipoDePatente.Visible = true;
 
             ctrlTipoDePatente.Inicializa();
             ctrlTipoDePatente.EnableLoadOnDemand = false;
@@ -113,8 +119,12 @@ namespace MP.Client.MP
 
             Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+
+            pnlDadosDoTipo.Visible = true;
+            //ctrlTipoDePatente.Visible = true;
+
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
-            ctrlTipoDePatente.Visible = false;
+            //ctrlTipoDePatente.Visible = false;
             ctrlTipoDePatente.EnableLoadOnDemand = false;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
         }
@@ -133,6 +143,8 @@ namespace MP.Client.MP
 
             Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+
+            pnlDadosDoTipo.Visible = false;
         }
 
         protected void btnCancela_Click()
@@ -149,7 +161,9 @@ namespace MP.Client.MP
                 tipoDePatente.IdTipoDePatente = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
+            
             tipoDePatente.DescricaoTipoDePatente = ctrlTipoDePatente.DescricaoTipoDePatente;
+            //tipoDePatente.DescricaoTipoDePatente = txtDescricaoTipoDePatente.Text;
             tipoDePatente.SiglaTipo = txtSigla.Text;
             tipoDePatente.DescricaoPagamento = this.txtDescricaoPagamento.Text;
             tipoDePatente.DescricaoPagamentoIntermediario = this.txtDescricaoPagamentoIntermediario.Text;
@@ -162,30 +176,77 @@ namespace MP.Client.MP
           
             tipoDePatente.TempoInicioAnos = Convert.ToInt32(this.txtTempoInicioPagamentos.Text);
 
-            if(cbPgtoInterPedidoExame.SelectedValue == "0")
-            {
-                tipoDePatente.TemPedidoDeExame = "0";
-            }
-            else
-            {
-                tipoDePatente.TemPedidoDeExame = "1";
-            }
+            tipoDePatente.TemPedidoDeExame = cbPgtoInterPedidoExame.SelectedValue != "0";
 
-            if(cbPgtoIntermediario.SelectedValue == "0")
-            {
-                tipoDePatente.TemPagamentoIntermediario = "0";
-            }
-            else
-            {
-                tipoDePatente.TemPagamentoIntermediario = "1";
-            }
+            tipoDePatente.TemPagamentoIntermediario = cbPgtoIntermediario.SelectedValue != "0";
 
             return tipoDePatente;
+        }
+
+        private string validaErrosDePreenchimento()
+        {
+            string mensagem = string.Empty;
+
+            if(string.IsNullOrEmpty(ctrlTipoDePatente.DescricaoTipoDePatente))
+            {
+                mensagem = mensagem + "Tipo de patente, ";
+            }
+            if(string.IsNullOrEmpty(txtSigla.Text))
+            {
+                mensagem = mensagem + "Sigla, ";
+            }
+            if (string.IsNullOrEmpty(txtTempoInicioPagamentos.Text))
+            {
+                mensagem = mensagem + "Tempo para início dos Pagtos , ";
+            }
+            if (string.IsNullOrEmpty(txtQuantidadePagamentos.Text))
+            {
+                mensagem = mensagem + "Quantidade de Pagtos. , ";
+            }
+            if (string.IsNullOrEmpty(txtIntervaloPagamentos.Text))
+            {
+                mensagem = mensagem + "Intervalo entre Pagtos , ";
+            }
+            if (string.IsNullOrEmpty(txtIniciarPagamentoSequencia.Text))
+            {
+                mensagem = mensagem + "Iniciar Pagtos. da sequencia , ";
+            }
+            if (string.IsNullOrEmpty(txtDescricaoPagamento.Text))
+            {
+                mensagem = mensagem + "Descrição para o Pagto , ";
+            }
+            if (string.IsNullOrEmpty(txtIniciarPagamentoSequencia.Text))
+            {
+                mensagem = mensagem + "Número de sequencia Pagtos intermediarios , ";
+            }
+            if (string.IsNullOrEmpty(txtIntervaloPagamentoIntermediario.Text))
+            {
+                mensagem = mensagem + "Intervalo de Pagto intermediário , ";
+            }
+            if (string.IsNullOrEmpty(txtDescricaoPagamentoIntermediario.Text))
+            {
+                mensagem = mensagem + "Descrição Pagto intermediarios , ";
+            }
+
+            return mensagem;
         }
 
         private void btnSalva_Click()
         {
             string mensagem;
+
+            if(!string.IsNullOrEmpty(validaErrosDePreenchimento()))
+            {
+                var erros = validaErrosDePreenchimento();
+
+                var mensagemDeErro = "Campo(s) " + erros + "precisa(m) ser preenchido(s)";
+
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagemDeErro), false);
+
+                return;
+            }
+
             var tipoDePatente = MontaObjetoTipoDePatente();
 
             try
@@ -287,6 +348,7 @@ namespace MP.Client.MP
             ctrlTipoDePatente.DescricaoTipoDePatente = tipoDePatente.DescricaoTipoDePatente;
             ctrlTipoDePatente.SiglaTipo = tipoDePatente.SiglaTipo;
 
+            //txtDescricaoTipoDePatente.Text = tipoDePatente.DescricaoTipoDePatente;
             this.txtDescricaoPagamento.Text = tipoDePatente.DescricaoPagamento;
             this.txtDescricaoPagamentoIntermediario.Text = tipoDePatente.DescricaoPagamentoIntermediario;
             this.txtIniciarPagamentoSequencia.Text = tipoDePatente.SequenciaInicioPagamento.ToString();
@@ -300,23 +362,9 @@ namespace MP.Client.MP
 
             CarregueCombosFormulario();
             
-            if (tipoDePatente.TemPedidoDeExame == "0")
-            {
-                this.cbPgtoInterPedidoExame.SelectedValue = "0";
-            }
-            else
-            {
-                this.cbPgtoInterPedidoExame.SelectedValue = "1";
-            }
+            this.cbPgtoInterPedidoExame.SelectedValue = tipoDePatente.TemPedidoDeExame ? "1" : "0";
 
-            if (tipoDePatente.TemPagamentoIntermediario == "0")
-            {
-                this.cbPgtoIntermediario.SelectedValue = "0";
-            }
-            else
-            {
-                this.cbPgtoIntermediario.SelectedValue = "1";
-            }
+            this.cbPgtoIntermediario.SelectedValue = tipoDePatente.TemPagamentoIntermediario ? "1" : "0";
 
             ExibaTelaModificar();
         }

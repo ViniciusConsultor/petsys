@@ -11,6 +11,6 @@ namespace MP.Interfaces.Negocio
         int CodigoDespacho { get; set; }
         string DetalheDespacho { get; set; }
         long? IdSituacaoProcesso { get; set; }
-        string Registro { get; set; }
+        bool Registro { get; set; }
     }
 }

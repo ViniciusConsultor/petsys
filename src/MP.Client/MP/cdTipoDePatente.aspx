@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master"
-    AutoEventWireup="true" CodeBehind="cdTipoDePatente.aspx.cs" Inherits="MP.Client.MP.cdTipoDePatente" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true"
+    CodeBehind="cdTipoDePatente.aspx.cs" Inherits="MP.Client.MP.cdTipoDePatente" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlTipoDePatente.ascx" TagName="ctrlTipoDePatente" TagPrefix="uc1" %>
@@ -35,7 +35,7 @@
                 <ContentTemplate>
                     <asp:Panel ID="pnlDadosDoTipo" runat="server">
                         <table class="tabela">
-                            <tr>
+                            <tr>                                
                                 <td class="th3">
                                     <asp:Label ID="Label1" runat="server" Text="Sigla"></asp:Label>
                                 </td>
@@ -46,7 +46,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label3" runat="server" Text="Tempo (em anos) da data de protocolo para início dos pagamentos"></asp:Label>
+                                    <asp:Label ID="Label3" runat="server" Text="Tempo (em anos) da data de protocolo para início dos Pagtos."></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtTempoInicioPagamentos" runat="server" Width="87px">
@@ -55,7 +55,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label4" runat="server" Text="Quantidade de pagamentos"></asp:Label>
+                                    <asp:Label ID="Label4" runat="server" Text="Quantidade de Pagtos."></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtQuantidadePagamentos" runat="server" Width="87px">
@@ -64,7 +64,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label5" runat="server" Text="Intervalo entre os pgtos (em anos)"></asp:Label>
+                                    <asp:Label ID="Label5" runat="server" Text="Intervalo entre os Pagtos. (em anos)"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtIntervaloPagamentos" runat="server" Width="87px">
@@ -73,7 +73,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label6" runat="server" Text="Iniciar pagamentos da sequência (Ex: 2ª...,3ª...)"></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="Iniciar Pagtos. da sequência (Ex: 2ª..,3ª..)"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtIniciarPagamentoSequencia" runat="server" Width="87px">
@@ -82,17 +82,17 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label7" runat="server" Text="Descrição para o pagamento"></asp:Label>
+                                    <asp:Label ID="Label7" runat="server" Text="Descrição para o Pagto."></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtDescricaoPagamento" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="5" Width="450px" >
+                                        Rows="5" Width="450px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label8" runat="server" Text="Possui pgtos intermediários?"></asp:Label>
+                                    <asp:Label ID="Label8" runat="server" Text="Possui Pagtos. intermediários?"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadComboBox ID="cbPgtoIntermediario" runat="server" Culture="pt-BR" Width="87px">
@@ -105,7 +105,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label9" runat="server" Text="Número de sequência que inicia o(s) pagamento(s) intermediário(s)"></asp:Label>
+                                    <asp:Label ID="Label9" runat="server" Text="Número de sequência que inicia o(s) Pagto(s) intermediário(s)"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtSequenciaInicioPagamentoIntermediario" runat="server"
@@ -115,7 +115,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label10" runat="server" Text="Quantidade de pgtos intermediários"></asp:Label>
+                                    <asp:Label ID="Label10" runat="server" Text="Quantidade de Pagtos. intermediários"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtQuantidadePagamentoIntermediario" runat="server" Width="87px">
@@ -124,7 +124,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label11" runat="server" Text="Intervalo pgtos intermediários (em anos)"></asp:Label>
+                                    <asp:Label ID="Label11" runat="server" Text="Intervalo Pagtos. intermediários (em anos)"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtIntervaloPagamentoIntermediario" runat="server" Width="87px">
@@ -133,7 +133,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label12" runat="server" Text="Pgto intermediário é o pedido de exame?"></asp:Label>
+                                    <asp:Label ID="Label12" runat="server" Text="Pagto. intermediário é o pedido de exame?"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadComboBox ID="cbPgtoInterPedidoExame" runat="server" Culture="pt-BR" Width="87px"
@@ -149,7 +149,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label13" runat="server" Text="Descrição pagamento intermediário"></asp:Label>
+                                    <asp:Label ID="Label13" runat="server" Text="Descrição Pagto. intermediário"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtDescricaoPagamentoIntermediario" runat="server" MaxLength="4000"

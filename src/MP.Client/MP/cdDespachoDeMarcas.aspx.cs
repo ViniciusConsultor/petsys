@@ -176,15 +176,37 @@ namespace MP.Client.MP
 
             despachoDeMarcas.CodigoDespacho = Convert.ToInt32(this.txtCodigo.Text);
             despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
-            despachoDeMarcas.Registro = cboConcessaoDeRegistro.SelectedValue;
+            despachoDeMarcas.Registro = Convert.ToBoolean(cboConcessaoDeRegistro.SelectedValue);
+
+            if (ctrlSituacaoDoProcesso.SituacaoDoProcessoSelecionada != null)
             despachoDeMarcas.IdSituacaoProcesso = Convert.ToInt64(ctrlSituacaoDoProcesso.SituacaoDoProcessoSelecionada.IdSituacaoProcesso);
 
             return despachoDeMarcas;
         }
 
+        private IList<string> ValidaTelaDespachoDeMarcas()
+        {
+            IList<string> listaDeErros = new List<string>();
+
+            if (string.IsNullOrEmpty(txtCodigo.Text))
+                listaDeErros.Add("Código do despacho");
+
+            return listaDeErros;
+        }
+
         private void btnSalva_Click()
         {
-            string mensagem;
+            string mensagem = string.Empty;
+
+            if (string.IsNullOrEmpty(this.txtCodigo.Text))
+            {
+                mensagem = "Campo código do despacho deve ser preenchido.";
+
+               ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
+                return;
+            }
+
             var despachoDeMarcas = MontaObjetoDespachoDeMarcas();
 
             try
@@ -291,14 +313,7 @@ namespace MP.Client.MP
             this.txtCodigo.Text = despachoDeMarcas.CodigoDespacho.ToString();
             this.txtDescricao.Text = despachoDeMarcas.DetalheDespacho;
 
-            if (despachoDeMarcas.Registro.Equals("0"))
-            {
-                this.cboConcessaoDeRegistro.SelectedValue = "0";
-            }
-            else
-            {
-                this.cboConcessaoDeRegistro.SelectedValue = "1";
-            }
+            this.cboConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeSituacaoDoProcesso>())
             {
@@ -310,7 +325,7 @@ namespace MP.Client.MP
 
         protected override string ObtenhaIdFuncao()
         {
-            return string.Empty;
+            return "FUN.MP.004";
         }
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()
