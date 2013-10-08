@@ -103,6 +103,24 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadTextBox txtDescricaoResumida;
         
         /// <summary>
+        /// lblDescricaoDoCampo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDescricaoDoCampo;
+        
+        /// <summary>
+        /// txtDescricaoDoCampo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtDescricaoDoCampo;
+        
+        /// <summary>
         /// lblTamanhoDoCampo control.
         /// </summary>
         /// <remarks>
