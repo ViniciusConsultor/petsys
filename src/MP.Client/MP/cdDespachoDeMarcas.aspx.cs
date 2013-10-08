@@ -176,22 +176,12 @@ namespace MP.Client.MP
 
             despachoDeMarcas.CodigoDespacho = Convert.ToInt32(this.txtCodigo.Text);
             despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
-            despachoDeMarcas.Registro = Convert.ToBoolean(cboConcessaoDeRegistro.SelectedValue);
+            despachoDeMarcas.Registro = cboConcessaoDeRegistro.SelectedValue != "0";
 
             if (ctrlSituacaoDoProcesso.SituacaoDoProcessoSelecionada != null)
             despachoDeMarcas.IdSituacaoProcesso = Convert.ToInt64(ctrlSituacaoDoProcesso.SituacaoDoProcessoSelecionada.IdSituacaoProcesso);
 
             return despachoDeMarcas;
-        }
-
-        private IList<string> ValidaTelaDespachoDeMarcas()
-        {
-            IList<string> listaDeErros = new List<string>();
-
-            if (string.IsNullOrEmpty(txtCodigo.Text))
-                listaDeErros.Add("Código do despacho");
-
-            return listaDeErros;
         }
 
         private void btnSalva_Click()
@@ -215,6 +205,19 @@ namespace MP.Client.MP
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
+                        IList<IDespachoDeMarcas> listaDeDespachosCadastrados = new List<IDespachoDeMarcas>();
+
+                        listaDeDespachosCadastrados = verificaSeJaExisteDespachoCadastrado(despachoDeMarcas.CodigoDespacho, servico);
+
+                        if (listaDeDespachosCadastrados.Count > 0)
+                        {
+                            mensagem = "Já existe um despacho de marcas cadastrado com este código";
+
+                            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
+                            return;
+                        }
+
                         servico.Inserir(despachoDeMarcas);
                         mensagem = "Despacho de marcas cadastrado com sucesso.";
                     }
@@ -235,6 +238,13 @@ namespace MP.Client.MP
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
+        }
+
+        private IList<IDespachoDeMarcas> verificaSeJaExisteDespachoCadastrado(int codigoDespacho, IServicoDeDespachoDeMarcas servico)
+        {
+            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespacho.ToString(), int.MaxValue);
+
+            return listaDeDespachos;
         }
 
         private void btnModificar_Click()

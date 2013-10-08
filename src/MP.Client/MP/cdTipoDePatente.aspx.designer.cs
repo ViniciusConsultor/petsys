@@ -109,7 +109,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtTempoInicioPagamentos;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtTempoInicioPagamentos;
         
         /// <summary>
         /// Label4 control.
@@ -127,7 +127,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtQuantidadePagamentos;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtQuantidadePagamentos;
         
         /// <summary>
         /// Label5 control.
@@ -145,7 +145,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtIntervaloPagamentos;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtIntervaloPagamentos;
         
         /// <summary>
         /// Label6 control.
@@ -163,7 +163,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtIniciarPagamentoSequencia;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtIniciarPagamentoSequencia;
         
         /// <summary>
         /// Label7 control.
@@ -217,7 +217,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtSequenciaInicioPagamentoIntermediario;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtSequenciaInicioPagamentoIntermediario;
         
         /// <summary>
         /// Label10 control.
@@ -235,7 +235,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtQuantidadePagamentoIntermediario;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtQuantidadePagamentoIntermediario;
         
         /// <summary>
         /// Label11 control.
@@ -253,7 +253,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtIntervaloPagamentoIntermediario;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtIntervaloPagamentoIntermediario;
         
         /// <summary>
         /// Label12 control.

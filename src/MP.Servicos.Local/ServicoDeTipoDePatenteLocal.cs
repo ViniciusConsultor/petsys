@@ -50,7 +50,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public ITipoDePatente obtenhaTipoDePatentePelaDescricao(string descricaoTipoDePatente)
+        public ITipoDePatente obtenhaTipoDePatentePelaDescricaoOuSigla(string descricaoTipoDePatente, string siglaTipo)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -58,7 +58,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaTipoDePatentePelaDescricao(descricaoTipoDePatente);
+                return mapeador.obtenhaTipoDePatentePelaDescricaoOuSigla(descricaoTipoDePatente, siglaTipo);
             }
             finally
             {

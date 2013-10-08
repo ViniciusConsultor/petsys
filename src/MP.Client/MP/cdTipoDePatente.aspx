@@ -35,7 +35,7 @@
                 <ContentTemplate>
                     <asp:Panel ID="pnlDadosDoTipo" runat="server">
                         <table class="tabela">
-                            <tr>                                
+                            <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label1" runat="server" Text="Sigla"></asp:Label>
                                 </td>
@@ -49,8 +49,10 @@
                                     <asp:Label ID="Label3" runat="server" Text="Tempo (em anos) da data de protocolo para início dos Pagtos."></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtTempoInicioPagamentos" runat="server" Width="87px">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtTempoInicioPagamentos" runat="server" Width="87px"
+                                        Type="Number" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -58,8 +60,10 @@
                                     <asp:Label ID="Label4" runat="server" Text="Quantidade de Pagtos."></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtQuantidadePagamentos" runat="server" Width="87px">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtQuantidadePagamentos" runat="server" Width="87px"
+                                        Type="Number" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -67,8 +71,10 @@
                                     <asp:Label ID="Label5" runat="server" Text="Intervalo entre os Pagtos. (em anos)"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtIntervaloPagamentos" runat="server" Width="87px">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtIntervaloPagamentos" runat="server" Width="87px"
+                                        Type="Number" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -76,8 +82,10 @@
                                     <asp:Label ID="Label6" runat="server" Text="Iniciar Pagtos. da sequência (Ex: 2ª..,3ª..)"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtIniciarPagamentoSequencia" runat="server" Width="87px">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtIniciarPagamentoSequencia" runat="server" Width="87px"
+                                        Type="Number" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -108,9 +116,10 @@
                                     <asp:Label ID="Label9" runat="server" Text="Número de sequência que inicia o(s) Pagto(s) intermediário(s)"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtSequenciaInicioPagamentoIntermediario" runat="server"
-                                        Width="87px">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtSequenciaInicioPagamentoIntermediario" runat="server"
+                                        Width="87px" Type="Number" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -118,8 +127,10 @@
                                     <asp:Label ID="Label10" runat="server" Text="Quantidade de Pagtos. intermediários"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtQuantidadePagamentoIntermediario" runat="server" Width="87px">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtQuantidadePagamentoIntermediario" runat="server"
+                                        Width="87px" Type="Number" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -127,8 +138,10 @@
                                     <asp:Label ID="Label11" runat="server" Text="Intervalo Pagtos. intermediários (em anos)"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtIntervaloPagamentoIntermediario" runat="server" Width="87px">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtIntervaloPagamentoIntermediario" runat="server"
+                                        Width="87px" Type="Number" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
                             <tr>

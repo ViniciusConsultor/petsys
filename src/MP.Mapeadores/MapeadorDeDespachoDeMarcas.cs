@@ -87,11 +87,6 @@ namespace MP.Mapeadores
             return listaDeDespachoDeMarcas;
         }
 
-        public IDespachoDeMarcas obtenhaDespachoDeMarcasPelaDescricao(string descricaoDespachoDeMarcas)
-        {
-            return null;
-        }
-
         public IList<IDespachoDeMarcas> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros)
         {
             var sql = new StringBuilder();
@@ -102,7 +97,7 @@ namespace MP.Mapeadores
 
             if (!string.IsNullOrEmpty(codigo))
             {
-                sql.Append(string.Concat("WHERE CODIGO_DESPACHO LIKE '", codigo, "%'"));
+                sql.Append(string.Concat("WHERE CODIGO_DESPACHO = '", codigo, "'"));
             }
             
             IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();

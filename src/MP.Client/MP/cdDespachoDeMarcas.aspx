@@ -41,8 +41,10 @@
                                                     <asp:Label ID="Label1" runat="server" Text="Código do despacho:"></asp:Label>
                                                 </td>
                                                 <td class="td">
-                                                    <telerik:RadTextBox ID="txtCodigo" runat="server" Width="87px">
-                                                    </telerik:RadTextBox>
+                                                    <telerik:RadNumericTextBox ID="txtCodigo" runat="server" Width="87px" Type="Number"
+                                                        DataType="System.Uint32">
+                                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                    </telerik:RadNumericTextBox>
                                                 </td>
                                             </tr>
                                             <tr>
