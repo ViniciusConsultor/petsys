@@ -1,7 +1,8 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlProcedimentosInternos.ascx.cs" Inherits="MP.Client.MP.ctrlProcedimentosInternos" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlProcedimentosInternos.ascx.cs"
+    Inherits="MP.Client.MP.ctrlProcedimentosInternos" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Panel ID="pnlProcedimentosInternos" runat="server">
-<table class="tabela">
+    <table class="tabela">
         <tr>
             <td class="th3">
                 <asp:Label ID="Label6" runat="server" Text="Tipo de procedimento:"></asp:Label>
@@ -10,38 +11,34 @@
                 <telerik:RadComboBox ID="cboProcedimentosInternos" runat="server" EmptyMessage="Selecione um tipo de procedimento"
                     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
                     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-                    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" 
-                    onitemsrequested="cboProcedimentosInternos_ItemsRequested" 
-                    onselectedindexchanged="cboProcedimentosInternos_SelectedIndexChanged">
+                    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnItemsRequested="cboProcedimentosInternos_ItemsRequested"
+                    OnSelectedIndexChanged="cboProcedimentosInternos_SelectedIndexChanged">
                     <HeaderTemplate>
                         <table width="96%">
                             <tr>
-                                <td width="10%">
+                                <td width="16%">
                                     Código
                                 </td>
-                                <td width="46%">
+                                <td width="80%">
                                     Descrição do tipo de procedimento
-                                </td>                                
+                                </td>
                             </tr>
                         </table>
                     </HeaderTemplate>
                     <ItemTemplate>
                         <table width="100%">
                             <tr>
-                                <td width="10%">
+                                <td width="16%">
                                     <%# DataBinder.Eval(Container, "Text")%>
                                 </td>
-                                <td width="46%">
+                                <td width="80%">
                                     <%#DataBinder.Eval(Container, "Attributes['DescricaoTipo']")%>
-                                </td>                               
+                                </td>
                             </tr>
                         </table>
                     </ItemTemplate>
-                </telerik:RadComboBox>                
-                <asp:RequiredFieldValidator ID="rfvProcedimentosInternos" runat="server" ErrorMessage="Campo deve ser informado."
-                    ControlToValidate="cboProcedimentosInternos"></asp:RequiredFieldValidator>
+                </telerik:RadComboBox>
             </td>
         </tr>
     </table>
 </asp:Panel>
-

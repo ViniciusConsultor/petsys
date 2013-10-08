@@ -66,7 +66,8 @@ namespace MP.Client.MP
 
         public bool EhObrigatorio
         {
-            set { rfvProcedimentosInternos.Enabled = value; }
+            set { }
+            //rfvProcedimentosInternos.Enabled = value; }
         }
 
         public string TextoItemVazio

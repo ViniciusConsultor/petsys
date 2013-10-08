@@ -13,9 +13,7 @@ namespace MP.Negocio
         private int _codigoDespacho;
         private string _detalheDespacho;
         private long? _idSituacaoProcesso;
-        private string _registro;
-
-        
+        private bool _registro;
 
         public long? IdDespacho
         {
@@ -41,7 +39,7 @@ namespace MP.Negocio
             set { _idSituacaoProcesso = value; }
         }
 
-        public string Registro
+        public bool Registro
         {
             get { return _registro; }
             set { _registro = value; }
