@@ -123,7 +123,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", despachoDeMarcas.CodigoDespacho, "', "));
             sql.Append(String.Concat("'", despachoDeMarcas.DetalheDespacho, "', "));
             sql.Append(String.Concat("'", despachoDeMarcas.IdSituacaoProcesso, "', "));
-            sql.Append(String.Concat("'", despachoDeMarcas.Registro.ToString(), "') "));
+            sql.Append(despachoDeMarcas.Registro ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -139,7 +139,10 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("CODIGO_DESPACHO = ", despachoDeMarcas.CodigoDespacho, ", "));
             sql.Append(String.Concat("DETALHE_DESPACHO = '", despachoDeMarcas.DetalheDespacho, "', "));
             sql.Append(String.Concat("IDSITUACAO_PROCESSO = '", despachoDeMarcas.IdSituacaoProcesso.Value.ToString(), "', "));
-            sql.Append(String.Concat("REGISTRO = '", despachoDeMarcas.Registro.ToString(), "' "));
+            sql.Append(despachoDeMarcas.Registro
+                           ? String.Concat("REGISTRO = '", 1, "' ")
+                           : String.Concat("REGISTRO = '", 0, "' "));
+
             sql.Append(String.Concat("WHERE IDDESPACHO = ", despachoDeMarcas.IdDespacho.Value.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
