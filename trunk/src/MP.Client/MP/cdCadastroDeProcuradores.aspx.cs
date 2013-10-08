@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
@@ -23,7 +24,7 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlProcuradores.ProcuradorFoiSelecionado += MostreProcurador;
+            ctrlPessoa1.PessoaFoiSelecionada += ObtenhaProcurador;
 
             if (!IsPostBack)
                 ExibaTelaInicial();
@@ -31,7 +32,7 @@ namespace MP.Client.MP
 
         private void ExibaTelaInicial()
         {
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
@@ -43,16 +44,10 @@ namespace MP.Client.MP
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
+            ctrlPessoa1.Inicializa();
+            ctrlPessoa1.BotaoDetalharEhVisivel = false;
+            ctrlPessoa1.BotaoNovoEhVisivel = true;
             PanelDadosDoProcurador.Visible = false;
-            ctrlProcuradores.Visible = true;
-            ctrlPessoa.Visible = false;
-
-            ctrlProcuradores.Inicializa();
-            ctrlProcuradores.EnableLoadOnDemand = true;
-            ctrlProcuradores.ShowDropDownOnTextboxClick = true;
-            ctrlProcuradores.AutoPostBack = true;
-            ctrlProcuradores.EhObrigatorio = false;
 
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
@@ -62,13 +57,10 @@ namespace MP.Client.MP
         {
             ViewState[ID_OBJETO] = procurador.Pessoa.ID;
 
-            ctrlProcuradores.Nome = procurador.Pessoa.Nome;
-            ctrlProcuradores.IdProcurador = procurador.Pessoa.ID;
-
             txtMatriculaAPI.Text = procurador.MatriculaAPI;
             txtSiglaOrgao.Text = procurador.SiglaOrgaoProfissional;
             txtNumeroRegistro.Text = procurador.NumeroRegistroProfissional;
-            txtDataRegistro.Text = procurador.DataRegistroProfissional.ToString();
+            txtDataRegistro.SelectedDate = procurador.DataRegistroProfissional;
             txtContato.Text = procurador.ObservacaoContato;
 
             ExibaTelaModificar();
@@ -95,15 +87,6 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             PanelDadosDoProcurador.Visible = true;
-            ctrlProcuradores.Visible = false;
-            ctrlPessoa.Visible = true; 
-
-            ctrlProcuradores.Inicializa();
-            ctrlProcuradores.EnableLoadOnDemand = false;
-            ctrlProcuradores.ShowDropDownOnTextboxClick = false;
-            ctrlProcuradores.AutoPostBack = false;
-            ctrlProcuradores.EhObrigatorio = true;
-            ctrlProcuradores.TextoItemVazio = string.Empty;
         }
 
         private void ExibaTelaModificar()
@@ -122,11 +105,6 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
             PanelDadosDoProcurador.Visible = true;
-            ctrlProcuradores.Visible = false;
-            ctrlPessoa.Visible = true;
-
-            ctrlProcuradores.EnableLoadOnDemand = false;
-            ctrlProcuradores.ShowDropDownOnTextboxClick = false;
         }
 
         private void ExibaTelaExcluir()
@@ -155,13 +133,11 @@ namespace MP.Client.MP
 
         private IProcurador MontaObjetoProcurador()
         {
-            var procurador = FabricaGenerica.GetInstancia().CrieObjeto<IProcurador>();
+            var procurador = FabricaGenerica.GetInstancia().CrieObjeto<IProcurador>(new object[] { ctrlPessoa1.PessoaSelecionada });
             DateTime? dataRegistro;
 
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
-            {
-                procurador.Pessoa.ID = Convert.ToInt64(ViewState[ID_OBJETO]);
-            }
+                procurador.Pessoa.ID = ctrlPessoa1.PessoaSelecionada.ID;
 
             procurador.MatriculaAPI = txtMatriculaAPI.Text;
             procurador.SiglaOrgaoProfissional = txtSiglaOrgao.Text;
@@ -172,8 +148,11 @@ namespace MP.Client.MP
             return procurador;
         }
 
-        private void btnSalva_Click()
+        private void btnSalvar_Click()
         {
+            if(!PodeSalvarOuModificar())
+                return;
+
             string mensagem;
             var procurador = MontaObjetoProcurador();
 
@@ -247,7 +226,7 @@ namespace MP.Client.MP
                     btnExclui_Click();
                     break;
                 case "btnSalvar":
-                    btnSalva_Click();
+                    btnSalvar_Click();
                     break;
                 case "btnCancelar":
                     btnCancela_Click();
@@ -269,6 +248,53 @@ namespace MP.Client.MP
         protected override RadToolBar ObtenhaBarraDeFerramentas()
         {
             return rtbToolBar;
+        }
+
+        private void ObtenhaProcurador(IPessoa pessoa)
+        {
+            IProcurador procurador;
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
+                procurador = servico.ObtenhaProcurador(pessoa);
+
+            if (procurador == null)
+            {
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
+                return;
+
+            }
+            MostreProcurador(procurador);
+            ExibaTelaConsultar();
+        }
+
+        private void ExibaTelaConsultar()
+        {
+            Control controle = PanelDadosDoProcurador;
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
+            UtilidadesWeb.HabilitaComponentes(ref controle, false);
+        }
+
+        private bool PodeSalvarOuModificar()
+        {
+            IList<string> listaDeInconsistencias = new List<string>();
+
+            if(ctrlPessoa1.PessoaSelecionada == null)
+                listaDeInconsistencias.Add("Selecione a pessoa que será o procurador.");
+
+            if(listaDeInconsistencias.Count > 0)
+            {
+                UtilidadesWeb.MostraMensagemDeInconsistencias(listaDeInconsistencias);
+                return false;
+            }
+
+            return true;
         }
 
         private enum Estado : byte

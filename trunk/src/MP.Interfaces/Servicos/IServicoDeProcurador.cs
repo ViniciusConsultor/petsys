@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Compartilhados;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 
 namespace MP.Interfaces.Servicos
@@ -13,7 +14,6 @@ namespace MP.Interfaces.Servicos
         void Remover(long idProcurador);
         void Atualizar(IProcurador procurador);
         List<IProcurador> ObtenhaTodosProcuradores();
-        IProcurador ObtenhaProcurador(IProcurador procurador);
-        IProcurador ObtenhaProcuradorPeloId(long identificador);
+        IProcurador ObtenhaProcurador(IPessoa pessoa);
     }
 }

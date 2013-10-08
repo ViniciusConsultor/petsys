@@ -49,13 +49,13 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDock RadDock1;
         
         /// <summary>
-        /// ctrlProcuradores control.
+        /// ctrlPessoa1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlProcuradores ctrlProcuradores;
+        protected global::WorkSpace.ctrlPessoa ctrlPessoa1;
         
         /// <summary>
         /// PanelDadosDoProcurador control.
@@ -65,15 +65,6 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanelDadosDoProcurador;
-        
-        /// <summary>
-        /// ctrlPessoa control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WorkSpace.ctrlPessoa ctrlPessoa;
         
         /// <summary>
         /// lblMatriculaAPI control.

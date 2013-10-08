@@ -123,13 +123,6 @@
     <Compile Include="MP\ctrlDespachoDeMarcas.ascx.designer.cs">
       <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
     </Compile>
-    <Compile Include="MP\ctrlLayoutRevistaPatente.ascx.cs">
-      <DependentUpon>ctrlLayoutRevistaPatente.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\ctrlLayoutRevistaPatente.ascx.designer.cs">
-      <DependentUpon>ctrlLayoutRevistaPatente.ascx</DependentUpon>
-    </Compile>
     <Compile Include="MP\ctrlNCL.ascx.cs">
       <DependentUpon>ctrlNCL.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -150,13 +143,6 @@
     </Compile>
     <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.designer.cs">
       <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="MP\ctrlProcuradores.ascx.cs">
-      <DependentUpon>ctrlProcuradores.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\ctrlProcuradores.ascx.designer.cs">
-      <DependentUpon>ctrlProcuradores.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlTipoDePatente.ascx.cs">
       <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
@@ -182,11 +168,9 @@
     <Content Include="MP\cdProcedimentosInternos.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
-    <Content Include="MP\ctrlLayoutRevistaPatente.ascx" />
     <Content Include="MP\ctrlNCL.ascx" />
     <Content Include="MP\ctrlProcedimentosInternos.ascx" />
     <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
-    <Content Include="MP\ctrlProcuradores.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />

@@ -21,7 +21,7 @@ namespace MP.Mapeadores
             procurador.MatriculaAPI = UtilidadesDePersistencia.GetValorString(reader, "MATRICULAAPI");
             procurador.SiglaOrgaoProfissional = UtilidadesDePersistencia.GetValorString(reader, "SIGLAORGAO");
             procurador.NumeroRegistroProfissional = UtilidadesDePersistencia.GetValorString(reader, "NRREGISTROORGAO");
-            procurador.DataRegistroProfissional = UtilidadesDePersistencia.p_getValorDate(UtilidadesDePersistencia.getValorDate(reader, "DATAREGISTROORGAO"));
+            procurador.DataRegistroProfissional = UtilidadesDePersistencia.getValorDate(reader, "DATAREGISTROORGAO");
             procurador.ObservacaoContato = UtilidadesDePersistencia.GetValorString(reader, "MATRICULAAPI");
 
             return procurador;
@@ -32,13 +32,13 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("INSERT INTO MP_PROCURADORES(IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO) ");
+            comandoSQL.Append("INSERT INTO MP_PROCURADORES(IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO) VALUES(");
             comandoSQL.Append(procurador.Pessoa.ID + ", ");
             comandoSQL.Append(procurador.Pessoa.Tipo.ID + ", ");
             comandoSQL.Append("'" + procurador.MatriculaAPI + "', ");
             comandoSQL.Append("'" + procurador.SiglaOrgaoProfissional + "', ");
             comandoSQL.Append("'" + procurador.NumeroRegistroProfissional + "', ");
-            comandoSQL.Append(procurador.DataRegistroProfissional + "', ");
+            comandoSQL.Append(procurador.DataRegistroProfissional == null ? "NULL, " : procurador.DataRegistroProfissional.Value.ToString("yyyyMMdd") + ", ");
             comandoSQL.Append("'" + procurador.ObservacaoContato + "')");
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
@@ -59,13 +59,13 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("UPDATE MP_PROCURADORES SET");
-            comandoSQL.Append("MATRICULAAPI = '" + procurador.MatriculaAPI + "' ");
-            comandoSQL.Append("SIGLAORGAO = '" + procurador.SiglaOrgaoProfissional + "' ");
-            comandoSQL.Append("NRREGISTROORGAO = '" + procurador.NumeroRegistroProfissional + "' ");
-            comandoSQL.Append("DATAREGISTROORGAO = '" + procurador.DataRegistroProfissional + "' ");
+            comandoSQL.Append("UPDATE MP_PROCURADORES SET ");
+            comandoSQL.Append("MATRICULAAPI = '" + procurador.MatriculaAPI + "', ");
+            comandoSQL.Append("SIGLAORGAO = '" + procurador.SiglaOrgaoProfissional + "', ");
+            comandoSQL.Append("NRREGISTROORGAO = '" + procurador.NumeroRegistroProfissional + "', ");
+            comandoSQL.Append("DATAREGISTROORGAO = " + (procurador.DataRegistroProfissional == null ? "NULL, " : procurador.DataRegistroProfissional.Value.ToString("yyyyMMdd")) + ", ");
             comandoSQL.Append("OBSCONTATO = '" + procurador.ObservacaoContato + "' ");
-            comandoSQL.Append("WHERE = '" + procurador.Pessoa.ID + "' ");
+            comandoSQL.Append("WHERE IDPESSOA = " + procurador.Pessoa.ID);
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -94,56 +94,21 @@ namespace MP.Mapeadores
             return listaDeProcuradores;
         }
 
-        public IProcurador ObtenhaProcurador(IProcurador procurador)
+        public IProcurador ObtenhaProcurador(IPessoa pessoa)
         {
-            var procuradorRetorno = FabricaGenerica.GetInstancia().CrieObjeto<IProcurador>();
+            IProcurador procuradorRetorno = null;
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
             comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
-            comandoSQL.Append("FROM MP_PROCURADORES");
-            comandoSQL.Append("WHERE IDPESSOA = " + procurador.Pessoa.ID);
+            comandoSQL.Append("FROM MP_PROCURADORES ");
+            comandoSQL.Append("WHERE IDPESSOA = " + pessoa.ID);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
-                {
-                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
-                    IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa)FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
-                                                                                FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
-
-                    pessoa.ID = UtilidadesDePersistencia.GetValorLong(reader, "ID");
-                    pessoa.Nome = UtilidadesDePersistencia.GetValorString(reader, "NOME");
-
                     procuradorRetorno = MapeieObjetoProcurador(reader, pessoa);
-                }
 
             return procuradorRetorno;
-        }
-
-        public IProcurador ObtenhaProcuradorPeloId(long identificador)
-        {
-            var procuradorRetorno = FabricaGenerica.GetInstancia().CrieObjeto<IProcurador>();
-            var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
-
-            comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
-            comandoSQL.Append("FROM MP_PROCURADORES");
-            comandoSQL.Append("WHERE IDPESSOA = " + identificador);
-
-            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
-                while (reader.Read())
-                {
-                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
-                    IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa)FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
-                                                                                FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
-
-                    pessoa.ID = UtilidadesDePersistencia.GetValorLong(reader, "ID");
-                    pessoa.Nome = UtilidadesDePersistencia.GetValorString(reader, "NOME");
-
-                    procuradorRetorno = MapeieObjetoProcurador(reader, pessoa);
-                }
-
-            return procuradorRetorno;            
         }
     }
 }
