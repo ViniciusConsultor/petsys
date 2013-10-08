@@ -8,10 +8,9 @@ namespace MP.Interfaces.Negocio
     public interface ILayoutRevistaPatente
     {
         long Codigo { get; set; }
-        string Identificador { get; set; }
-        string DescricaoIdentificador { get; set; }
+        string NomeDoCampo { get; set; }
+        string DescricaoDoCampo { get; set; }
         string DescricaoResumida { get; set; }
-        int TipoDeIdentificador { get; set; }
         long TamanhoDoCampo { get; set; }
         bool CampoDelimitadorDoRegistro { get; set; }
         bool CampoIdentificadorDoProcesso { get; set; }

@@ -60,5 +60,21 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+
+        public List<ILayoutRevistaPatente> ObtenhaTodos()
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorLayoutRevistaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorLayoutRevistaPatente>();
+
+            try
+            {
+                return mapeadorLayoutRevistaPatente.ObtenhaTodos();
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

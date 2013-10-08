@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="cdLayoutRevistaPatente.aspx.cs" Inherits="MP.Client.MP.cdLayoutRevistaPatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="ctrlLayoutRevistaPatente.ascx" TagName="ctrlProcuradores" TagPrefix="uc1" %>
+<%@ Register Src="ctrlLayoutRevistaPatente.ascx" TagName="ctrlLayoutRevistaPatente" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;" onbuttonclick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.006.0001" />
@@ -26,50 +26,60 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Cliente" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                                          
+                    <uc1:ctrlLayoutRevistaPatente ID="ctrlLayoutRevistaPatente" runat="server" />
                     <asp:Panel ID="PanelDadosDoLayout" runat="server">                        
-                       <%-- <table>                                    
+                        <table class="tabela">                                    
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="lblMatriculaAPI" runat="server" Text="Matrícula API" />
+                                    <asp:Label ID="lblNomeDoCampo" runat="server" Text="Nome campo" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtMatriculaAPI" MaxLength="10" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="txtNomeDoCampo" MaxLength="50" runat="server"></telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="lblSiglaOrgao" runat="server" Text="Sigla Orgão" />
+                                    <asp:Label ID="lblDescricaoResumida" runat="server" Text="Descrição Resumida" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtSiglaOrgao" MaxLength="10" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="txtDescricaoResumida" MaxLength="120" runat="server"></telerik:RadTextBox>
                                 </td>
                             </tr>
                              <tr>
                                 <td class="th3">
-                                    <asp:Label ID="lblNumeroRegistro" runat="server" Text="Número Registro" />
+                                    <asp:Label ID="lblTamanhoDoCampo" runat="server" Text="Tamanho do campo" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNumeroRegistro" MaxLength="17" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadNumericTextBox ID="txtTamanhoDoCampo" runat="server">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="lblCampoDelimitadorDoRegistro" runat="server" Text="Este campo identifica o início do Registro na Revista?" />
+                                </td>
+                                <td class="td">
+                                    <telerik:RadComboBox ID="cboCampoDelimitadorDoRegistro" runat="server"></telerik:RadComboBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="lblDataRegistro" runat="server" Text="Data Registro"></asp:Label>
+                                    <asp:Label ID="lblCampoIdentificadorDoProcesso" runat="server" Text="Este campo identifica o Número do Processo na Revista do Registro na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadDateInput ID="txtDataRegistro" runat="server"> </telerik:RadDateInput>
+                                    <telerik:RadComboBox ID="cboCampoIdentificadorDoProcesso" runat="server"></telerik:RadComboBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="lblContato" runat="server" Text="Contato" />
+                                    <asp:Label ID="lblCampoIdentificadorDeColidencia" runat="server" Text="Este campo identifica a Colidência do Processo na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtContato" MaxLength="20" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadComboBox ID="cboCampoIdentificadorDeColidencia" runat="server"></telerik:RadComboBox>
                                 </td>
                             </tr>
-                        </table>--%>
+                        </table>
                     </asp:Panel>                    
                 </ContentTemplate>
             </telerik:RadDock>

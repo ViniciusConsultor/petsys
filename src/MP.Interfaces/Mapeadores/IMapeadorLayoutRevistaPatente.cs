@@ -11,5 +11,6 @@ namespace MP.Interfaces.Mapeadores
         void Inserir(ILayoutRevistaPatente layoutRevistaPatente);
         void Excluir(long codigo);
         void Modificar(ILayoutRevistaPatente layoutRevistaPatente);
+        List<ILayoutRevistaPatente> ObtenhaTodos();
     }
 }

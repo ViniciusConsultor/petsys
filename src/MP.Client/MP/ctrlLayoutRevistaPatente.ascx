@@ -1,35 +1,53 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlLayoutRevistaPatente.ascx.cs" Inherits="MP.Client.MP.ctrlLayoutRevistaPatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<asp:Panel ID="pnlLayoutRevistaPatente" runat="server">
-    <table class="tabela">
-        <tr>
-            <td>
-                <telerik:RadGrid ID="grdLayoutRevistaPatente" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="10" GridLines="None" Skin="Vista">
-                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                    <MasterTableView GridLines="Both">
-                        <RowIndicatorColumn>
-                            <HeaderStyle Width="20px" />
-                        </RowIndicatorColumn>
-                        <ExpandCollapseColumn>
-                            <HeaderStyle Width="20px" />
-                        </ExpandCollapseColumn>
-                        <Columns>
-                            <telerik:GridBoundColumn DataField="Identificador" HeaderText="Nome Campo" UniqueName="column1" Visible="True">
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn DataField="DescricaoResumida" HeaderText="Descrição Resumida" UniqueName="column2">
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn DataField="TamanhoDoCampo" HeaderText="Tamanho do Campo" UniqueName="column3">
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn DataField="CampoDelimitadorDoRegistro" HeaderText="Identifica Registro" UniqueName="column4">
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn DataField="CampoIdentificadorDoProcesso" HeaderText="Identifica Processo" UniqueName="column5" Visible="True">
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn DataField="CampoIdentificadorDeColidencia" HeaderText="Identifica Colidência" UniqueName="column6" Visible="True">
-                            </telerik:GridBoundColumn>
-                        </Columns>
-                    </MasterTableView>
-                </telerik:RadGrid>
-            </td>
-        </tr>
-    </table>
-</asp:Panel>
+<telerik:RadComboBox ID="cboLayoutPatente" runat="server" EmptyMessage="Selecione uma layout"
+    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" >
+    <HeaderTemplate>
+        <table width="96%">
+            <tr>
+                <td width="10%">
+                    Nome Campo
+                </td>
+                <td width="40%">
+                    Descrição Resumida
+                </td>
+                <td width="16%">
+                    Tamanho do campo
+                </td>
+                <td width="10%">
+                    Identifica Registro
+                </td>
+                <td width="10%">
+                    Identifica Processo
+                </td>
+                <td width="10%">
+                    Identifica Colidência
+                </td>
+            </tr>
+        </table>
+    </HeaderTemplate>
+    <ItemTemplate>
+        <table width="100%">
+            <tr>
+                <td width="10%">
+                    <%# DataBinder.Eval(Container, "Text")%>
+                </td>
+                <td width="40%">
+                    <%#DataBinder.Eval(Container, "Attributes['Descricao']")%>
+                </td>
+                  <td width="16%">
+                    <%#DataBinder.Eval(Container, "Attributes['Natureza']")%>
+                </td>
+                <td width="10%">
+                    <%#DataBinder.Eval(Container, "Attributes['Natureza']")%>
+                </td>
+                <td width="10%">
+                    <%#DataBinder.Eval(Container, "Attributes['Descricao']")%>
+                </td>
+                 <td width="10%">
+                    <%#DataBinder.Eval(Container, "Attributes['Natureza']")%>
+                </td>
+            </tr>
+        </table>
+    </ItemTemplate>
+</telerik:RadComboBox>
