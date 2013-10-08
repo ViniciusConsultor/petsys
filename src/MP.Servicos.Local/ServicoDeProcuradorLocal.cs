@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
@@ -76,29 +77,14 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IProcurador ObtenhaProcurador(IProcurador procurador)
+        public IProcurador ObtenhaProcurador(IPessoa pessoa)
         {
             ServerUtils.setCredencial(_Credencial);
             var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcurador>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaProcurador(procurador);
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
-        public IProcurador ObtenhaProcuradorPeloId(long identificador)
-        {
-            ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcurador>();
-
-            try
-            {
-                return mapeadorProcurador.ObtenhaProcuradorPeloId(identificador);
+                return mapeadorProcurador.ObtenhaProcurador(pessoa);
             }
             finally
             {

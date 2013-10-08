@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="cdCadastroDeProcuradores.aspx.cs" Inherits="MP.Client.MP.cdCadastroDeProcuradores" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
-<%@ Register Src="ctrlProcuradores.ascx" TagName="ctrlProcuradores" TagPrefix="uc2" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;" onbuttonclick="rtbToolBar_ButtonClick">
         <Items>
@@ -24,13 +23,12 @@
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Cliente" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Procurador" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <uc2:ctrlProcuradores ID="ctrlProcuradores" runat="server"/>                                        
-                    <asp:Panel ID="PanelDadosDoProcurador" runat="server">                        
-                    <uc1:ctrlPessoa ID="ctrlPessoa" runat="server" />
-                        <table>                                    
+                    <uc1:ctrlPessoa ID= "ctrlPessoa1" runat="server" />
+                    <asp:Panel ID="PanelDadosDoProcurador" runat="server">                                            
+                        <table class="tabela">                                    
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="lblMatriculaAPI" runat="server" Text="Matrícula API" />
@@ -68,7 +66,7 @@
                                     <asp:Label ID="lblContato" runat="server" Text="Contato" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtContato" MaxLength="20" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="txtContato" MaxLength="255" Rows="5" runat="server" TextMode="MultiLine"></telerik:RadTextBox>
                                 </td>
                             </tr>
                         </table>
