@@ -8,15 +8,14 @@ namespace MP.Negocio
 {
     public class LayoutRevistaPatente : ILayoutRevistaPatente
     {
+
         public long Codigo { get; set; }
 
-        public string Identificador { get; set; }
+        public string NomeDoCampo { get; set; }
 
-        public string DescricaoIdentificador { get; set; }
+        public string DescricaoDoCampo { get; set; }
 
         public string DescricaoResumida { get; set; }
-
-        public int TipoDeIdentificador { get; set; }
 
         public long TamanhoDoCampo { get; set; }
 

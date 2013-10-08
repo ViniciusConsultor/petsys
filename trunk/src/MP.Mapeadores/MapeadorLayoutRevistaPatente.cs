@@ -17,11 +17,10 @@ namespace MP.Mapeadores
         {
             var layoutRevistaPatente = FabricaGenerica.GetInstancia().CrieObjeto<ILayoutRevistaPatente>();
 
-            layoutRevistaPatente.Codigo = UtilidadesDePersistencia.GetValorLong(reader, "IDCODIGOIDENTIFICACAOREVISTA");
-            layoutRevistaPatente.Identificador = UtilidadesDePersistencia.GetValorString(reader, "IDENTIFICADOR");
-            layoutRevistaPatente.DescricaoIdentificador = UtilidadesDePersistencia.GetValorString(reader, "DESCRICAO_IDENTIFICADOR");
+            layoutRevistaPatente.Codigo = UtilidadesDePersistencia.GetValorLong(reader, "IDCODIGOREVISTA");
+            layoutRevistaPatente.NomeDoCampo = UtilidadesDePersistencia.GetValorString(reader, "NOMEDOCAMPO");
+            layoutRevistaPatente.DescricaoDoCampo = UtilidadesDePersistencia.GetValorString(reader, "DESCRICAO_CAMPO");
             layoutRevistaPatente.DescricaoResumida = UtilidadesDePersistencia.GetValorString(reader, "DESCRICAO_RESUMIDA");
-            layoutRevistaPatente.TipoDeIdentificador = UtilidadesDePersistencia.getValorInteger(reader, "TIPO_IDENTIFICADOR");
             layoutRevistaPatente.TamanhoDoCampo = UtilidadesDePersistencia.getValorInteger(reader, "TAMANHO_CAMPO");
             layoutRevistaPatente.CampoDelimitadorDoRegistro = UtilidadesDePersistencia.GetValorBooleano(reader, "CAMPO_DELIMITADOR_REGISTRO");
             layoutRevistaPatente.CampoIdentificadorDoProcesso = UtilidadesDePersistencia.GetValorBooleano(reader, "CAMPO_IDENTIFICADOR_PROCESSO");
@@ -35,17 +34,16 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            string delimitadorDoRegistro = layoutRevistaPatente.CampoDelimitadorDoRegistro ? "Y" : "N";
-            string campoIdentificadorDoProcesso = layoutRevistaPatente.CampoIdentificadorDoProcesso ? "Y" : "N";
-            string campoIdentificadorDeColidencia = layoutRevistaPatente.CampoIdentificadorDeColidencia ? "Y" : "N";
+            string delimitadorDoRegistro = layoutRevistaPatente.CampoDelimitadorDoRegistro ? "1" : "0";
+            string campoIdentificadorDoProcesso = layoutRevistaPatente.CampoIdentificadorDoProcesso ? "1" : "0";
+            string campoIdentificadorDeColidencia = layoutRevistaPatente.CampoIdentificadorDeColidencia ? "1" : "0";
 
-            comandoSQL.Append("INSERT INTO MP_LAYOUT_REVISTA_PATENTE(IDCODIGOIDENTIFICACAOREVISTA, IDENTIFICADOR, DESCRICAO_IDENTIFICADOR, DESCRICAO_RESUMIDA,");
-            comandoSQL.Append("TIPO_IDENTIFICADOR, TAMANHO_CAMPO, CAMPO_DELIMITADOR_REGISTRO, CAMPO_IDENTIFICADOR_PROCESSO, CAMPO_IDENTIFICADOR_COLIDENCIA) VALUES(");
+            comandoSQL.Append("INSERT INTO MP_LAYOUT_REVISTA_PATENTE(IDCODIGOREVISTA, NOMEDOCAMPO, DESCRICAO_CAMPO, DESCRICAO_RESUMIDA, ");
+            comandoSQL.Append("TAMANHO_CAMPO, CAMPO_DELIMITADOR_REGISTRO, CAMPO_IDENTIFICADOR_PROCESSO, CAMPO_IDENTIFICADOR_COLIDENCIA) VALUES(");
             comandoSQL.Append(layoutRevistaPatente.Codigo + ", ");
-            comandoSQL.Append("'" + layoutRevistaPatente.Identificador + "', ");
-            comandoSQL.Append("'" + layoutRevistaPatente.DescricaoIdentificador + "', ");
+            comandoSQL.Append("'" + layoutRevistaPatente.NomeDoCampo + "', ");
+            comandoSQL.Append("'" + layoutRevistaPatente.DescricaoDoCampo + "', ");
             comandoSQL.Append("'" + layoutRevistaPatente.DescricaoResumida + "', ");
-            comandoSQL.Append(layoutRevistaPatente.TipoDeIdentificador + "', ");
             comandoSQL.Append(layoutRevistaPatente.TamanhoDoCampo + "', ");
             comandoSQL.Append("'" + delimitadorDoRegistro + "', ");
             comandoSQL.Append("'" + campoIdentificadorDoProcesso + "', ");
@@ -74,15 +72,31 @@ namespace MP.Mapeadores
             string campoIdentificadorDeColidencia = layoutRevistaPatente.CampoIdentificadorDeColidencia ? "Y" : "N";
 
             comandoSQL.Append("UPDATE MP_LAYOUT_REVISTA_PATENTE SET ");
-            comandoSQL.Append(" DESCRICAO_IDENTIFICADOR = '" + layoutRevistaPatente.DescricaoIdentificador + "', ");
+            comandoSQL.Append(" DESCRICAO_CAMPO = '" + layoutRevistaPatente.DescricaoDoCampo + "', ");
             comandoSQL.Append(" DESCRICAO_RESUMIDA = '" + layoutRevistaPatente.DescricaoResumida + "', ");
-            comandoSQL.Append(" TIPO_IDENTIFICADOR = " + layoutRevistaPatente.TipoDeIdentificador + "', ");
             comandoSQL.Append(" TAMANHO_CAMPO = " + layoutRevistaPatente.TamanhoDoCampo + "', ");
             comandoSQL.Append(" CAMPO_DELIMITADOR_REGISTRO = '" + delimitadorDoRegistro + "', ");
             comandoSQL.Append(" CAMPO_IDENTIFICADOR_PROCESSO = '" + campoIdentificadorDoProcesso + "', ");
             comandoSQL.Append(" CAMPO_IDENTIFICADOR_COLIDENCIA = '" + campoIdentificadorDeColidencia + "')");
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());            
+        }
+
+
+        public List<ILayoutRevistaPatente> ObtenhaTodos()
+        {
+            var listaDeLayouts = new List<ILayoutRevistaPatente>();
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            comandoSQL.Append("SELECT IDCODIGOREVISTA, NOMEDOCAMPO, DESCRICAO_CAMPO, DESCRICAO_RESUMIDA, TAMANHO_CAMPO, CAMPO_DELIMITADOR_REGISTRO, ");
+            comandoSQL.Append("CAMPO_IDENTIFICADOR_PROCESSO, CAMPO_IDENTIFICADOR_COLIDENCIA FROM MP_LAYOUT_REVISTA_PATENTE");
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
+                while (reader.Read())
+                    listaDeLayouts.Add(MapeieObjetoLayoutRevistaPatente(reader));
+
+            return listaDeLayouts;
         }
     }
 }
