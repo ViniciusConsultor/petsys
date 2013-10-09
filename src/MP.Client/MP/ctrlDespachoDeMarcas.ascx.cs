@@ -89,32 +89,28 @@ namespace MP.Client.MP
                     listaDespachoDeMarcas = servico.obtenhaTodosDespachoDeMarcas();
                 }
             }
-
-             IList<ISituacaoDoProcesso> listaSituacaoDoProcesso = new List<ISituacaoDoProcesso>();
-
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeSituacaoDoProcesso>())
-            {
-                listaSituacaoDoProcesso = servico.obtenhaTodasSituacoesDoProcesso();
-            }
-
+            
             if (listaDespachoDeMarcas.Count > 0)
             {
                 foreach (var despachoDeMarcas in listaDespachoDeMarcas)
                 {
                     var item = new RadComboBoxItem(despachoDeMarcas.CodigoDespacho.ToString(), despachoDeMarcas.IdDespacho.Value.ToString());
 
-                    if(listaSituacaoDoProcesso.Count > 0)
-                    {
-                        foreach (var situacaoDoProcesso in listaSituacaoDoProcesso)
-                        {
-                            if(situacaoDoProcesso.IdSituacaoProcesso.Value.ToString().Equals(despachoDeMarcas.IdSituacaoProcesso.Value.ToString()))
-                            {
-                                item.Attributes.Add("SituacaoProcesso",
-                                        situacaoDoProcesso.DescricaoSituacao ?? "Não informada");
-                                break;
-                            }
-                        }
-                    }
+                    var descricaoSituacaoDoProcesso =
+                        SituacaoDoProcesso.RetornaDescricaoPorCodigo(despachoDeMarcas.CodigoSituacaoProcesso);
+
+                    item.Attributes.Add("SituacaoProcesso",
+                                        descricaoSituacaoDoProcesso ?? "Não informada");
+
+                        //foreach (var situacaoDoProcesso in listaSituacaoDoProcesso)
+                        //{
+                        //    if(situacaoDoProcesso.IdSituacaoProcesso.Value.ToString().Equals(despachoDeMarcas.IdSituacaoProcesso.Value.ToString()))
+                        //    {
+                                
+                        //        break;
+                        //    }
+                        //}
+                    
 
                     if (despachoDeMarcas.Registro)
                     {

@@ -111,6 +111,8 @@ namespace MP.Client.MP
             ctrlDespachoDeMarcas.AutoPostBack = false;
             ctrlDespachoDeMarcas.TextoItemVazio = string.Empty;
 
+            ctrlSituacaoDoProcesso.Inicializa();
+
             CarregueCombosFormulario();
         }
 
@@ -178,8 +180,8 @@ namespace MP.Client.MP
             despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
             despachoDeMarcas.Registro = cboConcessaoDeRegistro.SelectedValue != "0";
 
-            if (ctrlSituacaoDoProcesso.SituacaoDoProcessoSelecionada != null)
-            despachoDeMarcas.IdSituacaoProcesso = Convert.ToInt64(ctrlSituacaoDoProcesso.SituacaoDoProcessoSelecionada.IdSituacaoProcesso);
+            if(!string.IsNullOrEmpty(ctrlSituacaoDoProcesso.Codigo))
+            despachoDeMarcas.CodigoSituacaoProcesso = Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo);
 
             return despachoDeMarcas;
         }
@@ -325,12 +327,14 @@ namespace MP.Client.MP
 
             this.cboConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
 
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeSituacaoDoProcesso>())
-            {
-                var situacaoDoProcesso = servico.obtenhaSituacaoDoProcessoPeloId(despachoDeMarcas.IdSituacaoProcesso.Value);
+            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.CodigoSituacaoProcesso.ToString();
 
-                ctrlSituacaoDoProcesso.IdSituacaoProcesso = situacaoDoProcesso.DescricaoSituacao;
-            }
+            //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeSituacaoDoProcesso>())
+            //{
+            //    var situacaoDoProcesso = servico.obtenhaSituacaoDoProcessoPeloId(despachoDeMarcas.IdSituacaoProcesso.Value);
+
+            //    ctrlSituacaoDoProcesso.Codigo = situacaoDoProcesso.IdSituacaoProcesso.ToString();
+            //}
         }
 
         protected override string ObtenhaIdFuncao()
