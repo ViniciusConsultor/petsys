@@ -40,11 +40,11 @@ namespace MP.Mapeadores
 
             comandoSQL.Append("INSERT INTO MP_LAYOUT_REVISTA_PATENTE(IDCODIGOREVISTA, NOMEDOCAMPO, DESCRICAO_CAMPO, DESCRICAO_RESUMIDA, ");
             comandoSQL.Append("TAMANHO_CAMPO, CAMPO_DELIMITADOR_REGISTRO, CAMPO_IDENTIFICADOR_PROCESSO, CAMPO_IDENTIFICADOR_COLIDENCIA) VALUES(");
-            comandoSQL.Append(layoutRevistaPatente.Codigo + ", ");
+            comandoSQL.Append(ObtenhaProximoCodigoIDLayoutRevista() + ", ");
             comandoSQL.Append("'" + layoutRevistaPatente.NomeDoCampo + "', ");
             comandoSQL.Append("'" + layoutRevistaPatente.DescricaoDoCampo + "', ");
             comandoSQL.Append("'" + layoutRevistaPatente.DescricaoResumida + "', ");
-            comandoSQL.Append(layoutRevistaPatente.TamanhoDoCampo + "', ");
+            comandoSQL.Append(layoutRevistaPatente.TamanhoDoCampo + ", ");
             comandoSQL.Append("'" + delimitadorDoRegistro + "', ");
             comandoSQL.Append("'" + campoIdentificadorDoProcesso + "', ");
             comandoSQL.Append("'" + campoIdentificadorDeColidencia + "')");
@@ -57,7 +57,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("DELETE FROM MP_LAYOUT_REVISTA_PATENTE WHERE IDCODIGOIDENTIFICACAOREVISTA = " + codigo);
+            comandoSQL.Append("DELETE FROM MP_LAYOUT_REVISTA_PATENTE WHERE IDCODIGOREVISTA = " + codigo);
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -67,17 +67,18 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            string delimitadorDoRegistro = layoutRevistaPatente.CampoDelimitadorDoRegistro ? "Y" : "N";
-            string campoIdentificadorDoProcesso = layoutRevistaPatente.CampoIdentificadorDoProcesso ? "Y" : "N";
-            string campoIdentificadorDeColidencia = layoutRevistaPatente.CampoIdentificadorDeColidencia ? "Y" : "N";
+            string delimitadorDoRegistro = layoutRevistaPatente.CampoDelimitadorDoRegistro ? "1" : "0";
+            string campoIdentificadorDoProcesso = layoutRevistaPatente.CampoIdentificadorDoProcesso ? "1" : "0";
+            string campoIdentificadorDeColidencia = layoutRevistaPatente.CampoIdentificadorDeColidencia ? "1" : "0";
 
             comandoSQL.Append("UPDATE MP_LAYOUT_REVISTA_PATENTE SET ");
             comandoSQL.Append(" DESCRICAO_CAMPO = '" + layoutRevistaPatente.DescricaoDoCampo + "', ");
             comandoSQL.Append(" DESCRICAO_RESUMIDA = '" + layoutRevistaPatente.DescricaoResumida + "', ");
-            comandoSQL.Append(" TAMANHO_CAMPO = " + layoutRevistaPatente.TamanhoDoCampo + "', ");
+            comandoSQL.Append(" TAMANHO_CAMPO = " + layoutRevistaPatente.TamanhoDoCampo + ", ");
             comandoSQL.Append(" CAMPO_DELIMITADOR_REGISTRO = '" + delimitadorDoRegistro + "', ");
             comandoSQL.Append(" CAMPO_IDENTIFICADOR_PROCESSO = '" + campoIdentificadorDoProcesso + "', ");
-            comandoSQL.Append(" CAMPO_IDENTIFICADOR_COLIDENCIA = '" + campoIdentificadorDeColidencia + "')");
+            comandoSQL.Append(" CAMPO_IDENTIFICADOR_COLIDENCIA = '" + campoIdentificadorDeColidencia + "'");
+            comandoSQL.Append(" WHERE IDCODIGOREVISTA = " + layoutRevistaPatente.Codigo + "");
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());            
         }
@@ -97,6 +98,21 @@ namespace MP.Mapeadores
                     listaDeLayouts.Add(MapeieObjetoLayoutRevistaPatente(reader));
 
             return listaDeLayouts;
+        }
+
+        private int ObtenhaProximoCodigoIDLayoutRevista()
+        {
+            int? proximoCodigo = null;
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDCODIGOREVISTA) AS CODIGO FROM MP_LAYOUT_REVISTA_PATENTE"))
+                while (reader.Read())
+                    proximoCodigo = UtilidadesDePersistencia.getValorInteger(reader, "CODIGO");
+
+            if (proximoCodigo == null)
+                return 1;
+
+            return proximoCodigo.Value + 1;
         }
     }
 }

@@ -15,11 +15,14 @@ namespace MP.Client.MP
 {
     public partial class cdLayoutRevistaPatente : SuperPagina
     {
-        private const string ID_OBJETO = "ID_OBJETO_CD_PROCURADOR";
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCURADOR";
+        private const string ID_OBJETO = "ID_OBJETO_CD_LAYOUT";
+        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_LAYOUT";
         private const string MSG_CADASTRO_SUCESSO = "Layout cadastrado com sucesso.";
         private const string MSG_MODIFICADO_SUCESSO = "Layout modificado com sucesso.";
         private const string MSG_EXCLUIDO_SUCESSO = "Layout excluído com sucesso.";
+        private const string VALOR_SIM = "Sim";
+        private const string VALOR_NAO = "Não";
+        private const string ID_CHAVE_LAYOUT = "ID_CHAVE_LAYOUT";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,9 +32,26 @@ namespace MP.Client.MP
                 ExibaTelaInicial();
         }
 
+        private ILayoutRevistaPatente LayoutSelecionado
+        {
+            get { return (ILayoutRevistaPatente) ViewState[ID_CHAVE_LAYOUT]; }
+            set { ViewState[ID_CHAVE_LAYOUT] = value; }
+        }
+
         private void MostreLayoutRevistaPatente(ILayoutRevistaPatente layoutRevistaPatente)
         {
-            
+            LayoutSelecionado = layoutRevistaPatente;
+
+            CarregueCombosLayout();
+            txtNomeDoCampo.Text = layoutRevistaPatente.NomeDoCampo;
+            txtDescricaoResumida.Text = layoutRevistaPatente.DescricaoResumida;
+            txtDescricaoDoCampo.Text = layoutRevistaPatente.DescricaoDoCampo;
+            txtTamanhoDoCampo.Text = layoutRevistaPatente.TamanhoDoCampo.ToString();
+
+            cboCampoDelimitadorDoRegistro.SelectedValue = layoutRevistaPatente.CampoDelimitadorDoRegistro ? VALOR_SIM : VALOR_NAO;
+            cboCampoIdentificadorDeColidencia.SelectedValue = layoutRevistaPatente.CampoIdentificadorDeColidencia ? VALOR_SIM : VALOR_NAO;
+            cboCampoIdentificadorDoProcesso.SelectedValue = layoutRevistaPatente.CampoIdentificadorDoProcesso ? VALOR_SIM : VALOR_NAO;
+            ExibaTelaConsultar();
         }
 
         private void ExibaTelaInicial()
@@ -55,6 +75,7 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
             CarregueCombosLayout();
+            LimpeCampos();
         }
 
         protected void btnNovo_Click()
@@ -91,9 +112,9 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelDadosDoLayout;
-
+            Control controlePanel = PanelDadosDoLayout;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+            txtNomeDoCampo.Enabled = false;
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
             PanelDadosDoLayout.Visible = true;
@@ -115,7 +136,7 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
-            PanelDadosDoLayout.Visible = false;
+            PanelDadosDoLayout.Visible = true;
         }
 
         protected void btnCancela_Click()
@@ -135,8 +156,8 @@ namespace MP.Client.MP
 
         private void btnSalvar_Click()
         {
-            //if (!PodeSalvarOuModificar())
-            //    return;
+            if (!PodeSalvarOuModificar())
+                return;
 
             string mensagem;
             var layoutPatente = MonteObjetoLayoutPatente();
@@ -186,7 +207,7 @@ namespace MP.Client.MP
             try
             {
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeLayoutRevistaPatente>())
-                    servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
+                    servico.Excluir(LayoutSelecionado.Codigo);
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInformacao(MSG_EXCLUIDO_SUCESSO), false);
                 ExibaTelaInicial();
@@ -227,15 +248,15 @@ namespace MP.Client.MP
 
         private ILayoutRevistaPatente MonteObjetoLayoutPatente()
         {
-            var layoutPatente = FabricaGenerica.GetInstancia().CrieObjeto<ILayoutRevistaPatente>();
+            var layoutPatente = LayoutSelecionado ?? FabricaGenerica.GetInstancia().CrieObjeto<ILayoutRevistaPatente>();
 
             layoutPatente.NomeDoCampo = txtNomeDoCampo.Text;
             layoutPatente.DescricaoResumida = txtDescricaoResumida.Text;
             layoutPatente.DescricaoDoCampo = txtDescricaoDoCampo.Text;
             layoutPatente.TamanhoDoCampo = int.Parse(txtTamanhoDoCampo.Text);
-            layoutPatente.CampoDelimitadorDoRegistro = cboCampoDelimitadorDoRegistro.SelectedValue.Equals("Sim");
-            layoutPatente.CampoIdentificadorDeColidencia = cboCampoIdentificadorDeColidencia.SelectedValue.Equals("Sim");
-            layoutPatente.CampoIdentificadorDoProcesso = cboCampoIdentificadorDoProcesso.SelectedValue.Equals("Sim");
+            layoutPatente.CampoDelimitadorDoRegistro = cboCampoDelimitadorDoRegistro.SelectedValue.Equals(VALOR_SIM);
+            layoutPatente.CampoIdentificadorDeColidencia = cboCampoIdentificadorDeColidencia.SelectedValue.Equals(VALOR_SIM);
+            layoutPatente.CampoIdentificadorDoProcesso = cboCampoIdentificadorDoProcesso.SelectedValue.Equals(VALOR_SIM);
 
             return layoutPatente;
         }
@@ -252,8 +273,9 @@ namespace MP.Client.MP
         {
             IList<string> valoresDaCombo = new List<string>();
 
-            valoresDaCombo.Add("Sim"); 
-            valoresDaCombo.Add("Não");
+            valoresDaCombo.Add(string.Empty);
+            valoresDaCombo.Add(VALOR_NAO);
+            valoresDaCombo.Add(VALOR_SIM);
 
             cboCampoDelimitadorDoRegistro.DataSource = valoresDaCombo;
             cboCampoDelimitadorDoRegistro.DataBind();
@@ -263,6 +285,58 @@ namespace MP.Client.MP
             
             cboCampoIdentificadorDeColidencia.DataSource = valoresDaCombo;
             cboCampoIdentificadorDeColidencia.DataBind();
+        }
+
+        private bool PodeSalvarOuModificar()
+        {
+            IList<string> inconsistencias = new List<string>();
+
+            if (string.IsNullOrEmpty(txtNomeDoCampo.Text))
+                inconsistencias.Add("Informe o nome do campo.");
+
+            if (string.IsNullOrEmpty(txtNomeDoCampo.Text))
+                inconsistencias.Add("Informe o tamanho do campo.");
+
+            if (string.IsNullOrEmpty(cboCampoDelimitadorDoRegistro.SelectedValue))
+                inconsistencias.Add("Selecione a opção delimitador do registro.");
+
+            if (string.IsNullOrEmpty(cboCampoIdentificadorDeColidencia.SelectedValue))
+                inconsistencias.Add("Selecione a opção do idendificador de colidência.");
+
+            if (string.IsNullOrEmpty(cboCampoIdentificadorDoProcesso.SelectedValue))
+                inconsistencias.Add("Selecione a opção identificador do procesos.");
+
+            if (inconsistencias.Count > 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsistencias(inconsistencias), false);
+                return false;
+            }
+            
+            return true;
+        }
+
+        private void ExibaTelaConsultar()
+        {
+            Control controle = PanelDadosDoLayout;
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
+            UtilidadesWeb.HabilitaComponentes(ref controle, false);
+            PanelDadosDoLayout.Visible = true;
+            ctrlLayoutRevistaPatente.Visible = false;
+        }
+
+        private void LimpeCampos()
+        {
+            txtNomeDoCampo.Text = string.Empty;
+            txtDescricaoResumida.Text = string.Empty;
+            txtDescricaoDoCampo.Text = string.Empty;
+            txtTamanhoDoCampo.Text = string.Empty;
         }
     }
 }
