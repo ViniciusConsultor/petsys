@@ -13,32 +13,19 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class cdDespachoDeMarcas : SuperPagina
+    public partial class cdTipoDeProcedimentoInterno : SuperPagina
     {
-        private const string ID_OBJETO = "ID_OBJETO_CD_DESPACHODEMARCAS";
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_DESPACHODEMARCAS";
+        private const string ID_OBJETO = "ID_OBJETO_CD_PROCEDIMENTOINTERNO";
+        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCEDIMENTOINTERNO";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlDespachoDeMarcas.DespachoDeMarcasFoiSelecionada += ExibaTelaDespachoDeMarcaSelecionado;
+            ctrlTipoProcedimentoInterno.ProcedimentosInternosFoiSelecionado += MostreProcedimentoInterno;
 
             if (!IsPostBack)
             {
                 this.ExibaTelaInicial();
             }
-        }
-
-        private void ExibaTelaDespachoDeMarcaSelecionado(IDespachoDeMarcas despachoDeMarcas)
-        {
-            ViewState[ID_OBJETO] = despachoDeMarcas.IdDespacho.Value.ToString();
-
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
         }
 
         private void ExibaTelaInicial()
@@ -51,35 +38,29 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
-            PanelCdDespachoDeMarcas.Visible = false;
-            ctrlDespachoDeMarcas.Visible = true;
+            PanelCdProcedimentosInternos.Visible = false;
+            ctrlTipoProcedimentoInterno.Visible = true;
 
-            ctrlDespachoDeMarcas.Inicializa();
-            ctrlDespachoDeMarcas.EnableLoadOnDemand = true;
-            ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = true;
-            ctrlDespachoDeMarcas.AutoPostBack = true;
+            ctrlTipoProcedimentoInterno.Inicializa();
+            ctrlTipoProcedimentoInterno.EnableLoadOnDemand = true;
+            ctrlTipoProcedimentoInterno.ShowDropDownOnTextboxClick = true;
+            ctrlTipoProcedimentoInterno.AutoPostBack = true;
+            ctrlTipoProcedimentoInterno.EhObrigatorio = false;
 
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
-        }
-
-        private void CarregueConcessaoDeRegistro()
-        {
-            rblConcessaoDeRegistro.Items.Clear();
-            rblConcessaoDeRegistro.Items.Add(new ListItem("Sim", "1"));
-            rblConcessaoDeRegistro.Items.Add(new ListItem("Não","0"));
-            rblConcessaoDeRegistro.SelectedValue = "0";
         }
 
         protected void btnNovo_Click()
         {
             ExibaTelaNovo();
         }
+
         private void ExibaTelaNovo()
         {
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
@@ -90,23 +71,20 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
-            PanelCdDespachoDeMarcas.Visible = true;
-            ctrlDespachoDeMarcas.Visible = false;
+            PanelCdProcedimentosInternos.Visible = true;
+            ctrlTipoProcedimentoInterno.Visible = false;
 
-            ctrlDespachoDeMarcas.Inicializa();
-            ctrlDespachoDeMarcas.EnableLoadOnDemand = false;
-            ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = false;
-            ctrlDespachoDeMarcas.AutoPostBack = false;
-            ctrlDespachoDeMarcas.TextoItemVazio = string.Empty;
-
-            ctrlSituacaoDoProcesso.Inicializa();
-
-            CarregueConcessaoDeRegistro();
+            ctrlTipoProcedimentoInterno.Inicializa();
+            ctrlTipoProcedimentoInterno.EnableLoadOnDemand = false;
+            ctrlTipoProcedimentoInterno.ShowDropDownOnTextboxClick = false;
+            ctrlTipoProcedimentoInterno.AutoPostBack = false;
+            ctrlTipoProcedimentoInterno.EhObrigatorio = true;
+            ctrlTipoProcedimentoInterno.TextoItemVazio = string.Empty;
         }
 
         private void ExibaTelaModificar()
@@ -119,20 +97,16 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
-            PanelCdDespachoDeMarcas.Visible = true;
+            PanelCdProcedimentosInternos.Visible = true;
+            ctrlTipoProcedimentoInterno.Visible = false;
 
-            ctrlDespachoDeMarcas.Visible = false;
-            ctrlDespachoDeMarcas.EnableLoadOnDemand = false;
-            ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = false;
-
-            CarregueConcessaoDeRegistro();
-
-            MostreDespachoDeMarcas();
+            ctrlTipoProcedimentoInterno.EnableLoadOnDemand = false;
+            ctrlTipoProcedimentoInterno.ShowDropDownOnTextboxClick = false;
         }
 
         private void ExibaTelaExcluir()
@@ -147,10 +121,11 @@ namespace MP.Client.MP
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            Control controlePanel = this.PanelCdProcedimentosInternos;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-            
+
+            PanelCdProcedimentosInternos.Visible = false;
         }
 
         protected void btnCancela_Click()
@@ -158,66 +133,38 @@ namespace MP.Client.MP
             ExibaTelaInicial();
         }
 
-        private IDespachoDeMarcas MontaObjetoDespachoDeMarcas()
+        private ITipoDeProcedimentoInterno MontaObjetoProcedimentosInternos()
         {
-            var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
+            var procedimentosInternos = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDeProcedimentoInterno>();
 
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
             {
-                despachoDeMarcas.IdDespacho = Convert.ToInt64(ViewState[ID_OBJETO]);
+                procedimentosInternos.Id = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
-            despachoDeMarcas.CodigoDespacho = Convert.ToInt32(this.txtCodigo.Text);
-            despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
-            despachoDeMarcas.Registro = rblConcessaoDeRegistro.SelectedValue != "0";
+            procedimentosInternos.Descricao = this.txtDescricaoTipo.Text;
 
-            if(!string.IsNullOrEmpty(ctrlSituacaoDoProcesso.Codigo))
-            despachoDeMarcas.CodigoSituacaoProcesso = Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo);
-
-            return despachoDeMarcas;
+            return procedimentosInternos;
         }
 
         private void btnSalva_Click()
         {
-            string mensagem = string.Empty;
-
-            if (string.IsNullOrEmpty(this.txtCodigo.Text))
-            {
-                mensagem = "Campo código do despacho deve ser preenchido.";
-
-               ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
-                return;
-            }
-
-            var despachoDeMarcas = MontaObjetoDespachoDeMarcas();
+            string mensagem;
+            var procedimentoInterno = MontaObjetoProcedimentosInternos();
 
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDeProcedimentoInterno>())
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
-                        IList<IDespachoDeMarcas> listaDeDespachosCadastrados = new List<IDespachoDeMarcas>();
-
-                        listaDeDespachosCadastrados = verificaSeJaExisteDespachoCadastrado(despachoDeMarcas.CodigoDespacho, servico);
-
-                        if (listaDeDespachosCadastrados.Count > 0)
-                        {
-                            mensagem = "Já existe um despacho de marcas cadastrado com este código";
-
-                            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
-                            return;
-                        }
-
-                        servico.Inserir(despachoDeMarcas);
-                        mensagem = "Despacho de marcas cadastrado com sucesso.";
+                        servico.Inserir(procedimentoInterno);
+                        mensagem = "Tipo de procedimento interno cadastrado com sucesso.";
                     }
                     else
                     {
-                        servico.Modificar(despachoDeMarcas);
-                        mensagem = "Despacho de marcas modificado com sucesso.";
+                        servico.Modificar(procedimentoInterno);
+                        mensagem = "Tipo de procedimento interno modificado com sucesso.";
                     }
                 }
 
@@ -231,13 +178,6 @@ namespace MP.Client.MP
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
-        }
-
-        private IList<IDespachoDeMarcas> verificaSeJaExisteDespachoCadastrado(int codigoDespacho, IServicoDeDespachoDeMarcas servico)
-        {
-            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespacho.ToString(), int.MaxValue);
-
-            return listaDeDespachos;
         }
 
         private void btnModificar_Click()
@@ -259,14 +199,14 @@ namespace MP.Client.MP
         {
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDeProcedimentoInterno>())
                 {
                     servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
                 }
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(
-                                                            "Despacho de marcas excluído com sucesso."), false);
+                                                            "Tipo de procedimento interno excluído com sucesso."), false);
                 ExibaTelaInicial();
             }
             catch (BussinesException ex)
@@ -275,7 +215,7 @@ namespace MP.Client.MP
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
         }
-
+        
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
         {
             switch (((RadToolBarButton)e.Item).CommandName)
@@ -304,31 +244,25 @@ namespace MP.Client.MP
             }
         }
 
-        private void MostreDespachoDeMarcas()
+        private void MostreProcedimentoInterno(ITipoDeProcedimentoInterno procedimentoInterno)
         {
-            var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
-            
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
-            {
-                despachoDeMarcas = servico.obtenhaDespachoDeMarcasPeloId(Convert.ToInt64(ViewState[ID_OBJETO]));
-            }
+            ViewState[ID_OBJETO] = procedimentoInterno.Id.Value.ToString();
 
-            txtCodigo.Text = despachoDeMarcas.CodigoDespacho.ToString();
-            txtDescricao.Text = despachoDeMarcas.DetalheDespacho;
+            ctrlTipoProcedimentoInterno.DescricaoTipo = procedimentoInterno.Descricao;
 
-            rblConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
+            this.txtDescricaoTipo.Text = procedimentoInterno.Descricao;
 
-            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.CodigoSituacaoProcesso.ToString();
+            ExibaTelaModificar();
         }
 
         protected override string ObtenhaIdFuncao()
         {
-            return "FUN.MP.004";
+            return "FUN.MP.003";
         }
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()
         {
-            return rtbToolBar;
+            return rtbToolBar; 
         }
 
         private enum Estado : byte

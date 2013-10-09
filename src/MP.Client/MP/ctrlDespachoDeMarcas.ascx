@@ -8,7 +8,7 @@
                 <asp:Label ID="Label6" runat="server" Text="Despachos cadastrados:"></asp:Label>
             </td>
             <td class="td">
-                <telerik:RadComboBox ID="cboDespachoDeMarcas" runat="server" EmptyMessage="Selecione um tipo de despacho"
+                <telerik:RadComboBox ID="cboDespachoDeMarcas" runat="server" EmptyMessage="Selecione um despacho"
                     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
                     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
                     Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnItemsRequested="cboDespachoDeMarcas_ItemsRequested"

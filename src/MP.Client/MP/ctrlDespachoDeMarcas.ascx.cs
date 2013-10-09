@@ -33,6 +33,7 @@ namespace MP.Client.MP
             Control controlePanel = pnlDespachoDeMarcas;
             UtilidadesWeb.LimparComponente(ref controlePanel);
             DespachoDeMarcasSelecionada = null;
+            cboDespachoDeMarcas.ClearSelection();
         }
 
         public bool EnableLoadOnDemand
