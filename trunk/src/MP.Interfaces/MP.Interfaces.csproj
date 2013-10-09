@@ -56,17 +56,17 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeDespachoDeMarcas.cs" />
     <Compile Include="Mapeadores\IMapeadorDeInventor.cs" />
-    <Compile Include="Mapeadores\IMapeadorDeProcedimentosInternos.cs" />
     <Compile Include="Mapeadores\IMapeadorDeProcurador.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Mapeadores\IMapeadorLayoutRevistaPatente.cs" />
     <Compile Include="Mapeadores\IMapeadorTipoDePatente.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
     <Compile Include="Negocio\IDespachoDeMarcas.cs" />
     <Compile Include="Negocio\IInventor.cs" />
     <Compile Include="Negocio\ILayoutRevistaPatente.cs" />
-    <Compile Include="Negocio\IProcedimentosInternos.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\ITipoDePatente.cs" />
+    <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
     <Compile Include="Negocio\Natureza.cs" />
     <Compile Include="Negocio\NCL.cs" />
     <Compile Include="Negocio\SituacaoDoProcesso.cs" />
@@ -74,9 +74,9 @@
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />
     <Compile Include="Servicos\IServicoDeLayoutRevistaPatente.cs" />
-    <Compile Include="Servicos\IServicoDeProcedimentosInternos.cs" />
     <Compile Include="Servicos\IServicoDeProcurador.cs" />
     <Compile Include="Servicos\IServicoDeTipoDePatente.cs" />
+    <Compile Include="Servicos\IServicoDeTipoDeProcedimentoInterno.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Interfaces.snk" />

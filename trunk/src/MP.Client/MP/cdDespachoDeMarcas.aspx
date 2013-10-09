@@ -31,54 +31,48 @@
                 <ContentTemplate>
                     <uc1:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
                     <asp:Panel ID="PanelCdDespachoDeMarcas" runat="server">
-                        <table class="tabela">
-                            <tr>
-                                <td>
-                                    <asp:Panel ID="PanelDespachoDeMarcas" runat="server">
-                                        <table class="tabela">
-                                            <tr>
-                                                <td class="th3">
-                                                    <asp:Label ID="Label1" runat="server" Text="Código do despacho:"></asp:Label>
-                                                </td>
-                                                <td class="td">
-                                                    <telerik:RadNumericTextBox ID="txtCodigo" runat="server" Width="87px" Type="Number"
-                                                        DataType="System.Uint32">
-                                                        <NumberFormat DecimalDigits="0"></NumberFormat>
-                                                    </telerik:RadNumericTextBox>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="th3">
-                                                    <asp:Label ID="Label2" runat="server" Text="Descrição:"></asp:Label>
-                                                </td>
-                                                <td class="td">
-                                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                                        Rows="5" Width="450px">
-                                                    </telerik:RadTextBox>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="th3">
-                                                    <asp:Label ID="Label6" runat="server" Text="Situação do processo após a publicação:"></asp:Label>
-                                                </td>
-                                                <td class="td">
-                                                    <uc2:ctrlSituacaoDoProcesso ID="ctrlSituacaoDoProcesso" runat="server" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="th3">
-                                                    <asp:Label ID="Label8" runat="server" Text="Indica a concessão do registro:"></asp:Label>
-                                                </td>
-                                                <td class="td">
-                                                    <telerik:RadComboBox ID="cboConcessaoDeRegistro" runat="server" Culture="pt-BR" Width="87px">
-                                                    </telerik:RadComboBox>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </asp:Panel>
-                                </td>
-                            </tr>
-                        </table>
+                        <asp:Panel ID="PanelDespachoDeMarcas" runat="server">
+                            <table class="tabela">
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label1" runat="server" Text="Código do despacho:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <telerik:RadNumericTextBox ID="txtCodigo" runat="server" Width="87px">
+                                            <NumberFormat DecimalDigits="0"></NumberFormat>
+                                        </telerik:RadNumericTextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label2" runat="server" Text="Descrição:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                            Rows="5" Width="450px">
+                                        </telerik:RadTextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label6" runat="server" Text="Situação do processo após a publicação:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <uc2:ctrlSituacaoDoProcesso ID="ctrlSituacaoDoProcesso" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label8" runat="server" Text="Indica a concessão do registro:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <asp:RadioButtonList ID="rblConcessaoDeRegistro" runat="server" AutoPostBack="false"
+                                            RepeatDirection="Horizontal" >
+                                        </asp:RadioButtonList>
+                                    </td>
+                                </tr>
+                            </table>
+                        </asp:Panel>
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>

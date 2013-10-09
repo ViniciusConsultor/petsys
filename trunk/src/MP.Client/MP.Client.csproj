@@ -102,19 +102,19 @@
     <Compile Include="MP\cdLayoutRevistaPatente.aspx.designer.cs">
       <DependentUpon>cdLayoutRevistaPatente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MP\cdProcedimentosInternos.aspx.cs">
-      <DependentUpon>cdProcedimentosInternos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\cdProcedimentosInternos.aspx.designer.cs">
-      <DependentUpon>cdProcedimentosInternos.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MP\cdTipoDePatente.aspx.cs">
       <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MP\cdTipoDePatente.aspx.designer.cs">
       <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.cs">
+      <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.designer.cs">
+      <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlDespachoDeMarcas.ascx.cs">
       <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
@@ -137,13 +137,6 @@
     <Compile Include="MP\ctrlNCL.ascx.designer.cs">
       <DependentUpon>ctrlNCL.ascx</DependentUpon>
     </Compile>
-    <Compile Include="MP\ctrlProcedimentosInternos.ascx.cs">
-      <DependentUpon>ctrlProcedimentosInternos.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\ctrlProcedimentosInternos.ascx.designer.cs">
-      <DependentUpon>ctrlProcedimentosInternos.ascx</DependentUpon>
-    </Compile>
     <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.cs">
       <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -157,6 +150,13 @@
     </Compile>
     <Compile Include="MP\ctrlTipoDePatente.ascx.designer.cs">
       <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.cs">
+      <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.designer.cs">
+      <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -172,14 +172,14 @@
     <Content Include="MP\cdDespachoDeMarcas.aspx" />
     <Content Include="MP\cdInventor.aspx" />
     <Content Include="MP\cdLayoutRevistaPatente.aspx" />
-    <Content Include="MP\cdProcedimentosInternos.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
+    <Content Include="MP\cdTipoDeProcedimentoInterno.aspx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlLayoutRevistaPatente.ascx" />
     <Content Include="MP\ctrlNCL.ascx" />
-    <Content Include="MP\ctrlProcedimentosInternos.ascx" />
     <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
+    <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>

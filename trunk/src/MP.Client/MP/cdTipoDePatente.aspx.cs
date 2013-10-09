@@ -43,9 +43,7 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
-            pnlDadosDoTipo.Visible = false;
-            ctrlTipoDePatente.Visible = true;
-            
+            ctrlTipoDePatente.Visible = true;          
             ctrlTipoDePatente.Inicializa();
             ctrlTipoDePatente.EnableLoadOnDemand = true;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = true;
@@ -143,8 +141,6 @@ namespace MP.Client.MP
 
             Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
-            pnlDadosDoTipo.Visible = false;
         }
 
         protected void btnCancela_Click()

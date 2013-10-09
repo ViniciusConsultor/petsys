@@ -10,7 +10,7 @@
 namespace MP.Client.MP {
     
     
-    public partial class cdDespachoDeMarcas {
+    public partial class cdTipoDeProcedimentoInterno {
         
         /// <summary>
         /// rtbToolBar control.
@@ -49,31 +49,31 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDock RadDock1;
         
         /// <summary>
-        /// ctrlDespachoDeMarcas control.
+        /// ctrlTipoProcedimentoInterno control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlDespachoDeMarcas ctrlDespachoDeMarcas;
+        protected global::MP.Client.MP.ctrlTipoProcedimentoInterno ctrlTipoProcedimentoInterno;
         
         /// <summary>
-        /// PanelCdDespachoDeMarcas control.
+        /// PanelCdProcedimentosInternos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelCdDespachoDeMarcas;
+        protected global::System.Web.UI.WebControls.Panel PanelCdProcedimentosInternos;
         
         /// <summary>
-        /// PanelDespachoDeMarcas control.
+        /// PanelTipoDeProcedimento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelDespachoDeMarcas;
+        protected global::System.Web.UI.WebControls.Panel PanelTipoDeProcedimento;
         
         /// <summary>
         /// Label1 control.
@@ -85,66 +85,12 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// txtCodigo control.
+        /// txtDescricaoTipo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtCodigo;
-        
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
-        /// txtDescricao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtDescricao;
-        
-        /// <summary>
-        /// Label6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
-        
-        /// <summary>
-        /// ctrlSituacaoDoProcesso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MP.Client.MP.ctrlSituacaoDoProcesso ctrlSituacaoDoProcesso;
-        
-        /// <summary>
-        /// Label8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
-        
-        /// <summary>
-        /// rblConcessaoDeRegistro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblConcessaoDeRegistro;
+        protected global::Telerik.Web.UI.RadTextBox txtDescricaoTipo;
     }
 }
