@@ -63,18 +63,11 @@ namespace MP.Interfaces.Negocio
             return SituacoesDoProcesso;
         }
 
-        //public static SituacaoDoProcesso ObtenhaPorCodigo(int codigo)
-        //{
-        //    return ObtenhaSituacoesDoProcesso().FirstOrDefault(situacao => situacao.CodigoSituacaoProcesso.Equals(codigo));
-        //}
-
-        public static string RetornaDescricaoPorCodigo(int codigo)
+        public static SituacaoDoProcesso ObtenhaPorCodigo(int codigo)
         {
-            var situacaoDoProcesso = ObtenhaSituacoesDoProcesso().FirstOrDefault(situacao => situacao.CodigoSituacaoProcesso.Equals(codigo));
-            
-            return situacaoDoProcesso != null ? situacaoDoProcesso.DescricaoSituacao : string.Empty;
+            return ObtenhaSituacoesDoProcesso().FirstOrDefault(situacao => situacao.CodigoSituacaoProcesso.Equals(codigo));
         }
-
+        
         public override bool Equals(object obj)
         {
             var objeto = obj as SituacaoDoProcesso;

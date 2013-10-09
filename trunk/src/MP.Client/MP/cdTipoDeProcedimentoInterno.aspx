@@ -2,8 +2,6 @@
     CodeBehind="cdTipoDeProcedimentoInterno.aspx.cs" Inherits="MP.Client.MP.cdTipoDeProcedimentoInterno" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="ctrlTipoProcedimentoInterno.ascx" TagName="ctrlTipoProcedimentoInterno"
-    TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -29,28 +27,45 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Cadastro de tipo de procedimento interno"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <uc1:ctrlTipoProcedimentoInterno ID="ctrlTipoProcedimentoInterno" runat="server" />
-                    <asp:Panel ID="PanelCdProcedimentosInternos" runat="server">
-                        <table class="tabela">
-                            <tr>
-                                <td>
-                                    <asp:Panel ID="PanelTipoDeProcedimento" runat="server">
-                                        <table class="tabela">
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label6" runat="server" Text="Tipo de procedimento"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadComboBox ID="cboTipoDeProcedimentosInternos" runat="server" EmptyMessage="Selecione um tipo de procedimento"
+                                    EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
+                                    ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
+                                    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnItemsRequested="cboProcedimentosInternos_ItemsRequested"
+                                    OnSelectedIndexChanged="cboProcedimentosInternos_SelectedIndexChanged" MaxLength="255">
+                                    <HeaderTemplate>
+                                        <table width="96%">
                                             <tr>
-                                                <td class="th3">
-                                                    <asp:Label ID="Label1" runat="server" Text="Tipo de procedimento:"></asp:Label>
+                                                <td width="16%">
+                                                    ID
                                                 </td>
-                                                <td class="td">
-                                                    <telerik:RadTextBox ID="txtDescricaoTipo" runat="server" Width="90%" MaxLength="255">
-                                                    </telerik:RadTextBox>
+                                                <td width="80%">
+                                                    Descrição do tipo de procedimento
                                                 </td>
                                             </tr>
                                         </table>
-                                    </asp:Panel>
-                                </td>
-                            </tr>
-                        </table>
-                    </asp:Panel>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="16%">
+                                                    <%#DataBinder.Eval(Container, "Attributes['ID']")%>
+                                                </td>
+                                                <td width="80%">
+                                                    <%# DataBinder.Eval(Container, "Text")%>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ItemTemplate>
+                                </telerik:RadComboBox>
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>

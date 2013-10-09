@@ -13,32 +13,6 @@ namespace MP.Mapeadores
 {
     public class MapeadorDeTipoDeProcedimentoInterno : IMapeadorDeTipoDeProcedimentoInterno
     {
-        public IList<ITipoDeProcedimentoInterno> obtenhaTodosTiposDeProcedimentoInterno()
-        {
-            var sql = new StringBuilder();
-
-            sql.Append("SELECT IDTIPO_PROCEDIMENTO_INTERNO, DESCRICAO_TIPO ");
-            sql.Append("FROM MP_TIPO_PROCEDIMENTO_INTERNO");
-
-            var DBHelper = ServerUtils.criarNovoDbHelper();
-
-            IList<ITipoDeProcedimentoInterno> listaDeProcedimentosInternos = new List<ITipoDeProcedimentoInterno>();
-
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
-            {
-                while (leitor.Read())
-                {
-                    var tipoProcedimentoInterno = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDeProcedimentoInterno>();
-                    tipoProcedimentoInterno.Id = UtilidadesDePersistencia.getValorInteger(leitor, "IDTIPO_PROCEDIMENTO_INTERNO");
-                    tipoProcedimentoInterno.Descricao = UtilidadesDePersistencia.GetValorString(leitor, "DESCRICAO_TIPO");
-
-                    listaDeProcedimentosInternos.Add(tipoProcedimentoInterno);
-                }
-            }
-
-            return listaDeProcedimentosInternos;
-        }
-
         public ITipoDeProcedimentoInterno obtenhaTipoProcedimentoInternoPeloId(long idTipoProcedimentosInternos)
         {
             var sql = new StringBuilder();
@@ -59,28 +33,19 @@ namespace MP.Mapeadores
             return procedimentosInternos;
         }
 
-        public ITipoDeProcedimentoInterno obtenhaTipoProcedimentoInternoPelaDescricao(string descricao)
+        public IList<ITipoDeProcedimentoInterno> obtenhaTipoProcedimentoInternoPelaDescricao(string descricao)
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDTIPO_ANDAMENTO_INTERNO, DESCRICAO_TIPO ");
-            sql.Append("FROM MP_TIPO_ANDAMENTO_INTERNO");
+            sql.Append("SELECT IDTIPO_PROCEDIMENTO_INTERNO, DESCRICAO_TIPO ");
+            sql.Append("FROM MP_TIPO_PROCEDIMENTO_INTERNO");
 
             if (!string.IsNullOrEmpty(descricao))
             {
-                sql.Append(string.Concat("WHERE DESCRICAO_TIPO LIKE '", UtilidadesDePersistencia.FiltraApostrofe(descricao), "%'"));
+                sql.Append(string.Concat("WHERE DESCRICAO_TIPO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricao), "%'"));
             }
 
-            ITipoDeProcedimentoInterno procedimentosInternos = null;
-
-            IList<ITipoDeProcedimentoInterno> listaDeProcedimentosInternos = new List<ITipoDeProcedimentoInterno>();
-
-            listaDeProcedimentosInternos = obtenhaTiposDeProcedimentoInterno(sql, int.MaxValue);
-
-            if (listaDeProcedimentosInternos.Count > 0)
-                procedimentosInternos = listaDeProcedimentosInternos[0];
-
-            return procedimentosInternos;
+            return obtenhaTiposDeProcedimentoInterno(sql, int.MaxValue);
         }
 
         

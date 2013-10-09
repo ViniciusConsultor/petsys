@@ -47,8 +47,6 @@ namespace MP.Client.MP
             ctrlPessoa1.Inicializa();
             ctrlPessoa1.BotaoDetalharEhVisivel = false;
             ctrlPessoa1.BotaoNovoEhVisivel = true;
-            PanelDadosDoProcurador.Visible = false;
-
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
         }
@@ -62,8 +60,6 @@ namespace MP.Client.MP
             txtNumeroRegistro.Text = procurador.NumeroRegistroProfissional;
             txtDataRegistro.SelectedDate = procurador.DataRegistroProfissional;
             txtContato.Text = procurador.ObservacaoContato;
-
-            ExibaTelaModificar();
         }
 
         protected void btnNovo_Click()
@@ -85,8 +81,6 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
-
-            PanelDadosDoProcurador.Visible = true;
         }
 
         private void ExibaTelaModificar()
@@ -94,7 +88,7 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
@@ -103,8 +97,6 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
-
-            PanelDadosDoProcurador.Visible = true;
         }
 
         private void ExibaTelaExcluir()
@@ -122,8 +114,6 @@ namespace MP.Client.MP
             Control controlePanel = PanelDadosDoProcurador;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
-            PanelDadosDoProcurador.Visible = false;
         }
 
         protected void btnCancela_Click()
@@ -275,7 +265,7 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
             UtilidadesWeb.HabilitaComponentes(ref controle, false);

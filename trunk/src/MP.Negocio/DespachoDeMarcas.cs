@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MP.Interfaces.Negocio;
 
 namespace MP.Negocio
@@ -9,40 +6,26 @@ namespace MP.Negocio
     [Serializable]
     public class DespachoDeMarcas : IDespachoDeMarcas
     {
-        private long? _idDespacho;
-        private int _codigoDespacho;
-        private string _detalheDespacho;
-        private int _codigoSituacaoProcesso;
-        private bool _registro;
-
         public long? IdDespacho
         {
-            get { return _idDespacho; }
-            set { _idDespacho = value; }
+            get;
+            set;
         }
 
         public int CodigoDespacho
         {
-            get { return _codigoDespacho; }
-            set { _codigoDespacho = value; }
-        }
+            get; set; }
 
         public string DetalheDespacho
         {
-            get { return _detalheDespacho; }
-            set { _detalheDespacho = value; }
-        }
+            get; set; }
 
-        public int CodigoSituacaoProcesso
+        public SituacaoDoProcesso SituacaoProcesso
         {
-            get { return _codigoSituacaoProcesso; }
-            set { _codigoSituacaoProcesso = value; }
-        }
+            get; set; }
 
         public bool Registro
         {
-            get { return _registro; }
-            set { _registro = value; }
-        }
+            get; set; }
     }
 }

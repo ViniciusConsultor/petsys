@@ -16,23 +16,7 @@ namespace MP.Servicos.Local
             : base(Credencial)
         {
         }
-
-        public IList<ITipoDeProcedimentoInterno> obtenhaTodosTiposDeProcedimentoInterno()
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeTipoDeProcedimentoInterno>();
-
-            try
-            {
-                return mapeador.obtenhaTodosTiposDeProcedimentoInterno();
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
+        
         public ITipoDeProcedimentoInterno obtenhaTipoProcedimentoInternoPeloId(long idTipoProcedimentosInternos)
         {
             ServerUtils.setCredencial(_Credencial);
@@ -49,7 +33,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public ITipoDeProcedimentoInterno obtenhaTipoProcedimentoInternoPelaDescricao(string descricao)
+        public IList<ITipoDeProcedimentoInterno> obtenhaTipoProcedimentoInternoPelaDescricao(string descricao)
         {
             ServerUtils.setCredencial(_Credencial);
 

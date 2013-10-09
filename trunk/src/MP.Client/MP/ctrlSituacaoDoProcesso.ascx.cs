@@ -14,16 +14,12 @@ namespace MP.Client.MP
 {
     public partial class ctrlSituacaoDoProcesso : System.Web.UI.UserControl
     {
-        //public static event SituacaoDoProcessoFoiSelecionadaEventHandler SituacaoDoProcessoFoiSelecionada;
-        //public delegate void SituacaoDoProcessoFoiSelecionadaEventHandler(ISituacaoDoProcesso situacaoDoProcesso);
-
         protected void Page_Load(object sender, EventArgs e)
         {
         }
 
         public void Inicializa()
         {
-            //AutoPostBack = true;
             LimparControle();
             CarregueCombo();
         }
@@ -39,15 +35,7 @@ namespace MP.Client.MP
         {
             get { return cboSituacaoDoProcesso.SelectedValue; }
             set
-            {
-                var descricaoSituacao =
-                        SituacaoDoProcesso.RetornaDescricaoPorCodigo(Convert.ToInt32(value));
-
-                cboSituacaoDoProcesso.Items.Clear();
-                CarregueCombo();
-
-                    cboSituacaoDoProcesso.Text = descricaoSituacao;
-                    cboSituacaoDoProcesso.SelectedValue = value;
+            {cboSituacaoDoProcesso.SelectedValue = value;
             }
         }
 
@@ -62,16 +50,6 @@ namespace MP.Client.MP
                 cboSituacaoDoProcesso.Items.Add(item);
                 item.DataBind();
             }
-        }
-
-        protected void cboSituacaoDoProcesso_ItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
-        {
-            
-        }
-
-        protected void cboSituacaoDoProcesso_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            
         }
     }
 }

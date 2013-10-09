@@ -20,8 +20,6 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlTipoProcedimentoInterno.ProcedimentosInternosFoiSelecionado += MostreProcedimentoInterno;
-
             if (!IsPostBack)
             {
                 this.ExibaTelaInicial();
@@ -38,20 +36,16 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdProcedimentosInternos;
+            Control controlePanel = this.cboTipoDeProcedimentosInternos;
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
-            UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
-            PanelCdProcedimentosInternos.Visible = false;
-            ctrlTipoProcedimentoInterno.Visible = true;
-
-            ctrlTipoProcedimentoInterno.Inicializa();
-            ctrlTipoProcedimentoInterno.EnableLoadOnDemand = true;
-            ctrlTipoProcedimentoInterno.ShowDropDownOnTextboxClick = true;
-            ctrlTipoProcedimentoInterno.AutoPostBack = true;
-            ctrlTipoProcedimentoInterno.EhObrigatorio = false;
-
+            UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+            
+            cboTipoDeProcedimentosInternos.EnableLoadOnDemand = true;
+            cboTipoDeProcedimentosInternos.ShowDropDownOnTextboxClick = true;
+            cboTipoDeProcedimentosInternos.AutoPostBack = true;
+            cboTipoDeProcedimentosInternos.ClearSelection();
+            cboTipoDeProcedimentosInternos.EmptyMessage = "Selecione um tipo de procedimento";
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
         }
@@ -71,20 +65,16 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdProcedimentosInternos;
-
-            UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
-            PanelCdProcedimentosInternos.Visible = true;
-            ctrlTipoProcedimentoInterno.Visible = false;
+            Control controlePanel = this.cboTipoDeProcedimentosInternos;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+            
+            cboTipoDeProcedimentosInternos.EnableLoadOnDemand = false;
+            cboTipoDeProcedimentosInternos.ShowDropDownOnTextboxClick = false;
+            cboTipoDeProcedimentosInternos.AutoPostBack = false;
+            cboTipoDeProcedimentosInternos.EmptyMessage = string.Empty;
 
-            ctrlTipoProcedimentoInterno.Inicializa();
-            ctrlTipoProcedimentoInterno.EnableLoadOnDemand = false;
-            ctrlTipoProcedimentoInterno.ShowDropDownOnTextboxClick = false;
-            ctrlTipoProcedimentoInterno.AutoPostBack = false;
-            ctrlTipoProcedimentoInterno.EhObrigatorio = true;
-            ctrlTipoProcedimentoInterno.TextoItemVazio = string.Empty;
         }
 
         private void ExibaTelaModificar()
@@ -92,21 +82,19 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdProcedimentosInternos;
-
-            UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
-            PanelCdProcedimentosInternos.Visible = true;
-            ctrlTipoProcedimentoInterno.Visible = false;
+            Control controlePanel = this.cboTipoDeProcedimentosInternos;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
 
-            ctrlTipoProcedimentoInterno.EnableLoadOnDemand = false;
-            ctrlTipoProcedimentoInterno.ShowDropDownOnTextboxClick = false;
+            cboTipoDeProcedimentosInternos.EnableLoadOnDemand = false;
+            cboTipoDeProcedimentosInternos.ShowDropDownOnTextboxClick = false;
+            cboTipoDeProcedimentosInternos.EmptyMessage = string.Empty;
         }
 
         private void ExibaTelaExcluir()
@@ -121,11 +109,9 @@ namespace MP.Client.MP
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
 
-            Control controlePanel = this.PanelCdProcedimentosInternos;
-
+            Control controlePanel = this.cboTipoDeProcedimentosInternos;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
-            PanelCdProcedimentosInternos.Visible = false;
+            cboTipoDeProcedimentosInternos.EmptyMessage = string.Empty;
         }
 
         protected void btnCancela_Click()
@@ -142,7 +128,7 @@ namespace MP.Client.MP
                 procedimentosInternos.Id = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
-            procedimentosInternos.Descricao = this.txtDescricaoTipo.Text;
+            procedimentosInternos.Descricao = cboTipoDeProcedimentosInternos.Text;
 
             return procedimentosInternos;
         }
@@ -248,11 +234,8 @@ namespace MP.Client.MP
         {
             ViewState[ID_OBJETO] = procedimentoInterno.Id.Value.ToString();
 
-            ctrlTipoProcedimentoInterno.DescricaoTipo = procedimentoInterno.Descricao;
-
-            this.txtDescricaoTipo.Text = procedimentoInterno.Descricao;
-
-            ExibaTelaModificar();
+            cboTipoDeProcedimentosInternos.Text = procedimentoInterno.Descricao;
+            ExibaTelaConsultar();
         }
 
         protected override string ObtenhaIdFuncao()
@@ -272,6 +255,62 @@ namespace MP.Client.MP
             Consulta,
             Modifica,
             Remove
+        }
+
+        protected void cboProcedimentosInternos_ItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
+        {
+            IList<ITipoDeProcedimentoInterno> listaProcedimentosInternos = new List<ITipoDeProcedimentoInterno>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDeProcedimentoInterno>())
+            {
+                listaProcedimentosInternos = servico.obtenhaTipoProcedimentoInternoPelaDescricao(e.Text);
+            }
+
+            if (listaProcedimentosInternos.Count > 0)
+            {
+                foreach (var procedimentoInterno in listaProcedimentosInternos)
+                {
+                    var item = new RadComboBoxItem(procedimentoInterno.Descricao, procedimentoInterno.Id.Value.ToString());
+
+                    item.Attributes.Add("ID", procedimentoInterno.Id.ToString());
+
+                    cboTipoDeProcedimentosInternos.Items.Add(item);
+                    item.DataBind();
+                }
+            }
+        }
+
+        protected void cboProcedimentosInternos_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            ITipoDeProcedimentoInterno procedimentoInterno = null;
+
+            if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
+                return;
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDeProcedimentoInterno>())
+            {
+                procedimentoInterno = servico.obtenhaTipoProcedimentoInternoPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
+            }
+
+
+            if (procedimentoInterno != null)
+            {
+                MostreProcedimentoInterno(procedimentoInterno);
+            }
+        }
+
+        private void ExibaTelaConsultar()
+        {
+            Control controlePanel = this.cboTipoDeProcedimentosInternos;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+            
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
         }
     }
 }

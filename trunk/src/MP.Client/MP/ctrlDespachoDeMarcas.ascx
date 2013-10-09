@@ -46,26 +46,5 @@
                 </telerik:RadComboBox>
             </td>
         </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td class="th3">
-                <asp:Label ID="Label1" runat="server" Text="Descrição detalhada do despacho"></asp:Label>
-            </td>
-        </tr>
     </table>
-    <asp:Panel ID="PanelDescricaoDetalhada" runat="server">
-        <table class="tabela">
-            <tr>
-                <td class="td">
-                    <telerik:RadTextBox ID="txtDescricaoDetalhada" runat="server" MaxLength="4000" TextMode="MultiLine"
-                        Rows="5" Width="99%" Enabled="false">
-                    </telerik:RadTextBox>
-                </td>
-            </tr>
-        </table>
-    </asp:Panel>
 </asp:Panel>

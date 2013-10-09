@@ -49,48 +49,21 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDock RadDock1;
         
         /// <summary>
-        /// ctrlTipoProcedimentoInterno control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlTipoProcedimentoInterno ctrlTipoProcedimentoInterno;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// PanelCdProcedimentosInternos control.
+        /// cboTipoDeProcedimentosInternos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelCdProcedimentosInternos;
-        
-        /// <summary>
-        /// PanelTipoDeProcedimento control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelTipoDeProcedimento;
-        
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// txtDescricaoTipo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtDescricaoTipo;
+        protected global::Telerik.Web.UI.RadComboBox cboTipoDeProcedimentosInternos;
     }
 }

@@ -97,22 +97,9 @@ namespace MP.Client.MP
                 {
                     var item = new RadComboBoxItem(despachoDeMarcas.CodigoDespacho.ToString(), despachoDeMarcas.IdDespacho.Value.ToString());
 
-                    var descricaoSituacaoDoProcesso =
-                        SituacaoDoProcesso.RetornaDescricaoPorCodigo(despachoDeMarcas.CodigoSituacaoProcesso);
-
                     item.Attributes.Add("SituacaoProcesso",
-                                        descricaoSituacaoDoProcesso ?? "Não informada");
-
-                        //foreach (var situacaoDoProcesso in listaSituacaoDoProcesso)
-                        //{
-                        //    if(situacaoDoProcesso.IdSituacaoProcesso.Value.ToString().Equals(despachoDeMarcas.IdSituacaoProcesso.Value.ToString()))
-                        //    {
-                                
-                        //        break;
-                        //    }
-                        //}
+                                        despachoDeMarcas.SituacaoProcesso.DescricaoSituacao ?? "Não informada");
                     
-
                     if (despachoDeMarcas.Registro)
                     {
                         item.Attributes.Add("Registro",
@@ -143,7 +130,6 @@ namespace MP.Client.MP
                 despachoDeMarcas = servico.obtenhaDespachoDeMarcasPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
             }
 
-            txtDescricaoDetalhada.Text = despachoDeMarcas.DetalheDespacho;
             DespachoDeMarcasSelecionada = despachoDeMarcas;
 
             if (DespachoDeMarcasFoiSelecionada != null)

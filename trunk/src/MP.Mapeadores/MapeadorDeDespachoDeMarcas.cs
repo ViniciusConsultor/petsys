@@ -17,8 +17,8 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDDESPACHO as IdDespacho, CODIGO_DESPACHO as CodigoDespacho, DETALHE_DESPACHO as DetalheDespacho, ");
-            sql.Append("IDSITUACAO_PROCESSO as CodigoSituacaoProcesso, REGISTRO as Registro ");
+            sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
+            sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO Registro ");
             sql.Append("FROM MP_DESPACHO");
 
             var DBHelper = ServerUtils.criarNovoDbHelper();
@@ -33,7 +33,7 @@ namespace MP.Mapeadores
                     despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");
                     despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDespacho");
                     despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
-                    despachoDeMarcas.CodigoSituacaoProcesso = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso");
+                    despachoDeMarcas.SituacaoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
                     despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");
 
                     listaDeDespachoDeMarcas.Add(despachoDeMarcas);
@@ -47,8 +47,8 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDDESPACHO as IdDespacho, CODIGO_DESPACHO as CodigoDespacho, DETALHE_DESPACHO as DetalheDespacho, ");
-            sql.Append("IDSITUACAO_PROCESSO as CodigoSituacaoProcesso, REGISTRO as Registro ");
+            sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
+            sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO Registro ");
             sql.Append("FROM MP_DESPACHO ");
             sql.Append("WHERE IDDESPACHO = " + idDespachoDeMarcas);
 
@@ -77,7 +77,7 @@ namespace MP.Mapeadores
                     despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");
                     despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDespacho");
                     despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
-                    despachoDeMarcas.CodigoSituacaoProcesso = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso");
+                    despachoDeMarcas.SituacaoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
                     despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");
 
                     listaDeDespachoDeMarcas.Add(despachoDeMarcas);
@@ -91,8 +91,8 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDDESPACHO as IdDespacho, CODIGO_DESPACHO as CodigoDespacho, DETALHE_DESPACHO as DetalheDespacho, ");
-            sql.Append("IDSITUACAO_PROCESSO as CodigoSituacaoProcesso, REGISTRO as Registro ");
+            sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
+            sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO  Registro ");
             sql.Append("FROM MP_DESPACHO ");
 
             if (!string.IsNullOrEmpty(codigo))
@@ -122,7 +122,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat(despachoDeMarcas.IdDespacho.Value.ToString(), ", "));
             sql.Append(String.Concat("'", despachoDeMarcas.CodigoDespacho, "', "));
             sql.Append(String.Concat("'", despachoDeMarcas.DetalheDespacho, "', "));
-            sql.Append(String.Concat("'", despachoDeMarcas.CodigoSituacaoProcesso, "', "));
+            sql.Append(String.Concat("'", despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso, "', "));
             sql.Append(despachoDeMarcas.Registro ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
@@ -138,7 +138,7 @@ namespace MP.Mapeadores
             sql.Append("UPDATE MP_DESPACHO SET ");
             sql.Append(String.Concat("CODIGO_DESPACHO = ", despachoDeMarcas.CodigoDespacho, ", "));
             sql.Append(String.Concat("DETALHE_DESPACHO = '", despachoDeMarcas.DetalheDespacho, "', "));
-            sql.Append(String.Concat("IDSITUACAO_PROCESSO = '", despachoDeMarcas.CodigoSituacaoProcesso.ToString(), "', "));
+            sql.Append(String.Concat("IDSITUACAO_PROCESSO = '", despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.ToString(), "', "));
             sql.Append(despachoDeMarcas.Registro
                            ? String.Concat("REGISTRO = '", 1, "' ")
                            : String.Concat("REGISTRO = '", 0, "' "));
@@ -155,8 +155,8 @@ namespace MP.Mapeadores
 
             DBHelper = ServerUtils.getDBHelper();
 
-            sql.Append("delete from MP_DESPACHO");
-            sql.Append(string.Concat(" where IDDESPACHO = ", idDespachoDeMarcas.ToString()));
+            sql.Append("DELETE FROM MP_DESPACHO");
+            sql.Append(string.Concat(" WHERE IDDESPACHO = ", idDespachoDeMarcas.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
