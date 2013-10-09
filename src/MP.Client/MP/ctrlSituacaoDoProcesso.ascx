@@ -3,8 +3,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Panel ID="pnlSituacaoDoProcesso" runat="server">
     <telerik:RadComboBox ID="cboSituacaoDoProcesso" runat="server" EmptyMessage="Selecione um tipo de situação"
-        Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnItemsRequested="cboSituacaoDoProcesso_ItemsRequested"
-        OnSelectedIndexChanged="cboSituacaoDoProcesso_SelectedIndexChanged">
+        Width="90%" Skin="Vista" CausesValidation="False">
         <HeaderTemplate>
             <table width="96%">
                 <tr>

@@ -20,25 +20,12 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlDespachoDeMarcas.DespachoDeMarcasFoiSelecionada += ExibaTelaDespachoDeMarcaSelecionado;
+            ctrlDespachoDeMarcas.DespachoDeMarcasFoiSelecionada += MostreDespachoDeMarcas;
 
             if (!IsPostBack)
             {
                 this.ExibaTelaInicial();
             }
-        }
-
-        private void ExibaTelaDespachoDeMarcaSelecionado(IDespachoDeMarcas despachoDeMarcas)
-        {
-            ViewState[ID_OBJETO] = despachoDeMarcas.IdDespacho.Value.ToString();
-
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
         }
 
         private void ExibaTelaInicial()
@@ -56,16 +43,32 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
-            PanelCdDespachoDeMarcas.Visible = false;
             ctrlDespachoDeMarcas.Visible = true;
-
             ctrlDespachoDeMarcas.Inicializa();
             ctrlDespachoDeMarcas.EnableLoadOnDemand = true;
             ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = true;
             ctrlDespachoDeMarcas.AutoPostBack = true;
 
+            ctrlSituacaoDoProcesso.Inicializa();
+
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
+
+            CarregueConcessaoDeRegistro();
+        }
+
+        private void ExibaTelaConsultar()
+        {
+            Control controle = PanelCdDespachoDeMarcas;
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
+            UtilidadesWeb.HabilitaComponentes(ref controle, false);
         }
 
         private void CarregueConcessaoDeRegistro()
@@ -80,6 +83,7 @@ namespace MP.Client.MP
         {
             ExibaTelaNovo();
         }
+
         private void ExibaTelaNovo()
         {
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
@@ -91,22 +95,12 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
             Control controlePanel = this.PanelCdDespachoDeMarcas;
-
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+            UtilidadesWeb.LimparComponente(ref controlePanel);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
-            PanelCdDespachoDeMarcas.Visible = true;
             ctrlDespachoDeMarcas.Visible = false;
-
-            ctrlDespachoDeMarcas.Inicializa();
-            ctrlDespachoDeMarcas.EnableLoadOnDemand = false;
-            ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = false;
-            ctrlDespachoDeMarcas.AutoPostBack = false;
-            ctrlDespachoDeMarcas.TextoItemVazio = string.Empty;
-
             ctrlSituacaoDoProcesso.Inicializa();
-
-            CarregueConcessaoDeRegistro();
         }
 
         private void ExibaTelaModificar()
@@ -114,7 +108,7 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
@@ -124,15 +118,7 @@ namespace MP.Client.MP
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
-            PanelCdDespachoDeMarcas.Visible = true;
-
             ctrlDespachoDeMarcas.Visible = false;
-            ctrlDespachoDeMarcas.EnableLoadOnDemand = false;
-            ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = false;
-
-            CarregueConcessaoDeRegistro();
-
-            MostreDespachoDeMarcas();
         }
 
         private void ExibaTelaExcluir()
@@ -171,8 +157,9 @@ namespace MP.Client.MP
             despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
             despachoDeMarcas.Registro = rblConcessaoDeRegistro.SelectedValue != "0";
 
-            if(!string.IsNullOrEmpty(ctrlSituacaoDoProcesso.Codigo))
-            despachoDeMarcas.CodigoSituacaoProcesso = Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo);
+            if (!string.IsNullOrEmpty(ctrlSituacaoDoProcesso.Codigo))
+                despachoDeMarcas.SituacaoProcesso =
+                    SituacaoDoProcesso.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo));
 
             return despachoDeMarcas;
         }
@@ -304,21 +291,15 @@ namespace MP.Client.MP
             }
         }
 
-        private void MostreDespachoDeMarcas()
+        private void MostreDespachoDeMarcas(IDespachoDeMarcas despachoDeMarcas)
         {
-            var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
-            
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
-            {
-                despachoDeMarcas = servico.obtenhaDespachoDeMarcasPeloId(Convert.ToInt64(ViewState[ID_OBJETO]));
-            }
-
             txtCodigo.Text = despachoDeMarcas.CodigoDespacho.ToString();
             txtDescricao.Text = despachoDeMarcas.DetalheDespacho;
 
             rblConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
 
-            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.CodigoSituacaoProcesso.ToString();
+            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.ToString();
+            ExibaTelaConsultar();
         }
 
         protected override string ObtenhaIdFuncao()

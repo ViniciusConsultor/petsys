@@ -24,7 +24,6 @@ namespace MP.Client.MP
 
         public void Inicializa()
         {
-            EhObrigatorio = false;
             AutoPostBack = true;
             LimparControle();
         }
@@ -65,12 +64,6 @@ namespace MP.Client.MP
             set { ViewState.Add(this.ClientID, value); }
         }
 
-        public bool EhObrigatorio
-        {
-            set { }
-            //rfvProcedimentosInternos.Enabled = value; }
-        }
-
         public string TextoItemVazio
         {
             set { cboProcedimentosInternos.EmptyMessage = value; }
@@ -82,7 +75,7 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDeProcedimentoInterno>())
             {
-                listaProcedimentosInternos = servico.obtenhaTodosTiposDeProcedimentoInterno();
+                listaProcedimentosInternos = servico.obtenhaTipoProcedimentoInternoPelaDescricao(e.Text);
             }
 
             if (listaProcedimentosInternos.Count > 0)

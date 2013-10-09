@@ -39,11 +39,12 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
             Control controlePanel = this.pnlDadosDoTipo;
+            Control control = RadDock1;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-
-            ctrlTipoDePatente.Visible = true;          
+            
             ctrlTipoDePatente.Inicializa();
             ctrlTipoDePatente.EnableLoadOnDemand = true;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = true;
@@ -71,9 +72,6 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
-
-            pnlDadosDoTipo.Visible = true;
-            ctrlTipoDePatente.Visible = true;
 
             ctrlTipoDePatente.Inicializa();
             ctrlTipoDePatente.EnableLoadOnDemand = false;
@@ -110,19 +108,14 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
             Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
-
-            pnlDadosDoTipo.Visible = true;
-            //ctrlTipoDePatente.Visible = true;
-
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
-            //ctrlTipoDePatente.Visible = false;
             ctrlTipoDePatente.EnableLoadOnDemand = false;
             ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
         }
@@ -141,6 +134,9 @@ namespace MP.Client.MP
 
             Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+
+            Control control = RadDock1;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
         }
 
         protected void btnCancela_Click()
@@ -156,10 +152,8 @@ namespace MP.Client.MP
             {
                 tipoDePatente.IdTipoDePatente = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
-
             
             tipoDePatente.DescricaoTipoDePatente = ctrlTipoDePatente.DescricaoTipoDePatente;
-            //tipoDePatente.DescricaoTipoDePatente = txtDescricaoTipoDePatente.Text;
             tipoDePatente.SiglaTipo = txtSigla.Text;
             tipoDePatente.DescricaoPagamento = this.txtDescricaoPagamento.Text;
             tipoDePatente.DescricaoPagamentoIntermediario = this.txtDescricaoPagamentoIntermediario.Text;
@@ -355,6 +349,20 @@ namespace MP.Client.MP
             }
         }
 
+        private void ExibaTelaConsultar()
+        {
+            Control controle = pnlDadosDoTipo;
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
+            UtilidadesWeb.HabilitaComponentes(ref controle, false);
+        }
+
         private void MostreTipoDePatente(ITipoDePatente tipoDePatente)
         {
             ViewState[ID_OBJETO] = tipoDePatente.IdTipoDePatente.Value.ToString();
@@ -362,7 +370,6 @@ namespace MP.Client.MP
             ctrlTipoDePatente.DescricaoTipoDePatente = tipoDePatente.DescricaoTipoDePatente;
             ctrlTipoDePatente.SiglaTipo = tipoDePatente.SiglaTipo;
 
-            //txtDescricaoTipoDePatente.Text = tipoDePatente.DescricaoTipoDePatente;
             this.txtDescricaoPagamento.Text = tipoDePatente.DescricaoPagamento;
             this.txtDescricaoPagamentoIntermediario.Text = tipoDePatente.DescricaoPagamentoIntermediario;
             this.txtIniciarPagamentoSequencia.Text = tipoDePatente.SequenciaInicioPagamento.ToString();
@@ -380,7 +387,7 @@ namespace MP.Client.MP
 
             this.cbPgtoIntermediario.SelectedValue = tipoDePatente.TemPagamentoIntermediario ? "1" : "0";
 
-            ExibaTelaModificar();
+            ExibaTelaConsultar();
         }
 
         protected override string ObtenhaIdFuncao()
