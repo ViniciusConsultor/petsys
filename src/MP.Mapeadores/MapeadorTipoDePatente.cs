@@ -17,9 +17,9 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDTIPO_PATENTE as IdTipoDePatente, DESCRICAO_TIPO_PATENTE as DescricaoTipoDePatente, SIGLA_TIPO as SiglaTipo, TEMPO_INICIO_ANOS as TempoInicioAnos, QUANTIDADE_PAGTO as QuantidadePagamento, ");
-            sql.Append("TEMPO_ENTRE_PAGTO as TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO as SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO as TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA as InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED as QuantidadePagamentoIntermediario, ");
-            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED as TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO as DescricaoPagamento, DESCRICAO_PAGTO_INTERMED as DescricaoPagamentoIntermediario, TEM_PED_EXAME as TemPedidoDeExame ");
+            sql.Append("SELECT IDTIPO_PATENTE IdTipoDePatente, DESCRICAO_TIPO_PATENTE DescricaoTipoDePatente, SIGLA_TIPO SiglaTipo, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
+            sql.Append("TEMPO_ENTRE_PAGTO TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED QuantidadePagamentoIntermediario, ");
+            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
             sql.Append("FROM MP_TIPO_PATENTE");
 
             var DBHelper = ServerUtils.criarNovoDbHelper();
@@ -57,9 +57,9 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDTIPO_PATENTE as IdTipoDePatente, DESCRICAO_TIPO_PATENTE as DescricaoTipoDePatente, SIGLA_TIPO as SiglaTipo, TEMPO_INICIO_ANOS as TempoInicioAnos, QUANTIDADE_PAGTO as QuantidadePagamento, ");
-            sql.Append("TEMPO_ENTRE_PAGTO as TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO as SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO as TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA as InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED as QuantidadePagamentoIntermediario, ");
-            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED as TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO as DescricaoPagamento, DESCRICAO_PAGTO_INTERMED as DescricaoPagamentoIntermediario, TEM_PED_EXAME as TemPedidoDeExame ");
+            sql.Append("SELECT IDTIPO_PATENTE IdTipoDePatente, DESCRICAO_TIPO_PATENTE DescricaoTipoDePatente, SIGLA_TIPO SiglaTipo, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
+            sql.Append("TEMPO_ENTRE_PAGTO TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED QuantidadePagamentoIntermediario, ");
+            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
             sql.Append("FROM MP_TIPO_PATENTE ");
             sql.Append("WHERE IDTIPO_PATENTE = " + idTipoPatente);
 
@@ -111,9 +111,9 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDTIPO_PATENTE as IdTipoDePatente, DESCRICAO_TIPO_PATENTE as DescricaoTipoDePatente, SIGLA_TIPO as SiglaTipo, TEMPO_INICIO_ANOS as TempoInicioAnos, QUANTIDADE_PAGTO as QuantidadePagamento, ");
-            sql.Append("TEMPO_ENTRE_PAGTO as TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO as SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO as TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA as InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED as QuantidadePagamentoIntermediario, ");
-            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED as TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO as DescricaoPagamento, DESCRICAO_PAGTO_INTERMED as DescricaoPagamentoIntermediario, TEM_PED_EXAME as TemPedidoDeExame ");
+            sql.Append("SELECT IDTIPO_PATENTE IdTipoDePatente, DESCRICAO_TIPO_PATENTE DescricaoTipoDePatente, SIGLA_TIPO SiglaTipo, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
+            sql.Append("TEMPO_ENTRE_PAGTO TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED QuantidadePagamentoIntermediario, ");
+            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
             sql.Append("FROM MP_TIPO_PATENTE ");
 
             if(!string.IsNullOrEmpty(descricaoTipoDePatente))

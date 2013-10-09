@@ -40,7 +40,7 @@
                                     <asp:Label ID="Label1" runat="server" Text="Sigla"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtSigla" runat="server" Width="87px">
+                                    <telerik:RadTextBox ID="txtSigla" runat="server" Width="87px" MaxLength="2">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
