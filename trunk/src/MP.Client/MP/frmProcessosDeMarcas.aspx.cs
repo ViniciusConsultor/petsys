@@ -12,7 +12,9 @@ namespace MP.Client.MP
     public partial class frmProcessosDeMarcas : SuperPagina
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        { 
+            if(!IsPostBack)
+                ExibaTelaInicial();
 
         }
 
@@ -37,8 +39,13 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
 
             CarregaOpcoesDeFiltro();
+            EscondaTodosOsPanelsDeFiltro();
+            pnlProtocolo.Visible = true;
+            cboTipoDeFiltro.SelectedValue = "8";
 
-
+            ctrlApresentacao1.Inicializa();
+            ctrlNCL1.Inicializa();
+            ctrlNatureza1.Inicializa();
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -47,15 +54,62 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Apresentação","1"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente","2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de entrada","3"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Marca","3"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza","4"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("NCL","5"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo","6"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Protocolo","7"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Marca","4"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza","5"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("NCL","6"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo","7"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Protocolo","8"));
 
         }
 
 
+        protected void cboTipoDeFiltro_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            EscondaTodosOsPanelsDeFiltro();
 
+            switch (cboTipoDeFiltro.SelectedValue)
+            {
+                case "1" :
+                    pnlApresentacao.Visible = true;
+                    break;
+                case  "2" :
+                    pnlCliente.Visible = true;
+                    break;
+                case "3":
+                    pnlDataDeEntrada.Visible = true;
+                    break;
+                case "4":
+                    pnlMarca.Visible = true;
+                    break;
+                case "5":
+                    pnlNatureza.Visible = true;
+                    break;
+                case "6":
+                    pnlNCL.Visible = true;
+                    break;
+                case "7":
+                    pnlProcesso.Visible = true;
+                    break;
+                case "8":
+                    pnlProtocolo.Visible = true;
+                    break;
+            }
+        }
+
+
+        private void EscondaTodosOsPanelsDeFiltro()
+        {
+            pnlApresentacao.Visible = false;
+            pnlCliente.Visible = false;
+            pnlDataDeEntrada.Visible = false;
+            pnlMarca.Visible = false;
+            pnlNatureza.Visible = false;
+            pnlNCL.Visible = false;
+            pnlProcesso.Visible = false;
+            pnlProcesso.Visible = false;
+            pnlProtocolo.Visible = false;
+        }
+
+    
     }
 }

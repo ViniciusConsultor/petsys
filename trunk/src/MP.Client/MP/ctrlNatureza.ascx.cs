@@ -42,7 +42,7 @@ namespace MP.Client.MP
         {
             foreach (var natureza in Natureza.ObtenhaTodas())
             {
-                var item = new RadComboBoxItem(natureza.Codigo.ToString(), natureza.Nome);
+                var item = new RadComboBoxItem(natureza.Nome, natureza.Codigo.ToString());
 
                 item.Attributes.Add("Codigo", natureza.Codigo.ToString());
 

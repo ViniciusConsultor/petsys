@@ -37,7 +37,7 @@ namespace MP.Client.MP
         {
             foreach (var apresentacao in Apresentacao.ObtenhaTodas())
             {
-                var item = new RadComboBoxItem(apresentacao.Codigo.ToString(), apresentacao.Nome);
+                var item = new RadComboBoxItem(apresentacao.Nome, apresentacao.Codigo.ToString());
 
                 item.Attributes.Add("Codigo", apresentacao.Codigo.ToString());
 

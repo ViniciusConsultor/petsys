@@ -1,7 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="frmProcessosDeMarcas.aspx.cs" Inherits="MP.Client.MP.frmProcessosDeMarcas" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true"
+    CodeBehind="frmProcessosDeMarcas.aspx.cs" Inherits="MP.Client.MP.frmProcessosDeMarcas" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="ctrlApresentacao.ascx" TagName="ctrlApresentacao" TagPrefix="uc1" %>
+<%@ Register Src="ctrlNatureza.ascx" TagName="ctrlNatureza" TagPrefix="uc2" %>
+<%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo Processo"
@@ -10,7 +15,7 @@
                 CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.DRY.002.0006" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
-             <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/refresh.gif"
+            <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnLerRevista" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
@@ -27,37 +32,94 @@
                                     <asp:Label ID="Label2" runat="server" Text="Opção de filtro"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboTipoDeFiltro" runat="server" AutoPostBack="true">
+                                    <telerik:RadComboBox ID="cboTipoDeFiltro" runat="server" AutoPostBack="true" OnSelectedIndexChanged="cboTipoDeFiltro_OnSelectedIndexChanged">
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
-                            <tr runat="server" id="pnlEntreDadas">
+                            <tr runat="server" id="pnlApresentacao">
                                 <td class="th3">
-                                    <asp:Label ID="Label7" runat="server" Text="Data de cadastro"></asp:Label>
+                                    <asp:Label ID="Label7" runat="server" Text="Apresentação"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadDatePicker ID="txtDataInicial" runat="server">
-                                    </telerik:RadDatePicker>
-                                    <asp:Label ID="Label1" runat="server" Text=" a  "></asp:Label>
-                                    <telerik:RadDatePicker ID="txtDataFinal" runat="server">
-                                    </telerik:RadDatePicker>
-                                    <asp:ImageButton ID="btnPesquisar" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar" />
+                                    <uc1:ctrlApresentacao ID="ctrlApresentacao1" runat="server" />
+                                    <asp:ImageButton ID="btnPesquisarPorApresentacao" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
                                 </td>
                             </tr>
-                            <tr runat="server" id="pnlCodigoDaSolicitacao">
+                            <tr runat="server" id="pnlCliente">
                                 <td class="th3">
-                                    <asp:Label ID="Label3" runat="server" Text="Código da solicitação"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="Cliente"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtCodigoDaSolicitacao" runat="server" DataType="System.Int64"
-                                        AllowOutOfRangeAutoCorrect="False">
+                                    <asp:ImageButton ID="btnPesquisarPorCliente" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlDataDeEntrada">
+                                <td class="th3">
+                                    <asp:Label ID="Label4" runat="server" Text="Data de entrada"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadDatePicker ID="txtDataDeEntrada" runat="server">
+                                    </telerik:RadDatePicker>
+                                    <asp:ImageButton ID="btnPesquisarPorDataDeEntrada" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlMarca">
+                                <td class="th3">
+                                    <asp:Label ID="Label5" runat="server" Text="Marca"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnPesquisarPorMarca" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlNatureza">
+                                <td class="th3">
+                                    <asp:Label ID="Label6" runat="server" Text="Natureza"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc2:ctrlNatureza ID="ctrlNatureza1" runat="server" />
+                                    <asp:ImageButton ID="btnPesquisarPorNatureza" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
+                                </td>
+                            </tr>
+                             <tr runat="server" id="pnlNCL">
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="NCL"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc3:ctrlNCL ID="ctrlNCL1" runat="server" />
+                                    <asp:ImageButton ID="btnPesquisarPorNCL" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlProcesso">
+                                <td class="th3">
+                                    <asp:Label ID="Label3" runat="server" Text="Processo"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64" Type="Number" >
+                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
                                     </telerik:RadNumericTextBox>
-                                    <asp:ImageButton ID="btnPesquisarPorCodigo" runat="server" ImageUrl="~/imagens/find.gif"
+                                    <asp:ImageButton ID="btnPesquisarPorProcesso" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlProtocolo">
+                                <td class="th3">
+                                    <asp:Label ID="Label9" runat="server" Text="Protocolo"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadNumericTextBox ID="txtProtocolo" runat="server" DataType="System.Int64" Type="Number" >
+                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
+                                    <asp:ImageButton ID="btnPesquisarPorProtoloco" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" />
                                 </td>
                             </tr>
                         </table>
-                        
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
