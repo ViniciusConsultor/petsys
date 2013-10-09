@@ -116,6 +116,13 @@
     <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.designer.cs">
       <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlApresentacao.ascx.cs">
+      <DependentUpon>ctrlApresentacao.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlApresentacao.ascx.designer.cs">
+      <DependentUpon>ctrlApresentacao.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlDespachoDeMarcas.ascx.cs">
       <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -129,6 +136,13 @@
     </Compile>
     <Compile Include="MP\ctrlLayoutRevistaPatente.ascx.designer.cs">
       <DependentUpon>ctrlLayoutRevistaPatente.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlNatureza.ascx.cs">
+      <DependentUpon>ctrlNatureza.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlNatureza.ascx.designer.cs">
+      <DependentUpon>ctrlNatureza.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlNCL.ascx.cs">
       <DependentUpon>ctrlNCL.ascx</DependentUpon>
@@ -158,6 +172,13 @@
     <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.designer.cs">
       <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmProcessosDeMarcas.aspx.cs">
+      <DependentUpon>frmProcessosDeMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmProcessosDeMarcas.aspx.designer.cs">
+      <DependentUpon>frmProcessosDeMarcas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,12 +195,15 @@
     <Content Include="MP\cdLayoutRevistaPatente.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
     <Content Include="MP\cdTipoDeProcedimentoInterno.aspx" />
+    <Content Include="MP\ctrlApresentacao.ascx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlLayoutRevistaPatente.ascx" />
+    <Content Include="MP\ctrlNatureza.ascx" />
     <Content Include="MP\ctrlNCL.ascx" />
     <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
+    <Content Include="MP\frmProcessosDeMarcas.aspx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
