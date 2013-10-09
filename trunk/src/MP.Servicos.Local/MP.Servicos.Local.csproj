@@ -60,7 +60,6 @@
     <Compile Include="ServicoDeLayoutRevistaPatenteLocal.cs" />
     <Compile Include="ServicoDeProcedimentosInternosLocal.cs" />
     <Compile Include="ServicoDeProcuradorLocal.cs" />
-    <Compile Include="ServicoDeSituacaoDoProcessoLocal.cs" />
     <Compile Include="ServicoDeTipoDePatenteLocal.cs" />
   </ItemGroup>
   <ItemGroup>
