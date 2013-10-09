@@ -6,8 +6,8 @@
             <asp:Label ID="lblLayoutRevista" runat="server">Layout Revista</asp:Label>
         </td>
         <td class="td">          
-            <telerik:RadComboBox ID="cboLayoutPatente" runat="server" EmptyMessage="Selecione uma layout"
-                Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" >
+            <telerik:RadComboBox ID="cboLayoutPatente" runat="server" EmptyMessage="Selecione um layout"
+                Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnSelectedIndexChanged="cboLayoutPatente_SelectedIndexChanged" >
                 <HeaderTemplate>
                     <table width="96%">
                         <tr>

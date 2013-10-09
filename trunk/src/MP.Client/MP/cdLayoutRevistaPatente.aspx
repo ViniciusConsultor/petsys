@@ -34,7 +34,7 @@
                                     <asp:Label ID="lblNomeDoCampo" runat="server" Text="Nome campo" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNomeDoCampo" MaxLength="50" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="txtNomeDoCampo" MaxLength="50" runat="server" Width="80%"></telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -42,7 +42,7 @@
                                     <asp:Label ID="lblDescricaoResumida" runat="server" Text="Descrição Resumida" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricaoResumida" MaxLength="50" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="txtDescricaoResumida" MaxLength="50" runat="server" Width="80%"></telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -50,7 +50,7 @@
                                     <asp:Label ID="lblDescricaoDoCampo" runat="server" Text="Descrição do campo" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricaoDoCampo" MaxLength="120" runat="server"></telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="txtDescricaoDoCampo" MaxLength="120" Width="80%" runat="server"></telerik:RadTextBox>
                                 </td>
                             </tr>
                              <tr>
@@ -58,7 +58,7 @@
                                     <asp:Label ID="lblTamanhoDoCampo" runat="server" Text="Tamanho do campo" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtTamanhoDoCampo" runat="server" MaxLength="5">
+                                    <telerik:RadNumericTextBox ID="txtTamanhoDoCampo" runat="server" MaxLength="5" Width="12%">
                                         <NumberFormat DecimalDigits="0"></NumberFormat>
                                     </telerik:RadNumericTextBox>
                                 </td>
@@ -68,7 +68,7 @@
                                     <asp:Label ID="lblCampoDelimitadorDoRegistro" runat="server" Text="Este campo identifica o início do Registro na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboCampoDelimitadorDoRegistro" Culture="pt-BR" runat="server" Width="5%"></telerik:RadComboBox>
+                                    <telerik:RadComboBox ID="cboCampoDelimitadorDoRegistro" Culture="pt-BR" runat="server" Width="10%"></telerik:RadComboBox>
                                 </td>
                             </tr>
                             <tr>
@@ -76,7 +76,7 @@
                                     <asp:Label ID="lblCampoIdentificadorDoProcesso" runat="server" Text="Este campo identifica o Número do Processo na Revista do Registro na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboCampoIdentificadorDoProcesso" runat="server" Culture="pt-BR" Width="5%"></telerik:RadComboBox>
+                                    <telerik:RadComboBox ID="cboCampoIdentificadorDoProcesso" runat="server" Culture="pt-BR" Width="10%"></telerik:RadComboBox>
                                 </td>
                             </tr>
                             <tr>
@@ -84,7 +84,7 @@
                                     <asp:Label ID="lblCampoIdentificadorDeColidencia" runat="server" Text="Este campo identifica a Colidência do Processo na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboCampoIdentificadorDeColidencia" runat="server" Culture="pt-BR" Width="5%"></telerik:RadComboBox>
+                                    <telerik:RadComboBox ID="cboCampoIdentificadorDeColidencia" runat="server" Culture="pt-BR" Width="10%"></telerik:RadComboBox>
                                 </td>
                             </tr>
                         </table>
