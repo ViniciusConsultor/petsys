@@ -24,104 +24,113 @@ namespace MP.Client.MP
 
         public void Inicializa()
         {
-            AutoPostBack = true;
+            //AutoPostBack = true;
             LimparControle();
+            CarregueCombo();
         }
 
         private void LimparControle()
         {
-            Control controlePanel = pnlSituacaoDoProcesso;
-            UtilidadesWeb.LimparComponente(ref controlePanel);
-            SituacaoDoProcessoSelecionada = null;
+            var controle = cboSituacaoDoProcesso as Control;
+            UtilidadesWeb.LimparComponente(ref controle);
+            cboSituacaoDoProcesso.ClearSelection();
         }
 
-        public bool EnableLoadOnDemand
+        //public bool EnableLoadOnDemand
+        //{
+        //    set { cboSituacaoDoProcesso.EnableLoadOnDemand = value; }
+        //}
+
+        //public bool ShowDropDownOnTextboxClick
+        //{
+        //    set { cboSituacaoDoProcesso.ShowDropDownOnTextboxClick = value; }
+        //}
+
+        public string Codigo
         {
-            set { cboSituacaoDoProcesso.EnableLoadOnDemand = value; }
+            get { return cboSituacaoDoProcesso.SelectedValue; }
+            set
+            {
+                var descricaoSituacao =
+                        SituacaoDoProcesso.RetornaDescricaoPorCodigo(Convert.ToInt32(value));
+
+                    cboSituacaoDoProcesso.Text = descricaoSituacao;
+                    cboSituacaoDoProcesso.SelectedValue = value;
+            }
         }
 
-        public bool ShowDropDownOnTextboxClick
-        {
-            set { cboSituacaoDoProcesso.ShowDropDownOnTextboxClick = value; }
-        }
+        //public string DescricaoSituacao
+        //{
+        //    get { return cboSituacaoDoProcesso.Attributes["DescricaoSituacao"]; }
+        //    set { cboSituacaoDoProcesso.Attributes["DescricaoSituacao"] = value; }
+        //}
 
-        public string IdSituacaoProcesso
-        {
-            get { return cboSituacaoDoProcesso.Text; }
-            set { cboSituacaoDoProcesso.Text = value; }
-        }
+        //public ISituacaoDoProcesso SituacaoDoProcessoSelecionada
+        //{
+        //    get { return (ISituacaoDoProcesso)ViewState[ClientID]; }
+        //    set { ViewState.Add(this.ClientID, value); }
+        //}
 
-        public string DescricaoSituacao
-        {
-            get { return cboSituacaoDoProcesso.Attributes["DescricaoSituacao"]; }
-            set { cboSituacaoDoProcesso.Attributes["DescricaoSituacao"] = value; }
-        }
+        //public string TextoItemVazio
+        //{
+        //    set { cboSituacaoDoProcesso.EmptyMessage = value; }
+        //}
 
-        public ISituacaoDoProcesso SituacaoDoProcessoSelecionada
+        private void CarregueCombo()
         {
-            get { return (ISituacaoDoProcesso)ViewState[ClientID]; }
-            set { ViewState.Add(this.ClientID, value); }
-        }
+            foreach (var situacao in SituacaoDoProcesso.ObtenhaSituacoesDoProcesso())
+            {
+                var item = new RadComboBoxItem(situacao.DescricaoSituacao, situacao.CodigoSituacaoProcesso.ToString());
 
-        public string TextoItemVazio
-        {
-            set { cboSituacaoDoProcesso.EmptyMessage = value; }
+                item.Attributes.Add("Codigo", situacao.CodigoSituacaoProcesso.ToString());
+
+                cboSituacaoDoProcesso.Items.Add(item);
+                item.DataBind();
+            }
         }
 
         protected void cboSituacaoDoProcesso_ItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
         {
-            IList<ISituacaoDoProcesso> listaSituacaoDoProcesso = new List<ISituacaoDoProcesso>();
+            //IList<ISituacaoDoProcesso> listaSituacaoDoProcesso = new List<ISituacaoDoProcesso>();
 
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeSituacaoDoProcesso>())
-            {
-                listaSituacaoDoProcesso = servico.obtenhaTodasSituacoesDoProcesso();
-            }
+            //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeSituacaoDoProcesso>())
+            //{
+            //    listaSituacaoDoProcesso = servico.obtenhaTodasSituacoesDoProcesso();
+            //}
 
-            if (listaSituacaoDoProcesso.Count > 0)
-            {
-                foreach (var situacaoDoProcesso in listaSituacaoDoProcesso)
-                {
-                    var item = new RadComboBoxItem(situacaoDoProcesso.IdSituacaoProcesso.Value.ToString(), situacaoDoProcesso.IdSituacaoProcesso.Value.ToString());
+            //if (listaSituacaoDoProcesso.Count > 0)
+            //{
+            //    foreach (var situacaoDoProcesso in listaSituacaoDoProcesso)
+            //    {
+            //        var item = new RadComboBoxItem(situacaoDoProcesso.IdSituacaoProcesso.Value.ToString(), situacaoDoProcesso.IdSituacaoProcesso.Value.ToString());
 
-                    item.Attributes.Add("DescricaoSituacao",
-                                        situacaoDoProcesso.DescricaoSituacao ?? "Não informada");
+            //        item.Attributes.Add("DescricaoSituacao",
+            //                            situacaoDoProcesso.DescricaoSituacao ?? "Não informada");
 
-                    this.cboSituacaoDoProcesso.Items.Add(item);
-                    item.DataBind();
-                }
-            }
+            //        this.cboSituacaoDoProcesso.Items.Add(item);
+            //        item.DataBind();
+            //    }
+            //}
         }
 
         protected void cboSituacaoDoProcesso_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            ISituacaoDoProcesso situacaoDoProcesso = null;
+            //if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
+            //    return;
 
-            if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
-                return;
+            //string descricao = SituacaoDoProcesso.RetornaDescricaoPorCodigo(Convert.ToInt32(((RadComboBox)o).SelectedValue));
 
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeSituacaoDoProcesso>())
-            {
-                situacaoDoProcesso = servico.obtenhaSituacaoDoProcessoPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
-            }
-
-            cboSituacaoDoProcesso.Text = situacaoDoProcesso.DescricaoSituacao;
-
-            SituacaoDoProcessoSelecionada = situacaoDoProcesso;
-
-            if (SituacaoDoProcessoFoiSelecionada != null)
-            {
-                SituacaoDoProcessoFoiSelecionada(situacaoDoProcesso);
-            }
+            //cboSituacaoDoProcesso.Text = descricao;
         }
 
-        public bool AutoPostBack
-        {
-            set { cboSituacaoDoProcesso.AutoPostBack = value; }
-        }
+        //public bool AutoPostBack
+        //{
+        //    set { cboSituacaoDoProcesso.AutoPostBack = value; }
+        //}
 
-        public ctrlSituacaoDoProcesso()
-	    {
-		    Load += Page_Load;
-	    }
+        //public ctrlSituacaoDoProcesso()
+        //{
+        //    Load += Page_Load;
+        //}
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="Negocio\ITipoDePatente.cs" />
     <Compile Include="Negocio\Natureza.cs" />
     <Compile Include="Negocio\NCL.cs" />
+    <Compile Include="Negocio\SituacaoDoProcesso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />

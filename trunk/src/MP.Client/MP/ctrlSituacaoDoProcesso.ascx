@@ -5,18 +5,16 @@
         <tr>          
             <td class="td">
                 <telerik:RadComboBox ID="cboSituacaoDoProcesso" runat="server" EmptyMessage="Selecione um tipo de situação"
-                    EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
-                    ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-                    Width="80%" Skin="Vista" CausesValidation="False" AutoPostBack="True"
-                    onitemsrequested="cboSituacaoDoProcesso_ItemsRequested" 
-                    onselectedindexchanged="cboSituacaoDoProcesso_SelectedIndexChanged">
+                    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True"
+                    OnItemsRequested="cboSituacaoDoProcesso_ItemsRequested"
+                    OnSelectedIndexChanged="cboSituacaoDoProcesso_SelectedIndexChanged">
                     <HeaderTemplate>
                         <table width="96%">
                             <tr>
-                                <td width="10%">
+                                <td width="16%">
                                     Código
                                 </td>
-                                <td width="46%">
+                                <td width="80%">
                                     Descrição da situação
                                 </td>                                
                             </tr>
@@ -25,12 +23,12 @@
                     <ItemTemplate>
                         <table width="100%">
                             <tr>
-                                <td width="10%">
+                            <td width="16%">
+                                    <%#DataBinder.Eval(Container, "Attributes['Codigo']")%>
+                                </td> 
+                                <td width="80%">
                                     <%# DataBinder.Eval(Container, "Text")%>
-                                </td>
-                                <td width="46%">
-                                    <%#DataBinder.Eval(Container, "Attributes['DescricaoSituacao']")%>
-                                </td>                               
+                                </td>                                                              
                             </tr>
                         </table>
                     </ItemTemplate>
