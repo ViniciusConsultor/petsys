@@ -47,6 +47,7 @@ namespace MP.Client.MP
             ctrlNCL1.Inicializa();
             ctrlNatureza1.Inicializa();
             ctrlOperacaoFiltro1.Inicializa();
+            ctrlCliente1.Inicializa();
         }
 
         private void CarregaOpcoesDeFiltro()

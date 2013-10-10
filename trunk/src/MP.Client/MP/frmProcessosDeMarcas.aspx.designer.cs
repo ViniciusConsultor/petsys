@@ -148,6 +148,15 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
+        /// ctrlCliente1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WorkSpace.ctrlCliente ctrlCliente1;
+        
+        /// <summary>
         /// btnPesquisarPorCliente control.
         /// </summary>
         /// <remarks>
