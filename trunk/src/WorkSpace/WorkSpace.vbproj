@@ -105,6 +105,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ctrlOperacaoFiltro.ascx" />
     <Content Include="ctrlPais.ascx" />
     <Content Include="ctrlTipoEndereco.ascx" />
     <Content Include="ctrlEmpresa.ascx" />
@@ -332,6 +333,13 @@
   <ItemGroup>
     <Compile Include="AsyncUploadHandlerCustom.ashx.vb">
       <DependentUpon>AsyncUploadHandlerCustom.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlOperacaoFiltro.ascx.designer.vb">
+      <DependentUpon>ctrlOperacaoFiltro.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlOperacaoFiltro.ascx.vb">
+      <DependentUpon>ctrlOperacaoFiltro.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ctrlPais.ascx.designer.vb">
       <DependentUpon>ctrlPais.ascx</DependentUpon>

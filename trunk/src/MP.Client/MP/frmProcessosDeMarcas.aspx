@@ -5,6 +5,7 @@
 <%@ Register Src="ctrlApresentacao.ascx" TagName="ctrlApresentacao" TagPrefix="uc1" %>
 <%@ Register Src="ctrlNatureza.ascx" TagName="ctrlNatureza" TagPrefix="uc2" %>
 <%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc3" %>
+<%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;">
@@ -36,6 +37,14 @@
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label10" runat="server" Text="Operação do filtro"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc4:ctrlOperacaoFiltro ID="ctrlOperacaoFiltro1" runat="server" />
+                                </td>
+                            </tr>
                             <tr runat="server" id="pnlApresentacao">
                                 <td class="th3">
                                     <asp:Label ID="Label7" runat="server" Text="Apresentação"></asp:Label>
@@ -43,7 +52,7 @@
                                 <td class="td">
                                     <uc1:ctrlApresentacao ID="ctrlApresentacao1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorApresentacao" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar" OnClick=btnPesquisarPorApresentacao_OnClick/>
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlCliente">
@@ -52,7 +61,7 @@
                                 </td>
                                 <td class="td">
                                     <asp:ImageButton ID="btnPesquisarPorCliente" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorCliente_OnClick_"/>
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlDataDeEntrada">
@@ -63,7 +72,7 @@
                                     <telerik:RadDatePicker ID="txtDataDeEntrada" runat="server">
                                     </telerik:RadDatePicker>
                                     <asp:ImageButton ID="btnPesquisarPorDataDeEntrada" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorDataDeEntrada_OnClick" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlMarca">
@@ -72,7 +81,7 @@
                                 </td>
                                 <td class="td">
                                     <asp:ImageButton ID="btnPesquisarPorMarca" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar"  OnClick="btnPesquisarPorMarca_OnClick"/>
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlNatureza">
@@ -82,7 +91,7 @@
                                 <td class="td">
                                     <uc2:ctrlNatureza ID="ctrlNatureza1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorNatureza" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar"  OnClick="btnPesquisarPorNatureza_OnClick"/>
                                 </td>
                             </tr>
                              <tr runat="server" id="pnlNCL">
@@ -92,7 +101,7 @@
                                 <td class="td">
                                     <uc3:ctrlNCL ID="ctrlNCL1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorNCL" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorNCL_OnClick" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlProcesso">
@@ -104,7 +113,7 @@
                                         <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
                                     </telerik:RadNumericTextBox>
                                     <asp:ImageButton ID="btnPesquisarPorProcesso" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorProcesso_OnClick" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlProtocolo">
@@ -116,7 +125,7 @@
                                         <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
                                     </telerik:RadNumericTextBox>
                                     <asp:ImageButton ID="btnPesquisarPorProtoloco" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" />
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorProtoloco_OnClick" />
                                 </td>
                             </tr>
                         </table>

@@ -76,6 +76,24 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadComboBox cboTipoDeFiltro;
         
         /// <summary>
+        /// Label10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label10;
+        
+        /// <summary>
+        /// ctrlOperacaoFiltro1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WorkSpace.ctrlOperacaoFiltro ctrlOperacaoFiltro1;
+        
+        /// <summary>
         /// pnlApresentacao control.
         /// </summary>
         /// <remarks>
