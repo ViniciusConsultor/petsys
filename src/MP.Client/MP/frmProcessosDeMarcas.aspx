@@ -6,6 +6,7 @@
 <%@ Register Src="ctrlNatureza.ascx" TagName="ctrlNatureza" TagPrefix="uc2" %>
 <%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc3" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
+<%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;">
@@ -60,6 +61,7 @@
                                     <asp:Label ID="Label1" runat="server" Text="Cliente"></asp:Label>
                                 </td>
                                 <td class="td">
+                                    <uc5:ctrlCliente ID="ctrlCliente1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorCliente" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorCliente_OnClick_"/>
                                 </td>
