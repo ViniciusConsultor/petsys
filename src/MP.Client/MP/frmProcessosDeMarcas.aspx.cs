@@ -46,6 +46,7 @@ namespace MP.Client.MP
             ctrlApresentacao1.Inicializa();
             ctrlNCL1.Inicializa();
             ctrlNatureza1.Inicializa();
+            ctrlOperacaoFiltro1.Inicializa();
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -110,6 +111,45 @@ namespace MP.Client.MP
             pnlProtocolo.Visible = false;
         }
 
-    
+
+        protected void btnPesquisarPorApresentacao_OnClick(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnPesquisarPorCliente_OnClick_(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnPesquisarPorDataDeEntrada_OnClick(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnPesquisarPorMarca_OnClick(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnPesquisarPorNatureza_OnClick(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnPesquisarPorNCL_OnClick(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnPesquisarPorProcesso_OnClick(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnPesquisarPorProtoloco_OnClick(object sender, ImageClickEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
