@@ -8,10 +8,10 @@ namespace MP.Interfaces.Negocio
     public interface IMarcas
     {
         long? IdMarca { get; set; }
-        int CodigoNCL { get; set; }
-        int CodigoApresentacao { get; set; }
+        NCL NCL { get; set; }
+        Apresentacao Apresentacao { get; set; }
         //Cliente Cliente { get; set; }
-        int CodigoNatureza { get; set; }
+        Natureza Natureza { get; set; }
         string DescricaoDaMarca { get; set; }
         string EspecificacaoDeProdutosEServicos { get; set; }
         string ImagemDaMarca { get; set; }
