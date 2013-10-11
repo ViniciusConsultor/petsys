@@ -53,20 +53,39 @@ namespace MP.Mapeadores
                     marca.NCL = NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "NCL"));
                     marca.Apresentacao =
                         Apresentacao.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Apresentacao"));
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaClasse"))
                     marca.CodigoDaClasse = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaClasse");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaSubClasse1"))
                     marca.CodigoDaSubClasse1 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse1");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaSubClasse2"))
                     marca.CodigoDaSubClasse2 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse2");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaSubClasse3"))
                     marca.CodigoDaSubClasse3 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse3");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "DescricaoDaMarca"))
                     marca.DescricaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoDaMarca");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "EspecificacaoDeProdutosEServicos"))
                     marca.EspecificacaoDeProdutosEServicos = UtilidadesDePersistencia.GetValorString(leitor, "EspecificacaoDeProdutosEServicos");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "ImagemDaMarca"))
                     marca.ImagemDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ImagemDaMarca");
+
                     marca.Natureza =
                         Natureza.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Natureza"));
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "ObservacaoDaMarca"))
                     marca.ObservacaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ObservacaoDaMarca");
 
                     var cliente =
                         FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(
                             UtilidadesDePersistencia.GetValorLong(leitor, "Cliente"));
+
+                    marca.Cliente = cliente;
                     
                     listaDeMarcas.Add(marca);
                 }
