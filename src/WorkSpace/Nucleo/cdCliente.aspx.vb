@@ -223,8 +223,12 @@ Partial Public Class cdCliente
         txtValorMaximoParaCompras.Value = Cliente.ValorMaximoParaCompras
         txtNumeroDoRegistro.Text = Cliente.NumeroDoRegistro
         txtDataDoRegistro.SelectedDate = Cliente.DataDoRegistro
-        ctrlGrupo1.GrupoSelecionado = Cliente.GrupoDeAtividade
-        ctrlGrupo1.NomeDoGrupo = Cliente.GrupoDeAtividade.Nome
+
+        If Not Cliente.GrupoDeAtividade Is Nothing Then
+            ctrlGrupo1.GrupoSelecionado = Cliente.GrupoDeAtividade
+            ctrlGrupo1.NomeDoGrupo = Cliente.GrupoDeAtividade.Nome
+        End If
+        
     End Sub
 
     Private Sub btnNovoGrupoDeAtividade_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnNovoGrupoDeAtividade.Click

@@ -215,9 +215,10 @@ Public Class MapeadorDeCliente
         Dim Tipo As TipoDePessoa
         Dim Pessoa As IPessoa = Nothing
 
-        Sql.Append("SELECT NCL_PESSOA.ID, NCL_PESSOA.NOME, NCL_PESSOA.TIPO,")
-        Sql.Append("NCL_CLIENTE.IDPESSOA, NCL_CLIENTE.TIPOPESSOA ")
+        Sql.Append("SELECT NCL_PESSOA.ID IDDAPESSOA, NCL_PESSOA.NOME NOMEPESSOA, NCL_PESSOA.TIPO, ")
+        Sql.Append("NCL_CLIENTE.IDPESSOA, NCL_CLIENTE.TIPOPESSOA, NCL_CLIENTE.DTCADASTRO, NCL_CLIENTE.INFOADICIONAL, NCL_CLIENTE.FAIXASALARIAL, NCL_CLIENTE.DESCONTOAUTOMATICO, NCL_CLIENTE.VLRMAXCOMPRAS, NCL_CLIENTE.SALDOCOMPRAS, NCL_CLIENTE.NUMREGISTRO, NCL_CLIENTE.DTREGISTRO, NCL_CLIENTE.IDGRPATIVIDADE, NCL_GRUPO_DE_ATIVIDADE.NOME  ")
         Sql.Append("FROM NCL_PESSOA, NCL_CLIENTE ")
+        Sql.Append("LEFT JOIN NCL_GRUPO_DE_ATIVIDADE ON IDGRPATIVIDADE = NCL_GRUPO_DE_ATIVIDADE.ID ")
         Sql.Append("WHERE NCL_CLIENTE.IDPESSOA = NCL_PESSOA.ID ")
         Sql.Append("AND NCL_CLIENTE.TIPOPESSOA = NCL_PESSOA.TIPO ")
         Sql.Append(String.Concat("AND IDPESSOA = ", ID.ToString))
@@ -235,8 +236,8 @@ Public Class MapeadorDeCliente
                         Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
                     End If
 
-                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDDAPESSOA")
+                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPESSOA")
 
                     Cliente = MontaObjetoCliente(Leitor, Pessoa)
                 End If

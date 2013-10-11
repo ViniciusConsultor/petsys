@@ -7,6 +7,7 @@ using Compartilhados.DBHelper;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
 using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.Core.Negocio.LazyLoad;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
 
@@ -63,10 +64,9 @@ namespace MP.Mapeadores
                         Natureza.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Natureza"));
                     marca.ObservacaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ObservacaoDaMarca");
 
-                    var cliente = FabricaGenerica.GetInstancia().CrieObjeto<ICliente>();
-                    cliente.Pessoa.ID = UtilidadesDePersistencia.getValorInteger(leitor, "Cliente");
-
-                    marca.Cliente = cliente;
+                    var cliente =
+                        FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(
+                            UtilidadesDePersistencia.GetValorLong(leitor, "Cliente"));
                     
                     listaDeMarcas.Add(marca);
                 }
