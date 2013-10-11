@@ -115,42 +115,86 @@ namespace MP.Client.MP
 
         protected void btnPesquisarPorApresentacao_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
         }
 
         protected void btnPesquisarPorCliente_OnClick_(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
         }
 
         protected void btnPesquisarPorDataDeEntrada_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
         }
 
         protected void btnPesquisarPorMarca_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
         }
 
         protected void btnPesquisarPorNatureza_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
         }
 
         protected void btnPesquisarPorNCL_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
         }
 
         protected void btnPesquisarPorProcesso_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
         }
 
         protected void btnPesquisarPorProtoloco_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+        }
+
+        private bool OpcaoDeOperacaodeFiltroEstaSelecionada()
+        {
+            return !string.IsNullOrEmpty(ctrlOperacaoFiltro1.Codigo);
+        }
+
+        private void ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro()
+        {
+           ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma opção de filtro"), false);
         }
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\ITipoDePatente.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
+    <Compile Include="Negocio\LazyLoad\IInventorLazyLoad.cs" />
     <Compile Include="Negocio\Natureza.cs" />
     <Compile Include="Negocio\NCL.cs" />
     <Compile Include="Negocio\SituacaoDoProcesso.cs" />
