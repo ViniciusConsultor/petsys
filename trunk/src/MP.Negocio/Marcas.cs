@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Compartilhados.Interfaces.Core.Negocio;
+using Core.Negocio;
 using MP.Interfaces.Negocio;
 
 namespace MP.Negocio
@@ -12,7 +14,7 @@ namespace MP.Negocio
         public long? IdMarca { get; set; }
         public NCL NCL { get; set; }
         public Apresentacao Apresentacao { get; set; }
-        //public Cliente Cliente { get; set; }
+        public ICliente Cliente { get; set; }
         public Natureza Natureza { get; set; }
         public string DescricaoDaMarca { get; set; }
         public string EspecificacaoDeProdutosEServicos { get; set; }
