@@ -35,9 +35,7 @@ namespace MP.Client.MP
 
             Control controle2 = rdkProcessosDeMarcas;
             UtilidadesWeb.LimparComponente(ref controle2);
-
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
-
+            
             CarregaOpcoesDeFiltro();
             EscondaTodosOsPanelsDeFiltro();
             pnlProtocolo.Visible = true;
@@ -195,6 +193,44 @@ namespace MP.Client.MP
         {
            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma opção de filtro"), false);
+        }
+
+
+
+
+        protected void btnNovo_Click()
+        {
+            var URL = ObtenhaURL();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanelaModal(URL, "Novo processo de marca", 650,
+                                                                               450), false);
+        }
+        
+    
+
+        private string ObtenhaURL()
+        {
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDeMarca.aspx");
+        }
+
+        protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
+        {
+            switch (((RadToolBarButton)e.Item).CommandName)
+            {
+                case "btnNovo":
+                    btnNovo_Click();
+                    break;
+                case "btnImprimir":
+                   
+                    break;
+                case "btnRecarregar":
+                   
+                    break;
+                case "btnLerRevista":
+                   
+                    break;
+                
+            }
         }
     }
 }

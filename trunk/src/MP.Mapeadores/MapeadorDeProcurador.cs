@@ -117,8 +117,8 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
-            comandoSQL.Append("FROM MP_PROCURADORES PROCURADORES ");
+            comandoSQL.Append("SELECT ID, NOME, IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
+            comandoSQL.Append("FROM MP_PROCURADORES PROCURADORES, ");
             comandoSQL.Append("NCL_PESSOA PESSOA ");
             comandoSQL.Append("WHERE PESSOA.ID = PROCURADORES.IDPESSOA ");
             comandoSQL.Append("AND PESSOA.TIPO = PROCURADORES.TIPOPESSOA "); 
@@ -129,7 +129,7 @@ namespace MP.Mapeadores
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), 50))
                 while (reader.Read())
                 {
-                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
+                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPOPESSOA"));
                     IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa)FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
                                                                                 FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
 

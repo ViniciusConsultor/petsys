@@ -64,8 +64,8 @@
                                     <asp:Label ID="lblDataRegistro" runat="server" Text="Data Registro"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadDateInput ID="txtDataRegistro" runat="server">
-                                    </telerik:RadDateInput>
+                                    <telerik:RadDatePicker ID="txtDataRegistro" runat="server">
+                                    </telerik:RadDatePicker>
                                 </td>
                             </tr>
                             <tr>
