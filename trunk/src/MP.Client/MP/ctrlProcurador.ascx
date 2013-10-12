@@ -13,13 +13,13 @@
                 <HeaderTemplate>
                     <table width="96%">
                         <tr>
-                            <td width="10%">
+                            <td width="56%">
                                 Nome
                             </td>
-                            <td width="40%">
+                            <td width="20%">
                                 Matricula API
                             </td>
-                            <td width="16%">
+                            <td width="20%">
                                 Nº Registro Profissional
                             </td>
                         </tr>
@@ -28,13 +28,13 @@
                 <ItemTemplate>
                     <table width="100%">
                         <tr>
-                            <td width="10%">
+                            <td width="60%">
                                 <%# DataBinder.Eval(Container, "Text")%>
                             </td>
-                            <td width="40%">
+                            <td width="20%">
                                 <%#DataBinder.Eval(Container, "Attributes['MatriculaAPI']")%>
                             </td>
-                            <td width="16%">
+                            <td width="20%">
                                 <%#DataBinder.Eval(Container, "Attributes['NumeroRegistroProfissional']")%>
                             </td>
                         </tr>

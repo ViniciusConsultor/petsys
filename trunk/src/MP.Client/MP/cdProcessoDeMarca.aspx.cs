@@ -90,6 +90,10 @@ namespace MP.Client.MP
 
             var controle = pnlProcessoDeMarca as Control;
             UtilidadesWeb.LimparComponente(ref controle);
+            ctrlMarcas1.Inicializa();
+            ctrlDespacho.Inicializa();
+            ctrlProcurador.Inicializa();
+            ctrlProcurador.RotuloComponente = "Procurador";
         }
 
 
