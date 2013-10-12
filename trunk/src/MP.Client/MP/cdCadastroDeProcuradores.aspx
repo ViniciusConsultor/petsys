@@ -37,7 +37,7 @@
                                     <asp:Label ID="lblMatriculaAPI" runat="server" Text="Matrícula API" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtMatriculaAPI" MaxLength="10" runat="server">
+                                    <telerik:RadTextBox ID="txtMatriculaAPI" MaxLength="22" runat="server">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>

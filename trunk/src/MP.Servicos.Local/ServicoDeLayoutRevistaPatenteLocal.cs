@@ -62,7 +62,7 @@ namespace MP.Servicos.Local
         }
 
 
-        public List<ILayoutRevistaPatente> ObtenhaTodos()
+        public IList<ILayoutRevistaPatente> ObtenhaTodos()
         {
             ServerUtils.setCredencial(_Credencial);
             var mapeadorLayoutRevistaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorLayoutRevistaPatente>();
@@ -75,6 +75,22 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+
+        public IList<ILayoutRevistaPatente> SelecioneLayoutPeloNomeDoCampo(string nomeDoCampo, int quantidadeMaximaDeRegistros)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorLayoutRevistaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorLayoutRevistaPatente>();
+
+            try
+            {
+                return mapeadorLayoutRevistaPatente.SelecioneLayoutPeloNomeDoCampo(nomeDoCampo, quantidadeMaximaDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
         }
     }
 }

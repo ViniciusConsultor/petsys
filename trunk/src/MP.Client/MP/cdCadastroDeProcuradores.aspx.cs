@@ -273,14 +273,10 @@ namespace MP.Client.MP
 
         private bool PodeSalvarOuModificar()
         {
-            IList<string> listaDeInconsistencias = new List<string>();
-
             if(ctrlPessoa1.PessoaSelecionada == null)
-                listaDeInconsistencias.Add("Selecione a pessoa que será o procurador.");
-
-            if(listaDeInconsistencias.Count > 0)
             {
-                UtilidadesWeb.MostraMensagemDeInconsistencias(listaDeInconsistencias);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione a pessoa que será o procurador."), false);
                 return false;
             }
 

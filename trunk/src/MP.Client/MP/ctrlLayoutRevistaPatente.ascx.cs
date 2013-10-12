@@ -50,7 +50,7 @@ namespace MP.Client.MP
                 if (LayoutRevistaPatentes == null)
                     LayoutRevistaPatentes = new List<ILayoutRevistaPatente>();
 
-                foreach (ILayoutRevistaPatente layout in servico.ObtenhaTodos())
+                foreach (ILayoutRevistaPatente layout in servico.SelecioneLayoutPeloNomeDoCampo(string.Empty, 50))
                 {
                     var item = new RadComboBoxItem(layout.NomeDoCampo, layout.Codigo.ToString());
                     
@@ -65,9 +65,9 @@ namespace MP.Client.MP
             }
         }
 
-        private List<ILayoutRevistaPatente> LayoutRevistaPatentes
+        private IList<ILayoutRevistaPatente> LayoutRevistaPatentes
         {
-            get { return (List<ILayoutRevistaPatente>) ViewState[ID_VIEW_LAYOUT]; }
+            get { return (IList<ILayoutRevistaPatente>) ViewState[ID_VIEW_LAYOUT]; }
             set { ViewState[ID_VIEW_LAYOUT] = value; }
         }
 
@@ -79,10 +79,32 @@ namespace MP.Client.MP
                 return;
 
             int codigoSelecionado = int.Parse(((RadComboBox)o).SelectedValue);
-            layoutRevistaPatente = LayoutRevistaPatentes.Find(layout => layout.Codigo == codigoSelecionado);
+            layoutRevistaPatente = LayoutRevistaPatentes.ToList().Find(layout => layout.Codigo == codigoSelecionado);
 
             if (LayoutPatenteFoiSelecionado != null)
                 LayoutPatenteFoiSelecionado(layoutRevistaPatente);
+        }
+
+        protected void cboLayoutPatente_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
+        {
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeLayoutRevistaPatente>())
+            {
+                cboLayoutPatente.Items.Clear();
+                LayoutRevistaPatentes = new List<ILayoutRevistaPatente>();
+
+                foreach (ILayoutRevistaPatente layout in servico.SelecioneLayoutPeloNomeDoCampo(e.Text, 50))
+                {
+                    var item = new RadComboBoxItem(layout.NomeDoCampo, layout.Codigo.ToString());
+
+                    item.Attributes.Add("DescricaoResumida", layout.DescricaoResumida);
+                    item.Attributes.Add("TamanhoDoCampo", layout.TamanhoDoCampo.ToString());
+
+                    cboLayoutPatente.Items.Add(item);
+                    item.DataBind();
+
+                    LayoutRevistaPatentes.Add(layout);
+                }
+            }
         }
     }
 }

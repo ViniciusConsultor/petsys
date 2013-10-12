@@ -12,6 +12,7 @@ namespace MP.Interfaces.Servicos
         void Inserir(ILayoutRevistaPatente layoutRevistaPatente);
         void Excluir(long codigo);
         void Modificar(ILayoutRevistaPatente layoutRevistaPatente);
-        List<ILayoutRevistaPatente> ObtenhaTodos();
+        IList<ILayoutRevistaPatente> ObtenhaTodos();
+        IList<ILayoutRevistaPatente> SelecioneLayoutPeloNomeDoCampo(string nomeDoCampo, int quantidadeMaximaDeRegistros);
     }
 }

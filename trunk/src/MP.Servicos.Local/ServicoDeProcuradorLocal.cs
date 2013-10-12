@@ -62,7 +62,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public List<IProcurador> ObtenhaTodosProcuradores()
+        public IList<IProcurador> ObtenhaTodosProcuradores()
         {
             ServerUtils.setCredencial(_Credencial);
             var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcurador>();
@@ -90,6 +90,22 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+
+        public IList<IProcurador> ObtenhaProcuradorPeloNome(string nomeDoProcurador, int quantidadeMaximaDeRegistros)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcurador>();
+
+            try
+            {
+                return mapeadorProcurador.ObtenhaProcuradorPeloNome(nomeDoProcurador, quantidadeMaximaDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
         }
     }
 }

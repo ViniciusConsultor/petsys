@@ -41,9 +41,9 @@ namespace MP.Mapeadores
             comandoSQL.Append("INSERT INTO MP_LAYOUT_REVISTA_PATENTE(IDCODIGOREVISTA, NOMEDOCAMPO, DESCRICAO_CAMPO, DESCRICAO_RESUMIDA, ");
             comandoSQL.Append("TAMANHO_CAMPO, CAMPO_DELIMITADOR_REGISTRO, CAMPO_IDENTIFICADOR_PROCESSO, CAMPO_IDENTIFICADOR_COLIDENCIA) VALUES(");
             comandoSQL.Append(ObtenhaProximoCodigoIDLayoutRevista() + ", ");
-            comandoSQL.Append("'" + layoutRevistaPatente.NomeDoCampo + "', ");
-            comandoSQL.Append("'" + layoutRevistaPatente.DescricaoDoCampo + "', ");
-            comandoSQL.Append("'" + layoutRevistaPatente.DescricaoResumida + "', ");
+            comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(layoutRevistaPatente.NomeDoCampo) + "', ");
+            comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(layoutRevistaPatente.DescricaoDoCampo) + "', ");
+            comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(layoutRevistaPatente.DescricaoResumida) + "', ");
             comandoSQL.Append(layoutRevistaPatente.TamanhoDoCampo + ", ");
             comandoSQL.Append("'" + delimitadorDoRegistro + "', ");
             comandoSQL.Append("'" + campoIdentificadorDoProcesso + "', ");
@@ -72,8 +72,8 @@ namespace MP.Mapeadores
             string campoIdentificadorDeColidencia = layoutRevistaPatente.CampoIdentificadorDeColidencia ? "1" : "0";
 
             comandoSQL.Append("UPDATE MP_LAYOUT_REVISTA_PATENTE SET ");
-            comandoSQL.Append(" DESCRICAO_CAMPO = '" + layoutRevistaPatente.DescricaoDoCampo + "', ");
-            comandoSQL.Append(" DESCRICAO_RESUMIDA = '" + layoutRevistaPatente.DescricaoResumida + "', ");
+            comandoSQL.Append(" DESCRICAO_CAMPO = '" + UtilidadesDePersistencia.FiltraApostrofe(layoutRevistaPatente.DescricaoDoCampo) + "', ");
+            comandoSQL.Append(" DESCRICAO_RESUMIDA = '" + UtilidadesDePersistencia.FiltraApostrofe(layoutRevistaPatente.DescricaoResumida) + "', ");
             comandoSQL.Append(" TAMANHO_CAMPO = " + layoutRevistaPatente.TamanhoDoCampo + ", ");
             comandoSQL.Append(" CAMPO_DELIMITADOR_REGISTRO = '" + delimitadorDoRegistro + "', ");
             comandoSQL.Append(" CAMPO_IDENTIFICADOR_PROCESSO = '" + campoIdentificadorDoProcesso + "', ");
@@ -84,7 +84,7 @@ namespace MP.Mapeadores
         }
 
 
-        public List<ILayoutRevistaPatente> ObtenhaTodos()
+        public IList<ILayoutRevistaPatente> ObtenhaTodos()
         {
             var listaDeLayouts = new List<ILayoutRevistaPatente>();
             var comandoSQL = new StringBuilder();
@@ -105,7 +105,7 @@ namespace MP.Mapeadores
             int? proximoCodigo = null;
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDCODIGOREVISTA) AS CODIGO FROM MP_LAYOUT_REVISTA_PATENTE"))
+            using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDCODIGOREVISTA) CODIGO FROM MP_LAYOUT_REVISTA_PATENTE"))
                 while (reader.Read())
                     proximoCodigo = UtilidadesDePersistencia.getValorInteger(reader, "CODIGO");
 
@@ -113,6 +113,25 @@ namespace MP.Mapeadores
                 return 1;
 
             return proximoCodigo.Value + 1;
+        }
+
+        public IList<ILayoutRevistaPatente> SelecioneLayoutPeloNomeDoCampo(string nomeDoCampo, int quantidadeMaximaDeRegistros)
+        {
+            IList<ILayoutRevistaPatente> layoutsRevista = new List<ILayoutRevistaPatente>();
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            comandoSQL.Append("SELECT IDCODIGOREVISTA, NOMEDOCAMPO, DESCRICAO_CAMPO, DESCRICAO_RESUMIDA, TAMANHO_CAMPO, CAMPO_DELIMITADOR_REGISTRO, ");
+            comandoSQL.Append("CAMPO_IDENTIFICADOR_PROCESSO, CAMPO_IDENTIFICADOR_COLIDENCIA FROM MP_LAYOUT_REVISTA_PATENTE");
+
+            if (!string.IsNullOrEmpty(nomeDoCampo))
+                comandoSQL.Append(" WHERE NOMEDOCAMPO LIKE '%" + nomeDoCampo + "%'");
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), quantidadeMaximaDeRegistros))
+                while (reader.Read())
+                    layoutsRevista.Add(MapeieObjetoLayoutRevistaPatente(reader));
+            
+            return layoutsRevista;
         }
     }
 }
