@@ -37,12 +37,6 @@ namespace MP.Client.MP
             cboLayoutPatente.ClearSelection();
         }
 
-        public string Codigo
-        {
-            get { return cboLayoutPatente.SelectedValue; }
-            set { cboLayoutPatente.SelectedValue = value; }
-        }
-
         private void CarregueCombo()
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeLayoutRevistaPatente>())
