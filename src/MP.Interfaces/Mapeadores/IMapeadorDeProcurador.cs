@@ -13,7 +13,8 @@ namespace MP.Interfaces.Mapeadores
         void Remover(long idProcurador);
         void Atualizar(IProcurador procurador);
         IList<IProcurador> ObtenhaTodosProcuradores();
-        IProcurador ObtenhaProcurador(IPessoa pessoa);
         IList<IProcurador> ObtenhaProcuradorPeloNome(string nomeDoProcurador, int quantidadeMaximaDeRegistros);
+        IProcurador ObtenhaProcurador(IPessoa pessoa);
+        IProcurador ObtenhaProcurador(long id);
     }
 }

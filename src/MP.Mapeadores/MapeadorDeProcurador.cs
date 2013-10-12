@@ -140,5 +140,33 @@ namespace MP.Mapeadores
 
             return listaDeProcuradores;
         }
+
+        public IProcurador ObtenhaProcurador(long id)
+        {
+            IProcurador procuradorRetorno = null;
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
+            comandoSQL.Append("FROM MP_PROCURADORES PROCURADORES ");
+            comandoSQL.Append("NCL_PESSOA PESSOA ");
+            comandoSQL.Append("WHERE PESSOA.ID = PROCURADORES.IDPESSOA ");
+            comandoSQL.Append("AND PESSOA.TIPO = PROCURADORES.TIPOPESSOA ");
+            comandoSQL.Append(String.Concat("AND IDPESSOA = ", id.ToString()));
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
+                while (reader.Read())
+                {
+                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
+                    IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa)FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
+                                                                                FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
+
+                    pessoa.ID = UtilidadesDePersistencia.GetValorLong(reader, "ID");
+                    pessoa.Nome = UtilidadesDePersistencia.GetValorString(reader, "NOME");
+                    procuradorRetorno = MapeieObjetoProcurador(reader, pessoa);
+                }
+
+            return procuradorRetorno;            
+        }
     }
 }

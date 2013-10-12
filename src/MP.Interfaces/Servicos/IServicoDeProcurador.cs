@@ -16,5 +16,6 @@ namespace MP.Interfaces.Servicos
         IList<IProcurador> ObtenhaTodosProcuradores();
         IProcurador ObtenhaProcurador(IPessoa pessoa);
         IList<IProcurador> ObtenhaProcuradorPeloNome(string nomeDoProcurador, int quantidadeMaximaDeRegistros);
+        IProcurador ObtenhaProcurador(long id);
     }
 }

@@ -16,7 +16,6 @@ namespace MP.Client.MP
     {
         public static event InventorFoiSelecionadoEventHandler InventorFoiSelecionado;
         public delegate void InventorFoiSelecionadoEventHandler(IInventor inventor);
-        private const string ID_VIEW_INVENTOR = "ID_VIEW_INVENTOR";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,7 +24,6 @@ namespace MP.Client.MP
 
         public void Inicializa()
         {
-            ViewState[ID_VIEW_INVENTOR] = null;
             LimparControle();
             CarregueCombo();
         }
@@ -42,7 +40,6 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
             {
                 cboInventor.Items.Clear();
-                Inventores = new List<IInventor>();
 
                 foreach (IInventor inventor in servico.ObtenhaPorNomeComoFiltro(string.Empty, 50))
                 {
@@ -53,16 +50,8 @@ namespace MP.Client.MP
 
                     cboInventor.Items.Add(item);
                     item.DataBind();
-
-                    Inventores.Add(inventor);
                 }
             }
-        }
-
-        private IList<IInventor> Inventores
-        {
-            get { return (IList<IInventor>)ViewState[ID_VIEW_INVENTOR]; }
-            set { ViewState[ID_VIEW_INVENTOR] = value; }
         }
 
         protected void cboInventor_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
@@ -70,7 +59,6 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
             {
                 cboInventor.Items.Clear();
-                Inventores = new List<IInventor>();
 
                 foreach (IInventor inventor in servico.ObtenhaPorNomeComoFiltro(e.Text, 50))
                 {
@@ -81,24 +69,41 @@ namespace MP.Client.MP
 
                     cboInventor.Items.Add(item);
                     item.DataBind();
-
-                    Inventores.Add(inventor);
                 }
             }
         }
 
         protected void cboInventor_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            IInventor inventor = null;
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
+            {
+                IInventor inventor = null;
 
-            if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
-                return;
+                if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
+                    return;
 
-            int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
-            inventor = Inventores.ToList().Find(inventorAtual => inventorAtual.Pessoa.ID == codigoSelecionado);
+                int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
+                inventor = servico.Obtenha(codigoSelecionado);
 
-            if (InventorFoiSelecionado != null)
-                InventorFoiSelecionado(inventor);
+                if (InventorFoiSelecionado != null)
+                    InventorFoiSelecionado(inventor);
+            }
+        }
+
+        public IInventor InventorSelecionado
+        {
+            get { return (IInventor)ViewState[ClientID]; }
+            set { ViewState.Add(ClientID, value); }
+        }
+
+        public bool EnableLoadOnDemand
+        {
+            set { cboInventor.EnableLoadOnDemand = value; }
+        }
+
+        public bool ShowDropDownOnTextboxClick
+        {
+            set { cboInventor.ShowDropDownOnTextboxClick = value; }
         }
     }
 }

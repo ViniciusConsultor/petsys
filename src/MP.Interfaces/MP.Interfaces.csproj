@@ -68,11 +68,10 @@
     <Compile Include="Negocio\ILayoutRevistaPatente.cs" />
     <Compile Include="Negocio\IMarcas.cs" />
     <Compile Include="Negocio\IPatente.cs" />
-    <Compile Include="Negocio\IPatenteAbstrata.cs" />
-    <Compile Include="Negocio\IPatenteAnuidade.cs" />
-    <Compile Include="Negocio\IPatenteClassificacao.cs" />
-    <Compile Include="Negocio\IPatentePrioridadeUnionista.cs" />
-    <Compile Include="Negocio\IPatenteTitular.cs" />
+    <Compile Include="Negocio\IAnuidadePatente.cs" />
+    <Compile Include="Negocio\IClassificacaoPatente.cs" />
+    <Compile Include="Negocio\IPrioridadeUnionistaPatente.cs" />
+    <Compile Include="Negocio\ITitularPatente.cs" />
     <Compile Include="Negocio\IProcessoDeMarca.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\ITipoDePatente.cs" />
