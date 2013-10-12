@@ -42,15 +42,14 @@ namespace MP.Client.MP
         {
             LayoutSelecionado = layoutRevistaPatente;
 
-            CarregueCombosLayout();
             txtNomeDoCampo.Text = layoutRevistaPatente.NomeDoCampo;
             txtDescricaoResumida.Text = layoutRevistaPatente.DescricaoResumida;
             txtDescricaoDoCampo.Text = layoutRevistaPatente.DescricaoDoCampo;
             txtTamanhoDoCampo.Text = layoutRevistaPatente.TamanhoDoCampo.ToString();
 
-            cboCampoDelimitadorDoRegistro.SelectedValue = layoutRevistaPatente.CampoDelimitadorDoRegistro ? VALOR_SIM : VALOR_NAO;
-            cboCampoIdentificadorDeColidencia.SelectedValue = layoutRevistaPatente.CampoIdentificadorDeColidencia ? VALOR_SIM : VALOR_NAO;
-            cboCampoIdentificadorDoProcesso.SelectedValue = layoutRevistaPatente.CampoIdentificadorDoProcesso ? VALOR_SIM : VALOR_NAO;
+            rblCampoDelimitadorDoRegistro.SelectedValue = layoutRevistaPatente.CampoDelimitadorDoRegistro ? VALOR_SIM : VALOR_NAO;
+            rblCampoIdentificadorDeColidencia.SelectedValue = layoutRevistaPatente.CampoIdentificadorDeColidencia ? VALOR_SIM : VALOR_NAO;
+            rblCampoIdentificadorDoProcesso.SelectedValue = layoutRevistaPatente.CampoIdentificadorDoProcesso ? VALOR_SIM : VALOR_NAO;
             ExibaTelaConsultar();
         }
 
@@ -74,7 +73,6 @@ namespace MP.Client.MP
 
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
-            CarregueCombosLayout();
             LimpeCampos();
         }
 
@@ -254,9 +252,9 @@ namespace MP.Client.MP
             layoutPatente.DescricaoResumida = txtDescricaoResumida.Text;
             layoutPatente.DescricaoDoCampo = txtDescricaoDoCampo.Text;
             layoutPatente.TamanhoDoCampo = int.Parse(txtTamanhoDoCampo.Text);
-            layoutPatente.CampoDelimitadorDoRegistro = cboCampoDelimitadorDoRegistro.SelectedValue.Equals(VALOR_SIM);
-            layoutPatente.CampoIdentificadorDeColidencia = cboCampoIdentificadorDeColidencia.SelectedValue.Equals(VALOR_SIM);
-            layoutPatente.CampoIdentificadorDoProcesso = cboCampoIdentificadorDoProcesso.SelectedValue.Equals(VALOR_SIM);
+            layoutPatente.CampoDelimitadorDoRegistro = rblCampoDelimitadorDoRegistro.SelectedValue.Equals(VALOR_SIM);
+            layoutPatente.CampoIdentificadorDeColidencia = rblCampoIdentificadorDeColidencia.SelectedValue.Equals(VALOR_SIM);
+            layoutPatente.CampoIdentificadorDoProcesso = rblCampoIdentificadorDoProcesso.SelectedValue.Equals(VALOR_SIM);
 
             return layoutPatente;
         }
@@ -269,46 +267,19 @@ namespace MP.Client.MP
             Remove
         }
 
-        private void CarregueCombosLayout()
-        {
-            IList<string> valoresDaCombo = new List<string>();
-
-            valoresDaCombo.Add(string.Empty);
-            valoresDaCombo.Add(VALOR_NAO);
-            valoresDaCombo.Add(VALOR_SIM);
-
-            cboCampoDelimitadorDoRegistro.DataSource = valoresDaCombo;
-            cboCampoDelimitadorDoRegistro.DataBind();
-
-            cboCampoIdentificadorDoProcesso.DataSource = valoresDaCombo;
-            cboCampoIdentificadorDoProcesso.DataBind();
-            
-            cboCampoIdentificadorDeColidencia.DataSource = valoresDaCombo;
-            cboCampoIdentificadorDeColidencia.DataBind();
-        }
-
         private bool PodeSalvarOuModificar()
         {
-            IList<string> inconsistencias = new List<string>();
-
             if (string.IsNullOrEmpty(txtNomeDoCampo.Text))
-                inconsistencias.Add("Informe o nome do campo.");
-
-            if (string.IsNullOrEmpty(txtNomeDoCampo.Text))
-                inconsistencias.Add("Informe o tamanho do campo.");
-
-            if (string.IsNullOrEmpty(cboCampoDelimitadorDoRegistro.SelectedValue))
-                inconsistencias.Add("Selecione a opção delimitador do registro.");
-
-            if (string.IsNullOrEmpty(cboCampoIdentificadorDeColidencia.SelectedValue))
-                inconsistencias.Add("Selecione a opção do idendificador de colidência.");
-
-            if (string.IsNullOrEmpty(cboCampoIdentificadorDoProcesso.SelectedValue))
-                inconsistencias.Add("Selecione a opção identificador do procesos.");
-
-            if (inconsistencias.Count > 0)
             {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsistencias(inconsistencias), false);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), 
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o nome do campo."), false);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtTamanhoDoCampo.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o tamanho do campo."), false);
                 return false;
             }
             
@@ -337,6 +308,9 @@ namespace MP.Client.MP
             txtDescricaoResumida.Text = string.Empty;
             txtDescricaoDoCampo.Text = string.Empty;
             txtTamanhoDoCampo.Text = string.Empty;
+            rblCampoDelimitadorDoRegistro.SelectedIndex = 0;
+            rblCampoIdentificadorDeColidencia.SelectedIndex = 0;
+            rblCampoIdentificadorDoProcesso.SelectedIndex = 0;
         }
     }
 }

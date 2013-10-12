@@ -1,27 +1,26 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlLayoutRevistaPatente.ascx.cs"
-    Inherits="MP.Client.MP.ctrlLayoutRevistaPatente" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlProcurador.ascx.cs" Inherits="MP.Client.MP.ctrlProcurador" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <table class="tabela">
     <tr>
         <td class="th3">
-            <asp:Label ID="lblLayoutRevista" runat="server">Layout Revista</asp:Label>
+            <asp:Label ID="lblProcurador" runat="server"></asp:Label>
         </td>
         <td class="td">
-            <telerik:RadComboBox ID="cboLayoutPatente" runat="server" EmptyMessage="Selecione um layout" 
-            OnItemsRequested="cboLayoutPatente_OnItemsRequested" EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
+            <telerik:RadComboBox ID="cboProcurador" runat="server" EmptyMessage="Selecione um procurador" 
+            OnItemsRequested="cboProcurador_OnItemsRequested" EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
             ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-            Width="90%" Skin="Vista" CausesValidation="False" Filter="Contains" AutoPostBack="True" OnSelectedIndexChanged="cboLayoutPatente_SelectedIndexChanged">
+            Width="90%" Skin="Vista" CausesValidation="False" Filter="Contains" AutoPostBack="True" OnSelectedIndexChanged="cboProcurador_SelectedIndexChanged">
                 <HeaderTemplate>
                     <table width="96%">
                         <tr>
                             <td width="10%">
-                                Nome Campo
+                                Nome
                             </td>
                             <td width="40%">
-                                Descrição Resumida
+                                Matricula API
                             </td>
                             <td width="16%">
-                                Tamanho do campo
+                                Nº Registro Profissional
                             </td>
                         </tr>
                     </table>
@@ -33,10 +32,10 @@
                                 <%# DataBinder.Eval(Container, "Text")%>
                             </td>
                             <td width="40%">
-                                <%#DataBinder.Eval(Container, "Attributes['DescricaoResumida']")%>
+                                <%#DataBinder.Eval(Container, "Attributes['MatriculaAPI']")%>
                             </td>
                             <td width="16%">
-                                <%#DataBinder.Eval(Container, "Attributes['TamanhoDoCampo']")%>
+                                <%#DataBinder.Eval(Container, "Attributes['NumeroRegistroProfissional']")%>
                             </td>
                         </tr>
                     </table>

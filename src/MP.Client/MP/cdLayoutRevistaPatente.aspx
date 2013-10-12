@@ -75,9 +75,10 @@
                                     <asp:Label ID="lblCampoDelimitadorDoRegistro" runat="server" Text="Este campo identifica o início do Registro na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboCampoDelimitadorDoRegistro" Culture="pt-BR" runat="server"
-                                        Width="10%">
-                                    </telerik:RadComboBox>
+                                    <asp:RadioButtonList runat="server" ID="rblCampoDelimitadorDoRegistro" RepeatDirection="Horizontal">
+                                        <asp:ListItem Selected="True" Value="Não" />
+                                        <asp:ListItem Value="Sim" />
+                                    </asp:RadioButtonList>
                                 </td>
                             </tr>
                             <tr>
@@ -85,9 +86,10 @@
                                     <asp:Label ID="lblCampoIdentificadorDoProcesso" runat="server" Text="Este campo identifica o Número do Processo na Revista do Registro na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboCampoIdentificadorDoProcesso" runat="server" Culture="pt-BR"
-                                        Width="10%">
-                                    </telerik:RadComboBox>
+                                    <asp:RadioButtonList runat="server" ID="rblCampoIdentificadorDoProcesso" RepeatDirection="Horizontal">
+                                        <asp:ListItem Selected="True" Value="Não" />
+                                        <asp:ListItem Value="Sim" />
+                                    </asp:RadioButtonList>
                                 </td>
                             </tr>
                             <tr>
@@ -95,9 +97,10 @@
                                     <asp:Label ID="lblCampoIdentificadorDeColidencia" runat="server" Text="Este campo identifica a Colidência do Processo na Revista?" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadComboBox ID="cboCampoIdentificadorDeColidencia" runat="server" Culture="pt-BR"
-                                        Width="10%">
-                                    </telerik:RadComboBox>
+                                    <asp:RadioButtonList runat="server" ID="rblCampoIdentificadorDeColidencia" RepeatDirection="Horizontal">
+                                        <asp:ListItem Selected="True" Value="Não" />
+                                        <asp:ListItem Value="Sim" />
+                                    </asp:RadioButtonList>
                                 </td>
                             </tr>
                         </table>

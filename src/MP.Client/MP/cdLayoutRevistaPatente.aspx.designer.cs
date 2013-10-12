@@ -148,13 +148,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label lblCampoDelimitadorDoRegistro;
         
         /// <summary>
-        /// cboCampoDelimitadorDoRegistro control.
+        /// rblCampoDelimitadorDoRegistro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cboCampoDelimitadorDoRegistro;
+        protected global::System.Web.UI.WebControls.RadioButtonList rblCampoDelimitadorDoRegistro;
         
         /// <summary>
         /// lblCampoIdentificadorDoProcesso control.
@@ -166,13 +166,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label lblCampoIdentificadorDoProcesso;
         
         /// <summary>
-        /// cboCampoIdentificadorDoProcesso control.
+        /// rblCampoIdentificadorDoProcesso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cboCampoIdentificadorDoProcesso;
+        protected global::System.Web.UI.WebControls.RadioButtonList rblCampoIdentificadorDoProcesso;
         
         /// <summary>
         /// lblCampoIdentificadorDeColidencia control.
@@ -184,12 +184,12 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label lblCampoIdentificadorDeColidencia;
         
         /// <summary>
-        /// cboCampoIdentificadorDeColidencia control.
+        /// rblCampoIdentificadorDeColidencia control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cboCampoIdentificadorDeColidencia;
+        protected global::System.Web.UI.WebControls.RadioButtonList rblCampoIdentificadorDeColidencia;
     }
 }
