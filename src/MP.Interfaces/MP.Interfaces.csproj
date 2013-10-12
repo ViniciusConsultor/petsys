@@ -73,6 +73,7 @@
     <Compile Include="Negocio\IPatenteClassificacao.cs" />
     <Compile Include="Negocio\IPatentePrioridadeUnionista.cs" />
     <Compile Include="Negocio\IPatenteTitular.cs" />
+    <Compile Include="Negocio\IProcessoDeMarca.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\ITipoDePatente.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Servicos\IServicoDeLayoutRevistaPatente.cs" />
     <Compile Include="Servicos\IServicoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDePatente.cs" />
+    <Compile Include="Servicos\IServicoDeProcessoDeMarca.cs" />
     <Compile Include="Servicos\IServicoDeProcurador.cs" />
     <Compile Include="Servicos\IServicoDeTipoDePatente.cs" />
     <Compile Include="Servicos\IServicoDeTipoDeProcedimentoInterno.cs" />

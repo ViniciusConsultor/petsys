@@ -4,7 +4,7 @@
 <table class="tabela">
         <tr>
             <td class="th3">
-                <asp:Label ID="Label6" runat="server" Text="Marcas cadastradas"></asp:Label>
+                <asp:Label ID="Label6" runat="server" Text="Marca"></asp:Label>
             </td>
             <td class="td">
                 <telerik:RadComboBox ID="cboMarcas" runat="server" EmptyMessage="Selecione uma marca..."

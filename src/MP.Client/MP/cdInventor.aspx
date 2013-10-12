@@ -36,8 +36,8 @@
                                     <asp:Label ID="Label6" runat="server" Text="Data do cadastro"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadDateInput ID="txtDataDoCadastro" runat="server">
-                                    </telerik:RadDateInput>
+                                    <telerik:RadDatePicker ID="txtDataDoCadastro" runat="server">
+                                    </telerik:RadDatePicker>
                                 </td>
                             </tr>
                             <tr>

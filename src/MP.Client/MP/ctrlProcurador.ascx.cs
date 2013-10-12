@@ -30,6 +30,20 @@ namespace MP.Client.MP
             CarregueCombo();
         }
 
+        public IProcurador ProcuradorSelecionado
+        {
+            get { return (IProcurador)ViewState[ClientID]; }
+            set { ViewState.Add(this.ClientID, value); }
+        }
+
+
+        public string Nome
+        {
+            get { return cboProcurador.Text; }
+            set { cboProcurador.Text = value; }
+        }
+        
+
         private void CarregueCombo()
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
@@ -63,6 +77,7 @@ namespace MP.Client.MP
             var controle = cboProcurador as Control;
             UtilidadesWeb.LimparComponente(ref controle);
             cboProcurador.ClearSelection();
+            ProcuradorSelecionado = null;
         }
 
         protected void cboProcurador_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -76,7 +91,11 @@ namespace MP.Client.MP
             procurador = Procuradores.ToList().Find(procurador1 => procurador1.Pessoa.ID == codigoSelecionado);
 
             if (ProcuradorFoiSelecionado != null)
+            {
+                ProcuradorSelecionado = procurador;
                 ProcuradorFoiSelecionado(procurador);
+            }
+                
         }
 
         protected void cboProcurador_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)

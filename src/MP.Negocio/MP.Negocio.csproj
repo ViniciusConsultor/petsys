@@ -69,6 +69,7 @@
     <Compile Include="PatenteClassificacao.cs" />
     <Compile Include="PatentePrioridadeUnionista.cs" />
     <Compile Include="PatenteTitular.cs" />
+    <Compile Include="ProcessoDeMarca.cs" />
     <Compile Include="Procurador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TipoDePatente.cs" />
