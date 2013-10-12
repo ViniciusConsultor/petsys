@@ -126,7 +126,7 @@ namespace MP.Mapeadores
             if(!string.IsNullOrEmpty(nomeDoProcurador))
                 comandoSQL.Append("AND PESSOA.NOME LIKE '%" + nomeDoProcurador + "%'");
 
-            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), 50))
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), quantidadeMaximaDeRegistros))
                 while (reader.Read())
                 {
                     TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPOPESSOA"));
@@ -147,8 +147,8 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
-            comandoSQL.Append("FROM MP_PROCURADORES PROCURADORES ");
+            comandoSQL.Append("SELECT ID, NOME, TIPO, IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
+            comandoSQL.Append("FROM MP_PROCURADORES PROCURADORES, ");
             comandoSQL.Append("NCL_PESSOA PESSOA ");
             comandoSQL.Append("WHERE PESSOA.ID = PROCURADORES.IDPESSOA ");
             comandoSQL.Append("AND PESSOA.TIPO = PROCURADORES.TIPOPESSOA ");

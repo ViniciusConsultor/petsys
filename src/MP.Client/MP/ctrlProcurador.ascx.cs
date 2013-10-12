@@ -25,7 +25,6 @@ namespace MP.Client.MP
         public void Inicializa()
         {
             LimparControle();
-            CarregueCombo();
         }
 
         public IProcurador ProcuradorSelecionado
@@ -40,20 +39,11 @@ namespace MP.Client.MP
             set { cboProcurador.Text = value; }
         }
 
-        private void CarregueCombo()
+        public string RotuloComponente
         {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
+            set
             {
-                foreach (IProcurador procurador in servico.ObtenhaProcuradorPeloNome(string.Empty, 50))
-                {
-                    var item = new RadComboBoxItem(procurador.Pessoa.Nome, procurador.Pessoa.ID.ToString());
-
-                    item.Attributes.Add("MatriculaAPI", procurador.MatriculaAPI);
-                    item.Attributes.Add("NumeroRegistroProfissional", procurador.NumeroRegistroProfissional);
-
-                    cboProcurador.Items.Add(item);
-                    item.DataBind();
-                }
+                lblProcurador.Text = value;
             }
         }
 
