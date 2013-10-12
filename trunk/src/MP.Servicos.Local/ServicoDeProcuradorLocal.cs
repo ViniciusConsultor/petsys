@@ -107,5 +107,21 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }            
         }
+
+
+        public IProcurador ObtenhaProcurador(long id)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcurador>();
+
+            try
+            {
+                return mapeadorProcurador.ObtenhaProcurador(id);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
+        }
     }
 }

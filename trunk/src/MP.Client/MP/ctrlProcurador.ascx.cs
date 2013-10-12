@@ -16,7 +16,6 @@ namespace MP.Client.MP
     {
         public static event ProcuradorFoiSelecionadoEventHandler ProcuradorFoiSelecionado;
         public delegate void ProcuradorFoiSelecionadoEventHandler(IProcurador procurador);
-        private const string ID_VIEW_PROCURADOR = "ID_VIEW_PROCURADOR";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,7 +24,6 @@ namespace MP.Client.MP
 
         public void Inicializa()
         {
-            ViewState[ID_VIEW_PROCURADOR] = null;
             LimparControle();
             CarregueCombo();
         }
@@ -33,24 +31,19 @@ namespace MP.Client.MP
         public IProcurador ProcuradorSelecionado
         {
             get { return (IProcurador)ViewState[ClientID]; }
-            set { ViewState.Add(this.ClientID, value); }
+            set { ViewState.Add(ClientID, value); }
         }
-
 
         public string Nome
         {
             get { return cboProcurador.Text; }
             set { cboProcurador.Text = value; }
         }
-        
 
         private void CarregueCombo()
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
             {
-                if (Procuradores == null)
-                    Procuradores = new List<IProcurador>();
-
                 foreach (IProcurador procurador in servico.ObtenhaProcuradorPeloNome(string.Empty, 50))
                 {
                     var item = new RadComboBoxItem(procurador.Pessoa.Nome, procurador.Pessoa.ID.ToString());
@@ -60,16 +53,8 @@ namespace MP.Client.MP
 
                     cboProcurador.Items.Add(item);
                     item.DataBind();
-
-                    Procuradores.Add(procurador);
                 }
             }
-        }
-
-        private IList<IProcurador> Procuradores
-        {
-            get { return (IList<IProcurador>)ViewState[ID_VIEW_PROCURADOR]; }
-            set { ViewState[ID_VIEW_PROCURADOR] = value; }
         }
 
         private void LimparControle()
@@ -82,20 +67,22 @@ namespace MP.Client.MP
 
         protected void cboProcurador_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            IProcurador procurador = null;
-
-            if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
-                return;
-
-            int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
-            procurador = Procuradores.ToList().Find(procurador1 => procurador1.Pessoa.ID == codigoSelecionado);
-
-            if (ProcuradorFoiSelecionado != null)
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
             {
-                ProcuradorSelecionado = procurador;
-                ProcuradorFoiSelecionado(procurador);
+                IProcurador procurador = null;
+
+                if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
+                    return;
+
+                int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
+                procurador = servico.ObtenhaProcurador(codigoSelecionado);
+
+                if (ProcuradorFoiSelecionado != null)
+                {
+                    ProcuradorSelecionado = procurador;
+                    ProcuradorFoiSelecionado(procurador);
+                }
             }
-                
         }
 
         protected void cboProcurador_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
@@ -103,7 +90,6 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
             {
                 cboProcurador.Items.Clear();
-                Procuradores = new List<IProcurador>();
 
                 foreach (IProcurador procurador in servico.ObtenhaProcuradorPeloNome(e.Text, 50))
                 {
@@ -114,10 +100,18 @@ namespace MP.Client.MP
 
                     cboProcurador.Items.Add(item);
                     item.DataBind();
-
-                    Procuradores.Add(procurador);
                 }
             }
+        }
+
+        public bool EnableLoadOnDemand
+        {
+            set { cboProcurador.EnableLoadOnDemand = value; }
+        }
+
+        public bool ShowDropDownOnTextboxClick
+        {
+            set { cboProcurador.ShowDropDownOnTextboxClick = value; }
         }
     }
 }

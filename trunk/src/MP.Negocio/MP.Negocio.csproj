@@ -65,10 +65,10 @@
     <Compile Include="LazyLoad\InventorLazyLoad.cs" />
     <Compile Include="Marcas.cs" />
     <Compile Include="Patente.cs" />
-    <Compile Include="PatenteAnuidade.cs" />
-    <Compile Include="PatenteClassificacao.cs" />
-    <Compile Include="PatentePrioridadeUnionista.cs" />
-    <Compile Include="PatenteTitular.cs" />
+    <Compile Include="AnuidadePatente.cs" />
+    <Compile Include="ClassificacaoPatente.cs" />
+    <Compile Include="PrioridadeUnionistaPatente.cs" />
+    <Compile Include="TitularPatente.cs" />
     <Compile Include="ProcessoDeMarca.cs" />
     <Compile Include="Procurador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

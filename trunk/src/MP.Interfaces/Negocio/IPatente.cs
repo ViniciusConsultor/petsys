@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MP.Interfaces.Negocio
 {
-    public interface IPatente : IPatenteAbstrata
+    public interface IPatente
     {
     }
 }
