@@ -76,15 +76,6 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label4" runat="server" Text="Parte nominativa da marca"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <telerik:RadTextBox ID="txtDescricaoMarca" runat="server" Width="400px" MaxLength="255">
-                                            </telerik:RadTextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="th3">
                                             <asp:Label ID="Label23" runat="server" Text="Imagem da marca"></asp:Label>
                                         </td>
                                         <td class="td">
@@ -93,14 +84,14 @@
                                                 <script type="text/javascript">
                                 //<![CDATA[
 
-                                                    function updateFotoMarca() {
+                                                    function updateImagemMarca() {
                                                         var upload = $find("<%=uplImagem.ClientID %>");
 
                                                         if (upload.getUploadedFiles().length > 0) {
                                                             __doPostBack('ButtonSubmit', 'RadButton1Args');
                                                         }
                                                         else {
-                                                            Ext.MessageBox.show({ title: 'Informação', msg: 'Selecione uma imaagem', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+                                                            Ext.MessageBox.show({ title: 'Informação', msg: 'Selecione uma imagem', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
                                                         }
                                                     }
                           //]]>
@@ -108,7 +99,7 @@
                                             </telerik:RadScriptBlock>
                                             <telerik:RadAsyncUpload runat="server" ID="uplImagem" MaxFileInputsCount="1" AllowedFileExtensions=".jpg,.jpeg,.bmp,.png"
                                                 PostbackTriggers="ButtonSubmit" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
-                                                Localization-Select="Procurar" />
+                                                Localization-Select="Procurar" OnFileUploaded="uplImagem_OnFileUploaded" />
                                             <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateImagemMarca(); return false;"
                                                 CausesValidation="False" CssClass="RadUploadSubmit" />
                                         </td>
@@ -120,59 +111,86 @@
                                         <td class="td">
                                             <uc2:ctrlNCL ID="ctrlNCL" runat="server" />
                                         </td>
-                                    </tr>                                                                                            
+                                    </tr>
                                 </table>
                                 <table class="tabela">
-                                <tr>                                        
-                                             <td class="th3" colspan = "2">
-                                                 <asp:Label ID="Label6" runat="server" Text="Classificação anterior de produtos e serviços:"></asp:Label>
-                                             </td>
-                                        </tr>   
-                                <tr>                                
-                                <td>
-                                    <asp:Panel ID="pnlClassificacao" runat="server" GroupingText="" BorderWidth="1" BorderColor="gray">
-                                    <table class="tabela">                                        
-                                        <tr>                                        
-                                        <td class="th3">
-                                            <asp:Label ID="Label7" runat="server" Text="Classe:"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <telerik:RadNumericTextBox ID="txtClasse" runat="server" Width="87px" Type="Number"
-                                                DataType="System.Uint32">
-                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                            </telerik:RadNumericTextBox>
-                                        </td>
-                                        </tr>
-                                        <tr>                                
-                                        <td class="th3">
-                                            <asp:Label ID="Label8" runat="server" Text="Sub - Classes:"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <telerik:RadNumericTextBox ID="txtSubClasse1" runat="server" Width="87px" Type="Number"
-                                                DataType="System.Uint32">
-                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                            </telerik:RadNumericTextBox>
-                                        
-                                            <telerik:RadNumericTextBox ID="txtSubClasse2" runat="server" Width="87px" Type="Number"
-                                                DataType="System.Uint32">
-                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                            </telerik:RadNumericTextBox>
-                                        
-                                            <telerik:RadNumericTextBox ID="txtSubClasse3" runat="server" Width="87px" Type="Number"
-                                                DataType="System.Uint32">
-                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                            </telerik:RadNumericTextBox>
+                                    <tr>
+                                        <td class="th3" colspan="2">
+                                            <asp:Label ID="Label6" runat="server" Text="Classificação anterior de produtos e serviços:"></asp:Label>
                                         </td>
                                     </tr>
-                                    </table>
-                                    </asp:Panel> 
-                                </td>
-                                </tr>                                
+                                    <tr>
+                                        <td>
+                                            <asp:Panel ID="pnlClassificacao" runat="server" GroupingText="" BorderWidth="1" BorderColor="#F5F5F5">
+                                                <table class="tabela">
+                                                    <tr>
+                                                        <td class="th3">
+                                                            <asp:Label ID="Label7" runat="server" Text="Classe:"></asp:Label>
+                                                        </td>
+                                                        <td class="td">
+                                                            <telerik:RadNumericTextBox ID="txtClasse" runat="server" Width="87px" Type="Number"
+                                                                DataType="System.Uint32">
+                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                            </telerik:RadNumericTextBox>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="th3">
+                                                            <asp:Label ID="Label8" runat="server" Text="Sub - Classes:"></asp:Label>
+                                                        </td>
+                                                        <td class="td">
+                                                            <telerik:RadNumericTextBox ID="txtSubClasse1" runat="server" Width="87px" Type="Number"
+                                                                DataType="System.Uint32">
+                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                            </telerik:RadNumericTextBox>
+                                                            <telerik:RadNumericTextBox ID="txtSubClasse2" runat="server" Width="87px" Type="Number"
+                                                                DataType="System.Uint32">
+                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                            </telerik:RadNumericTextBox>
+                                                            <telerik:RadNumericTextBox ID="txtSubClasse3" runat="server" Width="87px" Type="Number"
+                                                                DataType="System.Uint32">
+                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                            </telerik:RadNumericTextBox>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </asp:Panel>
+                                        </td>
+                                    </tr>
                                 </table>
                             </asp:Panel>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="RadPageView2" runat="server" SkinID="Vista">
                             <asp:Panel ID="pnlComplemento" runat="server">
+                                <table class="tabela">
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label9" runat="server" Text="Especificação de produtos e serviços:"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtEspecificacao" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                                Rows="5" Width="450px">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label10" runat="server" Text="Observação:"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtObservacao" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                                Rows="5" Width="450px">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label11" runat="server" Text="Radicais:"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                        </td>
+                                    </tr>
+                                </table>
                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>

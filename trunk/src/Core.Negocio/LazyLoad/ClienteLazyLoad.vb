@@ -4,7 +4,7 @@ Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
 
 Namespace LazyLoad
-
+    <Serializable()> _
     Public Class ClienteLazyLoad
         Implements IClienteLazyLoad
 
@@ -20,7 +20,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.DataDoCadastro
             End Get
-            Set(value As Date?)
+            Set(ByVal value As Date?)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.DataDoCadastro = value
             End Set
@@ -31,7 +31,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.DataDoRegistro
             End Get
-            Set(value As Date?)
+            Set(ByVal value As Date?)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.DataDoRegistro = value
             End Set
@@ -42,7 +42,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.FaixaSalarial
             End Get
-            Set(value As Double?)
+            Set(ByVal value As Double?)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.FaixaSalarial = value
             End Set
@@ -53,7 +53,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.GrupoDeAtividade
             End Get
-            Set(value As IGrupoDeAtividade)
+            Set(ByVal value As IGrupoDeAtividade)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.GrupoDeAtividade = value
             End Set
@@ -64,7 +64,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.InformacoesAdicionais
             End Get
-            Set(value As String)
+            Set(ByVal value As String)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.InformacoesAdicionais = value
             End Set
@@ -75,7 +75,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.NumeroDoRegistro
             End Get
-            Set(value As String)
+            Set(ByVal value As String)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.NumeroDoRegistro = value
             End Set
@@ -86,7 +86,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.PorcentagemDeDescontoAutomatico
             End Get
-            Set(value As Double?)
+            Set(ByVal value As Double?)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.PorcentagemDeDescontoAutomatico = value
             End Set
@@ -97,7 +97,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.SaldoParaCompras
             End Get
-            Set(value As Double?)
+            Set(ByVal value As Double?)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.SaldoParaCompras = value
             End Set
@@ -108,7 +108,7 @@ Namespace LazyLoad
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 Return _ClienteReal.ValorMaximoParaCompras
             End Get
-            Set(value As Double?)
+            Set(ByVal value As Double?)
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
                 _ClienteReal.ValorMaximoParaCompras = value
             End Set

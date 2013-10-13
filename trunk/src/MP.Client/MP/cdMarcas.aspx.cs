@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -39,11 +40,17 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            var controlePanel = this.pnlDadosDaMarca as Control;
-            UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+            var controlePanelMarca = this.pnlDadosDaMarca as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelMarca, true);
 
-            UtilidadesWeb.LimparComponente(ref controlePanel);
-            UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+            UtilidadesWeb.LimparComponente(ref controlePanelMarca);
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelMarca, false);
+
+            var controlePanelComplemento = this.pnlComplemento as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, true);
+
+            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
 
             ctrlMarcas.Inicializa();
             ctrlMarcas.EnableLoadOnDemand = true;
@@ -56,6 +63,9 @@ namespace MP.Client.MP
             ctrlNCL.Inicializa();
             ctrlNatureza.Inicializa();
             ctrlCliente.Inicializa();
+
+            this.RadTabStrip1.Tabs[0].Selected = true;
+            this.RadPageView1.Selected = true;
         }
 
         protected void btnNovo_Click()
@@ -76,6 +86,10 @@ namespace MP.Client.MP
             var controlePanel = this.pnlDadosDaMarca as Control;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+
+            var controlePanelComplemento = this.pnlComplemento as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, true);
+
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             ctrlMarcas.Inicializa();
@@ -97,9 +111,14 @@ namespace MP.Client.MP
 
             var controlePanel = this.pnlDadosDaMarca as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
+
+            var controlePanelComplemento = this.pnlComplemento as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, true);
+
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
             ctrlMarcas.EnableLoadOnDemand = false;
             ctrlMarcas.ShowDropDownOnTextboxClick = false;
+            
         }
 
         private void ExibaTelaExcluir()
@@ -118,6 +137,10 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+
+            var controlePanelComplemento = this.pnlComplemento as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
         }
 
         protected void btnCancela_Click()
@@ -136,21 +159,20 @@ namespace MP.Client.MP
 
             marca.Apresentacao = Apresentacao.ObtenhaPorCodigo(Convert.ToInt32(ctrlApresentacao.Codigo));
 
-            marca.Cliente.Pessoa.ID = ctrlCliente.ClienteSelecionado.Pessoa.ID;
+            marca.Cliente = ctrlCliente.ClienteSelecionado;
 
             marca.CodigoDaClasse = Convert.ToInt32(txtClasse.Text);
             marca.CodigoDaSubClasse1 = Convert.ToInt32(txtSubClasse1.Text);
             marca.CodigoDaSubClasse2 = Convert.ToInt32(txtSubClasse2.Text);
             marca.CodigoDaSubClasse3 = Convert.ToInt32(txtSubClasse3.Text);
-            marca.DescricaoDaMarca = txtDescricaoMarca.Text;
-
-            // marca.EspecificacaoDeProdutosEServicos =
-
+            //marca.DescricaoDaMarca = txtDescricaoMarca.Text;
+            marca.DescricaoDaMarca = ctrlMarcas.DescricaoDaMarca;
             marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
-
             marca.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCL.Codigo));
             marca.Natureza = Natureza.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
-            //marca.ObservacaoDaMarca = 
+
+            marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
+            marca.ObservacaoDaMarca = txtObservacao.Text;
 
 
             return marca;
@@ -292,7 +314,7 @@ namespace MP.Client.MP
 
         private void ExibaTelaConsultar()
         {
-            Control controle = pnlDadosDaMarca;
+            var controle = pnlDadosDaMarca as Control;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
@@ -301,7 +323,11 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
+
             UtilidadesWeb.HabilitaComponentes(ref controle, false);
+
+            var controlePanelComplemento = this.pnlComplemento as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
         }
 
         private void MostreMarcas(IMarcas marca)
@@ -309,15 +335,21 @@ namespace MP.Client.MP
             ViewState[ID_OBJETO] = marca.IdMarca.Value.ToString();
 
             ctrlApresentacao.Codigo = marca.Apresentacao.Codigo.ToString();
-            ctrlCliente.ClienteSelecionado.Pessoa.ID = marca.Cliente.Pessoa.ID;
+            ctrlCliente.ClienteSelecionado = marca.Cliente;
             ctrlNCL.Codigo = marca.NCL.Codigo.ToString();
             ctrlNatureza.Codigo = marca.Natureza.Codigo.ToString();
 
             txtClasse.Text = marca.CodigoDaClasse.ToString();
-            txtDescricaoMarca.Text = marca.CodigoDaSubClasse1.ToString();
             txtSubClasse1.Text = marca.CodigoDaSubClasse1.ToString();
             txtSubClasse2.Text = marca.CodigoDaSubClasse2.ToString();
             txtSubClasse3.Text = marca.CodigoDaSubClasse3.ToString();
+
+            //txtDescricaoMarca.Text = marca.DescricaoDaMarca;
+
+            txtEspecificacao.Text = marca.EspecificacaoDeProdutosEServicos;
+            txtObservacao.Text = marca.ObservacaoDaMarca;
+
+            imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
 
             ExibaTelaConsultar();
         }
@@ -339,6 +371,18 @@ namespace MP.Client.MP
             Consulta,
             Modifica,
             Remove
+        }
+        
+        protected void uplImagem_OnFileUploaded(object sender, FileUploadedEventArgs e)
+        {
+            if (uplImagem.UploadedFiles.Count > 0)
+            {
+                UploadedFile file = uplImagem.UploadedFiles[0];
+                string targetFolder = Server.MapPath(UtilidadesWeb.URL_IMAGEM_SEM_FOTO);
+                string targetFileName = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension());
+                file.SaveAs(targetFileName);
+                imgImagemMarca.ImageUrl = string.Concat(UtilidadesWeb.URL_IMAGEM_SEM_FOTO, "/", file.GetNameWithoutExtension() + file.GetExtension());
+            }
         }
     }
 }

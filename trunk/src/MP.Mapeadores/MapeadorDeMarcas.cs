@@ -139,17 +139,19 @@ namespace MP.Mapeadores
             sql.Append("IMAGEM_MARCA, OBSERVACAO_MARCA, CODIGOCLASSE, CODIGOCLASSE_SUBCLASSE1, CODIGOCLASSE_SUBCLASSE2, CODIGOCLASSE_SUBCLASSE3) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ", "));
+            sql.Append(String.Concat("'", marca.NCL.Codigo.ToString(), "', "));
             sql.Append(String.Concat("'", marca.Apresentacao.Codigo.ToString() , "', "));
             sql.Append(String.Concat("'", marca.Cliente.Pessoa.ID.Value.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.CodigoDaClasse.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.CodigoDaSubClasse1.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.CodigoDaSubClasse3.ToString(), "', "));
+            sql.Append(String.Concat("'", marca.Natureza.Codigo.ToString(), "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "', "));
             sql.Append(String.Concat("'", marca.EspecificacaoDeProdutosEServicos, "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ImagemDaMarca), "', "));
-            sql.Append(String.Concat("'", marca.NCL.Codigo.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.Natureza.Codigo.ToString(), "', "));
-            sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ObservacaoDaMarca), "') "));
+            sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ObservacaoDaMarca), "', "));
+            sql.Append(String.Concat("'", marca.CodigoDaClasse.ToString(), "', "));
+            sql.Append(String.Concat("'", marca.CodigoDaSubClasse1.ToString(), "', "));
+            sql.Append(String.Concat("'", marca.CodigoDaSubClasse2.ToString(), "', "));
+            sql.Append(String.Concat("'", marca.CodigoDaSubClasse3.ToString(), "') "));
+            
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
