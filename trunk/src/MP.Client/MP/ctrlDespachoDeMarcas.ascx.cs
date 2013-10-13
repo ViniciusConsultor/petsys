@@ -81,14 +81,7 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
             {
-                if (!string.IsNullOrEmpty(e.Text))
-                {
-                    listaDespachoDeMarcas = servico.ObtenhaPorCodigoDoDespachoComoFiltro(e.Text, int.MaxValue);
-                }
-                else
-                {
-                    listaDespachoDeMarcas = servico.obtenhaTodosDespachoDeMarcas();
-                }
+                listaDespachoDeMarcas = servico.ObtenhaPorCodigoDoDespachoComoFiltro(e.Text, 50);
             }
             
             if (listaDespachoDeMarcas.Count > 0)
@@ -97,8 +90,11 @@ namespace MP.Client.MP
                 {
                     var item = new RadComboBoxItem(despachoDeMarcas.CodigoDespacho.ToString(), despachoDeMarcas.IdDespacho.Value.ToString());
 
-                    item.Attributes.Add("SituacaoProcesso",
+                    if(despachoDeMarcas.SituacaoProcesso != null)
+                    {
+                        item.Attributes.Add("SituacaoProcesso",
                                         despachoDeMarcas.SituacaoProcesso.DescricaoSituacao ?? "Não informada");
+                    }
                     
                     if (despachoDeMarcas.Registro)
                     {
@@ -110,7 +106,6 @@ namespace MP.Client.MP
                         item.Attributes.Add("Registro",
                                             "Não" ?? "Não informada");
                     }
-
 
                     this.cboDespachoDeMarcas.Items.Add(item);
                     item.DataBind();

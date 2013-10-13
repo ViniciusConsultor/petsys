@@ -53,6 +53,23 @@ namespace MP.Mapeadores
             return listaDeTiposDePatentes;
         }
 
+        public IList<ITipoDePatente> obtenhaTipoDePatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros)
+        {
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT IDTIPO_PATENTE IdTipoDePatente, DESCRICAO_TIPO_PATENTE DescricaoTipoDePatente, SIGLA_TIPO SiglaTipo, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
+            sql.Append("TEMPO_ENTRE_PAGTO TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED QuantidadePagamentoIntermediario, ");
+            sql.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
+            sql.Append("FROM MP_TIPO_PATENTE ");
+
+            if (!string.IsNullOrEmpty(descricao))
+            {
+                sql.Append(string.Concat("WHERE DESCRICAO_TIPO_PATENTE LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricao), "%' "));
+            }
+
+            return obtenhaTipoDePatente(sql, quantidadeMaximaDeRegistros);
+        }
+
         public ITipoDePatente obtenhaTipoDePatentePeloId(long idTipoPatente)
         {
             var sql = new StringBuilder();
@@ -208,5 +225,7 @@ namespace MP.Mapeadores
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
+
+
     }
 }

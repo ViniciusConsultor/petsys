@@ -16,16 +16,16 @@
                     <HeaderTemplate>
                         <table width="96%">
                             <tr>
-                                <td width="60%">
+                                <td width="58%">
                                     Marca
                                 </td>
-                                <td width="13%">
+                                <td width="17%">
                                     Apresentação
                                 </td>
-                                 <td width="13%">
+                                 <td width="17%">
                                     Natureza
                                 </td>  
-                                 <td width="10%">
+                                 <td width="6%">
                                     NCL
                                 </td>                                
                             </tr>
@@ -34,16 +34,16 @@
                     <ItemTemplate>
                         <table width="100%">
                             <tr>
-                                <td width="60%">
+                                <td width="57%">
                                     <%# DataBinder.Eval(Container, "Text")%>
                                 </td>
-                                <td width="13%">
+                                <td width="17%">
                                     <%#DataBinder.Eval(Container, "Attributes['Apresentacao']")%>
                                 </td>
-                                <td width="13%">
+                                <td width="18%">
                                     <%#DataBinder.Eval(Container, "Attributes['Natureza']")%>
                                 </td>      
-                                <td width="10%">
+                                <td width="8%">
                                     <%#DataBinder.Eval(Container, "Attributes['NCL']")%>
                                 </td>                                
                             </tr>
