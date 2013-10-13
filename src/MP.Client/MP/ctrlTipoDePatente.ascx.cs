@@ -74,7 +74,7 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
             {
-                listaTiposDePatente = servico.obtenhaTodosTiposDePatentes();
+                listaTiposDePatente = servico.obtenhaTipoDePatentePelaDescricaoComoFiltro(e.Text, 50);
             }
 
             if (listaTiposDePatente.Count > 0)

@@ -48,7 +48,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IMarcas> obtenhaMarcasPelaDescricao(string descricaoDaMarca)
+        public IList<IMarcas> obtenhaMarcasPelaDescricaoComoFiltro(string descricaoDaMarca, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -56,7 +56,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaMarcasPelaDescricao(descricaoDaMarca);
+                return mapeador.obtenhaMarcasPelaDescricaoComoFiltro(descricaoDaMarca, quantidadeMaximaDeRegistros);
             }
             finally
             {

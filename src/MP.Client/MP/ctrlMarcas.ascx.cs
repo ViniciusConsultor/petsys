@@ -87,7 +87,7 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
             {
-                listaDeMarcas = servico.obtenhaTodasMarcasCadastradas();
+                listaDeMarcas = servico.obtenhaMarcasPelaDescricaoComoFiltro(string.Empty, 50);
             }
 
             if (listaDeMarcas.Count > 0)
@@ -103,7 +103,7 @@ namespace MP.Client.MP
                                         marca.Natureza.Nome ?? "Não informada");
 
                     item.Attributes.Add("NCL",
-                                        marca.NCL.Descricao ?? "Não informada");
+                                        marca.NCL.Codigo.ToString() ?? "Não informada");
 
                     this.cboMarcas.Items.Add(item);
                     item.DataBind();

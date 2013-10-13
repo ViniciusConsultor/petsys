@@ -293,12 +293,16 @@ namespace MP.Client.MP
 
         private void MostreDespachoDeMarcas(IDespachoDeMarcas despachoDeMarcas)
         {
+            ViewState[ID_OBJETO] = despachoDeMarcas.IdDespacho.Value.ToString();
+
             txtCodigo.Text = despachoDeMarcas.CodigoDespacho.ToString();
             txtDescricao.Text = despachoDeMarcas.DetalheDespacho;
 
             rblConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
 
+            if (despachoDeMarcas.SituacaoProcesso != null)
             ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.ToString();
+
             ExibaTelaConsultar();
         }
 

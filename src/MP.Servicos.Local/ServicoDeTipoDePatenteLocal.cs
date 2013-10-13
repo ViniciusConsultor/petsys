@@ -34,6 +34,22 @@ namespace MP.Servicos.Local
             }
         }
 
+        public IList<ITipoDePatente> obtenhaTipoDePatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorTipoDePatente>();
+
+            try
+            {
+                return mapeador.obtenhaTipoDePatentePelaDescricaoComoFiltro(descricao,quantidadeMaximaDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
         public ITipoDePatente obtenhaTipoDePatentePeloId(long idTipoPatente)
         {
             ServerUtils.setCredencial(_Credencial);

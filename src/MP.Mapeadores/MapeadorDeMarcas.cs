@@ -106,7 +106,7 @@ namespace MP.Mapeadores
             return sql;
         }
 
-        public IList<IMarcas> obtenhaMarcasPelaDescricao(string descricaoDaMarca)
+        public IList<IMarcas> obtenhaMarcasPelaDescricaoComoFiltro(string descricaoDaMarca, int quantidadeMaximaDeRegistros)
         {
             var sql = new StringBuilder();
 
@@ -117,7 +117,7 @@ namespace MP.Mapeadores
                 sql.Append(string.Concat("WHERE DescricaoDaMarca LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoDaMarca), "%' "));
             }
 
-           return obtenhaMarca(sql, int.MaxValue);
+            return obtenhaMarca(sql, quantidadeMaximaDeRegistros);
         }
 
         public IList<IMarcas> ObtenhaPorIdDaMarcaComoFiltro(string idMarca, int quantidadeMaximaDeRegistros)

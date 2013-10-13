@@ -32,8 +32,14 @@ namespace MP.Mapeadores
                     var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
                     despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");
                     despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDespacho");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "DetalheDespacho"))
                     despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoSituacaoProcesso"))
                     despachoDeMarcas.SituacaoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Registro"))
                     despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");
 
                     listaDeDespachoDeMarcas.Add(despachoDeMarcas);
@@ -76,9 +82,15 @@ namespace MP.Mapeadores
                     var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
                     despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");
                     despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDespacho");
-                    despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
-                    despachoDeMarcas.SituacaoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
-                    despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "DetalheDespacho"))
+                        despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoSituacaoProcesso"))
+                        despachoDeMarcas.SituacaoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Registro"))
+                        despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");
 
                     listaDeDespachoDeMarcas.Add(despachoDeMarcas);
                 }
@@ -102,7 +114,7 @@ namespace MP.Mapeadores
             
             IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();
 
-            listaDeDespachoDeMarcas = obtenhaDespachoDeMarcas(sql, int.MaxValue);
+            listaDeDespachoDeMarcas = obtenhaDespachoDeMarcas(sql, quantidadeMaximaDeRegistros);
             
             return listaDeDespachoDeMarcas;
         }
