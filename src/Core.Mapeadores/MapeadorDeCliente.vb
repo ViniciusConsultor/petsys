@@ -174,10 +174,10 @@ Public Class MapeadorDeCliente
         Sql.Append("LEFT JOIN NCL_GRUPO_DE_ATIVIDADE ON IDGRPATIVIDADE = NCL_GRUPO_DE_ATIVIDADE.ID ")
         Sql.Append("WHERE NCL_CLIENTE.IDPESSOA = NCL_PESSOA.ID ")
         Sql.Append("AND NCL_CLIENTE.TIPOPESSOA = NCL_PESSOA.TIPO ")
-        Sql.Append("AND IDEMPRESA = " & ServerUtils.getCredencial().EmpresaLogada.ID)
+        Sql.Append("AND NCL_CLIENTE.IDEMPRESA = " & ServerUtils.getCredencial().EmpresaLogada.ID)
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql.Append(String.Concat(" AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
+            Sql.Append(String.Concat(" AND NCL_PESSOA.NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         DBHelper = ServerUtils.criarNovoDbHelper
