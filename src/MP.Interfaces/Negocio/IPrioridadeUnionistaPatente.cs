@@ -8,7 +8,8 @@ namespace MP.Interfaces.Negocio
 {
     public interface IPrioridadeUnionistaPatente
     {
-        DateTime DataPrioridade { get; set; }
+        long Identificador { get; set; }
+        DateTime? DataPrioridade { get; set; }
         string NumeroPrioridade { get; set; }
         IPais Pais { get; set; }
     }

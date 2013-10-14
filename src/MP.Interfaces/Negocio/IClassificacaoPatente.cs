@@ -7,7 +7,7 @@ namespace MP.Interfaces.Negocio
 {
     public interface IClassificacaoPatente
     {
-        int Codigo { get; set; }
+        long Identificador { get; set; }
         string Classificacao { get; set; }
         string DescricaoClassificacao { get; set; }
         TipoClassificacaoPatente TipoClassificacao { get; set; }

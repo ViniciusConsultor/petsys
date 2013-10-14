@@ -9,10 +9,13 @@ namespace MP.Negocio
 {
     public class PrioridadeUnionistaPatente : IPrioridadeUnionistaPatente
     {
-        public DateTime DataPrioridade { get; set; }
+        public long Identificador { get; set; }
+
+        public DateTime? DataPrioridade { get; set; }
 
         public string NumeroPrioridade { get; set; }
 
         public IPais Pais { get; set; }
+        
     }
 }

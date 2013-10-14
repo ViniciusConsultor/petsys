@@ -8,6 +8,8 @@ namespace MP.Negocio
 {
     public class TitularPatente : ITitularPatente
     {
+        public long Identificador { get; set; }
+
         public IInventor Iventor { get; set; }
 
         public IProcurador Procurador { get; set; }

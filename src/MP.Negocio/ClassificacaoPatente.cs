@@ -8,7 +8,7 @@ namespace MP.Negocio
 {
     public class ClassificacaoPatente : IClassificacaoPatente
     {
-        public int Codigo { get; set; }
+        public long Identificador { get; set; }
 
         public string Classificacao { get; set; }
 
