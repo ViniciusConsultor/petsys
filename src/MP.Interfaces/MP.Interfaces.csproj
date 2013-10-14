@@ -90,6 +90,7 @@
     <Compile Include="Negocio\LazyLoad\IClassificacaoPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IDespachoDeMarcasLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IInventorLazyLoad.cs" />
+    <Compile Include="Negocio\LazyLoad\IMarcasLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IPrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IProcuradorLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\ITipoDePatenteLazyLoad.cs" />

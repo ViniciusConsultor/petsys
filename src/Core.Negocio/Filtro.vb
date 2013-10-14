@@ -30,7 +30,7 @@ Public MustInherit Class Filtro
         Dim caracter As String = ""
 
         If colocaAspas Then caracter = "'"
-        
+
         If Operacao.Equals(OperacaoDeFiltro.ComecaCom) Then
             Return campo & " LIKE '" & ValorDoFiltro & "%' "
         ElseIf Operacao.Equals(OperacaoDeFiltro.EmQualquerParte) Then
@@ -49,4 +49,15 @@ Public MustInherit Class Filtro
         Return ""
     End Function
 
+    Public Function ObtenhaQueryParaQuantidade() As String Implements IFiltro.ObtenhaQueryParaQuantidade
+        Dim sqlCount = New StringBuilder()
+
+        Dim query = ObtenhaQuery()
+
+        sqlCount.AppendLine("SELECT COUNT(*) QUANTIDADE ")
+        sqlCount.AppendLine(query.Substring(query.IndexOf("from", StringComparison.InvariantCultureIgnoreCase)))
+
+        Return sqlCount.ToString()
+
+    End Function
 End Class

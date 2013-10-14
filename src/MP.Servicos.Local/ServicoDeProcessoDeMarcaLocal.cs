@@ -89,7 +89,19 @@ namespace MP.Servicos.Local
 
         public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)
         {
-            throw new NotImplementedException();
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.ObtenhaProcessosDeMarcas(filtro, quantidadeDeRegistros, offSet);
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
         }
 
         public IProcessoDeMarca Obtenha(long ID)
@@ -111,7 +123,19 @@ namespace MP.Servicos.Local
 
         public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
         {
-            throw new NotImplementedException();
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
         }
     }
 }
