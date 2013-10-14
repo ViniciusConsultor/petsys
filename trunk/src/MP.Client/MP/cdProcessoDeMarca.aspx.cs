@@ -63,6 +63,7 @@ namespace MP.Client.MP
 
         private void MostreProcessoDeMarca(IProcessoDeMarca processoDeMarca)
         {
+            ViewState[CHAVE_ID] = processoDeMarca.IdProcessoDeMarca;
             ctrlMarcas1.MarcaSelecionada = processoDeMarca.Marca;
             ctrlMarcas1.DescricaoDaMarca = processoDeMarca.Marca.DescricaoDaMarca;
             if (processoDeMarca.Protocolo.HasValue) txtProtocolo.Text = processoDeMarca.Protocolo.Value.ToString();
@@ -96,10 +97,63 @@ namespace MP.Client.MP
             ctrlProcurador.RotuloComponente = "Procurador";
         }
 
+        private IProcessoDeMarca MontaObjeto()
+        {
+            var processoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDeMarca>();
+
+            if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
+                processoDeMarca.IdProcessoDeMarca = Convert.ToInt64(ViewState[CHAVE_ID]);
+            
+            processoDeMarca.Marca = ctrlMarcas1.MarcaSelecionada;
+
+            if (!String.IsNullOrEmpty(txtProtocolo.Text))
+                processoDeMarca.Protocolo = Convert.ToInt64(txtProtocolo.Text);
+
+            if (!String.IsNullOrEmpty(txtProcesso.Text))
+                processoDeMarca.Processo = Convert.ToInt64(txtProcesso.Text);
+
+            processoDeMarca.DataDeEntrada = txtDataDeEntrada.SelectedDate.Value;
+            processoDeMarca.DataDeConcessao = txtDataDeConcessao.SelectedDate;
+
+            processoDeMarca.ProcessoEhDeTerceiro = Convert.ToBoolean(rblProcessoEhDeTerceiro.SelectedValue);
+
+            if (ctrlDespacho.DespachoDeMarcasSelecionada != null) processoDeMarca.Despacho = ctrlDespacho.DespachoDeMarcasSelecionada;
+
+            processoDeMarca.DataDeRenovacao = txtDataRenovacao.SelectedDate;
+
+            if (ctrlProcurador.ProcuradorSelecionado != null)
+                processoDeMarca.Procurador = ctrlProcurador.ProcuradorSelecionado;
+            
+            if (!string.IsNullOrEmpty(ctrlSituacao.Codigo))
+                processoDeMarca.SituacaoDoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacao.Codigo));
+
+            return processoDeMarca;
+        }
+
+        private IList<string> VerifiqueCamposObrigatorios()
+        {
+            var inconsitencias = new List<string>();
+
+            if (ctrlMarcas1.MarcaSelecionada == null) inconsitencias.Add("É necessário informar uma marca.");
+
+            if (ctrlProcurador.ProcuradorSelecionado == null ) inconsitencias.Add("É necessário informar um procurador.");
+
+            return inconsitencias;
+
+        }
 
         protected void btnSalvar_Click()
         {
-            
+            var inconsitencias = VerifiqueCamposObrigatorios();
+
+            if (inconsitencias.Count != 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsistencias(inconsitencias),
+                                                        false);
+                return;
+            }
+
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)

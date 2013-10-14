@@ -94,7 +94,7 @@ Public Class UtilidadesWeb
 
         If Not Inconsistencias Is Nothing Then
             For Each Inconsistencia As String In Inconsistencias
-                Mensagem.AppendLine(String.Concat(Inconsistencia, "</br>"))
+                Mensagem.Append(String.Concat(Inconsistencia, "</br>"))
             Next
         End If
 
@@ -104,7 +104,6 @@ Public Class UtilidadesWeb
         Js.AppendLine(String.Concat("msg:'", Mensagem.ToString, "', "))
         Js.AppendLine(String.Concat("buttons: Ext.MessageBox.OK,"))
         Js.AppendLine(String.Concat("icon: Ext.MessageBox.WARNING});"))
-
         Js.AppendLine("</script>")
 
         Return Js.ToString
