@@ -64,6 +64,15 @@
     <Compile Include="Mapeadores\IMapeadorLayoutRevistaPatente.cs" />
     <Compile Include="Mapeadores\IMapeadorTipoDePatente.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorApresentacao.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorCliente.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorDataDeEntrada.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorMarca.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorNatureza.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorNCL.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorProcesso.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroPorProtocolo.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroSemFiltro.cs" />
     <Compile Include="Negocio\IDespachoDeMarcas.cs" />
     <Compile Include="Negocio\IInventor.cs" />
     <Compile Include="Negocio\ILayoutRevistaPatente.cs" />

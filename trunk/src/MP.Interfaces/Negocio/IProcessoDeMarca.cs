@@ -15,7 +15,7 @@ namespace MP.Interfaces.Negocio
         Nullable<DateTime> DataDeConcessao { get; set; }
         bool ProcessoEhDeTerceiro { get; set; }
         IDespachoDeMarcas Despacho { get; set; }
-        Nullable<DateTime> DataDeRenovacao { get; set; }
+        Nullable<DateTime> DataDeProrrogacao { get;}
         IProcurador Procurador { get; set; }
         SituacaoDoProcesso SituacaoDoProcesso { get; set; }
     }

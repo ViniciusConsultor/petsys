@@ -41,9 +41,11 @@ namespace MP.Negocio
         {
             get; set; }
 
-        public DateTime? DataDeRenovacao
+
+        public DateTime? DataDeProrrogacao
         {
-            get; set; }
+            get { return DataDeConcessao.Value.AddYears(10);  }
+        }
 
         public IProcurador Procurador
         {

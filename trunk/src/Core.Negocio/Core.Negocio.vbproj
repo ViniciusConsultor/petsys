@@ -105,6 +105,7 @@
     <Compile Include="Documento\RG.vb" />
     <Compile Include="Empresa.vb" />
     <Compile Include="Endereco.vb" />
+    <Compile Include="Filtro.vb" />
     <Compile Include="Fornecedor.vb" />
     <Compile Include="Funcao.vb" />
     <Compile Include="Grupo.vb" />

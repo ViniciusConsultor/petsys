@@ -169,7 +169,7 @@ namespace MP.Client.MP
             marca.DescricaoDaMarca = ctrlMarcas.DescricaoDaMarca;
             marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
             marca.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCL.Codigo));
-            marca.Natureza = Natureza.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
+            marca.Natureza = Natureza.ObtenhaPorCodigo(ctrlNatureza.Codigo);
 
             marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
             marca.ObservacaoDaMarca = txtObservacao.Text;

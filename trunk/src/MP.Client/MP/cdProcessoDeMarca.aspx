@@ -77,10 +77,10 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label5" runat="server" Text="Data de renovação"></asp:Label>
+                                    <asp:Label ID="Label5" runat="server" Text="Data de prorrogação"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadDatePicker ID="txtDataRenovacao" runat="server">
+                                    <telerik:RadDatePicker ID="txtDataDeProrrogacao" runat="server">
                                     </telerik:RadDatePicker>
                                 </td>
                             </tr>
