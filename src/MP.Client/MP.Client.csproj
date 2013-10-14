@@ -116,6 +116,13 @@
     <Compile Include="MP\cdProcessoDeMarca.aspx.designer.cs">
       <DependentUpon>cdProcessoDeMarca.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdProcessoDePatente.aspx.cs">
+      <DependentUpon>cdProcessoDePatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdProcessoDePatente.aspx.designer.cs">
+      <DependentUpon>cdProcessoDePatente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\cdTipoDePatente.aspx.cs">
       <DependentUpon>cdTipoDePatente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -214,6 +221,13 @@
     <Compile Include="MP\frmProcessosDeMarcas.aspx.designer.cs">
       <DependentUpon>frmProcessosDeMarcas.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmProcessosDePatentes.aspx.cs">
+      <DependentUpon>frmProcessosDePatentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmProcessosDePatentes.aspx.designer.cs">
+      <DependentUpon>frmProcessosDePatentes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +244,7 @@
     <Content Include="MP\cdLayoutRevistaPatente.aspx" />
     <Content Include="MP\cdMarcas.aspx" />
     <Content Include="MP\cdProcessoDeMarca.aspx" />
+    <Content Include="MP\cdProcessoDePatente.aspx" />
     <Content Include="MP\cdTipoDePatente.aspx" />
     <Content Include="MP\cdTipoDeProcedimentoInterno.aspx" />
     <Content Include="MP\ctrlApresentacao.ascx" />
@@ -244,6 +259,7 @@
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\frmProcessosDeMarcas.aspx" />
+    <Content Include="MP\frmProcessosDePatentes.aspx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />
   </ItemGroup>
