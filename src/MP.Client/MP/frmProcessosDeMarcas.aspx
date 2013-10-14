@@ -141,7 +141,7 @@
                         <tr>
                             <td colspan="2">
                                 <telerik:RadGrid ID="grdProcessosDeMarcas" runat="server" AutoGenerateColumns="False"
-                                    AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista" AllowFilteringByColumn="true" OnPageIndexChanged="grdProcessosDeMarcas_OnPageIndexChanged" OnItemCommand="grdProcessosDeMarcas_OnItemCommand">
+                                    AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista" AllowFilteringByColumn="false" OnPageIndexChanged="grdProcessosDeMarcas_OnPageIndexChanged" OnItemCommand="grdProcessosDeMarcas_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
@@ -157,15 +157,15 @@
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column" Visible="False">
+                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1" Visible="False">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column" Visible="False">
+                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column2">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column30">
+                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Protocolo" HeaderText="Protocolo" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Protocolo" HeaderText="Protocolo" UniqueName="column4">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6">
                                             </telerik:GridBoundColumn>

@@ -1,9 +1,10 @@
 ﻿Imports Compartilhados.Interfaces.Core.Negocio
 Imports System.Text
 
+<Serializable()> _
 Public MustInherit Class Filtro
     Implements IFiltro
-    
+
     Public MustOverride Function ObtenhaQuery() As String Implements IFiltro.ObtenhaQuery
 
     Private _operacao As OperacaoDeFiltro
@@ -11,7 +12,7 @@ Public MustInherit Class Filtro
         Get
             Return _operacao
         End Get
-        Set(value As OperacaoDeFiltro)
+        Set(ByVal value As OperacaoDeFiltro)
             _operacao = value
         End Set
     End Property
@@ -21,12 +22,12 @@ Public MustInherit Class Filtro
         Get
             Return _valorDoFiltro
         End Get
-        Set(value As String)
+        Set(ByVal value As String)
             _valorDoFiltro = value
         End Set
     End Property
 
-    Public Function ObtenhaFiltroMontado(campo As String, colocaAspas As Boolean) As String Implements IFiltro.ObtenhaFiltroMontado
+    Public Function ObtenhaFiltroMontado(ByVal campo As String, ByVal colocaAspas As Boolean) As String Implements IFiltro.ObtenhaFiltroMontado
         Dim caracter As String = ""
 
         If colocaAspas Then caracter = "'"

@@ -8,6 +8,7 @@ using MP.Interfaces.Negocio.Filtros.Marcas;
 
 namespace MP.Negocio.Filtros.Marcas
 {
+    [Serializable]
     public class FiltroPorNCL : Filtro, IFiltroPorNCL
     {
         public override string ObtenhaQuery()
