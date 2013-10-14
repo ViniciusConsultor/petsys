@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
@@ -42,6 +43,8 @@ namespace MP.Client.MP
         {
             ViewState[CHAVE_ESTADO] = Estado.Novo;
             LimpaTela();
+            txtDataDeConcessao.SelectedDate = DateTime.Now;
+            txtDataDeProrrogacao.Enabled = false;
         }
 
         private void ExibaTelaDetalhes(long id)
@@ -58,6 +61,7 @@ namespace MP.Client.MP
 
             if (processoDeMarca != null) MostreProcessoDeMarca(processoDeMarca);
 
+            txtDataDeProrrogacao.Enabled = false;
         }
 
 
@@ -72,7 +76,7 @@ namespace MP.Client.MP
             txtDataDeConcessao.SelectedDate = processoDeMarca.DataDeConcessao;
             rblProcessoEhDeTerceiro.SelectedValue = processoDeMarca.ProcessoEhDeTerceiro ? "1" : "0";
             if (processoDeMarca.Despacho != null) ctrlDespacho.DespachoDeMarcasSelecionada = processoDeMarca.Despacho;
-            txtDataRenovacao.SelectedDate = processoDeMarca.DataDeRenovacao;
+            txtDataDeProrrogacao.SelectedDate = processoDeMarca.DataDeProrrogacao;
             
             if (processoDeMarca.Procurador != null)
             {
@@ -118,9 +122,7 @@ namespace MP.Client.MP
             processoDeMarca.ProcessoEhDeTerceiro = Convert.ToBoolean(rblProcessoEhDeTerceiro.SelectedValue);
 
             if (ctrlDespacho.DespachoDeMarcasSelecionada != null) processoDeMarca.Despacho = ctrlDespacho.DespachoDeMarcasSelecionada;
-
-            processoDeMarca.DataDeRenovacao = txtDataRenovacao.SelectedDate;
-
+            
             if (ctrlProcurador.ProcuradorSelecionado != null)
                 processoDeMarca.Procurador = ctrlProcurador.ProcuradorSelecionado;
             
@@ -152,6 +154,35 @@ namespace MP.Client.MP
                                                         UtilidadesWeb.MostraMensagemDeInconsistencias(inconsitencias),
                                                         false);
                 return;
+            }
+
+            var processoDeMarca = MontaObjeto();
+            string mensagem;
+
+            try
+            {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                {
+                    if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
+                    {
+                        servico.Inserir(processoDeMarca);
+                        mensagem = "Processo de marca cadastrado com sucesso.";
+                    }
+                    else
+                    {
+                        servico.Modificar(processoDeMarca);
+                        mensagem = "Processo de marca modificada com sucesso.";
+                    }
+                }
+
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
+                
+            }
+            catch (BussinesException ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
 
         }

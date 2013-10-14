@@ -7,6 +7,8 @@
 <%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc3" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
+<%@ Register Src="ctrlMarcas.ascx" TagName="ctrlMarcas" TagPrefix="uc6" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista" Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
@@ -79,6 +81,7 @@
                                     <asp:Label ID="Label5" runat="server" Text="Marca"></asp:Label>
                                 </td>
                                 <td class="td">
+                                    <uc6:ctrlMarcas ID="ctrlMarcas1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorMarca" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar"  OnClick="btnPesquisarPorMarca_OnClick"/>
                                 </td>
@@ -138,7 +141,7 @@
                         <tr>
                             <td colspan="2">
                                 <telerik:RadGrid ID="grdProcessosDeMarcas" runat="server" AutoGenerateColumns="False"
-                                    AllowPaging="True" PageSize="50" GridLines="None" Skin="Vista" AllowFilteringByColumn="true">
+                                    AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista" AllowFilteringByColumn="true" OnPageIndexChanged="grdProcessosDeMarcas_OnPageIndexChanged" OnItemCommand="grdProcessosDeMarcas_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>

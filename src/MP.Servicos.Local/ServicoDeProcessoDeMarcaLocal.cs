@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
@@ -86,21 +87,9 @@ namespace MP.Servicos.Local
             
         }
 
-        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(int quantidadeDeRegistros, int offSet)
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)
         {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
-
-            try
-            {
-                return mapeador.ObtenhaProcessosDeMarcas(quantidadeDeRegistros, offSet);
-            }
-
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
+            throw new NotImplementedException();
         }
 
         public IProcessoDeMarca Obtenha(long ID)
@@ -118,6 +107,11 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
+        {
+            throw new NotImplementedException();
         }
     }
 }

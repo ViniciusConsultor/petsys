@@ -175,13 +175,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// txtDataRenovacao control.
+        /// txtDataDeProrrogacao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtDataRenovacao;
+        protected global::Telerik.Web.UI.RadDatePicker txtDataDeProrrogacao;
         
         /// <summary>
         /// ctrlProcurador control.

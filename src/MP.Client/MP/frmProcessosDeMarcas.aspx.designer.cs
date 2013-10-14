@@ -220,6 +220,15 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
+        /// ctrlMarcas1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::MP.Client.MP.ctrlMarcas ctrlMarcas1;
+        
+        /// <summary>
         /// btnPesquisarPorMarca control.
         /// </summary>
         /// <remarks>

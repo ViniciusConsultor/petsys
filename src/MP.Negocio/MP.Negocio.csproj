@@ -60,6 +60,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DespachoDeMarcas.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorApresentacao.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorCliente.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorDataDeEntrada.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorMarca.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorNatureza.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorNCL.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorProcesso.cs" />
+    <Compile Include="Filtros\Marcas\FiltroPorProtocolo.cs" />
+    <Compile Include="Filtros\Marcas\FiltroSemFiltro.cs" />
     <Compile Include="Inventor.cs" />
     <Compile Include="LayoutRevistaPatente.cs" />
     <Compile Include="LazyLoad\AnuidadePatenteLazyLoad.cs" />
