@@ -10,6 +10,11 @@ namespace MP.Interfaces.Mapeadores
     {
         void Insira(IPatente patente);
         void Modificar(IPatente patente);
-        void Exluir(int codigopatente);
+        void Exluir(int codigoPatente);
+        IAnuidadePatente ObtenhaAnuidade(long id);
+        IClassificacaoPatente ObtenhaClassificacao(long id);
+        IPrioridadeUnionistaPatente ObtenhaPrioridadeUnionista(long id);
+        ITitularPatente ObtenhaTitular(long id);
+        IPatente ObtenhaPatente(long id);
     }
 }

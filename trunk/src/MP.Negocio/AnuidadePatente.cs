@@ -8,24 +8,24 @@ namespace MP.Negocio
 {
     public class AnuidadePatente : IAnuidadePatente
     {
-        public int Codigo { get; set; }
+        public long Identificador { get; set; }
 
         public string DescricaoAnuidade { get; set; }
 
-        public DateTime DataLancamento { get; set; }
+        public DateTime? DataLancamento { get; set; }
 
-        public DateTime DataVencimento { get; set; }
+        public DateTime? DataVencimento { get; set; }
 
-        public DateTime DataPagamento { get; set; }
+        public DateTime? DataPagamento { get; set; }
 
-        public float ValorPagamento { get; set; }
+        public double ValorPagamento { get; set; }
 
         public bool AnuidadePaga { get; set; }
 
         public bool PedidoExame { get; set; }
 
-        public DateTime DataVencimentoSemMulta { get; set; }
+        public DateTime? DataVencimentoSemMulta { get; set; }
 
-        public DateTime DataVencimentoComMulta { get; set; }
+        public DateTime? DataVencimentoComMulta { get; set; }
     }
 }

@@ -36,12 +36,12 @@ namespace MP.Interfaces.Negocio
                                                                                                 TipoClassificacaoPatente1,
                                                                                                 TipoClassificacaoPatente2
                                                                                             };
-        public IList<TipoClassificacaoPatente> ObtenhaTodas()
+        public static IList<TipoClassificacaoPatente> ObtenhaTodas()
         {
             return todosTiposClassificacaoPatente;
         }
 
-        public TipoClassificacaoPatente ObtenhaPorCodigo(int codigo)
+        public static TipoClassificacaoPatente ObtenhaPorCodigo(int codigo)
         {
             return ObtenhaTodas().FirstOrDefault(tipoClassificacaoPatente => tipoClassificacaoPatente.Codigo.Equals(codigo));
         }

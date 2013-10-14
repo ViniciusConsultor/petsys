@@ -7,7 +7,7 @@ namespace MP.Interfaces.Negocio
 {
     public interface ITitularPatente
     {
-        IInventor Iventor { get; set; }
+        long Identificador { get; set; }
         IProcurador Procurador { get; set; }
         string ContatoTitular { get; set; }
     }
