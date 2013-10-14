@@ -157,28 +157,18 @@
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
+                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column" Visible="False">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Codigo" HeaderText="Código" UniqueName="column30">
+                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column" Visible="False">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Pauta" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column30">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Local" HeaderText="Local" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Protocolo" HeaderText="Protocolo" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column6">
+                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDaSolicitacao" HeaderText="Data e hora do cadastro"
-                                                UniqueName="column1" Visible="True">
+                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Contato.Pessoa.Nome" HeaderText="Contato" UniqueName="column2"
-                                                Visible="True">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Despachar" FilterImageToolTip="Despachar"
-                                                HeaderTooltip="Despachar" ImageUrl="~/imagens/accordian.gif" UniqueName="column7">
-                                            </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Finalizar" FilterImageToolTip="Finalizar"
-                                                HeaderTooltip="Finalizar" ImageUrl="~/imagens/yes.gif" UniqueName="column9">
-                                            </telerik:GridButtonColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

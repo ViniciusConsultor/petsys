@@ -75,6 +75,7 @@
     <Compile Include="LazyLoad\ClassificacaoPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\DespachoDeMarcasLazyLoad.cs" />
     <Compile Include="LazyLoad\InventorLazyLoad.cs" />
+    <Compile Include="LazyLoad\MarcasLazyLoad.cs" />
     <Compile Include="LazyLoad\PrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
     <Compile Include="LazyLoad\TipoDePatenteLazyLoad.cs" />
