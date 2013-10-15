@@ -61,7 +61,7 @@ namespace MP.Client.MP
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroSemFiltro>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaSemFiltro>();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
@@ -155,7 +155,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorApresentacao>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorApresentacao>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = ctrlApresentacao1.Codigo;
             FiltroAplicado = filtro;
@@ -178,7 +178,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorCliente>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorCliente>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = ctrlCliente1.ClienteSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
@@ -201,7 +201,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorDataDeEntrada>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorDataDeEntrada>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = txtDataDeEntrada.SelectedDate.Value.ToString("yyyyMMdd");
             FiltroAplicado = filtro;
@@ -223,7 +223,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorMarca>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorMarca>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = ctrlMarcas1.MarcaSelecionada.IdMarca.Value.ToString();
             FiltroAplicado = filtro;
@@ -245,7 +245,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorNatureza>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorNatureza>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = ctrlNatureza1.Codigo;
             FiltroAplicado = filtro;
@@ -268,7 +268,7 @@ namespace MP.Client.MP
             }
 
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorNCL>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorNCL>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = ctrlNCL1.Codigo;
             FiltroAplicado = filtro;
@@ -290,7 +290,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorProcesso>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorProcesso>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = txtProcesso.Text;
             FiltroAplicado = filtro;
@@ -313,7 +313,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorProtocolo>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorProtocolo>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = txtProtocolo.Text;
             FiltroAplicado = filtro;

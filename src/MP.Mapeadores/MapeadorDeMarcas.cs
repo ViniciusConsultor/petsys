@@ -15,11 +15,6 @@ namespace MP.Mapeadores
 {
     public class MapeadorDeMarcas : IMapeadorDeMarcas
     {
-        public IList<IMarcas> obtenhaTodasMarcasCadastradas()
-        {
-            return new List<IMarcas>();
-        }
-
         public IMarcas obtenhaMarcasPeloId(long idMarca)
         {
             var sql = new StringBuilder();
@@ -44,9 +39,9 @@ namespace MP.Mapeadores
             var DBHelper = ServerUtils.criarNovoDbHelper();
             IList<IMarcas> listaDeMarcas = new List<IMarcas>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros))
             {
-                while (leitor.Read() && listaDeMarcas.Count < quantidadeMaximaRegistros)
+                while (leitor.Read())
                 {
                     var marca = FabricaGenerica.GetInstancia().CrieObjeto<IMarcas>();
                     marca.IdMarca = UtilidadesDePersistencia.getValorInteger(leitor, "IdMarca");
@@ -118,11 +113,6 @@ namespace MP.Mapeadores
             }
 
             return obtenhaMarca(sql, quantidadeMaximaDeRegistros);
-        }
-
-        public IList<IMarcas> ObtenhaPorIdDaMarcaComoFiltro(string idMarca, int quantidadeMaximaDeRegistros)
-        {
-            return new List<IMarcas>();
         }
 
         public void Inserir(IMarcas marca)

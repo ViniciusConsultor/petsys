@@ -12,7 +12,6 @@ namespace MP.Interfaces.Mapeadores
         void Inserir(IProcurador procurador);
         void Remover(long idProcurador);
         void Atualizar(IProcurador procurador);
-        IList<IProcurador> ObtenhaTodosProcuradores();
         IList<IProcurador> ObtenhaProcuradorPeloNome(string nomeDoProcurador, int quantidadeMaximaDeRegistros);
         IProcurador ObtenhaProcurador(IPessoa pessoa);
         IProcurador ObtenhaProcurador(long id);

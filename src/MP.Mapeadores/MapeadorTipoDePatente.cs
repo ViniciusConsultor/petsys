@@ -97,9 +97,9 @@ namespace MP.Mapeadores
             var DBHelper = ServerUtils.criarNovoDbHelper();
             IList<ITipoDePatente> listaDeTiposDePatentes = new List<ITipoDePatente>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros))
             {
-                while (leitor.Read() && listaDeTiposDePatentes.Count < quantidadeMaximaRegistros)
+                while (leitor.Read())
                 {
                     var tipoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDePatente>();
                     tipoDePatente.IdTipoDePatente = UtilidadesDePersistencia.getValorInteger(leitor, "IdTipoDePatente");

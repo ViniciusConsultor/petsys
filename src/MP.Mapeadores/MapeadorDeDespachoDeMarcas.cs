@@ -13,42 +13,7 @@ namespace MP.Mapeadores
 {
     public class MapeadorDeDespachoDeMarcas : IMapeadorDeDespachoDeMarcas
     {
-        public IList<IDespachoDeMarcas> obtenhaTodosDespachoDeMarcas()
-        {
-            var sql = new StringBuilder();
-
-            sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
-            sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO Registro ");
-            sql.Append("FROM MP_DESPACHO");
-
-            var DBHelper = ServerUtils.criarNovoDbHelper();
-
-            IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();
-
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
-            {
-                while (leitor.Read())
-                {
-                    var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
-                    despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");
-                    despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDespacho");
-
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "DetalheDespacho"))
-                    despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
-
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoSituacaoProcesso"))
-                    despachoDeMarcas.SituacaoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
-
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Registro"))
-                    despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");
-
-                    listaDeDespachoDeMarcas.Add(despachoDeMarcas);
-                }
-            }
-
-            return listaDeDespachoDeMarcas;
-        }
-
+   
         public IDespachoDeMarcas obtenhaDespachoDeMarcasPeloId(long idDespachoDeMarcas)
         {
             var sql = new StringBuilder();
@@ -75,9 +40,9 @@ namespace MP.Mapeadores
             var DBHelper = ServerUtils.criarNovoDbHelper();
             IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros))
             {
-                while (leitor.Read() && listaDeDespachoDeMarcas.Count < quantidadeMaximaRegistros)
+                while (leitor.Read())
                 {
                     var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
                     despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");

@@ -62,21 +62,6 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IProcurador> ObtenhaTodosProcuradores()
-        {
-            ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcurador>();
-
-            try
-            {
-                return mapeadorProcurador.ObtenhaTodosProcuradores();
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
         public IProcurador ObtenhaProcurador(IPessoa pessoa)
         {
             ServerUtils.setCredencial(_Credencial);

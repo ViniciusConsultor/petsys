@@ -54,9 +54,9 @@ namespace MP.Mapeadores
             var DBHelper = ServerUtils.criarNovoDbHelper();
             IList<ITipoDeProcedimentoInterno> listaDeTiposProcedimentoInterno = new List<ITipoDeProcedimentoInterno>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros))
             {
-                while (leitor.Read() && listaDeTiposProcedimentoInterno.Count < quantidadeMaximaRegistros)
+                while (leitor.Read())
                 {
                     var tipoDeProcedimentoInterno = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDeProcedimentoInterno>();
                     tipoDeProcedimentoInterno.Id = UtilidadesDePersistencia.getValorInteger(leitor, "IDTIPO_PROCEDIMENTO_INTERNO");

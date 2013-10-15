@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Compartilhados.Interfaces.Core.Negocio;
 using Core.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 
 namespace MP.Negocio.Filtros.Marcas
 {
     [Serializable]
-    public class FiltroPorProtocolo : Filtro, IFiltroPorProtocolo
+    public class FiltroMarcaPorMarca : Filtro, IFiltroMarcaPorMarca
     {
         public override string ObtenhaQuery()
         {
@@ -22,7 +21,7 @@ namespace MP.Negocio.Filtros.Marcas
             sql.AppendLine("MP_MARCAS.IDMARCA, MP_MARCAS.CODIGONCL, MP_MARCAS.CODIGOAPRESENTACAO, MP_MARCAS.IDCLIENTE, MP_MARCAS.CODIGONATUREZA");
             sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS");
             sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA ");
-            sql.AppendLine(" AND " + ObtenhaFiltroMontado("MP_PROCESSOMARCA.PROTOCOLO", false));
+            sql.AppendLine(" AND " + ObtenhaFiltroMontado("MP_PROCESSOMARCA.IDMARCA", false));
 
             return sql.ToString();
         }

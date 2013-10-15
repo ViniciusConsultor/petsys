@@ -47,9 +47,9 @@ namespace MP.Mapeadores
             var DBHelper = ServerUtils.criarNovoDbHelper();
             IList<IRadicalMarcas> listaDeRadicalMarcas = new List<IRadicalMarcas>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaDeRegistros))
             {
-                while (leitor.Read() && listaDeRadicalMarcas.Count < quantidadeMaximaDeRegistros)
+                while (leitor.Read())
                 {
                     var radicalMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalMarcas>();
                     radicalMarcas.IdRadicalMarca = UtilidadesDePersistencia.getValorInteger(leitor, "IdRadicalMarca");

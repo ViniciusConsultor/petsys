@@ -9,10 +9,8 @@ namespace MP.Interfaces.Servicos
 {
     public interface IServicoDeMarcas : IServico
     {
-        IList<IMarcas> obtenhaTodasMarcasCadastradas();
         IMarcas obtenhaMarcasPeloId(long idMarca);
         IList<IMarcas> obtenhaMarcasPelaDescricaoComoFiltro(string descricaoDaMarca, int quantidadeMaximaDeRegistros);
-        IList<IMarcas> ObtenhaPorIdDaMarcaComoFiltro(string idMarca, int quantidadeMaximaDeRegistros);
         void Inserir(IMarcas marca);
         void Modificar(IMarcas marca);
         void Excluir(long idMarca);

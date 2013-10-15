@@ -3,7 +3,7 @@
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc1" %>
 <%@ Register Src="ctrlTipoDePatente.ascx" TagName="ctrlTipoDePatente" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista" Style="width: 100%;" >
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista" Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick" >
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo Processo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.009.0001" />
@@ -74,7 +74,7 @@
                             </tr>
                             <tr runat="server" id="pnlTipoDePatente">
                                 <td class="th3">
-                                    <asp:Label ID="Label1" runat="server" Text="Título da patente"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="Tipo de patente"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <uc2:ctrlTipoDePatente ID="ctrlTipoDePatente1" runat="server" />

@@ -9,7 +9,6 @@ namespace MP.Interfaces.Servicos
 {
     public interface IServicoDeTipoDePatente : IServico
     {
-        IList<ITipoDePatente> obtenhaTodosTiposDePatentes();
         IList<ITipoDePatente> obtenhaTipoDePatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros);
         ITipoDePatente obtenhaTipoDePatentePeloId(long idTipoPatente);
         ITipoDePatente obtenhaTipoDePatentePelaDescricaoOuSigla(string descricaoTipoDePatente, string siglaTipo);
