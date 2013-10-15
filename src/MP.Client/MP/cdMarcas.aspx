@@ -185,12 +185,54 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label11" runat="server" Text="Radicais:"></asp:Label>
+                                            <asp:Label ID="Label11" runat="server" Text="Radical:"></asp:Label>
                                         </td>
                                         <td class="td">
+                                            <telerik:RadTextBox ID="txtRadical" runat="server" Width="400px" MaxLength="50">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label4" runat="server" Text="Selecione um NCL:"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <uc2:ctrlNCL ID="ctrlNCLRadical" runat="server" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td">
+                                            <telerik:RadButton ID="btnAdicionarRadical" runat="server" Text="Adicionar" Skin="Vista"
+                                                OnClick="btnRadical_ButtonClick">
+                                            </telerik:RadButton>
                                         </td>
                                     </tr>
                                 </table>
+                                <telerik:RadGrid ID="grdRadicais" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                    PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdRadicais_ItemCommand" OnItemCreated="grdRadicais_ItemCreated" 
+                                    OnPageIndexChanged="grdRadicais_PageIndexChanged">
+                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                    <MasterTableView GridLines="Both">
+                                        <RowIndicatorColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </RowIndicatorColumn>
+                                        <ExpandCollapseColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                            </telerik:GridButtonColumn>
+                                            <telerik:GridBoundColumn DataField="IdRadicalMarca" HeaderText="IdRadical" UniqueName="column"
+                                                Visible="false">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="DESCRICAORADICAL" HeaderText="Radical" UniqueName="column1">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="NCL.Codigo" HeaderText="NCL" UniqueName="column2">
+                                            </telerik:GridBoundColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>

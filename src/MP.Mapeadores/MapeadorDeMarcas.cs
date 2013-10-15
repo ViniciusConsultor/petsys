@@ -151,9 +151,48 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", marca.CodigoDaSubClasse1.ToString(), "', "));
             sql.Append(String.Concat("'", marca.CodigoDaSubClasse2.ToString(), "', "));
             sql.Append(String.Concat("'", marca.CodigoDaSubClasse3.ToString(), "') "));
-            
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+
+            if(marca.RadicalMarcas.Count > 0)
+            InserirRadicalMarcas(marca);
+        }
+
+        private void InserirRadicalMarcas(IMarcas marca)
+        {
+            try
+            {
+                foreach (var radical in marca.RadicalMarcas)
+                {
+                    var sql = new StringBuilder();
+                    IDBHelper DBHelper;
+
+                    DBHelper = ServerUtils.getDBHelper();
+
+                    sql.Append("INSERT INTO MP_RADICAL_MARCA (");
+                    sql.Append("IDRADICAL, DESCRICAORADICAL, CODIGONCL, IDMARCA) ");
+                    sql.Append("VALUES (");
+                    sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
+                    sql.Append(String.Concat(radical.DescricaoRadical, ", "));
+                    
+                    if(radical.NCL != null && radical.NCL.Codigo != 0)
+                    {
+                        sql.Append(String.Concat("'", radical.NCL.Codigo.ToString(), "', "));
+                    }
+                    else
+                    {
+                        sql.Append(String.Concat("'", 0, "', "));
+                    }
+                    
+                    sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ") "));
+
+                    DBHelper.ExecuteNonQuery(sql.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public void Modificar(IMarcas marca)

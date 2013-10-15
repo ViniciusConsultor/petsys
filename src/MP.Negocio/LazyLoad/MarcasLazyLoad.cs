@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
@@ -197,6 +197,27 @@ namespace MP.Negocio.LazyLoad
                 if (_marcasReal == null) CarregueObjetoReal();
                 _marcasReal.CodigoDaSubClasse3 = value;
             }
+        }
+
+        public IList<IRadicalMarcas> RadicalMarcas
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AdicioneRadicaisMarcas(IList<IRadicalMarcas> listaRadicalMarcas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<IRadicalMarcas> ObtenhaRadicaisMarcas()
+        {
+            throw new NotImplementedException();
         }
     }
 }
