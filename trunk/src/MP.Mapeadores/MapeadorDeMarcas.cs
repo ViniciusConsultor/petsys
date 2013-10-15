@@ -71,7 +71,7 @@ namespace MP.Mapeadores
                     marca.ImagemDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ImagemDaMarca");
 
                     marca.Natureza =
-                        Natureza.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "Natureza"));
+                        Natureza.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Natureza"));
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "ObservacaoDaMarca"))
                     marca.ObservacaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ObservacaoDaMarca");
@@ -134,7 +134,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", marca.Cliente.Pessoa.ID.Value.ToString(), "', "));
             sql.Append(String.Concat("'", marca.Natureza.Codigo.ToString(), "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "', "));
-            sql.Append(String.Concat("'", marca.EspecificacaoDeProdutosEServicos, "', "));
+            sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.EspecificacaoDeProdutosEServicos), "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ImagemDaMarca), "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ObservacaoDaMarca), "', "));
             sql.Append(String.Concat("'", marca.CodigoDaClasse.ToString(), "', "));
@@ -163,9 +163,9 @@ namespace MP.Mapeadores
                     sql.Append("IDRADICAL, DESCRICAORADICAL, CODIGONCL, IDMARCA) ");
                     sql.Append("VALUES (");
                     sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
-                    sql.Append(String.Concat(radical.DescricaoRadical, ", "));
-                    
-                    if(radical.NCL != null && radical.NCL.Codigo != 0)
+                    sql.Append(String.Concat("'", radical.DescricaoRadical, "', "));
+
+                    if (radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo.ToString()))
                     {
                         sql.Append(String.Concat("'", radical.NCL.Codigo.ToString(), "', "));
                     }

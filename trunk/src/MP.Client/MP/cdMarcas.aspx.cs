@@ -185,7 +185,7 @@ namespace MP.Client.MP
             marca.DescricaoDaMarca = ctrlMarcas.DescricaoDaMarca;
             marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
             marca.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCL.Codigo));
-            marca.Natureza = Natureza.ObtenhaPorCodigo(ctrlNatureza.Codigo);
+            marca.Natureza = Natureza.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
 
             marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
             marca.ObservacaoDaMarca = txtObservacao.Text;
@@ -370,9 +370,17 @@ namespace MP.Client.MP
 
             imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
 
-            if(marca.ObtenhaRadicaisMarcas().Count > 0)
+            IList<IRadicalMarcas> listaDeRadicalMarcas = new List<IRadicalMarcas>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRadicalMarcas>())
             {
-                MostraRadicalMarcas(marca.ObtenhaRadicaisMarcas());
+                listaDeRadicalMarcas = servico.obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(marca.IdMarca.Value,
+                                                                                           int.MaxValue);
+            }
+
+            if (listaDeRadicalMarcas.Count > 0)
+            {
+                MostraRadicalMarcas(listaDeRadicalMarcas);
             }
 
             ExibaTelaConsultar();
@@ -437,7 +445,7 @@ namespace MP.Client.MP
                 radical.IdRadicalMarca = GeradorDeID.getInstancia().getProximoID();
                 radical.DescricaoRadical = txtRadical.Text;
 
-                if (ctrlNCLRadical != null && ctrlNCLRadical.Codigo != null)
+                if (ctrlNCLRadical != null && !string.IsNullOrEmpty(ctrlNCLRadical.Codigo))
                 {
                     radical.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCLRadical.Codigo));
                 }
@@ -480,6 +488,12 @@ namespace MP.Client.MP
             {
                 IList<IRadicalMarcas> listaRadicalMarcas = null;
                 listaRadicalMarcas = (IList<IRadicalMarcas>) ViewState[CHAVE_RADICAIS];
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRadicalMarcas>())
+                {
+                    servico.Excluir(listaRadicalMarcas[IndiceSelecionado].IdRadicalMarca.Value);
+                }
+
                 listaRadicalMarcas.RemoveAt(IndiceSelecionado);
                 MostraRadicalMarcas(listaRadicalMarcas);
             }

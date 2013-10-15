@@ -42,7 +42,7 @@ namespace MP.Interfaces.Negocio
             return naturezas;
         }
 
-        public static Natureza ObtenhaPorCodigo(string codigo)
+        public static Natureza ObtenhaPorCodigo(int codigo)
         {
             return naturezas.FirstOrDefault(natureza => natureza.Codigo.Equals(codigo));
         }
