@@ -70,7 +70,6 @@
     <Compile Include="Filtros\Marcas\FiltroPorProtocolo.cs" />
     <Compile Include="Filtros\Marcas\FiltroSemFiltro.cs" />
     <Compile Include="Inventor.cs" />
-    <Compile Include="LayoutRevistaPatente.cs" />
     <Compile Include="LazyLoad\AnuidadePatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ClassificacaoPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\DespachoDeMarcasLazyLoad.cs" />
