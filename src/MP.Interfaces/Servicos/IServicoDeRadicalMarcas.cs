@@ -14,5 +14,6 @@ namespace MP.Interfaces.Servicos
         void Inserir(IRadicalMarcas radicalMarcas);
         void Modificar(IRadicalMarcas radicalMarcas);
         void Excluir(long idRadicalMarcas);
+        IList<IRadicalMarcas> obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(long idMarca, int quantidadeMaximaDeRegistros);
     }
 }

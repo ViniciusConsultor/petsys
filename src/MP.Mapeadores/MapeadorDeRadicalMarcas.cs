@@ -11,7 +11,7 @@ using MP.Interfaces.Negocio;
 
 namespace MP.Mapeadores
 {
-    public class MapeadorDeRadicaisMarca : IMapeadorDeRadicalMarcas
+    public class MapeadorDeRadicalMarcas : IMapeadorDeRadicalMarcas
     {
         public IList<IRadicalMarcas> ObtenhaPorIdDoRadicalMarcasComoFiltro(string idRadicalMarcas, int quantidadeMaximaDeRegistros)
         {
@@ -22,7 +22,7 @@ namespace MP.Mapeadores
          {
              var sql = new StringBuilder();
 
-             sql.Append("SELECT IDRADICAL IdRadicalMarca, DESCRICAORADICAL DescricaoRadical, IDMARCA IdMarca, CODIGONCL CodigoNCL ");
+             sql.Append("SELECT IDRADICAL IdRadicalMarca, DESCRICAORADICAL DescricaoRadical, IDMARCA IdMarca, CODIGONCL NCL ");
              sql.Append("FROM MP_RADICAL_MARCA ");
 
              return sql;
@@ -101,7 +101,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(radicalMarcas.DescricaoRadical), "', "));
             sql.Append(String.Concat("'", radicalMarcas.IdMarca.Value.ToString(), "', "));
 
-            if (radicalMarcas.NCL != null && radicalMarcas.NCL.Codigo != 0)
+            if (radicalMarcas.NCL != null && string.IsNullOrEmpty(radicalMarcas.NCL.Codigo.ToString()))
             {
                 sql.Append(String.Concat("'", radicalMarcas.NCL.Codigo.ToString(), "') "));
             }
@@ -150,6 +150,21 @@ namespace MP.Mapeadores
             sql.Append(string.Concat(" WHERE IDRADICAL = ", idRadicalMarcas.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+        }
+
+
+        public IList<IRadicalMarcas> obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(long idMarca, int quantidadeMaximaDeRegistros)
+        {
+            var sql = new StringBuilder();
+
+            sql = retornaSQLSelecionaTodos();
+
+            if (!string.IsNullOrEmpty(idMarca.ToString()))
+            {
+                sql.Append(string.Concat("WHERE IDMARCA =", idMarca, " "));
+            }
+
+            return obtenhaRadicalMarcas(sql, quantidadeMaximaDeRegistros);
         }
     }
 }

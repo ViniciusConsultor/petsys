@@ -116,5 +116,22 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+
+        public IList<IRadicalMarcas> obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(long idMarca, int quantidadeMaximaDeRegistros)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRadicalMarcas>();
+
+            try
+            {
+                return mapeador.obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(idMarca, quantidadeMaximaDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

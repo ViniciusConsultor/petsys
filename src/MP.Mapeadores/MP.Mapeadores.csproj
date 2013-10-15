@@ -60,7 +60,7 @@
     <Compile Include="MapeadorDeMarcas.cs" />
     <Compile Include="MapeadorDeProcessoDeMarca.cs" />
     <Compile Include="MapeadorDeProcurador.cs" />
-    <Compile Include="MapeadorDeRadicaisMarca.cs" />
+    <Compile Include="MapeadorDeRadicalMarcas.cs" />
     <Compile Include="MapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="MapeadorTipoDePatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
