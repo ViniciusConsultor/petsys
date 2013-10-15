@@ -6,8 +6,7 @@ using Compartilhados.Interfaces.Core.Negocio;
 
 namespace MP.Interfaces.Negocio.Filtros.Marcas
 {
-    public interface IFiltroPorDataDeEntrada : IFiltro
+    public interface IFiltroMarcaPorProtocolo : IFiltro
     {
-
     }
 }

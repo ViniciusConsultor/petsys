@@ -16,22 +16,7 @@ namespace MP.Servicos.Local
         {
         }
 
-        public IList<IMarcas> obtenhaTodasMarcasCadastradas()
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
-
-            try
-            {
-                return mapeador.obtenhaTodasMarcasCadastradas();
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
+     
         public IMarcas obtenhaMarcasPeloId(long idMarca)
         {
             ServerUtils.setCredencial(_Credencial);
@@ -64,22 +49,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IMarcas> ObtenhaPorIdDaMarcaComoFiltro(string idMarca, int quantidadeMaximaDeRegistros)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
-
-            try
-            {
-                return mapeador.ObtenhaPorIdDaMarcaComoFiltro(idMarca, quantidadeMaximaDeRegistros);
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
+        
         public void Inserir(IMarcas marca)
         {
             ServerUtils.setCredencial(_Credencial);

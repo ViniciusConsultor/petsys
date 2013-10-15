@@ -8,7 +8,6 @@ namespace MP.Interfaces.Mapeadores
 {
     public interface IMapeadorDeDespachoDeMarcas
     {
-        IList<IDespachoDeMarcas> obtenhaTodosDespachoDeMarcas();
         IDespachoDeMarcas obtenhaDespachoDeMarcasPeloId(long idDespachoDeMarcas);
         IList<IDespachoDeMarcas> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros);
         void Inserir(IDespachoDeMarcas despachoDeMarcas);

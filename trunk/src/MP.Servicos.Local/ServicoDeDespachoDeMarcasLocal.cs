@@ -16,22 +16,6 @@ namespace MP.Servicos.Local
         {
         }
 
-        public IList<IDespachoDeMarcas> obtenhaTodosDespachoDeMarcas()
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeDespachoDeMarcas>();
-
-            try
-            {
-                return mapeador.obtenhaTodosDespachoDeMarcas();
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
         public IDespachoDeMarcas obtenhaDespachoDeMarcasPeloId(long idDespachoDeMarcas)
         {
             ServerUtils.setCredencial(_Credencial);

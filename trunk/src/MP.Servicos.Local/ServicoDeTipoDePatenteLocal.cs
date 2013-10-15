@@ -18,22 +18,6 @@ namespace MP.Servicos.Local
             
         }
 
-        public IList<ITipoDePatente> obtenhaTodosTiposDePatentes()
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorTipoDePatente>();
-
-            try
-            {
-                return mapeador.obtenhaTodosTiposDePatentes();
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
         public IList<ITipoDePatente> obtenhaTipoDePatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);

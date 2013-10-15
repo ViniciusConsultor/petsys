@@ -8,7 +8,6 @@ namespace MP.Interfaces.Mapeadores
 {
     public interface IMapeadorTipoDePatente
     {
-        IList<ITipoDePatente> obtenhaTodosTiposDePatentes();
         IList<ITipoDePatente> obtenhaTipoDePatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros);
         ITipoDePatente obtenhaTipoDePatentePeloId(long idTipoPatente);
         ITipoDePatente obtenhaTipoDePatentePelaDescricaoOuSigla(string descricaoTipoDePatente, string siglaTipo);

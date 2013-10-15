@@ -8,10 +8,8 @@ namespace MP.Interfaces.Mapeadores
 {
     public interface IMapeadorDeMarcas
     {
-        IList<IMarcas> obtenhaTodasMarcasCadastradas();
         IMarcas obtenhaMarcasPeloId(long idMarca);
         IList<IMarcas> obtenhaMarcasPelaDescricaoComoFiltro(string descricaoDaMarca, int quantidadeMaximaDeRegistros);
-        IList<IMarcas> ObtenhaPorIdDaMarcaComoFiltro(string idMarca, int quantidadeMaximaDeRegistros);
         void Inserir(IMarcas marca);
         void Modificar(IMarcas marca);
         void Excluir(long idMarca);

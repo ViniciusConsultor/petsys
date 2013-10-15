@@ -16,22 +16,6 @@ namespace MP.Servicos.Local
         {
         }
 
-        public IList<IRadicalMarcas> ObtenhaPorIdDoRadicalMarcasComoFiltro(string idRadicalMarcas, int quantidadeMaximaDeRegistros)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRadicalMarcas>();
-
-            try
-            {
-                return mapeador.ObtenhaPorIdDoRadicalMarcasComoFiltro(idRadicalMarcas, quantidadeMaximaDeRegistros);
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
         public IList<IRadicalMarcas> obtenhaRadicalMarcasPelaDescricaoComoFiltro(string descricaoDoRadicalMarcas, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
