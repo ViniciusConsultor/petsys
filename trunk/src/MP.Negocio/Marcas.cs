@@ -24,5 +24,29 @@ namespace MP.Negocio
         public int CodigoDaSubClasse1 { get; set; }
         public int CodigoDaSubClasse2 { get; set; }
         public int CodigoDaSubClasse3 { get; set; }
+
+        public IList<IRadicalMarcas> RadicalMarcas
+        { get; set; }
+
+        public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
+        {
+            RadicalMarcas.Add(radicalMarcas);
+        }
+
+        public void AdicioneRadicaisMarcas(IList<IRadicalMarcas> listaRadicalMarcas)
+        {
+            ((List<IRadicalMarcas>)RadicalMarcas).AddRange(listaRadicalMarcas);
+        }
+
+        public IList<IRadicalMarcas> ObtenhaRadicaisMarcas()
+        {
+            return RadicalMarcas;
+        }
+
+        public Marcas()
+        {
+            RadicalMarcas = new List<IRadicalMarcas>();
+        }
+
     }
 }

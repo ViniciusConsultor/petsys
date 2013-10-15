@@ -84,6 +84,7 @@
     <Compile Include="AnuidadePatente.cs" />
     <Compile Include="ClassificacaoPatente.cs" />
     <Compile Include="PrioridadeUnionistaPatente.cs" />
+    <Compile Include="RadicalMarcas.cs" />
     <Compile Include="TitularPatente.cs" />
     <Compile Include="ProcessoDeMarca.cs" />
     <Compile Include="Procurador.cs" />

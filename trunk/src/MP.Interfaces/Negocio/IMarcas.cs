@@ -21,5 +21,10 @@ namespace MP.Interfaces.Negocio
         int CodigoDaSubClasse1 { get; set; }
         int CodigoDaSubClasse2 { get; set; }
         int CodigoDaSubClasse3 { get; set; }
+        IList<IRadicalMarcas> RadicalMarcas { get; set; }
+
+        void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas);
+        void AdicioneRadicaisMarcas(IList<IRadicalMarcas> listaRadicalMarcas);
+        IList<IRadicalMarcas> ObtenhaRadicaisMarcas();
     }
 }

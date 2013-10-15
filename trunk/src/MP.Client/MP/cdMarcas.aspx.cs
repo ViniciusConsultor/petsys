@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces;
 using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
@@ -19,6 +20,7 @@ namespace MP.Client.MP
     {
         private const string ID_OBJETO = "ID_OBJETO_CD_MARCAS";
         private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_MARCAS";
+        private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -52,6 +54,9 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
 
+            var controleGrid = this.grdRadicais as Control;
+            UtilidadesWeb.LimparComponente(ref controleGrid);
+
             ctrlMarcas.Inicializa();
             ctrlMarcas.EnableLoadOnDemand = true;
             ctrlMarcas.ShowDropDownOnTextboxClick = true;
@@ -63,9 +68,14 @@ namespace MP.Client.MP
             ctrlNCL.Inicializa();
             ctrlNatureza.Inicializa();
             ctrlCliente.Inicializa();
+            ctrlNCLRadical.Inicializa();
 
             this.RadTabStrip1.Tabs[0].Selected = true;
             this.RadPageView1.Selected = true;
+
+            MostraRadicalMarcas(new List<IRadicalMarcas>());
+
+            imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
         }
 
         protected void btnNovo_Click()
@@ -97,10 +107,16 @@ namespace MP.Client.MP
             ctrlMarcas.ShowDropDownOnTextboxClick = false;
             ctrlMarcas.AutoPostBack = false;
             ctrlMarcas.TextoItemVazio = string.Empty;
+
+            imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
+
+            MostraRadicalMarcas(new List<IRadicalMarcas>());
         }
 
         private void ExibaTelaModificar()
         {
+            grdRadicais.Columns[0].Display = true;
+
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
@@ -174,6 +190,7 @@ namespace MP.Client.MP
             marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
             marca.ObservacaoDaMarca = txtObservacao.Text;
 
+            marca.AdicioneRadicaisMarcas((IList<IRadicalMarcas>) ViewState[CHAVE_RADICAIS]);
 
             return marca;
         }
@@ -314,6 +331,8 @@ namespace MP.Client.MP
 
         private void ExibaTelaConsultar()
         {
+            grdRadicais.Columns[0].Display = true;
+
             var controle = pnlDadosDaMarca as Control;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
@@ -351,6 +370,11 @@ namespace MP.Client.MP
 
             imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
 
+            if(marca.ObtenhaRadicaisMarcas().Count > 0)
+            {
+                MostraRadicalMarcas(marca.ObtenhaRadicaisMarcas());
+            }
+
             ExibaTelaConsultar();
         }
 
@@ -372,17 +396,121 @@ namespace MP.Client.MP
             Modifica,
             Remove
         }
-        
+
         protected void uplImagem_OnFileUploaded(object sender, FileUploadedEventArgs e)
         {
-            if (uplImagem.UploadedFiles.Count > 0)
+            try
             {
-                UploadedFile file = uplImagem.UploadedFiles[0];
-                string targetFolder = Server.MapPath(UtilidadesWeb.URL_IMAGEM_SEM_FOTO);
-                string targetFileName = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension());
-                file.SaveAs(targetFileName);
-                imgImagemMarca.ImageUrl = string.Concat(UtilidadesWeb.URL_IMAGEM_SEM_FOTO, "/", file.GetNameWithoutExtension() + file.GetExtension());
+                if (uplImagem.UploadedFiles.Count > 0)
+                {
+                    var arquivo = uplImagem.UploadedFiles[0];
+                    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_IMAGEM_MARCA);
+                    var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+                    arquivo.SaveAs(caminhoArquivo);
+
+                    UtilidadesWeb.redimensionaImagem(pastaDeDestino, arquivo.GetName(), 200, 200);
+
+                    imgImagemMarca.ImageUrl = string.Concat(UtilidadesWeb.URL_IMAGEM_MARCA, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.GetInstancia().Erro("Erro ao carregar imagem, exceção: ", ex);
+            }
+        }
+
+        protected void btnRadical_ButtonClick(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtRadical.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Campo radical com preenchimento obrigatório."), false);
+            }
+            else
+            {
+                IList<IRadicalMarcas> listaDeRadicais = new List<IRadicalMarcas>();
+
+                listaDeRadicais = (IList<IRadicalMarcas>) ViewState[CHAVE_RADICAIS];
+                
+                var radical = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalMarcas>();
+
+                radical.IdRadicalMarca = GeradorDeID.getInstancia().getProximoID();
+                radical.DescricaoRadical = txtRadical.Text;
+
+                if (ctrlNCLRadical != null && ctrlNCLRadical.Codigo != null)
+                {
+                    radical.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCLRadical.Codigo));
+                }
+
+                if(listaDeRadicais.Count > 0)
+                {
+                    if(!listaDeRadicais.Contains(radical))
+                    {
+                        listaDeRadicais.Add(radical);
+
+                        MostraRadicalMarcas(listaDeRadicais);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Radical já adicionado."), false);
+                    }
+                }
+                else
+                {
+                    listaDeRadicais.Add(radical);
+
+                    MostraRadicalMarcas(listaDeRadicais);
+                }
+            }
+        }
+
+        protected void grdRadicais_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            long ID = 0;
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+            {
+                //ID = Convert.ToInt64(e.Item.Cells[3].Text);
+                IndiceSelecionado = e.Item.ItemIndex;
+            }
+
+            if (e.CommandName == "Excluir")
+            {
+                IList<IRadicalMarcas> listaRadicalMarcas = null;
+                listaRadicalMarcas = (IList<IRadicalMarcas>) ViewState[CHAVE_RADICAIS];
+                listaRadicalMarcas.RemoveAt(IndiceSelecionado);
+                MostraRadicalMarcas(listaRadicalMarcas);
+            }
+        }
+
+        private void MostraRadicalMarcas(IList<IRadicalMarcas> listaRadicalMarcas)
+        {
+            grdRadicais.MasterTableView.DataSource = listaRadicalMarcas;
+            grdRadicais.DataBind();
+            ViewState.Add(CHAVE_RADICAIS, listaRadicalMarcas);
+        }
+
+        protected void grdRadicais_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdRadicais.MasterTableView.RenderColumns)
+                {
+                    if ((column is GridButtonColumn))
+                    {
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+                    }
+                }
+            }
+        }
+
+        protected void grdRadicais_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdRadicais, ViewState[CHAVE_RADICAIS], e);
         }
     }
 }
