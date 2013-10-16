@@ -289,6 +289,11 @@ namespace MP.Client.MP
                     servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
                 }
 
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRadicalMarcas>())
+                {
+                    servico.ExcluirPorIdDaMarca(Convert.ToInt64(ViewState[ID_OBJETO]));
+                }
+
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(
                                                             "Marca excluída com sucesso."), false);
