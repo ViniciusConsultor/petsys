@@ -30,14 +30,10 @@ namespace MP.Negocio.LazyLoad
         {
             get
             {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                return _ObjetoReal.Identificador;
+                return _ID;
+                
             }
-            set
-            {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                _ObjetoReal.Identificador = value;
-            }
+            set { _ID = value; }
         }
 
         public string Classificacao

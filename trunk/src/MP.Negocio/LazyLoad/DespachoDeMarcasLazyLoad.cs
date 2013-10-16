@@ -34,16 +34,8 @@ namespace MP.Negocio.LazyLoad
 
         public long? IdDespacho
         {
-            get
-            {
-                VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.IdDespacho;
-            }
-            set
-            {
-                VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.IdDespacho = value;
-            }
+            get { return _ID; }
+            set { _ID = value.Value; }
         }
 
         public int CodigoDespacho

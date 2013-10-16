@@ -75,7 +75,7 @@ Namespace DBHelper
         End Sub
 
         Public Function existeTransacaoAberta() As Boolean Implements IDBHelper.existeTransacaoAberta
-            Return Not Transacao Is Nothing
+            Return Not Transacao Is Nothing AndAlso Not Transacao.Connection Is Nothing
         End Function
 
         Public Function obtenhaReader(ByVal sQuery As String) As IDataReader Implements IDBHelper.obtenhaReader

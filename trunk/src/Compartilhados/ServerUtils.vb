@@ -61,16 +61,25 @@ Public Class ServerUtils
         Return Me.Credencial
     End Function
 
-    Private Sub p_libereRecursos()
+    Private Function p_libereRecursos() As Boolean
+        Dim LiberarServerUtilPadrao = True
+
         If Not Me.DBHelperPadrao Is Nothing Then
-            Me.DBHelperPadrao.Dispose()
+            If Not Me.DBHelperPadrao.existeTransacaoAberta() Then
+                Me.DBHelperPadrao.Dispose()
+            Else
+                LiberarServerUtilPadrao = False
+            End If
+
         End If
 
         'Libera possiveis IDbHelper's alocados
         For Each DBHelperAdicional As IDBHelper In ListaDeDbHelpers
             DBHelperAdicional.Dispose()
         Next
-    End Sub
+
+        Return LiberarServerUtilPadrao
+    End Function
 
     '**************** MÉTODOS SHARED **************
 
@@ -91,10 +100,10 @@ Public Class ServerUtils
     End Function
 
     Public Shared Sub libereRecursos()
-        ServerUtils.GetInstancia.p_libereRecursos()
+        Dim LiberaRecurso = ServerUtils.GetInstancia.p_libereRecursos()
 
-        SyncLock lockInstancia
-            CallContext.SetData(SERVER_UTILS, Nothing)
+        SyncLock LockInstancia
+            If LiberaRecurso Then CallContext.SetData(SERVER_UTILS, Nothing)
         End SyncLock
     End Sub
 

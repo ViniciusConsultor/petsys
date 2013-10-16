@@ -83,7 +83,7 @@ namespace MP.Mapeadores
         {
             IAnuidadePatente anuidadePatente = null;
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTEANUIDADE, IDPATENTE, DESCRICAOANUIDADE, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO, VALORPAGAMENTO, ANUIDADEPAGA,");
             comandoSQL.Append("PEDIDOEXAME, DATAVENCTO_SEM_MULTA, DATAVENCTO_COM_MULTA ");
@@ -100,7 +100,7 @@ namespace MP.Mapeadores
         {
             IClassificacaoPatente classificacaoPatente = null;
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTECLASSIFICACAO, CLASSIFICACAO, DESCRICAO_CLASSIFICACAO, IDPATENTE, TIPO_CLASSIFICACAO FROM MP_PATENTECLASSIFICACAO ");
             comandoSQL.Append("WHERE IDPATENTECLASSIFICACAO = " + id);
@@ -116,7 +116,7 @@ namespace MP.Mapeadores
         {
             IPrioridadeUnionistaPatente prioridadeUnionistaPatente = null;
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPRIORIDADEUNIONISTA, DATA_PRIORIDADE, NUMERO_PRIORIDADE, IDPATENTE, IDPAIS FROM MP_PATENTEPRIORIDADEUNIONISTA ");
             comandoSQL.Append("WHERE IDPRIORIDADEUNIONISTA = " + id);
@@ -132,7 +132,7 @@ namespace MP.Mapeadores
         {
             ITitularPatente titularPatente = null;
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTETITULARINVENTOR, IDPATENTE, IDPROCURADOR, CONTATO_TITULAR FROM MP_PATENTETITULARINVENTOR ");
             comandoSQL.Append("WHERE IDPATENTETITULARINVENTOR = " + id);
@@ -148,7 +148,7 @@ namespace MP.Mapeadores
         {
             IPatente patente = null;
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
             comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
@@ -165,7 +165,7 @@ namespace MP.Mapeadores
         {
             IList<IPatente> patentes = new List<IPatente>();
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
             comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
@@ -254,7 +254,7 @@ namespace MP.Mapeadores
         private int ObtenhaProximoIDAnuidadePatente()
         {
             int? proximoCodigo = null;
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPATENTEANUIDADE) CODIGO FROM MP_PATENTEANUIDADE"))
                 while (reader.Read())
@@ -269,7 +269,7 @@ namespace MP.Mapeadores
         private int ObtenhaProximoIDClassificacaoPatente()
         {
             int? proximoCodigo = null;
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPATENTECLASSIFICACAO) CODIGO FROM MP_PATENTECLASSIFICACAO"))
                 while (reader.Read())
@@ -284,7 +284,7 @@ namespace MP.Mapeadores
         private int ObtenhaProximoIDPrioridadeUnionista()
         {
             int? proximoCodigo = null;
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPRIORIDADEUNIONISTA) CODIGO FROM MP_PATENTEPRIORIDADEUNIONISTA"))
                 while (reader.Read())
@@ -299,7 +299,7 @@ namespace MP.Mapeadores
         private int ObtenhaProximoIDTitular()
         {
             int? proximoCodigo = null;
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPATENTETITULARINVENTOR) CODIGO FROM MP_PATENTETITULARINVENTOR"))
                 while (reader.Read())
@@ -314,7 +314,7 @@ namespace MP.Mapeadores
         private int ObtenhaProximoIDPatente()
         {
             int? proximoCodigo = null;
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPROCESSOPATENTE) CODIGO FROM MP_PATENTE"))
                 while (reader.Read())
@@ -330,7 +330,7 @@ namespace MP.Mapeadores
         {
             IList<IAnuidadePatente> anuidadesPatente = new List<IAnuidadePatente>();
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTEANUIDADE, IDPATENTE, DESCRICAOANUIDADE, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO, VALORPAGAMENTO, ANUIDADEPAGA,");
             comandoSQL.Append("PEDIDOEXAME, DATAVENCTO_SEM_MULTA, DATAVENCTO_COM_MULTA ");
@@ -347,7 +347,7 @@ namespace MP.Mapeadores
         {
             IList<IClassificacaoPatente> classificacoesPatente = new List<IClassificacaoPatente>();
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTECLASSIFICACAO, CLASSIFICACAO, DESCRICAO_CLASSIFICACAO, IDPATENTE, TIPO_CLASSIFICACAO FROM MP_PATENTECLASSIFICACAO ");
             comandoSQL.Append("WHERE IDPATENTECLASSIFICACAO = " + idPatente);
@@ -363,7 +363,7 @@ namespace MP.Mapeadores
         {
             IList<IPrioridadeUnionistaPatente> prioridadesUnionistaPatente = new List<IPrioridadeUnionistaPatente>();
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPRIORIDADEUNIONISTA, DATA_PRIORIDADE, NUMERO_PRIORIDADE, IDPATENTE, IDPAIS FROM MP_PATENTEPRIORIDADEUNIONISTA ");
             comandoSQL.Append("WHERE IDPRIORIDADEUNIONISTA = " + idPatente);
@@ -379,7 +379,7 @@ namespace MP.Mapeadores
         {
             IList<ITitularPatente> titularesPatente = new List<ITitularPatente>();
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTETITULARINVENTOR, IDPATENTE, IDPROCURADOR, CONTATO_TITULAR FROM MP_PATENTETITULARINVENTOR ");
             comandoSQL.Append("WHERE IDPATENTETITULARINVENTOR = " + idPatente);

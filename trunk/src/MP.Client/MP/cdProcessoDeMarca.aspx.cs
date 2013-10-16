@@ -66,6 +66,11 @@ namespace MP.Client.MP
             txtDataDeProrrogacao.Enabled = false;
         }
 
+        private void ExibaTelaModificar()
+        {
+            ViewState[CHAVE_ESTADO] = Estado.Modifica;
+        }
+
 
         private void MostreProcessoDeMarca(IProcessoDeMarca processoDeMarca)
         {
@@ -77,7 +82,11 @@ namespace MP.Client.MP
             txtDataDeEntrada.SelectedDate = processoDeMarca.DataDeEntrada;
             txtDataDeConcessao.SelectedDate = processoDeMarca.DataDeConcessao;
             rblProcessoEhDeTerceiro.SelectedValue = processoDeMarca.ProcessoEhDeTerceiro ? "1" : "0";
-            if (processoDeMarca.Despacho != null) ctrlDespacho.DespachoDeMarcasSelecionada = processoDeMarca.Despacho;
+            if (processoDeMarca.Despacho != null)
+            {
+                ctrlDespacho.DespachoDeMarcasSelecionada = processoDeMarca.Despacho;
+                ctrlDespacho.CodigoDespacho = processoDeMarca.Despacho.CodigoDespacho.ToString();
+            }
             txtDataDeProrrogacao.SelectedDate = processoDeMarca.DataDeProrrogacao;
             
             if (processoDeMarca.Procurador != null)
@@ -86,7 +95,7 @@ namespace MP.Client.MP
                 ctrlProcurador.Nome = processoDeMarca.Procurador.Pessoa.Nome;
             }
 
-            if (processoDeMarca.SituacaoDoProcesso != null)
+            if (processoDeMarca.SituacaoDoProcesso != null) 
                 ctrlSituacao.Codigo = processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.ToString();
 
         }
@@ -100,6 +109,7 @@ namespace MP.Client.MP
             ctrlMarcas1.Inicializa();
             ctrlDespacho.Inicializa();
             ctrlProcurador.Inicializa();
+            ctrlSituacao.Inicializa();
             ctrlProcurador.RotuloComponente = "Procurador";
             rblProcessoEhDeTerceiro.Items.Clear();
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
@@ -183,7 +193,8 @@ namespace MP.Client.MP
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
-                
+                ExibaTelaModificar();
+
             }
             catch (BussinesException ex)
             {

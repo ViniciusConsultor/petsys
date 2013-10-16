@@ -34,15 +34,10 @@ namespace MP.Negocio.LazyLoad
 
         public long? IdTipoDePatente
         {
-            get
-            {
-                VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.IdTipoDePatente;
-            }
+            get { return _ID; }
             set
             {
-                VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.IdTipoDePatente = value;
+                _ID =  value.Value;
             }
         }
 
