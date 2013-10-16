@@ -122,6 +122,7 @@
     <Compile Include="Core\Negocio\LazyLoad\IFornecedorLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\ILembreteLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\IObjetoLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IPaisLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\IPessoaFisicaLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\IPessoaJuridicaLazyLoad.vb" />
     <Compile Include="Core\Negocio\LazyLoad\ITarefaLazyLoad.vb" />

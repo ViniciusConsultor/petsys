@@ -114,6 +114,7 @@
     <Compile Include="LazyLoad\CompromissoLazyLoad.vb" />
     <Compile Include="LazyLoad\FornecedorLazyLoad.vb" />
     <Compile Include="LazyLoad\LembreteLazyLoad.vb" />
+    <Compile Include="LazyLoad\PaisLazyLoad.vb" />
     <Compile Include="LazyLoad\PessoaFisicaLazyLoad.vb" />
     <Compile Include="LazyLoad\PessoaJuridicaLazyLoad.vb" />
     <Compile Include="LazyLoad\TarefaLazyLoad.vb" />
