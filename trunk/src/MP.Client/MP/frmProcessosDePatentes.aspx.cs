@@ -65,10 +65,10 @@ namespace MP.Client.MP
 
         private void MostraProcessos(IFiltro filtro, int quantidadeDeProcessos, int offSet)
         {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
                 grdProcessosDePatentes.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
-                grdProcessosDePatentes.DataSource = servico.ObtenhaProcessosDeMarcas(filtro, quantidadeDeProcessos, offSet);
+                grdProcessosDePatentes.DataSource = servico.ObtenhaProcessosDePatentes(filtro, quantidadeDeProcessos, offSet);
                 grdProcessosDePatentes.DataBind();
             }
         }

@@ -60,6 +60,7 @@
     <Compile Include="ServicoDeMarcasLocal.cs" />
     <Compile Include="ServicoDePatenteLocal.cs" />
     <Compile Include="ServicoDeProcessoDeMarcaLocal.cs" />
+    <Compile Include="ServicoDeProcessoDePatenteLocal.cs" />
     <Compile Include="ServicoDeProcuradorLocal.cs" />
     <Compile Include="ServicoDeRadicalMarcasLocal.cs" />
     <Compile Include="ServicoDeTipoDePatenteLocal.cs" />
