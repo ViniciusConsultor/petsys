@@ -133,5 +133,28 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public void ExcluirPorIdDaMarca(long idMarca)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRadicalMarcas>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeador.ExcluirPorIdDaMarca(idMarca);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

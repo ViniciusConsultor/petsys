@@ -41,7 +41,7 @@ namespace MP.Mapeadores
 
             return obtenhaRadicalMarcas(sql, quantidadeMaximaDeRegistros);
         }
-
+        
         private IList<IRadicalMarcas> obtenhaRadicalMarcas(StringBuilder sql, int quantidadeMaximaDeRegistros)
         {
             var DBHelper = ServerUtils.criarNovoDbHelper();
@@ -148,6 +148,19 @@ namespace MP.Mapeadores
 
             sql.Append("DELETE FROM MP_RADICAL_MARCA");
             sql.Append(string.Concat(" WHERE IDRADICAL = ", idRadicalMarcas.ToString()));
+
+            DBHelper.ExecuteNonQuery(sql.ToString());
+        }
+
+        public void ExcluirPorIdDaMarca(long idMarca)
+        {
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            sql.Append("DELETE FROM MP_RADICAL_MARCA");
+            sql.Append(string.Concat(" WHERE IDMARCA = ", idMarca.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
