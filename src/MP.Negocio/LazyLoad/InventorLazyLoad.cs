@@ -10,6 +10,7 @@ using MP.Interfaces.Servicos;
 
 namespace MP.Negocio.LazyLoad
 {
+    [Serializable]
     public class InventorLazyLoad : IInventorLazyLoad
     {
         private IInventor _ObjetoReal;

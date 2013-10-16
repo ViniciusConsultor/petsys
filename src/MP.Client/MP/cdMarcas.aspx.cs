@@ -177,10 +177,18 @@ namespace MP.Client.MP
 
             marca.Cliente = ctrlCliente.ClienteSelecionado;
 
-            marca.CodigoDaClasse = Convert.ToInt32(txtClasse.Text);
-            marca.CodigoDaSubClasse1 = Convert.ToInt32(txtSubClasse1.Text);
-            marca.CodigoDaSubClasse2 = Convert.ToInt32(txtSubClasse2.Text);
-            marca.CodigoDaSubClasse3 = Convert.ToInt32(txtSubClasse3.Text);
+             if (txtClasse.Value.HasValue)
+                marca.CodigoDaClasse =   Convert.ToInt32(txtClasse.Text);
+
+             if (txtSubClasse1.Value.HasValue)
+                 marca.CodigoDaSubClasse1 = Convert.ToInt32(txtSubClasse1.Text);
+            
+            if (txtSubClasse2.Value.HasValue)
+                 marca.CodigoDaSubClasse2 = Convert.ToInt32(txtSubClasse2.Text);
+
+            if (txtSubClasse3.Value.HasValue)
+                marca.CodigoDaSubClasse3 = Convert.ToInt32(txtSubClasse3.Text);
+
             //marca.DescricaoDaMarca = txtDescricaoMarca.Text;
             marca.DescricaoDaMarca = ctrlMarcas.DescricaoDaMarca;
             marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
@@ -211,7 +219,7 @@ namespace MP.Client.MP
             {
                 mensagem = mensagem + "Apresentação , ";
             }
-            if (string.IsNullOrEmpty(ctrlCliente.ClienteSelecionado.Pessoa.ID.Value.ToString()))
+            if (ctrlCliente.ClienteSelecionado == null)
             {
                 mensagem = mensagem + "Cliente , ";
             }
@@ -223,22 +231,22 @@ namespace MP.Client.MP
         {
             string mensagem;
 
-            if (!string.IsNullOrEmpty(validaErrosDePreenchimento()))
-            {
-                var erros = validaErrosDePreenchimento();
-
-                var mensagemDeErro = "Campo(s) " + erros + "precisa(m) ser preenchido(s)";
-
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagemDeErro), false);
-
-                return;
-            }
-
-            var marca = MontaObjetoMarca();
-
             try
             {
+                if (!string.IsNullOrEmpty(validaErrosDePreenchimento()))
+                {
+                    var erros = validaErrosDePreenchimento();
+
+                    var mensagemDeErro = "Campo(s) " + erros + "precisa(m) ser preenchido(s)";
+
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(mensagemDeErro), false);
+
+                    return;
+                }
+
+                var marca = MontaObjetoMarca();
+
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
@@ -258,7 +266,7 @@ namespace MP.Client.MP
                 ExibaTelaInicial();
 
             }
-            catch (BussinesException ex)
+            catch (Exception ex)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);

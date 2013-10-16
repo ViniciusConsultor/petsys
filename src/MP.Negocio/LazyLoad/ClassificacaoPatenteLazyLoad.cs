@@ -9,6 +9,7 @@ using MP.Interfaces.Servicos;
 
 namespace MP.Negocio.LazyLoad
 {
+    [Serializable]
     public class ClassificacaoPatenteLazyLoad : IClassificacaoPatenteLazyLoad
     {
         private IClassificacaoPatente _ObjetoReal;

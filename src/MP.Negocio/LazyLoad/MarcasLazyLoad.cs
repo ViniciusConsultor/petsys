@@ -8,6 +8,7 @@ using MP.Interfaces.Servicos;
 
 namespace MP.Negocio.LazyLoad
 {
+    [Serializable]
     public class MarcasLazyLoad : IMarcasLazyLoad
     {
         private IMarcas _marcasReal;

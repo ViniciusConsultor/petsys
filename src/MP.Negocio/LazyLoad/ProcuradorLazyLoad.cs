@@ -10,6 +10,7 @@ using MP.Interfaces.Servicos;
 
 namespace MP.Negocio.LazyLoad
 {
+    [Serializable]
     public class ProcuradorLazyLoad : IProcuradorLazyLoad
     {
         private IProcurador _ObjetoReal;

@@ -10,6 +10,7 @@ using MP.Interfaces.Negocio;
 
 namespace MP.Negocio
 {
+    [Serializable]
     public class Procurador : PapelPessoa, IProcurador
     {
         public Procurador(IPessoa Pessoa) : base(Pessoa)
