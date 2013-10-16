@@ -74,7 +74,7 @@ namespace MP.Mapeadores
         {
             var listaDeProcuradores = new List<IProcurador>();
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
             comandoSQL.Append("FROM MP_PROCURADORES");
@@ -98,7 +98,7 @@ namespace MP.Mapeadores
         {
             IProcurador procuradorRetorno = null;
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
             comandoSQL.Append("FROM MP_PROCURADORES ");
@@ -115,7 +115,7 @@ namespace MP.Mapeadores
         {
             var listaDeProcuradores = new List<IProcurador>();
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT ID, NOME, IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
             comandoSQL.Append("FROM MP_PROCURADORES PROCURADORES, ");
@@ -145,7 +145,7 @@ namespace MP.Mapeadores
         {
             IProcurador procuradorRetorno = null;
             var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.getDBHelper();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT ID, NOME, TIPO, IDPESSOA, TIPOPESSOA, MATRICULAAPI, SIGLAORGAO, NRREGISTROORGAO, DATAREGISTROORGAO, OBSCONTATO ");
             comandoSQL.Append("FROM MP_PROCURADORES PROCURADORES, ");

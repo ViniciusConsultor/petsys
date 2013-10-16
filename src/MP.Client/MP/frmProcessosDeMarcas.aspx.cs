@@ -394,7 +394,7 @@ namespace MP.Client.MP
             switch (e.CommandName)
             {
                 case "Excluir":
-
+                    
                     try
                     {
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())

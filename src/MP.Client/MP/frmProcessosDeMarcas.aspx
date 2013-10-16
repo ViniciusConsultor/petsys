@@ -140,7 +140,7 @@
                     <table class="tabela">
                         <tr>
                             <td colspan="2">
-                                <telerik:RadGrid ID="grdProcessosDeMarcas" runat="server" AutoGenerateColumns="False"
+                                <telerik:RadGrid ID="grdProcessosDeMarcas" runat="server" AutoGenerateColumns="False" AllowCustomPaging="true"
                                     AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista" AllowFilteringByColumn="false" OnPageIndexChanged="grdProcessosDeMarcas_OnPageIndexChanged" OnItemCommand="grdProcessosDeMarcas_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">

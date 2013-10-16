@@ -69,7 +69,56 @@ namespace MP.Mapeadores
 
         public void Modificar(IProcessoDeMarca processoDeMarca)
         {
-            throw new NotImplementedException();
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            sql.Append("UPDATE MP_PROCESSOMARCA ");
+            sql.Append("SET IDMARCA = " + processoDeMarca.Marca.IdMarca + ", ");
+
+            
+            sql.Append(processoDeMarca.Protocolo.HasValue
+                           ? String.Concat("PROTOCOLO = ",processoDeMarca.Protocolo.Value, ", ")
+                           : "PROTOCOLO = NULL, ");
+            
+            sql.Append(processoDeMarca.Processo.HasValue
+                           ? String.Concat("PROCESSO = ",processoDeMarca.Processo.Value, ", ")
+                           : "PROCESSO = NULL, ");
+
+            sql.Append(String.Concat("DATAENTRADA = ",processoDeMarca.DataDeEntrada.ToString("yyyyMMdd"),", "));
+
+            sql.Append(processoDeMarca.DataDeConcessao.HasValue
+                           ? String.Concat("DATACONCESSAO = ",processoDeMarca.DataDeConcessao.Value.ToString("yyyyMMdd"), ", ")
+                           : "DATACONCESSAO = NULL, ");
+
+            sql.Append("PROCESSOEHTERCEIRO = " + (processoDeMarca.ProcessoEhDeTerceiro ? "1, " : "0, "));
+
+            sql.Append(processoDeMarca.Despacho != null
+                           ? String.Concat("IDDESPACHO = ",processoDeMarca.Despacho.IdDespacho, ", ")
+                           : "IDDESPACHO = NULL, ");
+
+            sql.Append(processoDeMarca.Procurador != null
+                           ? String.Concat("IDPROCURADOR = ",processoDeMarca.Procurador.Pessoa.ID.Value, ", ")
+                           : "IDPROCURADOR = NULL, ");
+
+
+            sql.Append(processoDeMarca.SituacaoDoProcesso != null
+               ? String.Concat("SITUACAO = ",processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso)
+               : "SITUACAO = NULL");
+
+            sql.Append(" WHERE IDPROCESSO = " + processoDeMarca.IdProcessoDeMarca);
+
+            try
+            {
+                DBHelper.ExecuteNonQuery(sql.ToString());
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+            
         }
 
         public void Excluir(long ID)

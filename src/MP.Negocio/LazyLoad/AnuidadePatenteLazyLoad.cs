@@ -36,13 +36,11 @@ namespace MP.Negocio.LazyLoad
         {
             get
             {
-                VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.Identificador;
+                return _ID;
             }
             set
             {
-                VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.Identificador = value;
+                _ID = value;
             }
         }
 

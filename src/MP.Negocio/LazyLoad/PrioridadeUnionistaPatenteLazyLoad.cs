@@ -29,16 +29,8 @@ namespace MP.Negocio.LazyLoad
 
         public long Identificador
         {
-            get
-            {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                return _ObjetoReal.Identificador;
-            }
-            set
-            {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                _ObjetoReal.Identificador = value;
-            }
+            get { return _ID; }
+            set { _ID = value; }
         }
 
         public DateTime? DataPrioridade
