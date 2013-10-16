@@ -115,13 +115,13 @@
                                 </table>
                                 <table class="tabela">
                                     <tr>
-                                        <td class="th3" colspan="2">
+                                        <td class="campodependente" colspan="2">
                                             <asp:Label ID="Label6" runat="server" Text="Classificação anterior de produtos e serviços:"></asp:Label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <asp:Panel ID="pnlClassificacao" runat="server" GroupingText="" BorderWidth="1" BorderColor="#F5F5F5">
+                                           <%-- <asp:Panel ID="pnlClassificacao" runat="server" GroupingText="" BorderWidth="1" BorderColor="#F5F5F5"> --%>
                                                 <table class="tabela">
                                                     <tr>
                                                         <td class="th3">
@@ -154,7 +154,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </asp:Panel>
+                                         <%--   </asp:Panel> --%>
                                         </td>
                                     </tr>
                                 </table>

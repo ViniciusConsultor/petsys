@@ -45,6 +45,8 @@ namespace MP.Client.MP
             LimpaTela();
             txtDataDeConcessao.SelectedDate = DateTime.Now;
             txtDataDeProrrogacao.Enabled = false;
+            txtDataDeEntrada.SelectedDate = DateTime.Now;
+            
         }
 
         private void ExibaTelaDetalhes(long id)
@@ -99,6 +101,10 @@ namespace MP.Client.MP
             ctrlDespacho.Inicializa();
             ctrlProcurador.Inicializa();
             ctrlProcurador.RotuloComponente = "Procurador";
+            rblProcessoEhDeTerceiro.Items.Clear();
+            rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
+            rblProcessoEhDeTerceiro.Items.Add(new ListItem("Sim", "1"));
+            rblProcessoEhDeTerceiro.SelectedValue = "0";
         }
 
         private IProcessoDeMarca MontaObjeto()
@@ -119,7 +125,7 @@ namespace MP.Client.MP
             processoDeMarca.DataDeEntrada = txtDataDeEntrada.SelectedDate.Value;
             processoDeMarca.DataDeConcessao = txtDataDeConcessao.SelectedDate;
 
-            processoDeMarca.ProcessoEhDeTerceiro = Convert.ToBoolean(rblProcessoEhDeTerceiro.SelectedValue);
+            processoDeMarca.ProcessoEhDeTerceiro = rblProcessoEhDeTerceiro.SelectedValue != "0";
 
             if (ctrlDespacho.DespachoDeMarcasSelecionada != null) processoDeMarca.Despacho = ctrlDespacho.DespachoDeMarcasSelecionada;
             

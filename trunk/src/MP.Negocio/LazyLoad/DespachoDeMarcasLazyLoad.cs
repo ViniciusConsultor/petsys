@@ -9,6 +9,7 @@ using MP.Interfaces.Servicos;
 
 namespace MP.Negocio.LazyLoad
 {
+    [Serializable]
     public class DespachoDeMarcasLazyLoad : IDespachoDeMarcasLazyLoad
     {
         private IDespachoDeMarcas _ObjetoReal;

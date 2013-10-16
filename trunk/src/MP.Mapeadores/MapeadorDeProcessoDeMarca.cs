@@ -10,6 +10,7 @@ using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.Core.Negocio.LazyLoad;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Negocio.LazyLoad;
 
 namespace MP.Mapeadores
@@ -147,7 +148,30 @@ namespace MP.Mapeadores
 
         public IProcessoDeMarca Obtenha(long ID)
         {
-            throw new NotImplementedException();
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorID>();
+            filtro.Operacao = OperacaoDeFiltro.IgualA;
+            filtro.ValorDoFiltro = ID.ToString();
+            
+            var processos = new List<IProcessoDeMarca>();
+
+            using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQuery()))
+            {
+                try
+                {
+                    if (leitor.Read())
+                        return MontaProcessoDeMarca(leitor);
+
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return null;
         }
 
         public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)

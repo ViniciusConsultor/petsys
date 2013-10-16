@@ -67,6 +67,7 @@
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorApresentacao.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorCliente.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorDataDeEntrada.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorID.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorMarca.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorNatureza.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorNCL.cs" />

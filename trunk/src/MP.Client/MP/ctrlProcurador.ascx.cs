@@ -64,14 +64,13 @@ namespace MP.Client.MP
                 if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
                     return;
 
-                int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
-                procurador = servico.ObtenhaProcurador(codigoSelecionado);
+                var id = Convert.ToInt64(((RadComboBox)sender).SelectedValue);
+                procurador = servico.ObtenhaProcurador(id);
+
+                ProcuradorSelecionado = procurador;
 
                 if (ProcuradorFoiSelecionado != null)
-                {
-                    ProcuradorSelecionado = procurador;
                     ProcuradorFoiSelecionado(procurador);
-                }
             }
         }
 

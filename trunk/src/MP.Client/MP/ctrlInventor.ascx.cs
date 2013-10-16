@@ -82,10 +82,12 @@ namespace MP.Client.MP
                 if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
                     return;
 
-                int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
+                var codigoSelecionado = Convert.ToInt64(((RadComboBox)sender).SelectedValue);
                 inventor = servico.Obtenha(codigoSelecionado);
 
-                if (InventorFoiSelecionado != null)
+                InventorSelecionado = inventor;
+
+                if (inventor != null)
                     InventorFoiSelecionado(inventor);
             }
         }
