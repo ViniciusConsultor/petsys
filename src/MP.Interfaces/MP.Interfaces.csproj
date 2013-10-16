@@ -113,6 +113,7 @@
     <Compile Include="Servicos\IServicoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDePatente.cs" />
     <Compile Include="Servicos\IServicoDeProcessoDeMarca.cs" />
+    <Compile Include="Servicos\IServicoDeProcessoDePatente.cs" />
     <Compile Include="Servicos\IServicoDeProcurador.cs" />
     <Compile Include="Servicos\IServicoDeRadicalMarcas.cs" />
     <Compile Include="Servicos\IServicoDeTipoDePatente.cs" />

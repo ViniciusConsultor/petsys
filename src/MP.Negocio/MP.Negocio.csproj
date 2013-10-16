@@ -70,6 +70,10 @@
     <Compile Include="Filtros\Marcas\FiltroMarcaPorProcesso.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorProtoloco.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaSemFiltro.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeEntrada.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorProcesso.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorTituloDaPatente.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatenteSemFiltro.cs" />
     <Compile Include="Inventor.cs" />
     <Compile Include="LazyLoad\AnuidadePatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ClassificacaoPatenteLazyLoad.cs" />
@@ -101,9 +105,7 @@
       <Name>MP.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Filtros\Patentes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
