@@ -135,5 +135,21 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }            
         }
+
+
+        public IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+
+            try
+            {
+                return mapeadorProcurador.ObtenhaPatentesPeloTitulo(titulo, quantidadeDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
+        }
     }
 }

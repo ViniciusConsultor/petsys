@@ -22,31 +22,16 @@ namespace MP.Mapeadores
 
             patente.Identificador = ObtenhaProximoIDPatente();
 
-            comandoSQL.Append("INSERT INTO MP_PATENTE(IDPROCESSOPATENTE, NUMEROPROTOCOLO, NUMEROPROCESSO, TITULOPATENTE, DATAENTRADA, PROCESSODETERCEIRO,");
-            comandoSQL.Append("DATACONCESSAO_REGISTRO, IDTIPOPATENTE, IDPROCURADOR, IDDESPACHO, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
-            comandoSQL.Append("RESUMO_PATENTE, ESTRANGEIRO,PCT, NUMEROPCT, NUMEROWO, DATA_DEPOSITOPCT, DATA_PUBLICACAOPCT, ATIVO, QTDEREINVINDICACAO) VALUES(");
+            comandoSQL.Append("INSERT INTO MP_PATENTE(IDPROCESSOPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
+            comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO) VALUES(");
             comandoSQL.Append(patente.Identificador + ", ");
-            comandoSQL.Append(patente.NumeroDoProtrocolo + ", ");
-            comandoSQL.Append("'" + patente.NumeroDoProcesso + "', ");
             comandoSQL.Append("'" + patente.TituloPatente + "', ");
-            comandoSQL.Append(patente.DataEntrada != null ? "'" + patente.DataEntrada.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
-            comandoSQL.Append("'" + (patente.ProcessoDeTerceiro ? "1" : "0") + "', ");
-            comandoSQL.Append(patente.DataConcessaoRegistro != null ? "'" + patente.DataConcessaoRegistro.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
             comandoSQL.Append(patente.TipoDePatente.IdTipoDePatente + ", ");
-            comandoSQL.Append(patente.Procurador.Pessoa.ID + ", ");
-            comandoSQL.Append(patente.DespachoDeMarcas.IdDespacho + ", ");
             comandoSQL.Append("'" + patente.LinkINPI + "', ");
             comandoSQL.Append("'" + (patente.ObrigacaoGerada ? "1" : "0") + "', ");
             comandoSQL.Append(patente.DataCadastro != null ? "'" + patente.DataCadastro.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
             comandoSQL.Append("'" + patente.Observacao + "', ");
             comandoSQL.Append("'" + patente.Resumo + "', ");
-            comandoSQL.Append("'" + (patente.Estrangeiro ? "1" : "0") + "', ");
-            comandoSQL.Append("'" + (patente.PCT ? "1" : "0") + "', ");
-            comandoSQL.Append("'" + patente.NumeroPCT + "', ");
-            comandoSQL.Append("'" + patente.NumeroWO + "', ");
-            comandoSQL.Append(patente.DataDepositoPCT != null ? "'" + patente.DataDepositoPCT.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
-            comandoSQL.Append(patente.DataPublicacaoPCT != null ? "'" + patente.DataPublicacaoPCT.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
-            comandoSQL.Append("'" + (patente.Ativo ? "1" : "0") + "', ");
             comandoSQL.Append(patente.QuantidadeReivindicacao + ", ");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
 
@@ -69,27 +54,13 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
             comandoSQL.Append("UPDATE MP_PATENTE SET ");
-            comandoSQL.Append("NUMEROPROTOCOLO = " + patente.NumeroDoProtrocolo + ", ");
-            comandoSQL.Append("NUMEROPROCESSO = '" + patente.NumeroDoProcesso + "', ");
             comandoSQL.Append("TITULOPATENTE = '" + patente.TituloPatente + "', ");
-            comandoSQL.Append("DATAENTRADA = " + (patente.DataEntrada != null ? "'" + patente.DataEntrada.Value.ToString("yyyyMMdd") + "', " : "NULL, "));
-            comandoSQL.Append("PROCESSODETERCEIRO = '" + (patente.ProcessoDeTerceiro ? "1" : "0") + "', ");
-            comandoSQL.Append("DATACONCESSAO_REGISTRO = " + (patente.DataConcessaoRegistro != null ? "'" + patente.DataConcessaoRegistro.Value.ToString("yyyyMMdd") + "', " : "NULL, "));
             comandoSQL.Append("IDTIPOPATENTE = " + patente.TipoDePatente.IdTipoDePatente + ", ");
-            comandoSQL.Append("IDPROCURADOR = " + patente.Procurador.Pessoa.ID + ", ");
-            comandoSQL.Append("IDDESPACHO = " + patente.DespachoDeMarcas.IdDespacho + ", ");
             comandoSQL.Append("LINKINPI = '" + patente.LinkINPI + "', ");
             comandoSQL.Append("OBRIGACAOGERADA = '" + (patente.ObrigacaoGerada ? "1" : "0") + "', ");
             comandoSQL.Append("DATACADASTRO = " + (patente.DataCadastro != null ? "'" + patente.DataCadastro.Value.ToString("yyyyMMdd") + "', " : "NULL, "));
             comandoSQL.Append("OBSERVACAO = '" + patente.Observacao + "', ");
             comandoSQL.Append("RESUMO_PATENTE = '" + patente.Resumo + "', ");
-            comandoSQL.Append("ESTRANGEIRO = '" + (patente.Estrangeiro ? "1" : "0") + "', ");
-            comandoSQL.Append("PCT = '" + (patente.PCT ? "1" : "0") + "', ");
-            comandoSQL.Append("NUMEROPCT = '" + patente.NumeroPCT + "', ");
-            comandoSQL.Append("NUMEROWO = '" + patente.NumeroWO + "', ");
-            comandoSQL.Append("DATA_DEPOSITOPCT = " + (patente.DataDepositoPCT != null ? "'" + patente.DataDepositoPCT.Value.ToString("yyyyMMdd") + "', " : "NULL, "));
-            comandoSQL.Append("DATA_PUBLICACAOPCT = " + (patente.DataPublicacaoPCT != null ? "'" + patente.DataPublicacaoPCT.Value.ToString("yyyyMMdd") + "', " : "NULL, "));
-            comandoSQL.Append("ATIVO ='" + (patente.Ativo ? "1" : "0") + "', ");
             comandoSQL.Append("QTDEREINVINDICACAO = " + patente.QuantidadeReivindicacao + ", ");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -179,16 +150,32 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("SELECT IDPROCESSOPATENTE, NUMEROPROTOCOLO, NUMEROPROCESSO, TITULOPATENTE, DATAENTRADA, PROCESSODETERCEIRO, DATACONCESSAO_REGISTRO, ");
-            comandoSQL.Append("IDTIPOPATENTE, IDPROCURADOR, IDDESPACHO, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE, ESTRANGEIRO, ");
-            comandoSQL.Append("PCT, NUMEROPCT, NUMEROWO, DATA_DEPOSITOPCT, DATA_PUBLICACAOPCT, ATIVO, QTDEREINVINDICACAO FROM MP_PATENTE ");
-            comandoSQL.Append("WHERE IDPROCESSOPATENTE = = " + id);
+            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
+            comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
+            comandoSQL.Append("WHERE IDPATENTE = " + id);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
                     patente = MapeieObjetoPatente(reader);
 
             return patente;
+        }
+
+        public IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros)
+        {
+            IList<IPatente> patentes = new List<IPatente>();
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
+            comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
+            comandoSQL.Append("WHERE TITULOPATENTE like '%" + titulo + "%'");
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), quantidadeDeRegistros))
+                while (reader.Read())
+                    patentes.Add(MapeieObjetoPatente(reader));
+
+            return patentes;
         }
 
 #region Métodos Privados
@@ -477,8 +464,7 @@ namespace MP.Mapeadores
             prioridadeUnionistaPatente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPRIORIDADEUNIONISTA");
             prioridadeUnionistaPatente.DataPrioridade = UtilidadesDePersistencia.getValorDate(reader, "DATA_PRIORIDADE");
             prioridadeUnionistaPatente.NumeroPrioridade = UtilidadesDePersistencia.GetValorString(reader, "NUMERO_PRIORIDADE");
-            //TODO: Criar LazyLoad do objeto Pais
-            //prioridadeUnionistaPatente.Pais = servico.ObtenhaPais(UtilidadesDePersistencia.getValorInteger(reader, "IDPAIS"));
+            prioridadeUnionistaPatente.Pais = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPaisLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPAIS"));
 
             return prioridadeUnionistaPatente;
         }
@@ -499,27 +485,13 @@ namespace MP.Mapeadores
             var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
 
             patente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPROCESSOPATENTE");
-            patente.NumeroDoProtrocolo = UtilidadesDePersistencia.GetValorLong(reader, "NUMEROPROTOCOLO");
-            patente.NumeroDoProcesso = UtilidadesDePersistencia.GetValorString(reader, "NUMEROPROCESSO");
             patente.TituloPatente = UtilidadesDePersistencia.GetValorString(reader, "TITULOPATENTE");
-            patente.DataEntrada = UtilidadesDePersistencia.getValorDate(reader, "DATAENTRADA");
-            patente.ProcessoDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(reader, "PROCESSODETERCEIRO");
-            patente.DataConcessaoRegistro = UtilidadesDePersistencia.getValorDate(reader, "DATACONCESSAO_REGISTRO");
             patente.TipoDePatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ITipoDePatenteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDTIPOPATENTE"));
-            patente.Procurador = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPROCURADOR"));
-            patente.DespachoDeMarcas = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IDespachoDeMarcas>(UtilidadesDePersistencia.GetValorLong(reader, "IDDESPACHO"));
             patente.LinkINPI = UtilidadesDePersistencia.GetValorString(reader, "LINKINPI");
             patente.ObrigacaoGerada = UtilidadesDePersistencia.GetValorBooleano(reader, "OBRIGACAOGERADA");
             patente.DataCadastro = UtilidadesDePersistencia.getValorDate(reader, "DATACADASTRO");
             patente.Observacao = UtilidadesDePersistencia.GetValorString(reader, "OBSERVACAO");
             patente.Resumo = UtilidadesDePersistencia.GetValorString(reader, "RESUMO_PATENTE");
-            patente.Estrangeiro = UtilidadesDePersistencia.GetValorBooleano(reader, "ESTRANGEIRO");
-            patente.PCT = UtilidadesDePersistencia.GetValorBooleano(reader, "PCT");
-            patente.NumeroPCT = UtilidadesDePersistencia.GetValorString(reader, "NUMEROPCT");
-            patente.NumeroWO = UtilidadesDePersistencia.GetValorString(reader, "NUMEROWO");
-            patente.DataDepositoPCT = UtilidadesDePersistencia.getValorDate(reader, "DATA_DEPOSITOPCT");
-            patente.DataPublicacaoPCT = UtilidadesDePersistencia.getValorDate(reader, "DATA_PUBLICACAOPCT");
-            patente.Ativo = UtilidadesDePersistencia.GetValorBooleano(reader, "ATIVO");
             patente.QuantidadeReivindicacao = UtilidadesDePersistencia.getValorInteger(reader, "QTDEREINVINDICACAO");
             patente.Anuidades = ObtenhaAnuidadePeloIdDaPatente(patente.Identificador);
             patente.Classificacoes = ObtenhaClassificacaoPeloIdDaPatente(patente.Identificador);
@@ -530,6 +502,5 @@ namespace MP.Mapeadores
         }
 
 #endregion
-
     }
 }

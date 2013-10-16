@@ -10,21 +10,9 @@ namespace MP.Negocio
     {
         public long Identificador { get; set; }
 
-        public long NumeroDoProtrocolo { get; set; }
-
-        public string NumeroDoProcesso { get; set; }
-
         public string TituloPatente { get; set; }
 
-        public DateTime? DataEntrada { get; set; }
-
-        public bool ProcessoDeTerceiro { get; set; }
-
-        public DateTime? DataConcessaoRegistro { get; set; }
-
         public ITipoDePatente TipoDePatente { get; set; }
-
-        public IProcurador Procurador { get; set; }
 
         public IDespachoDeMarcas DespachoDeMarcas { get; set; }
 
@@ -37,20 +25,6 @@ namespace MP.Negocio
         public string Observacao { get; set; }
 
         public string Resumo { get; set; }
-
-        public bool Estrangeiro { get; set; }
-
-        public bool PCT { get; set; }
-
-        public string NumeroPCT { get; set; }
-
-        public string NumeroWO { get; set; }
-
-        public DateTime? DataDepositoPCT { get; set; }
-
-        public DateTime? DataPublicacaoPCT { get; set; }
-
-        public bool Ativo { get; set; }
 
         public int QuantidadeReivindicacao { get; set; }
 

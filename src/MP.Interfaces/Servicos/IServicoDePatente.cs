@@ -16,5 +16,6 @@ namespace MP.Interfaces.Servicos
         IPrioridadeUnionistaPatente ObtenhaPrioridadeUnionista(long id);
         ITitularPatente ObtenhaTitular(long id);
         IPatente ObtenhaPatente(long id);
+        IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros);
     }
 }
