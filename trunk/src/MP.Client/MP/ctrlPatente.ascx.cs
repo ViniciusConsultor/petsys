@@ -90,5 +90,11 @@ namespace MP.Client.MP
         {
             set { cboPatente.ShowDropDownOnTextboxClick = value; }
         }
+
+        public string TituloPatente
+        {
+            get { return cboPatente.Text; }
+            set { cboPatente.Text = value; }
+        }
     }
 }

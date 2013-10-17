@@ -32,6 +32,7 @@ namespace MP.Client.MP
             }
         }
 
+       
         private void ExibaTelaInicial()
         {
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
@@ -76,6 +77,9 @@ namespace MP.Client.MP
             MostraRadicalMarcas(new List<IRadicalMarcas>());
 
             imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
+
+            ctrlCliente.BotaoNovoEhVisivel = true;
+            ctrlMarcas.BotaoNovoEhVisivel = false;
         }
 
         protected void btnNovo_Click()
@@ -189,7 +193,6 @@ namespace MP.Client.MP
             if (txtSubClasse3.Value.HasValue)
                 marca.CodigoDaSubClasse3 = Convert.ToInt32(txtSubClasse3.Text);
 
-            //marca.DescricaoDaMarca = txtDescricaoMarca.Text;
             marca.DescricaoDaMarca = ctrlMarcas.DescricaoDaMarca;
             marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
             marca.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCL.Codigo));
@@ -376,8 +379,7 @@ namespace MP.Client.MP
             txtSubClasse2.Text = marca.CodigoDaSubClasse2.ToString();
             txtSubClasse3.Text = marca.CodigoDaSubClasse3.ToString();
 
-            //txtDescricaoMarca.Text = marca.DescricaoDaMarca;
-
+            
             txtEspecificacao.Text = marca.EspecificacaoDeProdutosEServicos;
             txtObservacao.Text = marca.ObservacaoDaMarca;
 
@@ -539,5 +541,8 @@ namespace MP.Client.MP
         {
             UtilidadesWeb.PaginacaoDataGrid(ref grdRadicais, ViewState[CHAVE_RADICAIS], e);
         }
+
+
+       
     }
 }

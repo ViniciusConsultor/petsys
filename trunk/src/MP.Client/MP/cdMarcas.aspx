@@ -64,7 +64,7 @@
                                             <asp:Label ID="Label1" runat="server" Text="Cliente"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <uc5:ctrlCliente ID="ctrlCliente" runat="server" />
+                                            <uc5:ctrlCliente ID="ctrlCliente" runat="server" /> 
                                         </td>
                                     </tr>
                                     <tr>

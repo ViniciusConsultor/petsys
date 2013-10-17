@@ -109,15 +109,15 @@
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column2">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column3">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Protocolo" HeaderText="Protocolo" UniqueName="column4">
+                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column1">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TipoDePatente.DescricaoTipoDePatente" HeaderText="Tipo da patente" UniqueName="column3">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Protocolo" HeaderText="Protocolo" UniqueName="column4">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6">
                                             </telerik:GridBoundColumn>

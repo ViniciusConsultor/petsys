@@ -60,6 +60,7 @@ namespace MP.Client.MP
             txtNumeroRegistro.Text = procurador.NumeroRegistroProfissional;
             txtDataRegistro.SelectedDate = procurador.DataRegistroProfissional;
             txtContato.Text = procurador.ObservacaoContato;
+            ctrlPessoa1.BotaoDetalharEhVisivel = true;
         }
 
         protected void btnNovo_Click()
