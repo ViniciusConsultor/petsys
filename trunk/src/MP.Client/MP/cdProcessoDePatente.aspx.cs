@@ -89,7 +89,7 @@ namespace MP.Client.MP
 
             var controle = pnlProcessoDeMarca as Control;
             UtilidadesWeb.LimparComponente(ref controle);
-            ctrlPatente1.Incializa();
+            ctrlPatente1.Inicializa();
             
             rblProcessoEhDeTerceiro.Items.Clear();
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
