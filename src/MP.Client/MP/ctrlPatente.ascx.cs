@@ -23,9 +23,14 @@ namespace MP.Client.MP
 
         }
 
-        public void Incializa()
+        public void Inicializa()
         {
             LimparControle();
+        }
+
+        public bool AutoPostBack
+        {
+            set { cboPatente.AutoPostBack = value; }
         }
 
         protected void cboProcurador_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
