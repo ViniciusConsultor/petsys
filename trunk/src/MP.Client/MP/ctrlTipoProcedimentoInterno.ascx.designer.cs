@@ -13,24 +13,6 @@ namespace MP.Client.MP {
     public partial class ctrlTipoProcedimentoInterno {
         
         /// <summary>
-        /// pnlProcedimentosInternos control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlProcedimentosInternos;
-        
-        /// <summary>
-        /// Label6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
-        
-        /// <summary>
         /// cboProcedimentosInternos control.
         /// </summary>
         /// <remarks>

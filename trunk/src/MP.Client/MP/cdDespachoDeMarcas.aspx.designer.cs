@@ -49,6 +49,24 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDock RadDock1;
         
         /// <summary>
+        /// pnlDespacho control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlDespacho;
+        
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
         /// ctrlDespachoDeMarcas control.
         /// </summary>
         /// <remarks>

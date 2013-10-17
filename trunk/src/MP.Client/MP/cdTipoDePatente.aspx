@@ -27,7 +27,16 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Cadastro de tipo de patente"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista">
                 <ContentTemplate>
-                    <uc1:ctrlTipoDePatente ID="ctrlTipoDePatente" runat="server" />
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                             <asp:Label ID="Label2" runat="server" Text="Tipo de patente"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc1:ctrlTipoDePatente ID="ctrlTipoDePatente" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock2" runat="server" Title="Dados do tipo de patente" DefaultCommands="ExpandCollapse"
@@ -37,7 +46,7 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label1" runat="server" Text="Sigla"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="Sigla"></asp:Label> 
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtSigla" runat="server" Width="87px" MaxLength="2">

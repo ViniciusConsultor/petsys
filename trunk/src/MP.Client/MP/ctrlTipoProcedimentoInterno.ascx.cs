@@ -30,7 +30,7 @@ namespace MP.Client.MP
 
         private void LimparControle()
         {
-            Control controlePanel = pnlProcedimentosInternos;
+            Control controlePanel = cboProcedimentosInternos;
             UtilidadesWeb.LimparComponente(ref controlePanel);
             ProcedimentosInternosSelecionado = null;
             cboProcedimentosInternos.ClearSelection();

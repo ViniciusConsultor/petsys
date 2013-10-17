@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="cdPatente.aspx.cs" Inherits="MP.Client.MP.cdPatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="~/MP/ctrlPatente.ascx" TagName="ctrPatente" TagPrefix="uc1" %>
+<%@ Register Src="ctrlPatente.ascx" TagName="ctrPatente" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
@@ -25,7 +25,18 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Patentes cadastradas" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista">
                 <ContentTemplate>
-                    <uc1:ctrPatente ID="ctrPatente" runat="server" />
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label12" runat="server" Text="Patente"></asp:Label>
+                            </td>
+
+                            <td class="td">
+                                <uc1:ctrPatente ID="ctrPatente" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
+                    
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock2" runat="server" Title="Cadastro de Patentes" DefaultCommands="ExpandCollapse"
@@ -45,7 +56,7 @@
                                 <table class="tabela">
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label1" runat="server" Text="Cliente:"></asp:Label>
+                                            <asp:Label ID="Label1" runat="server" Text="Cliente"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <uc5:ctrlCliente ID="ctrlCliente" runat="server" />
@@ -53,7 +64,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label2" runat="server" Text="Apresentação:"></asp:Label>
+                                            <asp:Label ID="Label2" runat="server" Text="Apresentação"></asp:Label> 
                                         </td>
                                         <td class="td">
                                             <uc3:ctrlApresentacao ID="ctrlApresentacao" runat="server" />
@@ -61,7 +72,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label3" runat="server" Text="Natureza:"></asp:Label>
+                                            <asp:Label ID="Label3" runat="server" Text="Natureza"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <uc1:ctrlNatureza ID="ctrlNatureza" runat="server" />
@@ -109,7 +120,7 @@
                                 <table class="tabela">
                                     <tr>
                                         <td class="th3" colspan="2">
-                                            <asp:Label ID="Label6" runat="server" Text="Classificação anterior de produtos e serviços:"></asp:Label>
+                                            <asp:Label ID="Label6" runat="server" Text="Classificação anterior de produtos e serviços"></asp:Label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -118,7 +129,7 @@
                                                 <table class="tabela">
                                                     <tr>
                                                         <td class="th3">
-                                                            <asp:Label ID="Label7" runat="server" Text="Classe:"></asp:Label>
+                                                            <asp:Label ID="Label7" runat="server" Text="Classe"></asp:Label>
                                                         </td>
                                                         <td class="td">
                                                             <telerik:RadNumericTextBox ID="txtClasse" runat="server" Width="87px" Type="Number"
@@ -129,7 +140,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="th3">
-                                                            <asp:Label ID="Label8" runat="server" Text="Sub - Classes:"></asp:Label>
+                                                            <asp:Label ID="Label8" runat="server" Text="Sub - Classes"></asp:Label>
                                                         </td>
                                                         <td class="td">
                                                             <telerik:RadNumericTextBox ID="txtSubClasse1" runat="server" Width="87px" Type="Number"
@@ -158,7 +169,7 @@
                                 <table class="tabela">
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label9" runat="server" Text="Especificação de produtos e serviços:"></asp:Label>
+                                            <asp:Label ID="Label9" runat="server" Text="Especificação de produtos e serviços"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtEspecificacao" runat="server" MaxLength="4000" TextMode="MultiLine"

@@ -31,7 +31,16 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Marcas cadastradas" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista">
                 <ContentTemplate>
-                    <uc4:ctrlMarcas ID="ctrlMarcas" runat="server" />
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label12" runat="server" Text="Marca"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc4:ctrlMarcas ID="ctrlMarcas" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
             <telerik:RadDock ID="RadDock2" runat="server" Title="Cadastro de marcas" DefaultCommands="ExpandCollapse"
@@ -52,7 +61,7 @@
                                 <table class="tabela">
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label1" runat="server" Text="Cliente:"></asp:Label>
+                                            <asp:Label ID="Label1" runat="server" Text="Cliente"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <uc5:ctrlCliente ID="ctrlCliente" runat="server" />
@@ -60,7 +69,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label2" runat="server" Text="Apresentação:"></asp:Label>
+                                            <asp:Label ID="Label2" runat="server" Text="Apresentação"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <uc3:ctrlApresentacao ID="ctrlApresentacao" runat="server" />
@@ -68,7 +77,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label3" runat="server" Text="Natureza:"></asp:Label>
+                                            <asp:Label ID="Label3" runat="server" Text="Natureza"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <uc1:ctrlNatureza ID="ctrlNatureza" runat="server" />
@@ -106,7 +115,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label5" runat="server" Text="Classificação de NCL:"></asp:Label>
+                                            <asp:Label ID="Label5" runat="server" Text="Classificação de NCL"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <uc2:ctrlNCL ID="ctrlNCL" runat="server" />
@@ -115,46 +124,44 @@
                                 </table>
                                 <table class="tabela">
                                     <tr>
-                                        <td class="campodependente" colspan="2">
-                                            <asp:Label ID="Label6" runat="server" Text="Classificação anterior de produtos e serviços:"></asp:Label>
+                                        <td class="th3" colspan="2">
+                                            <asp:Label ID="Label6" runat="server" Text="Classificação anterior de produtos e serviços"></asp:Label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                           <%-- <asp:Panel ID="pnlClassificacao" runat="server" GroupingText="" BorderWidth="1" BorderColor="#F5F5F5"> --%>
-                                                <table class="tabela">
-                                                    <tr>
-                                                        <td class="th3">
-                                                            <asp:Label ID="Label7" runat="server" Text="Classe:"></asp:Label>
-                                                        </td>
-                                                        <td class="td">
-                                                            <telerik:RadNumericTextBox ID="txtClasse" runat="server" Width="87px" Type="Number"
-                                                                DataType="System.Uint32">
-                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                                            </telerik:RadNumericTextBox>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="th3">
-                                                            <asp:Label ID="Label8" runat="server" Text="Sub - Classes:"></asp:Label>
-                                                        </td>
-                                                        <td class="td">
-                                                            <telerik:RadNumericTextBox ID="txtSubClasse1" runat="server" Width="87px" Type="Number"
-                                                                DataType="System.Uint32">
-                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                                            </telerik:RadNumericTextBox>
-                                                            <telerik:RadNumericTextBox ID="txtSubClasse2" runat="server" Width="87px" Type="Number"
-                                                                DataType="System.Uint32">
-                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                                            </telerik:RadNumericTextBox>
-                                                            <telerik:RadNumericTextBox ID="txtSubClasse3" runat="server" Width="87px" Type="Number"
-                                                                DataType="System.Uint32">
-                                                                <NumberFormat DecimalDigits="0"></NumberFormat>
-                                                            </telerik:RadNumericTextBox>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                         <%--   </asp:Panel> --%>
+                                            <table class="tabela">
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="Label7" runat="server" Text="Classe"></asp:Label>
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadNumericTextBox ID="txtClasse" runat="server" Width="87px" Type="Number"
+                                                            DataType="System.Uint32">
+                                                            <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                        </telerik:RadNumericTextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="Label8" runat="server" Text="Sub - Classes"></asp:Label>
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadNumericTextBox ID="txtSubClasse1" runat="server" Width="87px" Type="Number"
+                                                            DataType="System.Uint32">
+                                                            <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                        </telerik:RadNumericTextBox>
+                                                        <telerik:RadNumericTextBox ID="txtSubClasse2" runat="server" Width="87px" Type="Number"
+                                                            DataType="System.Uint32">
+                                                            <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                        </telerik:RadNumericTextBox>
+                                                        <telerik:RadNumericTextBox ID="txtSubClasse3" runat="server" Width="87px" Type="Number"
+                                                            DataType="System.Uint32">
+                                                            <NumberFormat DecimalDigits="0"></NumberFormat>
+                                                        </telerik:RadNumericTextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
                                 </table>
@@ -165,7 +172,7 @@
                                 <table class="tabela">
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label9" runat="server" Text="Especificação de produtos e serviços:"></asp:Label>
+                                            <asp:Label ID="Label9" runat="server" Text="Especificação de produtos e serviços"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtEspecificacao" runat="server" MaxLength="4000" TextMode="MultiLine"
@@ -175,7 +182,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label10" runat="server" Text="Observação:"></asp:Label>
+                                            <asp:Label ID="Label10" runat="server" Text="Observação"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtObservacao" runat="server" MaxLength="4000" TextMode="MultiLine"
@@ -185,7 +192,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label11" runat="server" Text="Radical:"></asp:Label>
+                                            <asp:Label ID="Label11" runat="server" Text="Radical"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtRadical" runat="server" Width="400px" MaxLength="50">
@@ -194,7 +201,7 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="Label4" runat="server" Text="Selecione um NCL:"></asp:Label>
+                                            <asp:Label ID="Label4" runat="server" Text="Selecione uma NCL"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <uc2:ctrlNCL ID="ctrlNCLRadical" runat="server" />
@@ -209,8 +216,8 @@
                                     </tr>
                                 </table>
                                 <telerik:RadGrid ID="grdRadicais" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                                    PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdRadicais_ItemCommand" OnItemCreated="grdRadicais_ItemCreated" 
-                                    OnPageIndexChanged="grdRadicais_PageIndexChanged">
+                                    PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdRadicais_ItemCommand"
+                                    OnItemCreated="grdRadicais_ItemCreated" OnPageIndexChanged="grdRadicais_PageIndexChanged">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>

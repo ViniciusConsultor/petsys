@@ -58,6 +58,15 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Panel pnlProcessoDeMarca;
         
         /// <summary>
+        /// Label9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label9;
+        
+        /// <summary>
         /// ctrlMarcas1 control.
         /// </summary>
         /// <remarks>
@@ -157,6 +166,15 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.RadioButtonList rblProcessoEhDeTerceiro;
         
         /// <summary>
+        /// Label8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label8;
+        
+        /// <summary>
         /// ctrlDespacho control.
         /// </summary>
         /// <remarks>
@@ -182,6 +200,15 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker txtDataDeProrrogacao;
+        
+        /// <summary>
+        /// Label10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label10;
         
         /// <summary>
         /// ctrlProcurador control.
