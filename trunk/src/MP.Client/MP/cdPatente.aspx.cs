@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Compartilhados.Componentes.Web;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 using Telerik.Web.UI;
 
@@ -51,21 +52,9 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, false);
 
-            var controleGridClientes = grdClientes as Control;
-            UtilidadesWeb.LimparComponente(ref controleGridClientes);
-
-            var controleGridInventores = grdInventores as Control;
-            UtilidadesWeb.LimparComponente(ref controleGridInventores);
-
-            var controleGridPrioridadeUnionista = grdPrioridadeUnionista as Control;
-            UtilidadesWeb.LimparComponente(ref controleGridPrioridadeUnionista);
-
-            var controleGridAnuidades = grdAnuidades as Control;
-            UtilidadesWeb.LimparComponente(ref controleGridAnuidades);
-
-            var controleGridClassificacaoPatente = grdClassificacaoPatente as Control;
-            UtilidadesWeb.LimparComponente(ref controleGridClassificacaoPatente);
-
+            grdClientes.DataSource = new List<ICliente>();
+            grdClientes.DataBind();
+            
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
 
