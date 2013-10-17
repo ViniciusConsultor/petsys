@@ -26,6 +26,8 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ctrlPatente1.BotaoNovoEhVisivel = true;
+
             if (IsPostBack) return;
 
             Nullable<long> id = null;

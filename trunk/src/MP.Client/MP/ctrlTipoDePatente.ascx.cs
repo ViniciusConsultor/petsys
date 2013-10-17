@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
@@ -33,6 +34,7 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanel);
             TipoDePatenteSelecionada = null;
             cboTipoDePatente.ClearSelection();
+            BotaoNovoEhVisivel = false;
         }
 
         public bool EnableLoadOnDemand
@@ -121,5 +123,35 @@ namespace MP.Client.MP
 	    {
 		    Load += Page_Load;
 	    }
+
+        public bool BotaoNovoEhVisivel
+        {
+            set { btnNovo.Visible = value; }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
+
+            if (btnNovo.Visible)
+                btnNovo.Visible = principal.EstaAutorizado(btnNovo.CommandArgument);
+
+            base.OnPreRender(e);
+        }
+
+        protected void btnNovo_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var URL = ObtenhaURL();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanelaModal(URL, "Tipos de Patentes", 650, 480),
+                                                false);
+        }
+
+        private string ObtenhaURL()
+        {
+            var URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual();
+            URL = String.Concat(URL, "MP/cdTipoDePatente.aspx");
+            return URL;
+        }
     }
 }

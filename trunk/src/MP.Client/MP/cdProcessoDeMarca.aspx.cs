@@ -27,6 +27,8 @@ namespace MP.Client.MP
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlMarcas1.BotaoNovoEhVisivel = true;
+            ctrlDespacho.BotaoNovoEhVisivel = true;
+            ctrlProcurador.BotaoNovoEhVisivel = true;
 
             if (IsPostBack) return;
 
