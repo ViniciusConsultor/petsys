@@ -97,7 +97,24 @@ namespace MP.Client.MP
 
         protected void btnPesquisarPorTipoDePatente_OnClick(object sender, ImageClickEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            if (ctrlTipoDePatente1.TipoDePatenteSelecionada == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione um tipo de patente."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorTipoDePatente>();
+            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.ValorDoFiltro = ctrlTipoDePatente1.TipoDePatenteSelecionada.IdTipoDePatente.ToString();
+            FiltroAplicado = filtro;
+            MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -231,7 +248,7 @@ namespace MP.Client.MP
             }
         }
 
-        protected void grdProcessosDeMarcas_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        protected void grdProcessosDePatentes_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
             if (e.NewPageIndex >= 0)
             {
@@ -245,7 +262,7 @@ namespace MP.Client.MP
             }
         }
 
-        protected void grdProcessosDeMarcas_OnItemCommand(object sender, GridCommandEventArgs e)
+        protected void grdProcessosDePatentes_OnItemCommand(object sender, GridCommandEventArgs e)
         {
             long id = 0;
             int indiceSelecionado;
@@ -262,7 +279,7 @@ namespace MP.Client.MP
 
                     try
                     {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                         {
                             servico.Excluir(id);
                         }

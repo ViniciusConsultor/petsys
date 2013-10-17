@@ -43,7 +43,7 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
-            ctrlDespachoDeMarcas.Visible = true;
+            pnlDespacho.Visible = true;
             ctrlDespachoDeMarcas.Inicializa();
             ctrlDespachoDeMarcas.EnableLoadOnDemand = true;
             ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = true;
@@ -99,7 +99,7 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controlePanel);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
-            ctrlDespachoDeMarcas.Visible = false;
+            pnlDespacho.Visible = false;
             ctrlSituacaoDoProcesso.Inicializa();
         }
 
@@ -118,7 +118,7 @@ namespace MP.Client.MP
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
-            ctrlDespachoDeMarcas.Visible = false;
+            pnlDespacho.Visible = false;
         }
 
         private void ExibaTelaExcluir()

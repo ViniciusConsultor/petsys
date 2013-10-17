@@ -110,7 +110,6 @@ namespace MP.Client.MP
             ctrlDespacho.Inicializa();
             ctrlProcurador.Inicializa();
             ctrlSituacao.Inicializa();
-            ctrlProcurador.RotuloComponente = "Procurador";
             rblProcessoEhDeTerceiro.Items.Clear();
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Sim", "1"));

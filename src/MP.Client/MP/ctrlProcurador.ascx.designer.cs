@@ -13,15 +13,6 @@ namespace MP.Client.MP {
     public partial class ctrlProcurador {
         
         /// <summary>
-        /// lblProcurador control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProcurador;
-        
-        /// <summary>
         /// cboProcurador control.
         /// </summary>
         /// <remarks>

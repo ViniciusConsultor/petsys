@@ -92,8 +92,8 @@
                     <table class="tabela">
                         <tr>
                             <td colspan="2">
-                                <telerik:RadGrid ID="grdProcessosDePatentes" runat="server" AutoGenerateColumns="False"
-                                    AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista" AllowFilteringByColumn="false">
+                                <telerik:RadGrid ID="grdProcessosDePatentes"  runat="server" AutoGenerateColumns="False" AllowCustomPaging="true"
+                                    AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista" AllowFilteringByColumn="false" OnPageIndexChanged="grdProcessosDePatentes_OnPageIndexChanged" OnItemCommand="grdProcessosDePatentes_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
@@ -109,7 +109,7 @@
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1" Visible="False">
+                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column2">
                                             </telerik:GridBoundColumn>

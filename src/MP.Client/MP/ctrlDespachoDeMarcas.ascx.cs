@@ -30,7 +30,7 @@ namespace MP.Client.MP
 
         private void LimparControle()
         {
-            Control controlePanel = pnlDespachoDeMarcas;
+            Control controlePanel = cboDespachoDeMarcas;
             UtilidadesWeb.LimparComponente(ref controlePanel);
             DespachoDeMarcasSelecionada = null;
             cboDespachoDeMarcas.ClearSelection();

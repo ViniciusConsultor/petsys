@@ -13,15 +13,6 @@ namespace MP.Client.MP {
     public partial class ctrlSituacaoDoProcesso {
         
         /// <summary>
-        /// pnlSituacaoDoProcesso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlSituacaoDoProcesso;
-        
-        /// <summary>
         /// cboSituacaoDoProcesso control.
         /// </summary>
         /// <remarks>

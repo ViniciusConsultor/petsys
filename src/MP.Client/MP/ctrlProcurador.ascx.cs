@@ -39,14 +39,6 @@ namespace MP.Client.MP
             set { cboProcurador.Text = value; }
         }
 
-        public string RotuloComponente
-        {
-            set
-            {
-                lblProcurador.Text = value;
-            }
-        }
-
         private void LimparControle()
         {
             var controle = cboProcurador as Control;

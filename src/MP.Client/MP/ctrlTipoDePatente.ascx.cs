@@ -29,7 +29,7 @@ namespace MP.Client.MP
 
         private void LimparControle()
         {
-            Control controlePanel = pnlTipoDePatente;
+            Control controlePanel = cboTipoDePatente;
             UtilidadesWeb.LimparComponente(ref controlePanel);
             TipoDePatenteSelecionada = null;
             cboTipoDePatente.ClearSelection();

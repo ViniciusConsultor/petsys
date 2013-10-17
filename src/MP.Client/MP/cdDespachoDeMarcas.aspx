@@ -29,12 +29,23 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Cadastro do despacho de marcas"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <uc1:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
+                    <table class="tabela">
+                        <tr runat="server" id="pnlDespacho">
+                            <td class="th3">
+                                <asp:Label ID="Label3" runat="server" Text="Despacho"></asp:Label>
+                            </td>
+
+                            <td class="td">
+                                <uc1:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
+                    
                     <asp:Panel ID="PanelCdDespachoDeMarcas" runat="server">
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label1" runat="server" Text="Código do despacho:"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="Código do despacho"></asp:Label>   
                                 </td>
                                 <td class="td">
                                     <telerik:RadNumericTextBox ID="txtCodigo" runat="server" Width="87px" Type="Number" >
@@ -45,7 +56,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label2" runat="server" Text="Descrição:"></asp:Label>
+                                    <asp:Label ID="Label2" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="4000" TextMode="MultiLine"
@@ -55,7 +66,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label6" runat="server" Text="Situação do processo após a publicação:"></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="Situação do processo após a publicação"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <uc2:ctrlSituacaoDoProcesso ID="ctrlSituacaoDoProcesso" runat="server" />
@@ -63,7 +74,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label8" runat="server" Text="Indica a concessão do registro:"></asp:Label>
+                                    <asp:Label ID="Label8" runat="server" Text="Indica a concessão do registro"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <asp:RadioButtonList ID="rblConcessaoDeRegistro" runat="server" AutoPostBack="false"

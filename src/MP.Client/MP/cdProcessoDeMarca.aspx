@@ -21,8 +21,15 @@
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlProcessoDeMarca" runat="server">
-                        <uc1:ctrlMarcas ID="ctrlMarcas1" runat="server" />
                         <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label9" runat="server" Text="Marca"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc1:ctrlMarcas ID="ctrlMarcas1" runat="server" />
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label7" runat="server" Text="Protocolo"></asp:Label>
@@ -72,9 +79,14 @@
                                     </asp:RadioButtonList>
                                 </td>
                             </tr>
-                        </table>
-                        <uc2:ctrlDespachoDeMarcas ID="ctrlDespacho" runat="server" />
-                        <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="Despacho"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc2:ctrlDespachoDeMarcas ID="ctrlDespacho" runat="server" />
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label5" runat="server" Text="Data de prorrogação"></asp:Label>
@@ -84,9 +96,14 @@
                                     </telerik:RadDatePicker>
                                 </td>
                             </tr>
-                        </table>
-                        <uc3:ctrlProcurador ID="ctrlProcurador" runat="server" />
-                        <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label10" runat="server" Text="Procurador"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc3:ctrlProcurador ID="ctrlProcurador" runat="server" />
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label6" runat="server" Text="Situação do processo"></asp:Label>
