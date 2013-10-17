@@ -13,6 +13,7 @@ namespace MP.Client.MP
         protected void Page_Load(object sender, EventArgs e)
         {
 
+         
         }
 
         protected void grdClientes_ItemCommand(object sender, GridCommandEventArgs e)
