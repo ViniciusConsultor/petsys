@@ -59,6 +59,7 @@
     <Compile Include="MapeadorDeInventor.cs" />
     <Compile Include="MapeadorDeMarcas.cs" />
     <Compile Include="MapeadorDeProcessoDeMarca.cs" />
+    <Compile Include="MapeadorDeProcessoDePatente.cs" />
     <Compile Include="MapeadorDeProcurador.cs" />
     <Compile Include="MapeadorDeRadicalMarcas.cs" />
     <Compile Include="MapeadorDeTipoDeProcedimentoInterno.cs" />
