@@ -49,15 +49,6 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDock RadDock1;
         
         /// <summary>
-        /// Label12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
-        
-        /// <summary>
         /// ctrPatente control.
         /// </summary>
         /// <remarks>
@@ -94,184 +85,148 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadMultiPage RadMultiPage1;
         
         /// <summary>
-        /// RadPageView1 control.
+        /// rpvDadosPatentes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadPageView RadPageView1;
+        protected global::Telerik.Web.UI.RadPageView rpvDadosPatentes;
         
         /// <summary>
-        /// pnlDadosDaMarca control.
+        /// pnlDadosPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDadosDaMarca;
+        protected global::System.Web.UI.WebControls.Panel pnlDadosPatente;
         
         /// <summary>
-        /// Label1 control.
+        /// lblTituloPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblTituloPatente;
         
         /// <summary>
-        /// Label2 control.
+        /// txtTituloPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::Telerik.Web.UI.RadTextBox txtTituloPatente;
         
         /// <summary>
-        /// Label3 control.
+        /// ctrlTipoDePatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::MP.Client.MP.ctrlTipoDePatente ctrlTipoDePatente;
         
         /// <summary>
-        /// Label23 control.
+        /// panelDadosDoCliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label23;
+        protected global::System.Web.UI.WebControls.Panel panelDadosDoCliente;
         
         /// <summary>
-        /// imgImagemMarca control.
+        /// lblCliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgImagemMarca;
+        protected global::System.Web.UI.WebControls.Label lblCliente;
         
         /// <summary>
-        /// RadScriptBlock2 control.
+        /// ctrlCliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptBlock RadScriptBlock2;
+        protected global::WorkSpace.ctrlCliente ctrlCliente;
         
         /// <summary>
-        /// uplImagem control.
+        /// grdClientes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAsyncUpload uplImagem;
+        protected global::Telerik.Web.UI.RadGrid grdClientes;
         
         /// <summary>
-        /// ButtonSubmit control.
+        /// panelInventores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonSubmit;
+        protected global::System.Web.UI.WebControls.Panel panelInventores;
         
         /// <summary>
-        /// Label5 control.
+        /// lblInventor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label lblInventor;
         
         /// <summary>
-        /// Label6 control.
+        /// ctrlInventor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::MP.Client.MP.ctrlInventor ctrlInventor;
         
         /// <summary>
-        /// pnlClassificacao control.
+        /// grdInventores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlClassificacao;
+        protected global::Telerik.Web.UI.RadGrid grdInventores;
         
         /// <summary>
-        /// Label7 control.
+        /// panelPrioridadeUnionista control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.Panel panelPrioridadeUnionista;
         
         /// <summary>
-        /// txtClasse control.
+        /// grdPrioridadeUnionista control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtClasse;
+        protected global::Telerik.Web.UI.RadGrid grdPrioridadeUnionista;
         
         /// <summary>
-        /// Label8 control.
+        /// rpvComplemento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
-        
-        /// <summary>
-        /// txtSubClasse1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtSubClasse1;
-        
-        /// <summary>
-        /// txtSubClasse2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtSubClasse2;
-        
-        /// <summary>
-        /// txtSubClasse3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtSubClasse3;
-        
-        /// <summary>
-        /// RadPageView2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadPageView RadPageView2;
+        protected global::Telerik.Web.UI.RadPageView rpvComplemento;
         
         /// <summary>
         /// pnlComplemento control.
@@ -283,84 +238,120 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Panel pnlComplemento;
         
         /// <summary>
-        /// Label9 control.
+        /// lblResumoDaPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.Label lblResumoDaPatente;
         
         /// <summary>
-        /// txtEspecificacao control.
+        /// txtResumoDaPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtEspecificacao;
+        protected global::Telerik.Web.UI.RadTextBox txtResumoDaPatente;
         
         /// <summary>
-        /// Label10 control.
+        /// lblObservacoes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
+        protected global::System.Web.UI.WebControls.Label lblObservacoes;
         
         /// <summary>
-        /// txtObservacao control.
+        /// txtObservacoes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtObservacao;
+        protected global::Telerik.Web.UI.RadTextBox txtObservacoes;
         
         /// <summary>
-        /// Label11 control.
+        /// panelClassificacaoPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Panel panelClassificacaoPatente;
         
         /// <summary>
-        /// txtRadical control.
+        /// grvClassificacaoPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtRadical;
+        protected global::Telerik.Web.UI.RadGrid grvClassificacaoPatente;
         
         /// <summary>
-        /// Label4 control.
+        /// lblReivindicacoes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lblReivindicacoes;
         
         /// <summary>
-        /// btnAdicionarRadical control.
+        /// txtReivindicacoes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnAdicionarRadical;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtReivindicacoes;
         
         /// <summary>
-        /// grdRadicais control.
+        /// rpvObrigacoes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid grdRadicais;
+        protected global::Telerik.Web.UI.RadPageView rpvObrigacoes;
+        
+        /// <summary>
+        /// panelObrigacoes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelObrigacoes;
+        
+        /// <summary>
+        /// btnNovaAnuidade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnNovaAnuidade;
+        
+        /// <summary>
+        /// btnBaixar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnBaixar;
+        
+        /// <summary>
+        /// grvObrigacoes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid grvObrigacoes;
     }
 }
