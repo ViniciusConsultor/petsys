@@ -37,5 +37,5 @@
         </table>
     </ItemTemplate>
 </telerik:RadComboBox>
-<asp:ImageButton ID="btnNovo" runat="server" ImageUrl="imagens/new.gif" ToolTip="Novo"
+<asp:ImageButton ID="btnNovo" runat="server" ImageUrl="~/imagens/new.gif" ToolTip="Novo"
     CausesValidation="False" CommandArgument="OPE.MP.002.0001" OnClick="btnNovo_OnClick" />
