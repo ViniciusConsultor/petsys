@@ -97,11 +97,6 @@ namespace MP.Servicos.Local
             {
                 return mapeador.ObtenhaPorNomeComoFiltro(nome,quantidadeMaxima);
             }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
             finally
             {
                 ServerUtils.libereRecursos();
@@ -118,11 +113,7 @@ namespace MP.Servicos.Local
             {
                 return mapeador.Obtenha(ID);
             }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
+            
             finally
             {
                 ServerUtils.libereRecursos();
@@ -138,11 +129,6 @@ namespace MP.Servicos.Local
             try
             {
                 return mapeador.Obtenha(pessoa);
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
             }
             finally
             {

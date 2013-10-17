@@ -85,7 +85,7 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.criarNovoDbHelper();
 
             sql.Append("SELECT NCL_PESSOA.ID, NCL_PESSOA.NOME, NCL_PESSOA.TIPO,");
-            sql.Append("MP_INVENTOR.IDPESSOA, MP_INVENTOR.TIPOPESSOA ");
+            sql.Append("MP_INVENTOR.IDPESSOA, MP_INVENTOR.TIPOPESSOA, MP_INVENTOR.DTCADASTRO, MP_INVENTOR.INFOADICIONAL ");
             sql.Append("FROM NCL_PESSOA, MP_INVENTOR ");
             sql.Append("WHERE MP_INVENTOR.IDPESSOA = NCL_PESSOA.ID ");
             sql.Append("AND MP_INVENTOR.TIPOPESSOA = NCL_PESSOA.TIPO ");
@@ -134,7 +134,7 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.criarNovoDbHelper();
 
             sql.Append("SELECT NCL_PESSOA.ID, NCL_PESSOA.NOME, NCL_PESSOA.TIPO,");
-            sql.Append("MP_INVENTOR.IDPESSOA, MP_INVENTOR.TIPOPESSOA ");
+            sql.Append("MP_INVENTOR.IDPESSOA, MP_INVENTOR.TIPOPESSOA, MP_INVENTOR.DTCADASTRO, MP_INVENTOR.INFOADICIONAL  ");
             sql.Append("FROM NCL_PESSOA, MP_INVENTOR ");
             sql.Append("WHERE MP_INVENTOR.IDPESSOA = NCL_PESSOA.ID ");
             sql.Append("AND MP_INVENTOR.TIPOPESSOA = NCL_PESSOA.TIPO ");
