@@ -269,6 +269,7 @@ namespace MP.Client.MP
             ctrlPessoa1.PessoaSelecionada = inventor.Pessoa;
             txtDataDoCadastro.SelectedDate = inventor.DataDoCadastro;
             txtInformacoesAdicionais.Text = inventor.InformacoesAdicionais;
+            ctrlPessoa1.BotaoDetalharEhVisivel = true;
         }
     }
 }

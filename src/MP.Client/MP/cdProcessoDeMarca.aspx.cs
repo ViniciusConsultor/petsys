@@ -26,6 +26,8 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ctrlMarcas1.BotaoNovoEhVisivel = true;
+
             if (IsPostBack) return;
 
             Nullable<long> id = null;
@@ -46,7 +48,6 @@ namespace MP.Client.MP
             txtDataDeConcessao.SelectedDate = DateTime.Now;
             txtDataDeProrrogacao.Enabled = false;
             txtDataDeEntrada.SelectedDate = DateTime.Now;
-            
         }
 
         private void ExibaTelaDetalhes(long id)
@@ -125,10 +126,10 @@ namespace MP.Client.MP
             
             processoDeMarca.Marca = ctrlMarcas1.MarcaSelecionada;
 
-            if (!String.IsNullOrEmpty(txtProtocolo.Text))
+            if (txtProtocolo.Value.HasValue)
                 processoDeMarca.Protocolo = Convert.ToInt64(txtProtocolo.Text);
 
-            if (!String.IsNullOrEmpty(txtProcesso.Text))
+            if (txtProcesso.Value.HasValue)
                 processoDeMarca.Processo = Convert.ToInt64(txtProcesso.Text);
 
             processoDeMarca.DataDeEntrada = txtDataDeEntrada.SelectedDate.Value;

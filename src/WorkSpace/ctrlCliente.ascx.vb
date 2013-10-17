@@ -22,6 +22,7 @@ Public Class ctrlCliente
         UtilidadesWeb.LimparComponente(CType(cboCliente, Control))
         ClienteSelecionado = Nothing
         cboCliente.ClearSelection()
+        BotaoNovoEhVisivel = False
     End Sub
 
     Private Property Nome() As String
@@ -73,7 +74,7 @@ Public Class ctrlCliente
         Principal = FabricaDeContexto.GetInstancia.GetContextoAtual
         'Só verificamos se tem permissão se o botão estiver marcado para ser exibido (pela aplicação)
         If btnNovo.Visible Then
-            Principal.EstaAutorizado(btnNovo.CommandArgument)
+            btnNovo.Visible = Principal.EstaAutorizado(btnNovo.CommandArgument)
         End If
     End Sub
 

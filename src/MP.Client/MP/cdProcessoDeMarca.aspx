@@ -75,7 +75,7 @@
                                     <asp:Label ID="Label4" runat="server" Text="Processo é de terceiro?"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <asp:RadioButtonList ID="rblProcessoEhDeTerceiro" runat="server">
+                                    <asp:RadioButtonList ID="rblProcessoEhDeTerceiro" runat="server"  RepeatDirection="Horizontal">
                                     </asp:RadioButtonList>
                                 </td>
                             </tr>
