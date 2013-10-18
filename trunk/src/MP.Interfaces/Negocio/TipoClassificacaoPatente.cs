@@ -11,8 +11,8 @@ namespace MP.Interfaces.Negocio
         private int codigo;
         private string descricao;
 
-        public static TipoClassificacaoPatente TipoClassificacaoPatente1 = new TipoClassificacaoPatente(1, "Internacional");
-        public static TipoClassificacaoPatente TipoClassificacaoPatente2 = new TipoClassificacaoPatente(2, "Nacional");
+        public static TipoClassificacaoPatente Internacional = new TipoClassificacaoPatente(1, "Internacional");
+        public static TipoClassificacaoPatente Nacional = new TipoClassificacaoPatente(2, "Nacional");
 
         private TipoClassificacaoPatente(int codigo, string descricao)
         {
@@ -33,8 +33,8 @@ namespace MP.Interfaces.Negocio
 
         private static IList<TipoClassificacaoPatente> todosTiposClassificacaoPatente = new List<TipoClassificacaoPatente>()
                                                                                             {
-                                                                                                TipoClassificacaoPatente1,
-                                                                                                TipoClassificacaoPatente2
+                                                                                                Nacional,
+                                                                                                Internacional
                                                                                             };
         public static IList<TipoClassificacaoPatente> ObtenhaTodas()
         {

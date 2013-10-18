@@ -134,5 +134,10 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public void AtivaDesativaProcessoDePatente(long idProcessoDePatente, bool ativo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
