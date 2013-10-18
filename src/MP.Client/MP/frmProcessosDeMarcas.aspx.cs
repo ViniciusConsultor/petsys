@@ -333,17 +333,33 @@ namespace MP.Client.MP
 
         protected void btnNovo_Click()
         {
-            var URL = ObtenhaURL();
+            var URL = ObtenhaURLDeCadastroDeMarca();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanelaModal(URL, "Novo processo de marca", 650,
                                                                                450), false);
         }
 
-
-
-        private string ObtenhaURL()
+        private string ObtenhaURLDeCadastroDeMarca()
         {
             return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDeMarca.aspx");
+        }
+
+        private string ObtenhaURLLeituraDeRevistaDeMarca()
+        {
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmLeituraRevistaMarca.aspx");
+        }
+
+        private void AbraTelaDeLeituraDaRevista()
+        {
+            var URL = ObtenhaURLLeituraDeRevistaDeMarca();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanelaModal(URL, "Leitura da revista de marca", 650,
+                                                                               450), false);
+        }
+
+        private void Recarregue()
+        {
+            MostraProcessos(FiltroAplicado, grdProcessosDeMarcas.PageSize, 0);
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -353,14 +369,11 @@ namespace MP.Client.MP
                 case "btnNovo":
                     btnNovo_Click();
                     break;
-                case "btnImprimir":
-
-                    break;
                 case "btnRecarregar":
-
+                    Recarregue();
                     break;
                 case "btnLerRevista":
-
+                    AbraTelaDeLeituraDaRevista();
                     break;
 
             }

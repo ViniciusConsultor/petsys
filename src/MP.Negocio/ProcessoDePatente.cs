@@ -38,5 +38,39 @@ namespace MP.Negocio
         {
             get; set;
         }
+
+        public DateTime? DataDaConcessao
+        {
+            get;
+            set;
+            
+        }
+
+        public IProcurador Procurador
+        {
+            get;
+            set;
+        }
+
+        public bool ProcessoEhEstrangeiro
+        {
+            get; set;
+        }
+
+        public bool Ativo
+        {
+            get; set; 
+        }
+
+        public bool EhPCT 
+        { 
+            get; set;
+        }
+
+        public string NumeroPCT
+        {
+            get; 
+            set;
+        }
     }
 }

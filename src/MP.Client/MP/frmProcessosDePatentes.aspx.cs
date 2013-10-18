@@ -215,7 +215,7 @@ namespace MP.Client.MP
 
         protected void btnNovo_Click()
         {
-            var URL = ObtenhaURL();
+            var URL = ObtenhaURLCadastrodePatente();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanelaModal(URL, "Novo processo de patente", 650,
                                                                                450), false);
@@ -223,9 +223,19 @@ namespace MP.Client.MP
 
 
 
-        private string ObtenhaURL()
+        private string ObtenhaURLCadastrodePatente()
         {
             return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx");
+        }
+
+        private string ObtenhaURLLeituraDeRevistaDePatente()
+        {
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx");
+        }
+
+        private void Recarregue()
+        {
+            MostraProcessos(FiltroAplicado, grdProcessosDePatentes.PageSize, 0);
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -235,11 +245,8 @@ namespace MP.Client.MP
                 case "btnNovo":
                     btnNovo_Click();
                     break;
-                case "btnImprimir":
-
-                    break;
                 case "btnRecarregar":
-
+                    Recarregue();
                     break;
                 case "btnLerRevista":
 
