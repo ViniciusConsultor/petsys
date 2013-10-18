@@ -166,6 +166,15 @@ namespace MP.Client.MP {
         protected global::WorkSpace.ctrlCliente ctrlCliente;
         
         /// <summary>
+        /// btnAdicionarCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnAdicionarCliente;
+        
+        /// <summary>
         /// grdClientes control.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,15 @@ namespace MP.Client.MP {
         protected global::MP.Client.MP.ctrlInventor ctrlInventor;
         
         /// <summary>
+        /// btnAdicionarInventor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnAdicionarInventor;
+        
+        /// <summary>
         /// grdInventores control.
         /// </summary>
         /// <remarks>
@@ -200,6 +218,15 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid grdInventores;
+        
+        /// <summary>
+        /// btnAdicionarPrioridadeUnionista control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnAdicionarPrioridadeUnionista;
         
         /// <summary>
         /// grdPrioridadeUnionista control.
@@ -263,6 +290,15 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtObservacoes;
+        
+        /// <summary>
+        /// btnAdicionarClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnAdicionarClassificacao;
         
         /// <summary>
         /// grdClassificacaoPatente control.

@@ -87,6 +87,12 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td colspan="2">
+                                            <telerik:RadButton ID="btnAdicionarCliente" runat="server" Text="Adicionar" ToolTip="Adicionar Cliente" 
+                                            OnClick="btnAdicionarCliente_ButtonClick" />
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="campodependente" colspan="2">
                                             <telerik:RadGrid ID="grdClientes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                                                 PageSize="10" GridLines="None" OnItemCommand="grdClientes_ItemCommand" OnItemCreated="grdClientes_ItemCreated"
@@ -103,12 +109,16 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn DataField="CPF" HeaderText="CNPJ/CPF" UniqueName="colunaCNPJCPF"
-                                                            Visible="false" />
-                                                        <telerik:GridBoundColumn DataField="Nome" HeaderText="Nome" UniqueName="colunaNome" />
+                                                        <telerik:GridBoundColumn DataField="CPF" HeaderText="CNPJ/CPF" UniqueName="colunaCNPJCPF"/>
+                                                        <telerik:GridBoundColumn DataField="Pessoa.Nome" HeaderText="Nome" UniqueName="colunaNome" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
@@ -120,10 +130,16 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td colspan="2">
+                                            <telerik:RadButton ID="btnAdicionarInventor" runat="server" Text="Adicionar" ToolTip="Adicionar Inventor" 
+                                            OnClick="btnAdicionarInventor_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="campodependente" colspan="2">
-                                            <telerik:RadGrid ID="grdInventores" runat="server" AutoGenerateColumns="False" AllowPaging="True" Skin="Vista"
-                                                PageSize="10" GridLines="None" OnItemCommand="grdInventores_ItemCommand" OnItemCreated="grdInventores_ItemCreated"
-                                                OnPageIndexChanged="grdInventores_PageIndexChanged">
+                                            <telerik:RadGrid ID="grdInventores" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                                Skin="Vista" PageSize="10" GridLines="None" OnItemCommand="grdInventores_ItemCommand"
+                                                OnItemCreated="grdInventores_ItemCreated" OnPageIndexChanged="grdInventores_PageIndexChanged">
                                                 <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                                 <MasterTableView GridLines="Both">
                                                     <RowIndicatorColumn>
@@ -136,18 +152,28 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn DataField="CPF" HeaderText="CNPJ/CPF" UniqueName="colunaCNPJCPF"
-                                                            Visible="false" />
-                                                        <telerik:GridBoundColumn DataField="Nome" HeaderText="Nome" UniqueName="colunaNome" />
+                                                        <telerik:GridBoundColumn DataField="CPF" HeaderText="CNPJ/CPF" UniqueName="colunaCNPJCPF"/>
+                                                        <telerik:GridBoundColumn DataField="Pessoa.Nome" HeaderText="Nome" UniqueName="colunaNome" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <telerik:RadButton ID="btnAdicionarPrioridadeUnionista" runat="server" Text="Adicionar Linha" ToolTip="Adicionar Prioridade Unionista" 
+                                            OnClick="btnAdicionarPrioridadeUnionista_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="campodependente" colspan="2">
-                                            <telerik:RadGrid ID="grdPrioridadeUnionista" runat="server" AutoGenerateColumns="False" Skin="Vista"
-                                                AllowPaging="True" PageSize="10" GridLines="None" OnItemCommand="grdPrioridadeUnionista_ItemCommand"
+                                            <telerik:RadGrid ID="grdPrioridadeUnionista" runat="server" AutoGenerateColumns="False"
+                                                Skin="Vista" AllowPaging="True" PageSize="10" GridLines="None" OnItemCommand="grdPrioridadeUnionista_ItemCommand"
                                                 OnItemCreated="grdPrioridadeUnionista_ItemCreated" OnPageIndexChanged="grdPrioridadeUnionista_PageIndexChanged">
                                                 <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                                 <MasterTableView GridLines="Both">
@@ -161,10 +187,9 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridDateTimeColumn DataField="Data" HeaderText="Data" UniqueName="colunaData"
-                                                            Visible="false" />
+                                                        <telerik:GridDateTimeColumn DataField="DataPrioridade" HeaderText="Data" UniqueName="colunaData"/>
                                                         <telerik:GridBoundColumn DataField="Pais" HeaderText="País de Origem" UniqueName="colunaPais" />
-                                                        <telerik:GridBoundColumn DataField="Prioridade" HeaderText="Nº Prioridade" UniqueName="colunaPrioridade" />
+                                                        <telerik:GridBoundColumn DataField="Identificador" HeaderText="Nº Prioridade" UniqueName="colunaPrioridade" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
@@ -195,9 +220,20 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <telerik:RadButton ID="btnAdicionarClassificacao" runat="server" Text="Adicionar Linha" ToolTip="Adicionar Classificação da Patente" 
+                                            OnClick="btnAdicionarClassificacao_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="campodependente" colspan="2">
-                                            <telerik:RadGrid ID="grdClassificacaoPatente" runat="server" AutoGenerateColumns="False" Skin="Vista"
-                                                AllowPaging="True" PageSize="10" GridLines="None" OnItemCommand="grvClassificacaoPatente_ItemCommand"
+                                            <telerik:RadGrid ID="grdClassificacaoPatente" runat="server" AutoGenerateColumns="False"
+                                                Skin="Vista" AllowPaging="True" PageSize="10" GridLines="None" OnItemCommand="grvClassificacaoPatente_ItemCommand"
                                                 OnItemCreated="grvClassificacaoPatente_ItemCreated" OnPageIndexChanged="grvClassificacaoPatente_PageIndexChanged">
                                                 <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                                 <MasterTableView GridLines="Both">
@@ -212,9 +248,8 @@
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
                                                         <telerik:GridBoundColumn DataField="Classificacao" HeaderText="Classificação" UniqueName="colunaClassificacao" />
-                                                        <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="colunaDescricao" />
-                                                        <telerik:GridBoundColumn DataField="TipoDeClassificacao" HeaderText="Tipo Classificação"
-                                                            UniqueName="colunaTipoDeClassificacao" />
+                                                        <telerik:GridBoundColumn DataField="DescricaoClassificacao" HeaderText="Descrição" UniqueName="colunaDescricao" />
+                                                        <telerik:GridBoundColumn DataField="TipoClassificacao" HeaderText="Tipo Classificação" UniqueName="colunaTipoDeClassificacao" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
@@ -248,8 +283,8 @@
                                     </tr>
                                     <tr>
                                         <td class="campodependente" colspan="2">
-                                            <telerik:RadGrid ID="grdAnuidades" runat="server" AutoGenerateColumns="False" AllowPaging="True" Skin="Vista"
-                                                PageSize="10" GridLines="None" Width="98%" OnItemCommand="grvObrigacoes_ItemCommand"
+                                            <telerik:RadGrid ID="grdAnuidades" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                                Skin="Vista" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grvObrigacoes_ItemCommand"
                                                 OnItemCreated="grvObrigacoes_ItemCreated" OnPageIndexChanged="grvObrigacoes_PageIndexChanged">
                                                 <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                                 <MasterTableView GridLines="Both">
@@ -263,11 +298,11 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn DataField="DescricaoParcela" HeaderText="Classificação"
-                                                            UniqueName="colunaClassificacao" />
-                                                        <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="colunaDescricao" />
-                                                        <telerik:GridBoundColumn DataField="TipoDeClassificacao" HeaderText="Tipo Classificação"
-                                                            UniqueName="colunaTipoDeClassificacao" />
+                                                        <telerik:GridBoundColumn DataField="DescricaoAnuidade" HeaderText="Descrição Parcela" UniqueName="colunaDescricaoAnuidade" />
+                                                        <telerik:GridBoundColumn DataField="DataLancamento" HeaderText="Dt. Início" UniqueName="colunaDataLancamento" />
+                                                        <telerik:GridBoundColumn DataField="DataVencimentoSemMulta" HeaderText="Dt. S/Multa" UniqueName="colunaDataVencimentoSemMulta" />
+                                                        <telerik:GridBoundColumn DataField="DataVencimentoComMulta" HeaderText="Dt. C/Multa" UniqueName="colunaDataVencimentoComMulta" />
+                                                        <telerik:GridBoundColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
