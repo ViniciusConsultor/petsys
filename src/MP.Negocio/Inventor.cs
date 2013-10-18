@@ -8,6 +8,7 @@ using MP.Interfaces.Negocio;
 
 namespace MP.Negocio
 {
+    [Serializable]
     public class Inventor: PapelPessoa, IInventor
     {
         public Inventor(IPessoa pessoa) : base(pessoa)
