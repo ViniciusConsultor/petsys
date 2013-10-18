@@ -16,8 +16,6 @@ namespace MP.Negocio
 
         public IDespachoDeMarcas DespachoDeMarcas { get; set; }
 
-        public string LinkINPI { get; set; }
-
         public bool ObrigacaoGerada { get; set; }
 
         public DateTime? DataCadastro { get; set; }

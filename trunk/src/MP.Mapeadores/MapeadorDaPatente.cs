@@ -27,7 +27,6 @@ namespace MP.Mapeadores
             comandoSQL.Append(patente.Identificador + ", ");
             comandoSQL.Append("'" + patente.TituloPatente + "', ");
             comandoSQL.Append(patente.TipoDePatente.IdTipoDePatente + ", ");
-            comandoSQL.Append("'" + patente.LinkINPI + "', ");
             comandoSQL.Append("'" + (patente.ObrigacaoGerada ? "1" : "0") + "', ");
             comandoSQL.Append(patente.DataCadastro != null ? "'" + patente.DataCadastro.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
             comandoSQL.Append("'" + patente.Observacao + "', ");
@@ -56,8 +55,6 @@ namespace MP.Mapeadores
             comandoSQL.Append("UPDATE MP_PATENTE SET ");
             comandoSQL.Append("TITULOPATENTE = '" + patente.TituloPatente + "', ");
             comandoSQL.Append("IDTIPOPATENTE = " + patente.TipoDePatente.IdTipoDePatente + ", ");
-            comandoSQL.Append("LINKINPI = '" + patente.LinkINPI + "', ");
-            comandoSQL.Append("OBRIGACAOGERADA = '" + (patente.ObrigacaoGerada ? "1" : "0") + "', ");
             comandoSQL.Append("DATACADASTRO = " + (patente.DataCadastro != null ? "'" + patente.DataCadastro.Value.ToString("yyyyMMdd") + "', " : "NULL, "));
             comandoSQL.Append("OBSERVACAO = '" + patente.Observacao + "', ");
             comandoSQL.Append("RESUMO_PATENTE = '" + patente.Resumo + "', ");
@@ -487,7 +484,6 @@ namespace MP.Mapeadores
             patente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPROCESSOPATENTE");
             patente.TituloPatente = UtilidadesDePersistencia.GetValorString(reader, "TITULOPATENTE");
             patente.TipoDePatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ITipoDePatenteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDTIPOPATENTE"));
-            patente.LinkINPI = UtilidadesDePersistencia.GetValorString(reader, "LINKINPI");
             patente.ObrigacaoGerada = UtilidadesDePersistencia.GetValorBooleano(reader, "OBRIGACAOGERADA");
             patente.DataCadastro = UtilidadesDePersistencia.getValorDate(reader, "DATACADASTRO");
             patente.Observacao = UtilidadesDePersistencia.GetValorString(reader, "OBSERVACAO");
