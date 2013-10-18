@@ -89,7 +89,7 @@ namespace MP.Client.MP
 
                 InventorSelecionado = inventor;
 
-                if (inventor != null)
+                if (InventorFoiSelecionado != null)
                     InventorFoiSelecionado(inventor);
             }
         }
