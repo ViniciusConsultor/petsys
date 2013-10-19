@@ -1,16 +1,9 @@
-usuario hermessilvajr
-senha h071281*
+smarterasp.net
 
-Site name(s): 	simple.somee.com
-  	( http://simple.somee.com; http://www.simple.somee.com; )
-  	
-Supplied product ID: 	SPID333213
-Managed product ID: 	MPID1248709
-  	 
-FTP addresses: 	( ftp://simple.somee.com; ftp://www.simple.somee.com; )
-FTP username: 	hermessilvajr
-  	FTP credentials (Username and password) are the same as your Username and password.
-  	 
-IP address: 	66.96.210.17 (Shared)
-  	 
-Hosting plan: 	Hosting plan "Freebie"
+usuario hermessilvajr
+senhahj071281
+
+
+site
+ http://hermessilvajr-001-site1.smarterasp.net/
+
