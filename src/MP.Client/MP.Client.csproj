@@ -95,6 +95,13 @@
     <Compile Include="MP\cdDespachoDeMarcas.aspx.designer.cs">
       <DependentUpon>cdDespachoDeMarcas.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdDespachoDePatentes.aspx.cs">
+      <DependentUpon>cdDespachoDePatentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdDespachoDePatentes.aspx.designer.cs">
+      <DependentUpon>cdDespachoDePatentes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\cdInventor.aspx.cs">
       <DependentUpon>cdInventor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -158,6 +165,13 @@
     <Compile Include="MP\ctrlDespachoDeMarcas.ascx.designer.cs">
       <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlDespachoDePatentes.ascx.cs">
+      <DependentUpon>ctrlDespachoDePatentes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlDespachoDePatentes.ascx.designer.cs">
+      <DependentUpon>ctrlDespachoDePatentes.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlInventor.ascx.cs">
       <DependentUpon>ctrlInventor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -207,6 +221,13 @@
     <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.designer.cs">
       <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlSituacaoDoProcessoDePatente.ascx.cs">
+      <DependentUpon>ctrlSituacaoDoProcessoDePatente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlSituacaoDoProcessoDePatente.ascx.designer.cs">
+      <DependentUpon>ctrlSituacaoDoProcessoDePatente.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlTipoDePatente.ascx.cs">
       <DependentUpon>ctrlTipoDePatente.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -255,6 +276,7 @@
     <Content Include="MP\cdAnuidadeDaPatente.aspx" />
     <Content Include="MP\cdCadastroDeProcuradores.aspx" />
     <Content Include="MP\cdDespachoDeMarcas.aspx" />
+    <Content Include="MP\cdDespachoDePatentes.aspx" />
     <Content Include="MP\cdInventor.aspx" />
     <Content Include="MP\cdMarcas.aspx" />
     <Content Include="MP\cdPatente.aspx" />
@@ -264,6 +286,7 @@
     <Content Include="MP\cdTipoDeProcedimentoInterno.aspx" />
     <Content Include="MP\ctrlApresentacao.ascx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
+    <Content Include="MP\ctrlDespachoDePatentes.ascx" />
     <Content Include="MP\ctrlInventor.ascx" />
     <Content Include="MP\ctrlMarcas.ascx" />
     <Content Include="MP\ctrlNatureza.ascx" />
@@ -271,6 +294,7 @@
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
     <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
+    <Content Include="MP\ctrlSituacaoDoProcessoDePatente.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />

@@ -113,7 +113,7 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.getDBHelper();
 
             sql.Append("UPDATE MP_DESPACHO SET ");
-            sql.Append(String.Concat("CODIGO_DESPACHO = ", despachoDeMarcas.CodigoDespacho, ", "));
+            sql.Append(String.Concat("CODIGO_DESPACHO = '", despachoDeMarcas.CodigoDespacho, "', "));
             sql.Append(String.Concat("DETALHE_DESPACHO = '", despachoDeMarcas.DetalheDespacho, "', "));
             sql.Append(String.Concat("IDSITUACAO_PROCESSO = '", despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.ToString(), "', "));
             sql.Append(despachoDeMarcas.Registro
