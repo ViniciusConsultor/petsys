@@ -17,10 +17,10 @@ namespace MP.Interfaces.Negocio
         string EspecificacaoDeProdutosEServicos { get; set; }
         string ImagemDaMarca { get; set; }
         string ObservacaoDaMarca { get; set; }
-        int CodigoDaClasse { get; set; }
-        int CodigoDaSubClasse1 { get; set; }
-        int CodigoDaSubClasse2 { get; set; }
-        int CodigoDaSubClasse3 { get; set; }
+        Nullable<int> CodigoDaClasse { get; set; }
+        Nullable<int> CodigoDaSubClasse1 { get; set; }
+        Nullable<int> CodigoDaSubClasse2 { get; set; }
+        Nullable<int> CodigoDaSubClasse3 { get; set; }
         IList<IRadicalMarcas> RadicalMarcas { get; set; }
 
         void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas);

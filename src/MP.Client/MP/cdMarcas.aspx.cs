@@ -374,11 +374,18 @@ namespace MP.Client.MP
             ctrlNCL.Codigo = marca.NCL.Codigo.ToString();
             ctrlNatureza.Codigo = marca.Natureza.Codigo.ToString();
 
-            txtClasse.Text = marca.CodigoDaClasse.ToString();
-            txtSubClasse1.Text = marca.CodigoDaSubClasse1.ToString();
-            txtSubClasse2.Text = marca.CodigoDaSubClasse2.ToString();
-            txtSubClasse3.Text = marca.CodigoDaSubClasse3.ToString();
 
+            if (marca.CodigoDaClasse.HasValue)
+                txtClasse.Text = marca.CodigoDaClasse.ToString();
+
+            if (marca.CodigoDaSubClasse1.HasValue)
+                txtSubClasse1.Text = marca.CodigoDaSubClasse1.ToString();
+
+            if (marca.CodigoDaSubClasse2.HasValue)
+                txtSubClasse2.Text = marca.CodigoDaSubClasse2.ToString();
+
+            if (marca.CodigoDaSubClasse3.HasValue)
+                txtSubClasse3.Text = marca.CodigoDaSubClasse3.ToString();
             
             txtEspecificacao.Text = marca.EspecificacaoDeProdutosEServicos;
             txtObservacao.Text = marca.ObservacaoDaMarca;

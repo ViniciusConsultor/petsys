@@ -144,7 +144,7 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public int CodigoDaClasse
+        public Nullable<int> CodigoDaClasse
         {
             get
             {
@@ -158,7 +158,7 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public int CodigoDaSubClasse1
+        public Nullable<int> CodigoDaSubClasse1
         {
             get
             {
@@ -172,7 +172,7 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public int CodigoDaSubClasse2
+        public Nullable<int> CodigoDaSubClasse2
         {
             get
             {
@@ -186,7 +186,7 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public int CodigoDaSubClasse3
+        public Nullable<int> CodigoDaSubClasse3
         {
             get
             {
@@ -202,23 +202,34 @@ namespace MP.Negocio.LazyLoad
 
         public IList<IRadicalMarcas> RadicalMarcas
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                return _marcasReal.RadicalMarcas;
+            }
+            set
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                _marcasReal.RadicalMarcas = value;
+            }
         }
 
         public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
         {
-            throw new NotImplementedException();
+            if (_marcasReal == null) CarregueObjetoReal();
+            _marcasReal.AdicioneRadicalMarcas(radicalMarcas);
         }
 
         public void AdicioneRadicaisMarcas(IList<IRadicalMarcas> listaRadicalMarcas)
         {
-            throw new NotImplementedException();
+            if (_marcasReal == null) CarregueObjetoReal();
+            _marcasReal.AdicioneRadicaisMarcas(listaRadicalMarcas);
         }
 
         public IList<IRadicalMarcas> ObtenhaRadicaisMarcas()
         {
-            throw new NotImplementedException();
+            if (_marcasReal == null) CarregueObjetoReal();
+            return _marcasReal.ObtenhaRadicaisMarcas();
         }
     }
 }
