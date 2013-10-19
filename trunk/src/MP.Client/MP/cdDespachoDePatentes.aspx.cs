@@ -13,14 +13,14 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class cdDespachoDeMarcas : SuperPagina
+    public partial class cdDespachoDePatentes : SuperPagina
     {
-        private const string ID_OBJETO = "ID_OBJETO_CD_DESPACHODEMARCAS";
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_DESPACHODEMARCAS";
+        private const string ID_OBJETO = "ID_OBJETO_CD_DESPACHODEPATENTES";
+        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_DESPACHODEPATENTES";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlDespachoDeMarcas.DespachoDeMarcasFoiSelecionada += MostreDespachoDeMarcas;
+            ctrlDespachoDePatentes.DespachoDePatentesFoiSelecionada += MostreDespachoDePatentes;
 
             if (!IsPostBack)
             {
@@ -38,28 +38,26 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            var controlePanel = this.PanelCdDespachoDePatentes as Control;
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
             pnlDespacho.Visible = true;
-            ctrlDespachoDeMarcas.Inicializa();
-            ctrlDespachoDeMarcas.EnableLoadOnDemand = true;
-            ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = true;
-            ctrlDespachoDeMarcas.AutoPostBack = true;
+            ctrlDespachoDePatentes.Inicializa();
+            ctrlDespachoDePatentes.EnableLoadOnDemand = true;
+            ctrlDespachoDePatentes.ShowDropDownOnTextboxClick = true;
+            ctrlDespachoDePatentes.AutoPostBack = true;
 
-            ctrlSituacaoDoProcesso.Inicializa();
+            ctrlSituacaoDoProcessoDePatente.Inicializa();
 
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
-
-            CarregueConcessaoDeRegistro();
         }
 
         private void ExibaTelaConsultar()
         {
-            Control controle = PanelCdDespachoDeMarcas;
+            var controle = PanelCdDespachoDePatentes as Control;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
@@ -69,14 +67,6 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
             UtilidadesWeb.HabilitaComponentes(ref controle, false);
-        }
-
-        private void CarregueConcessaoDeRegistro()
-        {
-            rblConcessaoDeRegistro.Items.Clear();
-            rblConcessaoDeRegistro.Items.Add(new ListItem("Sim", "1"));
-            rblConcessaoDeRegistro.Items.Add(new ListItem("Não","0"));
-            rblConcessaoDeRegistro.SelectedValue = "0";
         }
 
         protected void btnNovo_Click()
@@ -94,13 +84,20 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            var controlePanel = this.PanelCdDespachoDePatentes as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
-            UtilidadesWeb.LimparComponente(ref controlePanel);
+            //UtilidadesWeb.LimparComponente(ref controlePanel);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
-            pnlDespacho.Visible = false;
-            ctrlSituacaoDoProcesso.Inicializa();
+            ctrlDespachoDePatentes.Inicializa();
+            ctrlDespachoDePatentes.EnableLoadOnDemand = false;
+            ctrlDespachoDePatentes.ShowDropDownOnTextboxClick = false;
+            ctrlDespachoDePatentes.AutoPostBack = false;
+            ctrlDespachoDePatentes.TextoItemVazio = string.Empty;
+
+            //pnlDespacho.Visible = false;
+            ctrlSituacaoDoProcessoDePatente.Inicializa();
+
         }
 
         private void ExibaTelaModificar()
@@ -113,12 +110,15 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            var controlePanel = this.PanelCdDespachoDePatentes as Control;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
 
-            pnlDespacho.Visible = false;
+            ctrlDespachoDePatentes.EnableLoadOnDemand = false;
+            ctrlDespachoDePatentes.ShowDropDownOnTextboxClick = false;
+
+            //pnlDespacho.Visible = false;
         }
 
         private void ExibaTelaExcluir()
@@ -133,10 +133,11 @@ namespace MP.Client.MP
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
 
-            Control controlePanel = this.PanelCdDespachoDeMarcas;
+            var controlePanel = this.PanelCdDespachoDePatentes as Control;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-            
+            UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
+
         }
 
         protected void btnCancela_Click()
@@ -144,84 +145,104 @@ namespace MP.Client.MP
             ExibaTelaInicial();
         }
 
-        private IDespachoDeMarcas MontaObjetoDespachoDeMarcas()
+        private IDespachoDePatentes MontaObjetoDespachoDePatentes()
         {
-            var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
+            var despachoDePatentes = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDePatentes>();
 
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
             {
-                despachoDeMarcas.IdDespacho = Convert.ToInt64(ViewState[ID_OBJETO]);
+                despachoDePatentes.IdDespachoDePatente = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
-            despachoDeMarcas.CodigoDespacho = this.txtCodigo.Text;
-            despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
-            despachoDeMarcas.Registro = rblConcessaoDeRegistro.SelectedValue != "0";
+            despachoDePatentes.CodigoDespachoDePatente = this.ctrlDespachoDePatentes.CodigoDespachoDePatentes;
 
-            if (!string.IsNullOrEmpty(ctrlSituacaoDoProcesso.Codigo))
-                despachoDeMarcas.SituacaoProcesso =
-                    SituacaoDoProcesso.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo));
+            despachoDePatentes.DescricaoDespachoDePatente = !string.IsNullOrEmpty(txtDescricao.Text) ? txtDescricao.Text : string.Empty;
+            despachoDePatentes.DetalheDespachoDePatente = !string.IsNullOrEmpty(txtDetalhe.Text) ? txtDetalhe.Text : string.Empty;
 
-            return despachoDeMarcas;
+            despachoDePatentes.SituacaoDoProcessoDePatente =
+                    SituacaoDoProcessoDePatente.ObtenhaPorCodigo(ctrlSituacaoDoProcessoDePatente.Codigo);
+
+            return despachoDePatentes;
+        }
+
+        private string validaErrosDePreenchimento()
+        {
+            var mensagem = string.Empty;
+
+            if (string.IsNullOrEmpty(ctrlDespachoDePatentes.CodigoDespachoDePatentes))
+            {
+                mensagem = mensagem + "Código do despacho, ";
+            }
+            if (string.IsNullOrEmpty(ctrlSituacaoDoProcessoDePatente.Codigo))
+            {
+                mensagem = mensagem + "Situação do despacho, ";
+            }
+
+            return mensagem;
         }
 
         private void btnSalva_Click()
         {
-            string mensagem = string.Empty;
+            var mensagem = string.Empty;
 
             try
             {
-                if (string.IsNullOrEmpty(this.txtCodigo.Text))
+                if (!string.IsNullOrEmpty(validaErrosDePreenchimento()))
                 {
-                    mensagem = "Campo código do despacho deve ser preenchido.";
+                    var erros = validaErrosDePreenchimento();
+
+                    var mensagemDeErro = "Campo(s) " + erros + "precisa(m) ser preenchido(s)";
 
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                             UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(mensagemDeErro), false);
+
                     return;
                 }
 
-                var despachoDeMarcas = MontaObjetoDespachoDeMarcas();
+                var despachoDePatentes = MontaObjetoDespachoDePatentes();
 
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
-                        IList<IDespachoDeMarcas> listaDeDespachosCadastrados = new List<IDespachoDeMarcas>();
+                        IList<IDespachoDePatentes> listaDeDespachosCadastrados = new List<IDespachoDePatentes>();
 
-                        listaDeDespachosCadastrados = verificaSeJaExisteDespachoCadastrado(despachoDeMarcas.CodigoDespacho, servico);
+                        listaDeDespachosCadastrados = verificaSeJaExisteDespachoCadastrado(despachoDePatentes.CodigoDespachoDePatente, servico);
 
                         if (listaDeDespachosCadastrados.Count > 0)
                         {
-                            mensagem = "Já existe um despacho de marcas cadastrado com este código";
+                            mensagem = "Já existe um despacho de patente cadastrado com este código";
 
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
                             return;
                         }
 
-                        servico.Inserir(despachoDeMarcas);
-                        mensagem = "Despacho de marcas cadastrado com sucesso.";
+                        servico.Inserir(despachoDePatentes);
+                        mensagem = "Despacho de patente cadastrado com sucesso.";
                     }
                     else
                     {
-                        servico.Modificar(despachoDeMarcas);
-                        mensagem = "Despacho de marcas modificado com sucesso.";
+                        servico.Modificar(despachoDePatentes);
+                        mensagem = "Despacho de patente modificado com sucesso.";
                     }
                 }
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
                 ExibaTelaInicial();
+
             }
             catch (Exception ex)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                           UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
         }
 
-        private IList<IDespachoDeMarcas> verificaSeJaExisteDespachoCadastrado(string codigoDespacho, IServicoDeDespachoDeMarcas servico)
+        private IList<IDespachoDePatentes> verificaSeJaExisteDespachoCadastrado(string codigoDespachoDePatente, IServicoDeDespachoDePatentes servico)
         {
-            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespacho, int.MaxValue);
+            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespachoDePatente, int.MaxValue);
 
             return listaDeDespachos;
         }
@@ -245,14 +266,14 @@ namespace MP.Client.MP
         {
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
                 {
                     servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
                 }
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(
-                                                            "Despacho de marcas excluído com sucesso."), false);
+                                                            "Despacho de patente excluído com sucesso."), false);
                 ExibaTelaInicial();
             }
             catch (BussinesException ex)
@@ -260,6 +281,22 @@ namespace MP.Client.MP
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
+        }
+
+        private void MostreDespachoDePatentes(IDespachoDePatentes despachodepatentes)
+        {
+            ViewState[ID_OBJETO] = despachodepatentes.IdDespachoDePatente.Value.ToString();
+
+            //ctrlDespachoDePatentes.DespachoDePatentesSelecionada = despachodepatentes.CodigoDespachoDePatente;
+
+            txtDescricao.Text = !string.IsNullOrEmpty(despachodepatentes.DescricaoDespachoDePatente) ? despachodepatentes.DescricaoDespachoDePatente : string.Empty;
+            txtDetalhe.Text = !string.IsNullOrEmpty(despachodepatentes.DetalheDespachoDePatente) ? despachodepatentes.DetalheDespachoDePatente : string.Empty;
+
+
+            if (despachodepatentes.SituacaoDoProcessoDePatente != null)
+                ctrlSituacaoDoProcessoDePatente.Codigo = despachodepatentes.SituacaoDoProcessoDePatente.CodigoSituacaoProcessoDePatente;
+
+            ExibaTelaConsultar();
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -290,24 +327,9 @@ namespace MP.Client.MP
             }
         }
 
-        private void MostreDespachoDeMarcas(IDespachoDeMarcas despachoDeMarcas)
-        {
-            ViewState[ID_OBJETO] = despachoDeMarcas.IdDespacho.Value.ToString();
-
-            txtCodigo.Text = despachoDeMarcas.CodigoDespacho;
-            txtDescricao.Text = despachoDeMarcas.DetalheDespacho;
-
-            rblConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
-
-            if (despachoDeMarcas.SituacaoProcesso != null)
-            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.ToString();
-
-            ExibaTelaConsultar();
-        }
-
         protected override string ObtenhaIdFuncao()
         {
-            return "FUN.MP.004";
+            return "FUN.MP.010";
         }
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()

@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="MapeadorDaPatente.cs" />
     <Compile Include="MapeadorDeDespachoDeMarcas.cs" />
+    <Compile Include="MapeadorDeDespachoDePatentes.cs" />
     <Compile Include="MapeadorDeInventor.cs" />
     <Compile Include="MapeadorDeMarcas.cs" />
     <Compile Include="MapeadorDeProcessoDeMarca.cs" />
