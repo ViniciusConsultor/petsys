@@ -12,7 +12,7 @@ namespace MP.Negocio
             set;
         }
 
-        public int CodigoDespacho
+        public string CodigoDespacho
         {
             get; set; }
 

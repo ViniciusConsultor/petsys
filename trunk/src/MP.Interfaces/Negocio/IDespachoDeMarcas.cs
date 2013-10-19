@@ -8,7 +8,7 @@ namespace MP.Interfaces.Negocio
     public interface IDespachoDeMarcas
     {
         long? IdDespacho { get; set; }
-        int CodigoDespacho { get; set; }
+        string CodigoDespacho { get; set; }
         string DetalheDespacho { get; set; }
         SituacaoDoProcesso SituacaoProcesso { get; set; }
         bool Registro { get; set; }

@@ -38,7 +38,7 @@ namespace MP.Negocio.LazyLoad
             set { _ID = value.Value; }
         }
 
-        public int CodigoDespacho
+        public string CodigoDespacho
         {
             get
             {
