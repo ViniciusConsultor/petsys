@@ -129,18 +129,19 @@ namespace MP.Mapeadores
             sql.Append("IMAGEM_MARCA, OBSERVACAO_MARCA, CODIGOCLASSE, CODIGOCLASSE_SUBCLASSE1, CODIGOCLASSE_SUBCLASSE2, CODIGOCLASSE_SUBCLASSE3) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ", "));
-            sql.Append(String.Concat("'", marca.NCL.Codigo.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.Apresentacao.Codigo.ToString() , "', "));
-            sql.Append(String.Concat("'", marca.Cliente.Pessoa.ID.Value.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.Natureza.Codigo.ToString(), "', "));
+            sql.Append(String.Concat(marca.NCL.Codigo.ToString(), ", "));
+            sql.Append(String.Concat( marca.Apresentacao.Codigo.ToString() , ", "));
+            sql.Append(String.Concat(marca.Cliente.Pessoa.ID.Value.ToString(), ", "));
+            sql.Append(String.Concat(marca.Natureza.Codigo.ToString(), ", "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.EspecificacaoDeProdutosEServicos), "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ImagemDaMarca), "', "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ObservacaoDaMarca), "', "));
-            sql.Append(String.Concat("'", marca.CodigoDaClasse.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.CodigoDaSubClasse1.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.CodigoDaSubClasse2.ToString(), "', "));
-            sql.Append(String.Concat("'", marca.CodigoDaSubClasse3.ToString(), "') "));
+
+            sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaClasse.ToString(), ", ") : "NULL, ");
+            sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaSubClasse1.ToString(), ", ") : "NULL, ");
+            sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ", ") : "NULL, ");
+            sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ") ") : "NULL) ");
 
             DBHelper.ExecuteNonQuery(sql.ToString());
 
@@ -193,17 +194,30 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.getDBHelper();
 
             sql.Append("UPDATE MP_MARCAS SET ");
-            sql.Append(String.Concat("CODIGOAPRESENTACAO = '", marca.Apresentacao.Codigo.ToString(), "' , "));
-            sql.Append(String.Concat("IDCLIENTE = '", marca.Cliente.Pessoa.ID.Value.ToString(), "' , "));
-            sql.Append(String.Concat("CODIGOCLASSE = '", marca.CodigoDaClasse.ToString(), "' , "));
-            sql.Append(String.Concat("CODIGOCLASSE_SUBCLASSE1 = '", marca.CodigoDaSubClasse1.ToString(), "' , "));
-            sql.Append(String.Concat("CODIGOCLASSE_SUBCLASSE2 = '", marca.CodigoDaSubClasse2.ToString(), "' , "));
-            sql.Append(String.Concat("CODIGOCLASSE_SUBCLASSE3 = '", marca.CodigoDaSubClasse3.ToString(), "' , "));
-            sql.Append(String.Concat("DESCRICAO_MARCA = '", marca.DescricaoDaMarca, "' , "));
-            sql.Append(String.Concat("ESPECIFICACAO_PROD_SERV = '", marca.EspecificacaoDeProdutosEServicos, "' , "));
+            sql.Append(String.Concat("CODIGOAPRESENTACAO = ", marca.Apresentacao.Codigo.ToString(), " , "));
+            sql.Append(String.Concat("IDCLIENTE = ", marca.Cliente.Pessoa.ID.Value.ToString(), " , "));
+
+            sql.Append(marca.CodigoDaClasse.HasValue
+                           ? String.Concat("CODIGOCLASSE = ", marca.CodigoDaClasse.Value, " , ")
+                           : "CODIGOCLASSE = NULL, ");
+
+            sql.Append(marca.CodigoDaSubClasse1.HasValue
+                           ? String.Concat("CODIGOCLASSE_SUBCLASSE1 = ", marca.CodigoDaSubClasse1.Value, " , ")
+                           : "CODIGOCLASSE_SUBCLASSE1 = NULL, ");
+
+            sql.Append(marca.CodigoDaSubClasse1.HasValue
+                           ? String.Concat("CODIGOCLASSE_SUBCLASSE2 = ", marca.CodigoDaSubClasse2.Value, " , ")
+                           : "CODIGOCLASSE_SUBCLASSE2 = NULL, ");
+
+            sql.Append(marca.CodigoDaSubClasse1.HasValue
+                           ? String.Concat("CODIGOCLASSE_SUBCLASS3 = ", marca.CodigoDaSubClasse3.Value, " , ")
+                           : "CODIGOCLASSE_SUBCLASSE3 = NULL, ");
+            
+            sql.Append(String.Concat("DESCRICAO_MARCA = '", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "' , "));
+            sql.Append(String.Concat("ESPECIFICACAO_PROD_SERV = '", UtilidadesDePersistencia.FiltraApostrofe(marca.EspecificacaoDeProdutosEServicos), "' , "));
             sql.Append(String.Concat("IMAGEM_MARCA = '", marca.ImagemDaMarca, "' , "));
-            sql.Append(String.Concat("CODIGONCL = '", marca.NCL.Codigo.ToString(), "' , "));
-            sql.Append(String.Concat("CODIGONATUREZA = '", marca.Natureza.Codigo.ToString(), "' , "));
+            sql.Append(String.Concat("CODIGONCL = ", marca.NCL.Codigo, " , "));
+            sql.Append(String.Concat("CODIGONATUREZA = ", marca.Natureza.Codigo, " , "));
             sql.Append(String.Concat("OBSERVACAO_MARCA = '", marca.ObservacaoDaMarca, "' "));
             sql.Append(String.Concat("WHERE IDMARCA = ", marca.IdMarca.Value.ToString()));
 

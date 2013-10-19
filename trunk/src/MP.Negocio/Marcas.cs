@@ -20,10 +20,10 @@ namespace MP.Negocio
         public string EspecificacaoDeProdutosEServicos { get; set; }
         public string ImagemDaMarca { get; set; }
         public string ObservacaoDaMarca { get; set; }
-        public int CodigoDaClasse { get; set; }
-        public int CodigoDaSubClasse1 { get; set; }
-        public int CodigoDaSubClasse2 { get; set; }
-        public int CodigoDaSubClasse3 { get; set; }
+        public Nullable<int> CodigoDaClasse { get; set; }
+        public Nullable<int> CodigoDaSubClasse1 { get; set; }
+        public Nullable<int> CodigoDaSubClasse2 { get; set; }
+        public Nullable<int> CodigoDaSubClasse3 { get; set; }
 
         public IList<IRadicalMarcas> RadicalMarcas
         { get; set; }
