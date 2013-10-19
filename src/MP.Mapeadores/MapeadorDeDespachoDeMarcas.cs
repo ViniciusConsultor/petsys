@@ -46,7 +46,7 @@ namespace MP.Mapeadores
                 {
                     var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
                     despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");
-                    despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDespacho");
+                    despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CodigoDespacho");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "DetalheDespacho"))
                         despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");

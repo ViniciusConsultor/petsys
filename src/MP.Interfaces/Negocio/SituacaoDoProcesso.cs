@@ -13,31 +13,31 @@ namespace MP.Interfaces.Negocio
 
         // Classificação da situação do processo
 
-        public static SituacaoDoProcesso Situacao1 = new SituacaoDoProcesso(1, "Protocolada");
-        public static SituacaoDoProcesso Situacao2 = new SituacaoDoProcesso(2, "Pendente");
-        public static SituacaoDoProcesso Situacao3 = new SituacaoDoProcesso(3, "Depositada");
-        public static SituacaoDoProcesso Situacao4 = new SituacaoDoProcesso(4, "Indeferida");
-        public static SituacaoDoProcesso Situacao5 = new SituacaoDoProcesso(5, "Deferida");
-        public static SituacaoDoProcesso Situacao6 = new SituacaoDoProcesso(6, "Registrada");
-        public static SituacaoDoProcesso Situacao7 = new SituacaoDoProcesso(7, "Caducidade");
-        public static SituacaoDoProcesso Situacao8 = new SituacaoDoProcesso(8, "Abandonada");
-        public static SituacaoDoProcesso Situacao9 = new SituacaoDoProcesso(9, "Extinta");
-        public static SituacaoDoProcesso Situacao10 = new SituacaoDoProcesso(10, "Arquivada");
-        public static SituacaoDoProcesso Situacao11 = new SituacaoDoProcesso(11, "Renov. Pend.");
+        public static SituacaoDoProcesso Protocolada = new SituacaoDoProcesso(1, "Protocolada");
+        public static SituacaoDoProcesso Pendente = new SituacaoDoProcesso(2, "Pendente");
+        public static SituacaoDoProcesso Depositada = new SituacaoDoProcesso(3, "Depositada");
+        public static SituacaoDoProcesso Indeferida = new SituacaoDoProcesso(4, "Indeferida");
+        public static SituacaoDoProcesso Deferida = new SituacaoDoProcesso(5, "Deferida");
+        public static SituacaoDoProcesso Registrada = new SituacaoDoProcesso(6, "Registrada");
+        public static SituacaoDoProcesso Caducidade = new SituacaoDoProcesso(7, "Caducidade");
+        public static SituacaoDoProcesso Abandonada = new SituacaoDoProcesso(8, "Abandonada");
+        public static SituacaoDoProcesso Extinta = new SituacaoDoProcesso(9, "Extinta");
+        public static SituacaoDoProcesso Arquivada = new SituacaoDoProcesso(10, "Arquivada");
+        public static SituacaoDoProcesso RenovPend = new SituacaoDoProcesso(11, "Renov. Pend.");
 
         private static IList<SituacaoDoProcesso> SituacoesDoProcesso = new List<SituacaoDoProcesso>()
                                                                            {
-                                                                               Situacao1,
-                                                                               Situacao2,
-                                                                               Situacao3,
-                                                                               Situacao4,
-                                                                               Situacao5,
-                                                                               Situacao6,
-                                                                               Situacao7,
-                                                                               Situacao8,
-                                                                               Situacao9,
-                                                                               Situacao10,
-                                                                               Situacao11
+                                                                               Protocolada,
+                                                                               Pendente,
+                                                                               Depositada,
+                                                                               Indeferida,
+                                                                               Deferida,
+                                                                               Registrada,
+                                                                               Caducidade,
+                                                                               Abandonada,
+                                                                               Extinta,
+                                                                               Arquivada,
+                                                                               RenovPend
                                                                            };
 
         private SituacaoDoProcesso(int codigoSituacaoProcesso, string descricao)

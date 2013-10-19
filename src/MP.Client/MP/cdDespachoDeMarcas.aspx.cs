@@ -153,7 +153,7 @@ namespace MP.Client.MP
                 despachoDeMarcas.IdDespacho = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
-            despachoDeMarcas.CodigoDespacho = Convert.ToInt32(this.txtCodigo.Text);
+            despachoDeMarcas.CodigoDespacho = this.txtCodigo.Text;
             despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
             despachoDeMarcas.Registro = rblConcessaoDeRegistro.SelectedValue != "0";
 
@@ -220,9 +220,9 @@ namespace MP.Client.MP
             }
         }
 
-        private IList<IDespachoDeMarcas> verificaSeJaExisteDespachoCadastrado(int codigoDespacho, IServicoDeDespachoDeMarcas servico)
+        private IList<IDespachoDeMarcas> verificaSeJaExisteDespachoCadastrado(string codigoDespacho, IServicoDeDespachoDeMarcas servico)
         {
-            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespacho.ToString(), int.MaxValue);
+            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespacho, int.MaxValue);
 
             return listaDeDespachos;
         }
@@ -295,7 +295,7 @@ namespace MP.Client.MP
         {
             ViewState[ID_OBJETO] = despachoDeMarcas.IdDespacho.Value.ToString();
 
-            txtCodigo.Text = despachoDeMarcas.CodigoDespacho.ToString();
+            txtCodigo.Text = despachoDeMarcas.CodigoDespacho;
             txtDescricao.Text = despachoDeMarcas.DetalheDespacho;
 
             rblConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
