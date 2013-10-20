@@ -33,7 +33,7 @@ namespace MP.Client.MP
             set { cboPatente.AutoPostBack = value; }
         }
 
-        protected void cboProcurador_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void cboPatente_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
             {
@@ -59,7 +59,7 @@ namespace MP.Client.MP
             set { ViewState.Add(ClientID, value); }
         }
 
-        protected void cboProcurador_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
+        protected void cboPatente_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
             {

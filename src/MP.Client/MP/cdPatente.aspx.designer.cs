@@ -220,6 +220,60 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadGrid grdInventores;
         
         /// <summary>
+        /// lblDataPrioridade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDataPrioridade;
+        
+        /// <summary>
+        /// txtDataPrioridade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtDataPrioridade;
+        
+        /// <summary>
+        /// lblPaisDeOrigem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPaisDeOrigem;
+        
+        /// <summary>
+        /// ctrlPais control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WorkSpace.ctrlPais ctrlPais;
+        
+        /// <summary>
+        /// lblNumeroPrioridade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumeroPrioridade;
+        
+        /// <summary>
+        /// txtNumeroPrioridade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNumeroPrioridade;
+        
+        /// <summary>
         /// btnAdicionarPrioridadeUnionista control.
         /// </summary>
         /// <remarks>
@@ -290,6 +344,60 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtObservacoes;
+        
+        /// <summary>
+        /// lblClassficacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblClassficacao;
+        
+        /// <summary>
+        /// txtClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtClassificacao;
+        
+        /// <summary>
+        /// lblDescricaoClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDescricaoClassificacao;
+        
+        /// <summary>
+        /// txtDescricaoClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtDescricaoClassificacao;
+        
+        /// <summary>
+        /// lblTipoDeClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTipoDeClassificacao;
+        
+        /// <summary>
+        /// cboTipoDeClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cboTipoDeClassificacao;
         
         /// <summary>
         /// btnAdicionarClassificacao control.

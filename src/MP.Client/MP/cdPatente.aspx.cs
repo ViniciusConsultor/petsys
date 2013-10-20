@@ -41,9 +41,11 @@ namespace MP.Client.MP
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlPatente.PatenteFoiSelecionada += ExibaPatenteSelecionada;
+            CarregueComboTipoDeClassificacao();
 
             if(!IsPostBack)
                 ExibaTelaInicial();
+            
         }
 
         private void ExibaTelaInicial()
@@ -413,7 +415,14 @@ namespace MP.Client.MP
 
         protected void btnAdicionarPrioridadeUnionista_ButtonClick(object sender, EventArgs e)
         {
+            if(!PodeAdicionarPrioridadeUnionista())
+                return;
+
             var prioridadeUnionista = FabricaGenerica.GetInstancia().CrieObjeto<IPrioridadeUnionistaPatente>();
+
+            prioridadeUnionista.DataPrioridade = txtDataPrioridade.SelectedDate;
+            prioridadeUnionista.Pais = ctrlPais.PaisSelecionado;
+            prioridadeUnionista.NumeroPrioridade = txtNumeroPrioridade.Text;
 
             if (ListaDePrioridadeUnionista == null)
                 ListaDePrioridadeUnionista = new List<IPrioridadeUnionistaPatente>();
@@ -422,15 +431,89 @@ namespace MP.Client.MP
             MostrarListasDePrioridadesUnionistas();           
         }
 
+        private bool PodeAdicionarPrioridadeUnionista()
+        {
+            if(txtDataPrioridade.SelectedDate == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a data da prioridade."), false);
+                return false;
+            }
+
+            if (ctrlPais.PaisSelecionado == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione o país de origem."), false);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtNumeroPrioridade.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o número da prioridade."), false);
+                return false;
+            }
+
+            return true;
+        }
+
         private void MostrarListasDePrioridadesUnionistas()
         {
             grdPrioridadeUnionista.MasterTableView.DataSource = ListaDePrioridadeUnionista;
             grdPrioridadeUnionista.DataBind();
+            LimpeCamposPrioridadeUnionista();
+        }
+
+        private void LimpeCamposPrioridadeUnionista()
+        {
+            txtDataPrioridade.Clear();
+            ctrlPais.PaisSelecionado = null;
+            txtNumeroPrioridade.Text = string.Empty;
         }
 
         protected void btnAdicionarClassificacao_ButtonClick(object sender, EventArgs e)
         {
-            
+            if(!PodeAdicionarClassficicaoPatente())
+                return;
+        }
+
+        private bool PodeAdicionarClassficicaoPatente()
+        {
+            if(string.IsNullOrEmpty(txtClassificacao.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a classificação."), false);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtDescricaoClassificacao.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a descrição classificação."), false);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cboTipoDeClassificacao.SelectedValue))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione o tipo de classificação."), false);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void CarregueComboTipoDeClassificacao()
+        {
+            IList<TipoClassificacaoPatente> tiposDeClassficacaoPatente = new List<TipoClassificacaoPatente>();
+
+            tiposDeClassficacaoPatente.Add(TipoClassificacaoPatente.Internacional);
+            tiposDeClassficacaoPatente.Add(TipoClassificacaoPatente.Nacional);
+
+            cboTipoDeClassificacao.DataValueField = "Codigo";
+            cboTipoDeClassificacao.DataTextField = "Descricao";
+            cboTipoDeClassificacao.DataSource = tiposDeClassficacaoPatente;
+            cboTipoDeClassificacao.DataBind();
         }
     }
 }
