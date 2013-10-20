@@ -16,7 +16,8 @@ namespace MP.Interfaces.Negocio
 
         private TipoClassificacaoPatente(int codigo, string descricao)
         {
-
+            this.codigo = codigo;
+            this.descricao = descricao;
         }
 
         public int Codigo

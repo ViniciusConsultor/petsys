@@ -2,10 +2,10 @@
     Inherits="MP.Client.MP.ctrlPatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadComboBox ID="cboPatente" runat="server" EmptyMessage="Selecione uma patente"
-    OnItemsRequested="cboProcurador_OnItemsRequested" EnableLoadOnDemand="True" LoadingMessage="Carregando..."
+    OnItemsRequested="cboPatente_OnItemsRequested" EnableLoadOnDemand="True" LoadingMessage="Carregando..."
     MarkFirstMatch="false" ShowDropDownOnTextboxClick="False" AllowCustomText="True"
     HighlightTemplatedItems="True" Width="90%" Skin="Vista" CausesValidation="False"
-    Filter="Contains" AutoPostBack="True" OnSelectedIndexChanged="cboProcurador_SelectedIndexChanged">
+    Filter="Contains" AutoPostBack="True" OnSelectedIndexChanged="cboPatente_SelectedIndexChanged">
     <HeaderTemplate>
         <table width="96%">
             <tr>

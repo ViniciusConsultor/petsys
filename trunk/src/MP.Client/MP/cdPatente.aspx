@@ -6,6 +6,7 @@
 <%@ Register Src="~/MP/ctrlTipoDePatente.ascx" TagName="ctrlTipoDePatente" TagPrefix="uc2" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc3" %>
 <%@ Register Src="~/MP/ctrlInventor.ascx" TagName="ctrlInventor" TagPrefix="uc4" %>
+<%@ Register Src="~/ctrlPais.ascx" TagName="ctrlPais" TagPrefix="uc5" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
@@ -61,6 +62,11 @@
                             <asp:Panel ID="pnlDadosPatente" runat="server">
                                 <table class="tabela">
                                     <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="th3">
                                             <asp:Label ID="lblTituloPatente" runat="server" Text="Título da Patente"></asp:Label>
                                         </td>
@@ -68,6 +74,11 @@
                                             <telerik:RadTextBox ID="txtTituloPatente" runat="server" Rows="5" TextMode="MultiLine"
                                                 Width="100%">
                                             </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
@@ -79,6 +90,11 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="th3">
                                             <asp:Label ID="lblCliente" runat="server" Text="Cliente"></asp:Label>
                                         </td>
@@ -87,9 +103,19 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
                                             <telerik:RadButton ID="btnAdicionarCliente" runat="server" Text="Adicionar" ToolTip="Adicionar Cliente" 
                                             OnClick="btnAdicionarCliente_ButtonClick" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
@@ -109,7 +135,6 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn DataField="CPF" HeaderText="CNPJ/CPF" UniqueName="colunaCNPJCPF"/>
                                                         <telerik:GridBoundColumn DataField="Pessoa.Nome" HeaderText="Nome" UniqueName="colunaNome" />
                                                     </Columns>
                                                 </MasterTableView>
@@ -130,9 +155,19 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
                                             <telerik:RadButton ID="btnAdicionarInventor" runat="server" Text="Adicionar" ToolTip="Adicionar Inventor" 
                                             OnClick="btnAdicionarInventor_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
@@ -152,7 +187,6 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn DataField="CPF" HeaderText="CNPJ/CPF" UniqueName="colunaCNPJCPF"/>
                                                         <telerik:GridBoundColumn DataField="Pessoa.Nome" HeaderText="Nome" UniqueName="colunaNome" />
                                                     </Columns>
                                                 </MasterTableView>
@@ -165,9 +199,49 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
-                                            <telerik:RadButton ID="btnAdicionarPrioridadeUnionista" runat="server" Text="Adicionar Linha" ToolTip="Adicionar Prioridade Unionista" 
+                                        <td colspan="2">     
+                                            <table class="tabela">
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblDataPrioridade" runat="server" Text="Data" />
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadDatePicker ID="txtDataPrioridade" runat="server" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblPaisDeOrigem" runat="server" Text="País de Origem" />
+                                                    </td>
+                                                    <td class="td">
+                                                        <uc5:ctrlPais ID="ctrlPais" runat="server" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblNumeroPrioridade" runat="server" Text="Número Prioridade" />
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadTextBox ID="txtNumeroPrioridade" runat="server" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
+                                            <telerik:RadButton ID="btnAdicionarPrioridadeUnionista" runat="server" Text="Adicionar" ToolTip="Adicionar Prioridade Unionista" 
                                             OnClick="btnAdicionarPrioridadeUnionista_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
@@ -188,8 +262,8 @@
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
                                                         <telerik:GridDateTimeColumn DataField="DataPrioridade" HeaderText="Data" UniqueName="colunaData"/>
-                                                        <telerik:GridBoundColumn DataField="Pais" HeaderText="País de Origem" UniqueName="colunaPais" />
-                                                        <telerik:GridBoundColumn DataField="Identificador" HeaderText="Nº Prioridade" UniqueName="colunaPrioridade" />
+                                                        <telerik:GridBoundColumn DataField="Pais.Nome" HeaderText="País de Origem" UniqueName="colunaPais" />
+                                                        <telerik:GridBoundColumn DataField="NumeroPrioridade" HeaderText="Nº Prioridade" UniqueName="colunaPrioridade" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
@@ -202,12 +276,22 @@
                             <asp:Panel ID="pnlComplemento" runat="server">
                                 <table class="tabela">
                                     <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="th3">
                                             <asp:Label ID="lblResumoDaPatente" runat="server" Text="Resumo da Patente" />
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtResumoDaPatente" runat="server" TextMode="MultiLine" Rows="5"
                                                 Width="100%" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
@@ -225,9 +309,54 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
-                                            <telerik:RadButton ID="btnAdicionarClassificacao" runat="server" Text="Adicionar Linha" ToolTip="Adicionar Classificação da Patente" 
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <table class="tabela">
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblClassficacao" runat="server" Text="Classificação" />
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadTextBox ID="txtClassificacao" runat="server" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblDescricaoClassificacao" runat="server" Text="Descrição da classificação" />
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadTextBox ID="txtDescricaoClassificacao" runat="server" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblTipoDeClassificacao" runat="server" Text="Tipo de classificação" />
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadComboBox ID="cboTipoDeClassificacao" runat="server" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
+                                            <telerik:RadButton ID="btnAdicionarClassificacao" runat="server" Text="Adicionar" ToolTip="Adicionar Classificação da Patente" 
                                             OnClick="btnAdicionarClassificacao_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
@@ -256,6 +385,11 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="th3">
                                             <asp:Label ID="lblReivindicacoes" runat="server" Text="Reivindicações" />
                                         </td>
@@ -274,11 +408,19 @@
                             <asp:Panel ID="pnlAnuidades" runat="server">
                                 <table class="tabela">
                                     <tr>
-                                        <td class="th3">
-                                            <telerik:RadButton ID="btnNovaAnuidade" runat="server" Text="Nova" />
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
-                                        <td class="td">
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
+                                            <telerik:RadButton ID="btnNovaAnuidade" runat="server" Text="Nova" />
                                             <telerik:RadButton ID="btnBaixar" runat="server" Text="Baixar" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
                                         </td>
                                     </tr>
                                     <tr>
