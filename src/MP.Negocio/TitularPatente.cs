@@ -12,8 +12,6 @@ namespace MP.Negocio
 
         public IInventor Iventor { get; set; }
 
-        public IProcurador Procurador { get; set; }
-
         public string ContatoTitular { get; set; }
     }
 }

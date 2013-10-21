@@ -27,27 +27,11 @@ namespace MP.Interfaces.Negocio.LazyLoad
         {
             get
             {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                return _ObjetoReal.Identificador;
+                return _ID;
             }
             set
             {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                _ObjetoReal.Identificador = value;
-            }
-        }
-
-        public IProcurador Procurador
-        {
-            get
-            {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                return _ObjetoReal.Procurador;
-            }
-            set
-            {
-                if (_ObjetoReal == null) CarregueObjetoReal();
-                _ObjetoReal.Procurador = value;
+                _ID = value;
             }
         }
 
@@ -62,6 +46,21 @@ namespace MP.Interfaces.Negocio.LazyLoad
             {
                 if (_ObjetoReal == null) CarregueObjetoReal();
                 _ObjetoReal.ContatoTitular = value;
+            }
+        }
+
+
+        public IInventor Iventor
+        {
+            get
+            {
+                if (_ObjetoReal == null) CarregueObjetoReal();
+                return _ObjetoReal.Iventor;
+            }
+            set
+            {
+                if (_ObjetoReal == null) CarregueObjetoReal();
+                _ObjetoReal.Iventor = value;
             }
         }
     }

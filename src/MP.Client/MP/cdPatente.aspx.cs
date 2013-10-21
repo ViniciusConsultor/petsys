@@ -8,6 +8,7 @@ using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
 
 namespace MP.Client.MP
@@ -19,6 +20,8 @@ namespace MP.Client.MP
         private const string CHAVE_CLIENTES = "CHAVE_CLIENTES";
         private const string CHAVE_INVENTORES = "CHAVE_INVENTORES";
         private const string CHAVE_PRIORIDADE_UNIONISTA = "CHAVE_PRIORIDADE_UNIONISTA";
+        private const string CHAVE_CLASSIFICACAO_PATENTE = "CHAVE_CLASSIFICACAO_PATENTE";
+        private const string CHAVE_ANUIDADE_PATENTE = "CHAVE_ANUIDADE_PATENTE";
 
         private IList<ICliente> ListaDeClientes
         {
@@ -36,6 +39,18 @@ namespace MP.Client.MP
         {
             get { return (IList<IPrioridadeUnionistaPatente>)ViewState[CHAVE_PRIORIDADE_UNIONISTA]; }
             set { ViewState[CHAVE_PRIORIDADE_UNIONISTA] = value; }
+        }
+
+        private IList<IClassificacaoPatente> ListaDeClassificacaoDePatente
+        {
+            get { return (IList<IClassificacaoPatente>)ViewState[CHAVE_CLASSIFICACAO_PATENTE]; }
+            set { ViewState[CHAVE_CLASSIFICACAO_PATENTE] = value; }
+        }
+
+        private IList<IAnuidadePatente> ListaDeAnuidadeDaPatente
+        {
+            get { return (IList<IAnuidadePatente>)ViewState[CHAVE_ANUIDADE_PATENTE]; }
+            set { ViewState[CHAVE_ANUIDADE_PATENTE] = value; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -110,38 +125,163 @@ namespace MP.Client.MP
 
         protected void grdClientes_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "Excluir")
+            {
+                ListaDeClientes.RemoveAt(IndiceSelecionado);
+                MostrarListasDeClientes();
+            }
         }
 
         protected void grdClientes_ItemCreated(object sender, GridItemEventArgs e)
         {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdClientes.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
         }
 
         protected void grdClientes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdClientes, ViewState[CHAVE_CLIENTES], e);
         }
 
         protected void grdInventores_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "Excluir")
+            {
+                ListaDeInventores.RemoveAt(IndiceSelecionado);
+                MostrarListasDeInventores();
+            }
         }
 
         protected void grdInventores_ItemCreated(object sender, GridItemEventArgs e)
         {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdInventores.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
         }
 
         protected void grdInventores_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdInventores, ViewState[CHAVE_INVENTORES], e);
         }
 
         protected void grdPrioridadeUnionista_ItemCreated(object sender, GridItemEventArgs e)
         {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdPrioridadeUnionista.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
         }
 
         protected void grdPrioridadeUnionista_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "Excluir")
+            {
+                ListaDePrioridadeUnionista.RemoveAt(IndiceSelecionado);
+                MostrarListasDePrioridadesUnionistas();
+            }
         }
 
         protected void grdPrioridadeUnionista_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdPrioridadeUnionista, ViewState[CHAVE_PRIORIDADE_UNIONISTA], e);
+        }
+
+        protected void grvClassificacaoPatente_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "Excluir")
+            {
+                ListaDeClassificacaoDePatente.RemoveAt(IndiceSelecionado);
+                MostrarListasDeClassificacaoDePatentes();
+            }
+        }
+
+        protected void grvClassificacaoPatente_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdClassificacaoPatente.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
+        }
+
+        protected void grvClassificacaoPatente_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdClassificacaoPatente, ViewState[CHAVE_CLASSIFICACAO_PATENTE], e);
+        }
+
+        protected void grvObrigacoes_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "Excluir")
+            {
+                ListaDeAnuidadeDaPatente.RemoveAt(IndiceSelecionado);
+                MostrarListaDeAnuidadeDaPatente();
+            }
+
+            if (e.CommandName == "Baixar")
+            {
+                BaixarAnuidade(ListaDeAnuidadeDaPatente[IndiceSelecionado]);
+                ListaDeAnuidadeDaPatente.RemoveAt(IndiceSelecionado);
+            }
+        }
+
+        protected void grvObrigacoes_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdAnuidades.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
+        }
+
+        protected void grvObrigacoes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdAnuidades, ViewState[CHAVE_ANUIDADE_PATENTE], e);
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -189,7 +329,7 @@ namespace MP.Client.MP
 
         private void btnSalvar_Click()
         {
-            
+            GravePatente();
         }
 
         private void btnExcluir_Click()
@@ -241,30 +381,6 @@ namespace MP.Client.MP
             ctrlPatente.EnableLoadOnDemand = false;
             ctrlPatente.ShowDropDownOnTextboxClick = false;
             ctrlPatente.AutoPostBack = false;
-        }
-
-        protected void grvClassificacaoPatente_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-        }
-
-        protected void grvClassificacaoPatente_ItemCreated(object sender, GridItemEventArgs e)
-        {
-        }
-
-        protected void grvClassificacaoPatente_PageIndexChanged(object sender, GridPageChangedEventArgs e)
-        {
-        }
-
-        protected void grvObrigacoes_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-        }
-
-        protected void grvObrigacoes_ItemCreated(object sender, GridItemEventArgs e)
-        {
-        }
-
-        protected void grvObrigacoes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
-        {
         }
 
         private void ExibaPatenteSelecionada(IPatente patente)
@@ -475,6 +591,18 @@ namespace MP.Client.MP
         {
             if(!PodeAdicionarClassficicaoPatente())
                 return;
+
+            var classficacaoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
+
+            classficacaoDePatente.Classificacao = txtClassificacao.Text;
+            classficacaoDePatente.DescricaoClassificacao = txtDescricaoClassificacao.Text;
+            classficacaoDePatente.TipoClassificacao = TipoClassificacaoPatente.ObtenhaPorCodigo(int.Parse(cboTipoDeClassificacao.SelectedItem.Value));
+
+            if (ListaDeClassificacaoDePatente == null)
+                ListaDeClassificacaoDePatente = new List<IClassificacaoPatente>();
+
+            ListaDeClassificacaoDePatente.Add(classficacaoDePatente);
+            MostrarListasDeClassificacaoDePatentes();
         }
 
         private bool PodeAdicionarClassficicaoPatente()
@@ -514,6 +642,233 @@ namespace MP.Client.MP
             cboTipoDeClassificacao.DataTextField = "Descricao";
             cboTipoDeClassificacao.DataSource = tiposDeClassficacaoPatente;
             cboTipoDeClassificacao.DataBind();
+        }
+
+        private void MostrarListasDeClassificacaoDePatentes()
+        {
+            grdClassificacaoPatente.MasterTableView.DataSource = ListaDeClassificacaoDePatente;
+            grdClassificacaoPatente.DataBind();
+            LimpeCamposClassificacaoDePatentes();
+        }
+
+        private void LimpeCamposClassificacaoDePatentes()
+        {
+            txtClassificacao.Text = string.Empty;
+            txtDescricaoClassificacao.Text = string.Empty;
+            CarregueComboTipoDeClassificacao();
+        }
+
+        protected void btnNovaAnuidade_ButtonClick(object sender, EventArgs e)
+        {
+            if(!PodeAdicionarAnuidadeDaPatente())
+                return;
+
+            var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
+
+            anuidadeDaPatente.DescricaoAnuidade = txtDescricaoDaAnuidade.Text;
+            anuidadeDaPatente.DataLancamento = txtInicioPrazoPagamento.SelectedDate;
+            anuidadeDaPatente.DataVencimentoSemMulta = txtPagamentoSemMulta.SelectedDate;
+            anuidadeDaPatente.DataVencimentoComMulta = txtPagamentoComMulta.SelectedDate;
+            anuidadeDaPatente.DataPagamento = txtDataPagamento.SelectedDate;
+
+            if (!string.IsNullOrEmpty(txtValorPagamento.Text))
+                anuidadeDaPatente.ValorPagamento = double.Parse(txtValorPagamento.Text);
+
+            if (ListaDeAnuidadeDaPatente == null)
+                ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
+
+            ListaDeAnuidadeDaPatente.Add(anuidadeDaPatente);
+            MostrarListaDeAnuidadeDaPatente();
+        }
+
+        private bool PodeAdicionarAnuidadeDaPatente()
+        {
+            if (string.IsNullOrEmpty(txtDescricaoDaAnuidade.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a descrição da anuidade."), false);
+                return false;
+            }
+
+            if (txtInicioPrazoPagamento.SelectedDate == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a data de início."), false);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void MostrarListaDeAnuidadeDaPatente()
+        {
+            grdAnuidades.MasterTableView.DataSource = ListaDeAnuidadeDaPatente;
+            grdAnuidades.DataBind();
+            LimpeCamposAnuidadeDePatentes();
+        }
+
+        private void LimpeCamposAnuidadeDePatentes()
+        {
+            txtDescricaoDaAnuidade.Text = string.Empty;
+            txtInicioPrazoPagamento.Clear();
+            txtPagamentoSemMulta.Clear();
+            txtPagamentoComMulta.Clear();
+            txtDataPagamento.Clear();
+            txtValorPagamento.Text = string.Empty;
+        }
+        
+        private void BaixarAnuidade(IAnuidadePatente anuidadePatente)
+        {
+            txtDescricaoDaAnuidade.Text = anuidadePatente.DescricaoAnuidade;
+            txtInicioPrazoPagamento.SelectedDate = anuidadePatente.DataLancamento;
+            txtPagamentoSemMulta.SelectedDate = anuidadePatente.DataVencimentoSemMulta;
+            txtPagamentoComMulta.SelectedDate = anuidadePatente.DataVencimentoComMulta;
+            txtDataPagamento.SelectedDate = anuidadePatente.DataPagamento;
+            txtValorPagamento.Text = anuidadePatente.ValorPagamento.ToString();
+            VisibilidadeBaixar(false);
+        }
+
+        private void VisibilidadeBaixar(bool visibilidade)
+        {
+            btnNovaAnuidade.Visible = visibilidade;
+            btnBaixar.Visible = !visibilidade;
+        }
+
+        protected void btnBaixar_ButtonClick(object sender, EventArgs e)
+        {
+            if(!PodeBaixarAnuidadeDaPatente())
+                return;
+
+            var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
+
+            anuidadeDaPatente.DescricaoAnuidade = txtDescricaoDaAnuidade.Text;
+            anuidadeDaPatente.DataLancamento = txtInicioPrazoPagamento.SelectedDate;
+            anuidadeDaPatente.DataVencimentoSemMulta = txtPagamentoSemMulta.SelectedDate;
+            anuidadeDaPatente.DataVencimentoComMulta = txtPagamentoComMulta.SelectedDate;
+            anuidadeDaPatente.DataPagamento = txtDataPagamento.SelectedDate;
+            anuidadeDaPatente.AnuidadePaga = true;
+
+            if (!string.IsNullOrEmpty(txtValorPagamento.Text))
+                anuidadeDaPatente.ValorPagamento = double.Parse(txtValorPagamento.Text.Replace(".", ","));
+
+            if (ListaDeAnuidadeDaPatente == null)
+                ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
+
+            ListaDeAnuidadeDaPatente.Add(anuidadeDaPatente);
+            MostrarListaDeAnuidadeDaPatente();
+            VisibilidadeBaixar(true);
+
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Anuidade baixada com sucesso."), false);
+        }
+
+        private bool PodeBaixarAnuidadeDaPatente()
+        {
+            if (txtDataPagamento.SelectedDate == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a data do pagamento."), false);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtValorPagamento.Text) || txtValorPagamento.Text.Equals("0"))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o valor do pagamento."), false);
+                return false;
+            }
+
+            return true;
+        }
+
+        protected void btnGerarTodas_ButtonClick(object sender, EventArgs e)
+        {
+        }
+
+        private void GravePatente()
+        {
+            if(!PodeGravarPatente())
+                return;
+
+            string mensagem;
+
+            try
+            {
+                var patente = MonateObjetoPatente();
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
+                {
+                    if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
+                    {
+                        servico.Insira(patente);
+                        mensagem = "Patente cadastrada com sucesso.";
+                    }
+                    else
+                    {
+                        servico.Modificar(patente);
+                        mensagem = "Patente modificada com sucesso.";
+                    }
+                }
+
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
+                ExibaTelaInicial();    
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+            }
+        }
+
+        private bool PodeGravarPatente()
+        {
+            if (ctrlTipoDePatente.TipoDePatenteSelecionada == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione o tipo da patente."), false);
+                return false;
+            }
+
+            return true;
+        }
+
+        private IPatente MonateObjetoPatente()
+        {
+            var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
+
+            patente.TituloPatente = txtTituloPatente.Text;
+            patente.TipoDePatente = ctrlTipoDePatente.TipoDePatenteSelecionada;
+            patente.Resumo = txtResumoDaPatente.Text;
+            patente.Observacao = txtObservacoes.Text;
+
+            if (!string.IsNullOrEmpty(txtReivindicacoes.Text))
+                patente.QuantidadeReivindicacao = int.Parse(txtReivindicacoes.Text);
+
+            patente.DataCadastro = DateTime.Now;
+
+            if (ListaDeAnuidadeDaPatente != null && ListaDeAnuidadeDaPatente.Count > 0)
+                patente.Anuidades = ListaDeAnuidadeDaPatente;
+
+            if (ListaDeClassificacaoDePatente != null && ListaDeClassificacaoDePatente.Count > 0)
+                patente.Classificacoes = ListaDeClassificacaoDePatente;
+
+            if (ListaDePrioridadeUnionista != null && ListaDePrioridadeUnionista.Count > 0)
+                patente.PrioridadesUnionista = ListaDePrioridadeUnionista;
+
+            if (ListaDeInventores != null && ListaDeInventores.Count > 0)
+            {
+                IList<ITitularPatente> titularesPatente = new List<ITitularPatente>();
+
+                foreach (IInventor inventor in ListaDeInventores)
+                {
+                    var titulaPatente = FabricaGenerica.GetInstancia().CrieObjeto<ITitularPatente>();
+                    titulaPatente.Iventor = inventor;
+                    titularesPatente.Add(titulaPatente);
+                }
+
+                patente.Titulares = titularesPatente;
+            }
+
+            return patente;
         }
     }
 }

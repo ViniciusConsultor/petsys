@@ -6,6 +6,7 @@ using MP.Interfaces.Negocio;
 
 namespace MP.Negocio
 {
+    [Serializable]
     public class ClassificacaoPatente : IClassificacaoPatente
     {
         public long Identificador { get; set; }
