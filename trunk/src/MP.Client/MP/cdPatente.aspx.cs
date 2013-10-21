@@ -385,6 +385,7 @@ namespace MP.Client.MP
 
         private void ExibaPatenteSelecionada(IPatente patente)
         {
+
         }
 
         private void ExibaTelaModificar()

@@ -8,20 +8,19 @@ Namespace LazyLoad
     Public Class PaisLazyLoad
         Implements IPaisLazyLoad
 
+        Private _ID as Long?
         Private _PaisReal As IPais
 
         Public Sub New(ByVal ID As Long)
-            Me.ID = ID
+            _ID = ID
         End Sub
 
         Public Property ID() As Long? Implements IPais.ID
             Get
-                If _PaisReal Is Nothing Then CarregueObjetoReal()
-                Return _PaisReal.ID
+                Return _ID
             End Get
             Set (ByVal value As Long?)
-                If _PaisReal Is Nothing Then CarregueObjetoReal()
-                _PaisReal.ID = value
+                _ID = value
             End Set
         End Property
 

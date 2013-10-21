@@ -147,7 +147,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
+            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
             comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
             comandoSQL.Append("WHERE IDPATENTE = " + id);
 
@@ -164,9 +164,11 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
+            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
             comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
-            comandoSQL.Append("WHERE TITULOPATENTE like '%" + titulo + "%'");
+
+            if (!string.IsNullOrEmpty(titulo))
+                comandoSQL.Append("WHERE TITULOPATENTE like '%" + titulo + "%'");
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), quantidadeDeRegistros))
                 while (reader.Read())
@@ -377,7 +379,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTETITULARINVENTOR, IDPATENTE, IDPROCURADOR, CONTATO_TITULAR FROM MP_PATENTETITULARINVENTOR ");
+            comandoSQL.Append("SELECT IDPATENTETITULARINVENTOR, IDPATENTE, CONTATO_TITULAR FROM MP_PATENTETITULARINVENTOR ");
             comandoSQL.Append("WHERE IDPATENTETITULARINVENTOR = " + idPatente);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
@@ -479,7 +481,7 @@ namespace MP.Mapeadores
         {
             var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
 
-            patente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPROCESSOPATENTE");
+            patente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTE");
             patente.TituloPatente = UtilidadesDePersistencia.GetValorString(reader, "TITULOPATENTE");
             patente.TipoDePatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ITipoDePatenteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDTIPOPATENTE"));
             patente.ObrigacaoGerada = UtilidadesDePersistencia.GetValorBooleano(reader, "OBRIGACAOGERADA");
