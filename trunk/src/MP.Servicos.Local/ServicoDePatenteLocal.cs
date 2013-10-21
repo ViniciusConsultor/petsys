@@ -23,7 +23,13 @@ namespace MP.Servicos.Local
 
             try
             {
+                ServerUtils.BeginTransaction();
                 mapeadorProcurador.Insira(patente);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
             }
             finally
             {
@@ -38,7 +44,13 @@ namespace MP.Servicos.Local
 
             try
             {
+                ServerUtils.BeginTransaction();
                 mapeadorProcurador.Modificar(patente);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
             }
             finally
             {
@@ -53,7 +65,13 @@ namespace MP.Servicos.Local
 
             try
             {
+                ServerUtils.BeginTransaction();
                 mapeadorProcurador.Exluir(codigoPatente);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
             }
             finally
             {

@@ -74,13 +74,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MP\cdAnuidadeDaPatente.aspx.cs">
-      <DependentUpon>cdAnuidadeDaPatente.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\cdAnuidadeDaPatente.aspx.designer.cs">
-      <DependentUpon>cdAnuidadeDaPatente.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MP\cdCadastroDeProcuradores.aspx.cs">
       <DependentUpon>cdCadastroDeProcuradores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,7 +266,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Client.snk" />
-    <Content Include="MP\cdAnuidadeDaPatente.aspx" />
     <Content Include="MP\cdCadastroDeProcuradores.aspx" />
     <Content Include="MP\cdDespachoDeMarcas.aspx" />
     <Content Include="MP\cdDespachoDePatentes.aspx" />

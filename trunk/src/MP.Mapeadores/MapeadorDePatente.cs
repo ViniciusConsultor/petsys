@@ -13,7 +13,7 @@ using MP.Interfaces.Negocio.LazyLoad;
 
 namespace MP.Mapeadores
 {
-    public class MapeadorDaPatente : IMapeadorDePatente
+    public class MapeadorDePatente : IMapeadorDePatente
     {
         public void Insira(IPatente patente)
         {
@@ -22,7 +22,7 @@ namespace MP.Mapeadores
 
             patente.Identificador = ObtenhaProximoIDPatente();
 
-            comandoSQL.Append("INSERT INTO MP_PATENTE(IDPROCESSOPATENTE, TITULOPATENTE, IDTIPOPATENTE, LINKINPI, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
+            comandoSQL.Append("INSERT INTO MP_PATENTE(IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
             comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO) VALUES(");
             comandoSQL.Append(patente.Identificador + ", ");
             comandoSQL.Append("'" + patente.TituloPatente + "', ");
@@ -31,7 +31,7 @@ namespace MP.Mapeadores
             comandoSQL.Append(patente.DataCadastro != null ? "'" + patente.DataCadastro.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
             comandoSQL.Append("'" + patente.Observacao + "', ");
             comandoSQL.Append("'" + patente.Resumo + "', ");
-            comandoSQL.Append(patente.QuantidadeReivindicacao + ", ");
+            comandoSQL.Append(patente.QuantidadeReivindicacao + ")");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
 
             foreach (IAnuidadePatente anuidadePatente in patente.Anuidades)
@@ -196,7 +196,7 @@ namespace MP.Mapeadores
             comandoSQL.Append("'" + (anuidadePatente.AnuidadePaga ? "1" : "0" )+ "', ");
             comandoSQL.Append("'" + (anuidadePatente.PedidoExame ? "1" : "0") + "', ");
             comandoSQL.Append(anuidadePatente.DataVencimentoSemMulta != null ? anuidadePatente.DataVencimentoSemMulta.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
-            comandoSQL.Append(anuidadePatente.DataVencimentoComMulta != null ? anuidadePatente.DataVencimentoComMulta.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
+            comandoSQL.Append(anuidadePatente.DataVencimentoComMulta != null ? anuidadePatente.DataVencimentoComMulta.Value.ToString("yyyyMMdd") + ") " : "NULL) ");
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -240,10 +240,9 @@ namespace MP.Mapeadores
 
             titularPatente.Identificador = ObtenhaProximoIDTitular();
 
-            comandoSQL.Append("INSERT INTO MP_PATENTETITULARINVENTOR(IDPATENTETITULARINVENTOR, IDPATENTE, IDPROCURADOR, CONTATO_TITULAR) VALUES(");
+            comandoSQL.Append("INSERT INTO MP_PATENTETITULARINVENTOR(IDPATENTETITULARINVENTOR, IDPATENTE, CONTATO_TITULAR) VALUES(");
             comandoSQL.Append(titularPatente.Identificador + ", ");
             comandoSQL.Append(idPatente + ", ");
-            comandoSQL.Append(titularPatente.Procurador.Pessoa.ID + ", ");
             comandoSQL.Append("'" + titularPatente.ContatoTitular + "') ");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -313,7 +312,7 @@ namespace MP.Mapeadores
             int? proximoCodigo = null;
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPROCESSOPATENTE) CODIGO FROM MP_PATENTE"))
+            using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPATENTE) CODIGO FROM MP_PATENTE"))
                 while (reader.Read())
                     proximoCodigo = UtilidadesDePersistencia.getValorInteger(reader, "CODIGO");
 
@@ -471,7 +470,6 @@ namespace MP.Mapeadores
             var titularPatente = FabricaGenerica.GetInstancia().CrieObjeto<ITitularPatente>();
 
             titularPatente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTETITULARINVENTOR");
-            titularPatente.Procurador = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPROCURADOR"));
             titularPatente.ContatoTitular = UtilidadesDePersistencia.GetValorString(reader, "CONTATO_TITULAR");
 
             return titularPatente;

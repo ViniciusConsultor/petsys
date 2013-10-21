@@ -72,7 +72,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtTituloPatente" runat="server" Rows="5" TextMode="MultiLine"
-                                                Width="100%">
+                                                Width="100%" MaxLength="500">
                                             </telerik:RadTextBox>
                                         </td>
                                     </tr>
@@ -286,7 +286,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtResumoDaPatente" runat="server" TextMode="MultiLine" Rows="5"
-                                                Width="100%" />
+                                                Width="100%" MaxLength="500" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -300,12 +300,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtObservacoes" runat="server" TextMode="MultiLine" Rows="5"
-                                                Width="100%" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">     
-                                            <br/>                                                  
+                                                Width="100%" MaxLength="250" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -378,7 +373,7 @@
                                                         </telerik:GridButtonColumn>
                                                         <telerik:GridBoundColumn DataField="Classificacao" HeaderText="Classificação" UniqueName="colunaClassificacao" />
                                                         <telerik:GridBoundColumn DataField="DescricaoClassificacao" HeaderText="Descrição" UniqueName="colunaDescricao" />
-                                                        <telerik:GridBoundColumn DataField="TipoClassificacao" HeaderText="Tipo Classificação" UniqueName="colunaTipoDeClassificacao" />
+                                                        <telerik:GridBoundColumn DataField="TipoClassificacao.Descricao" HeaderText="Tipo Classificação" UniqueName="colunaTipoDeClassificacao" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
@@ -413,9 +408,65 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblDescricaoDaAnuidade" runat="server" Text="Descrição da Anuidade" />
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtDescricaoDaAnuidade" MaxLength="45" runat="server" Width="100%">
+                                            </telerik:RadTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblInicioPrazoPagamento" runat="server" Text="Início Prazo de Pagto" />
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadDatePicker ID="txtInicioPrazoPagamento" runat="server">
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblPagamentoSemMulta" runat="server" Text="Limite Pagto S/ Multa" />
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadDatePicker ID="txtPagamentoSemMulta" runat="server">
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblPagamentoComMulta" runat="server" Text="Limite Pagto C/ Multa" />
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadDatePicker ID="txtPagamentoComMulta" runat="server">
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblDataPagamento" runat="server" Text="Data Pagamento" />
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadDatePicker ID="txtDataPagamento" runat="server">
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblValorPagamento" runat="server" Text="Valor Pagamento" />
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadNumericTextBox ID="txtValorPagamento" runat="server">
+                                                <NumberFormat DecimalDigits="2"/>
+                                            </telerik:RadNumericTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td colspan="2" align="right">
-                                            <telerik:RadButton ID="btnNovaAnuidade" runat="server" Text="Nova" />
-                                            <telerik:RadButton ID="btnBaixar" runat="server" Text="Baixar" />
+                                            <telerik:RadButton ID="btnNovaAnuidade" runat="server" Text="Adicionar" OnClick="btnNovaAnuidade_ButtonClick" />
+                                            <telerik:RadButton ID="btnBaixar" runat="server" Text="Baixar" OnClick="btnBaixar_ButtonClick" Visible="False" />
+                                            <telerik:RadButton ID="btnGerarTodas" runat="server" Text="Gerar todas" OnClick="btnGerarTodas_ButtonClick"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -438,13 +489,16 @@
                                                     </ExpandCollapseColumn>
                                                     <Columns>
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                            HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
-                                                        </telerik:GridButtonColumn>
+                                                            HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir" />
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Baixar" FilterImageToolTip="Baixar"
+                                                        HeaderTooltip="Baixar" ImageUrl="~/imagens/yes.gif" UniqueName="colunaBaixar" />
                                                         <telerik:GridBoundColumn DataField="DescricaoAnuidade" HeaderText="Descrição Parcela" UniqueName="colunaDescricaoAnuidade" />
                                                         <telerik:GridBoundColumn DataField="DataLancamento" HeaderText="Dt. Início" UniqueName="colunaDataLancamento" />
                                                         <telerik:GridBoundColumn DataField="DataVencimentoSemMulta" HeaderText="Dt. S/Multa" UniqueName="colunaDataVencimentoSemMulta" />
                                                         <telerik:GridBoundColumn DataField="DataVencimentoComMulta" HeaderText="Dt. C/Multa" UniqueName="colunaDataVencimentoComMulta" />
+                                                        <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Pagamento" UniqueName="colunaDataPagamento" />
                                                         <telerik:GridBoundColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" />
+                                                        <telerik:GridBoundColumn DataField="AnuidadePaga" HeaderText="Paga" UniqueName="colunaAnuidadePaga" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>
