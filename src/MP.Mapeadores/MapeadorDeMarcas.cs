@@ -168,11 +168,11 @@ namespace MP.Mapeadores
 
                     if (radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo.ToString()))
                     {
-                        sql.Append(String.Concat("'", radical.NCL.Codigo.ToString(), "', "));
+                        sql.Append(String.Concat("", radical.NCL.Codigo, ", "));
                     }
                     else
                     {
-                        sql.Append(String.Concat("'", 0, "', "));
+                        sql.Append(String.Concat("", null, ", "));
                     }
                     
                     sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ") "));
@@ -182,7 +182,7 @@ namespace MP.Mapeadores
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -210,7 +210,7 @@ namespace MP.Mapeadores
                            : "CODIGOCLASSE_SUBCLASSE2 = NULL, ");
 
             sql.Append(marca.CodigoDaSubClasse1.HasValue
-                           ? String.Concat("CODIGOCLASSE_SUBCLASS3 = ", marca.CodigoDaSubClasse3.Value, " , ")
+                           ? String.Concat("CODIGOCLASSE_SUBCLASSE3 = ", marca.CodigoDaSubClasse3.Value, " , ")
                            : "CODIGOCLASSE_SUBCLASSE3 = NULL, ");
             
             sql.Append(String.Concat("DESCRICAO_MARCA = '", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "' , "));
@@ -223,6 +223,23 @@ namespace MP.Mapeadores
 
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+
+            ModificarRadicaisMarca(marca);
+        }
+
+        private void ModificarRadicaisMarca(IMarcas marca)
+        {
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            sql.Append("DELETE FROM MP_RADICAL_MARCA");
+            sql.Append(string.Concat(" WHERE IDMARCA = ", marca.IdMarca.Value.ToString()));
+
+            DBHelper.ExecuteNonQuery(sql.ToString());
+
+            InserirRadicalMarcas(marca);
         }
 
         public void Excluir(long idMarca)
