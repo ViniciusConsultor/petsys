@@ -145,7 +145,7 @@ namespace MP.Client.MP
                 processoDeMarca.Procurador = ctrlProcurador.ProcuradorSelecionado;
             
             if (!string.IsNullOrEmpty(ctrlSituacao.Codigo))
-                processoDeMarca.SituacaoDoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacao.Codigo));
+                processoDeMarca.SituacaoDoProcesso = SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacao.Codigo));
 
             return processoDeMarca;
         }

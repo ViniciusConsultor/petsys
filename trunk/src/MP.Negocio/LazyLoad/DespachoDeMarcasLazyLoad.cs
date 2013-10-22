@@ -66,7 +66,7 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public SituacaoDoProcesso SituacaoProcesso
+        public SituacaoDoProcessoDeMarca SituacaoProcesso
         {
             get
             {

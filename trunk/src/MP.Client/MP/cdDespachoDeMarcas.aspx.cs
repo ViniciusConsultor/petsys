@@ -159,7 +159,7 @@ namespace MP.Client.MP
 
             if (!string.IsNullOrEmpty(ctrlSituacaoDoProcesso.Codigo))
                 despachoDeMarcas.SituacaoProcesso =
-                    SituacaoDoProcesso.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo));
+                    SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo));
 
             return despachoDeMarcas;
         }

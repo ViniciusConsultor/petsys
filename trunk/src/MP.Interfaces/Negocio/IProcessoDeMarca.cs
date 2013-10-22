@@ -17,6 +17,6 @@ namespace MP.Interfaces.Negocio
         IDespachoDeMarcas Despacho { get; set; }
         Nullable<DateTime> DataDeProrrogacao { get;}
         IProcurador Procurador { get; set; }
-        SituacaoDoProcesso SituacaoDoProcesso { get; set; }
+        SituacaoDoProcessoDeMarca SituacaoDoProcesso { get; set; }
     }
 }

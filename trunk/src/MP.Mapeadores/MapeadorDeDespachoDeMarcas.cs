@@ -52,7 +52,7 @@ namespace MP.Mapeadores
                         despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoSituacaoProcesso"))
-                        despachoDeMarcas.SituacaoProcesso = SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
+                        despachoDeMarcas.SituacaoProcesso = SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "Registro"))
                         despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");

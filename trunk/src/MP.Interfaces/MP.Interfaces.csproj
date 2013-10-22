@@ -110,7 +110,7 @@
     <Compile Include="Negocio\LazyLoad\TitularPatenteLazyLoad.cs" />
     <Compile Include="Negocio\NaturezaDeMarca.cs" />
     <Compile Include="Negocio\NCL.cs" />
-    <Compile Include="Negocio\SituacaoDoProcesso.cs" />
+    <Compile Include="Negocio\SituacaoDoProcessoDeMarca.cs" />
     <Compile Include="Negocio\SituacaoDoProcessoDePatente.cs" />
     <Compile Include="Negocio\TipoClassificacaoPatente.cs" />
     <Compile Include="Negocio\TipoProvidenciaDespachoDeMarca.cs" />

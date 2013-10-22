@@ -10,7 +10,7 @@
 namespace MP.Client.MP {
     
     
-    public partial class ctrlSituacaoDoProcesso {
+    public partial class ctrlSituacaoDoProcessoDeMarca {
         
         /// <summary>
         /// cboSituacaoDoProcesso control.

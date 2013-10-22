@@ -207,12 +207,12 @@
     <Compile Include="MP\ctrlProcurador.ascx.designer.cs">
       <DependentUpon>ctrlProcurador.ascx</DependentUpon>
     </Compile>
-    <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.cs">
-      <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
+    <Compile Include="MP\ctrlSituacaoDoProcessoDeMarca.ascx.cs">
+      <DependentUpon>ctrlSituacaoDoProcessoDeMarca.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MP\ctrlSituacaoDoProcesso.ascx.designer.cs">
-      <DependentUpon>ctrlSituacaoDoProcesso.ascx</DependentUpon>
+    <Compile Include="MP\ctrlSituacaoDoProcessoDeMarca.ascx.designer.cs">
+      <DependentUpon>ctrlSituacaoDoProcessoDeMarca.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlSituacaoDoProcessoDePatente.ascx.cs">
       <DependentUpon>ctrlSituacaoDoProcessoDePatente.ascx</DependentUpon>
@@ -285,7 +285,7 @@
     <Content Include="MP\ctrlNCL.ascx" />
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
-    <Content Include="MP\ctrlSituacaoDoProcesso.ascx" />
+    <Content Include="MP\ctrlSituacaoDoProcessoDeMarca.ascx" />
     <Content Include="MP\ctrlSituacaoDoProcessoDePatente.ascx" />
     <Content Include="MP\ctrlTipoDePatente.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />

@@ -3,7 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc1" %>
-<%@ Register Src="ctrlSituacaoDoProcesso.ascx" TagName="ctrlSituacaoDoProcesso" TagPrefix="uc2" %>
+<%@ Register Src="ctrlSituacaoDoProcessoDeMarca.ascx" TagName="ctrlSituacaoDoProcessoDeMarca" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -69,7 +69,7 @@
                                     <asp:Label ID="Label6" runat="server" Text="Situação do processo após a publicação"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <uc2:ctrlSituacaoDoProcesso ID="ctrlSituacaoDoProcesso" runat="server" />
+                                    <uc2:ctrlSituacaoDoProcessoDeMarca ID="ctrlSituacaoDoProcesso" runat="server" />
                                 </td>
                             </tr>
                             <tr>
