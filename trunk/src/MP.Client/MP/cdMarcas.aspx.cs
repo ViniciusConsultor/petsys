@@ -511,10 +511,10 @@ namespace MP.Client.MP
                 IList<IRadicalMarcas> listaRadicalMarcas = null;
                 listaRadicalMarcas = (IList<IRadicalMarcas>) ViewState[CHAVE_RADICAIS];
 
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRadicalMarcas>())
-                {
-                    servico.Excluir(listaRadicalMarcas[IndiceSelecionado].IdRadicalMarca.Value);
-                }
+                //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRadicalMarcas>())
+                //{
+                //    servico.Excluir(listaRadicalMarcas[IndiceSelecionado].IdRadicalMarca.Value);
+                //}
 
                 listaRadicalMarcas.RemoveAt(IndiceSelecionado);
                 MostraRadicalMarcas(listaRadicalMarcas);
