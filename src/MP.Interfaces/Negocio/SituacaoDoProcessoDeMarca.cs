@@ -8,7 +8,7 @@ namespace MP.Interfaces.Negocio
     [Serializable]
     public class SituacaoDoProcessoDeMarca
     {
-        private int _codigoSituacaoProcesso;
+        private Nullable<int> _codigoSituacaoProcesso;
         private string _descricaoSituacao;
 
         // Classificação da situação do processo
@@ -46,7 +46,7 @@ namespace MP.Interfaces.Negocio
             DescricaoSituacao = descricao;
         }
 
-        public int CodigoSituacaoProcesso
+        public Nullable<int> CodigoSituacaoProcesso
         {
             get { return _codigoSituacaoProcesso; }
             private set { _codigoSituacaoProcesso = value; }

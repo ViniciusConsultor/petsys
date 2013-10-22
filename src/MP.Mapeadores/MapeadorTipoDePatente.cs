@@ -167,15 +167,15 @@ namespace MP.Mapeadores
             sql.Append("VALUES (");
             sql.Append(String.Concat(tipoPatente.IdTipoDePatente.Value.ToString(), ", "));
             sql.Append(String.Concat("'", tipoPatente.DescricaoTipoDePatente, "', "));
-            sql.Append(String.Concat("'", tipoPatente.SiglaTipo.ToString(), "', "));
-            sql.Append(String.Concat("'", tipoPatente.TempoInicioAnos.ToString(), "', "));
-            sql.Append(String.Concat("'", tipoPatente.QuantidadePagamento.ToString(), "', "));
-            sql.Append(String.Concat("'", tipoPatente.TempoEntrePagamento.ToString(), "', "));
-            sql.Append(String.Concat("'", tipoPatente.SequenciaInicioPagamento.ToString(), "', "));
+            sql.Append(String.Concat("'", tipoPatente.SiglaTipo, "', "));
+            sql.Append(String.Concat("", tipoPatente.TempoInicioAnos, ", "));
+            sql.Append(String.Concat("", tipoPatente.QuantidadePagamento, ", "));
+            sql.Append(String.Concat("", tipoPatente.TempoEntrePagamento, ", "));
+            sql.Append(String.Concat("", tipoPatente.SequenciaInicioPagamento, ", "));
             sql.Append(tipoPatente.TemPagamentoIntermediario ? String.Concat("'", 1, "', ") : String.Concat("'", 0, "', "));
-            sql.Append(String.Concat("'", tipoPatente.InicioIntermediarioSequencia.ToString(), "', "));
-            sql.Append(String.Concat("'", tipoPatente.QuantidadePagamentoIntermediario.ToString(), "', "));
-            sql.Append(String.Concat("'", tipoPatente.TempoEntrePagamentoIntermediario.ToString(), "', "));
+            sql.Append(String.Concat("", tipoPatente.InicioIntermediarioSequencia, ", "));
+            sql.Append(String.Concat("", tipoPatente.QuantidadePagamentoIntermediario, ", "));
+            sql.Append(String.Concat("", tipoPatente.TempoEntrePagamentoIntermediario, ", "));
             sql.Append(String.Concat("'", tipoPatente.DescricaoPagamento, "', "));
             sql.Append(String.Concat("'", tipoPatente.DescricaoPagamentoIntermediario, "', "));
             sql.Append(tipoPatente.TemPedidoDeExame ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
@@ -192,17 +192,17 @@ namespace MP.Mapeadores
 
             sql.Append("UPDATE MP_TIPO_PATENTE SET ");
             sql.Append(String.Concat("DESCRICAO_TIPO_PATENTE = '", UtilidadesDePersistencia.FiltraApostrofe(tipoPatente.DescricaoTipoDePatente), "', "));
-            sql.Append(String.Concat("SIGLA_TIPO = '", tipoPatente.SiglaTipo.ToString(), "', "));
-            sql.Append(String.Concat("TEMPO_INICIO_ANOS = '", tipoPatente.TempoInicioAnos.ToString(), "', "));
-            sql.Append(String.Concat("QUANTIDADE_PAGTO = '", tipoPatente.QuantidadePagamento.ToString(), "', "));
-            sql.Append(String.Concat("TEMPO_ENTRE_PAGTO = '", tipoPatente.TempoEntrePagamento.ToString(), "', "));
-            sql.Append(String.Concat("SEQUENCIA_INICIO_PAGTO = '", tipoPatente.SequenciaInicioPagamento.ToString(), "', "));
+            sql.Append(String.Concat("SIGLA_TIPO = '", tipoPatente.SiglaTipo, "', "));
+            sql.Append(String.Concat("TEMPO_INICIO_ANOS = ", tipoPatente.TempoInicioAnos, ", "));
+            sql.Append(String.Concat("QUANTIDADE_PAGTO = ", tipoPatente.QuantidadePagamento, ", "));
+            sql.Append(String.Concat("TEMPO_ENTRE_PAGTO = ", tipoPatente.TempoEntrePagamento, ", "));
+            sql.Append(String.Concat("SEQUENCIA_INICIO_PAGTO = ", tipoPatente.SequenciaInicioPagamento, ", "));
             sql.Append(tipoPatente.TemPagamentoIntermediario
                            ? String.Concat("TEM_PAGTO_INTERMEDIARIO = '", 1, "', ")
                            : String.Concat("TEM_PAGTO_INTERMEDIARIO = '", 0, "', "));
-            sql.Append(String.Concat("INICIO_INTERMED_SEQUENCIA = '", tipoPatente.InicioIntermediarioSequencia.ToString(), "', "));
-            sql.Append(String.Concat("QUANTIDADE_PAGTO_INTERMED = '", tipoPatente.QuantidadePagamentoIntermediario.ToString(), "', "));
-            sql.Append(String.Concat("TEMPO_ENTRE_PAGTO_INTERMED = '", tipoPatente.TempoEntrePagamentoIntermediario.ToString(), "', "));
+            sql.Append(String.Concat("INICIO_INTERMED_SEQUENCIA = ", tipoPatente.InicioIntermediarioSequencia, ", "));
+            sql.Append(String.Concat("QUANTIDADE_PAGTO_INTERMED = ", tipoPatente.QuantidadePagamentoIntermediario, ", "));
+            sql.Append(String.Concat("TEMPO_ENTRE_PAGTO_INTERMED = ", tipoPatente.TempoEntrePagamentoIntermediario, ", "));
             sql.Append(String.Concat("DESCRICAO_PAGTO = '", tipoPatente.DescricaoPagamento, "', "));
             sql.Append(String.Concat("DESCRICAO_PAGTO_INTERMED = '", tipoPatente.DescricaoPagamentoIntermediario, "', "));
             sql.Append(tipoPatente.TemPedidoDeExame

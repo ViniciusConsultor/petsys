@@ -139,9 +139,9 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.ObservacaoDaMarca), "', "));
 
             sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaClasse.ToString(), ", ") : "NULL, ");
-            sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaSubClasse1.ToString(), ", ") : "NULL, ");
-            sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ", ") : "NULL, ");
-            sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ") ") : "NULL) ");
+            sql.Append(marca.CodigoDaSubClasse1.HasValue ? String.Concat(marca.CodigoDaSubClasse1.ToString(), ", ") : "NULL, ");
+            sql.Append(marca.CodigoDaSubClasse2.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ", ") : "NULL, ");
+            sql.Append(marca.CodigoDaSubClasse3.HasValue ? String.Concat(marca.CodigoDaSubClasse3.ToString(), ") ") : "NULL) ");
 
             DBHelper.ExecuteNonQuery(sql.ToString());
 
@@ -205,11 +205,11 @@ namespace MP.Mapeadores
                            ? String.Concat("CODIGOCLASSE_SUBCLASSE1 = ", marca.CodigoDaSubClasse1.Value, " , ")
                            : "CODIGOCLASSE_SUBCLASSE1 = NULL, ");
 
-            sql.Append(marca.CodigoDaSubClasse1.HasValue
+            sql.Append(marca.CodigoDaSubClasse2.HasValue
                            ? String.Concat("CODIGOCLASSE_SUBCLASSE2 = ", marca.CodigoDaSubClasse2.Value, " , ")
                            : "CODIGOCLASSE_SUBCLASSE2 = NULL, ");
 
-            sql.Append(marca.CodigoDaSubClasse1.HasValue
+            sql.Append(marca.CodigoDaSubClasse3.HasValue
                            ? String.Concat("CODIGOCLASSE_SUBCLASSE3 = ", marca.CodigoDaSubClasse3.Value, " , ")
                            : "CODIGOCLASSE_SUBCLASSE3 = NULL, ");
             
