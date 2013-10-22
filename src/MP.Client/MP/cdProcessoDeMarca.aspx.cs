@@ -80,8 +80,7 @@ namespace MP.Client.MP
             ViewState[CHAVE_ID] = processoDeMarca.IdProcessoDeMarca;
             ctrlMarcas1.MarcaSelecionada = processoDeMarca.Marca;
             ctrlMarcas1.DescricaoDaMarca = processoDeMarca.Marca.DescricaoDaMarca;
-            if (processoDeMarca.Protocolo.HasValue) txtProtocolo.Text = processoDeMarca.Protocolo.Value.ToString();
-            if (processoDeMarca.Processo.HasValue) txtProcesso.Text = processoDeMarca.Processo.Value.ToString();
+            txtProcesso.Text = processoDeMarca.Processo.ToString();
             txtDataDeEntrada.SelectedDate = processoDeMarca.DataDeEntrada;
             txtDataDeConcessao.SelectedDate = processoDeMarca.DataDeConcessao;
             rblProcessoEhDeTerceiro.SelectedValue = processoDeMarca.ProcessoEhDeTerceiro ? "1" : "0";
@@ -128,11 +127,7 @@ namespace MP.Client.MP
             
             processoDeMarca.Marca = ctrlMarcas1.MarcaSelecionada;
 
-            if (txtProtocolo.Value.HasValue)
-                processoDeMarca.Protocolo = Convert.ToInt64(txtProtocolo.Text);
-
-            if (txtProcesso.Value.HasValue)
-                processoDeMarca.Processo = Convert.ToInt64(txtProcesso.Text);
+            processoDeMarca.Processo = Convert.ToInt64(txtProcesso.Text);
 
             processoDeMarca.DataDeEntrada = txtDataDeEntrada.SelectedDate.Value;
             processoDeMarca.DataDeConcessao = txtDataDeConcessao.SelectedDate;
@@ -155,6 +150,10 @@ namespace MP.Client.MP
             var inconsitencias = new List<string>();
 
             if (ctrlMarcas1.MarcaSelecionada == null) inconsitencias.Add("É necessário informar uma marca.");
+
+            if (!txtProcesso.Value.HasValue) inconsitencias.Add("É necessário informar o processo.");
+
+            if (!txtDataDeEntrada.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de entrada.");
 
             if (ctrlProcurador.ProcuradorSelecionado == null ) inconsitencias.Add("É necessário informar um procurador.");
 

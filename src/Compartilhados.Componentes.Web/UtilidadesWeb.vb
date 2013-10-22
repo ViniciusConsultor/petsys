@@ -140,8 +140,9 @@ Public Class UtilidadesWeb
         Dim Js As New StringBuilder
 
         Js.AppendLine("<script language='javascript' type='text/javascript'>")
+        Js.AppendLine("var desktop = this.parent.MyDesktop.desktop;")
         Js.AppendLine("var win; ")
-        Js.AppendLine(" win = new Ext.Window({ ")
+        Js.AppendLine(" win = desktop.createWindow({ ")
         Js.AppendLine(String.Concat(" id: '", Guid.NewGuid.ToString, "',"))
         Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
         Js.AppendLine("layout:  'fit',")

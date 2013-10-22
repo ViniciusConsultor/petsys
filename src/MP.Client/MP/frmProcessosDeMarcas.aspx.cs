@@ -52,9 +52,9 @@ namespace MP.Client.MP
 
             CarregaOpcoesDeFiltro();
             EscondaTodosOsPanelsDeFiltro();
-            pnlProtocolo.Visible = true;
-            cboTipoDeFiltro.SelectedValue = "8";
-
+            pnlProcesso.Visible = true;
+            cboTipoDeFiltro.SelectedValue = "7";
+            
             ctrlApresentacao1.Inicializa();
             ctrlNCL1.Inicializa();
             ctrlNatureza1.Inicializa();
@@ -87,8 +87,6 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza", "5"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("NCL", "6"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo", "7"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Protocolo", "8"));
-
         }
 
 
@@ -119,9 +117,6 @@ namespace MP.Client.MP
                 case "7":
                     pnlProcesso.Visible = true;
                     break;
-                case "8":
-                    pnlProtocolo.Visible = true;
-                    break;
             }
         }
 
@@ -135,8 +130,6 @@ namespace MP.Client.MP
             pnlNatureza.Visible = false;
             pnlNCL.Visible = false;
             pnlProcesso.Visible = false;
-            pnlProcesso.Visible = false;
-            pnlProtocolo.Visible = false;
         }
 
 
@@ -296,30 +289,7 @@ namespace MP.Client.MP
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
-
-        protected void btnPesquisarPorProtoloco_OnClick(object sender, ImageClickEventArgs e)
-        {
-            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
-            {
-                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
-                return;
-            }
-
-
-            if (!txtProtocolo.Value.HasValue)
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe um número de protocolo."), false);
-                return;
-            }
-
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorProtocolo>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-            filtro.ValorDoFiltro = txtProtocolo.Text;
-            FiltroAplicado = filtro;
-            MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
-        }
-
+        
         private bool OpcaoDeOperacaodeFiltroEstaSelecionada()
         {
             return !string.IsNullOrEmpty(ctrlOperacaoFiltro1.Codigo);
@@ -335,8 +305,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURLDeCadastroDeMarca();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanelaModal(URL, "Novo processo de marca", 650,
-                                                                               450), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Novo processo de marca", 800, 600), false);
         }
 
         private string ObtenhaURLDeCadastroDeMarca()
@@ -353,8 +322,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURLLeituraDeRevistaDeMarca();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanelaModal(URL, "Leitura da revista de marca", 650,
-                                                                               450), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Leitura da revista de marca", 800, 600), false);
         }
 
         private void Recarregue()
@@ -431,9 +399,9 @@ namespace MP.Client.MP
                     var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDeMarca.aspx",
                                             "?Id=", id);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.ExibeJanelaModal(url,
+                                                        UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar processo de marca",
-                                                                                       650, 450), false);
+                                                                                       800, 600), false);
                     break;
             }
         }

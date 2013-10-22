@@ -237,7 +237,7 @@ Partial Public Class cdCliente
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
         URL = String.Concat(URL, "Nucleo/cdGrupoDeAtividade.aspx")
 
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de grupo de atividade", 650, 450), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de grupo de atividade", 800, 600), False)
     End Sub
 
 End Class

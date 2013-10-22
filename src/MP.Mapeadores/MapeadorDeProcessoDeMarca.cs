@@ -27,20 +27,14 @@ namespace MP.Mapeadores
             processoDeMarca.IdProcessoDeMarca = GeradorDeID.getInstancia().getProximoID();
 
             sql.Append("INSERT INTO MP_PROCESSOMARCA (");
-            sql.Append("IDPROCESSO, IDMARCA, PROTOCOLO, PROCESSO,");
+            sql.Append("IDPROCESSO, IDMARCA, PROCESSO,");
             sql.Append("DATAENTRADA, DATACONCESSAO, PROCESSOEHTERCEIRO, IDDESPACHO,");
             sql.Append("IDPROCURADOR, SITUACAO)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(processoDeMarca.IdProcessoDeMarca.Value, ", "));
             sql.Append(String.Concat(processoDeMarca.Marca.IdMarca.Value, ", "));
 
-            sql.Append(processoDeMarca.Protocolo.HasValue
-                           ? String.Concat(processoDeMarca.Protocolo.Value, ", ")
-                           : "NULL, ");
-            
-            sql.Append(processoDeMarca.Processo.HasValue
-                           ? String.Concat(processoDeMarca.Processo.Value, ", ")
-                           : "NULL, ");
+            sql.Append(String.Concat(processoDeMarca.Processo, ", "));
 
             sql.Append(String.Concat(processoDeMarca.DataDeEntrada.ToString("yyyyMMdd"),", "));
 
@@ -54,10 +48,7 @@ namespace MP.Mapeadores
                            ? String.Concat(processoDeMarca.Despacho.IdDespacho, ", ")
                            : "NULL, ");
 
-            sql.Append(processoDeMarca.Procurador != null
-                           ? String.Concat(processoDeMarca.Procurador.Pessoa.ID.Value, ", ")
-                           : "NULL, ");
-
+            sql.Append(processoDeMarca.Procurador.Pessoa.ID.Value);
 
             sql.Append(processoDeMarca.SituacaoDoProcesso != null
                ? String.Concat(processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso, ")")
@@ -77,15 +68,8 @@ namespace MP.Mapeadores
             sql.Append("UPDATE MP_PROCESSOMARCA ");
             sql.Append("SET IDMARCA = " + processoDeMarca.Marca.IdMarca + ", ");
 
+            sql.Append(String.Concat("PROCESSO = ", processoDeMarca.Processo, ", "));
             
-            sql.Append(processoDeMarca.Protocolo.HasValue
-                           ? String.Concat("PROTOCOLO = ",processoDeMarca.Protocolo.Value, ", ")
-                           : "PROTOCOLO = NULL, ");
-            
-            sql.Append(processoDeMarca.Processo.HasValue
-                           ? String.Concat("PROCESSO = ",processoDeMarca.Processo.Value, ", ")
-                           : "PROCESSO = NULL, ");
-
             sql.Append(String.Concat("DATAENTRADA = ",processoDeMarca.DataDeEntrada.ToString("yyyyMMdd"),", "));
 
             sql.Append(processoDeMarca.DataDeConcessao.HasValue
@@ -98,9 +82,7 @@ namespace MP.Mapeadores
                            ? String.Concat("IDDESPACHO = ",processoDeMarca.Despacho.IdDespacho, ", ")
                            : "IDDESPACHO = NULL, ");
 
-            sql.Append(processoDeMarca.Procurador != null
-                           ? String.Concat("IDPROCURADOR = ",processoDeMarca.Procurador.Pessoa.ID.Value, ", ")
-                           : "IDPROCURADOR = NULL, ");
+            sql.Append(String.Concat("IDPROCURADOR = ", processoDeMarca.Procurador.Pessoa.ID.Value, ", "));
 
 
             sql.Append(processoDeMarca.SituacaoDoProcesso != null
@@ -138,7 +120,7 @@ namespace MP.Mapeadores
 
             sql.Append(filtro.ObtenhaQuery());
 
-            sql.AppendLine(" ORDER BY IDPROCESSO");
+            sql.AppendLine(" ORDER BY DATAENTRADA DESC");
 
             var processos = new List<IProcessoDeMarca>();
 
@@ -168,12 +150,8 @@ namespace MP.Mapeadores
             processoDeMarca.Marca = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDMARCA"));
 
             processoDeMarca.IdProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCESSO");
-
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "PROTOCOLO"))
-                processoDeMarca.Protocolo = UtilidadesDePersistencia.GetValorLong(leitor, "PROTOCOLO");
-
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "PROCESSO"))
-                processoDeMarca.Processo = UtilidadesDePersistencia.GetValorLong(leitor, "PROCESSO");
+            
+            processoDeMarca.Processo = UtilidadesDePersistencia.GetValorLong(leitor, "PROCESSO");
 
             processoDeMarca.DataDeEntrada = UtilidadesDePersistencia.getValorDate(leitor, "DATAENTRADA").Value;
             
@@ -186,8 +164,7 @@ namespace MP.Mapeadores
                 processoDeMarca.SituacaoDoProcesso =
                     SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "SITUACAO"));
 
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "IDPROCURADOR"))
-                processoDeMarca.Procurador =  FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCURADOR"));
+            processoDeMarca.Procurador =  FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCURADOR"));
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "IDDESPACHO"))
                 processoDeMarca.Despacho = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IDespachoDeMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDDESPACHO"));

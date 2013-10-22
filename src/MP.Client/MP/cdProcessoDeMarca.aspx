@@ -32,17 +32,6 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label7" runat="server" Text="Protocolo"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtProtocolo" runat="server" Width="87px" Type="Number">
-                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
-                                        </NumberFormat>
-                                    </telerik:RadNumericTextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="th3">
                                     <asp:Label ID="Label2" runat="server" Text="Data de entrada"></asp:Label>
                                 </td>
                                 <td class="td">

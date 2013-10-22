@@ -80,7 +80,7 @@ Partial Public Class ctrlPessoa
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de pessoas", 650, 480), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de pessoas", 800, 600), False)
     End Sub
 
     Private Sub btnDetalhar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnDetalhar.Click
@@ -88,7 +88,7 @@ Partial Public Class ctrlPessoa
 
         URL = ObtenhaURL()
         URL = String.Concat(URL, "?Id=", PessoaSelecionada.ID.Value.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de pessoas", 650, 480), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de pessoas", 800, 600), False)
     End Sub
 
     Private Function ObtenhaURL() As String

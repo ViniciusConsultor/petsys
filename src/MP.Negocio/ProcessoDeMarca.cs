@@ -17,11 +17,7 @@ namespace MP.Negocio
         {
             get; set; }
 
-        public long? Protocolo
-        {
-            get; set; }
-
-        public long? Processo
+        public long Processo
         {
             get; set; }
 
