@@ -3,7 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlApresentacao.ascx" TagName="ctrlApresentacao" TagPrefix="uc1" %>
-<%@ Register Src="ctrlNatureza.ascx" TagName="ctrlNatureza" TagPrefix="uc2" %>
+<%@ Register Src="ctrlNaturezaDeMarca.ascx" TagName="ctrlNaturezaDeMarca" TagPrefix="uc2" %>
 <%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc3" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
@@ -91,7 +91,7 @@
                                     <asp:Label ID="Label6" runat="server" Text="Natureza"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <uc2:ctrlNatureza ID="ctrlNatureza1" runat="server" />
+                                    <uc2:ctrlNaturezaDeMarca ID="ctrlNatureza1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorNatureza" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar"  OnClick="btnPesquisarPorNatureza_OnClick"/>
                                 </td>

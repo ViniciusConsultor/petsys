@@ -74,7 +74,7 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public Natureza Natureza
+        public NaturezaDeMarca Natureza
         {
             get
             {

@@ -1,5 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlNatureza.ascx.cs"
-    Inherits="MP.Client.MP.ctrlNatureza" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlNaturezaDeMarca.ascx.cs" Inherits="MP.Client.MP.ctrlNaturezaDeMarca" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadComboBox ID="cboNatureza" runat="server" EmptyMessage="Selecione uma natureza"
     Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
@@ -28,3 +27,4 @@
         </table>
     </ItemTemplate>
 </telerik:RadComboBox>
+

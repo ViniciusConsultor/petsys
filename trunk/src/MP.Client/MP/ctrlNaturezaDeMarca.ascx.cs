@@ -10,7 +10,7 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class ctrlNatureza : System.Web.UI.UserControl
+    public partial class ctrlNaturezaDeMarca : System.Web.UI.UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,7 +40,7 @@ namespace MP.Client.MP
 
         private void CarregueCombo()
         {
-            foreach (var natureza in Natureza.ObtenhaTodas())
+            foreach (var natureza in NaturezaDeMarca.ObtenhaTodas())
             {
                 var item = new RadComboBoxItem(natureza.Nome, natureza.Codigo.ToString());
 

@@ -179,12 +179,12 @@
     <Compile Include="MP\ctrlMarcas.ascx.designer.cs">
       <DependentUpon>ctrlMarcas.ascx</DependentUpon>
     </Compile>
-    <Compile Include="MP\ctrlNatureza.ascx.cs">
-      <DependentUpon>ctrlNatureza.ascx</DependentUpon>
+    <Compile Include="MP\ctrlNaturezaDeMarca.ascx.cs">
+      <DependentUpon>ctrlNaturezaDeMarca.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MP\ctrlNatureza.ascx.designer.cs">
-      <DependentUpon>ctrlNatureza.ascx</DependentUpon>
+    <Compile Include="MP\ctrlNaturezaDeMarca.ascx.designer.cs">
+      <DependentUpon>ctrlNaturezaDeMarca.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlNCL.ascx.cs">
       <DependentUpon>ctrlNCL.ascx</DependentUpon>
@@ -281,7 +281,7 @@
     <Content Include="MP\ctrlDespachoDePatentes.ascx" />
     <Content Include="MP\ctrlInventor.ascx" />
     <Content Include="MP\ctrlMarcas.ascx" />
-    <Content Include="MP\ctrlNatureza.ascx" />
+    <Content Include="MP\ctrlNaturezaDeMarca.ascx" />
     <Content Include="MP\ctrlNCL.ascx" />
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />

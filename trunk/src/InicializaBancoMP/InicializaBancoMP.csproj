@@ -38,6 +38,8 @@
     <StartupObject>InicializaBancoMP.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Compartilhados, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00532d988ee8a0bc, processorArchitecture=MSIL" />
+    <Reference Include="Core.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e1e9fd483115ebd, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmPrincipal.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

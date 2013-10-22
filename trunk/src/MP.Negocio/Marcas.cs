@@ -15,7 +15,7 @@ namespace MP.Negocio
         public NCL NCL { get; set; }
         public Apresentacao Apresentacao { get; set; }
         public ICliente Cliente { get; set; }
-        public Natureza Natureza { get; set; }
+        public NaturezaDeMarca Natureza { get; set; }
         public string DescricaoDaMarca { get; set; }
         public string EspecificacaoDeProdutosEServicos { get; set; }
         public string ImagemDaMarca { get; set; }
