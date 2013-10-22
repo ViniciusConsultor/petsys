@@ -114,6 +114,7 @@ namespace MP.Client.MP
             ctrlPatente.ShowDropDownOnTextboxClick = true;
             ctrlPatente.AutoPostBack = true;
             ctrlTipoDePatente.Inicializa();
+            ctrlTipoDePatente.BotaoNovoEhVisivel = true;
             ctrlCliente.Inicializa();
             ctrlCliente.BotaoNovoEhVisivel = true;
             ctrlInventor.Inicializa();

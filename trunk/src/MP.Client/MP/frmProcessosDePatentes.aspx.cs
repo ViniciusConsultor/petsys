@@ -217,7 +217,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURLCadastrodePatente();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Novo processo de patente", 800, 600), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Novo processo de patente", 800, 550), false);
         }
 
 
@@ -229,12 +229,20 @@ namespace MP.Client.MP
 
         private string ObtenhaURLLeituraDeRevistaDePatente()
         {
-            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx");
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmLeituraRevistaPatente.aspx");
         }
 
         private void Recarregue()
         {
             MostraProcessos(FiltroAplicado, grdProcessosDePatentes.PageSize, 0);
+        }
+
+        private void AbraLeituraDeRevista()
+        {
+
+            var URL = ObtenhaURLLeituraDeRevistaDePatente();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanela(URL, "Leitura da revista de patente", 800, 550), false);
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -248,7 +256,7 @@ namespace MP.Client.MP
                     Recarregue();
                     break;
                 case "btnLerRevista":
-
+                    AbraLeituraDeRevista();
                     break;
 
             }
@@ -286,10 +294,8 @@ namespace MP.Client.MP
                     try
                     {
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
-                        {
                             servico.Excluir(id);
-                        }
-
+                        
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                                 UtilidadesWeb.MostraMensagemDeInformacao(
                                                                     "Processo de patente excluído com sucesso."), false);
@@ -308,7 +314,7 @@ namespace MP.Client.MP
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar processo de patente",
-                                                                                       800, 600), false);
+                                                                                       800, 550), false);
                     break;
             }
         }

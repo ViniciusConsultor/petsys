@@ -9,8 +9,7 @@ namespace MP.Interfaces.Negocio
     {
         Nullable<long> IdProcessoDePatente { get; set; }
         IPatente Patente { get; set; }
-        Nullable<long> Processo { get; set; }
-        Nullable<long> Protocolo { get; set; }
+        string Processo { get; set; }
         DateTime DataDeEntrada { get; set; }
         bool ProcessoEhDeTerceiro { get; set; }
         Nullable<DateTime> DataDaConcessao { get; set; }
@@ -21,11 +20,3 @@ namespace MP.Interfaces.Negocio
         string NumeroPCT { get; set; } 
     }
 }
-
-
-
-    //IDDESPACHO						BIGINT					NULL,
-	
-    //NUMEROWO						VARCHAR(20)				NULL,
-    //DATA_DEPOSITOPCT				INT						NULL,
-    //DATA_PUBLICACAOPCT				INT						NULL,

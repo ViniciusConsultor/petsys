@@ -143,7 +143,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Tipos de Patentes", 800, 600),
+                                                UtilidadesWeb.ExibeJanela(URL, "Tipos de Patentes", 800, 550),
                                                 false);
         }
 

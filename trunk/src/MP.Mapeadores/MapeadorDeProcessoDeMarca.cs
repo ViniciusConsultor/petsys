@@ -48,7 +48,7 @@ namespace MP.Mapeadores
                            ? String.Concat(processoDeMarca.Despacho.IdDespacho, ", ")
                            : "NULL, ");
 
-            sql.Append(processoDeMarca.Procurador.Pessoa.ID.Value);
+            sql.Append(String.Concat(processoDeMarca.Procurador != null ? processoDeMarca.Procurador.Pessoa.ID.Value.ToString() : "NULL", ", "));
 
             sql.Append(processoDeMarca.SituacaoDoProcesso != null
                ? String.Concat(processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.Value, ")")
@@ -82,24 +82,15 @@ namespace MP.Mapeadores
                            ? String.Concat("IDDESPACHO = ",processoDeMarca.Despacho.IdDespacho, ", ")
                            : "IDDESPACHO = NULL, ");
 
-            sql.Append(String.Concat("IDPROCURADOR = ", processoDeMarca.Procurador.Pessoa.ID.Value, ", "));
-
-
+            sql.Append(String.Concat("IDPROCURADOR = ", processoDeMarca.Procurador != null ? processoDeMarca.Procurador.Pessoa.ID.Value.ToString() : "NULL", ", "));
+            
             sql.Append(processoDeMarca.SituacaoDoProcesso != null
                ? String.Concat("SITUACAO = ",processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.Value)
                : "SITUACAO = NULL");
 
             sql.Append(" WHERE IDPROCESSO = " + processoDeMarca.IdProcessoDeMarca);
 
-            try
-            {
-                DBHelper.ExecuteNonQuery(sql.ToString());
-            }
-            catch (Exception ex)
-            {
-                
-                throw;
-            }
+            DBHelper.ExecuteNonQuery(sql.ToString());
             
         }
 
