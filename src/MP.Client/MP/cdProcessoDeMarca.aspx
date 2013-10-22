@@ -5,7 +5,7 @@
 <%@ Register Src="ctrlMarcas.ascx" TagName="ctrlMarcas" TagPrefix="uc1" %>
 <%@ Register Src="ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc2" %>
 <%@ Register Src="ctrlProcurador.ascx" TagName="ctrlProcurador" TagPrefix="uc3" %>
-<%@ Register Src="ctrlSituacaoDoProcesso.ascx" TagName="ctrlSituacaoDoProcesso" TagPrefix="uc4" %>
+<%@ Register Src="ctrlSituacaoDoProcessoDeMarca.ascx" TagName="ctrlSituacaoDoProcessoDeMarca" TagPrefix="uc4" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -109,7 +109,7 @@
                                     <asp:Label ID="Label6" runat="server" Text="Situação do processo"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <uc4:ctrlSituacaoDoProcesso ID="ctrlSituacao" runat="server" />
+                                    <uc4:ctrlSituacaoDoProcessoDeMarca ID="ctrlSituacao" runat="server" />
                                 </td>
                             </tr>
                         </table>

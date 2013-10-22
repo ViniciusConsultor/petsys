@@ -136,7 +136,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlSituacaoDoProcesso ctrlSituacaoDoProcesso;
+        protected global::MP.Client.MP.ctrlSituacaoDoProcessoDeMarca ctrlSituacaoDoProcesso;
         
         /// <summary>
         /// Label8 control.

@@ -184,7 +184,7 @@ namespace MP.Mapeadores
             
             if (!UtilidadesDePersistencia.EhNulo(leitor, "SITUACAO"))
                 processoDeMarca.SituacaoDoProcesso =
-                    SituacaoDoProcesso.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "SITUACAO"));
+                    SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "SITUACAO"));
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "IDPROCURADOR"))
                 processoDeMarca.Procurador =  FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCURADOR"));

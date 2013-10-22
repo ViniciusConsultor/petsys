@@ -6,26 +6,26 @@ using System.Text;
 namespace MP.Interfaces.Negocio
 {
     [Serializable]
-    public class SituacaoDoProcesso
+    public class SituacaoDoProcessoDeMarca
     {
         private int _codigoSituacaoProcesso;
         private string _descricaoSituacao;
 
         // Classificação da situação do processo
 
-        public static SituacaoDoProcesso Protocolada = new SituacaoDoProcesso(1, "Protocolada");
-        public static SituacaoDoProcesso Pendente = new SituacaoDoProcesso(2, "Pendente");
-        public static SituacaoDoProcesso Depositada = new SituacaoDoProcesso(3, "Depositada");
-        public static SituacaoDoProcesso Indeferida = new SituacaoDoProcesso(4, "Indeferida");
-        public static SituacaoDoProcesso Deferida = new SituacaoDoProcesso(5, "Deferida");
-        public static SituacaoDoProcesso Registrada = new SituacaoDoProcesso(6, "Registrada");
-        public static SituacaoDoProcesso Caducidade = new SituacaoDoProcesso(7, "Caducidade");
-        public static SituacaoDoProcesso Abandonada = new SituacaoDoProcesso(8, "Abandonada");
-        public static SituacaoDoProcesso Extinta = new SituacaoDoProcesso(9, "Extinta");
-        public static SituacaoDoProcesso Arquivada = new SituacaoDoProcesso(10, "Arquivada");
-        public static SituacaoDoProcesso RenovPend = new SituacaoDoProcesso(11, "Renov. Pend.");
+        public static SituacaoDoProcessoDeMarca Protocolada = new SituacaoDoProcessoDeMarca(1, "Protocolada");
+        public static SituacaoDoProcessoDeMarca Pendente = new SituacaoDoProcessoDeMarca(2, "Pendente");
+        public static SituacaoDoProcessoDeMarca Depositada = new SituacaoDoProcessoDeMarca(3, "Depositada");
+        public static SituacaoDoProcessoDeMarca Indeferida = new SituacaoDoProcessoDeMarca(4, "Indeferida");
+        public static SituacaoDoProcessoDeMarca Deferida = new SituacaoDoProcessoDeMarca(5, "Deferida");
+        public static SituacaoDoProcessoDeMarca Registrada = new SituacaoDoProcessoDeMarca(6, "Registrada");
+        public static SituacaoDoProcessoDeMarca Caducidade = new SituacaoDoProcessoDeMarca(7, "Caducidade");
+        public static SituacaoDoProcessoDeMarca Abandonada = new SituacaoDoProcessoDeMarca(8, "Abandonada");
+        public static SituacaoDoProcessoDeMarca Extinta = new SituacaoDoProcessoDeMarca(9, "Extinta");
+        public static SituacaoDoProcessoDeMarca Arquivada = new SituacaoDoProcessoDeMarca(10, "Arquivada");
+        public static SituacaoDoProcessoDeMarca RenovPend = new SituacaoDoProcessoDeMarca(11, "Renov. Pend.");
 
-        private static IList<SituacaoDoProcesso> SituacoesDoProcesso = new List<SituacaoDoProcesso>()
+        private static IList<SituacaoDoProcessoDeMarca> SituacoesDoProcesso = new List<SituacaoDoProcessoDeMarca>()
                                                                            {
                                                                                Protocolada,
                                                                                Pendente,
@@ -40,7 +40,7 @@ namespace MP.Interfaces.Negocio
                                                                                RenovPend
                                                                            };
 
-        private SituacaoDoProcesso(int codigoSituacaoProcesso, string descricao)
+        private SituacaoDoProcessoDeMarca(int codigoSituacaoProcesso, string descricao)
         {
             CodigoSituacaoProcesso = codigoSituacaoProcesso;
             DescricaoSituacao = descricao;
@@ -58,19 +58,19 @@ namespace MP.Interfaces.Negocio
             private set { _descricaoSituacao = value; }
         }
 
-        public static IList<SituacaoDoProcesso> ObtenhaSituacoesDoProcesso()
+        public static IList<SituacaoDoProcessoDeMarca> ObtenhaSituacoesDoProcesso()
         {
             return SituacoesDoProcesso;
         }
 
-        public static SituacaoDoProcesso ObtenhaPorCodigo(int codigo)
+        public static SituacaoDoProcessoDeMarca ObtenhaPorCodigo(int codigo)
         {
             return ObtenhaSituacoesDoProcesso().FirstOrDefault(situacao => situacao.CodigoSituacaoProcesso.Equals(codigo));
         }
         
         public override bool Equals(object obj)
         {
-            var objeto = obj as SituacaoDoProcesso;
+            var objeto = obj as SituacaoDoProcessoDeMarca;
 
             return objeto != null && objeto.CodigoSituacaoProcesso == CodigoSituacaoProcesso;
         }

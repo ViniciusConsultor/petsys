@@ -1,5 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlSituacaoDoProcesso.ascx.cs"
-    Inherits="MP.Client.MP.ctrlSituacaoDoProcesso" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlSituacaoDoProcessoDeMarca.ascx.cs" Inherits="MP.Client.MP.ctrlSituacaoDoProcessoDeMarca" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadComboBox ID="cboSituacaoDoProcesso" runat="server" EmptyMessage="Selecione um tipo de situação"
     Width="90%" Skin="Vista" CausesValidation="False">

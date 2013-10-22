@@ -51,7 +51,7 @@ namespace MP.Negocio
         {
             get; set; }
 
-        public SituacaoDoProcesso SituacaoDoProcesso
+        public SituacaoDoProcessoDeMarca SituacaoDoProcesso
         {
             get; set; }
     }

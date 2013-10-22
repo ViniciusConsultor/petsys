@@ -4,15 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Compartilhados.Fabricas;
-using MP.Interfaces.Negocio;
-using MP.Interfaces.Servicos;
-using Telerik.Web.UI;
 using Compartilhados.Componentes.Web;
+using MP.Interfaces.Negocio;
+using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class ctrlSituacaoDoProcesso : System.Web.UI.UserControl
+    public partial class ctrlSituacaoDoProcessoDeMarca : System.Web.UI.UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,18 +28,19 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controle);
             cboSituacaoDoProcesso.ClearSelection();
         }
-        
+
         public string Codigo
         {
             get { return cboSituacaoDoProcesso.SelectedValue; }
             set
-            {cboSituacaoDoProcesso.SelectedValue = value;
+            {
+                cboSituacaoDoProcesso.SelectedValue = value;
             }
         }
 
         private void CarregueCombo()
         {
-            foreach (var situacao in SituacaoDoProcesso.ObtenhaSituacoesDoProcesso())
+            foreach (var situacao in SituacaoDoProcessoDeMarca.ObtenhaSituacoesDoProcesso())
             {
                 var item = new RadComboBoxItem(situacao.DescricaoSituacao, situacao.CodigoSituacaoProcesso.ToString());
 
