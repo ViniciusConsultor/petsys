@@ -97,9 +97,10 @@ namespace MP.Client.MP
                 ctrlProcurador.Nome = processoDeMarca.Procurador.Pessoa.Nome;
             }
 
-            if (processoDeMarca.SituacaoDoProcesso != null) 
-                ctrlSituacao.Codigo = processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.ToString();
-
+            ctrlSituacao.Codigo = processoDeMarca.SituacaoDoProcesso != null &&
+                                  processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.HasValue
+                                      ? processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.ToString()
+                                      : "NULL";
         }
 
         private void LimpaTela()

@@ -101,14 +101,18 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(radicalMarcas.DescricaoRadical), "', "));
             sql.Append(String.Concat("'", radicalMarcas.IdMarca.Value.ToString(), "', "));
 
-            if (radicalMarcas.NCL != null && string.IsNullOrEmpty(radicalMarcas.NCL.Codigo.ToString()))
-            {
-                sql.Append(String.Concat("'", radicalMarcas.NCL.Codigo.ToString(), "') "));
-            }
-            else
-            {
-                sql.Append(String.Concat("'", 0, "') "));
-            }
+            sql.Append(radicalMarcas.NCL != null && radicalMarcas.NCL.Codigo != 0
+                           ? String.Concat("", radicalMarcas.NCL.Codigo, ") ")
+                           : "NULL )");
+
+            //if (radicalMarcas.NCL != null && string.IsNullOrEmpty(radicalMarcas.NCL.Codigo.ToString()))
+            //{
+            //    sql.Append(String.Concat("'", radicalMarcas.NCL.Codigo.ToString(), "') "));
+            //}
+            //else
+            //{
+            //    sql.Append(String.Concat("'", 0, "') "));
+            //}
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -124,14 +128,9 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("DESCRICAORADICAL = '", UtilidadesDePersistencia.FiltraApostrofe(radicalMarcas.DescricaoRadical), "' , "));
             sql.Append(String.Concat("IDMARCA = '", radicalMarcas.IdMarca.Value.ToString(), "' , "));
 
-            if(radicalMarcas.NCL != null && radicalMarcas.NCL.Codigo != 0)
-            {
-                sql.Append(String.Concat("CODIGONCL = '", radicalMarcas.NCL.Codigo.ToString(), "' , "));
-            }
-            else
-            {
-                sql.Append(String.Concat("CODIGONCL = '", 0, "' , "));
-            }
+            sql.Append(radicalMarcas.NCL != null && radicalMarcas.NCL.Codigo != 0
+                           ? String.Concat("CODIGONCL = ", radicalMarcas.NCL.Codigo, " ")
+                           : "CODIGONCL = NULL ");
 
             sql.Append(String.Concat("WHERE IDRADICAL = ", radicalMarcas.IdRadicalMarca.Value.ToString()));
 

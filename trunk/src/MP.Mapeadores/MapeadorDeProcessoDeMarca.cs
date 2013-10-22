@@ -51,7 +51,7 @@ namespace MP.Mapeadores
             sql.Append(processoDeMarca.Procurador.Pessoa.ID.Value);
 
             sql.Append(processoDeMarca.SituacaoDoProcesso != null
-               ? String.Concat(processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso, ")")
+               ? String.Concat(processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.Value, ")")
                : "NULL)");
 
 
@@ -86,7 +86,7 @@ namespace MP.Mapeadores
 
 
             sql.Append(processoDeMarca.SituacaoDoProcesso != null
-               ? String.Concat("SITUACAO = ",processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso)
+               ? String.Concat("SITUACAO = ",processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.Value)
                : "SITUACAO = NULL");
 
             sql.Append(" WHERE IDPROCESSO = " + processoDeMarca.IdProcessoDeMarca);

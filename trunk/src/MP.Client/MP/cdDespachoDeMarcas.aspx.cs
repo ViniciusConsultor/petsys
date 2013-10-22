@@ -299,8 +299,11 @@ namespace MP.Client.MP
 
             rblConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
 
-            if (despachoDeMarcas.SituacaoProcesso != null)
-            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.ToString();
+            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.SituacaoProcesso != null &&
+                                            despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.HasValue
+                                                ? despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.Value.
+                                                      ToString()
+                                                : "NULL";
 
             ExibaTelaConsultar();
         }
