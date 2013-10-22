@@ -87,6 +87,7 @@
     <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
     <Compile Include="LazyLoad\TipoDePatenteLazyLoad.cs" />
     <Compile Include="Marcas.cs" />
+    <Compile Include="NaturezaPatente.cs" />
     <Compile Include="Patente.cs" />
     <Compile Include="AnuidadePatente.cs" />
     <Compile Include="ClassificacaoPatente.cs" />
