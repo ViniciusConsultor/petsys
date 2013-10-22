@@ -2,7 +2,7 @@
     CodeBehind="cdMarcas.aspx.cs" Inherits="MP.Client.MP.cdMarcas" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="~/MP/ctrlNatureza.ascx" TagName="ctrlNatureza" TagPrefix="uc1" %>
+<%@ Register Src="~/MP/ctrlNaturezaDeMarca.ascx" TagName="ctrlNaturezaDeMarca" TagPrefix="uc1" %>
 <%@ Register Src="~/MP/ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc2" %>
 <%@ Register Src="~/MP/ctrlApresentacao.ascx" TagName="ctrlApresentacao" TagPrefix="uc3" %>
 <%@ Register Src="~/MP/ctrlMarcas.ascx" TagName="ctrlMarcas" TagPrefix="uc4" %>
@@ -80,7 +80,7 @@
                                             <asp:Label ID="Label3" runat="server" Text="Natureza"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <uc1:ctrlNatureza ID="ctrlNatureza" runat="server" />
+                                            <uc1:ctrlNaturezaDeMarca ID="ctrlNatureza" runat="server" />
                                         </td>
                                     </tr>
                                     <tr>

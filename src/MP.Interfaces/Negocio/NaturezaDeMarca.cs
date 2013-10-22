@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting;
 using System.Text;
 
 namespace MP.Interfaces.Negocio
 {
     [Serializable]
-    public class Natureza
+    public  class NaturezaDeMarca
     {
-        private int _codigo;
+         private int _codigo;
         private string _nome;
 
-        public static Natureza DeProduto = new Natureza(1, "De produto");
-        public static Natureza DeServico = new Natureza(2, "De serviço");
-        public static Natureza Coletiva = new Natureza(3,"Coletiva");
-        public static Natureza Certificacao = new Natureza(4, "Certificação");
+        public static NaturezaDeMarca DeProduto = new NaturezaDeMarca(1, "De produto");
+        public static NaturezaDeMarca DeServico = new NaturezaDeMarca(2, "De serviço");
+        public static NaturezaDeMarca Coletiva = new NaturezaDeMarca(3, "Coletiva");
+        public static NaturezaDeMarca Certificacao = new NaturezaDeMarca(4, "Certificação");
 
-        private static IList<Natureza> naturezas = new List<Natureza>() {DeProduto, DeServico, Coletiva, Certificacao};
-        
-        private Natureza(int codigo, string nome)
+        private static IList<NaturezaDeMarca> naturezas = new List<NaturezaDeMarca>() { DeProduto, DeServico, Coletiva, Certificacao };
+
+        private NaturezaDeMarca(int codigo, string nome)
         {
             Codigo = codigo;
             Nome = nome;
@@ -37,19 +36,19 @@ namespace MP.Interfaces.Negocio
             private set { _nome = value; }
         }
 
-        public static IList<Natureza> ObtenhaTodas()
+        public static IList<NaturezaDeMarca> ObtenhaTodas()
         {
             return naturezas;
         }
 
-        public static Natureza ObtenhaPorCodigo(int codigo)
+        public static NaturezaDeMarca ObtenhaPorCodigo(int codigo)
         {
             return naturezas.FirstOrDefault(natureza => natureza.Codigo.Equals(codigo));
         }
 
         public override bool Equals(object obj)
         {
-            var objeto = obj as Natureza;
+            var objeto = obj as NaturezaDeMarca;
 
             return objeto != null && objeto.Codigo == Codigo;
         }

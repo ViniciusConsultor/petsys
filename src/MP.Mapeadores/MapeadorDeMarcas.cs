@@ -71,7 +71,7 @@ namespace MP.Mapeadores
                     marca.ImagemDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ImagemDaMarca");
 
                     marca.Natureza =
-                        Natureza.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Natureza"));
+                        NaturezaDeMarca.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Natureza"));
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "ObservacaoDaMarca"))
                     marca.ObservacaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ObservacaoDaMarca");

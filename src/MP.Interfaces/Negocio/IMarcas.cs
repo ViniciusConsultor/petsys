@@ -12,7 +12,7 @@ namespace MP.Interfaces.Negocio
         NCL NCL { get; set; }
         Apresentacao Apresentacao { get; set; }
         ICliente Cliente { get; set; }
-        Natureza Natureza { get; set; }
+        NaturezaDeMarca Natureza { get; set; }
         string DescricaoDaMarca { get; set; }
         string EspecificacaoDeProdutosEServicos { get; set; }
         string ImagemDaMarca { get; set; }

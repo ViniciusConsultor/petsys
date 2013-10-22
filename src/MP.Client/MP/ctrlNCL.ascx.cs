@@ -45,7 +45,7 @@ namespace MP.Client.MP
                 var item = new RadComboBoxItem(ncl.Codigo.ToString(), ncl.Codigo.ToString());
 
                 item.Attributes.Add("Descricao", ncl.Descricao);
-                item.Attributes.Add("Natureza", ncl.Natureza.Nome);
+                item.Attributes.Add("Natureza", ncl.NaturezaDeMarca.Nome);
 
                 cboNCL.Items.Add(item);
                 item.DataBind();

@@ -10,7 +10,7 @@
 namespace MP.Client.MP {
     
     
-    public partial class ctrlNatureza {
+    public partial class ctrlNaturezaDeMarca {
         
         /// <summary>
         /// cboNatureza control.
