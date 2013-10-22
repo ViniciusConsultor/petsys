@@ -166,7 +166,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanelaModal(URL, "Despacho de marcas", 650, 480),
+                                                UtilidadesWeb.ExibeJanela(URL, "Despacho de marcas", 800, 600),
                                                 false);
         }
 

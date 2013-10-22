@@ -153,7 +153,7 @@ namespace MP.Client.MP
                 despachoDeMarcas.IdDespacho = Convert.ToInt64(ViewState[ID_OBJETO]);
             }
 
-            despachoDeMarcas.CodigoDespacho = this.txtCodigo.Text;
+            despachoDeMarcas.CodigoDespacho = txtCodigo.Text;
             despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
             despachoDeMarcas.Registro = rblConcessaoDeRegistro.SelectedValue != "0";
 

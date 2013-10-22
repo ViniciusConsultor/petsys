@@ -20,7 +20,7 @@ namespace MP.Mapeadores
 
             sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
             sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO Registro ");
-            sql.Append("FROM MP_DESPACHO ");
+            sql.Append("FROM MP_DESPACHO_MARCA ");
             sql.Append("WHERE IDDESPACHO = " + idDespachoDeMarcas);
 
             IDespachoDeMarcas despachoDeMarcas = null;
@@ -70,7 +70,7 @@ namespace MP.Mapeadores
 
             sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
             sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO  Registro ");
-            sql.Append("FROM MP_DESPACHO ");
+            sql.Append("FROM MP_DESPACHO_MARCA ");
 
             if (!string.IsNullOrEmpty(codigo))
             {
@@ -93,7 +93,7 @@ namespace MP.Mapeadores
 
             despachoDeMarcas.IdDespacho = GeradorDeID.getInstancia().getProximoID();
 
-            sql.Append("INSERT INTO MP_DESPACHO (");
+            sql.Append("INSERT INTO MP_DESPACHO_MARCA (");
             sql.Append("IDDESPACHO, CODIGO_DESPACHO, DETALHE_DESPACHO, IDSITUACAO_PROCESSO, REGISTRO) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(despachoDeMarcas.IdDespacho.Value.ToString(), ", "));
@@ -112,7 +112,7 @@ namespace MP.Mapeadores
 
             DBHelper = ServerUtils.getDBHelper();
 
-            sql.Append("UPDATE MP_DESPACHO SET ");
+            sql.Append("UPDATE MP_DESPACHO_MARCA SET ");
             sql.Append(String.Concat("CODIGO_DESPACHO = '", despachoDeMarcas.CodigoDespacho, "', "));
             sql.Append(String.Concat("DETALHE_DESPACHO = '", despachoDeMarcas.DetalheDespacho, "', "));
             sql.Append(String.Concat("IDSITUACAO_PROCESSO = '", despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.ToString(), "', "));
@@ -132,7 +132,7 @@ namespace MP.Mapeadores
 
             DBHelper = ServerUtils.getDBHelper();
 
-            sql.Append("DELETE FROM MP_DESPACHO");
+            sql.Append("DELETE FROM MP_DESPACHO_MARCA");
             sql.Append(string.Concat(" WHERE IDDESPACHO = ", idDespachoDeMarcas.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());

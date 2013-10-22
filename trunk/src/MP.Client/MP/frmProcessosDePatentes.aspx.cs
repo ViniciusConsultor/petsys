@@ -217,8 +217,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURLCadastrodePatente();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanelaModal(URL, "Novo processo de patente", 650,
-                                                                               450), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Novo processo de patente", 800, 600), false);
         }
 
 
@@ -307,9 +306,9 @@ namespace MP.Client.MP
                     var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx",
                                             "?Id=", id);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.ExibeJanelaModal(url,
+                                                        UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar processo de patente",
-                                                                                       650, 450), false);
+                                                                                       800, 600), false);
                     break;
             }
         }

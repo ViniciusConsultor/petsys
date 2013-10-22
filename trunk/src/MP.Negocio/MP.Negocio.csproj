@@ -69,7 +69,6 @@
     <Compile Include="Filtros\Marcas\FiltroMarcaPorNatureza.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorNCL.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorProcesso.cs" />
-    <Compile Include="Filtros\Marcas\FiltroMarcaPorProtoloco.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaSemFiltro.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeEntrada.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorProcesso.cs" />

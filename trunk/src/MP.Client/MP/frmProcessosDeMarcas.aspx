@@ -118,18 +118,7 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorProcesso_OnClick" />
                                 </td>
                             </tr>
-                            <tr runat="server" id="pnlProtocolo">
-                                <td class="th3">
-                                    <asp:Label ID="Label9" runat="server" Text="Protocolo"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtProtocolo" runat="server" DataType="System.Int64" Type="Number" >
-                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
-                                    </telerik:RadNumericTextBox>
-                                    <asp:ImageButton ID="btnPesquisarPorProtoloco" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorProtoloco_OnClick" />
-                                </td>
-                            </tr>
+                            
                         </table>
                     </asp:Panel>
                 </ContentTemplate>

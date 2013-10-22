@@ -38,7 +38,7 @@ Public Class ctrlCliente
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastro de clientes", 650, 480), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de clientes", 800, 600), False)
     End Sub
 
     Private Function ObtenhaURL() As String

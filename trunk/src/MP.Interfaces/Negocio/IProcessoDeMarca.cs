@@ -9,8 +9,7 @@ namespace MP.Interfaces.Negocio
     {
         Nullable<long> IdProcessoDeMarca { get; set; }
         IMarcas Marca { get; set; }
-        Nullable<long> Protocolo { get; set; } 
-        Nullable<long> Processo { get; set; }
+        long Processo { get; set; }
         DateTime DataDeEntrada { get; set; }
         Nullable<DateTime> DataDeConcessao { get; set; }
         bool ProcessoEhDeTerceiro { get; set; }
