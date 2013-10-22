@@ -71,6 +71,7 @@
     <Compile Include="Filtros\Marcas\FiltroMarcaPorProcesso.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaSemFiltro.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeEntrada.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorID.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorProcesso.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorTipoDePatente.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorTituloDaPatente.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="LazyLoad\DespachoDePatentesLazyLoad.cs" />
     <Compile Include="LazyLoad\InventorLazyLoad.cs" />
     <Compile Include="LazyLoad\MarcasLazyLoad.cs" />
+    <Compile Include="LazyLoad\PatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\PrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
     <Compile Include="LazyLoad\TipoDePatenteLazyLoad.cs" />

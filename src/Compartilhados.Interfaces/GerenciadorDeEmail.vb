@@ -39,7 +39,12 @@ Public Class GerenciadorDeEmail
                 MensagemDeEmail.Subject = Assunto
                 MensagemDeEmail.Body = Mensagem
 
-                Gerenciador.Send(MensagemDeEmail)
+                Try
+                    Gerenciador.Send(MensagemDeEmail)
+                Catch ex As Exception
+
+                End Try
+
             End With
         End If
     End Sub

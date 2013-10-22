@@ -19,7 +19,7 @@ namespace MP.Negocio
             get; set; 
         }
 
-        public long? Processo
+        public string Processo
         {
             get; set;
         }

@@ -8,7 +8,7 @@ using MP.Interfaces.Negocio.Filtros.Patentes;
 namespace MP.Negocio.Filtros.Patentes
 {
     [Serializable]
-    public class FiltroPatentePorDataDeEntrada : Filtro, IFiltroPatentePorDataDeEntrada
+    public class FiltroPatentePorID : Filtro, IFiltroPatentePorID
     {
         public override string ObtenhaQuery()
         {
@@ -19,7 +19,7 @@ namespace MP.Negocio.Filtros.Patentes
             sql.AppendLine("MP_PATENTE.IDPATENTE ");
             sql.AppendLine(" FROM MP_PROCESSOPATENTE, MP_PATENTE");
             sql.AppendLine(" WHERE MP_PROCESSOPATENTE.IDPATENTE = MP_PATENTE.IDPATENTE ");
-            sql.AppendLine(" AND " + ObtenhaFiltroMontado("MP_PROCESSOPATENTE.DATAENTRADA", false));
+            sql.AppendLine(" AND " + ObtenhaFiltroMontado("MP_PROCESSOPATENTE.IDPROCESSOPATENTE", false));
 
             return sql.ToString();
         }

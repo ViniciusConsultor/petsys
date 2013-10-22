@@ -3,6 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlPatente.ascx" TagName="ctrlPatente" TagPrefix="uc1" %>
+<%@ Register Src="ctrlProcurador.ascx" TagName="ctrlProcurador" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -29,17 +30,6 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label7" runat="server" Text="Protocolo"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtProtocolo" runat="server" Width="87px" Type="Number">
-                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
-                                        </NumberFormat>
-                                    </telerik:RadNumericTextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="th3">
                                     <asp:Label ID="Label2" runat="server" Text="Data de entrada"></asp:Label>
                                 </td>
                                 <td class="td">
@@ -52,10 +42,8 @@
                                     <asp:Label ID="Label1" runat="server" Text="Processo"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtProcesso" runat="server" Width="87px" Type="Number">
-                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
-                                        </NumberFormat>
-                                    </telerik:RadNumericTextBox>
+                                    <telerik:RadTextBox ID="txtProcesso" runat="server" Width="87px">
+                                    </telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -63,7 +51,33 @@
                                     <asp:Label ID="Label4" runat="server" Text="Processo é de terceiro?"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <asp:RadioButtonList ID="rblProcessoEhDeTerceiro" runat="server"  RepeatDirection="Horizontal">
+                                    <asp:RadioButtonList ID="rblProcessoEhDeTerceiro" runat="server" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label10" runat="server" Text="Procurador"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc2:ctrlProcurador ID="ctrlProcurador" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label3" runat="server" Text="Processo é estrangeiro?"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rblProcessoEhEstrangeiro" runat="server" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label5" runat="server" Text="Situção"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rblSituacao" runat="server" RepeatDirection="Horizontal">
                                     </asp:RadioButtonList>
                                 </td>
                             </tr>

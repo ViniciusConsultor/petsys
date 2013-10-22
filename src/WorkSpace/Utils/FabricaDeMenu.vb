@@ -120,7 +120,7 @@ Public Class FabricaDeMenu
             _JsMenu.AppendLine(String.Concat("id:'win", Funcao.IDSemFormatacao, "',"))
             _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
             _JsMenu.AppendLine("width:800,")
-            _JsMenu.AppendLine("height:600,")
+            _JsMenu.AppendLine("height:550,")
             _JsMenu.AppendLine(String.Concat("html:'" & CrieHTML(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & Funcao.URL) & "',"))
             _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
             _JsMenu.AppendLine("shim:false,")
