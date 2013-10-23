@@ -171,7 +171,7 @@ namespace MP.Client.MP
             string mensagem = string.Empty;
 
             if (string.IsNullOrEmpty(ctrlNaturezaPatente.DescricaoNaturezaPatente))
-                mensagem = mensagem + "Tipo de patente, ";
+                mensagem = mensagem + "Descrição da natureza patente, ";
 
             if (string.IsNullOrEmpty(txtSigla.Text))
                 mensagem = mensagem + "Sigla, ";
@@ -227,7 +227,7 @@ namespace MP.Client.MP
 
                         if (existeNaturezaPatenteCadastrado != null)
                         {
-                            mensagem = "Já existe uma natureza de patente cadastrado com esta descrição ou sigla";
+                            mensagem = "Já existe uma natureza de patente cadastrada com esta descrição ou sigla";
 
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
