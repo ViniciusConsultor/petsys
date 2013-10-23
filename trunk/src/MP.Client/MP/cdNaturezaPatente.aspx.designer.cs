@@ -10,7 +10,7 @@
 namespace MP.Client.MP {
     
     
-    public partial class cdTipoDePatente {
+    public partial class cdNaturezaPatente {
         
         /// <summary>
         /// rtbToolBar control.
@@ -58,13 +58,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// ctrlTipoDePatente control.
+        /// ctrlNaturezaPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlTipoDePatente ctrlTipoDePatente;
+        protected global::MP.Client.MP.ctrlNaturezaPatente ctrlNaturezaPatente;
         
         /// <summary>
         /// RadDock2 control.

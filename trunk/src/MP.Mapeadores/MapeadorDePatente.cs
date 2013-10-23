@@ -22,11 +22,11 @@ namespace MP.Mapeadores
 
             patente.Identificador = ObtenhaProximoIDPatente();
 
-            comandoSQL.Append("INSERT INTO MP_PATENTE(IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
+            comandoSQL.Append("INSERT INTO MP_PATENTE(IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
             comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO) VALUES(");
             comandoSQL.Append(patente.Identificador + ", ");
             comandoSQL.Append("'" + patente.TituloPatente + "', ");
-            comandoSQL.Append(patente.TipoDePatente.IdTipoDePatente + ", ");
+            comandoSQL.Append(patente.NaturezaPatente.IdNaturezaPatente + ", ");
             comandoSQL.Append("'" + (patente.ObrigacaoGerada ? "1" : "0") + "', ");
             comandoSQL.Append(patente.DataCadastro != null ? "'" + patente.DataCadastro.Value.ToString("yyyyMMdd") + "', " : "NULL, ");
             comandoSQL.Append("'" + patente.Observacao + "', ");
@@ -54,7 +54,7 @@ namespace MP.Mapeadores
 
             comandoSQL.Append("UPDATE MP_PATENTE SET ");
             comandoSQL.Append("TITULOPATENTE = '" + patente.TituloPatente + "', ");
-            comandoSQL.Append("IDTIPOPATENTE = " + patente.TipoDePatente.IdTipoDePatente + ", ");
+            comandoSQL.Append("IDTIPOPATENTE = " + patente.NaturezaPatente.IdNaturezaPatente + ", ");
             comandoSQL.Append("DATACADASTRO = " + (patente.DataCadastro != null ? "'" + patente.DataCadastro.Value.ToString("yyyyMMdd") + "', " : "NULL, "));
             comandoSQL.Append("OBSERVACAO = '" + patente.Observacao + "', ");
             comandoSQL.Append("RESUMO_PATENTE = '" + patente.Resumo + "', ");
@@ -147,7 +147,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
+            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
             comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
             comandoSQL.Append("WHERE IDPATENTE = " + id);
 
@@ -164,7 +164,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDTIPOPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
+            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
             comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
 
             if (!string.IsNullOrEmpty(titulo))
@@ -483,7 +483,7 @@ namespace MP.Mapeadores
 
             patente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTE");
             patente.TituloPatente = UtilidadesDePersistencia.GetValorString(reader, "TITULOPATENTE");
-            patente.TipoDePatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ITipoDePatenteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDTIPOPATENTE"));
+            patente.NaturezaPatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<INaturezaPatenteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDNATUREZAPATENTE"));
             patente.ObrigacaoGerada = UtilidadesDePersistencia.GetValorBooleano(reader, "OBRIGACAOGERADA");
             patente.DataCadastro = UtilidadesDePersistencia.getValorDate(reader, "DATACADASTRO");
             patente.Observacao = UtilidadesDePersistencia.GetValorString(reader, "OBSERVACAO");

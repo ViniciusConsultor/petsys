@@ -13,7 +13,7 @@ namespace MP.Negocio
 
         public string TituloPatente { get; set; }
 
-        public ITipoDePatente TipoDePatente { get; set; }
+        public INaturezaPatente NaturezaPatente { get; set; }
 
         public IDespachoDeMarcas DespachoDeMarcas { get; set; }
 

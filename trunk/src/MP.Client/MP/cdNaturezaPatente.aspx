@@ -1,8 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true"
-    CodeBehind="cdTipoDePatente.aspx.cs" Inherits="MP.Client.MP.cdTipoDePatente" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="cdNaturezaPatente.aspx.cs" Inherits="MP.Client.MP.cdNaturezaPatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="ctrlTipoDePatente.ascx" TagName="ctrlTipoDePatente" TagPrefix="uc1" %>
+<%@ Register Src="ctrlNaturezaPatente.ascx" TagName="ctrlNaturezaPatente" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
@@ -24,22 +22,22 @@
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Cadastro de tipo de patente"
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Cadastro de natureza de patente"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista">
                 <ContentTemplate>
                     <table class="tabela">
                         <tr>
                             <td class="th3">
-                             <asp:Label ID="Label2" runat="server" Text="Tipo de patente"></asp:Label>
+                             <asp:Label ID="Label2" runat="server" Text="Natureza de patente"></asp:Label>
                             </td>
                             <td class="td">
-                                <uc1:ctrlTipoDePatente ID="ctrlTipoDePatente" runat="server" />
+                                <uc1:ctrlNaturezaPatente ID="ctrlNaturezaPatente" runat="server" />
                             </td>
                         </tr>
                     </table>
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="RadDock2" runat="server" Title="Dados do tipo de patente" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock2" runat="server" Title="Dados da natureza de patente" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <asp:Panel ID="pnlDadosDoTipo" runat="server">

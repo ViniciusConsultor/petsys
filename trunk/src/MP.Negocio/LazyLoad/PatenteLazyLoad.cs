@@ -40,7 +40,7 @@ namespace MP.Negocio.LazyLoad
             set { throw new NotImplementedException(); }
         }
 
-        public ITipoDePatente TipoDePatente
+        public INaturezaPatente NaturezaPatente
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }

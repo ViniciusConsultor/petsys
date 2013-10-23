@@ -65,7 +65,6 @@
     <Compile Include="Mapeadores\IMapeadorDeProcurador.cs" />
     <Compile Include="Mapeadores\IMapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Mapeadores\IMapeadorDeRadicalMarcas.cs" />
-    <Compile Include="Mapeadores\IMapeadorTipoDePatente.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorApresentacao.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorCliente.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="Negocio\ITitularPatente.cs" />
     <Compile Include="Negocio\IProcessoDeMarca.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
-    <Compile Include="Negocio\ITipoDePatente.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
     <Compile Include="Negocio\LayoutRevistaPatente.cs" />
     <Compile Include="Negocio\LazyLoad\IAnuidadePatenteLazyLoad.cs" />
@@ -105,10 +103,10 @@
     <Compile Include="Negocio\LazyLoad\IDespachoDePatentesLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IInventorLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IMarcasLazyLoad.cs" />
+    <Compile Include="Negocio\LazyLoad\INaturezaPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IPrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IProcuradorLazyLoad.cs" />
-    <Compile Include="Negocio\LazyLoad\ITipoDePatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\ITitularPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\TitularPatenteLazyLoad.cs" />
     <Compile Include="Negocio\NaturezaDeMarca.cs" />
@@ -128,7 +126,6 @@
     <Compile Include="Servicos\IServicoDeProcessoDePatente.cs" />
     <Compile Include="Servicos\IServicoDeProcurador.cs" />
     <Compile Include="Servicos\IServicoDeRadicalMarcas.cs" />
-    <Compile Include="Servicos\IServicoDeTipoDePatente.cs" />
     <Compile Include="Servicos\IServicoDeTipoDeProcedimentoInterno.cs" />
   </ItemGroup>
   <ItemGroup>

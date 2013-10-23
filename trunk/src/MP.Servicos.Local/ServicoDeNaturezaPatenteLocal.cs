@@ -116,7 +116,7 @@ namespace MP.Servicos.Local
         {
             ServerUtils.setCredencial(_Credencial);
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorTipoDePatente>();
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeNaturezaPatente>();
 
             try
             {

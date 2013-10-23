@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="frmProcessosDePatentes.aspx.cs" Inherits="MP.Client.MP.frmProcessosDePatentes" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc1" %>
-<%@ Register Src="ctrlTipoDePatente.ascx" TagName="ctrlTipoDePatente" TagPrefix="uc2" %>
+<%@ Register Src="ctrlNaturezaPatente.ascx" TagName="ctrlNaturezaPatente" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista" Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick" >
         <Items>
@@ -77,7 +77,7 @@
                                     <asp:Label ID="Label1" runat="server" Text="Tipo de patente"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <uc2:ctrlTipoDePatente ID="ctrlTipoDePatente1" runat="server" />
+                                    <uc2:ctrlNaturezaPatente ID="ctrlNaturezaPatente1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorTipoDePatente" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorTipoDePatente_OnClick"/>
                                 </td>
@@ -113,7 +113,7 @@
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="TipoDePatente.DescricaoTipoDePatente" HeaderText="Tipo da patente" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="TipoDePatente.DescricaoNaturezaPatente" HeaderText="Tipo da patente" UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
                                             </telerik:GridBoundColumn>

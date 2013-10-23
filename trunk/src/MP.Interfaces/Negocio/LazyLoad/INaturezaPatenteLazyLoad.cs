@@ -6,7 +6,7 @@ using Compartilhados.Interfaces.Core.Negocio.LazyLoad;
 
 namespace MP.Interfaces.Negocio.LazyLoad
 {
-    public interface ITipoDePatenteLazyLoad : IObjetoLazyLoad, ITipoDePatente
+    public interface INaturezaPatenteLazyLoad : IObjetoLazyLoad, INaturezaPatente
     {
     }
 }

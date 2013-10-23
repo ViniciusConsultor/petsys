@@ -18,13 +18,13 @@ namespace MP.Mapeadores
         {
             var consultaSQL = new StringBuilder();
 
-            consultaSQL.Append("SELECT IDTIPO_PATENTE IdTipoDePatente, DESCRICAO_TIPO_PATENTE DescricaoTipoDePatente, SIGLA_TIPO SiglaTipo, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
+            consultaSQL.Append("SELECT IDNATUREZA_PATENTE IdNaturezaPatente, DESCRICAO_NATUREZA_PATENTE DescricaoNaturezaPatente, SIGLA_NATUREZA SiglaNatureza, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
             consultaSQL.Append("TEMPO_ENTRE_PAGTO TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED QuantidadePagamentoIntermediario, ");
             consultaSQL.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
-            consultaSQL.Append("FROM MP_TIPO_PATENTE ");
+            consultaSQL.Append("FROM MP_NATUREZA_PATENTE ");
 
             if (!string.IsNullOrEmpty(descricao))
-                consultaSQL.Append(string.Concat("WHERE DESCRICAO_TIPO_PATENTE LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricao), "%' "));
+                consultaSQL.Append(string.Concat("WHERE DESCRICAO_NATUREZA_PATENTE LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricao), "%' "));
 
             return ObtenhaNaturezaPatente(consultaSQL, quantidadeMaximaDeRegistros);
         }
@@ -33,11 +33,11 @@ namespace MP.Mapeadores
         {
             var consultaSQL = new StringBuilder();
 
-            consultaSQL.Append("SELECT IDTIPO_PATENTE IdTipoDePatente, DESCRICAO_TIPO_PATENTE DescricaoTipoDePatente, SIGLA_TIPO SiglaTipo, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
+            consultaSQL.Append("SELECT IDNATUREZA_PATENTE IdNaturezaPatente, DESCRICAO_NATUREZA_PATENTE DescricaoNaturezaPatente, SIGLA_NATUREZA SiglaNatureza, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
             consultaSQL.Append("TEMPO_ENTRE_PAGTO TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED QuantidadePagamentoIntermediario, ");
             consultaSQL.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
-            consultaSQL.Append("FROM MP_TIPO_PATENTE ");
-            consultaSQL.Append("WHERE IDTIPO_PATENTE = " + idNaturezaPatente);
+            consultaSQL.Append("FROM MP_NATUREZA_PATENTE ");
+            consultaSQL.Append("WHERE IDNATUREZA_PATENTE = " + idNaturezaPatente);
 
             INaturezaPatente naturezaPatente = null;
 
@@ -55,15 +55,15 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDTIPO_PATENTE IdTipoDePatente, DESCRICAO_TIPO_PATENTE DescricaoTipoDePatente, SIGLA_TIPO SiglaTipo, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
+            sql.Append("SELECT IDNATUREZA_PATENTE IdNaturezaPatente, DESCRICAO_NATUREZA_PATENTE DescricaoNaturezaPatente, SIGLA_NATUREZA SiglaNatureza, TEMPO_INICIO_ANOS TempoInicioAnos, QUANTIDADE_PAGTO QuantidadePagamento, ");
             sql.Append("TEMPO_ENTRE_PAGTO TempoEntrePagamento, SEQUENCIA_INICIO_PAGTO SequenciaInicioPagamento, TEM_PAGTO_INTERMEDIARIO TemPagamentoIntermediario, INICIO_INTERMED_SEQUENCIA InicioIntermediarioSequencia, QUANTIDADE_PAGTO_INTERMED QuantidadePagamentoIntermediario, ");
             sql.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
-            sql.Append("FROM MP_TIPO_PATENTE ");
+            sql.Append("FROM MP_NATUREZA_PATENTE ");
 
             if (!string.IsNullOrEmpty(descricaoNaturezaPatente))
             {
-                sql.Append(string.Concat("WHERE DESCRICAO_TIPO_PATENTE = '", UtilidadesDePersistencia.FiltraApostrofe(descricaoNaturezaPatente), "' "));
-                sql.Append(string.Concat("OR SIGLA_TIPO = '", UtilidadesDePersistencia.FiltraApostrofe(siglaNatureza), "'"));
+                sql.Append(string.Concat("WHERE DESCRICAO_NATUREZA_PATENTE = '", UtilidadesDePersistencia.FiltraApostrofe(descricaoNaturezaPatente), "' "));
+                sql.Append(string.Concat("OR SIGLA_NATUREZA = '", UtilidadesDePersistencia.FiltraApostrofe(siglaNatureza), "'"));
             }
 
             INaturezaPatente naturezaPatente = null;
@@ -87,22 +87,22 @@ namespace MP.Mapeadores
 
             naturezaPatente.IdNaturezaPatente = GeradorDeID.getInstancia().getProximoID();
 
-            comandoSQL.Append("INSERT INTO MP_TIPO_PATENTE (");
-            comandoSQL.Append("IDTIPO_PATENTE, DESCRICAO_TIPO_PATENTE, SIGLA_TIPO, TEMPO_INICIO_ANOS, QUANTIDADE_PAGTO, ");
+            comandoSQL.Append("INSERT INTO MP_NATUREZA_PATENTE (");
+            comandoSQL.Append("IDNATUREZA_PATENTE, DESCRICAO_NATUREZA_PATENTE, SIGLA_NATUREZA, TEMPO_INICIO_ANOS, QUANTIDADE_PAGTO, ");
             comandoSQL.Append("TEMPO_ENTRE_PAGTO, SEQUENCIA_INICIO_PAGTO, TEM_PAGTO_INTERMEDIARIO, INICIO_INTERMED_SEQUENCIA, QUANTIDADE_PAGTO_INTERMED, ");
             comandoSQL.Append("TEMPO_ENTRE_PAGTO_INTERMED, DESCRICAO_PAGTO, DESCRICAO_PAGTO_INTERMED, TEM_PED_EXAME) ");
             comandoSQL.Append("VALUES (");
             comandoSQL.Append(String.Concat(naturezaPatente.IdNaturezaPatente.Value.ToString(), ", "));
             comandoSQL.Append(String.Concat("'", naturezaPatente.DescricaoNaturezaPatente, "', "));
             comandoSQL.Append(String.Concat("'", naturezaPatente.SiglaNatureza.ToString(), "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.TempoInicioAnos.ToString(), "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.QuantidadePagamento.ToString(), "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.TempoEntrePagamento.ToString(), "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.SequenciaInicioPagamento.ToString(), "', "));
+            comandoSQL.Append(String.Concat(naturezaPatente.TempoInicioAnos, ", "));
+            comandoSQL.Append(String.Concat(naturezaPatente.QuantidadePagamento, ", "));
+            comandoSQL.Append(String.Concat(naturezaPatente.TempoEntrePagamento, ", "));
+            comandoSQL.Append(String.Concat(naturezaPatente.SequenciaInicioPagamento, ", "));
             comandoSQL.Append(naturezaPatente.TemPagamentoIntermediario ? String.Concat("'", 1, "', ") : String.Concat("'", 0, "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.InicioIntermediarioSequencia.ToString(), "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.QuantidadePagamentoIntermediario.ToString(), "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.TempoEntrePagamentoIntermediario.ToString(), "', "));
+            comandoSQL.Append(String.Concat(naturezaPatente.InicioIntermediarioSequencia, ", "));
+            comandoSQL.Append(String.Concat(naturezaPatente.QuantidadePagamentoIntermediario, ", "));
+            comandoSQL.Append(String.Concat(naturezaPatente.TempoEntrePagamentoIntermediario, ", "));
             comandoSQL.Append(String.Concat("'", naturezaPatente.DescricaoPagamento, "', "));
             comandoSQL.Append(String.Concat("'", naturezaPatente.DescricaoPagamentoIntermediario, "', "));
             comandoSQL.Append(naturezaPatente.TemPedidoDeExame ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
@@ -117,23 +117,23 @@ namespace MP.Mapeadores
 
             DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("UPDATE MP_TIPO_PATENTE SET ");
-            comandoSQL.Append(String.Concat("DESCRICAO_TIPO_PATENTE = '", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoNaturezaPatente), "', "));
-            comandoSQL.Append(String.Concat("SIGLA_TIPO = '", naturezaPatente.SiglaNatureza.ToString(), "', "));
-            comandoSQL.Append(String.Concat("TEMPO_INICIO_ANOS = '", naturezaPatente.TempoInicioAnos.ToString(), "', "));
-            comandoSQL.Append(String.Concat("QUANTIDADE_PAGTO = '", naturezaPatente.QuantidadePagamento.ToString(), "', "));
-            comandoSQL.Append(String.Concat("TEMPO_ENTRE_PAGTO = '", naturezaPatente.TempoEntrePagamento.ToString(), "', "));
-            comandoSQL.Append(String.Concat("SEQUENCIA_INICIO_PAGTO = '", naturezaPatente.SequenciaInicioPagamento.ToString(), "', "));
+            comandoSQL.Append("UPDATE MP_NATUREZA_PATENTE SET ");
+            comandoSQL.Append(String.Concat("DESCRICAO_NATUREZA_PATENTE = '", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoNaturezaPatente), "', "));
+            comandoSQL.Append(String.Concat("SIGLA_NATUREZA = '", naturezaPatente.SiglaNatureza.ToString(), "', "));
+            comandoSQL.Append(String.Concat("TEMPO_INICIO_ANOS = ", naturezaPatente.TempoInicioAnos, ", "));
+            comandoSQL.Append(String.Concat("QUANTIDADE_PAGTO = ", naturezaPatente.QuantidadePagamento, ", "));
+            comandoSQL.Append(String.Concat("TEMPO_ENTRE_PAGTO = ", naturezaPatente.TempoEntrePagamento, ", "));
+            comandoSQL.Append(String.Concat("SEQUENCIA_INICIO_PAGTO = ", naturezaPatente.SequenciaInicioPagamento, ", "));
             comandoSQL.Append(naturezaPatente.TemPagamentoIntermediario ? String.Concat("TEM_PAGTO_INTERMEDIARIO = '", 1, "', ") : 
                                                                           String.Concat("TEM_PAGTO_INTERMEDIARIO = '", 0, "', "));
-            comandoSQL.Append(String.Concat("INICIO_INTERMED_SEQUENCIA = '", naturezaPatente.InicioIntermediarioSequencia.ToString(), "', "));
-            comandoSQL.Append(String.Concat("QUANTIDADE_PAGTO_INTERMED = '", naturezaPatente.QuantidadePagamentoIntermediario.ToString(), "', "));
-            comandoSQL.Append(String.Concat("TEMPO_ENTRE_PAGTO_INTERMED = '", naturezaPatente.TempoEntrePagamentoIntermediario.ToString(), "', "));
+            comandoSQL.Append(String.Concat("INICIO_INTERMED_SEQUENCIA = ", naturezaPatente.InicioIntermediarioSequencia, ", "));
+            comandoSQL.Append(String.Concat("QUANTIDADE_PAGTO_INTERMED = ", naturezaPatente.QuantidadePagamentoIntermediario, ", "));
+            comandoSQL.Append(String.Concat("TEMPO_ENTRE_PAGTO_INTERMED = ", naturezaPatente.TempoEntrePagamentoIntermediario, ", "));
             comandoSQL.Append(String.Concat("DESCRICAO_PAGTO = '", naturezaPatente.DescricaoPagamento, "', "));
             comandoSQL.Append(String.Concat("DESCRICAO_PAGTO_INTERMED = '", naturezaPatente.DescricaoPagamentoIntermediario, "', "));
             comandoSQL.Append(naturezaPatente.TemPedidoDeExame ? String.Concat("TEM_PED_EXAME = '", 1, "' ") :
                                                                  String.Concat("TEM_PED_EXAME = '", 0, "' "));
-            comandoSQL.Append(String.Concat("WHERE IDTIPO_PATENTE = ", naturezaPatente.IdNaturezaPatente.Value.ToString()));
+            comandoSQL.Append(String.Concat("WHERE IDNATUREZA_PATENTE = ", naturezaPatente.IdNaturezaPatente.Value.ToString()));
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -145,8 +145,8 @@ namespace MP.Mapeadores
 
             DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("delete from MP_TIPO_PATENTE");
-            comandoSQL.Append(string.Concat(" where IDTIPO_PATENTE = ", idNaturezaPatente.ToString()));
+            comandoSQL.Append("DELETE FROM MP_NATUREZA_PATENTE");
+            comandoSQL.Append(string.Concat(" WHERE IDNATUREZA_PATENTE = ", idNaturezaPatente.ToString()));
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
@@ -161,9 +161,9 @@ namespace MP.Mapeadores
                 while (leitor.Read())
                 {
                     var naturezaPatente = FabricaGenerica.GetInstancia().CrieObjeto<INaturezaPatente>();
-                    naturezaPatente.IdNaturezaPatente = UtilidadesDePersistencia.getValorInteger(leitor, "IdTipoDePatente");
-                    naturezaPatente.DescricaoNaturezaPatente = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoTipoDePatente");
-                    naturezaPatente.SiglaNatureza = UtilidadesDePersistencia.GetValorString(leitor, "SiglaTipo");
+                    naturezaPatente.IdNaturezaPatente = UtilidadesDePersistencia.getValorInteger(leitor, "IdNaturezaPatente");
+                    naturezaPatente.DescricaoNaturezaPatente = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoNaturezaPatente");
+                    naturezaPatente.SiglaNatureza = UtilidadesDePersistencia.GetValorString(leitor, "SiglaNatureza");
                     naturezaPatente.TempoInicioAnos = UtilidadesDePersistencia.getValorInteger(leitor, "TempoInicioAnos");
                     naturezaPatente.QuantidadePagamento = UtilidadesDePersistencia.getValorInteger(leitor, "QuantidadePagamento");
                     naturezaPatente.TempoEntrePagamento = UtilidadesDePersistencia.getValorInteger(leitor, "TempoEntrePagamento");

@@ -10,16 +10,16 @@
 namespace MP.Client.MP {
     
     
-    public partial class ctrlTipoDePatente {
+    public partial class ctrlNaturezaPatente {
         
         /// <summary>
-        /// cboTipoDePatente control.
+        /// cboNaturezaPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cboTipoDePatente;
+        protected global::Telerik.Web.UI.RadComboBox cboNaturezaPatente;
         
         /// <summary>
         /// btnNovo control.

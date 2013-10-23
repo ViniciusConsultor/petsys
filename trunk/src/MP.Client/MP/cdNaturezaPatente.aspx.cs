@@ -13,19 +13,17 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class cdTipoDePatente : SuperPagina
+    public partial class cdNaturezaPatente : SuperPagina
     {
-        private const string ID_OBJETO = "ID_OBJETO_CD_TIPODEPATENTE";
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_TIPODEPATENTE";
+        private const string ID_OBJETO = "ID_OBJETO_CD_NATUREZAPATENTE";
+        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_NATUREZAPATENTE";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlTipoDePatente.TipoDePatenteFoiSelecionada += MostreTipoDePatente;
+            ctrlNaturezaPatente.NaturezaPatenteFoiSelecionada += MostreNaturezaPatente;
 
             if (!IsPostBack)
-            {
                 this.ExibaTelaInicial();
-            }
         }
 
         private void ExibaTelaInicial()
@@ -44,11 +42,11 @@ namespace MP.Client.MP
 
             UtilidadesWeb.LimparComponente(ref controlePanel);
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-            
-            ctrlTipoDePatente.Inicializa();
-            ctrlTipoDePatente.EnableLoadOnDemand = true;
-            ctrlTipoDePatente.ShowDropDownOnTextboxClick = true;
-            ctrlTipoDePatente.AutoPostBack = true;
+
+            ctrlNaturezaPatente.Inicializa();
+            ctrlNaturezaPatente.EnableLoadOnDemand = true;
+            ctrlNaturezaPatente.ShowDropDownOnTextboxClick = true;
+            ctrlNaturezaPatente.AutoPostBack = true;
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
         }
@@ -73,11 +71,11 @@ namespace MP.Client.MP
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
-            ctrlTipoDePatente.Inicializa();
-            ctrlTipoDePatente.EnableLoadOnDemand = false;
-            ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
-            ctrlTipoDePatente.AutoPostBack = false;
-            ctrlTipoDePatente.TextoItemVazio = string.Empty;
+            ctrlNaturezaPatente.Inicializa();
+            ctrlNaturezaPatente.EnableLoadOnDemand = false;
+            ctrlNaturezaPatente.ShowDropDownOnTextboxClick = false;
+            ctrlNaturezaPatente.AutoPostBack = false;
+            ctrlNaturezaPatente.TextoItemVazio = string.Empty;
             CarregueCombosFormulario();
         }
 
@@ -116,8 +114,8 @@ namespace MP.Client.MP
             Control controlePanel = this.pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
-            ctrlTipoDePatente.EnableLoadOnDemand = false;
-            ctrlTipoDePatente.ShowDropDownOnTextboxClick = false;
+            ctrlNaturezaPatente.EnableLoadOnDemand = false;
+            ctrlNaturezaPatente.ShowDropDownOnTextboxClick = false;
         }
 
         private void ExibaTelaExcluir()
@@ -132,137 +130,117 @@ namespace MP.Client.MP
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
 
-            Control controlePanel = this.pnlDadosDoTipo;
+            Control controlePanel = pnlDadosDoTipo;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
             Control control = RadDock1;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
         }
 
-        protected void btnCancela_Click()
+        protected void btnCancelar_Click()
         {
             ExibaTelaInicial();
         }
 
-        private ITipoDePatente MontaObjetoTipoDePatente()
+        private INaturezaPatente MontaObjetoTipoDePatente()
         {
-            var tipoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDePatente>();
+            var naturezaPatente = FabricaGenerica.GetInstancia().CrieObjeto<INaturezaPatente>();
 
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
-            {
-                tipoDePatente.IdTipoDePatente = Convert.ToInt64(ViewState[ID_OBJETO]);
-            }
-            
-            tipoDePatente.DescricaoTipoDePatente = ctrlTipoDePatente.DescricaoTipoDePatente;
-            tipoDePatente.SiglaTipo = txtSigla.Text;
-            tipoDePatente.DescricaoPagamento = this.txtDescricaoPagamento.Text;
-            tipoDePatente.DescricaoPagamentoIntermediario = this.txtDescricaoPagamentoIntermediario.Text;
-            tipoDePatente.SequenciaInicioPagamento = Convert.ToInt32(this.txtIniciarPagamentoSequencia.Text);
-            tipoDePatente.TempoEntrePagamento = Convert.ToInt32(this.txtIntervaloPagamentos.Text);
-            tipoDePatente.TempoEntrePagamentoIntermediario = Convert.ToInt32(txtIntervaloPagamentoIntermediario.Text);
-            tipoDePatente.QuantidadePagamento = Convert.ToInt32(this.txtQuantidadePagamentos.Text);
-            tipoDePatente.QuantidadePagamentoIntermediario = Convert.ToInt32(this.txtQuantidadePagamentoIntermediario.Text);
-            tipoDePatente.InicioIntermediarioSequencia = Convert.ToInt32(this.txtSequenciaInicioPagamentoIntermediario.Text);
-          
-            tipoDePatente.TempoInicioAnos = Convert.ToInt32(this.txtTempoInicioPagamentos.Text);
+                naturezaPatente.IdNaturezaPatente = Convert.ToInt64(ViewState[ID_OBJETO]);
 
-            tipoDePatente.TemPedidoDeExame = cbPgtoInterPedidoExame.SelectedValue != "0";
+            naturezaPatente.DescricaoNaturezaPatente = ctrlNaturezaPatente.DescricaoNaturezaPatente;
+            naturezaPatente.SiglaNatureza = txtSigla.Text;
+            naturezaPatente.DescricaoPagamento = txtDescricaoPagamento.Text;
+            naturezaPatente.DescricaoPagamentoIntermediario = txtDescricaoPagamentoIntermediario.Text;
+            naturezaPatente.SequenciaInicioPagamento = Convert.ToInt32(txtIniciarPagamentoSequencia.Text);
+            naturezaPatente.TempoEntrePagamento = Convert.ToInt32(txtIntervaloPagamentos.Text);
+            naturezaPatente.TempoEntrePagamentoIntermediario = Convert.ToInt32(txtIntervaloPagamentoIntermediario.Text);
+            naturezaPatente.QuantidadePagamento = Convert.ToInt32(txtQuantidadePagamentos.Text);
+            naturezaPatente.QuantidadePagamentoIntermediario = Convert.ToInt32(txtQuantidadePagamentoIntermediario.Text);
+            naturezaPatente.InicioIntermediarioSequencia = Convert.ToInt32(txtSequenciaInicioPagamentoIntermediario.Text);
+            naturezaPatente.TempoInicioAnos = Convert.ToInt32(txtTempoInicioPagamentos.Text);
+            naturezaPatente.TemPedidoDeExame = cbPgtoInterPedidoExame.SelectedValue != "0";
+            naturezaPatente.TemPagamentoIntermediario = cbPgtoIntermediario.SelectedValue != "0";
 
-            tipoDePatente.TemPagamentoIntermediario = cbPgtoIntermediario.SelectedValue != "0";
-
-            return tipoDePatente;
+            return naturezaPatente;
         }
 
         private string validaErrosDePreenchimento()
         {
             string mensagem = string.Empty;
 
-            if(string.IsNullOrEmpty(ctrlTipoDePatente.DescricaoTipoDePatente))
-            {
+            if (string.IsNullOrEmpty(ctrlNaturezaPatente.DescricaoNaturezaPatente))
                 mensagem = mensagem + "Tipo de patente, ";
-            }
-            if(string.IsNullOrEmpty(txtSigla.Text))
-            {
+
+            if (string.IsNullOrEmpty(txtSigla.Text))
                 mensagem = mensagem + "Sigla, ";
-            }
+            
             if (string.IsNullOrEmpty(txtTempoInicioPagamentos.Text))
-            {
                 mensagem = mensagem + "Tempo para início dos Pagtos , ";
-            }
+            
             if (string.IsNullOrEmpty(txtQuantidadePagamentos.Text))
-            {
                 mensagem = mensagem + "Quantidade de Pagtos. , ";
-            }
+            
             if (string.IsNullOrEmpty(txtIntervaloPagamentos.Text))
-            {
                 mensagem = mensagem + "Intervalo entre Pagtos , ";
-            }
+            
             if (string.IsNullOrEmpty(txtIniciarPagamentoSequencia.Text))
-            {
                 mensagem = mensagem + "Iniciar Pagtos. da sequencia , ";
-            }
+            
             if (string.IsNullOrEmpty(txtDescricaoPagamento.Text))
-            {
                 mensagem = mensagem + "Descrição para o Pagto , ";
-            }
+            
             if (string.IsNullOrEmpty(txtIniciarPagamentoSequencia.Text))
-            {
                 mensagem = mensagem + "Número de sequencia Pagtos intermediarios , ";
-            }
+            
             if (string.IsNullOrEmpty(txtIntervaloPagamentoIntermediario.Text))
-            {
                 mensagem = mensagem + "Intervalo de Pagto intermediário , ";
-            }
+            
             if (string.IsNullOrEmpty(txtDescricaoPagamentoIntermediario.Text))
-            {
                 mensagem = mensagem + "Descrição Pagto intermediarios , ";
-            }
 
             return mensagem;
         }
 
-        private void btnSalva_Click()
+        private void btnSalvar_Click()
         {
             string mensagem;
 
-            if(!string.IsNullOrEmpty(validaErrosDePreenchimento()))
+            if (!string.IsNullOrEmpty(validaErrosDePreenchimento()))
             {
                 var erros = validaErrosDePreenchimento();
-
                 var mensagemDeErro = "Campo(s) " + erros + "precisa(m) ser preenchido(s)";
-
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(mensagemDeErro), false);
-
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(mensagemDeErro), false);
                 return;
             }
 
-            var tipoDePatente = MontaObjetoTipoDePatente();
+            var naturezaPatente = MontaObjetoTipoDePatente();
 
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeNaturezaPatente>())
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
-                        ITipoDePatente tipoDePatenteExistente = verificaSeJaExisteTipoDePatenteCadastrado(tipoDePatente.DescricaoTipoDePatente, tipoDePatente.SiglaTipo, servico);
+                        INaturezaPatente existeNaturezaPatenteCadastrado = verificaSeJaExisteNaturezaPatenteCadastrado(naturezaPatente.DescricaoNaturezaPatente, naturezaPatente.SiglaNatureza, servico);
 
-                        if(tipoDePatenteExistente != null)
+                        if (existeNaturezaPatenteCadastrado != null)
                         {
-                            mensagem = "Já existe um tipo de patente cadastrado com esta descrição ou sigla";
+                            mensagem = "Já existe uma natureza de patente cadastrado com esta descrição ou sigla";
 
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
                             return;
                         }
 
-                        servico.Inserir(tipoDePatente);
-                        mensagem = "Tipo de patente cadastrado com sucesso.";
+                        servico.Inserir(naturezaPatente);
+                        mensagem = "Natureza de patente cadastrada com sucesso.";
                     }
                     else
                     {
-                        servico.Modificar(tipoDePatente);
-                        mensagem = "Tipo de patente modificado com sucesso.";
+                        servico.Modificar(naturezaPatente);
+                        mensagem = "Natureza de patente modificada com sucesso.";
                     }
                 }
 
@@ -278,11 +256,10 @@ namespace MP.Client.MP
             }
         }
 
-        private ITipoDePatente verificaSeJaExisteTipoDePatenteCadastrado(string descricaoTipoDePatente, string siglaTipo, IServicoDeTipoDePatente servico)
+        private INaturezaPatente verificaSeJaExisteNaturezaPatenteCadastrado(string descricaoNaturezaPatente, string siglaTipo, IServicoDeNaturezaPatente servico)
         {
-            var tipoDePatente = servico.obtenhaTipoDePatentePelaDescricaoOuSigla(descricaoTipoDePatente, siglaTipo);
-
-            return tipoDePatente;
+            var naturezaPatente = servico.obtenhaNaturezaPatentePelaDescricaoOuSigla(descricaoNaturezaPatente, siglaTipo);
+            return naturezaPatente;
         }
 
         private void btnModificar_Click()
@@ -304,20 +281,16 @@ namespace MP.Client.MP
         {
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDePatente>())
-                {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeNaturezaPatente>())
                     servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
-                }
 
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInformacao(
-                                                            "Tipo de patente excluído com sucesso."), false);
+                                                        UtilidadesWeb.MostraMensagemDeInformacao("Natureza de patente excluída com sucesso."), false);
                 ExibaTelaInicial();
             }
             catch (BussinesException ex)
             {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
         }
 
@@ -335,10 +308,10 @@ namespace MP.Client.MP
                     btnExclui_Click();
                     break;
                 case "btnSalvar":
-                    btnSalva_Click();
+                    btnSalvar_Click();
                     break;
                 case "btnCancelar":
-                    btnCancela_Click();
+                    btnCancelar_Click();
                     break;
                 case "btnSim":
                     btnSim_Click();
@@ -363,29 +336,28 @@ namespace MP.Client.MP
             UtilidadesWeb.HabilitaComponentes(ref controle, false);
         }
 
-        private void MostreTipoDePatente(ITipoDePatente tipoDePatente)
+        private void MostreNaturezaPatente(INaturezaPatente naturezaPatente)
         {
-            ViewState[ID_OBJETO] = tipoDePatente.IdTipoDePatente.Value.ToString();
+            ViewState[ID_OBJETO] = naturezaPatente.IdNaturezaPatente.Value.ToString();
 
-            ctrlTipoDePatente.DescricaoTipoDePatente = tipoDePatente.DescricaoTipoDePatente;
-            ctrlTipoDePatente.SiglaTipo = tipoDePatente.SiglaTipo;
+            ctrlNaturezaPatente.DescricaoNaturezaPatente = naturezaPatente.DescricaoNaturezaPatente;
+            ctrlNaturezaPatente.SiglaTipo = naturezaPatente.SiglaNatureza;
 
-            this.txtDescricaoPagamento.Text = tipoDePatente.DescricaoPagamento;
-            this.txtDescricaoPagamentoIntermediario.Text = tipoDePatente.DescricaoPagamentoIntermediario;
-            this.txtIniciarPagamentoSequencia.Text = tipoDePatente.SequenciaInicioPagamento.ToString();
-            this.txtIntervaloPagamentos.Text = tipoDePatente.TempoEntrePagamento.ToString();
-            this.txtIntervaloPagamentoIntermediario.Text = tipoDePatente.TempoEntrePagamentoIntermediario.ToString();
-            this.txtQuantidadePagamentos.Text = tipoDePatente.QuantidadePagamento.ToString();
-            this.txtQuantidadePagamentoIntermediario.Text = tipoDePatente.QuantidadePagamentoIntermediario.ToString();
-            this.txtSequenciaInicioPagamentoIntermediario.Text = tipoDePatente.InicioIntermediarioSequencia.ToString();
-            this.txtSigla.Text = tipoDePatente.SiglaTipo;
-            this.txtTempoInicioPagamentos.Text = tipoDePatente.TempoInicioAnos.ToString();
+            txtDescricaoPagamento.Text = naturezaPatente.DescricaoPagamento;
+            txtDescricaoPagamentoIntermediario.Text = naturezaPatente.DescricaoPagamentoIntermediario;
+            txtIniciarPagamentoSequencia.Text = naturezaPatente.SequenciaInicioPagamento.ToString();
+            txtIntervaloPagamentos.Text = naturezaPatente.TempoEntrePagamento.ToString();
+            txtIntervaloPagamentoIntermediario.Text = naturezaPatente.TempoEntrePagamentoIntermediario.ToString();
+            txtQuantidadePagamentos.Text = naturezaPatente.QuantidadePagamento.ToString();
+            txtQuantidadePagamentoIntermediario.Text = naturezaPatente.QuantidadePagamentoIntermediario.ToString();
+            txtSequenciaInicioPagamentoIntermediario.Text = naturezaPatente.InicioIntermediarioSequencia.ToString();
+            txtSigla.Text = naturezaPatente.SiglaNatureza;
+            txtTempoInicioPagamentos.Text = naturezaPatente.TempoInicioAnos.ToString();
 
             CarregueCombosFormulario();
-            
-            this.cbPgtoInterPedidoExame.SelectedValue = tipoDePatente.TemPedidoDeExame ? "1" : "0";
 
-            this.cbPgtoIntermediario.SelectedValue = tipoDePatente.TemPagamentoIntermediario ? "1" : "0";
+            cbPgtoInterPedidoExame.SelectedValue = naturezaPatente.TemPedidoDeExame ? "1" : "0";
+            cbPgtoIntermediario.SelectedValue = naturezaPatente.TemPagamentoIntermediario ? "1" : "0";
 
             ExibaTelaConsultar();
         }
@@ -397,7 +369,7 @@ namespace MP.Client.MP
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()
         {
-            return rtbToolBar; 
+            return rtbToolBar;
         }
 
         private enum Estado : byte
