@@ -30,6 +30,7 @@ namespace MP.Servicos.Local
             catch
             {
                 ServerUtils.RollbackTransaction();
+                throw;
             }
             finally
             {
@@ -51,6 +52,7 @@ namespace MP.Servicos.Local
             catch
             {
                 ServerUtils.RollbackTransaction();
+                throw;
             }
             finally
             {
@@ -72,6 +74,7 @@ namespace MP.Servicos.Local
             catch
             {
                 ServerUtils.RollbackTransaction();
+                throw;
             }
             finally
             {
