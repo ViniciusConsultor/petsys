@@ -6,7 +6,7 @@ using MP.Interfaces.Negocio;
 
 namespace MP.Interfaces.Servicos
 {
-    public interface IServicoDeNaturezaPatente
+    public interface IServicoDeNaturezaPatente : IDisposable
     {
         IList<INaturezaPatente> obtenhaNaturezaPatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros);
         INaturezaPatente obtenhaNaturezaPatentePeloId(long idNaturezaPatente);

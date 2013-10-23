@@ -3,7 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/MP/ctrlPatente.ascx" TagName="ctrlPatente" TagPrefix="uc1" %>
-<%@ Register Src="~/MP/ctrlTipoDePatente.ascx" TagName="ctrlTipoDePatente" TagPrefix="uc2" %>
+<%@ Register Src="~/MP/ctrlNaturezaPatente.ascx" TagName="ctrlNaturezaPatente" TagPrefix="uc2" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc3" %>
 <%@ Register Src="~/MP/ctrlInventor.ascx" TagName="ctrlInventor" TagPrefix="uc4" %>
 <%@ Register Src="~/ctrlPais.ascx" TagName="ctrlPais" TagPrefix="uc5" %>
@@ -83,10 +83,10 @@
                                     </tr>
                                     <tr>
                                         <td class="th3">
-                                            <asp:Label ID="lblTipoDaPatente" runat="server" Text="Tipo da Patente"></asp:Label>
+                                            <asp:Label ID="lblNaturezaPatente" runat="server" Text="Natureza"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <uc2:ctrlTipoDePatente ID="ctrlTipoDePatente" runat="server" />
+                                            <uc2:ctrlNaturezaPatente ID="ctrlNaturezaPatente" runat="server" />
                                         </td>
                                     </tr>
                                     <tr>

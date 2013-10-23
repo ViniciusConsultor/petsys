@@ -1,16 +1,15 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlTipoDePatente.ascx.cs"
-    Inherits="MP.Client.MP.ctrlTipoDePatente" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlNaturezaPatente.ascx.cs" Inherits="MP.Client.MP.ctrlNaturezaPatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<telerik:RadComboBox ID="cboTipoDePatente" runat="server" EmptyMessage="Selecione um tipo de patente"
+<telerik:RadComboBox ID="cboNaturezaPatente" runat="server" EmptyMessage="Selecione uma natureza da patente"
     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnItemsRequested="cboTipoDePatente_ItemsRequested"
-    OnSelectedIndexChanged="cboTipoDePatente_SelectedIndexChanged">
+    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnItemsRequested="cboNaturezaPatente_ItemsRequested"
+    OnSelectedIndexChanged="cboNaturezaPatente_SelectedIndexChanged">
     <HeaderTemplate>
         <table width="96%">
             <tr>
                 <td width="80%">
-                    Descrição do tipo da patente
+                    Descrição da natureza patente
                 </td>
                 <td width="16%">
                     Sigla
@@ -31,5 +30,5 @@
         </table>
     </ItemTemplate>
 </telerik:RadComboBox>
-<asp:ImageButton ID="btnNovo" runat="server" ImageUrl="~/imagens/new.gif" ToolTip="Novo"
+<asp:ImageButton ID="btnNovo" runat="server" ImageUrl="~/imagens/new.gif" ToolTip="Novo" 
     CausesValidation="False" CommandArgument="OPE.MP.005.0001" OnClick="btnNovo_OnClick" />

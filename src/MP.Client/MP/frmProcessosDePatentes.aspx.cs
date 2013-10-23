@@ -56,7 +56,7 @@ namespace MP.Client.MP
             pnlProcesso.Visible = true;
             cboTipoDeFiltro.SelectedValue = "1";
             ctrlOperacaoFiltro1.Inicializa();
-            ctrlTipoDePatente1.Inicializa();
+            ctrlNaturezaPatente1.Inicializa();
             
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatenteSemFiltro>();
             FiltroAplicado = filtro;
@@ -103,7 +103,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (ctrlTipoDePatente1.TipoDePatenteSelecionada == null)
+            if (ctrlNaturezaPatente1.NaturezaPatenteSelecionada == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione um tipo de patente."), false);
@@ -112,7 +112,7 @@ namespace MP.Client.MP
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorTipoDePatente>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-            filtro.ValorDoFiltro = ctrlTipoDePatente1.TipoDePatenteSelecionada.IdTipoDePatente.ToString();
+            filtro.ValorDoFiltro = ctrlNaturezaPatente1.NaturezaPatenteSelecionada.IdNaturezaPatente.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
         }

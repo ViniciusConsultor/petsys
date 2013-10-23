@@ -220,13 +220,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// ctrlTipoDePatente1 control.
+        /// ctrlNaturezaPatente1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlTipoDePatente ctrlTipoDePatente1;
+        protected global::MP.Client.MP.ctrlNaturezaPatente ctrlNaturezaPatente1;
         
         /// <summary>
         /// btnPesquisarPorTipoDePatente control.

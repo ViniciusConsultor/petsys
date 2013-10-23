@@ -9,7 +9,7 @@ namespace MP.Interfaces.Negocio
     {
         long Identificador { get; set; }
         string TituloPatente { get; set; }
-        ITipoDePatente TipoDePatente { get; set; }
+        INaturezaPatente NaturezaPatente { get; set; }
         bool ObrigacaoGerada { get; set; }
         DateTime? DataCadastro { get; set; }
         string Observacao { get; set; }

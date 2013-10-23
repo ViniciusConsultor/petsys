@@ -83,10 +83,10 @@
     <Compile Include="LazyLoad\DespachoDePatentesLazyLoad.cs" />
     <Compile Include="LazyLoad\InventorLazyLoad.cs" />
     <Compile Include="LazyLoad\MarcasLazyLoad.cs" />
+    <Compile Include="LazyLoad\NaturezaPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\PatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\PrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
-    <Compile Include="LazyLoad\TipoDePatenteLazyLoad.cs" />
     <Compile Include="Marcas.cs" />
     <Compile Include="NaturezaPatente.cs" />
     <Compile Include="Patente.cs" />
@@ -99,7 +99,6 @@
     <Compile Include="ProcessoDeMarca.cs" />
     <Compile Include="Procurador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TipoDePatente.cs" />
     <Compile Include="TipoDeProcedimentoInterno.cs" />
   </ItemGroup>
   <ItemGroup>

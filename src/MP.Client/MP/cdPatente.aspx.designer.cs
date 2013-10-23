@@ -130,22 +130,22 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadTextBox txtTituloPatente;
         
         /// <summary>
-        /// lblTipoDaPatente control.
+        /// lblNaturezaPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTipoDaPatente;
+        protected global::System.Web.UI.WebControls.Label lblNaturezaPatente;
         
         /// <summary>
-        /// ctrlTipoDePatente control.
+        /// ctrlNaturezaPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlTipoDePatente ctrlTipoDePatente;
+        protected global::MP.Client.MP.ctrlNaturezaPatente ctrlNaturezaPatente;
         
         /// <summary>
         /// lblCliente control.

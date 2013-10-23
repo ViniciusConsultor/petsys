@@ -113,8 +113,8 @@ namespace MP.Client.MP
             ctrlPatente.EnableLoadOnDemand = true;
             ctrlPatente.ShowDropDownOnTextboxClick = true;
             ctrlPatente.AutoPostBack = true;
-            ctrlTipoDePatente.Inicializa();
-            ctrlTipoDePatente.BotaoNovoEhVisivel = true;
+            ctrlNaturezaPatente.Inicializa();
+            ctrlNaturezaPatente.BotaoNovoEhVisivel = true;
             ctrlCliente.Inicializa();
             ctrlCliente.BotaoNovoEhVisivel = true;
             ctrlInventor.Inicializa();
@@ -475,6 +475,7 @@ namespace MP.Client.MP
             
             ListaDeClientes.Add(ctrlCliente.ClienteSelecionado);
             MostrarListasDeClientes();
+            ctrlCliente.Inicializa();
         }
 
         protected void btnAdicionarInventor_ButtonClick(object sender, EventArgs e)
@@ -498,6 +499,7 @@ namespace MP.Client.MP
 
             ListaDeInventores.Add(ctrlInventor.InventorSelecionado);
             MostrarListasDeInventores();
+            ctrlInventor.Inicializa();
         }
 
         private void MostrarListasDeClientes()
@@ -823,7 +825,7 @@ namespace MP.Client.MP
 
         private bool PodeGravarPatente()
         {
-            if (ctrlTipoDePatente.TipoDePatenteSelecionada == null)
+            if (ctrlNaturezaPatente.NaturezaPatenteSelecionada == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione o tipo da patente."), false);
@@ -838,7 +840,7 @@ namespace MP.Client.MP
             var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
 
             patente.TituloPatente = txtTituloPatente.Text;
-            patente.TipoDePatente = ctrlTipoDePatente.TipoDePatenteSelecionada;
+            patente.NaturezaPatente = ctrlNaturezaPatente.NaturezaPatenteSelecionada;
             patente.Resumo = txtResumoDaPatente.Text;
             patente.Observacao = txtObservacoes.Text;
 
