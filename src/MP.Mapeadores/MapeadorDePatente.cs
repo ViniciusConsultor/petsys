@@ -34,17 +34,21 @@ namespace MP.Mapeadores
             comandoSQL.Append(patente.QuantidadeReivindicacao + ")");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
 
-            foreach (IAnuidadePatente anuidadePatente in patente.Anuidades)
-                InserirAnuidade(anuidadePatente, patente.Identificador);
+            if (patente.Anuidades != null)
+                foreach (IAnuidadePatente anuidadePatente in patente.Anuidades)
+                    InserirAnuidade(anuidadePatente, patente.Identificador);
 
-            foreach (IClassificacaoPatente classificacaoPatente in patente.Classificacoes)
-                InserirClassificacao(classificacaoPatente, patente.Identificador);
+            if (patente.Classificacoes != null)
+                foreach (IClassificacaoPatente classificacaoPatente in patente.Classificacoes)
+                    InserirClassificacao(classificacaoPatente, patente.Identificador);
 
-            foreach (IPrioridadeUnionistaPatente prioridadeUnionistaPatente in patente.PrioridadesUnionista)
-                InserirPrioridadeUnionista(prioridadeUnionistaPatente, patente.Identificador);
+            if (patente.PrioridadesUnionista != null)
+                foreach (IPrioridadeUnionistaPatente prioridadeUnionistaPatente in patente.PrioridadesUnionista)
+                    InserirPrioridadeUnionista(prioridadeUnionistaPatente, patente.Identificador);
 
-            foreach (ITitularPatente titularPatente in patente.Titulares)
-                InserirTitularPatente(titularPatente, patente.Identificador);
+            if (patente.Titulares != null)
+                foreach (ITitularPatente titularPatente in patente.Titulares)
+                    InserirTitularPatente(titularPatente, patente.Identificador);
         }
 
         public void Modificar(IPatente patente)
