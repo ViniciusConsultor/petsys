@@ -45,11 +45,11 @@ namespace MP.Client.MP
                 int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
                 patente = servico.ObtenhaPatente(codigoSelecionado);
 
+                PatenteSelecionada = patente;
+
                 if (PatenteFoiSelecionada != null)
-                {
-                    PatenteSelecionada = patente;
                     PatenteFoiSelecionada(patente);
-                }
+                
             }
         }
 

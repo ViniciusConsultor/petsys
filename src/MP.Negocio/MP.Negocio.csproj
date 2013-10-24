@@ -72,8 +72,8 @@
     <Compile Include="Filtros\Marcas\FiltroMarcaSemFiltro.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeEntrada.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorID.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorNatureza.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorProcesso.cs" />
-    <Compile Include="Filtros\Patentes\FiltroPatentePorTipoDePatente.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatenteSemFiltro.cs" />
     <Compile Include="Inventor.cs" />

@@ -346,40 +346,6 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorProcesso;
         
         /// <summary>
-        /// pnlProtocolo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        /// <summary>
-        /// Label9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
-        
-        /// <summary>
-        /// txtProtocolo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtProtocolo;
-        
-        /// <summary>
-        /// btnPesquisarPorProtoloco control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorProtoloco;
-        
-        /// <summary>
         /// rdkProcessosDeMarcas control.
         /// </summary>
         /// <remarks>
