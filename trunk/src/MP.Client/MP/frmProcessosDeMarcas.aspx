@@ -8,9 +8,9 @@
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
 <%@ Register Src="ctrlMarcas.ascx" TagName="ctrlMarcas" TagPrefix="uc6" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista" Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
+        Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo Processo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.007.0001" />
@@ -37,7 +37,7 @@
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label10" runat="server" Text="Operação do filtro"></asp:Label>
                                 </td>
@@ -52,7 +52,7 @@
                                 <td class="td">
                                     <uc1:ctrlApresentacao ID="ctrlApresentacao1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorApresentacao" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick=btnPesquisarPorApresentacao_OnClick/>
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorApresentacao_OnClick" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlCliente">
@@ -62,7 +62,7 @@
                                 <td class="td">
                                     <uc5:ctrlCliente ID="ctrlCliente1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorCliente" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorCliente_OnClick_"/>
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorCliente_OnClick_" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlDataDeEntrada">
@@ -83,7 +83,7 @@
                                 <td class="td">
                                     <uc6:ctrlMarcas ID="ctrlMarcas1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorMarca" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar"  OnClick="btnPesquisarPorMarca_OnClick"/>
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorMarca_OnClick" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlNatureza">
@@ -93,10 +93,10 @@
                                 <td class="td">
                                     <uc2:ctrlNaturezaDeMarca ID="ctrlNatureza1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorNatureza" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar"  OnClick="btnPesquisarPorNatureza_OnClick"/>
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorNatureza_OnClick" />
                                 </td>
                             </tr>
-                             <tr runat="server" id="pnlNCL">
+                            <tr runat="server" id="pnlNCL">
                                 <td class="th3">
                                     <asp:Label ID="Label8" runat="server" Text="NCL"></asp:Label>
                                 </td>
@@ -111,14 +111,15 @@
                                     <asp:Label ID="Label3" runat="server" Text="Processo"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64" Type="Number" >
-                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
+                                    <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64"
+                                        Type="Number">
+                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
+                                        </NumberFormat>
                                     </telerik:RadNumericTextBox>
                                     <asp:ImageButton ID="btnPesquisarPorProcesso" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorProcesso_OnClick" />
                                 </td>
                             </tr>
-                            
                         </table>
                     </asp:Panel>
                 </ContentTemplate>
@@ -129,8 +130,10 @@
                     <table class="tabela">
                         <tr>
                             <td colspan="2">
-                                <telerik:RadGrid ID="grdProcessosDeMarcas" runat="server" AutoGenerateColumns="False" AllowCustomPaging="true"
-                                    AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista" AllowFilteringByColumn="false" OnPageIndexChanged="grdProcessosDeMarcas_OnPageIndexChanged" OnItemCommand="grdProcessosDeMarcas_OnItemCommand">
+                                <telerik:RadGrid ID="grdProcessosDeMarcas" runat="server" AutoGenerateColumns="False"
+                                    AllowCustomPaging="true" AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista"
+                                    AllowFilteringByColumn="false" OnPageIndexChanged="grdProcessosDeMarcas_OnPageIndexChanged"
+                                    OnItemCommand="grdProcessosDeMarcas_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
@@ -142,21 +145,24 @@
                                         <Columns>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
+                                                <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column2">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column3">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Protocolo" HeaderText="Protocolo" UniqueName="column4">
+                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6">
+                                             <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column3">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente"
+                                                UniqueName="column2">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6"
+                                                DataFormatString="{0:dd/MM/yyyy}">
+                                                <ItemStyle Width="15%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>

@@ -37,68 +37,158 @@ namespace MP.Negocio.LazyLoad
 
         public string TituloPatente
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.TituloPatente;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.TituloPatente = value;
+            }
         }
 
         public INaturezaPatente NaturezaPatente
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.NaturezaPatente;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.NaturezaPatente = value;
+            }
         }
 
         public bool ObrigacaoGerada
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.ObrigacaoGerada;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.ObrigacaoGerada = value;
+            }
         }
 
         public DateTime? DataCadastro
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.DataCadastro;
+
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.DataCadastro = value;
+            }
         }
 
         public string Observacao
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Observacao;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Observacao = value;
+            }
         }
 
         public string Resumo
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Resumo;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Resumo = value;
+            }
         }
 
         public int QuantidadeReivindicacao
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.QuantidadeReivindicacao;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.QuantidadeReivindicacao = value;
+            }
         }
 
         public IList<IAnuidadePatente> Anuidades
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Anuidades;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Anuidades = value;
+            }
         }
 
         public IList<IClassificacaoPatente> Classificacoes
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Classificacoes;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Classificacoes = value;
+
+            }
         }
 
         public IList<IPrioridadeUnionistaPatente> PrioridadesUnionista
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.PrioridadesUnionista;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.PrioridadesUnionista = value;
+            }
         }
 
         public IList<ITitularPatente> Titulares
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Titulares;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Titulares = value;
+            }
         }
 
 

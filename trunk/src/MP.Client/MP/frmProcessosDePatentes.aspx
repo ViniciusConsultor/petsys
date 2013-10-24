@@ -54,9 +54,8 @@
                                     <asp:Label ID="Label3" runat="server" Text="Processo"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64" Type="Number" >
-                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
-                                    </telerik:RadNumericTextBox>
+                                    <telerik:RadTextBox ID="txtProcesso" runat="server" >
+                                    </telerik:RadTextBox>
                                     <asp:ImageButton ID="btnPesquisarPorProcesso" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorProcesso_OnClick" />
                                 </td>
@@ -72,14 +71,14 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorTituloDaPatente_OnClick"/>
                                 </td>
                             </tr>
-                            <tr runat="server" id="pnlTipoDePatente">
+                            <tr runat="server" id="pnlNatureza">
                                 <td class="th3">
-                                    <asp:Label ID="Label1" runat="server" Text="Tipo de patente"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="Natureza"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <uc2:ctrlNaturezaPatente ID="ctrlNaturezaPatente1" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorTipoDePatente" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorTipoDePatente_OnClick"/>
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorNatureza_OnClick"/>
                                 </td>
                             </tr>
                         </table>
@@ -105,21 +104,23 @@
                                         <Columns>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
+                                                <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column1">
+                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="TipoDePatente.DescricaoNaturezaPatente" HeaderText="Tipo da patente" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Patente.NaturezaPatente.DescricaoNaturezaPatente" HeaderText="Natureza" UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
+                                                  <ItemStyle Width="50%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Protocolo" HeaderText="Protocolo" UniqueName="column4">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6">
+                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6" DataFormatString="{0:dd/MM/yyyy}" >
+                                                 <ItemStyle Width="15%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>

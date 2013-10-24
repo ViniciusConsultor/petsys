@@ -90,12 +90,12 @@ namespace MP.Client.MP
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorTituloDaPatente>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-            filtro.ValorDoFiltro = txtDataDeEntrada.SelectedDate.Value.ToString("yyyyMMdd");
+            filtro.ValorDoFiltro = txtTituloPatente.Text;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
         }
 
-        protected void btnPesquisarPorTipoDePatente_OnClick(object sender, ImageClickEventArgs e)
+        protected void btnPesquisarPorNatureza_OnClick(object sender, ImageClickEventArgs e)
         {
             if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
             {
@@ -106,11 +106,11 @@ namespace MP.Client.MP
             if (ctrlNaturezaPatente1.NaturezaPatenteSelecionada == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione um tipo de patente."), false);
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma natureza."), false);
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorTipoDePatente>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorNatureza>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
             filtro.ValorDoFiltro = ctrlNaturezaPatente1.NaturezaPatenteSelecionada.IdNaturezaPatente.ToString();
             FiltroAplicado = filtro;
@@ -123,7 +123,7 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo", "1"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de entrada", "2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Título da patente", "3"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Tipo de patente", "4"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza", "4"));
         }
 
 
@@ -143,7 +143,7 @@ namespace MP.Client.MP
                     pnlTituloPatente.Visible = true;
                     break;
                 case "4":
-                    pnlTipoDePatente.Visible = true;
+                    pnlNatureza.Visible = true;
                     break;
             }
         }
@@ -154,7 +154,7 @@ namespace MP.Client.MP
             pnlProcesso.Visible = false;
             pnlDataDeEntrada.Visible = false;
             pnlTituloPatente.Visible = false;
-            pnlTipoDePatente.Visible = false;
+            pnlNatureza.Visible = false;
         }
         
         protected void btnPesquisarPorDataDeEntrada_OnClick(object sender, ImageClickEventArgs e)
@@ -188,7 +188,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (!txtProcesso.Value.HasValue)
+            if (string.IsNullOrEmpty(txtProcesso.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraMensagemDeInconsitencia("Informe um número de processo."), false);
@@ -224,12 +224,12 @@ namespace MP.Client.MP
 
         private string ObtenhaURLCadastrodePatente()
         {
-            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx");
+            return String.Concat(UtilidadesWeb.ObtenhaURLCorrente(), "cdProcessoDePatente.aspx");
         }
 
         private string ObtenhaURLLeituraDeRevistaDePatente()
         {
-            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmLeituraRevistaPatente.aspx");
+            return String.Concat(UtilidadesWeb.ObtenhaURLCorrente(), "frmLeituraRevistaPatente.aspx");
         }
 
         private void Recarregue()

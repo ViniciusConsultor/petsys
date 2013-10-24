@@ -154,7 +154,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtProcesso;
+        protected global::Telerik.Web.UI.RadTextBox txtProcesso;
         
         /// <summary>
         /// btnPesquisarPorProcesso control.
@@ -202,13 +202,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorTituloDaPatente;
         
         /// <summary>
-        /// pnlTipoDePatente control.
+        /// pnlNatureza control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlTipoDePatente;
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlNatureza;
         
         /// <summary>
         /// Label1 control.
