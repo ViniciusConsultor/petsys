@@ -6,6 +6,7 @@ using System.Text;
 using Compartilhados;
 using Compartilhados.DBHelper;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.Core.Negocio.LazyLoad;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
@@ -49,6 +50,10 @@ namespace MP.Mapeadores
             if (patente.Titulares != null)
                 foreach (ITitularPatente titularPatente in patente.Titulares)
                     InserirTitularPatente(titularPatente, patente.Identificador);
+
+            if (patente.Clientes != null)
+                foreach (ICliente clientePatente in patente.Clientes)
+                    InserirClientesPatente(clientePatente, patente.Identificador);
         }
 
         public void Modificar(IPatente patente)
@@ -499,6 +504,40 @@ namespace MP.Mapeadores
             patente.Titulares = ObtenhaTitularPeloIdDaPatente(patente.Identificador);
 
             return patente;
+        }
+
+        private ICliente MapeieObjetoClientePatente(IDataReader reader)
+        {
+            var clientePatente = FabricaGenerica.GetInstancia().CrieObjeto<ICliente>();
+            clientePatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTECLIENTE"));
+            return clientePatente;
+        }
+
+        public ICliente ObtenhaClientePatente(long id)
+        {
+            ICliente clientePatente = null;
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
+
+            comandoSQL.Append("SELECT IDPATENTECLIENTE, IDPATENTE FROM MP_PATENTECLIENTE ");
+            comandoSQL.Append("WHERE IDPATENTE = " + id);
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
+                while (reader.Read())
+                    clientePatente = MapeieObjetoClientePatente(reader);
+
+            return clientePatente;
+        }
+
+        private void InserirClientesPatente(ICliente cliente, long idPatente)
+        {
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            comandoSQL.Append("INSERT INTO MP_PATENTECLIENTE(IDPATENTECLIENTE, IDPATENTE) VALUES(");
+            comandoSQL.Append(cliente.Pessoa.ID + ", ");
+            comandoSQL.Append(idPatente + ")");
+            DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
 
 #endregion

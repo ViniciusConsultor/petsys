@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 
 namespace MP.Negocio
@@ -14,8 +15,6 @@ namespace MP.Negocio
         public string TituloPatente { get; set; }
 
         public INaturezaPatente NaturezaPatente { get; set; }
-
-        public IDespachoDeMarcas DespachoDeMarcas { get; set; }
 
         public bool ObrigacaoGerada { get; set; }
 
@@ -34,5 +33,7 @@ namespace MP.Negocio
         public IList<IPrioridadeUnionistaPatente> PrioridadesUnionista { get; set; }
 
         public IList<ITitularPatente> Titulares { get; set; }
+
+        public IList<ICliente> Clientes { get; set; }
     }
 }
