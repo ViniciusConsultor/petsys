@@ -387,7 +387,20 @@ namespace MP.Client.MP
 
         private void ExibaPatenteSelecionada(IPatente patente)
         {
-
+            txtTituloPatente.Text = patente.TituloPatente;
+            ctrlNaturezaPatente.NaturezaPatenteSelecionada = patente.NaturezaPatente;
+            ListaDeClientes = patente.Clientes;
+            MostrarListasDeClientes();
+            CarregueListaDeInventores(patente);
+            ListaDePrioridadeUnionista = patente.PrioridadesUnionista;
+            MostrarListasDePrioridadesUnionistas();
+            txtResumoDaPatente.Text = patente.Resumo;
+            txtObservacoes.Text = patente.Observacao;
+            ListaDeClassificacaoDePatente = patente.Classificacoes;
+            MostrarListasDeClassificacaoDePatentes();
+            txtReivindicacoes.Text = patente.QuantidadeReivindicacao.ToString();
+            ListaDeAnuidadeDaPatente = patente.Anuidades;
+            MostrarListaDeAnuidadeDaPatente();
         }
 
         private void ExibaTelaModificar()
@@ -833,6 +846,20 @@ namespace MP.Client.MP
                 return false;
             }
 
+            if (ListaDeClientes == null || (ListaDeClientes != null && ListaDeClientes.Count == 0))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe os clientes da patente."), false);
+                return false;
+            }
+
+            if (ListaDeInventores == null || (ListaDeInventores != null && ListaDeInventores.Count == 0))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe os inventores da patente."), false);
+                return false;
+            }
+
             return true;
         }
 
@@ -859,6 +886,9 @@ namespace MP.Client.MP
             if (ListaDePrioridadeUnionista != null && ListaDePrioridadeUnionista.Count > 0)
                 patente.PrioridadesUnionista = ListaDePrioridadeUnionista;
 
+            if (ListaDeClientes != null && ListaDeClientes.Count > 0)
+                patente.Clientes = ListaDeClientes;
+
             if (ListaDeInventores != null && ListaDeInventores.Count > 0)
             {
                 IList<ITitularPatente> titularesPatente = new List<ITitularPatente>();
@@ -874,6 +904,15 @@ namespace MP.Client.MP
             }
 
             return patente;
+        }
+
+        private void CarregueListaDeInventores(IPatente patente)
+        {
+            if(ListaDeInventores == null)
+                ListaDeInventores = new List<IInventor>();
+
+            foreach (ITitularPatente titularPatente in patente.Titulares)
+                ListaDeInventores.Add(titularPatente.Iventor);
         }
     }
 }

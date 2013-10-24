@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.LazyLoad;
 using MP.Interfaces.Servicos;
@@ -95,6 +96,13 @@ namespace MP.Negocio.LazyLoad
         }
 
         public IList<ITitularPatente> Titulares
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+
+        public IList<ICliente> Clientes
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
