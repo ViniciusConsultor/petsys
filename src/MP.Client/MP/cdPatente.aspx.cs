@@ -341,7 +341,7 @@ namespace MP.Client.MP
 
         private void btnModificar_Click()
         {
-            ExibaTelaModificar();
+            GravePatente();
         }
 
         private void btnNovo_Click()
@@ -387,11 +387,16 @@ namespace MP.Client.MP
 
         private void ExibaPatenteSelecionada(IPatente patente)
         {
+            ExibaTelaModificar();
+
             txtTituloPatente.Text = patente.TituloPatente;
+            ctrlNaturezaPatente.Inicializa();
             ctrlNaturezaPatente.NaturezaPatenteSelecionada = patente.NaturezaPatente;
+            ctrlNaturezaPatente.DescricaoNaturezaPatente = patente.NaturezaPatente.DescricaoNaturezaPatente;
             ListaDeClientes = patente.Clientes;
             MostrarListasDeClientes();
             CarregueListaDeInventores(patente);
+            MostrarListasDeInventores();
             ListaDePrioridadeUnionista = patente.PrioridadesUnionista;
             MostrarListasDePrioridadesUnionistas();
             txtResumoDaPatente.Text = patente.Resumo;
@@ -405,11 +410,11 @@ namespace MP.Client.MP
 
         private void ExibaTelaModificar()
         {
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = true;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
@@ -812,7 +817,7 @@ namespace MP.Client.MP
 
             try
             {
-                var patente = MonateObjetoPatente();
+                var patente = MonteObjetoPatente();
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
                 {
@@ -863,9 +868,9 @@ namespace MP.Client.MP
             return true;
         }
 
-        private IPatente MonateObjetoPatente()
+        private IPatente MonteObjetoPatente()
         {
-            var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
+            var patente = ViewState[CHAVE_ESTADO].Equals(Estado.Novo) ? FabricaGenerica.GetInstancia().CrieObjeto<IPatente>() : ctrlPatente.PatenteSelecionada;
 
             patente.TituloPatente = txtTituloPatente.Text;
             patente.NaturezaPatente = ctrlNaturezaPatente.NaturezaPatenteSelecionada;
@@ -912,7 +917,8 @@ namespace MP.Client.MP
                 ListaDeInventores = new List<IInventor>();
 
             foreach (ITitularPatente titularPatente in patente.Titulares)
-                ListaDeInventores.Add(titularPatente.Iventor);
+                if(titularPatente.Iventor != null)
+                    ListaDeInventores.Add(titularPatente.Iventor);
         }
     }
 }
