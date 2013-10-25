@@ -111,6 +111,7 @@
     <Content Include="ctrlTipoEndereco.ascx" />
     <Content Include="ctrlEmpresa.ascx" />
     <Content Include="ctrlGrupoDeAtividade.ascx" />
+    <Content Include="ctrlUF.ascx" />
     <Content Include="DefinicaoDeNovaSenha.aspx" />
     <Content Include="desktop.css" />
     <Content Include="Desktop.aspx" />
@@ -1145,6 +1146,13 @@
     </Compile>
     <Compile Include="ctrlGrupoDeAtividade.ascx.vb">
       <DependentUpon>ctrlGrupoDeAtividade.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ctrlUF.ascx.designer.vb">
+      <DependentUpon>ctrlUF.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlUF.ascx.vb">
+      <DependentUpon>ctrlUF.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DefinicaoDeNovaSenha.aspx.designer.vb">
