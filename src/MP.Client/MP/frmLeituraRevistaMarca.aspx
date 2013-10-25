@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="frmLeituraRevistaMarca.aspx.cs" Inherits="MP.Client.MP.frmLeituraRevistaMarca" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="~/MP/ctrlProcurador.ascx" TagName="ctrlProcurador" TagPrefix="uc1" %>
+<%@ Register Src="~/MP/ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc2" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
@@ -107,9 +110,11 @@
                                 <asp:Label ID="Label2" runat="server" Text="Processo:"></asp:Label>
                             </td>
                             <td class="td">
-                               <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64" Type="Number" >
-                                        <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false"></NumberFormat>
-                                    </telerik:RadNumericTextBox>
+                                <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64"
+                                    Type="Number">
+                                    <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
+                                    </NumberFormat>
+                                </telerik:RadNumericTextBox>
                             </td>
                         </tr>
                         <tr>
@@ -117,9 +122,52 @@
                                 <asp:Label ID="Label3" runat="server" Text="Estado:"></asp:Label>
                             </td>
                             <td class="td">
-                                   <%-- <telerik:RadComboBox ID="cboEstado" runat="server" AutoPostBack="true" OnSelectedIndexChanged="cboEstado_OnSelectedIndexChanged">
-                                    </telerik:RadComboBox>--%>
-                           </td>
+                                <%-- controle uf --%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label5" runat="server" Text="Despacho:"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc2:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td">
+                                <telerik:RadButton ID="btnFiltrar" runat="server" Text="Filtrar" Skin="Vista" OnClick="btnFiltrar_ButtonClick">
+                                </telerik:RadButton>
+                            </td>
+                            <td class="td">
+                                <telerik:RadButton ID="btnLimpar" runat="server" Text="Limpar" Skin="Vista" OnClick="btnLimpar_ButtonClick">
+                                </telerik:RadButton>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label11" runat="server" Text="Publicações próprias:"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadTextBox ID="txtPublicacoesProprias" runat="server" Enabled="true">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label6" runat="server" Text="Processos:"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadTextBox ID="txtQuantdadeDeProcessos" runat="server" Enabled="true">
+                                </telerik:RadTextBox>
+                            </td>
                         </tr>
                     </table>
                   </asp:Panel>

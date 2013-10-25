@@ -73,5 +73,15 @@ namespace MP.Client.MP
         {
             throw new NotImplementedException();
         }
+
+        protected void btnFiltrar_ButtonClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnLimpar_ButtonClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
