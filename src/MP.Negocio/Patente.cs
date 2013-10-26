@@ -32,7 +32,7 @@ namespace MP.Negocio
 
         public IList<IPrioridadeUnionistaPatente> PrioridadesUnionista { get; set; }
 
-        public IList<ITitularPatente> Titulares { get; set; }
+        public IList<IInventor> Inventores { get; set; }
 
         public IList<ICliente> Clientes { get; set; }
     }

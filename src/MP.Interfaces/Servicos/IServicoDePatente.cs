@@ -10,11 +10,11 @@ namespace MP.Interfaces.Servicos
     {
         void Insira(IPatente patente);
         void Modificar(IPatente patente);
-        void Exluir(int codigoPatente);
+        void Exluir(long codigoPatente);
         IAnuidadePatente ObtenhaAnuidade(long id);
         IClassificacaoPatente ObtenhaClassificacao(long id);
         IPrioridadeUnionistaPatente ObtenhaPrioridadeUnionista(long id);
-        ITitularPatente ObtenhaTitular(long id);
+        IInventor ObtenhaInventor(long id);
         IPatente ObtenhaPatente(long id);
         IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros);
     }

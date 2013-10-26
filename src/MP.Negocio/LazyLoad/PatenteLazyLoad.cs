@@ -177,17 +177,17 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public IList<ITitularPatente> Titulares
+        public IList<IInventor> Inventores
         {
             get
             {
                 if (_objetoReal == null) CarregueObjetoReal();
-                return _objetoReal.Titulares;
+                return _objetoReal.Inventores;
             }
             set
             {
                 if (_objetoReal == null) CarregueObjetoReal();
-                _objetoReal.Titulares = value;
+                _objetoReal.Inventores = value;
             }
         }
 
