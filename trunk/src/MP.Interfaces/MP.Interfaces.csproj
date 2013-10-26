@@ -92,7 +92,6 @@
     <Compile Include="Negocio\IPrioridadeUnionistaPatente.cs" />
     <Compile Include="Negocio\IProcessoDePatente.cs" />
     <Compile Include="Negocio\IRadicalMarcas.cs" />
-    <Compile Include="Negocio\ITitularPatente.cs" />
     <Compile Include="Negocio\IProcessoDeMarca.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
@@ -107,8 +106,6 @@
     <Compile Include="Negocio\LazyLoad\IPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IPrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IProcuradorLazyLoad.cs" />
-    <Compile Include="Negocio\LazyLoad\ITitularPatenteLazyLoad.cs" />
-    <Compile Include="Negocio\LazyLoad\TitularPatenteLazyLoad.cs" />
     <Compile Include="Negocio\NaturezaDeMarca.cs" />
     <Compile Include="Negocio\NCL.cs" />
     <Compile Include="Negocio\SituacaoDoProcessoDeMarca.cs" />

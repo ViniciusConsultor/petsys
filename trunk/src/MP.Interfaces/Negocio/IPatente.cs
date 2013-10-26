@@ -19,7 +19,7 @@ namespace MP.Interfaces.Negocio
         IList<IAnuidadePatente> Anuidades { get; set; }
         IList<IClassificacaoPatente> Classificacoes { get; set; }
         IList<IPrioridadeUnionistaPatente> PrioridadesUnionista { get; set; }
-        IList<ITitularPatente> Titulares { get; set; }
+        IList<IInventor> Inventores { get; set; }
         IList<ICliente> Clientes { get; set; }
     }
 }

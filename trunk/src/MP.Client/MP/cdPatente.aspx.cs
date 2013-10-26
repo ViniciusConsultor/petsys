@@ -321,7 +321,20 @@ namespace MP.Client.MP
 
         private void btnSim_Click()
         {
-            
+            try
+            {
+                var patente = MonteObjetoPatente();
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
+                    servico.Exluir(patente.Identificador);
+
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInformacao("Patente excluída com sucesso."), false);
+                ExibaTelaInicial();
+            }
+            catch (BussinesException ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+            }
         }
 
         private void btnCancelar_Click()
@@ -395,7 +408,7 @@ namespace MP.Client.MP
             ctrlNaturezaPatente.DescricaoNaturezaPatente = patente.NaturezaPatente.DescricaoNaturezaPatente;
             ListaDeClientes = patente.Clientes;
             MostrarListasDeClientes();
-            CarregueListaDeInventores(patente);
+            ListaDeInventores = patente.Inventores;
             MostrarListasDeInventores();
             ListaDePrioridadeUnionista = patente.PrioridadesUnionista;
             MostrarListasDePrioridadesUnionistas();
@@ -895,30 +908,9 @@ namespace MP.Client.MP
                 patente.Clientes = ListaDeClientes;
 
             if (ListaDeInventores != null && ListaDeInventores.Count > 0)
-            {
-                IList<ITitularPatente> titularesPatente = new List<ITitularPatente>();
-
-                foreach (IInventor inventor in ListaDeInventores)
-                {
-                    var titulaPatente = FabricaGenerica.GetInstancia().CrieObjeto<ITitularPatente>();
-                    titulaPatente.Iventor = inventor;
-                    titularesPatente.Add(titulaPatente);
-                }
-
-                patente.Titulares = titularesPatente;
-            }
+                patente.Inventores = ListaDeInventores;
 
             return patente;
-        }
-
-        private void CarregueListaDeInventores(IPatente patente)
-        {
-            if(ListaDeInventores == null)
-                ListaDeInventores = new List<IInventor>();
-
-            foreach (ITitularPatente titularPatente in patente.Titulares)
-                if(titularPatente.Iventor != null)
-                    ListaDeInventores.Add(titularPatente.Iventor);
         }
     }
 }

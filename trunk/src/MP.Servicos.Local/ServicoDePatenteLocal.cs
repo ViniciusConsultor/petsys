@@ -60,7 +60,7 @@ namespace MP.Servicos.Local
             }            
         }
 
-        public void Exluir(int codigoPatente)
+        public void Exluir(long codigoPatente)
         {
             ServerUtils.setCredencial(_Credencial);
             var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
@@ -127,14 +127,14 @@ namespace MP.Servicos.Local
             }            
         }
 
-        public ITitularPatente ObtenhaTitular(long id)
+        public IInventor ObtenhaInventor(long id)
         {
             ServerUtils.setCredencial(_Credencial);
             var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaTitular(id);
+                return mapeadorProcurador.ObtenhaInventor(id);
             }
             finally
             {

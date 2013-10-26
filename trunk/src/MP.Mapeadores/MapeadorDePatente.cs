@@ -47,9 +47,9 @@ namespace MP.Mapeadores
                 foreach (IPrioridadeUnionistaPatente prioridadeUnionistaPatente in patente.PrioridadesUnionista)
                     InserirPrioridadeUnionista(prioridadeUnionistaPatente, patente.Identificador);
 
-            if (patente.Titulares != null)
-                foreach (ITitularPatente titularPatente in patente.Titulares)
-                    InserirTitularPatente(titularPatente, patente.Identificador);
+            if (patente.Inventores != null)
+                foreach (IInventor inventor in patente.Inventores)
+                    InserirTitularPatente(inventor, patente.Identificador);
 
             if (patente.Clientes != null)
                 foreach (ICliente clientePatente in patente.Clientes)
@@ -90,16 +90,16 @@ namespace MP.Mapeadores
                 foreach (IPrioridadeUnionistaPatente prioridadeUnionistaPatente in patente.PrioridadesUnionista)
                     InserirPrioridadeUnionista(prioridadeUnionistaPatente, patente.Identificador);
 
-            if (patente.Titulares != null)
-                foreach (ITitularPatente titularPatente in patente.Titulares)
-                    InserirTitularPatente(titularPatente, patente.Identificador);
+            if (patente.Inventores != null)
+                foreach (IInventor inventor in patente.Inventores)
+                    InserirTitularPatente(inventor, patente.Identificador);
 
             if (patente.Clientes != null)
                 foreach (ICliente clientePatente in patente.Clientes)
                     InserirClientesPatente(clientePatente, patente.Identificador);
         }
 
-        public void Exluir(int codigoPatente)
+        public void Exluir(long codigoPatente)
         {
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
@@ -110,7 +110,7 @@ namespace MP.Mapeadores
             ExluirTitular(codigoPatente);
             ExluirCliente(codigoPatente);
 
-            comandoSQL.Append("DELETE FROM MP_PATENTE WHERE IDPROCESSOPATENTE = " + codigoPatente);
+            comandoSQL.Append("DELETE FROM MP_PATENTE WHERE IDPATENTE = " + codigoPatente);
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
 
@@ -163,20 +163,20 @@ namespace MP.Mapeadores
             return prioridadeUnionistaPatente;
         }
 
-        public ITitularPatente ObtenhaTitular(long id)
+        public IInventor ObtenhaInventor(long id)
         {
-            ITitularPatente titularPatente = null;
+            IInventor inventorPatente = null;
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTETITULARINVENTOR, IDPATENTE, IDPROCURADOR, CONTATO_TITULAR FROM MP_PATENTETITULARINVENTOR ");
-            comandoSQL.Append("WHERE IDPATENTETITULARINVENTOR = " + id);
+            comandoSQL.Append("SELECT IDTITULARINVENTOR, IDPATENTE FROM MP_PATENTETITULARINVENTOR ");
+            comandoSQL.Append("WHERE IDTITULARINVENTOR = " + id);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
-                    titularPatente = MapeieObjetoTitularPatente(reader);
+                    inventorPatente = MapeieObjetoIventorPatente(reader);
 
-            return titularPatente;
+            return inventorPatente;
         }
 
         public IPatente ObtenhaPatente(long id)
@@ -222,7 +222,8 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            anuidadePatente.Identificador = ObtenhaProximoIDAnuidadePatente();
+            if (anuidadePatente.Identificador == 0)
+                anuidadePatente.Identificador = ObtenhaProximoIDAnuidadePatente();
 
             comandoSQL.Append("INSERT INTO MP_PATENTEANUIDADE(IDPATENTEANUIDADE, IDPATENTE, DESCRICAOANUIDADE, DATALANCAMENTO, DATAVENCIMENTO,");
             comandoSQL.Append("DATAPAGAMENTO, VALORPAGAMENTO, ANUIDADEPAGA, PEDIDOEXAME, DATAVENCTO_SEM_MULTA, DATAVENCTO_COM_MULTA) VALUES(");
@@ -246,7 +247,8 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            classificacaoPatente.Identificador = ObtenhaProximoIDClassificacaoPatente();
+            if (classificacaoPatente.Identificador == 0)
+                classificacaoPatente.Identificador = ObtenhaProximoIDClassificacaoPatente();
 
             comandoSQL.Append("INSERT INTO MP_PATENTECLASSIFICACAO(IDPATENTECLASSIFICACAO, CLASSIFICACAO, DESCRICAO_CLASSIFICACAO, IDPATENTE, TIPO_CLASSIFICACAO) VALUES(");
             comandoSQL.Append( classificacaoPatente.Identificador + ", ");
@@ -262,7 +264,8 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            prioridadeUnionistaPatente.Identificador = ObtenhaProximoIDPrioridadeUnionista();
+            if (prioridadeUnionistaPatente.Identificador == 0)
+                prioridadeUnionistaPatente.Identificador = ObtenhaProximoIDPrioridadeUnionista();
 
             comandoSQL.Append("INSERT INTO MP_PATENTEPRIORIDADEUNIONISTA(IDPRIORIDADEUNIONISTA, DATA_PRIORIDADE, NUMERO_PRIORIDADE, IDPATENTE, IDPAIS) VALUES(");
             comandoSQL.Append(prioridadeUnionistaPatente.Identificador + ", ");
@@ -273,17 +276,14 @@ namespace MP.Mapeadores
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
 
-        private void InserirTitularPatente(ITitularPatente titularPatente, long idPatente)
+        private void InserirTitularPatente(IInventor inventor, long idPatente)
         {
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            titularPatente.Identificador = ObtenhaProximoIDTitular();
-
-            comandoSQL.Append("INSERT INTO MP_PATENTETITULARINVENTOR(IDPATENTETITULARINVENTOR, IDPATENTE, CONTATO_TITULAR) VALUES(");
-            comandoSQL.Append(titularPatente.Identificador + ", ");
-            comandoSQL.Append(idPatente + ", ");
-            comandoSQL.Append("'" + titularPatente.ContatoTitular + "') ");
+            comandoSQL.Append("INSERT INTO MP_PATENTETITULARINVENTOR(IDTITULARINVENTOR, IDPATENTE) VALUES(");
+            comandoSQL.Append(inventor.Pessoa.ID + ", ");
+            comandoSQL.Append(idPatente + ")");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
 
@@ -323,21 +323,6 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPRIORIDADEUNIONISTA) CODIGO FROM MP_PATENTEPRIORIDADEUNIONISTA"))
-                while (reader.Read())
-                    proximoCodigo = UtilidadesDePersistencia.getValorInteger(reader, "CODIGO");
-
-            if (proximoCodigo == null)
-                return 1;
-
-            return proximoCodigo.Value + 1;
-        }
-
-        private int ObtenhaProximoIDTitular()
-        {
-            int? proximoCodigo = null;
-            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
-
-            using (var reader = DBHelper.obtenhaReader("SELECT MAX(IDPATENTETITULARINVENTOR) CODIGO FROM MP_PATENTETITULARINVENTOR"))
                 while (reader.Read())
                     proximoCodigo = UtilidadesDePersistencia.getValorInteger(reader, "CODIGO");
 
@@ -411,20 +396,20 @@ namespace MP.Mapeadores
             return prioridadesUnionistaPatente;
         }
 
-        public IList<ITitularPatente> ObtenhaTitularPeloIdDaPatente(long idPatente)
+        public IList<IInventor> ObtenhaTitularPeloIdDaPatente(long idPatente)
         {
-            IList<ITitularPatente> titularesPatente = new List<ITitularPatente>();
+            IList<IInventor> inventores = new List<IInventor>();
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTETITULARINVENTOR, IDPATENTE, CONTATO_TITULAR FROM MP_PATENTETITULARINVENTOR ");
-            comandoSQL.Append("WHERE IDPATENTETITULARINVENTOR = " + idPatente);
+            comandoSQL.Append("SELECT IDTITULARINVENTOR, IDPATENTE FROM MP_PATENTETITULARINVENTOR ");
+            comandoSQL.Append("WHERE IDPATENTE = " + idPatente);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
-                    titularesPatente.Add(MapeieObjetoTitularPatente(reader));
+                    inventores.Add(MapeieObjetoIventorPatente(reader));
 
-            return titularesPatente;
+            return inventores;
         }
 
         private void ExluirAnuidade(long codigoPatente)
@@ -514,15 +499,10 @@ namespace MP.Mapeadores
             return prioridadeUnionistaPatente;
         }
 
-        private ITitularPatente MapeieObjetoTitularPatente(IDataReader reader)
+        private IInventor MapeieObjetoIventorPatente(IDataReader reader)
         {
-            var titularPatente = FabricaGenerica.GetInstancia().CrieObjeto<ITitularPatente>();
-
-            titularPatente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTETITULARINVENTOR");
-            titularPatente.ContatoTitular = UtilidadesDePersistencia.GetValorString(reader, "CONTATO_TITULAR");
-            titularPatente.Iventor = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IInventorLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTETITULARINVENTOR"));
-
-            return titularPatente;
+            var inventor = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IInventorLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDTITULARINVENTOR"));
+            return inventor;
         }
 
         private IPatente MapeieObjetoPatente(IDataReader reader)
@@ -540,7 +520,7 @@ namespace MP.Mapeadores
             patente.Anuidades = ObtenhaAnuidadePeloIdDaPatente(patente.Identificador);
             patente.Classificacoes = ObtenhaClassificacaoPeloIdDaPatente(patente.Identificador);
             patente.PrioridadesUnionista = ObtenhaPrioridadeUnionistaPeloIdDaPatente(patente.Identificador);
-            patente.Titulares = ObtenhaTitularPeloIdDaPatente(patente.Identificador);
+            patente.Inventores = ObtenhaTitularPeloIdDaPatente(patente.Identificador);
             patente.Clientes = ObtenhaClientesPatente(patente.Identificador);
 
             return patente;
@@ -548,7 +528,7 @@ namespace MP.Mapeadores
 
         private ICliente MapeieObjetoClientePatente(IDataReader reader)
         {
-            var clientePatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTECLIENTE"));
+            var clientePatente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDCLIENTE"));
             return clientePatente;
         }
 
@@ -558,7 +538,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDPATENTECLIENTE, IDPATENTE FROM MP_PATENTECLIENTE ");
+            comandoSQL.Append("SELECT IDCLIENTE, IDPATENTE FROM MP_PATENTECLIENTE ");
             comandoSQL.Append("WHERE IDPATENTE = " + id);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
@@ -573,7 +553,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("INSERT INTO MP_PATENTECLIENTE(IDPATENTECLIENTE, IDPATENTE) VALUES(");
+            comandoSQL.Append("INSERT INTO MP_PATENTECLIENTE(IDCLIENTE, IDPATENTE) VALUES(");
             comandoSQL.Append(cliente.Pessoa.ID + ", ");
             comandoSQL.Append(idPatente + ")");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());

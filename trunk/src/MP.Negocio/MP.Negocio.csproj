@@ -95,7 +95,6 @@
     <Compile Include="PrioridadeUnionistaPatente.cs" />
     <Compile Include="ProcessoDePatente.cs" />
     <Compile Include="RadicalMarcas.cs" />
-    <Compile Include="TitularPatente.cs" />
     <Compile Include="ProcessoDeMarca.cs" />
     <Compile Include="Procurador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
