@@ -47,8 +47,5 @@ namespace MP.Negocio
         {
             get; set; }
 
-        public SituacaoDoProcessoDeMarca SituacaoDoProcesso
-        {
-            get; set; }
     }
 }

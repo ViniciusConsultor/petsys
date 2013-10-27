@@ -15,8 +15,9 @@ namespace MP.Interfaces.Negocio
         public static NaturezaDeMarca DeServico = new NaturezaDeMarca(2, "De serviço");
         public static NaturezaDeMarca Coletiva = new NaturezaDeMarca(3, "Coletiva");
         public static NaturezaDeMarca Certificacao = new NaturezaDeMarca(4, "Certificação");
+        public static NaturezaDeMarca Geografica = new NaturezaDeMarca(5, "Geográfica");
 
-        private static IList<NaturezaDeMarca> naturezas = new List<NaturezaDeMarca>() { DeProduto, DeServico, Coletiva, Certificacao };
+        private static IList<NaturezaDeMarca> naturezas = new List<NaturezaDeMarca>() { DeProduto, DeServico, Coletiva, Certificacao, Geografica };
 
         private NaturezaDeMarca(int codigo, string nome)
         {
@@ -44,6 +45,11 @@ namespace MP.Interfaces.Negocio
         public static NaturezaDeMarca ObtenhaPorCodigo(int codigo)
         {
             return naturezas.FirstOrDefault(natureza => natureza.Codigo.Equals(codigo));
+        }
+
+        public static NaturezaDeMarca ObtenhaPorNome(string nome)
+        {
+            return naturezas.FirstOrDefault(natureza => natureza.Nome.Equals(nome,StringComparison.InvariantCultureIgnoreCase));
         }
 
         public override bool Equals(object obj)

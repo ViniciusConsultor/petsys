@@ -48,7 +48,7 @@ namespace InicializaBancoMP
              Cursor = Cursors.WaitCursor;
              toolStripStatusLabel2.Text = "Abrindo arquivo de despachos de patentes...";
 
-             var arquivo = new StreamReader(diretorio + @"\DespachosDeMarcas.csv");
+             var arquivo = new StreamReader(diretorio + @"\DespachosDeMarcas.txt");
 
              var Despachos = new List<IDespachoDeMarcas>();
 
@@ -96,11 +96,22 @@ namespace InicializaBancoMP
 
             var despacho = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
 
-            //despacho.CodigoDespacho = pedacos[0];
-            //despacho.Registro = pedacos[3];
-            //despacho.DetalheDespacho = 
+            despacho.CodigoDespacho = pedacos[0];
+            
+            if (!string.IsNullOrEmpty(pedacos[1]))
+                despacho.SituacaoProcesso = pedacos[1];
 
-            return null;
+            despacho.PrazoParaProvidenciaEmDias = Convert.ToInt32(pedacos[2]);
+
+            if (!string.IsNullOrEmpty(pedacos[3]))
+                despacho.Providencia = pedacos[3];
+
+            despacho.DescricaoDespacho = pedacos[4];
+
+            despacho.DesativaProcesso = pedacos[5].Equals("VERDADEIRO", StringComparison.InvariantCultureIgnoreCase);
+            despacho.DesativaPesquisaDeColidencia = pedacos[6].Equals("VERDADEIRO", StringComparison.InvariantCultureIgnoreCase);
+            
+            return despacho;
         }
 
     }

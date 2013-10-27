@@ -109,10 +109,8 @@
     <Compile Include="Negocio\LazyLoad\IProcuradorLazyLoad.cs" />
     <Compile Include="Negocio\NaturezaDeMarca.cs" />
     <Compile Include="Negocio\NCL.cs" />
-    <Compile Include="Negocio\SituacaoDoProcessoDeMarca.cs" />
     <Compile Include="Negocio\SituacaoDoProcessoDePatente.cs" />
     <Compile Include="Negocio\TipoClassificacaoPatente.cs" />
-    <Compile Include="Negocio\TipoProvidenciaDespachoDeMarca.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDePatentes.cs" />

@@ -62,6 +62,11 @@ namespace MP.Interfaces.Negocio
             return apresentacoes.FirstOrDefault(apresentacao => apresentacao.Codigo.Equals(codigo));
         }
 
+        public static Apresentacao ObtenhaPorNome(string nome)
+        {
+            return apresentacoes.FirstOrDefault(apresentacao => apresentacao.Nome.Equals(nome,StringComparison.InvariantCultureIgnoreCase));
+        }
+
         public override bool Equals(object obj)
         {
             var objeto = obj as Apresentacao;

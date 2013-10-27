@@ -90,26 +90,12 @@ namespace MP.Client.MP
             {
                 foreach (var despachoDeMarcas in listaDespachoDeMarcas)
                 {
-                    var item = new RadComboBoxItem(despachoDeMarcas.CodigoDespacho.ToString(), despachoDeMarcas.IdDespacho.Value.ToString());
+                    var item = new RadComboBoxItem(despachoDeMarcas.CodigoDespacho, despachoDeMarcas.IdDespacho.Value.ToString());
 
-                    if(despachoDeMarcas.SituacaoProcesso != null)
-                    {
-                        item.Attributes.Add("SituacaoProcesso",
-                                        despachoDeMarcas.SituacaoProcesso.DescricaoSituacao ?? "Não informada");
-                    }
+                    item.Attributes.Add("Descricao",despachoDeMarcas.DescricaoDespacho);
+                    item.Attributes.Add("SituacaoProcesso", despachoDeMarcas.SituacaoProcesso);
                     
-                    if (despachoDeMarcas.Registro)
-                    {
-                        item.Attributes.Add("Registro",
-                                            "Sim" ?? "Não informada");
-                    }
-                    else
-                    {
-                        item.Attributes.Add("Registro",
-                                            "Não" ?? "Não informada");
-                    }
-
-                    this.cboDespachoDeMarcas.Items.Add(item);
+                    cboDespachoDeMarcas.Items.Add(item);
                     item.DataBind();
                 }
             }
