@@ -94,6 +94,7 @@
     <Compile Include="Negocio\IRadicalMarcas.cs" />
     <Compile Include="Negocio\IProcessoDeMarca.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
+    <Compile Include="Negocio\IRevistaDeMarcas.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
     <Compile Include="Negocio\LayoutRevistaPatente.cs" />
     <Compile Include="Negocio\LazyLoad\IAnuidadePatenteLazyLoad.cs" />

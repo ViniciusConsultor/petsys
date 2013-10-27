@@ -139,6 +139,15 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
+        /// ctrlUF control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WorkSpace.ctrlUF ctrlUF;
+        
+        /// <summary>
         /// Label4 control.
         /// </summary>
         /// <remarks>
@@ -227,5 +236,68 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtQuantdadeDeProcessos;
+        
+        /// <summary>
+        /// RadTabStrip1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTabStrip RadTabStrip1;
+        
+        /// <summary>
+        /// RadMultiPage1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadMultiPage RadMultiPage1;
+        
+        /// <summary>
+        /// RadPageView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadPageView RadPageView1;
+        
+        /// <summary>
+        /// pnlDadosDaRevistaProcesso control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlDadosDaRevistaProcesso;
+        
+        /// <summary>
+        /// gridRevistaProcessos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid gridRevistaProcessos;
+        
+        /// <summary>
+        /// RadPageView2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadPageView RadPageView2;
+        
+        /// <summary>
+        /// pnlRadicais control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlRadicais;
     }
 }
