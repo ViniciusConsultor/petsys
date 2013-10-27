@@ -98,6 +98,7 @@
     <Compile Include="ProcessoDeMarca.cs" />
     <Compile Include="Procurador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RevistaDeMarcas.cs" />
     <Compile Include="TipoDeProcedimentoInterno.cs" />
   </ItemGroup>
   <ItemGroup>
