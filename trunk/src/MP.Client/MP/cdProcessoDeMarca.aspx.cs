@@ -96,11 +96,7 @@ namespace MP.Client.MP
                 ctrlProcurador.ProcuradorSelecionado = processoDeMarca.Procurador;
                 ctrlProcurador.Nome = processoDeMarca.Procurador.Pessoa.Nome;
             }
-
-            ctrlSituacao.Codigo = processoDeMarca.SituacaoDoProcesso != null &&
-                                  processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.HasValue
-                                      ? processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.ToString()
-                                      : "NULL";
+            
         }
 
         private void LimpaTela()
@@ -112,7 +108,6 @@ namespace MP.Client.MP
             ctrlMarcas1.Inicializa();
             ctrlDespacho.Inicializa();
             ctrlProcurador.Inicializa();
-            ctrlSituacao.Inicializa();
             rblProcessoEhDeTerceiro.Items.Clear();
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Sim", "1"));
@@ -140,9 +135,6 @@ namespace MP.Client.MP
             if (ctrlProcurador.ProcuradorSelecionado != null)
                 processoDeMarca.Procurador = ctrlProcurador.ProcuradorSelecionado;
             
-            if (!string.IsNullOrEmpty(ctrlSituacao.Codigo))
-                processoDeMarca.SituacaoDoProcesso = SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacao.Codigo));
-
             return processoDeMarca;
         }
 

@@ -29,7 +29,7 @@ namespace MP.Mapeadores
             sql.Append("INSERT INTO MP_PROCESSOMARCA (");
             sql.Append("IDPROCESSO, IDMARCA, PROCESSO,");
             sql.Append("DATAENTRADA, DATACONCESSAO, PROCESSOEHTERCEIRO, IDDESPACHO,");
-            sql.Append("IDPROCURADOR, SITUACAO)");
+            sql.Append("IDPROCURADOR)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(processoDeMarca.IdProcessoDeMarca.Value, ", "));
             sql.Append(String.Concat(processoDeMarca.Marca.IdMarca.Value, ", "));
@@ -48,13 +48,8 @@ namespace MP.Mapeadores
                            ? String.Concat(processoDeMarca.Despacho.IdDespacho, ", ")
                            : "NULL, ");
 
-            sql.Append(String.Concat(processoDeMarca.Procurador != null ? processoDeMarca.Procurador.Pessoa.ID.Value.ToString() : "NULL", ", "));
-
-            sql.Append(processoDeMarca.SituacaoDoProcesso != null
-               ? String.Concat(processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.Value, ")")
-               : "NULL)");
-
-
+            sql.Append(String.Concat(processoDeMarca.Procurador != null ? processoDeMarca.Procurador.Pessoa.ID.Value.ToString() + ")" : "NULL)"));
+            
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
 
@@ -82,12 +77,8 @@ namespace MP.Mapeadores
                            ? String.Concat("IDDESPACHO = ",processoDeMarca.Despacho.IdDespacho, ", ")
                            : "IDDESPACHO = NULL, ");
 
-            sql.Append(String.Concat("IDPROCURADOR = ", processoDeMarca.Procurador != null ? processoDeMarca.Procurador.Pessoa.ID.Value.ToString() : "NULL", ", "));
+            sql.Append(String.Concat("IDPROCURADOR = ", processoDeMarca.Procurador != null ? processoDeMarca.Procurador.Pessoa.ID.Value.ToString() : "NULL"));
             
-            sql.Append(processoDeMarca.SituacaoDoProcesso != null
-               ? String.Concat("SITUACAO = ",processoDeMarca.SituacaoDoProcesso.CodigoSituacaoProcesso.Value)
-               : "SITUACAO = NULL");
-
             sql.Append(" WHERE IDPROCESSO = " + processoDeMarca.IdProcessoDeMarca);
 
             DBHelper.ExecuteNonQuery(sql.ToString());
@@ -151,10 +142,6 @@ namespace MP.Mapeadores
 
             processoDeMarca.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSOEHTERCEIRO");
             
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "SITUACAO"))
-                processoDeMarca.SituacaoDoProcesso =
-                    SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "SITUACAO"));
-
             processoDeMarca.Procurador =  FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCURADOR"));
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "IDDESPACHO"))

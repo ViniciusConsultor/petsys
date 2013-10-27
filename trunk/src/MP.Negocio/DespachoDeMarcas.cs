@@ -6,26 +6,13 @@ namespace MP.Negocio
     [Serializable]
     public class DespachoDeMarcas : IDespachoDeMarcas
     {
-        public long? IdDespacho
-        {
-            get;
-            set;
-        }
-
-        public string CodigoDespacho
-        {
-            get; set; }
-
-        public string DetalheDespacho
-        {
-            get; set; }
-
-        public SituacaoDoProcessoDeMarca SituacaoProcesso
-        {
-            get; set; }
-
-        public bool Registro
-        {
-            get; set; }
+        public long? IdDespacho{get;set;}
+        public string CodigoDespacho {get; set; }
+        public string DescricaoDespacho { get; set; }
+        public string SituacaoProcesso { get; set; }
+        public int PrazoParaProvidenciaEmDias { get; set; }
+        public string Providencia { get; set; }
+        public bool DesativaProcesso { get; set; }
+        public bool DesativaPesquisaDeColidencia {get;set;}
     }
 }

@@ -52,21 +52,21 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public string DetalheDespacho
+        public string DescricaoDespacho
         {
             get
             {
                 VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.DetalheDespacho;
+                return _ObjetoReal.DescricaoDespacho;
             }
             set
             {
                 VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.DetalheDespacho = value;
+                _ObjetoReal.DescricaoDespacho = value;
             }
         }
 
-        public SituacaoDoProcessoDeMarca SituacaoProcesso
+        public string SituacaoProcesso
         {
             get
             {
@@ -80,17 +80,57 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public bool Registro
+        public int PrazoParaProvidenciaEmDias
         {
             get
             {
                 VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.Registro;
+                return _ObjetoReal.PrazoParaProvidenciaEmDias;
             }
             set
             {
                 VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.Registro = value;
+                _ObjetoReal.PrazoParaProvidenciaEmDias = value;
+            }
+        }
+
+        public string Providencia
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.Providencia;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.Providencia = value;
+            }
+        }
+
+        public bool DesativaProcesso
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.DesativaProcesso;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.DesativaProcesso = value; 
+            }
+        }
+
+        public bool DesativaPesquisaDeColidencia
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.DesativaPesquisaDeColidencia;
+            }
+            set { VerifiqueSeObjetoEstaCarregado();
+            _ObjetoReal.DesativaPesquisaDeColidencia = value;
             }
         }
     }

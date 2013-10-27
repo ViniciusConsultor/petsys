@@ -9,8 +9,11 @@ namespace MP.Interfaces.Negocio
     {
         long? IdDespacho { get; set; }
         string CodigoDespacho { get; set; }
-        string DetalheDespacho { get; set; }
-        SituacaoDoProcessoDeMarca SituacaoProcesso { get; set; }
-        bool Registro { get; set; }
+        string DescricaoDespacho { get; set; }
+        string SituacaoProcesso { get; set; }
+        int PrazoParaProvidenciaEmDias { get; set; }
+        string Providencia { get; set; }
+        bool DesativaProcesso { get; set; }
+        bool DesativaPesquisaDeColidencia { get; set; }
     }
 }

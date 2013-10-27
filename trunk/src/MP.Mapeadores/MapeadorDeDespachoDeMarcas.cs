@@ -18,8 +18,8 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
-            sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO Registro ");
+            sql.Append("SELECT IDDESPACHO, CODIGO_DESPACHO, DESCRICAO_DESPACHO, ");
+            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA ");
             sql.Append("FROM MP_DESPACHO_MARCA ");
             sql.Append("WHERE IDDESPACHO = " + idDespachoDeMarcas);
 
@@ -39,23 +39,27 @@ namespace MP.Mapeadores
         {
             var DBHelper = ServerUtils.criarNovoDbHelper();
             IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();
-
+            
             using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros))
             {
                 while (leitor.Read())
                 {
                     var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
-                    despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IdDespacho");
-                    despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CodigoDespacho");
+                    despachoDeMarcas.IdDespacho = UtilidadesDePersistencia.getValorInteger(leitor, "IDDESPACHO");
+                    despachoDeMarcas.CodigoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CODIGO_DESPACHO");
+                    despachoDeMarcas.DescricaoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DESCRICAO_DESPACHO");
 
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "DetalheDespacho"))
-                        despachoDeMarcas.DetalheDespacho = UtilidadesDePersistencia.GetValorString(leitor, "DetalheDespacho");
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "SITUACAODOPROCESSO"))
+                        despachoDeMarcas.SituacaoProcesso = UtilidadesDePersistencia.GetValorString(leitor, "SITUACAODOPROCESSO");
 
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoSituacaoProcesso"))
-                        despachoDeMarcas.SituacaoProcesso = SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "CodigoSituacaoProcesso"));
+                    despachoDeMarcas.PrazoParaProvidenciaEmDias = UtilidadesDePersistencia.getValorInteger(leitor, "PRAZOPROVIDENCIA");
 
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Registro"))
-                        despachoDeMarcas.Registro = UtilidadesDePersistencia.GetValorBooleano(leitor, "Registro");
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "PROVIDENCIA"))
+                        despachoDeMarcas.Providencia = UtilidadesDePersistencia.GetValorString(leitor, "PROVIDENCIA");
+
+                    despachoDeMarcas.DesativaProcesso = UtilidadesDePersistencia.GetValorBooleano(leitor, "DESATIVAPROCESSO");
+
+                    despachoDeMarcas.DesativaPesquisaDeColidencia = UtilidadesDePersistencia.GetValorBooleano(leitor, "DESATIVAPESQCOLIDENCIA");
 
                     listaDeDespachoDeMarcas.Add(despachoDeMarcas);
                 }
@@ -68,15 +72,13 @@ namespace MP.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDDESPACHO IdDespacho, CODIGO_DESPACHO CodigoDespacho, DETALHE_DESPACHO DetalheDespacho, ");
-            sql.Append("IDSITUACAO_PROCESSO CodigoSituacaoProcesso, REGISTRO  Registro ");
+            sql.Append("SELECT IDDESPACHO, CODIGO_DESPACHO, DESCRICAO_DESPACHO, ");
+            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA ");
             sql.Append("FROM MP_DESPACHO_MARCA ");
 
-            if (!string.IsNullOrEmpty(codigo))
-            {
-                sql.Append(string.Concat("WHERE CODIGO_DESPACHO = '", codigo, "'"));
-            }
-            
+            if (!String.IsNullOrEmpty(codigo))
+                sql.Append(string.Concat("WHERE CODIGO_DESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(codigo), "'"));
+
             IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();
 
             listaDeDespachoDeMarcas = obtenhaDespachoDeMarcas(sql, quantidadeMaximaDeRegistros);
@@ -94,17 +96,29 @@ namespace MP.Mapeadores
             despachoDeMarcas.IdDespacho = GeradorDeID.getInstancia().getProximoID();
 
             sql.Append("INSERT INTO MP_DESPACHO_MARCA (");
-            sql.Append("IDDESPACHO, CODIGO_DESPACHO, DETALHE_DESPACHO, IDSITUACAO_PROCESSO, REGISTRO) ");
+            sql.Append("IDDESPACHO, CODIGO_DESPACHO, DESCRICAO_DESPACHO, SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPESQCOLIDENCIA, DESATIVAPROCESSO) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(despachoDeMarcas.IdDespacho.Value.ToString(), ", "));
-            sql.Append(String.Concat("'", despachoDeMarcas.CodigoDespacho, "', "));
-            sql.Append(String.Concat("'", despachoDeMarcas.DetalheDespacho, "', "));
-          
-            sql.Append(despachoDeMarcas.SituacaoProcesso != null && despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.HasValue
-                           ? String.Concat("", despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.Value, ", ")
+            sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.CodigoDespacho), "', "));
+            sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.DescricaoDespacho), "', "));
+
+            sql.Append(!string.IsNullOrEmpty(despachoDeMarcas.SituacaoProcesso)
+                           ? String.Concat("'",
+                                           UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.SituacaoProcesso),
+                                           "', ")
+                           : "NULL, ");
+            
+            sql.Append(String.Concat(despachoDeMarcas.PrazoParaProvidenciaEmDias, ", "));
+
+            sql.Append(!string.IsNullOrEmpty(despachoDeMarcas.Providencia)
+                           ? String.Concat("'",
+                                           UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.Providencia),
+                                           "', ")
                            : "NULL, ");
 
-            sql.Append(despachoDeMarcas.Registro ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
+            sql.Append(despachoDeMarcas.DesativaPesquisaDeColidencia ? String.Concat("'", 1, "', ") : String.Concat("'", 0, "', "));
+
+            sql.Append(despachoDeMarcas.DesativaProcesso ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -117,17 +131,27 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.getDBHelper();
 
             sql.Append("UPDATE MP_DESPACHO_MARCA SET ");
-            sql.Append(String.Concat("CODIGO_DESPACHO = '", despachoDeMarcas.CodigoDespacho, "', "));
-            sql.Append(String.Concat("DETALHE_DESPACHO = '", despachoDeMarcas.DetalheDespacho, "', "));
+            sql.Append(String.Concat("CODIGO_DESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.CodigoDespacho), "', "));
+            sql.Append(String.Concat("DESCRICAO_DESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.DescricaoDespacho), "', "));
 
-            sql.Append(despachoDeMarcas.SituacaoProcesso != null &&
-                       despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.HasValue
-                           ? String.Concat("IDSITUACAO_PROCESSO = ", despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.Value, ", ")
-                           : "IDSITUACAO_PROCESSO = NULL, ");
+            sql.Append(!string.IsNullOrEmpty(despachoDeMarcas.SituacaoProcesso)
+                           ? String.Concat("SITUACAODOPROCESSO = '", UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.SituacaoProcesso), "', ")
+                           : "SITUACAODOPROCESSO = NULL, ");
+
+            sql.Append(String.Concat("PRAZOPROVIDENCIA = ", despachoDeMarcas.PrazoParaProvidenciaEmDias, ", "));
+
+            sql.Append(!string.IsNullOrEmpty(despachoDeMarcas.Providencia)
+                          ? String.Concat("PROVIDENCIA = '", UtilidadesDePersistencia.FiltraApostrofe(despachoDeMarcas.Providencia), "', ")
+                          : "PROVIDENCIA = NULL, ");
+
+            sql.Append(despachoDeMarcas.DesativaPesquisaDeColidencia
+                           ? String.Concat("DESATIVAPESQCOLIDENCIA = '", 1, "', ")
+                           : String.Concat("DESATIVAPESQCOLIDENCIA = '", 0, "', "));
+
             
-            sql.Append(despachoDeMarcas.Registro
-                           ? String.Concat("REGISTRO = '", 1, "' ")
-                           : String.Concat("REGISTRO = '", 0, "' "));
+            sql.Append(despachoDeMarcas.DesativaProcesso
+                           ? String.Concat("DESATIVAPROCESSO = '", 1, "' ")
+                           : String.Concat("DESATIVAPROCESSO = '", 0, "' "));
 
             sql.Append(String.Concat("WHERE IDDESPACHO = ", despachoDeMarcas.IdDespacho.Value.ToString()));
 

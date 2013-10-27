@@ -49,12 +49,11 @@ namespace MP.Client.MP
             ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = true;
             ctrlDespachoDeMarcas.AutoPostBack = true;
 
-            ctrlSituacaoDoProcesso.Inicializa();
 
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
 
-            CarregueConcessaoDeRegistro();
+            CarregueComponentes();
         }
 
         private void ExibaTelaConsultar()
@@ -71,12 +70,17 @@ namespace MP.Client.MP
             UtilidadesWeb.HabilitaComponentes(ref controle, false);
         }
 
-        private void CarregueConcessaoDeRegistro()
+        private void CarregueComponentes()
         {
-            rblConcessaoDeRegistro.Items.Clear();
-            rblConcessaoDeRegistro.Items.Add(new ListItem("Sim", "1"));
-            rblConcessaoDeRegistro.Items.Add(new ListItem("Não","0"));
-            rblConcessaoDeRegistro.SelectedValue = "0";
+            rblDesativaProcesso.Items.Clear();
+            rblDesativaProcesso.Items.Add(new ListItem("Sim", "1"));
+            rblDesativaProcesso.Items.Add(new ListItem("Não", "0"));
+            rblDesativaProcesso.SelectedValue = "0";
+
+            rblDesativaPesquisa.Items.Clear();
+            rblDesativaPesquisa.Items.Add(new ListItem("Sim", "1"));
+            rblDesativaPesquisa.Items.Add(new ListItem("Não", "0"));
+            rblDesativaPesquisa.SelectedValue = "0";
         }
 
         protected void btnNovo_Click()
@@ -100,7 +104,6 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             pnlDespacho.Visible = false;
-            ctrlSituacaoDoProcesso.Inicializa();
         }
 
         private void ExibaTelaModificar()
@@ -136,7 +139,7 @@ namespace MP.Client.MP
             Control controlePanel = this.PanelCdDespachoDeMarcas;
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
-            
+
         }
 
         protected void btnCancela_Click()
@@ -154,32 +157,50 @@ namespace MP.Client.MP
             }
 
             despachoDeMarcas.CodigoDespacho = txtCodigo.Text;
-            despachoDeMarcas.DetalheDespacho = txtDescricao.Text;
-            despachoDeMarcas.Registro = rblConcessaoDeRegistro.SelectedValue != "0";
-
-            if (!string.IsNullOrEmpty(ctrlSituacaoDoProcesso.Codigo))
-                despachoDeMarcas.SituacaoProcesso =
-                    SituacaoDoProcessoDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlSituacaoDoProcesso.Codigo));
+            despachoDeMarcas.DescricaoDespacho = txtDescricao.Text;
+            despachoDeMarcas.PrazoParaProvidenciaEmDias = Convert.ToInt32(txtPrazoProvidencia.Value);
+            despachoDeMarcas.Providencia = txtProvidencia.Text;
+            despachoDeMarcas.SituacaoProcesso = txtSituacao.Text;
+            despachoDeMarcas.DesativaProcesso = rblDesativaProcesso.SelectedValue != "0";
+            despachoDeMarcas.DesativaPesquisaDeColidencia = rblDesativaPesquisa.SelectedValue != "0";
 
             return despachoDeMarcas;
+        }
+
+        private IList<string> VerifiqueCamposObrigatorios()
+        {
+            var inconsistencias = new List<string>();
+
+            if (string.IsNullOrEmpty(txtCodigo.Text))
+                inconsistencias.Add("O código do despacho deve ser informado.");
+
+            if (string.IsNullOrEmpty(txtDescricao.Text))
+                inconsistencias.Add("A descrição do despacho deve ser informada.");
+
+            if (!txtPrazoProvidencia.Value.HasValue)
+                inconsistencias.Add("O prazo para a providência deve ser informado.");
+
+            return inconsistencias;
         }
 
         private void btnSalva_Click()
         {
             string mensagem = string.Empty;
+            var inconsistencias = VerifiqueCamposObrigatorios();
+
+
+            if (inconsistencias.Count > 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsistencias(inconsistencias), false);
+                return;
+            }
+
+
+            var despachoDeMarcas = MontaObjetoDespachoDeMarcas();
 
             try
             {
-                if (string.IsNullOrEmpty(this.txtCodigo.Text))
-                {
-                    mensagem = "Campo código do despacho deve ser preenchido.";
-
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                             UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem), false);
-                    return;
-                }
-
-                var despachoDeMarcas = MontaObjetoDespachoDeMarcas();
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
                 {
@@ -212,11 +233,12 @@ namespace MP.Client.MP
                                                         UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
                 ExibaTelaInicial();
             }
-            catch (Exception ex)
+            catch (BussinesException ex)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                           UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
+
         }
 
         private IList<IDespachoDeMarcas> verificaSeJaExisteDespachoCadastrado(string codigoDespacho, IServicoDeDespachoDeMarcas servico)
@@ -295,16 +317,12 @@ namespace MP.Client.MP
             ViewState[ID_OBJETO] = despachoDeMarcas.IdDespacho.Value.ToString();
 
             txtCodigo.Text = despachoDeMarcas.CodigoDespacho;
-            txtDescricao.Text = despachoDeMarcas.DetalheDespacho;
-
-            rblConcessaoDeRegistro.SelectedValue = despachoDeMarcas.Registro ? "1" : "0";
-
-            ctrlSituacaoDoProcesso.Codigo = despachoDeMarcas.SituacaoProcesso != null &&
-                                            despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.HasValue
-                                                ? despachoDeMarcas.SituacaoProcesso.CodigoSituacaoProcesso.Value.
-                                                      ToString()
-                                                : "NULL";
-
+            txtDescricao.Text = despachoDeMarcas.DescricaoDespacho;
+            txtPrazoProvidencia.Text = despachoDeMarcas.PrazoParaProvidenciaEmDias.ToString();
+            txtProvidencia.Text = despachoDeMarcas.Providencia;
+            txtSituacao.Text = despachoDeMarcas.SituacaoProcesso;
+            rblDesativaPesquisa.SelectedValue = despachoDeMarcas.DesativaPesquisaDeColidencia ? "1": "0";
+            rblDesativaProcesso.SelectedValue = despachoDeMarcas.DesativaProcesso ? "1" : "0";
             ExibaTelaConsultar();
         }
 
