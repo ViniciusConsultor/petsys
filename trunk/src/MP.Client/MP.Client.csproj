@@ -137,26 +137,12 @@
     <Compile Include="MP\cdProcessoDePatente.aspx.designer.cs">
       <DependentUpon>cdProcessoDePatente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MP\cdSituacaoDeProcessoDeMarca.aspx.cs">
-      <DependentUpon>cdSituacaoDeProcessoDeMarca.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\cdSituacaoDeProcessoDeMarca.aspx.designer.cs">
-      <DependentUpon>cdSituacaoDeProcessoDeMarca.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.cs">
       <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.designer.cs">
       <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MP\cdTipoDeProvidenciaDeDespachoDeMarca.aspx.cs">
-      <DependentUpon>cdTipoDeProvidenciaDeDespachoDeMarca.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\cdTipoDeProvidenciaDeDespachoDeMarca.aspx.designer.cs">
-      <DependentUpon>cdTipoDeProvidenciaDeDespachoDeMarca.aspx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlApresentacao.ascx.cs">
       <DependentUpon>ctrlApresentacao.ascx</DependentUpon>
@@ -289,9 +275,7 @@
     <Content Include="MP\cdPatente.aspx" />
     <Content Include="MP\cdProcessoDeMarca.aspx" />
     <Content Include="MP\cdProcessoDePatente.aspx" />
-    <Content Include="MP\cdSituacaoDeProcessoDeMarca.aspx" />
     <Content Include="MP\cdTipoDeProcedimentoInterno.aspx" />
-    <Content Include="MP\cdTipoDeProvidenciaDeDespachoDeMarca.aspx" />
     <Content Include="MP\ctrlApresentacao.ascx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlDespachoDePatentes.ascx" />

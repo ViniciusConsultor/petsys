@@ -47,7 +47,7 @@
                             <tr>
                                 <td class="td">
                                     <telerik:RadGrid ID="grdRevistasAProcessar" runat="server" AutoGenerateColumns="False"
-                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdRevistasAProcessar_ItemCommand"
+                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" Skin="Vista" OnItemCommand="grdRevistasAProcessar_ItemCommand"
                                         OnItemCreated="grdRevistasAProcessar_ItemCreated" OnPageIndexChanged="grdRevistasAProcessar_PageIndexChanged">
                                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                         <MasterTableView GridLines="Both">
@@ -65,9 +65,9 @@
                                                 <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ProcessarRevista"
                                                     FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
                                                     UniqueName="column4">
-                                                    <ItemStyle Width="2%"></ItemStyle>
+                                                    <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
-                                                <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista a processar"
+                                                <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista(s) a processar"
                                                     UniqueName="column1">
                                                 </telerik:GridBoundColumn>
                                             </Columns>
@@ -76,7 +76,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadGrid ID="grdRevistasJaProcessadas" runat="server" AutoGenerateColumns="False"
-                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdRevistasJaProcessadas_ItemCommand"
+                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" Skin="Vista" OnItemCommand="grdRevistasJaProcessadas_ItemCommand"
                                         OnItemCreated="grdRevistasJaProcessadas_ItemCreated" OnPageIndexChanged="grdRevistasJaProcessadas_PageIndexChanged">
                                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                         <MasterTableView GridLines="Both">
@@ -87,10 +87,15 @@
                                                 <HeaderStyle Width="20px" />
                                             </ExpandCollapseColumn>
                                             <Columns>
+                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ProcessarRevista"
+                                                    FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
+                                                    UniqueName="column4">
+                                                    <ItemStyle Width="4%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
                                                 <telerik:GridBoundColumn DataField="IdRevistaMarcas" HeaderText="IdRevista" UniqueName="column"
                                                     Visible="false">
                                                 </telerik:GridBoundColumn>
-                                                <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista já processada"
+                                                <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista(s) já processada(s)"
                                                     UniqueName="column1">
                                                 </telerik:GridBoundColumn>
                                             </Columns>
