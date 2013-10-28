@@ -14,10 +14,13 @@ namespace MP.Negocio
         public int NumeroRevistaMarcas
         { get; set; }
 
-        public string DataPublicacao
+        public DateTime DataPublicacao
         { get; set; }
 
         public bool Processada
+        { get; set; }
+
+        public string ExtensaoArquivo
         { get; set; }
     }
 }

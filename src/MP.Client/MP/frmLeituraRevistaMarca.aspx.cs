@@ -5,10 +5,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
 
 namespace MP.Client.MP
@@ -22,7 +24,76 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // carregua grids já processadas.
+            if (!IsPostBack)
+            {
+                this.ExibaTelaInicial();
+            }
+        }
+
+        private void ExibaTelaInicial()
+        {
+            CarregueGridRevistasAProcessar();
+            CarregueGridRevistasJaProcessadas();
+        }
+
+        private void CarregueGridRevistasJaProcessadas()
+        {
+            try
+            {
+                IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                {
+                    listaDeRevistas = servico.ObtenhaRevistasJaProcessadas(grdRevistasJaProcessadas.PageSize);
+                }
+
+                if(listaDeRevistas.Count > 0)
+                {
+                    MostraListaRevistasJaProcessadas(listaDeRevistas);
+                }
+                else
+                {
+                    var controleGrid = this.grdRevistasJaProcessadas as Control;
+                    UtilidadesWeb.LimparComponente(ref controleGrid);
+
+                    MostraListaRevistasJaProcessadas(new List<IRevistaDeMarcas>());
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+
+        private void CarregueGridRevistasAProcessar()
+        {
+            try
+            {
+                IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                {
+                    listaDeRevistas = servico.ObtenhaRevistasAProcessar(grdRevistasJaProcessadas.PageSize);
+                }
+
+                if (listaDeRevistas.Count > 0)
+                {
+                    MostraListaRevistasAProcessar(listaDeRevistas);
+                }
+                else
+                {
+                    var controleGrid = this.grdRevistasAProcessar as Control;
+                    UtilidadesWeb.LimparComponente(ref controleGrid);
+
+                    MostraListaRevistasAProcessar(new List<IRevistaDeMarcas>());
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         public string CaminhoArquivo { get; set; }
@@ -39,19 +110,19 @@ namespace MP.Client.MP
                     var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
                     arquivo.SaveAs(caminhoArquivo);
-
-                    ExtensaoDoArquivo = arquivo.GetExtension();
-                    CaminhoArquivo = string.Concat(UtilidadesWeb.URL_REVISTA_MARCA, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
-
+                    
                     IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
 
                     var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
 
                     var numeroRevista = arquivo.GetNameWithoutExtension();
 
+                    revistaDeMarcas.ExtensaoArquivo = arquivo.GetExtension();
+
                     if(numeroRevista.Substring(0,2).Equals("rm"))
                     {
                         revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista.Substring(2, 4));
+                        
                         listaRevistasAProcessar.Add(revistaDeMarcas);
                     }
                     else
@@ -76,6 +147,13 @@ namespace MP.Client.MP
             ViewState.Add(CHAVE_REVISTAS_A_PROCESSAR, listaRevistasAProcessar);
         }
 
+        private void MostraListaRevistasJaProcessadas(IList<IRevistaDeMarcas> listaRevistasJaProcessadas)
+        {
+            grdRevistasJaProcessadas.MasterTableView.DataSource = listaRevistasJaProcessadas;
+            grdRevistasJaProcessadas.DataBind();
+            ViewState.Add(CHAVE_REVISTAS_PROCESSADAS, listaRevistasJaProcessadas);
+        }
+
         protected void grdRevistasAProcessar_ItemCommand(object sender, GridCommandEventArgs e)
         {
             var IndiceSelecionado = 0;
@@ -93,9 +171,48 @@ namespace MP.Client.MP
                 MostraListaRevistasAProcessar(listaRevistasAProcessar);
             }
 
-            if(e.CommandName == "ProcessarRevista")
+            else if(e.CommandName == "ProcessarRevista")
             {
-                
+                var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_A_PROCESSAR];
+
+                try
+                {
+                    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+
+                    CaminhoArquivo = Path.Combine(pastaDeDestino, listaRevistasAProcessar[IndiceSelecionado].NumeroRevistaMarcas + 
+                        listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo);
+
+                    if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".txt"))
+                    {
+                        // leitura .txt
+                    }
+                    else if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".xml"))
+                    {
+                        var xmlRevista = new XmlDocument();
+
+                        xmlRevista.Load(CaminhoArquivo);
+
+                        listaRevistasAProcessar[IndiceSelecionado].Processada = true;
+
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                        {
+                            servico.InserirELerRevistaXml(listaRevistasAProcessar[IndiceSelecionado], xmlRevista);
+                        }
+
+                        // if(leitura)
+                        //  {
+                        //      carrega grid Já processadas
+                        //  }
+                        // else { erro }
+
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    
+                    throw ex;
+                }
             }
         }
 
@@ -122,17 +239,77 @@ namespace MP.Client.MP
 
         protected void grdRevistasJaProcessadas_ItemCommand(object sender, GridCommandEventArgs e)
         {
-            throw new NotImplementedException();
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+            {
+                IndiceSelecionado = e.Item.ItemIndex;
+            }
+
+            if (e.CommandName == "ProcessarRevista")
+            {
+                var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+
+                try
+                {
+                    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+
+                    CaminhoArquivo = Path.Combine(pastaDeDestino, listaRevistasAProcessar[IndiceSelecionado].NumeroRevistaMarcas +
+                        listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo);
+
+                    if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".txt"))
+                    {
+                        // leitura .txt
+                    }
+                    else if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".xml"))
+                    {
+                        var xmlRevista = new XmlDocument();
+
+                        xmlRevista.Load(CaminhoArquivo);
+
+                        listaRevistasAProcessar[IndiceSelecionado].Processada = true;
+
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                        {
+                            //servico.InserirELerRevistaXml(listaRevistasAProcessar[IndiceSelecionado], xmlRevista);
+                        }
+
+                        // if(leitura)
+                        //  {
+                        //      carrega grid Já processadas
+                        //  }
+                        // else { erro }
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
         }
 
         protected void grdRevistasJaProcessadas_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            UtilidadesWeb.PaginacaoDataGrid(ref grdRevistasJaProcessadas, ViewState[CHAVE_REVISTAS_PROCESSADAS], e);
         }
 
         protected void grdRevistasJaProcessadas_ItemCreated(object sender, GridItemEventArgs e)
         {
-            throw new NotImplementedException();
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdRevistasJaProcessadas.MasterTableView.RenderColumns)
+                {
+                    if ((column is GridButtonColumn))
+                    {
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+                    }
+                }
+            }
         }
 
         protected void btnFiltrar_ButtonClick(object sender, EventArgs e)

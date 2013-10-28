@@ -9,7 +9,8 @@ namespace MP.Interfaces.Negocio
     {
         long? IdRevistaMarcas { get; set; }
         int NumeroRevistaMarcas { get; set; }
-        string DataPublicacao { get; set; }
+        DateTime DataPublicacao { get; set; }
         bool Processada { get; set; }
+        string ExtensaoArquivo { get; set; }
     }
 }
