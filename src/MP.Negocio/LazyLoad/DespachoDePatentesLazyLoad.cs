@@ -38,60 +38,118 @@ namespace MP.Negocio.LazyLoad
             set { _ID = value.Value; }
         }
 
-        public string CodigoDespachoDePatente
+        public string Codigo
         {
             get
             {
                 VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.CodigoDespachoDePatente;
+                return _ObjetoReal.Codigo;
             }
             set
             {
                 VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.CodigoDespachoDePatente = value;
+                _ObjetoReal.Codigo = value;
             }
         }
 
-        public string DetalheDespachoDePatente
+        public string Titulo
         {
             get
             {
                 VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.DetalheDespachoDePatente;
+                return _ObjetoReal.Titulo;
             }
             set
             {
                 VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.DetalheDespachoDePatente = value;
+                _ObjetoReal.Titulo   = value;
             }
         }
 
-        public string DescricaoDespachoDePatente
+        public string Situacao
         {
             get
             {
                 VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.DescricaoDespachoDePatente;
+                return _ObjetoReal.Situacao;
             }
             set
             {
                 VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.DescricaoDespachoDePatente = value;
+                _ObjetoReal.Situacao = value;
             }
         }
 
-        public SituacaoDoProcessoDePatente SituacaoDoProcessoDePatente
+        public int? PrazoProvidencia
         {
             get
             {
                 VerifiqueSeObjetoEstaCarregado();
-                return _ObjetoReal.SituacaoDoProcessoDePatente;
+                return _ObjetoReal.PrazoProvidencia;
             }
             set
             {
                 VerifiqueSeObjetoEstaCarregado();
-                _ObjetoReal.SituacaoDoProcessoDePatente = value;
+                _ObjetoReal.PrazoProvidencia = value;
             }
         }
+
+        public string TipoProvidencia
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.TipoProvidencia;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.TipoProvidencia = value;
+            }
+        }
+
+        public bool DesativaProcesso
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.DesativaProcesso;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.DesativaProcesso = value;
+            }
+        }
+
+        public bool AgendarPagamento
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.AgendarPagamento;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.AgendarPagamento = value;
+            }
+        }
+
+        public string Descricao
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.Descricao;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.Descricao = value;
+            }
+        }
+
+       
     }
 }

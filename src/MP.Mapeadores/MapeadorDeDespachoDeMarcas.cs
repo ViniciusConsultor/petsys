@@ -79,6 +79,8 @@ namespace MP.Mapeadores
             if (!String.IsNullOrEmpty(codigo))
                 sql.Append(string.Concat("WHERE CODIGO_DESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(codigo), "'"));
 
+            sql.Append(" ORDER BY CODIGO_DESPACHO");
+
             IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();
 
             listaDeDespachoDeMarcas = obtenhaDespachoDeMarcas(sql, quantidadeMaximaDeRegistros);

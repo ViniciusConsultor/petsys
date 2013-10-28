@@ -54,12 +54,6 @@ namespace MP.Client.MP
             set { cboDespachoDePatentes.Text = value; }
         }
 
-        public string SituacaoProcessoDePatentes
-        {
-            get { return cboDespachoDePatentes.Attributes["SituacaoProcessoDePatentes"]; }
-            set { cboDespachoDePatentes.Attributes["SituacaoProcessoDePatentes"] = value; }
-        }
-
         public IDespachoDePatentes DespachoDePatentesSelecionada
         {
             get { return (IDespachoDePatentes)ViewState[ClientID]; }
@@ -76,25 +70,17 @@ namespace MP.Client.MP
             IList<IDespachoDePatentes> listaDespachoDePatentes = new List<IDespachoDePatentes>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-            {
                 listaDespachoDePatentes = servico.ObtenhaPorCodigoDoDespachoComoFiltro(e.Text, 50);
-            }
+            
+            if (listaDespachoDePatentes.Count <= 0) return;
 
-            if (listaDespachoDePatentes.Count > 0)
+            foreach (var despachoDePatentes in listaDespachoDePatentes)
             {
-                foreach (var despachoDePatentes in listaDespachoDePatentes)
-                {
-                    var item = new RadComboBoxItem(despachoDePatentes.CodigoDespachoDePatente, despachoDePatentes.IdDespachoDePatente.Value.ToString());
-
-                    if (despachoDePatentes.SituacaoDoProcessoDePatente != null)
-                    {
-                        item.Attributes.Add("SituacaoProcessoDePatentes",
-                                        despachoDePatentes.SituacaoDoProcessoDePatente.DescricaoSituacaoProcessoDePatente ?? "Não informada");
-                    }
-
-                    this.cboDespachoDePatentes.Items.Add(item);
-                    item.DataBind();
-                }
+                var item = new RadComboBoxItem(despachoDePatentes.Codigo, despachoDePatentes.IdDespachoDePatente.Value.ToString());
+                    
+                item.Attributes.Add("Titulo", despachoDePatentes.Titulo);
+                cboDespachoDePatentes.Items.Add(item);
+                item.DataBind();
             }
         }
 
@@ -106,16 +92,13 @@ namespace MP.Client.MP
                 return;
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-            {
                 despachoDePatentes = servico.obtenhaDespachoDePatentesPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
-            }
-
+            
             DespachoDePatentesSelecionada = despachoDePatentes;
 
             if (DespachoDePatentesFoiSelecionada != null)
-            {
                 DespachoDePatentesFoiSelecionada(despachoDePatentes);
-            }
+            
         }
 
         public bool AutoPostBack

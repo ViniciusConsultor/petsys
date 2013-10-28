@@ -214,13 +214,6 @@
     <Compile Include="MP\ctrlProcurador.ascx.designer.cs">
       <DependentUpon>ctrlProcurador.ascx</DependentUpon>
     </Compile>
-    <Compile Include="MP\ctrlSituacaoDoProcessoDePatente.ascx.cs">
-      <DependentUpon>ctrlSituacaoDoProcessoDePatente.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\ctrlSituacaoDoProcessoDePatente.ascx.designer.cs">
-      <DependentUpon>ctrlSituacaoDoProcessoDePatente.ascx</DependentUpon>
-    </Compile>
     <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.cs">
       <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -286,7 +279,6 @@
     <Content Include="MP\ctrlNCL.ascx" />
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
-    <Content Include="MP\ctrlSituacaoDoProcessoDePatente.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />
     <Content Include="MP\frmLeituraRevistaPatente.aspx" />

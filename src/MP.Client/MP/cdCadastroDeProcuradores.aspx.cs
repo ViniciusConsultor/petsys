@@ -125,8 +125,7 @@ namespace MP.Client.MP
         private IProcurador MontaObjetoProcurador()
         {
             var procurador = FabricaGenerica.GetInstancia().CrieObjeto<IProcurador>(new object[] { ctrlPessoa1.PessoaSelecionada });
-            DateTime? dataRegistro;
-
+            
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                 procurador.Pessoa.ID = ctrlPessoa1.PessoaSelecionada.ID;
 

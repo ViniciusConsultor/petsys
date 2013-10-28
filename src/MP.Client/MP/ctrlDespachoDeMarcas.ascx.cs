@@ -54,18 +54,6 @@ namespace MP.Client.MP
             set { cboDespachoDeMarcas.Text = value; }
         }
 
-        public string SituacaoProcesso
-        {
-            get { return cboDespachoDeMarcas.Attributes["SituacaoProcesso"]; }
-            set { cboDespachoDeMarcas.Attributes["SituacaoProcesso"] = value; }
-        }
-
-        public string Registro
-        {
-            get { return cboDespachoDeMarcas.Attributes["Registro"]; }
-            set { cboDespachoDeMarcas.Attributes["Registro"] = value; }
-        }
-
         public IDespachoDeMarcas DespachoDeMarcasSelecionada
         {
             get { return (IDespachoDeMarcas)ViewState[ClientID]; }
@@ -93,8 +81,6 @@ namespace MP.Client.MP
                     var item = new RadComboBoxItem(despachoDeMarcas.CodigoDespacho, despachoDeMarcas.IdDespacho.Value.ToString());
 
                     item.Attributes.Add("Descricao",despachoDeMarcas.DescricaoDespacho);
-                    item.Attributes.Add("SituacaoProcesso", despachoDeMarcas.SituacaoProcesso);
-                    
                     cboDespachoDeMarcas.Items.Add(item);
                     item.DataBind();
                 }

@@ -10,10 +10,10 @@
         <table width="96%">
             <tr>
                 <td width="15%">
-                    Despacho
+                    Código
                 </td>
                 <td width="81%">
-                    Situação do processo
+                    Título
                 </td>
             </tr>
         </table>
@@ -25,7 +25,7 @@
                     <%# DataBinder.Eval(Container, "Text")%>
                 </td>
                 <td width="61%">
-                    <%#DataBinder.Eval(Container, "Attributes['SituacaoProcessoDePatentes']")%>
+                    <%#DataBinder.Eval(Container, "Attributes['Titulo']")%>
                 </td>
             </tr>
         </table>
