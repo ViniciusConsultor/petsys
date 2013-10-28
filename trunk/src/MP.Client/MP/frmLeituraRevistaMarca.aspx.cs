@@ -15,7 +15,7 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class frmLeituraRevistaMarca : System.Web.UI.Page
+    public partial class frmLeituraRevistaMarca : SuperPagina
     {
         private const string ID_OBJETO = "ID_OBJETO_FRM_LEITURA_REVISTA_MARCA";
         private const string CHAVE_ESTADO = "CHAVE_ESTADO_FRM_LEITURA_REVISTA_MARCA";
@@ -62,7 +62,7 @@ namespace MP.Client.MP
             catch (Exception ex)
             {
                 
-                throw ex;
+                throw;
             }
         }
 
@@ -91,8 +91,8 @@ namespace MP.Client.MP
             }
             catch (Exception ex)
             {
-                
-                throw ex;
+
+                throw;
             }
         }
 
@@ -109,7 +109,10 @@ namespace MP.Client.MP
                     var arquivo = uplRevistaMarca.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
-                    arquivo.SaveAs(caminhoArquivo);
+
+                    Directory.CreateDirectory(pastaDeDestino);
+
+                    arquivo.SaveAs(caminhoArquivo,true);
                     
                     IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
 
@@ -137,6 +140,7 @@ namespace MP.Client.MP
             catch (Exception ex)
             {
                 Logger.GetInstancia().Erro("Erro ao carregar revista, exceção: ", ex);
+                throw;
             }
         }
 
@@ -211,7 +215,7 @@ namespace MP.Client.MP
                 catch (Exception ex)
                 {
                     
-                    throw ex;
+                    throw;
                 }
             }
         }
@@ -286,7 +290,7 @@ namespace MP.Client.MP
                 catch (Exception ex)
                 {
 
-                    throw ex;
+                    throw;
                 }
             }
         }
@@ -335,6 +339,16 @@ namespace MP.Client.MP
         protected void gridRevistaProcessos_ItemCreated(object sender, GridItemEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        protected override string ObtenhaIdFuncao()
+        {
+            return "";
+        }
+
+        protected override RadToolBar ObtenhaBarraDeFerramentas()
+        {
+            return null;
         }
     }
 }

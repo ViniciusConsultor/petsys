@@ -497,25 +497,16 @@ namespace MP.Client.MP
 
         protected void grdRadicais_ItemCommand(object sender, GridCommandEventArgs e)
         {
-            long ID = 0;
             var IndiceSelecionado = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-            {
-                //ID = Convert.ToInt64(e.Item.Cells[3].Text);
                 IndiceSelecionado = e.Item.ItemIndex;
-            }
+            
 
             if (e.CommandName == "Excluir")
             {
                 IList<IRadicalMarcas> listaRadicalMarcas = null;
                 listaRadicalMarcas = (IList<IRadicalMarcas>) ViewState[CHAVE_RADICAIS];
-
-                //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRadicalMarcas>())
-                //{
-                //    servico.Excluir(listaRadicalMarcas[IndiceSelecionado].IdRadicalMarca.Value);
-                //}
-
                 listaRadicalMarcas.RemoveAt(IndiceSelecionado);
                 MostraRadicalMarcas(listaRadicalMarcas);
             }
@@ -535,12 +526,8 @@ namespace MP.Client.MP
                 var gridItem = (GridDataItem)e.Item;
 
                 foreach (GridColumn column in grdRadicais.MasterTableView.RenderColumns)
-                {
                     if ((column is GridButtonColumn))
-                    {
                         gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
-                    }
-                }
             }
         }
 

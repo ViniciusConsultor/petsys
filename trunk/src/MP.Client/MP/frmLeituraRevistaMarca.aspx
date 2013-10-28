@@ -3,7 +3,8 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/MP/ctrlProcurador.ascx" TagName="ctrlProcurador" TagPrefix="uc1" %>
-<%@ Register Src="~/MP/ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc2" %>
+<%@ Register Src="~/MP/ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas"
+    TagPrefix="uc2" %>
 <%@ Register Src="~/ctrlUF.ascx" TagName="ctrlUF" TagPrefix="uc3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
@@ -36,16 +37,17 @@
                                         </script>
                                     </telerik:RadScriptBlock>
                                     <telerik:RadAsyncUpload runat="server" ID="uplRevistaMarca" MaxFileInputsCount="1"
-                                        AllowedFileExtensions=".xml,.txt" PostbackTriggers="ButtonSubmit" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
-                                        Localization-Select="Procurar" OnFileUploaded="uplRevistaMarca_OnFileUploaded" />
+                                        AllowedFileExtensions=".xml,.txt" PostbackTriggers="ButtonSubmit" Skin="Vista"
+                                        HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Procurar"
+                                        OnFileUploaded="uplRevistaMarca_OnFileUploaded" />
                                     <asp:Button ID="ButtonSubmit" runat="server" Text="Adicionar" OnClientClick="updateRevistaMarca(); return false;"
                                         CausesValidation="False" CssClass="RadUploadSubmit" />
                                 </td>
                             </tr>
                         </table>
-                        <table class="tabela">
+                        <table width="100%">
                             <tr>
-                                <td class="td">
+                                <td width="50%">
                                     <telerik:RadGrid ID="grdRevistasAProcessar" runat="server" AutoGenerateColumns="False"
                                         AllowPaging="True" PageSize="10" GridLines="None" Width="98%" Skin="Vista" OnItemCommand="grdRevistasAProcessar_ItemCommand"
                                         OnItemCreated="grdRevistasAProcessar_ItemCreated" OnPageIndexChanged="grdRevistasAProcessar_PageIndexChanged">
@@ -74,7 +76,7 @@
                                         </MasterTableView>
                                     </telerik:RadGrid>
                                 </td>
-                                <td class="td">
+                                <td width="50%">
                                     <telerik:RadGrid ID="grdRevistasJaProcessadas" runat="server" AutoGenerateColumns="False"
                                         AllowPaging="True" PageSize="10" GridLines="None" Width="98%" Skin="Vista" OnItemCommand="grdRevistasJaProcessadas_ItemCommand"
                                         OnItemCreated="grdRevistasJaProcessadas_ItemCreated" OnPageIndexChanged="grdRevistasJaProcessadas_PageIndexChanged">
@@ -87,7 +89,7 @@
                                                 <HeaderStyle Width="20px" />
                                             </ExpandCollapseColumn>
                                             <Columns>
-                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ProcessarRevista"
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ProcessarRevista"
                                                     FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
                                                     UniqueName="column4">
                                                     <ItemStyle Width="4%"></ItemStyle>
@@ -107,12 +109,12 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3" colspan="2">
-                                    <asp:Label ID="Label1" runat="server" Text="Filtros para revista:"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="Filtros para revista"></asp:Label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label2" runat="server" Text="Processo:"></asp:Label>
+                                    <asp:Label ID="Label2" runat="server" Text="Processo"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64"
@@ -124,7 +126,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label3" runat="server" Text="Estado:"></asp:Label>
+                                    <asp:Label ID="Label3" runat="server" Text="Estado"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <uc3:ctrlUF ID="ctrlUF" runat="server" />
@@ -132,7 +134,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
+                                    <asp:Label ID="Label4" runat="server" Text="Procurador"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
@@ -140,7 +142,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label5" runat="server" Text="Despacho:"></asp:Label>
+                                    <asp:Label ID="Label5" runat="server" Text="Despacho"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <uc2:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
@@ -158,7 +160,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label11" runat="server" Text="Publicações próprias:"></asp:Label>
+                                    <asp:Label ID="Label11" runat="server" Text="Publicações próprias"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtPublicacoesProprias" runat="server" Enabled="true">
@@ -167,7 +169,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label6" runat="server" Text="Processos:"></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="Processos"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtQuantdadeDeProcessos" runat="server" Enabled="true">

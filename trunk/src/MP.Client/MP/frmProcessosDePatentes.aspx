@@ -9,7 +9,7 @@
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.009.0001" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
-            <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/refresh.gif"
+            <telerik:RadToolBarButton runat="server" Text="Ler revista"  CommandArgument="OPE.MP.009.0005" ImageUrl="~/imagens/processarRevista.gif"
                 CommandName="btnLerRevista" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>

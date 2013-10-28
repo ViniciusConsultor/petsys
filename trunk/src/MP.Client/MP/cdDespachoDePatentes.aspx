@@ -3,8 +3,6 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlDespachoDePatentes.ascx" TagName="ctrlDespachoDePatentes" TagPrefix="uc1" %>
-<%@ Register Src="ctrlSituacaoDoProcessoDePatente.ascx" TagName="ctrlSituacaoDoProcessoDePatente"
-    TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -41,25 +39,25 @@
                         </tr>
                     </table>
                     <asp:Panel ID="PanelCdDespachoDePatentes" runat="server">
-                        <table class="tabela">                            
+                        <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label2" runat="server" Text="Descrição"></asp:Label>
+                                    <asp:Label ID="Label2" runat="server" Text="Título"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="5" Width="450px">
+                                    <telerik:RadTextBox ID="txtTitulo" runat="server" MaxLength="255" Width="450px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label4" runat="server" Text="Detalhe"></asp:Label>
+                                    <asp:Label ID="Label4" runat="server" Text="Descrição"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDetalhe" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="4000" TextMode="MultiLine"
                                         Rows="5" Width="450px">
                                     </telerik:RadTextBox>
+                                    <br>
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +65,52 @@
                                     <asp:Label ID="Label6" runat="server" Text="Situação do processo após a publicação"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <uc2:ctrlSituacaoDoProcessoDePatente ID="ctrlSituacaoDoProcessoDePatente" runat="server" />
+                                    <telerik:RadTextBox ID="txtSituacao" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                        Rows="5" Width="450px">
+                                    </telerik:RadTextBox>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label5" runat="server" Text="Prazo para providência (dias)"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadNumericTextBox ID="txtPrazoProvidencia" runat="server" Width="87px" Type="Number"
+                                        DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
+                                    </telerik:RadNumericTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label7" runat="server" Text="Providência"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtProvidencia" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                        Rows="5" Width="450px">
+                                    </telerik:RadTextBox>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="Desativa processo?"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rblDesativaProcesso" runat="server" AutoPostBack="false"
+                                        RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label1" runat="server" Text="Agenda pagamento?"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rblAgendaPagamento" runat="server" AutoPostBack="false"
+                                        RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
                                 </td>
                             </tr>
                         </table>

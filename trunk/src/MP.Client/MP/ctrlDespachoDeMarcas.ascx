@@ -12,12 +12,10 @@
                 <td width="15%">
                     Código do despacho
                 </td>
-                <td width="45%">
+                <td width="81%">
                     Descrição
                 </td>
-                <td width="36%">
-                    Situação do processo
-                </td>
+                
             </tr>
         </table>
     </HeaderTemplate>
@@ -28,13 +26,9 @@
                     <%# DataBinder.Eval(Container, "Text")%>
                 </td>
 
-                 <td width="45%">
+                 <td width="85%">
                     <%#DataBinder.Eval(Container, "Attributes['Descricao']")%>
                 </td>
-                <td width="40%">
-                    <%#DataBinder.Eval(Container, "Attributes['SituacaoProcesso']")%>
-                </td>
-               
             </tr>
         </table>
     </ItemTemplate>
