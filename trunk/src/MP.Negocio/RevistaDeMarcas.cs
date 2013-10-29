@@ -17,6 +17,21 @@ namespace MP.Negocio
         public DateTime DataPublicacao
         { get; set; }
 
+        public DateTime DataProcessamento
+        { get; set; }
+
+        public long NumeroProcessoDeMarca
+        { get; set; }
+
+        public string CodigoDespacho
+        { get; set; }
+
+        public string Apostila
+        { get; set; }
+
+        public string TextoDoDespacho
+        { get; set; }
+
         public bool Processada
         { get; set; }
 

@@ -16,5 +16,6 @@ namespace MP.Interfaces.Servicos
         IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet);
         IProcessoDeMarca Obtenha(long ID);
         int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
+        IProcessoDeMarca ObtenhaProcessoDeMarcaPeloNumero(long numeroDoProcesso);
     }
 }

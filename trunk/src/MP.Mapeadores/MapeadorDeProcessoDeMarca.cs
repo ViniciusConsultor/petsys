@@ -198,5 +198,42 @@ namespace MP.Mapeadores
 
             return 0;
         }
+
+        public IProcessoDeMarca ObtenhaProcessoDeMarcaPeloNumero(long numeroDoProcesso)
+        {
+            var DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT IDPROCESSO IdProcessoDeMarca, IDMARCA Marca, PROCESSO Processo, DATAENTRADA DataDeEntrada, ");
+            sql.Append("DATACONCESSAO DataDeConcessao, PROCESSOEHTERCEIRO ProcessoEhDeTerceiro, IDDESPACHO Despacho, IDPROCURADOR Procurador ");
+            sql.Append("FROM MP_PROCESSOMARCA ");
+            sql.Append("WHERE PROCESSO = " + numeroDoProcesso);
+
+            var processoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDeMarca>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                while (leitor.Read())
+                {
+                    processoDeMarca.IdProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IdProcessoDeMarca");
+                    processoDeMarca.Marca = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "Marca"));
+                    processoDeMarca.Processo = UtilidadesDePersistencia.GetValorLong(leitor, "Processo");
+                    processoDeMarca.DataDeEntrada = UtilidadesDePersistencia.getValorDate(leitor, "DataDeEntrada").Value;
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "DataDeConcessao"))
+                        processoDeMarca.DataDeConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DataDeConcessao");
+
+                    processoDeMarca.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(leitor, "ProcessoEhDeTerceiro");
+
+                    processoDeMarca.Procurador = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "Procurador"));
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Despacho"))
+                        processoDeMarca.Despacho = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IDespachoDeMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "Despacho"));
+                }
+            }
+
+            return processoDeMarca;
+        }
     }
 }

@@ -10,6 +10,11 @@ namespace MP.Interfaces.Negocio
         long? IdRevistaMarcas { get; set; }
         int NumeroRevistaMarcas { get; set; }
         DateTime DataPublicacao { get; set; }
+        DateTime DataProcessamento { get; set; }
+        long NumeroProcessoDeMarca { get; set; }
+        string CodigoDespacho { get; set; }
+        string Apostila { get; set; }
+        string TextoDoDespacho { get; set; }
         bool Processada { get; set; }
         string ExtensaoArquivo { get; set; }
     }
