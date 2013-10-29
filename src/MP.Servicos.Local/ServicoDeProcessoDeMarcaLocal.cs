@@ -137,5 +137,22 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public IProcessoDeMarca ObtenhaProcessoDeMarcaPeloNumero(long numeroDoProcesso)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.ObtenhaProcessoDeMarcaPeloNumero(numeroDoProcesso);
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }
