@@ -57,11 +57,11 @@ namespace MP.Client.MP
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlPatente.PatenteFoiSelecionada += ExibaPatenteSelecionada;
-            CarregueComboTipoDeClassificacao();
 
             if(!IsPostBack)
                 ExibaTelaInicial();
-            
+
+            CarregueComboTipoDeClassificacao();
         }
 
         private void ExibaTelaInicial()
@@ -389,7 +389,7 @@ namespace MP.Client.MP
             var controlePanelAnuidades = pnlAnuidades as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, true);
 
-            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
+            UtilidadesWeb.LimparComponente(ref controlePanelAnuidades);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, true);
 
             ctrlPatente.Inicializa();
