@@ -90,6 +90,7 @@
     <Compile Include="Negocio\IPatente.cs" />
     <Compile Include="Negocio\IAnuidadePatente.cs" />
     <Compile Include="Negocio\IClassificacaoPatente.cs" />
+    <Compile Include="Negocio\IPCT.cs" />
     <Compile Include="Negocio\IPrioridadeUnionistaPatente.cs" />
     <Compile Include="Negocio\IProcessoDePatente.cs" />
     <Compile Include="Negocio\IRadicalMarcas.cs" />
