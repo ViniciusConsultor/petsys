@@ -200,6 +200,16 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">     
+                                            <asp:Label ID="lblTituloPrioridadeUnionista" runat="server" Text="Prioridade Unionista" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
                                             <table class="tabela">
                                                 <tr>
                                                     <td class="th3">
@@ -222,7 +232,7 @@
                                                         <asp:Label ID="lblNumeroPrioridade" runat="server" Text="Número Prioridade" />
                                                     </td>
                                                     <td class="td">
-                                                        <telerik:RadTextBox ID="txtNumeroPrioridade" runat="server" />
+                                                        <telerik:RadTextBox ID="txtNumeroPrioridade" runat="server" Width="10%" />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -316,7 +326,7 @@
                                                         <asp:Label ID="lblClassficacao" runat="server" Text="Classificação" />
                                                     </td>
                                                     <td class="td">
-                                                        <telerik:RadTextBox ID="txtClassificacao" runat="server" />
+                                                        <telerik:RadTextBox ID="txtClassificacao" runat="server" Width="100%"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -324,7 +334,7 @@
                                                         <asp:Label ID="lblDescricaoClassificacao" runat="server" Text="Descrição da classificação" />
                                                     </td>
                                                     <td class="td">
-                                                        <telerik:RadTextBox ID="txtDescricaoClassificacao" runat="server" />
+                                                        <telerik:RadTextBox ID="txtDescricaoClassificacao" runat="server" TextMode="MultiLine" Rows="5" Width="100%" />
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -390,7 +400,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadNumericTextBox ID="txtReivindicacoes" runat="server" DataType="System.Int64"
-                                                Type="Number">
+                                                Type="Number" Width="10%" MaxLength="8">
                                                 <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
                                                 </NumberFormat>
                                             </telerik:RadNumericTextBox>
@@ -457,7 +467,7 @@
                                             <asp:Label ID="lblValorPagamento" runat="server" Text="Valor Pagamento" />
                                         </td>
                                         <td class="td">
-                                            <telerik:RadNumericTextBox ID="txtValorPagamento" runat="server">
+                                            <telerik:RadNumericTextBox ID="txtValorPagamento" runat="server" Width="10%" MaxLength="8">
                                                 <NumberFormat DecimalDigits="2"/>
                                             </telerik:RadNumericTextBox>
                                         </td>
