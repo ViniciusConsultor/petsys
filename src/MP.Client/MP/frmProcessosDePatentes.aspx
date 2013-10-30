@@ -107,7 +107,7 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8" ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo excluir o processo?" ConfirmTitle="Apagar processo">>
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                              <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column1" Display="false">
