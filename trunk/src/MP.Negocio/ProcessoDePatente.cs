@@ -22,6 +22,13 @@ namespace MP.Negocio
         public IProcurador Procurador {get;set;}
         public bool ProcessoEhEstrangeiro {get; set;}
         public bool Ativo {get; set; }
+
+        public IPCT PCT
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         public bool EhPCT {get; set;}
         public string NumeroPCT {get; set;}
     }

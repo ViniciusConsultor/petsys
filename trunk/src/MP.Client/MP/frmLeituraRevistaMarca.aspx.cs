@@ -281,6 +281,7 @@ namespace MP.Client.MP
                         // if(leitura)
                         //  {
                         //      carrega grid Já processadas
+                        //      carregar grid com as informações dos processos da revista
                         //  }
                         // else { erro }
 
