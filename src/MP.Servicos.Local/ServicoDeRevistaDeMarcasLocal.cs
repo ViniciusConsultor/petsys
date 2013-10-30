@@ -28,12 +28,12 @@ namespace MP.Servicos.Local
             {
                 // FAZER A LEITURA DA REVISTA E ATUALIZAR OS CAMPOS NECESSÁRIOS
 
-                IList<IRevistaDeMarcas> listaDeDadosDaRevistaASerSalvos = new List<IRevistaDeMarcas>();
+                IList<IRevistaDeMarcas> listaDeProcessosExistentesNaRevista = new List<IRevistaDeMarcas>();
 
-                listaDeDadosDaRevistaASerSalvos = LerRevistaXML(revistaDeMarcas, revistaXml);
+                listaDeProcessosExistentesNaRevista = LerRevistaXMLParaProcessosExistentes(revistaDeMarcas, revistaXml);
 
                 ServerUtils.BeginTransaction();
-                //mapeador.InserirELerRevistaXml(listaDeDadosDaRevistaASerSalvos);
+                mapeador.InserirDadosRevistaXml(listaDeProcessosExistentesNaRevista);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -47,7 +47,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        private IList<IRevistaDeMarcas> LerRevistaXML(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
+        private IList<IRevistaDeMarcas> LerRevistaXMLParaProcessosExistentes(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace MP.Servicos.Local
 
                     if (despachos != null)
                     {
-                        objetoRevista.CodigoDespacho = despachos["despacho"].Attributes.GetNamedItem("codigo").Value;
+                        objetoRevista.CodigoDespachoAtual = despachos["despacho"].Attributes.GetNamedItem("codigo").Value;
                     }
 
                     //var titulares = processo["titulares"];
@@ -165,10 +165,11 @@ namespace MP.Servicos.Local
 
                             if (processoDeMarcaExistente != null)
                             {
-                                codigoDespachoDaProcessoRevista = processo.CodigoDespacho;
+                                codigoDespachoDaProcessoRevista = processo.CodigoDespachoAtual;
 
                                 objetoRevistaASerSalvo.Apostila = processo.Apostila;
-                                objetoRevistaASerSalvo.CodigoDespacho = processoDeMarcaExistente.Despacho.CodigoDespacho;
+                                objetoRevistaASerSalvo.CodigoDespachoAnterior = processoDeMarcaExistente.Despacho.CodigoDespacho;
+                                objetoRevistaASerSalvo.CodigoDespachoAtual = processo.CodigoDespachoAtual;
                                 objetoRevistaASerSalvo.DataProcessamento = processo.DataProcessamento;
                                 objetoRevistaASerSalvo.DataPublicacao = processo.DataPublicacao;
                                 objetoRevistaASerSalvo.ExtensaoArquivo = processo.ExtensaoArquivo;

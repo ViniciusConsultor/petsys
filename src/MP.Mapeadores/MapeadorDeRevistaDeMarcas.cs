@@ -15,6 +15,57 @@ namespace MP.Mapeadores
 {
     public class MapeadorDeRevistaDeMarcas : IMapeadorDeRevistaDeMarcas
     {
+        public void InserirDadosRevistaXml(IList<IRevistaDeMarcas> listaDeProcessosExistentesNaRevista)
+        {
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            foreach (var processoDaRevistaDeMarca in listaDeProcessosExistentesNaRevista)
+            {
+                processoDaRevistaDeMarca.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
+
+                sql.Append("INSERT INTO MP_REVISTA_MARCAS (");
+                sql.Append("IDREVISTAMARCAS, NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, NUMEROPROCESSODEMARCA, ");
+                sql.Append("CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO) ");
+                sql.Append("VALUES (");
+                sql.Append(String.Concat(processoDaRevistaDeMarca.IdRevistaMarcas.Value.ToString(), ", "));
+                sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroRevistaMarcas, ", "));
+
+                sql.Append(String.Concat(processoDaRevistaDeMarca.DataPublicacao.ToString("yyyyMMdd"), ", "));
+
+                sql.Append(processoDaRevistaDeMarca.DataProcessamento != null
+                           ? String.Concat(processoDaRevistaDeMarca.DataProcessamento.ToString("yyyyMMdd"), ", ")
+                           : "NULL, ");
+
+                sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroProcessoDeMarca, ", "));
+
+                sql.Append(processoDaRevistaDeMarca.CodigoDespachoAnterior != null
+                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAnterior, "', ")
+                           : "NULL, ");
+
+                sql.Append(processoDaRevistaDeMarca.CodigoDespachoAtual != null
+                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAtual, "', ")
+                           : "NULL, ");
+
+                sql.Append(processoDaRevistaDeMarca.Apostila != null
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDeMarca.Apostila), "', ")
+                           : "NULL, ");
+
+                sql.Append(processoDaRevistaDeMarca.TextoDoDespacho != null
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDeMarca.TextoDoDespacho), "', ")
+                           : "NULL, ");
+
+                sql.Append(processoDaRevistaDeMarca.Processada ? "1, " : "0, ");
+
+                if (!string.IsNullOrEmpty(processoDaRevistaDeMarca.ExtensaoArquivo))
+                    sql.Append(String.Concat("'", processoDaRevistaDeMarca.ExtensaoArquivo, "' ) "));
+
+                DBHelper.ExecuteNonQuery(sql.ToString());
+            }
+        }
+
         public void InserirELerRevistaXml(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
         {
             revistaDeMarcas.DataPublicacao = Convert.ToDateTime(ObtenhaDataDePublicacaoDaRevista(revistaXml));
