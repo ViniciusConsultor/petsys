@@ -204,21 +204,21 @@
                                                             <HeaderStyle Width="20px" />
                                                         </ExpandCollapseColumn>
                                                         <Columns>
-                                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Detalhes" FilterImageToolTip="Detalhes"
+                                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="DetalharProcesso" FilterImageToolTip="Detalhes"
                                                                 HeaderTooltip="Detalhes" ImageUrl="~/imagens/find.gif" UniqueName="column10">
                                                             </telerik:GridButtonColumn>
-                                                            <telerik:GridBoundColumn DataField="IdRevista" HeaderText="IdRevista" UniqueName="column"
+                                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="IdProcessoDeMarca" UniqueName="column"
                                                                 Visible="false">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column1">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column2">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Despacho" HeaderText="Despacho" UniqueName="column3">
+                                                            <telerik:GridBoundColumn DataField="Despacho.CodigoDespacho" HeaderText="Despacho" UniqueName="column3">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Nome" HeaderText="Titular" UniqueName="column4">
+                                                            <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Titular" UniqueName="column4">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Procurador" HeaderText="Procurador" UniqueName="column5">
+                                                            <telerik:GridBoundColumn DataField="Procurador.Pessoa.Nome" HeaderText="Procurador" UniqueName="column5">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
