@@ -235,5 +235,28 @@ namespace MP.Mapeadores
 
             return processoDeMarca;
         }
+
+        public IList<long> ObtenhaTodosNumerosDeProcessosCadastrados()
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT PROCESSO Processo ");
+            sql.Append("FROM MP_PROCESSOMARCA ");
+
+            IList<long> listaDeProcessos = new List<long>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                while (leitor.Read())
+                {
+                    listaDeProcessos.Add(UtilidadesDePersistencia.GetValorLong(leitor, "Processo"));
+                }
+            }
+
+            return listaDeProcessos;
+        }
     }
 }

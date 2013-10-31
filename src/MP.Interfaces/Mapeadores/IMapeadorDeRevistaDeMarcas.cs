@@ -13,5 +13,6 @@ namespace MP.Interfaces.Mapeadores
         void Modificar(IRevistaDeMarcas revistaDeMarcas);
         IList<IRevistaDeMarcas> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDeMarcas> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
+        
     }
 }

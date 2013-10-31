@@ -63,7 +63,7 @@ namespace MP.Client.MP
             catch (Exception ex)
             {
                 
-                throw;
+                throw ex;
             }
         }
 
@@ -93,7 +93,7 @@ namespace MP.Client.MP
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -222,6 +222,8 @@ namespace MP.Client.MP
                             }
 
                             CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                            CarregueGridRevistasAProcessar();
+                            CarregueGridRevistasJaProcessadas();
                             //carregar grid com as informações dos processos da revista
                             //carrega grid Já processadas
                         }
