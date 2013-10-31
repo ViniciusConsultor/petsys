@@ -35,6 +35,10 @@ namespace MP.Client.MP
         {
             CarregueGridRevistasAProcessar();
             CarregueGridRevistasJaProcessadas();
+            CarregaGridComProcessosExistentesNaBase(new List<IRevistaDeMarcas>());
+
+            txtPublicacoesProprias.Enabled = true;
+            txtProcesso.Enabled = true;
         }
 
         private void CarregueGridRevistasJaProcessadas()
@@ -194,11 +198,11 @@ namespace MP.Client.MP
                     CaminhoArquivo = Path.Combine(pastaDeDestino, listaRevistasAProcessar[IndiceSelecionado].NumeroRevistaMarcas + 
                         listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo);
 
-                    if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".txt"))
+                    if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
                     {
                         // leitura .txt
                     }
-                    else if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".xml"))
+                    else if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".XML"))
                     {
                         var xmlRevista = new XmlDocument();
 
@@ -245,17 +249,35 @@ namespace MP.Client.MP
 
         private void CarregaGridComProcessosExistentesNaBase(IList<IRevistaDeMarcas> listaDeProcessosExistentes)
         {
-            IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
-
-            foreach (var processo in listaDeProcessosExistentes)
+            try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
+
+                if (listaDeProcessosExistentes.Count > 0)
                 {
-                    listaDeProcessos.Add(servico.ObtenhaProcessoDeMarcaPeloNumero(processo.NumeroProcessoDeMarca));
+                    foreach (var processo in listaDeProcessosExistentes)
+                    {
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                        {
+                            listaDeProcessos.Add(servico.ObtenhaProcessoDeMarcaPeloNumero(processo.NumeroProcessoDeMarca));
+                        }
+                    }
+
+                    MostraProcessosCadastradosDaRevista(listaDeProcessos);
+                }
+                else
+                {
+                    var controleGrid = this.gridRevistaProcessos as Control;
+                    UtilidadesWeb.LimparComponente(ref controleGrid);
+
+                    MostraProcessosCadastradosDaRevista(new List<IProcessoDeMarca>());
                 }
             }
+            catch (Exception ex)
+            {
 
-            MostraProcessosCadastradosDaRevista(listaDeProcessos);
+                throw ex;
+            }
         }
 
         protected void grdRevistasAProcessar_PageIndexChanged(object sender, GridPageChangedEventArgs e)
@@ -288,36 +310,59 @@ namespace MP.Client.MP
                 IndiceSelecionado = e.Item.ItemIndex;
             }
 
-            if (e.CommandName == "ProcessarRevista")
+            if (e.CommandName == "ReprocessarRevista")
             {
-                //var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+                var listaRevistasProcessadas = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
 
-                //try
-                //{
-                //    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+                try
+                {
+                    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
 
-                //    CaminhoArquivo = Path.Combine(pastaDeDestino, listaRevistasAProcessar[IndiceSelecionado].NumeroRevistaMarcas +
-                //        listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo);
+                    CaminhoArquivo = Path.Combine(pastaDeDestino, listaRevistasProcessadas[IndiceSelecionado].NumeroRevistaMarcas +
+                        listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo);
 
-                //    if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".txt"))
-                //    {
-                //        // leitura .txt
-                //    }
-                //    else if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.Equals(".xml"))
-                //    {
-                //        var xmlRevista = new XmlDocument();
+                    if (listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
+                    {
+                        // leitura .txt
+                    }
+                    else if (listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".XML"))
+                    {
+                        var xmlRevista = new XmlDocument();
 
-                //        xmlRevista.Load(CaminhoArquivo);
+                        xmlRevista.Load(CaminhoArquivo);
 
-                //        listaRevistasAProcessar[IndiceSelecionado].Processada = true;
-                //    }
+                        listaRevistasProcessadas[IndiceSelecionado].Processada = true;
 
-                //}
-                //catch (Exception ex)
-                //{
+                        // lista de processos existentes na base, de acordo com a revista que está sendo processada.
+                        IList<IRevistaDeMarcas> listaDeProcessosExistentes = new List<IRevistaDeMarcas>();
 
-                //    throw;
-                //}
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                        {
+                            listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(listaRevistasProcessadas[IndiceSelecionado], xmlRevista);
+                        }
+
+                        if (listaDeProcessosExistentes.Count > 0)
+                        {
+                            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                            {
+                                servico.Inserir(listaDeProcessosExistentes);
+                            }
+
+                            CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        }
+                        else
+                        {
+                            // tratar
+                        }
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
         }
 

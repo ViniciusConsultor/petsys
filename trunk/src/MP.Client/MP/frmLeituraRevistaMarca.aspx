@@ -89,14 +89,11 @@
                                                 <HeaderStyle Width="20px" />
                                             </ExpandCollapseColumn>
                                             <Columns>
-                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ProcessarRevista"
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ReprocessarRevista"
                                                     FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
                                                     UniqueName="column4">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
-                                                <telerik:GridBoundColumn DataField="IdRevistaMarcas" HeaderText="IdRevista" UniqueName="column"
-                                                    Visible="false">
-                                                </telerik:GridBoundColumn>
                                                 <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista(s) já processada(s)"
                                                     UniqueName="column1">
                                                 </telerik:GridBoundColumn>
@@ -157,7 +154,9 @@
                                     <telerik:RadButton ID="btnLimpar" runat="server" Text="Limpar" Skin="Vista" OnClick="btnLimpar_ButtonClick">
                                     </telerik:RadButton>
                                 </td>
-                            </tr>
+                            </tr>                            
+                        </table>
+                        <table class="tabela">
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label11" runat="server" Text="Publicações próprias"></asp:Label>
@@ -212,7 +211,9 @@
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column1">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column2">
+                                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column2"
+                                                                DataFormatString="{0:dd/MM/yyyy}">
+                                                                <ItemStyle Width="15%"></ItemStyle>
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Despacho.CodigoDespacho" HeaderText="Despacho" UniqueName="column3">
                                                             </telerik:GridBoundColumn>
