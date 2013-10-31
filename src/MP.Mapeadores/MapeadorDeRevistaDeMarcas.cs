@@ -66,45 +66,6 @@ namespace MP.Mapeadores
             }
         }
 
-        public void InserirELerRevistaXml(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
-        {
-            revistaDeMarcas.DataPublicacao = Convert.ToDateTime(ObtenhaDataDePublicacaoDaRevista(revistaXml));
-
-            var sql = new StringBuilder();
-            IDBHelper DBHelper;
-
-            DBHelper = ServerUtils.getDBHelper();
-
-            revistaDeMarcas.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
-
-            sql.Append("INSERT INTO MP_REVISTA_MARCAS (");
-            sql.Append("IDREVISTAMARCAS, NUMEROREVISTAMARCAS, DATAPUBLICACAO, PROCESSADA, EXTENSAOARQUIVO) ");
-            sql.Append("VALUES (");
-            sql.Append(String.Concat(revistaDeMarcas.IdRevistaMarcas.Value.ToString(), ", "));
-            sql.Append(String.Concat(revistaDeMarcas.NumeroRevistaMarcas, ", "));
-
-            sql.Append(String.Concat(revistaDeMarcas.DataPublicacao.ToString("yyyyMMdd"), ", "));
-
-            sql.Append(revistaDeMarcas.Processada ? "1, " : "0, ");
-
-            if (!string.IsNullOrEmpty(revistaDeMarcas.ExtensaoArquivo))
-                sql.Append(String.Concat("'", revistaDeMarcas.ExtensaoArquivo, "' ) "));
-
-            DBHelper.ExecuteNonQuery(sql.ToString());
-        }
-
-        private string ObtenhaDataDePublicacaoDaRevista(XmlDocument revistaXml)
-        {
-            var xmlrevista = revistaXml.GetElementsByTagName("revista");
-
-            for (int i = 0; i < xmlrevista.Count; i++)
-            {
-                return xmlrevista[i].Attributes.GetNamedItem("data").Value;
-            }
-
-            return string.Empty;
-        }
-
         public void Modificar(IRevistaDeMarcas revistaDeMarcas)
         {
             var sql = new StringBuilder();
@@ -163,7 +124,7 @@ namespace MP.Mapeadores
         {
             var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
 
-            revistaDeMarcas.IdRevistaMarcas = UtilidadesDePersistencia.GetValorLong(leitor, "IdRevistaMarcas");
+            //revistaDeMarcas.IdRevistaMarcas = UtilidadesDePersistencia.GetValorLong(leitor, "IdRevistaMarcas");
 
             revistaDeMarcas.NumeroRevistaMarcas = UtilidadesDePersistencia.getValorInteger(leitor, "NumeroRevistaMarcas");
 
@@ -172,7 +133,7 @@ namespace MP.Mapeadores
             revistaDeMarcas.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "Processada");
 
              if (!UtilidadesDePersistencia.EhNulo(leitor, "ExtensaoArquivo"))
-                 revistaDeMarcas.ExtensaoArquivo = UtilidadesDePersistencia.GetValorString(leitor, "NumeroRevistaMarcas");
+                 revistaDeMarcas.ExtensaoArquivo = UtilidadesDePersistencia.GetValorString(leitor, "ExtensaoArquivo");
 
             return revistaDeMarcas;
         }
@@ -184,7 +145,7 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDREVISTAMARCAS IdRevistaMarcas, NUMEROREVISTAMARCAS NumeroRevistaMarcas, DATAPUBLICACAO DataPublicacao, ");
+            sql.Append("SELECT distinct(NUMEROREVISTAMARCAS) NumeroRevistaMarcas, DATAPUBLICACAO DataPublicacao, ");
             sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
             sql.Append("FROM MP_REVISTA_MARCAS ");
             sql.Append("WHERE PROCESSADA = 1");
@@ -192,7 +153,7 @@ namespace MP.Mapeadores
 
             IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, 0))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros))
             {
                 try
                 {
