@@ -154,5 +154,22 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public IList<long> ObtenhaTodosNumerosDeProcessosCadastrados()
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.ObtenhaTodosNumerosDeProcessosCadastrados();
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }
