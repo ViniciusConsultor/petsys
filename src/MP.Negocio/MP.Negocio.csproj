@@ -92,6 +92,7 @@
     <Compile Include="Patente.cs" />
     <Compile Include="AnuidadePatente.cs" />
     <Compile Include="ClassificacaoPatente.cs" />
+    <Compile Include="PCT.cs" />
     <Compile Include="PrioridadeUnionistaPatente.cs" />
     <Compile Include="ProcessoDePatente.cs" />
     <Compile Include="RadicalMarcas.cs" />

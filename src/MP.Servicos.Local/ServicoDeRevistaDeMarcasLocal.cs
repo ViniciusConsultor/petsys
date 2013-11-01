@@ -219,7 +219,6 @@ namespace MP.Servicos.Local
                                                 }
                                             }
 
-
                                             objetoRevistaASerSalvo.CodigoDespachoAtual = processo.CodigoDespachoAtual;
                                             objetoRevistaASerSalvo.DataProcessamento = processo.DataProcessamento;
                                             objetoRevistaASerSalvo.DataPublicacao = processo.DataPublicacao;
