@@ -43,15 +43,15 @@ namespace MP.Mapeadores
                            ? String.Concat(processoDePatente.DataDaPublicacao.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
-            sql.Append(processoDePatente.DataDaPublicacao.HasValue
+            sql.Append(processoDePatente.DataDoDeposito.HasValue
                            ? String.Concat(processoDePatente.DataDoDeposito.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
-            sql.Append(processoDePatente.DataDaPublicacao.HasValue
+            sql.Append(processoDePatente.DataDaConcessao.HasValue
                            ? String.Concat(processoDePatente.DataDaConcessao.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
-            sql.Append(processoDePatente.DataDaPublicacao.HasValue
+            sql.Append(processoDePatente.DataDoExame.HasValue
                            ? String.Concat(processoDePatente.DataDoExame.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
@@ -95,22 +95,67 @@ namespace MP.Mapeadores
 
         public void Modificar(IProcessoDePatente processoDePatente)
         {
-            //var sql = new StringBuilder();
-            //IDBHelper DBHelper;
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
 
-            //DBHelper = ServerUtils.getDBHelper();
+            DBHelper = ServerUtils.getDBHelper();
 
-            //sql.Append("UPDATE MP_PROCESSOPATENTE ");
-            //sql.Append("SET IDPATENTE = " + processoDePatente.Patente.Identificador + ", ");
-            //sql.Append(String.Concat("PROCESSO = ", processoDePatente.Processo, ", "));
-            //sql.Append(String.Concat("DATAENTRADA = ", processoDePatente.DataDeEntrada.ToString("yyyyMMdd"), ", "));
-            //sql.Append("PROCESSODETERCEIRO = " + (processoDePatente.ProcessoEhDeTerceiro ? "1, " : "0, "));
-            //sql.Append(String.Concat("IDPROCURADOR = ", processoDePatente.Procurador != null ? processoDePatente.Procurador.Pessoa.ID.Value.ToString() : "NULL", ", "));
-            //sql.Append("EHESTRANGEIRO = " + (processoDePatente.ProcessoEhDeTerceiro ? "1, " : "0, "));
-            //sql.Append("ATIVO = " + (processoDePatente.ProcessoEhDeTerceiro ? "1" : "0"));
-            //sql.Append(" WHERE IDPROCESSOPATENTE = " + processoDePatente.IdProcessoDePatente);
+            sql.Append("UPDATE MP_PROCESSOPATENTE ");
+            sql.Append("SET IDPATENTE = " + processoDePatente.Patente.Identificador + ", ");
+            sql.Append(String.Concat("PROCESSO = '", processoDePatente.Processo, "', "));
 
-            //DBHelper.ExecuteNonQuery(sql.ToString());
+            sql.Append(processoDePatente.DataDaPublicacao.HasValue
+                         ? String.Concat("DATADEPUBLICACAO=", processoDePatente.DataDaPublicacao.Value.ToString("yyyyMMdd"), ", ")
+                         : "DATADEPUBLICACAO=NULL, ");
+
+            sql.Append(processoDePatente.DataDoDeposito.HasValue
+                           ? String.Concat("DATADEDEPOSITO=",processoDePatente.DataDoDeposito.Value.ToString("yyyyMMdd"), ", ")
+                           : "DATADEDEPOSITO=NULL, ");
+
+            sql.Append(processoDePatente.DataDaConcessao.HasValue
+                           ? String.Concat("DATADECONCESSAO=",processoDePatente.DataDaConcessao.Value.ToString("yyyyMMdd"), ", ")
+                           : "DATADECONCESSAO=NULL, ");
+
+            sql.Append(processoDePatente.DataDoExame.HasValue
+                           ? String.Concat("DATADEEXAME=",processoDePatente.DataDoExame.Value.ToString("yyyyMMdd"), ", ")
+                           : "DATADEEXAME=NULL, ");
+
+            sql.Append("PROCESSODETERCEIRO = " + (processoDePatente.ProcessoEhDeTerceiro ? "'1', " : "'0', "));
+            sql.Append(String.Concat("IDPROCURADOR = ", processoDePatente.Procurador != null ? processoDePatente.Procurador.Pessoa.ID.Value.ToString() : "NULL", ", "));
+            sql.Append("EHESTRANGEIRO = " + (processoDePatente.ProcessoEhEstrangeiro ? "1, " : "0, "));
+            
+            if (processoDePatente.PCT != null)
+            {
+                var pct = processoDePatente.PCT;
+
+                sql.Append(!string.IsNullOrEmpty(pct.Numero)
+                               ? string.Concat("NUMEROPCT='", UtilidadesDePersistencia.FiltraApostrofe(pct.Numero), "', ")
+                               : "NUMEROPCT=NULL, ");
+
+                sql.Append(!string.IsNullOrEmpty(pct.NumeroWO)
+                               ? string.Concat("NUMEROWO='", UtilidadesDePersistencia.FiltraApostrofe(pct.Numero), "', ")
+                               : "NUMEROWO=NULL, ");
+
+                sql.Append(pct.DataDaPublicacao.HasValue? string.Concat("DATAPUBLICACAOPCT=",pct.DataDaPublicacao.Value.ToString("yyyyMMdd"), ", ")
+                               : "DATAPUBLICACAOPCT=NULL, ");
+
+                sql.Append(pct.DataDoDeposito.HasValue ? string.Concat("DATADEPOSITOPCT=",pct.DataDoDeposito.Value.ToString("yyyyMMdd"), ", ")
+                             : "DATADEPOSITOPCT=NULL, ");
+            }
+
+            else
+                sql.Append("NUMEROPCT=NULL, NUMEROWO=NULL, DATAPUBLICACAOPCT=NULL, DATADEPOSITOPCT=NULL, ");
+            
+
+             if (processoDePatente.Despacho != null)
+                sql.Append(string.Concat("IDDESPACHO=",processoDePatente.Despacho.IdDespachoDePatente.Value, ", "));
+            else
+                sql.Append("IDDESPACHO=NULL, ");
+
+            sql.Append("ATIVO = " + (processoDePatente.Ativo ? "1" : "0"));
+            sql.Append(" WHERE IDPROCESSOPATENTE = " + processoDePatente.IdProcessoDePatente);
+
+            DBHelper.ExecuteNonQuery(sql.ToString());
         }
 
         public void Excluir(long ID)
@@ -185,7 +230,9 @@ namespace MP.Mapeadores
                 pct.DataDoDeposito = UtilidadesDePersistencia.getValorDate(leitor, "DATADEPOSITOPCT");
             }
 
-            processo.Despacho = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IDespachoDePatentesLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDDESPACHO"));
+            if (!UtilidadesDePersistencia.EhNulo(leitor,"IDDESPACHO"))
+                processo.Despacho = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IDespachoDePatentesLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDDESPACHO"));
+
             processo.Ativo = UtilidadesDePersistencia.GetValorBooleano(leitor, "ATIVO");
             
             return processo;

@@ -19,6 +19,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{2BD549CC-6EBE-470A-B8A0-25A7EA8B2E70}"
 	ProjectSection(SolutionItems) = preProject
 		..\doc\Banco de dados\MP\SQL Server\CREATE_MP_SQLServer.sql = ..\doc\Banco de dados\MP\SQL Server\CREATE_MP_SQLServer.sql
+		..\doc\Banco de dados\MP\SQL Server\DropTodasTabelasMP.sql = ..\doc\Banco de dados\MP\SQL Server\DropTodasTabelasMP.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{FD1D1018-784F-45DD-B111-C4EFE4D683B0}"
