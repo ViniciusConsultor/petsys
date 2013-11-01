@@ -36,9 +36,19 @@ namespace MP.Client.MP
             CarregueGridRevistasAProcessar();
             CarregueGridRevistasJaProcessadas();
             CarregaGridComProcessosExistentesNaBase(new List<IRevistaDeMarcas>());
+            EscondaPanelDeFiltro();
+            //txtPublicacoesProprias.Enabled = true;
+            //txtQuantdadeDeProcessos.Enabled = true;
+        }
 
-            txtPublicacoesProprias.Enabled = true;
-            txtProcesso.Enabled = true;
+        private void EscondaPanelDeFiltro()
+        {
+            pnlFiltro.Visible = false;
+        }
+
+        private void ExibaPanelDeFiltro()
+        {
+            pnlFiltro.Visible = true;
         }
 
         private void CarregueGridRevistasJaProcessadas()
@@ -228,8 +238,9 @@ namespace MP.Client.MP
                             CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
                             CarregueGridRevistasAProcessar();
                             CarregueGridRevistasJaProcessadas();
-                            //carregar grid com as informações dos processos da revista
-                            //carrega grid Já processadas
+
+                            txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
+
                         }
                         else
                         {
@@ -349,6 +360,12 @@ namespace MP.Client.MP
                             }
 
                             CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+
+                            txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
+
+                            ExibaPanelDeFiltro();
+
+                            txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         }
                         else
                         {

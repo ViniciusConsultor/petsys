@@ -51,37 +51,7 @@ namespace MP.Servicos.Local
             return listaDeProcessosExistentesNaRevista;
         }
 
-        //public IList<IRevistaDeMarcas> InserirELerRevistaXmlERetornarProcessosExistentes(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
-        //{
-        //    ServerUtils.setCredencial(_Credencial);
-
-        //    var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDeMarcas>();
-
-        //    try
-        //    {
-        //        // FAZER A LEITURA DA REVISTA E ATUALIZAR OS CAMPOS NECESSÁRIOS
-
-        //        IList<IRevistaDeMarcas> listaDeProcessosExistentesNaRevista = new List<IRevistaDeMarcas>();
-
-        //        listaDeProcessosExistentesNaRevista = LerRevistaXMLParaProcessosExistentes(revistaDeMarcas, revistaXml);
-
-        //        ServerUtils.BeginTransaction();
-        //        mapeador.InserirDadosRevistaXml(listaDeProcessosExistentesNaRevista);
-        //        ServerUtils.CommitTransaction();
-
-        //        return listaDeProcessosExistentesNaRevista;
-        //    }
-        //    catch
-        //    {
-        //        ServerUtils.RollbackTransaction();
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        ServerUtils.libereRecursos();
-        //    }
-        //}
-
+        
         private IList<IRevistaDeMarcas> LerRevistaXMLParaProcessosExistentes(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
         {
             try
@@ -197,64 +167,8 @@ namespace MP.Servicos.Local
                         }
                     }
 
-                    //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
-                    //{
-                    //    foreach (var processo in listaDeProcessosDaRevistaDeMarcas)
-                    //    {
-                    //        var objetoRevistaASerSalvo = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
-
-                    //        IProcessoDeMarca processoDeMarcaExistente = servico.ObtenhaProcessoDeMarcaPeloNumero(processo.NumeroProcessoDeMarca);
-
-                    //        // validar codigo.
-
-                    //        if (processoDeMarcaExistente.IdProcessoDeMarca != null)
-                    //        {
-                    //            objetoRevistaASerSalvo.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
-
-                    //            codigoDespachoDaProcessoRevista = processo.CodigoDespachoAtual;
-
-                    //            objetoRevistaASerSalvo.Apostila = processo.Apostila;
-
-                    //            if (processoDeMarcaExistente.Despacho != null)
-                    //            {
-                    //                objetoRevistaASerSalvo.CodigoDespachoAnterior = processoDeMarcaExistente.Despacho.CodigoDespacho;
-                    //                processoDeMarcaExistente.Despacho.CodigoDespacho = codigoDespachoDaProcessoRevista; 
-                    //            }
-                    //            else if (processoDeMarcaExistente.Despacho == null && !string.IsNullOrEmpty(codigoDespachoDaProcessoRevista))
-                    //            {
-                    //                objetoRevistaASerSalvo.CodigoDespachoAnterior = null;
-
-                    //                IList<IDespachoDeMarcas> listaDeDespachos = new List<IDespachoDeMarcas>();
-
-                    //                using (var servicoDespacho = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
-                    //                {
-                    //                    listaDeDespachos = servicoDespacho.ObtenhaPorCodigoDoDespachoComoFiltro(
-                    //                        codigoDespachoDaProcessoRevista, int.MaxValue);
-                    //                }
-
-                    //                if (listaDeDespachos.Count > 0)
-                    //                {
-                    //                    processoDeMarcaExistente.Despacho = listaDeDespachos[0];
-                    //                }
-                    //            }
-                                
-
-                    //            objetoRevistaASerSalvo.CodigoDespachoAtual = processo.CodigoDespachoAtual;
-                    //            objetoRevistaASerSalvo.DataProcessamento = processo.DataProcessamento;
-                    //            objetoRevistaASerSalvo.DataPublicacao = processo.DataPublicacao;
-                    //            objetoRevistaASerSalvo.ExtensaoArquivo = processo.ExtensaoArquivo;
-                    //            objetoRevistaASerSalvo.NumeroProcessoDeMarca = processo.NumeroProcessoDeMarca;
-                    //            objetoRevistaASerSalvo.NumeroRevistaMarcas = processo.NumeroRevistaMarcas;
-                    //            objetoRevistaASerSalvo.Processada = processo.Processada;
-                    //            objetoRevistaASerSalvo.TextoDoDespacho = processo.TextoDoDespacho;
-
-                    //            listaDeDadosDaRevistaASerSalvo.Add(objetoRevistaASerSalvo);
-
-                    //            servico.Modificar(processoDeMarcaExistente);
-                    //        }
-                    //    }
-                    }
-                }
+                  }
+               }
 
                 return listaDeDadosDaRevistaASerSalvo;
             }
