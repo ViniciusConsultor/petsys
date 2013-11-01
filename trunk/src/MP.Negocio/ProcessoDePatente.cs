@@ -12,6 +12,7 @@ namespace MP.Negocio
         public long? IdProcessoDePatente { get;set; }
         public IPatente Patente {get; set;}
         public string Processo {get; set;}
+        public DateTime DataDoCadastro { get; set; }
         public DateTime DataDeEntrada {get; set;}
         public bool ProcessoEhDeTerceiro {get; set;}
         public DateTime? DataDaConcessao {get;set;}
@@ -22,14 +23,7 @@ namespace MP.Negocio
         public IProcurador Procurador {get;set;}
         public bool ProcessoEhEstrangeiro {get; set;}
         public bool Ativo {get; set; }
-
-        public IPCT PCT
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public bool EhPCT {get; set;}
-        public string NumeroPCT {get; set;}
+        public IPCT PCT { get; set; }
+        public IDespachoDePatentes Despacho { get; set; }
     }
 }

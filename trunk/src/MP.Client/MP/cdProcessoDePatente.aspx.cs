@@ -45,7 +45,7 @@ namespace MP.Client.MP
         {
             ViewState[CHAVE_ESTADO] = Estado.Novo;
             LimpaTela();
-            txtDataDeEntrada.SelectedDate = DateTime.Now;
+            txtDataDeCadastro.SelectedDate = DateTime.Now;
         }
 
         private void ExibaTelaDetalhes(long id)
@@ -74,12 +74,40 @@ namespace MP.Client.MP
             ViewState[CHAVE_ID] = processoDePatente.IdProcessoDePatente;
             ctrlPatente1.PatenteSelecionada = processoDePatente.Patente;
             ctrlPatente1.TituloPatente = processoDePatente.Patente.TituloPatente;
-
             txtProcesso.Text = processoDePatente.Processo;
-
-            txtDataDeEntrada.SelectedDate = processoDePatente.DataDeEntrada;
-
+            txtDataDeCadastro.SelectedDate = processoDePatente.DataDoCadastro;
+            txtDataDeConcessao.SelectedDate = processoDePatente.DataDaConcessao;
+            txtDataDePublicacao.SelectedDate = processoDePatente.DataDaPublicacao;
+            txtDataDoDeposito.SelectedDate = processoDePatente.DataDoDeposito;
+            txtDataDaVigencia.SelectedDate = processoDePatente.DataDaVigencia;
+            txtDataDoExame.SelectedDate = processoDePatente.DataDoExame;
             rblProcessoEhDeTerceiro.SelectedValue = processoDePatente.ProcessoEhDeTerceiro ? "1" : "0";
+
+            if (processoDePatente.Procurador != null)
+            {
+                ctrlProcurador.ProcuradorSelecionado = processoDePatente.Procurador;
+                ctrlProcurador.Nome = processoDePatente.Procurador.Pessoa.Nome;
+            }
+
+            rblProcessoEhEstrangeiro.SelectedValue = processoDePatente.ProcessoEhEstrangeiro ? "1" : "0";
+            rblEstaAtivo.SelectedValue = processoDePatente.Ativo ? "1" : "0";
+
+
+            if (processoDePatente.Despacho != null)
+            {
+                ctrlDespachoDePatentes.DespachoDePatentesSelecionada = processoDePatente.Despacho;
+                ctrlDespachoDePatentes.CodigoDespachoDePatentes = processoDePatente.Despacho.Codigo;
+            }
+
+
+            if (processoDePatente.PCT != null)
+            {
+                rblEHPCT.SelectedValue = "1";
+                txtNumeroPCT.Text = processoDePatente.PCT.Numero;
+                txtNumeroPCTWO.Text = processoDePatente.PCT.NumeroWO;
+                txtDataDaPublicacaoPCT.SelectedDate = processoDePatente.PCT.DataDaPublicacao;
+                txtDataDoDepositoPCT.SelectedDate = processoDePatente.PCT.DataDoDeposito;
+            }
         }
 
         private void LimpaTela()
@@ -90,9 +118,11 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controle);
             ctrlPatente1.Inicializa();
             ctrlProcurador.Inicializa();
+            ctrlDespachoDePatentes.Inicializa();
 
             ctrlPatente1.BotaoNovoEhVisivel = true;
             ctrlProcurador.BotaoNovoEhVisivel = true;
+            ctrlDespachoDePatentes.BotaoNovoEhVisivel = true;
 
             rblProcessoEhDeTerceiro.Items.Clear();
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
@@ -105,10 +135,27 @@ namespace MP.Client.MP
             rblProcessoEhEstrangeiro.SelectedValue = "0";
 
 
-            rblSituacao.Items.Clear();
-            rblSituacao.Items.Add(new ListItem("Não", "0"));
-            rblSituacao.Items.Add(new ListItem("Sim", "1"));
-            rblSituacao.SelectedValue = "0";
+            rblEstaAtivo.Items.Clear();
+            rblEstaAtivo.Items.Add(new ListItem("Não", "0"));
+            rblEstaAtivo.Items.Add(new ListItem("Sim", "1"));
+            rblEstaAtivo.SelectedValue = "1";
+
+            rblEstaAtivo.Items.Clear();
+            rblEstaAtivo.Items.Add(new ListItem("Não", "0"));
+            rblEstaAtivo.Items.Add(new ListItem("Sim", "1"));
+            rblEstaAtivo.SelectedValue = "1";
+
+            rblEHPCT.Items.Clear();
+            rblEHPCT.Items.Add(new ListItem("Não", "0"));
+            rblEHPCT.Items.Add(new ListItem("Sim", "1"));
+            rblEHPCT.SelectedValue = "0";
+            MostraPCT(false);
+            
+        }
+
+        private void MostraPCT( bool mostra)
+        {
+            pnlPCT.Visible = mostra;
         }
 
         private IProcessoDePatente MontaObjeto()
@@ -120,9 +167,26 @@ namespace MP.Client.MP
 
             processoDePatente.Patente = ctrlPatente1.PatenteSelecionada;
             processoDePatente.Processo = txtProcesso.Text;
-            processoDePatente.DataDeEntrada = txtDataDeEntrada.SelectedDate.Value;
+            processoDePatente.DataDoCadastro = txtDataDeCadastro.SelectedDate.Value;
+            processoDePatente.DataDaConcessao = txtDataDeConcessao.SelectedDate;
+            processoDePatente.DataDaPublicacao = txtDataDePublicacao.SelectedDate;
+            processoDePatente.DataDoDeposito = txtDataDoDeposito.SelectedDate;
+            processoDePatente.DataDaVigencia = txtDataDaVigencia.SelectedDate;
+            processoDePatente.DataDoExame = txtDataDoExame.SelectedDate;
             processoDePatente.ProcessoEhDeTerceiro = rblProcessoEhDeTerceiro.SelectedValue != "0";
             processoDePatente.Procurador = ctrlProcurador.ProcuradorSelecionado;
+            processoDePatente.ProcessoEhEstrangeiro = rblProcessoEhEstrangeiro.SelectedValue != "0";
+            processoDePatente.Ativo = rblEstaAtivo.SelectedValue != "0";
+            processoDePatente.Despacho = ctrlDespachoDePatentes.DespachoDePatentesSelecionada;
+
+            if (rblEHPCT.SelectedValue != "0")
+            {
+                var pct = FabricaGenerica.GetInstancia().CrieObjeto<IPCT>();
+                pct.Numero = txtNumeroPCT.Text;
+                pct.NumeroWO = txtNumeroPCTWO.Text;
+                pct.DataDaPublicacao = txtDataDaPublicacaoPCT.SelectedDate;
+                pct.DataDoDeposito = txtDataDoDepositoPCT.SelectedDate;
+            }
 
             return processoDePatente;
         }
@@ -133,13 +197,11 @@ namespace MP.Client.MP
 
             if (ctrlPatente1.PatenteSelecionada == null) inconsitencias.Add("É necessário informar uma patente.");
 
-            if (string.IsNullOrEmpty(txtProcesso.Text)) inconsitencias.Add("É necessário informar o processo da patente.");
+            if (string.IsNullOrEmpty(txtProcesso.Text)) inconsitencias.Add("É necessário informar o número do processo da patente.");
 
-            if (!txtDataDeEntrada.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de entrada.");
-
-            if (!txtDataDeEntrada.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de entrada.");
-
-            if (rblProcessoEhDeTerceiro.SelectedValue !="0" && ctrlProcurador.ProcuradorSelecionado == null) inconsitencias.Add("É necessário informar o procurador.");
+            if (!txtDataDeCadastro.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de cadastro.");
+            
+            if (rblProcessoEhDeTerceiro.SelectedValue =="0" && ctrlProcurador.ProcuradorSelecionado == null) inconsitencias.Add("É necessário informar o procurador.");
             
             return inconsitencias;
         }
@@ -196,6 +258,11 @@ namespace MP.Client.MP
                     btnSalvar_Click();
                     break;
             }
+        }
+
+        protected void rblEHPCT_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            MostraPCT((sender as RadioButtonList).SelectedValue == "1");
         }
     }
 }

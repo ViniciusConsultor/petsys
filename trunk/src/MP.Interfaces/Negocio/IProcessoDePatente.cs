@@ -10,7 +10,7 @@ namespace MP.Interfaces.Negocio
         Nullable<long> IdProcessoDePatente { get; set; }
         IPatente Patente { get; set; }
         string Processo { get; set; }
-        DateTime DataDeEntrada { get; set; }
+        DateTime DataDoCadastro { get; set; }
         Nullable<DateTime> DataDaConcessao { get; set; }
         Nullable<DateTime> DataDaPublicacao { get; set; }
         Nullable<DateTime> DataDoDeposito { get; set; }
@@ -21,5 +21,6 @@ namespace MP.Interfaces.Negocio
         bool ProcessoEhDeTerceiro { get; set; }
         bool Ativo { get; set; }
         IPCT PCT { get; set; }
+        IDespachoDePatentes Despacho { get; set; }
     }
 }

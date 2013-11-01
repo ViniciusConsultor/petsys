@@ -29,7 +29,7 @@ namespace InicializaBancoMP
             InicializaDespachosDeMarcas();
             InicializaDespachosDePatentes();
 
-            MessageBox.Show("Dados inicilizados com sucesso!");
+            MessageBox.Show("Dados inicializados com sucesso!");
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
