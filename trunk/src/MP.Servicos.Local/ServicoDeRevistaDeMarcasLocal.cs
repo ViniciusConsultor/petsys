@@ -81,15 +81,84 @@ namespace MP.Servicos.Local
 
                     if (despachos != null)
                     {
-                        objetoRevista.CodigoDespachoAtual = despachos["despacho"].Attributes.GetNamedItem("codigo").Value;
+                        var despacho = despachos["despacho"];
+
+                        if (despacho != null)
+                        {
+                            objetoRevista.CodigoDespachoAtual = despacho.Attributes.GetNamedItem("codigo").Value;
+                            
+                                var textoDoDespacho = despacho["texto-complementar"];
+
+                                objetoRevista.TextoDoDespacho = textoDoDespacho != null ? textoDoDespacho.InnerText : null;
+                        }
+                            
                     }
+
+                    var classeNacional = processo["classe-nacional"];
+
+                    if(classeNacional != null)
+                    {
+                        //objetoRevista.codigoClasseNacional = classeNacional.Attributes.GetNamedItem("codigo").Value;
+
+                        var especificacaoClasseNacional = classeNacional["especificacao"];
+
+                        if(especificacaoClasseNacional != null)
+                        {
+                            //objetoRevista.especificacaoClasseNacional = especificacaoClasseNacional.InnerText;
+                        }
+
+                        var subClassesNacional = classeNacional["sub-classes-nacional"];
+
+                        if (subClassesNacional != null)
+                        {
+                            //objetoRevista.listaDeSubClassesNacional = new List<string>();
+
+                            foreach (XmlNode subClasseNacional in subClassesNacional)
+                            {
+                                //if (subClasseNacional.Attributes != null)
+                                //    objetoRevista.listaDeSubClassesNacional.Add(
+                                //        subClasseNacional.Attributes.GetNamedItem("codigo").Value);
+                            }
+                        }
+                    }
+
+                    var apostila = processo["apostila"];
+
+                    objetoRevista.Apostila = apostila != null ? apostila.InnerText : null;
+
+                    var prioridadeUnionista = processo["prioridade-unionista"];
+
+                    if (prioridadeUnionista != null)
+                    {
+                        var prioridade = prioridadeUnionista["prioridade"];
+
+                        if (prioridade != null)
+                        {
+                            //objetoRevista.dataPrioridadeUnionista = prioridade.Attributes.GetNamedItem("data").Value;
+                            //objetoRevista.numeroPrioridadeUnionista = prioridade.Attributes.GetNamedItem("numero").Value;
+                            //objetoRevista.paisPrioridadeUnionista = prioridade.Attributes.GetNamedItem("pais").Value;
+                        }
+                    }
+
+                    //var sobrestadores = processo["sobrestadores"];
+
+                    //if (sobrestadores != null)
+                    //{
+                    //    objetoRevista.dicionarioDeSobrestatores = new Dictionary<string, string>();
+
+                    //    foreach (XmlNode sobrestador in sobrestadores)
+                    //    {
+                    //        if(sobrestador.Attributes != null)
+                    //        {
+                    //            dicionarioDeSobrestatores.Add(sobrestador.Attributes.GetNamedItem("processo").Value,
+                    //                sobrestador.Attributes.GetNamedItem("marca").Value);
+                    //        }
+                    //    }
+                    //}
 
                     objetoRevista.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
                     objetoRevista.DataPublicacao = Convert.ToDateTime(dataRevista);
                     objetoRevista.DataProcessamento = DateTime.Now;
-
-                    objetoRevista.Apostila = string.Empty;
-                    objetoRevista.TextoDoDespacho = string.Empty;
 
                     objetoRevista.Processada = revistaDeMarcas.Processada;
                     objetoRevista.ExtensaoArquivo = revistaDeMarcas.ExtensaoArquivo;
