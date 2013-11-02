@@ -47,9 +47,7 @@ namespace MP.Client.MP
         {
             ViewState[CHAVE_ESTADO] = Estado.Novo;
             LimpaTela();
-            txtDataDeConcessao.SelectedDate = DateTime.Now;
-            txtDataDeProrrogacao.Enabled = false;
-            txtDataDeEntrada.SelectedDate = DateTime.Now;
+            txtDataDeCadastro.SelectedDate = DateTime.Now;
         }
 
         private void ExibaTelaDetalhes(long id)
@@ -60,13 +58,10 @@ namespace MP.Client.MP
             IProcessoDeMarca processoDeMarca = null;
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
-            {
                 processoDeMarca = servico.Obtenha(id);
-            }
 
             if (processoDeMarca != null) MostreProcessoDeMarca(processoDeMarca);
-
-            txtDataDeProrrogacao.Enabled = false;
+         
         }
 
         private void ExibaTelaModificar()
@@ -81,22 +76,29 @@ namespace MP.Client.MP
             ctrlMarcas1.MarcaSelecionada = processoDeMarca.Marca;
             ctrlMarcas1.DescricaoDaMarca = processoDeMarca.Marca.DescricaoDaMarca;
             txtProcesso.Text = processoDeMarca.Processo.ToString();
-            txtDataDeEntrada.SelectedDate = processoDeMarca.DataDeEntrada;
+            rblEstaAtivo.SelectedValue = processoDeMarca.Ativo ? "1" : "0";
+            txtDataDeCadastro.SelectedDate = processoDeMarca.DataDoCadastro;
+            txtDataDeDeposito.SelectedDate = processoDeMarca.DataDoDeposito;
             txtDataDeConcessao.SelectedDate = processoDeMarca.DataDeConcessao;
+            txtDataDeVigencia.SelectedDate = processoDeMarca.DataDaVigencia;
             rblProcessoEhDeTerceiro.SelectedValue = processoDeMarca.ProcessoEhDeTerceiro ? "1" : "0";
+
             if (processoDeMarca.Despacho != null)
             {
                 ctrlDespacho.DespachoDeMarcasSelecionada = processoDeMarca.Despacho;
                 ctrlDespacho.CodigoDespacho = processoDeMarca.Despacho.CodigoDespacho.ToString();
             }
-            txtDataDeProrrogacao.SelectedDate = processoDeMarca.DataDeProrrogacao;
+
+            txtTextoComplementarDoDespacho.Text = processoDeMarca.TextoComplementarDoDespacho;
             
             if (processoDeMarca.Procurador != null)
             {
                 ctrlProcurador.ProcuradorSelecionado = processoDeMarca.Procurador;
                 ctrlProcurador.Nome = processoDeMarca.Procurador.Pessoa.Nome;
             }
-            
+
+            txtApostila.Text = processoDeMarca.Apostila;
+
         }
 
         private void LimpaTela()
@@ -112,6 +114,12 @@ namespace MP.Client.MP
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Sim", "1"));
             rblProcessoEhDeTerceiro.SelectedValue = "0";
+            txtDataDeCadastro.Enabled = false;
+
+            rblEstaAtivo.Items.Clear();
+            rblEstaAtivo.Items.Add(new ListItem("Não", "0"));
+            rblEstaAtivo.Items.Add(new ListItem("Sim", "1"));
+            rblEstaAtivo.SelectedValue = "1";
         }
 
         private IProcessoDeMarca MontaObjeto()
@@ -122,18 +130,17 @@ namespace MP.Client.MP
                 processoDeMarca.IdProcessoDeMarca = Convert.ToInt64(ViewState[CHAVE_ID]);
             
             processoDeMarca.Marca = ctrlMarcas1.MarcaSelecionada;
-
             processoDeMarca.Processo = Convert.ToInt64(txtProcesso.Text);
-
-            processoDeMarca.DataDeEntrada = txtDataDeEntrada.SelectedDate.Value;
+            processoDeMarca.DataDoCadastro = txtDataDeCadastro.SelectedDate.Value;
+            processoDeMarca.DataDoDeposito = txtDataDeDeposito.SelectedDate;
             processoDeMarca.DataDeConcessao = txtDataDeConcessao.SelectedDate;
-
+            processoDeMarca.Ativo = rblEstaAtivo.SelectedValue != "0";
             processoDeMarca.ProcessoEhDeTerceiro = rblProcessoEhDeTerceiro.SelectedValue != "0";
-
             if (ctrlDespacho.DespachoDeMarcasSelecionada != null) processoDeMarca.Despacho = ctrlDespacho.DespachoDeMarcasSelecionada;
-            
+            processoDeMarca.TextoComplementarDoDespacho = txtTextoComplementarDoDespacho.Text;
             if (ctrlProcurador.ProcuradorSelecionado != null)
                 processoDeMarca.Procurador = ctrlProcurador.ProcuradorSelecionado;
+            processoDeMarca.Apostila = txtApostila.Text;
             
             return processoDeMarca;
         }
@@ -144,11 +151,9 @@ namespace MP.Client.MP
 
             if (ctrlMarcas1.MarcaSelecionada == null) inconsitencias.Add("É necessário informar uma marca.");
 
-            if (!txtProcesso.Value.HasValue) inconsitencias.Add("É necessário informar o processo.");
-
-            if (!txtDataDeEntrada.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de entrada.");
-
-            if (ctrlProcurador.ProcuradorSelecionado == null ) inconsitencias.Add("É necessário informar um procurador.");
+            if (!txtProcesso.Value.HasValue) inconsitencias.Add("É necessário informar número do processo.");
+            
+            if (rblProcessoEhDeTerceiro.SelectedValue == "1" && ctrlProcurador.ProcuradorSelecionado == null ) inconsitencias.Add("É necessário informar um procurador.");
 
             return inconsitencias;
 
