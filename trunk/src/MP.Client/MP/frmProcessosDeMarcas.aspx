@@ -160,7 +160,7 @@
                                             <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente"
                                                 UniqueName="column2">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDeEntrada" HeaderText="Data de entrada" UniqueName="column6"
+                                            <telerik:GridBoundColumn DataField="DataDoCadastro" HeaderText="Data do cadastro" UniqueName="column6"
                                                 DataFormatString="{0:dd/MM/yyyy}">
                                                 <ItemStyle Width="15%"></ItemStyle>
                                             </telerik:GridBoundColumn>

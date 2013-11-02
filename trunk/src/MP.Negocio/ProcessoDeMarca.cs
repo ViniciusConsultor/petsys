@@ -9,43 +9,27 @@ namespace MP.Negocio
     [Serializable]
     public class ProcessoDeMarca : IProcessoDeMarca
     {
-        public long? IdProcessoDeMarca
+        public long? IdProcessoDeMarca {get; set; }
+        public IMarcas Marca {get; set; }
+        public long Processo {get; set; }
+        public DateTime DataDoCadastro { get; set; }
+        public DateTime? DataDoDeposito { get; set; }
+        public DateTime? DataDeConcessao {get; set; }
+        public DateTime? DataDaVigencia
         {
-            get; set; }
-
-        public IMarcas Marca
-        {
-            get; set; }
-
-        public long Processo
-        {
-            get; set; }
-
-        public DateTime DataDeEntrada
-        {
-            get; set; }
-
-        public DateTime? DataDeConcessao
-        {
-            get; set; }
-
-        public bool ProcessoEhDeTerceiro
-        {
-            get; set; }
-
-        public IDespachoDeMarcas Despacho
-        {
-            get; set; }
-
-
-        public DateTime? DataDeProrrogacao
-        {
-            get { return DataDeConcessao.Value.AddYears(10);  }
+            get
+            {
+                if (DataDoDeposito.HasValue)
+                    return DataDoDeposito.Value.AddYears(10);
+                
+                return null;
+            }
         }
-
-        public IProcurador Procurador
-        {
-            get; set; }
-
+        public bool ProcessoEhDeTerceiro {get; set; }
+        public IDespachoDeMarcas Despacho {get; set;}
+        public string TextoComplementarDoDespacho { get; set; }
+        public IProcurador Procurador {get; set; }
+        public string Apostila { get; set; }
+        public bool Ativo {get; set; }
     }
 }
