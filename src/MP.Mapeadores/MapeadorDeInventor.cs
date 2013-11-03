@@ -21,7 +21,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper;
 
             DBHelper = ServerUtils.getDBHelper();
-
+            
             sql.Append("INSERT INTO MP_INVENTOR (");
             sql.Append("IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL)");
             sql.Append("VALUES (");
@@ -30,14 +30,10 @@ namespace MP.Mapeadores
             sql.Append(String.Concat(inventor.DataDoCadastro.Value.ToString("yyyyMMdd"), ", "));
 
             if (string.IsNullOrEmpty(inventor.InformacoesAdicionais))
-            {
                 sql.Append("NULL)");
-            }
             else
-            {
                 sql.Append(String.Concat("'", inventor.InformacoesAdicionais, "')"));
-            }
-
+            
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
 

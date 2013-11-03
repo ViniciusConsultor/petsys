@@ -119,6 +119,13 @@
     <Compile Include="MP\cdNaturezaPatente.aspx.designer.cs">
       <DependentUpon>cdNaturezaPatente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdPastas.aspx.cs">
+      <DependentUpon>cdPastas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdPastas.aspx.designer.cs">
+      <DependentUpon>cdPastas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\cdPatente.aspx.cs">
       <DependentUpon>cdPatente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -203,6 +210,13 @@
     <Compile Include="MP\ctrlNCL.ascx.designer.cs">
       <DependentUpon>ctrlNCL.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlPasta.ascx.cs">
+      <DependentUpon>ctrlPasta.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlPasta.ascx.designer.cs">
+      <DependentUpon>ctrlPasta.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlPatente.ascx.cs">
       <DependentUpon>ctrlPatente.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -268,6 +282,7 @@
     <Content Include="MP\cdInventor.aspx" />
     <Content Include="MP\cdMarcas.aspx" />
     <Content Include="MP\cdNaturezaPatente.aspx" />
+    <Content Include="MP\cdPastas.aspx" />
     <Content Include="MP\cdPatente.aspx" />
     <Content Include="MP\cdProcessoDeMarca.aspx" />
     <Content Include="MP\cdProcessoDePatente.aspx" />
@@ -280,6 +295,7 @@
     <Content Include="MP\ctrlNaturezaDeMarca.ascx" />
     <Content Include="MP\ctrlNaturezaPatente.ascx" />
     <Content Include="MP\ctrlNCL.ascx" />
+    <Content Include="MP\ctrlPasta.ascx" />
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
