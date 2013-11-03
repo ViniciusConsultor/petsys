@@ -27,6 +27,17 @@ Public Class ctrlUF
             cboUF.SelectedValue = value
         End Set
     End Property
+    Public Property Sigla As UF
+        Get
+            If (String.IsNullOrEmpty(cboUF.SelectedValue)) Then
+                Return Nothing
+            Else : Return UF.Obtenha(CShort(cboUF.SelectedValue))
+            End If
+        End Get
+        Set(value As UF)
+
+        End Set
+    End Property
 
     Private Sub CarregueCombo()
         For Each estado In UF.ObtenhaTodos()

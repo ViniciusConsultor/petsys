@@ -68,6 +68,7 @@
     <Compile Include="Mapeadores\IMapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Mapeadores\IMapeadorDeRadicalMarcas.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroLeituraDeRevistaDeMarcas.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorApresentacao.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorCliente.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorDataDeEntrada.cs" />
@@ -83,9 +84,12 @@
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorProcesso.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatenteSemFiltro.cs" />
+    <Compile Include="Negocio\IClasseNacional.cs" />
+    <Compile Include="Negocio\IClasseViena.cs" />
     <Compile Include="Negocio\IDespachoDeMarcas.cs" />
     <Compile Include="Negocio\IDespachoDePatentes.cs" />
     <Compile Include="Negocio\IInventor.cs" />
+    <Compile Include="Negocio\ILeituraRevistaDeMarcas.cs" />
     <Compile Include="Negocio\IMarcas.cs" />
     <Compile Include="Negocio\INaturezaPatente.cs" />
     <Compile Include="Negocio\IPasta.cs" />
