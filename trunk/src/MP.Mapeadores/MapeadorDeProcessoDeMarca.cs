@@ -241,7 +241,7 @@ namespace MP.Mapeadores
             
             IList<long> listaDeProcessos = new List<long>();
 
-            using (var leitor = DBHelper.obtenhaReader("SELECT PROCESSO FROM FROM MP_PROCESSOMARCA ORDER BY PROCESSO"))
+            using (var leitor = DBHelper.obtenhaReader("SELECT PROCESSO FROM MP_PROCESSOMARCA ORDER BY PROCESSO"))
                 try
                 {
                     while (leitor.Read())

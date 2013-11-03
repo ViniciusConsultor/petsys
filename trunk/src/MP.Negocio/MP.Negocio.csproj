@@ -59,8 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClasseNacional.cs" />
+    <Compile Include="ClasseViena.cs" />
     <Compile Include="DespachoDeMarcas.cs" />
     <Compile Include="DespachoDePatentes.cs" />
+    <Compile Include="Filtros\Marcas\FiltroLeituraDeRevistaDeMarcas.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorApresentacao.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorCliente.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorDataDeEntrada.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="LazyLoad\PatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\PrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
+    <Compile Include="LeituraRevistaDeMarcas.cs" />
     <Compile Include="Marcas.cs" />
     <Compile Include="NaturezaPatente.cs" />
     <Compile Include="Pasta.cs" />

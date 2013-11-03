@@ -9,6 +9,7 @@ using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Servicos;
 
 namespace MP.Servicos.Local
@@ -51,7 +52,314 @@ namespace MP.Servicos.Local
             return listaDeProcessosExistentesNaRevista;
         }
 
-        
+        public IList<ILeituraRevistaDeMarcas> ObtenhaResultadoDaConsultaPorFiltroXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDeMarcas filtro)
+        {
+            IList<ILeituraRevistaDeMarcas> listaDeTodosProcessosDaRevista = LerTodaRevistaXML(revistaXml);
+            IList<ILeituraRevistaDeMarcas> listaResultadoPorFiltro = new List<ILeituraRevistaDeMarcas>();
+
+            if (listaDeTodosProcessosDaRevista.Count > 0)
+            {
+                foreach (var processoDaRevista in listaDeTodosProcessosDaRevista)
+                {
+                    if (!string.IsNullOrEmpty(filtro.NumeroDoProcesso))
+                    {
+                        if (processoDaRevista.NumeroDoProcesso == filtro.NumeroDoProcesso)
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                            return listaResultadoPorFiltro;
+                        }
+                    }
+                    else if(!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho == null)
+                    {
+                        // filtro por estado
+
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper())
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
+                    {
+                        // filtro por estado, procurador
+
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper() && 
+                            processoDaRevista.Procurador != null &&
+                            filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper()))
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
+                    {
+                        // filtro por estado, despacho
+
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper() &&
+                             filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
+                    {
+                        // filtro por estado, procurador , despacho
+                        
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper() &&
+                            processoDaRevista.Procurador != null && 
+                            filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper())
+                             && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                        }
+                    }
+                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
+                    {
+                        // filtro por procurador
+
+                        if (processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper()))
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                        }
+                    }
+                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
+                    {
+                        // filtro por procurador, despacho
+
+                        if (processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper()) &&
+                            filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                        }
+                    }
+                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
+                    {
+                        // filtro por despacho
+
+                        if (filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                        {
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                        }
+                    }
+                    else
+                    {
+                        new List<ILeituraRevistaDeMarcas>();
+                    }
+                }
+                
+            }
+
+            return listaResultadoPorFiltro;
+        }
+
+        public IList<ILeituraRevistaDeMarcas> ObtenhaObjetoDeLeituraRevistaDeMarcas(IList<IRevistaDeMarcas> listaDeProcessosExistentes)
+        {
+            IList<ILeituraRevistaDeMarcas> listaObjetosLeituraRevistaDeMarcas = new List<ILeituraRevistaDeMarcas>();
+
+            var objetoLeituraRevistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+
+            //foreach (var processo in listaDeProcessosExistentes)
+            //{
+            //    if(processo.)
+            //    objetoLeituraRevistaDeMarcas.
+            //}
+
+            return listaObjetosLeituraRevistaDeMarcas;
+        }
+
+        private IList<ILeituraRevistaDeMarcas> LerTodaRevistaXML(XmlDocument revistaXml)
+        {
+            IList<ILeituraRevistaDeMarcas> listaDeProcessos = new List<ILeituraRevistaDeMarcas>();
+
+            XmlNodeList xmlprocessos = revistaXml.GetElementsByTagName("processo");
+
+            foreach (XmlNode processo in xmlprocessos)
+            {
+                var processoLidoDaRevistaDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+
+                processoLidoDaRevistaDeMarca.NumeroDoProcesso = processo.Attributes.GetNamedItem("numero").Value;
+
+                if (processo.Attributes.GetNamedItem("data-deposito") != null)
+                    processoLidoDaRevistaDeMarca.DataDeDeposito = processo.Attributes.GetNamedItem("data-deposito").Value;
+
+                if (processo.Attributes.GetNamedItem("data-concessao") != null)
+                    processoLidoDaRevistaDeMarca.DataDeConcessao = processo.Attributes.GetNamedItem("data-concessao").Value;
+
+                if (processo.Attributes.GetNamedItem("data-vigencia") != null)
+                    processoLidoDaRevistaDeMarca.DataDeVigencia = processo.Attributes.GetNamedItem("data-vigencia").Value;
+
+                var despachos = processo["despachos"];
+
+                if (despachos != null)
+                {
+                    var despacho = despachos["despacho"];
+
+                    if (despacho != null)
+                    {
+                        processoLidoDaRevistaDeMarca.CodigoDoDespacho = despachos["despacho"].Attributes.GetNamedItem("codigo").Value;
+
+                        var textoDoDespacho = despacho["texto-complementar"];
+
+                        processoLidoDaRevistaDeMarca.TextoDoDespacho = textoDoDespacho != null ? textoDoDespacho.InnerText : null;
+                    }
+                }
+                
+                var titulares = processo["titulares"];
+
+                if (titulares != null)
+                {
+                    var titular = titulares["titular"];
+
+                    if(titular != null)
+                    {
+                        if (titular.Attributes.GetNamedItem("nome-razao-social") != null)
+                            processoLidoDaRevistaDeMarca.Titular = titular.Attributes.GetNamedItem("nome-razao-social").Value;
+
+                        if (titular.Attributes.GetNamedItem("pais") != null)
+                            processoLidoDaRevistaDeMarca.Pais = titular.Attributes.GetNamedItem("pais").Value;
+
+                        if (titular.Attributes.GetNamedItem("uf") != null)
+                            processoLidoDaRevistaDeMarca.Uf = titular.Attributes.GetNamedItem("uf").Value;
+                    }
+                }
+
+                var marca = processo["marca"];
+
+                if (marca != null)
+                {
+                    if (marca.Attributes.GetNamedItem("apresentacao") != null)
+                        processoLidoDaRevistaDeMarca.Apresentacao = marca.Attributes.GetNamedItem("apresentacao").Value;
+
+                    if (marca.Attributes.GetNamedItem("natureza") != null)
+                        processoLidoDaRevistaDeMarca.Natureza = marca.Attributes.GetNamedItem("natureza").Value;
+
+                    var descricaoMarca = marca["nome"];
+                    if (descricaoMarca != null) processoLidoDaRevistaDeMarca.Marca = descricaoMarca.InnerText;
+
+                    var traducaoMarca = marca["traducao"];
+                    if (traducaoMarca != null) processoLidoDaRevistaDeMarca.TraducaoDaMarca = traducaoMarca.InnerText;
+                }
+
+                var classesViena = processo["classes-vienna"];
+
+                if (classesViena != null)
+                {
+                    processoLidoDaRevistaDeMarca.ClasseViena = FabricaGenerica.GetInstancia().CrieObjeto<IClasseViena>();
+
+                    if (classesViena.Attributes.GetNamedItem("edicao") != null)
+                        processoLidoDaRevistaDeMarca.ClasseViena.EdicaoClasseViena = classesViena.Attributes.GetNamedItem("edicao").Value;
+
+                    processoLidoDaRevistaDeMarca.ClasseViena.ListaDeCodigosClasseViena = new List<string>();
+
+                    foreach (XmlNode classe in classesViena)
+                    {
+                        if (classe.Attributes != null)
+                            processoLidoDaRevistaDeMarca.ClasseViena.ListaDeCodigosClasseViena.Add(
+                                classe.Attributes.GetNamedItem("codigo").Value);
+                    }
+                }
+
+                var classesNice = processo["classe-nice"];
+
+                if (classesNice != null)
+                {
+                    if (classesNice.Attributes.GetNamedItem("codigo") != null)
+                        processoLidoDaRevistaDeMarca.NCL = classesNice.Attributes.GetNamedItem("codigo").Value;
+
+                    if (classesNice.Attributes.GetNamedItem("edicao") != null)
+                        processoLidoDaRevistaDeMarca.EdicaoNCL = classesNice.Attributes.GetNamedItem("edicao").Value;
+
+                    var especificacao = classesNice["especificacao"];
+
+                    if (especificacao != null)
+                        processoLidoDaRevistaDeMarca.EspecificacaoNCL = especificacao.InnerText;
+                }
+
+                var classeNacional = processo["classe-nacional"];
+
+                if (classeNacional != null)
+                {
+                    processoLidoDaRevistaDeMarca.ClasseNacional = FabricaGenerica.GetInstancia().CrieObjeto<IClasseNacional>();
+
+                    if (classeNacional.Attributes.GetNamedItem("codigo") != null)
+                        processoLidoDaRevistaDeMarca.ClasseNacional.CodigoClasseNacional = classeNacional.Attributes.GetNamedItem("codigo").Value;
+
+                    var especificacaoClasseNacional = classeNacional["especificacao"];
+
+                    if (especificacaoClasseNacional != null)
+                    {
+                        processoLidoDaRevistaDeMarca.ClasseNacional.EspecificacaoClasseNacional = especificacaoClasseNacional.InnerText;
+                    }
+
+                    var subClassesNacional = classeNacional["sub-classes-nacional"];
+
+                    if (subClassesNacional != null)
+                    {
+                        processoLidoDaRevistaDeMarca.ClasseNacional.listaDeCodigosDeSubClasse = new List<string>();
+
+                        foreach (XmlNode subClasseNacional in subClassesNacional)
+                        {
+                            if (subClasseNacional.Attributes != null)
+                                processoLidoDaRevistaDeMarca.ClasseNacional.listaDeCodigosDeSubClasse.Add(
+                                    subClasseNacional.Attributes.GetNamedItem("codigo").Value);
+                        }
+                    }
+                }
+
+                var apostila = processo["apostila"];
+
+                if (apostila != null)
+                {
+                    processoLidoDaRevistaDeMarca.Apostila = apostila.InnerText;
+                }
+
+                var prioridadeUnionista = processo["prioridade-unionista"];
+
+                if (prioridadeUnionista != null)
+                {
+                    var prioridade = prioridadeUnionista["prioridade"];
+
+                    if (prioridade != null)
+                    {
+                        if (prioridade.Attributes.GetNamedItem("data") != null)
+                            processoLidoDaRevistaDeMarca.DataPrioridadeUnionista = prioridade.Attributes.GetNamedItem("data").Value;
+
+                        if (prioridade.Attributes.GetNamedItem("numero") != null)
+                            processoLidoDaRevistaDeMarca.NumeroPrioridadeUnionista = prioridade.Attributes.GetNamedItem("numero").Value;
+
+                        if (prioridade.Attributes.GetNamedItem("pais") != null)
+                            processoLidoDaRevistaDeMarca.PaisPrioridadeUnionista = prioridade.Attributes.GetNamedItem("pais").Value;
+                    }
+                }
+
+                var procurador = processo["procurador"];
+
+                if (procurador != null)
+                {
+                    processoLidoDaRevistaDeMarca.Procurador = procurador.InnerText;
+                }
+
+                var sobrestadores = processo["sobrestadores"];
+
+                if (sobrestadores != null)
+                {
+                    processoLidoDaRevistaDeMarca.DicionarioSobrestadores = new Dictionary<string, string>();
+
+                    foreach (XmlNode sobrestador in sobrestadores)
+                    {
+                        if (sobrestador.Attributes != null)
+                        {
+                            processoLidoDaRevistaDeMarca.DicionarioSobrestadores.Add(sobrestador.Attributes.GetNamedItem("processo").Value,
+                                sobrestador.Attributes.GetNamedItem("marca").Value);
+                        }
+                    }
+                }
+
+                listaDeProcessos.Add(processoLidoDaRevistaDeMarca);
+            }
+
+            return listaDeProcessos;
+        }
+
+
         private IList<IRevistaDeMarcas> LerRevistaXMLParaProcessosExistentes(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
         {
             try

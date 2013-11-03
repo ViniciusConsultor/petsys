@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using Compartilhados;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Marcas;
 
 namespace MP.Interfaces.Servicos
 {
@@ -15,5 +16,8 @@ namespace MP.Interfaces.Servicos
         IList<IRevistaDeMarcas> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDeMarcas> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
         IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml);
+        IList<ILeituraRevistaDeMarcas> ObtenhaResultadoDaConsultaPorFiltroXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDeMarcas filtro);
+        IList<ILeituraRevistaDeMarcas> ObtenhaObjetoDeLeituraRevistaDeMarcas(
+            IList<IRevistaDeMarcas> listaDeProcessosExistentes);
     }
 }
