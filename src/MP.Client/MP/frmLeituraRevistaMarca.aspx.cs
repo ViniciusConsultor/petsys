@@ -25,7 +25,7 @@ namespace MP.Client.MP
         private const string CHAVE_REVISTAS_PROCESSADAS = "CHAVE_REVISTAS_PROCESSADAS";
         private const string CHAVE_PROCESSOS_DA_REVISTA = "CHAVE_PROCESSOS_DA_REVISTA";
         private const string CHAVE_REVISTA_SELECIONADA = "CHAVE_REVISTA_SELECIONADA";
-        private const string CHAVE_PROCESSOS_REUSLTADO_FILTRO = "CHAVE_PROCESSOS_REUSLTADO_FILTRO";
+        public const string CHAVE_PROCESSOS_REUSLTADO_FILTRO = "CHAVE_PROCESSOS_REUSLTADO_FILTRO";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -550,7 +550,7 @@ namespace MP.Client.MP
         {
             grdFiltros.MasterTableView.DataSource = listaDeProcessosDaRevista;
             grdFiltros.DataBind();
-            ViewState.Add(CHAVE_PROCESSOS_REUSLTADO_FILTRO, listaDeProcessosDaRevista);
+            Session.Add(CHAVE_PROCESSOS_REUSLTADO_FILTRO, listaDeProcessosDaRevista);
         }
 
         protected void grdFiltros_ItemCommand(object sender, GridCommandEventArgs e)
@@ -586,7 +586,7 @@ namespace MP.Client.MP
 
         protected void grdFiltros_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref grdFiltros, ViewState[CHAVE_PROCESSOS_REUSLTADO_FILTRO], e);
+            UtilidadesWeb.PaginacaoDataGrid(ref grdFiltros, Session[CHAVE_PROCESSOS_REUSLTADO_FILTRO], e);
         }
     }
 }
