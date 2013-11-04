@@ -9,6 +9,9 @@ namespace MP.Negocio
     [Serializable]
     public class LeituraRevistaDeMarcas : ILeituraRevistaDeMarcas
     {
+        public long? IdLeitura
+        { get; set; }
+
         public string NumeroDoProcesso { get; set; }
 
         public string DataDeDeposito
