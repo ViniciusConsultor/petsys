@@ -49,9 +49,9 @@ namespace MP.Interfaces.Negocio
 
         public override bool Equals(object obj)
         {
-            var objeto = obj as NCL;
+            var objeto = obj as TipoClassificacaoPatente;
 
-            return objeto != null && objeto.Codigo == Codigo;
+            return objeto != null && objeto.Codigo.Equals(Codigo);
         }
 
         public override int GetHashCode()

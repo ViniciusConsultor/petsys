@@ -57,7 +57,7 @@ namespace MP.Mapeadores
                     radicalMarcas.IdMarca = UtilidadesDePersistencia.getValorInteger(leitor, "IdMarca");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "NCL"))
-                        radicalMarcas.NCL = NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "NCL"));
+                        radicalMarcas.NCL = NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "NCL"));
 
                     listaDeRadicalMarcas.Add(radicalMarcas);
                 }
@@ -101,8 +101,8 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(radicalMarcas.DescricaoRadical), "', "));
             sql.Append(String.Concat("'", radicalMarcas.IdMarca.Value.ToString(), "', "));
 
-            sql.Append(radicalMarcas.NCL != null && radicalMarcas.NCL.Codigo != 0
-                           ? String.Concat("", radicalMarcas.NCL.Codigo, ") ")
+            sql.Append(radicalMarcas.NCL != null
+                           ? String.Concat("'", radicalMarcas.NCL.Codigo, "') ")
                            : "NULL )");
 
             //if (radicalMarcas.NCL != null && string.IsNullOrEmpty(radicalMarcas.NCL.Codigo.ToString()))
@@ -128,8 +128,8 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("DESCRICAORADICAL = '", UtilidadesDePersistencia.FiltraApostrofe(radicalMarcas.DescricaoRadical), "' , "));
             sql.Append(String.Concat("IDMARCA = '", radicalMarcas.IdMarca.Value.ToString(), "' , "));
 
-            sql.Append(radicalMarcas.NCL != null && radicalMarcas.NCL.Codigo != 0
-                           ? String.Concat("CODIGONCL = ", radicalMarcas.NCL.Codigo, " ")
+            sql.Append(radicalMarcas.NCL != null
+                           ? String.Concat("CODIGONCL = '", radicalMarcas.NCL.Codigo, "' ")
                            : "CODIGONCL = NULL ");
 
             sql.Append(String.Concat("WHERE IDRADICAL = ", radicalMarcas.IdRadicalMarca.Value.ToString()));

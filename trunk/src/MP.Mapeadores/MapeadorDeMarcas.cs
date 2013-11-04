@@ -45,7 +45,7 @@ namespace MP.Mapeadores
                 {
                     var marca = FabricaGenerica.GetInstancia().CrieObjeto<IMarcas>();
                     marca.IdMarca = UtilidadesDePersistencia.getValorInteger(leitor, "IdMarca");
-                    marca.NCL = NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "NCL"));
+                    marca.NCL = NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "NCL"));
                     marca.Apresentacao =
                         Apresentacao.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Apresentacao"));
 
@@ -129,8 +129,8 @@ namespace MP.Mapeadores
             sql.Append("IMAGEM_MARCA, OBSERVACAO_MARCA, CODIGOCLASSE, CODIGOCLASSE_SUBCLASSE1, CODIGOCLASSE_SUBCLASSE2, CODIGOCLASSE_SUBCLASSE3) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ", "));
-            sql.Append(String.Concat(marca.NCL.Codigo.ToString(), ", "));
-            sql.Append(String.Concat( marca.Apresentacao.Codigo.ToString() , ", "));
+            sql.Append(String.Concat("'",marca.NCL.Codigo, "', "));
+            sql.Append(String.Concat(marca.Apresentacao.Codigo.ToString() , ", "));
             sql.Append(String.Concat(marca.Cliente.Pessoa.ID.Value.ToString(), ", "));
             sql.Append(String.Concat(marca.Natureza.Codigo.ToString(), ", "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "', "));
@@ -216,7 +216,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("DESCRICAO_MARCA = '", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "' , "));
             sql.Append(String.Concat("ESPECIFICACAO_PROD_SERV = '", UtilidadesDePersistencia.FiltraApostrofe(marca.EspecificacaoDeProdutosEServicos), "' , "));
             sql.Append(String.Concat("IMAGEM_MARCA = '", marca.ImagemDaMarca, "' , "));
-            sql.Append(String.Concat("CODIGONCL = ", marca.NCL.Codigo, " , "));
+            sql.Append(String.Concat("CODIGONCL = '", marca.NCL.Codigo, "' , "));
             sql.Append(String.Concat("CODIGONATUREZA = ", marca.Natureza.Codigo, " , "));
             sql.Append(String.Concat("OBSERVACAO_MARCA = '", marca.ObservacaoDaMarca, "' "));
             sql.Append(String.Concat("WHERE IDMARCA = ", marca.IdMarca.Value.ToString()));

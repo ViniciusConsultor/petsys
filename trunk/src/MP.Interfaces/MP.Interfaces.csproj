@@ -136,13 +136,13 @@
     <Compile Include="Servicos\IServicoDeRevistaDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeRevistaDePatente.cs" />
     <Compile Include="Servicos\IServicoDeTipoDeProcedimentoInterno.cs" />
+    <Compile Include="Utilidades\TradutorDeRevistaTXTParaRevistaXML.cs" />
+    <Compile Include="Utilidades\UtilidadesDeStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Interfaces.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utilidades\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

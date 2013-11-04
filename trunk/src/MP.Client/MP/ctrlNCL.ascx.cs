@@ -42,7 +42,7 @@ namespace MP.Client.MP
         {
             foreach (var ncl in NCL.ObtenhaTodas())
             {
-                var item = new RadComboBoxItem(ncl.Codigo.ToString(), ncl.Codigo.ToString());
+                var item = new RadComboBoxItem(ncl.Codigo, ncl.Codigo);
 
                 item.Attributes.Add("Descricao", ncl.Descricao);
                 item.Attributes.Add("Natureza", ncl.NaturezaDeMarca.Nome);

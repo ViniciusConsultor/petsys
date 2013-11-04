@@ -12,6 +12,7 @@ using Compartilhados.Fabricas;
 using Core.Interfaces.Servicos;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
+using MP.Interfaces.Utilidades;
 
 namespace InicializaBancoMP
 {
