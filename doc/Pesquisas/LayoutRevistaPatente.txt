@@ -25,8 +25,8 @@ P2230
 (Co)    Complemento
 (De) 	Decisão
 (Re)	Recorrente
-(15)	?
-(52)	?
+(15)	Data do Registro/Data da Prorrogação
+(52)	Classificação Nacional
 (Np)    Número do Processo
 (Ce) 	Cedente
 (Cs)	Cessionária
