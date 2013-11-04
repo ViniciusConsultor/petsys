@@ -67,6 +67,7 @@
     <Compile Include="ServicoDeProcuradorLocal.cs" />
     <Compile Include="ServicoDeRadicalMarcasLocal.cs" />
     <Compile Include="ServicoDeRevistaDeMarcasLocal.cs" />
+    <Compile Include="ServicoDeRevistaDePatenteLocal.cs" />
     <Compile Include="ServicoDeTipoDeProcedimentoInternoLocal.cs" />
   </ItemGroup>
   <ItemGroup>

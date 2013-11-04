@@ -66,6 +66,7 @@
     <Compile Include="MapeadorDeProcurador.cs" />
     <Compile Include="MapeadorDeRadicalMarcas.cs" />
     <Compile Include="MapeadorDeRevistaDeMarcas.cs" />
+    <Compile Include="MapeadorDeRevistaDePatente.cs" />
     <Compile Include="MapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

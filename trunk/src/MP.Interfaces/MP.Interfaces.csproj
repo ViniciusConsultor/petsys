@@ -65,6 +65,7 @@
     <Compile Include="Mapeadores\IMapeadorDeProcessoDePatente.cs" />
     <Compile Include="Mapeadores\IMapeadorDeProcurador.cs" />
     <Compile Include="Mapeadores\IMapeadorDeRevistaDeMarcas.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeRevistaDePatente.cs" />
     <Compile Include="Mapeadores\IMapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Mapeadores\IMapeadorDeRadicalMarcas.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Negocio\IProcessoDeMarca.cs" />
     <Compile Include="Negocio\IProcurador.cs" />
     <Compile Include="Negocio\IRevistaDeMarcas.cs" />
+    <Compile Include="Negocio\IRevistaDePatente.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
     <Compile Include="Negocio\LayoutRevistaPatente.cs" />
     <Compile Include="Negocio\LazyLoad\IAnuidadePatenteLazyLoad.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Servicos\IServicoDeProcurador.cs" />
     <Compile Include="Servicos\IServicoDeRadicalMarcas.cs" />
     <Compile Include="Servicos\IServicoDeRevistaDeMarcas.cs" />
+    <Compile Include="Servicos\IServicoDeRevistaDePatente.cs" />
     <Compile Include="Servicos\IServicoDeTipoDeProcedimentoInterno.cs" />
   </ItemGroup>
   <ItemGroup>
