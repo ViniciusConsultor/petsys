@@ -195,7 +195,7 @@ namespace MP.Client.MP
 
             marca.DescricaoDaMarca = ctrlMarcas.DescricaoDaMarca;
             marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
-            marca.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCL.Codigo));
+            marca.NCL = NCL.ObtenhaPorCodigo(ctrlNCL.Codigo);
             marca.Natureza = NaturezaDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
 
             marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
@@ -469,7 +469,7 @@ namespace MP.Client.MP
 
                 if (ctrlNCLRadical != null && !string.IsNullOrEmpty(ctrlNCLRadical.Codigo))
                 {
-                    radical.NCL = NCL.ObtenhaPorCodigo(Convert.ToInt32(ctrlNCLRadical.Codigo));
+                    radical.NCL = NCL.ObtenhaPorCodigo(ctrlNCLRadical.Codigo);
                 }
 
                 if(listaDeRadicais.Count > 0)
