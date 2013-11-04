@@ -7,6 +7,7 @@ namespace MP.Interfaces.Negocio
 {
     public interface ILeituraRevistaDeMarcas
     {
+        long? IdLeitura { get; set; }
         string NumeroDoProcesso { get; set; }
         string DataDeDeposito { get; set; }
         string DataDeConcessao { get; set; }

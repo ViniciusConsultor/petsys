@@ -68,6 +68,7 @@
     <Compile Include="Mapeadores\IMapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Mapeadores\IMapeadorDeRadicalMarcas.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
+    <Compile Include="Negocio\Execucao\ISobrestator.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroLeituraDeRevistaDeMarcas.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorApresentacao.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorCliente.cs" />
