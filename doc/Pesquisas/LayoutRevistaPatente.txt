@@ -1,0 +1,55 @@
+(Cd)	Código Despacho
+(11)	Número da Patente
+(21)	Número do Pedido
+(22)	Data do Depósito
+(30)	Dados da Prioridade Unionista (data de depósito, país, número)
+(43)	Data da Publicação do Pedido
+(45)	Data da Concessão da Patente/Certificado de Adição de Invenção
+(51)	Classificação Internacional
+(54)	Título
+(57)	Resumo
+(61)	Dados do Pedido ou patente principal do qual o presente é uma adição (número e data de depósito)
+(62)	Dados do pedido original do qual o presente é uma divisão (número e dadta de depósito)
+(66)	Dados da Prioridade Interna (número e data de depósito)
+(71)	Nome do Depositante
+(72)	Nome do Inventor
+(73)	Nome do Titular
+(74)	Nome do Procurador
+(81)	Países Designados
+(85)	Data do Início da Fase Nacional
+(86)	Número, Idioma e Data do Depósito Internacional
+(87)	Número, Idioma e Data da Publicação Internacional
+(Rp)	Responsável pelo pagamento do Imposto de Renda
+-------------------------------------------------------------------------------------------------------------------
+P2230
+(Co)    Complemento
+(De) 	Decisão
+(Re)	Recorrente
+(15)	?
+(52)	?
+(Np)    Número do Processo
+(Ce) 	Cedente
+(Cs)	Cessionária
+(Ob)	Objeto
+(Ui)	Com última informação
+(Ca)	Certificado de averbação	
+(Pe)	País Cedente
+(Ps)	País da Concessionária	
+(Se)	Setor	
+(Es)	Endereço da Concessionária	
+(Nd)	Natureza do documento
+(Mo)	Moeda de pagamento
+(Va)	Valor
+(Pg)	Pagamento
+(Pz)	Prazo
+(Ia)	Serviços/Despesas Isentas de Averbação
+(Cr)	Criador
+(Lg)	Linguagem
+(Cp)	Campo de aplicação
+(Tp)	Tipo de programa
+(Dl)	Data da criação
+(Rg)	Regime Guarda
+--------------------------------------------------------------------------------------------------------------
+P2231
+(Rq) Requerente
+(Rd) Redaçao
