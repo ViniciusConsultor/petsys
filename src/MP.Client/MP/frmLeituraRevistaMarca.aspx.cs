@@ -564,7 +564,12 @@ namespace MP.Client.MP
 
             if (e.CommandName == "DetalharProcesso")
             {
-
+                var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmDetalhesLeituraDaRevista.aspx",
+                                            "?Indice=", IndiceSelecionado);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.ExibeJanela(url,
+                                                                                   "Detalhes do processo da revista marcas",
+                                                                                   800, 550), false);
             }
         }
 

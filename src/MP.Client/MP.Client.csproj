@@ -238,6 +238,13 @@
     <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.designer.cs">
       <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.cs">
+      <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.designer.cs">
+      <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\frmLeituraRevistaMarca.aspx.cs">
       <DependentUpon>frmLeituraRevistaMarca.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -299,6 +306,7 @@
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
+    <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />
     <Content Include="MP\frmLeituraRevistaPatente.aspx" />
     <Content Include="MP\frmProcessosDeMarcas.aspx" />
