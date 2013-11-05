@@ -19,8 +19,6 @@ namespace MP.Client.MP
 {
     public partial class frmLeituraRevistaMarca : SuperPagina
     {
-        private const string ID_OBJETO = "ID_OBJETO_FRM_LEITURA_REVISTA_MARCA";
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO_FRM_LEITURA_REVISTA_MARCA";
         private const string CHAVE_REVISTAS_A_PROCESSAR = "CHAVE_REVISTAS_A_PROCESSAR";
         private const string CHAVE_REVISTAS_PROCESSADAS = "CHAVE_REVISTAS_PROCESSADAS";
         private const string CHAVE_PROCESSOS_DA_REVISTA = "CHAVE_PROCESSOS_DA_REVISTA";
@@ -30,9 +28,7 @@ namespace MP.Client.MP
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
-                this.ExibaTelaInicial();
-            }
+                ExibaTelaInicial();
         }
 
         private void ExibaTelaInicial()
@@ -58,66 +54,39 @@ namespace MP.Client.MP
 
         private void CarregueGridRevistasJaProcessadas()
         {
-            try
+            IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                listaDeRevistas = servico.ObtenhaRevistasJaProcessadas(grdRevistasJaProcessadas.PageSize);
+
+            if (listaDeRevistas.Count > 0)
+                MostraListaRevistasJaProcessadas(listaDeRevistas);
+            else
             {
-                IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
-
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                {
-                    listaDeRevistas = servico.ObtenhaRevistasJaProcessadas(grdRevistasJaProcessadas.PageSize);
-                }
-
-                if(listaDeRevistas.Count > 0)
-                {
-                    MostraListaRevistasJaProcessadas(listaDeRevistas);
-                }
-                else
-                {
-                    var controleGrid = this.grdRevistasJaProcessadas as Control;
-                    UtilidadesWeb.LimparComponente(ref controleGrid);
-
-                    MostraListaRevistasJaProcessadas(new List<IRevistaDeMarcas>());
-                }
-            }
-            catch (Exception ex)
-            {
-                
-                throw ex;
+                var controleGrid = this.grdRevistasJaProcessadas as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraListaRevistasJaProcessadas(new List<IRevistaDeMarcas>());
             }
         }
 
         private void CarregueGridRevistasAProcessar()
         {
-            try
+            IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                listaDeRevistas = servico.ObtenhaRevistasAProcessar(grdRevistasJaProcessadas.PageSize);
+
+            if (listaDeRevistas.Count > 0)
+                MostraListaRevistasAProcessar(listaDeRevistas);
+            else
             {
-                IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
-
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                {
-                    listaDeRevistas = servico.ObtenhaRevistasAProcessar(grdRevistasJaProcessadas.PageSize);
-                }
-
-                if (listaDeRevistas.Count > 0)
-                {
-                    MostraListaRevistasAProcessar(listaDeRevistas);
-                }
-                else
-                {
-                    var controleGrid = this.grdRevistasAProcessar as Control;
-                    UtilidadesWeb.LimparComponente(ref controleGrid);
-
-                    MostraListaRevistasAProcessar(new List<IRevistaDeMarcas>());
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
+                var controleGrid = this.grdRevistasAProcessar as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraListaRevistasAProcessar(new List<IRevistaDeMarcas>());
             }
         }
 
         public string CaminhoArquivo { get; set; }
-
         public string ExtensaoDoArquivo { get; set; }
 
         protected void uplRevistaMarca_OnFileUploaded(object sender, FileUploadedEventArgs e)
@@ -129,23 +98,17 @@ namespace MP.Client.MP
                     var arquivo = uplRevistaMarca.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
-
                     Directory.CreateDirectory(pastaDeDestino);
+                    arquivo.SaveAs(caminhoArquivo, true);
 
-                    arquivo.SaveAs(caminhoArquivo,true);
-                    
                     IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
-
                     var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
-
                     var numeroRevista = arquivo.GetNameWithoutExtension();
-
                     revistaDeMarcas.ExtensaoArquivo = arquivo.GetExtension();
 
-                    if(numeroRevista.Substring(0,2).Equals("rm"))
+                    if (numeroRevista.Substring(0, 2).Equals("rm"))
                     {
                         revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista.Substring(2, 4));
-                        
                         listaRevistasAProcessar.Add(revistaDeMarcas);
                     }
                     else
@@ -190,19 +153,14 @@ namespace MP.Client.MP
             ViewState.Add(CHAVE_REVISTA_SELECIONADA, revistaSelecionada);
         }
 
-        private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDeMarcas revistaDeMarcas )
+        private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDeMarcas revistaDeMarcas)
         {
             var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
-
             CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDeMarcas.NumeroRevistaMarcas +
                 revistaDeMarcas.ExtensaoArquivo);
-
             AdicioneNumeroDaRevistaSelecionada(revistaDeMarcas);
-
             var xmlRevista = new XmlDocument();
-
             xmlRevista.Load(CaminhoArquivo);
-
             return xmlRevista;
         }
 
@@ -211,19 +169,16 @@ namespace MP.Client.MP
             var IndiceSelecionado = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-            {
                 IndiceSelecionado = e.Item.ItemIndex;
-            }
 
             if (e.CommandName == "Excluir")
             {
                 var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_A_PROCESSAR];
-
                 listaRevistasAProcessar.RemoveAt(IndiceSelecionado);
                 MostraListaRevistasAProcessar(listaRevistasAProcessar);
             }
 
-            else if(e.CommandName == "ProcessarRevista")
+            else if (e.CommandName == "ProcessarRevista")
             {
                 var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_A_PROCESSAR];
 
@@ -238,49 +193,39 @@ namespace MP.Client.MP
                         // leitura .xml
 
                         var xmlRevista = MontaXmlParaProcessamentoDaRevista(listaRevistasAProcessar[IndiceSelecionado]);
-
                         listaRevistasAProcessar[IndiceSelecionado].Processada = true;
 
                         // lista de processos existentes na base, de acordo com a revista que está sendo processada.
                         IList<IRevistaDeMarcas> listaDeProcessosExistentes = new List<IRevistaDeMarcas>();
-                        
+
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                        {
                             listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(listaRevistasAProcessar[IndiceSelecionado], xmlRevista);
-                        }
 
                         if (listaDeProcessosExistentes.Count > 0)
                         {
                             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                            {
                                 servico.Inserir(listaDeProcessosExistentes);
-                            }
 
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."), 
+                                                        UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."),
                                                         false);
-                            
+
                             CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
                             CarregueGridRevistasAProcessar();
                             CarregueGridRevistasJaProcessadas();
-
                             txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
-
                             ExibaPanelDeFiltro();
 
                         }
                         else
-                        {
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista em processada."),
                                                         false);
-                        }
-
                     }
-                    
+
                 }
-                catch (Exception ex)
+                catch (BussinesException ex)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
@@ -290,34 +235,21 @@ namespace MP.Client.MP
 
         private void CarregaGridComProcessosExistentesNaBase(IList<IRevistaDeMarcas> listaDeProcessosExistentes)
         {
-            try
+            IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
+
+            if (listaDeProcessosExistentes.Count > 0)
             {
-                IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
+                foreach (var processo in listaDeProcessosExistentes)
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                        listaDeProcessos.Add(servico.ObtenhaProcessoDeMarcaPeloNumero(processo.NumeroProcessoDeMarca));
 
-                if (listaDeProcessosExistentes.Count > 0)
-                {
-                    foreach (var processo in listaDeProcessosExistentes)
-                    {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
-                        {
-                            listaDeProcessos.Add(servico.ObtenhaProcessoDeMarcaPeloNumero(processo.NumeroProcessoDeMarca));
-                        }
-                    }
-
-                    MostraProcessosDaRevista(listaDeProcessos);
-                }
-                else
-                {
-                    var controleGrid = this.gridRevistaProcessos as Control;
-                    UtilidadesWeb.LimparComponente(ref controleGrid);
-
-                    MostraProcessosDaRevista(new List<IProcessoDeMarca>());
-                }
+                MostraProcessosDaRevista(listaDeProcessos);
             }
-            catch (Exception ex)
+            else
             {
-
-                throw ex;
+                var controleGrid = gridRevistaProcessos as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraProcessosDaRevista(new List<IProcessoDeMarca>());
             }
         }
 
@@ -333,12 +265,8 @@ namespace MP.Client.MP
                 var gridItem = (GridDataItem)e.Item;
 
                 foreach (GridColumn column in grdRevistasAProcessar.MasterTableView.RenderColumns)
-                {
                     if ((column is GridButtonColumn))
-                    {
                         gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
-                    }
-                }
             }
         }
 
@@ -347,9 +275,7 @@ namespace MP.Client.MP
             var IndiceSelecionado = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-            {
                 IndiceSelecionado = e.Item.ItemIndex;
-            }
 
             if (e.CommandName == "ReprocessarRevista")
             {
@@ -364,49 +290,36 @@ namespace MP.Client.MP
                     else
                     {
                         // leitura .xml
-
                         var xmlRevista = MontaXmlParaProcessamentoDaRevista(listaRevistasProcessadas[IndiceSelecionado]);
-
                         listaRevistasProcessadas[IndiceSelecionado].Processada = true;
-
                         // lista de processos existentes na base, de acordo com a revista que está sendo processada.
                         IList<IRevistaDeMarcas> listaDeProcessosExistentes = new List<IRevistaDeMarcas>();
 
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                        {
                             listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(listaRevistasProcessadas[IndiceSelecionado], xmlRevista);
-                        }
 
                         if (listaDeProcessosExistentes.Count > 0)
                         {
                             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                            {
                                 servico.Inserir(listaDeProcessosExistentes);
-                            }
 
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."),
                                                         false);
 
                             CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
-
                             txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
-
                             ExibaPanelDeFiltro();
-
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         }
                         else
-                        {
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista em processada."),
                                                          false);
-                        }
-
                     }
 
                 }
-                catch (Exception ex)
+                catch (BussinesException ex)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
@@ -426,12 +339,8 @@ namespace MP.Client.MP
                 var gridItem = (GridDataItem)e.Item;
 
                 foreach (GridColumn column in grdRevistasJaProcessadas.MasterTableView.RenderColumns)
-                {
                     if ((column is GridButtonColumn))
-                    {
                         gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
-                    }
-                }
             }
         }
 
@@ -441,7 +350,6 @@ namespace MP.Client.MP
                 ctrlProcurador.ProcuradorSelecionado == null && ctrlDespachoDeMarcas.DespachoDeMarcasSelecionada == null)
             {
                 // Nenhum filtro
-
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe filtro informado para realizar a consulta das informações."),
                                                          false);
@@ -449,13 +357,8 @@ namespace MP.Client.MP
             else
             {
                 IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevista = new List<ILeituraRevistaDeMarcas>();
-
-                var revistaSelecionada = (IRevistaDeMarcas) ViewState[CHAVE_REVISTA_SELECIONADA];
-
-                var filtro =
-                            FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDeMarcas>();
-
-                
+                var revistaSelecionada = (IRevistaDeMarcas)ViewState[CHAVE_REVISTA_SELECIONADA];
+                var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDeMarcas>();
 
                 filtro.NumeroDoProcesso = txtProcesso.Text;
                 filtro.UF = ctrlUF.Sigla != null ? ctrlUF.Sigla.Sigla : null;
@@ -469,18 +372,15 @@ namespace MP.Client.MP
                 else
                 {
                     // leitura .xml
-
                     var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
 
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                    {
                         listaDeProcessosDaRevista = servico.ObtenhaResultadoDaConsultaPorFiltroXML(xmlRevista, filtro);
-                    }
 
                     if (listaDeProcessosDaRevista.Count > 0)
                     {
                         // adicionar viewstate para filtro CHAVE_PROCESSOS_REUSLTADO_FILTRO
-                        CarregaGridFiltros(listaDeProcessosDaRevista); 
+                        CarregaGridFiltros(listaDeProcessosDaRevista);
                         txtQuantdadeDeProcessos.Text = listaDeProcessosDaRevista.Count.ToString();
                     }
                 }
@@ -498,13 +398,9 @@ namespace MP.Client.MP
         protected void gridRevistaProcessos_ItemCommand(object sender, GridCommandEventArgs e)
         {
             long id = 0;
-             var IndiceSelecionado = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-            {
                 id = Convert.ToInt64((e.Item.Cells[3].Text));
-                IndiceSelecionado = e.Item.ItemIndex;
-            }
 
             if (e.CommandName == "Modificar")
             {
@@ -529,12 +425,8 @@ namespace MP.Client.MP
                 var gridItem = (GridDataItem)e.Item;
 
                 foreach (GridColumn column in gridRevistaProcessos.MasterTableView.RenderColumns)
-                {
                     if ((column is GridButtonColumn))
-                    {
                         gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
-                    }
-                }
             }
         }
 
@@ -560,9 +452,7 @@ namespace MP.Client.MP
             var IndiceSelecionado = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-            {
                 IndiceSelecionado = e.Item.ItemIndex;
-            }
 
             if (e.CommandName == "DetalharProcesso")
             {
@@ -582,12 +472,8 @@ namespace MP.Client.MP
                 var gridItem = (GridDataItem)e.Item;
 
                 foreach (GridColumn column in grdFiltros.MasterTableView.RenderColumns)
-                {
                     if ((column is GridButtonColumn))
-                    {
                         gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
-                    }
-                }
             }
         }
 

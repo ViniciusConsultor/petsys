@@ -10,6 +10,7 @@ namespace MP.Interfaces.Mapeadores
     {
         IDespachoDeMarcas obtenhaDespachoDeMarcasPeloId(long idDespachoDeMarcas);
         IList<IDespachoDeMarcas> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros);
+        IDespachoDeMarcas ObtenhaDespachoPorCodigo(string codigo);
         void Inserir(IDespachoDeMarcas despachoDeMarcas);
         void Modificar(IDespachoDeMarcas despachoDeMarcas);
         void Excluir(long idDespachoDeMarcas);

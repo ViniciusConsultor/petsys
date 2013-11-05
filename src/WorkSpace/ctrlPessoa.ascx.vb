@@ -160,7 +160,10 @@ Partial Public Class ctrlPessoa
     Protected Sub cboPessoaFisica_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboPessoaFisica.SelectedIndexChanged
         Dim Pessoa As IPessoa
 
-        If String.IsNullOrEmpty(DirectCast(o, RadComboBox).SelectedValue) Then Exit Sub
+        If String.IsNullOrEmpty(DirectCast(o, RadComboBox).SelectedValue) Then
+            PessoaSelecionada = Nothing
+            Exit Sub
+        End If
 
         Using Servico As IServicoDePessoaFisica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaFisica)()
             Pessoa = Servico.ObtenhaPessoa(CLng(DirectCast(o, RadComboBox).SelectedValue))
@@ -268,7 +271,10 @@ Partial Public Class ctrlPessoa
     Private Sub cboPessoaJuridica_SelectedIndexChanged(ByVal o As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboPessoaJuridica.SelectedIndexChanged
         Dim Pessoa As IPessoa
 
-        If String.IsNullOrEmpty(DirectCast(o, RadComboBox).SelectedValue) Then Exit Sub
+        If String.IsNullOrEmpty(DirectCast(o, RadComboBox).SelectedValue) Then
+            PessoaSelecionada = Nothing
+            Exit Sub
+        End If
 
         Using Servico As IServicoDePessoaJuridica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaJuridica)()
             Pessoa = Servico.ObtenhaPessoa(CLng(DirectCast(o, RadComboBox).SelectedValue))

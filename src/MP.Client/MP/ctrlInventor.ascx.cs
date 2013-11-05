@@ -26,7 +26,6 @@ namespace MP.Client.MP
         public void Inicializa()
         {
             LimparControle();
-            CarregueCombo();
         }
 
         private void LimparControle()
@@ -36,33 +35,14 @@ namespace MP.Client.MP
             cboInventor.ClearSelection();
             BotaoNovoEhVisivel = false;
         }
-
-        private void CarregueCombo()
-        {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
-            {
-                cboInventor.Items.Clear();
-
-                foreach (IInventor inventor in servico.ObtenhaPorNomeComoFiltro(string.Empty, 50))
-                {
-                    var item = new RadComboBoxItem(inventor.Pessoa.Nome, inventor.Pessoa.ID.ToString());
-
-                    item.Attributes.Add("DataDoCadastro", inventor.DataDoCadastro.ToString());
-                    item.Attributes.Add("InformacoesAdicionais", inventor.InformacoesAdicionais);
-
-                    cboInventor.Items.Add(item);
-                    item.DataBind();
-                }
-            }
-        }
-
+        
         protected void cboInventor_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
             {
                 cboInventor.Items.Clear();
 
-                foreach (IInventor inventor in servico.ObtenhaPorNomeComoFiltro(e.Text, 50))
+                foreach (var inventor in servico.ObtenhaPorNomeComoFiltro(e.Text, 50))
                 {
                     var item = new RadComboBoxItem(inventor.Pessoa.Nome, inventor.Pessoa.ID.ToString());
 
@@ -82,7 +62,10 @@ namespace MP.Client.MP
                 IInventor inventor = null;
 
                 if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
+                {
+                    LimparControle();
                     return;
+                }
 
                 var codigoSelecionado = Convert.ToInt64(((RadComboBox)sender).SelectedValue);
                 inventor = servico.Obtenha(codigoSelecionado);
@@ -117,7 +100,6 @@ namespace MP.Client.MP
 
         protected override void OnPreRender(EventArgs e)
         {
-
             var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
 
             if (btnNovo.Visible)

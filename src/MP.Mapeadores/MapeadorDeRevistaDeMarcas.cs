@@ -17,13 +17,13 @@ namespace MP.Mapeadores
     {
         public void InserirDadosRevistaXml(IList<IRevistaDeMarcas> listaDeProcessosExistentesNaRevista)
         {
-            var sql = new StringBuilder();
             IDBHelper DBHelper;
 
             DBHelper = ServerUtils.getDBHelper();
 
             foreach (var processoDaRevistaDeMarca in listaDeProcessosExistentesNaRevista)
             {
+                var sql = new StringBuilder();
                 processoDaRevistaDeMarca.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
 
                 sql.Append("INSERT INTO MP_REVISTA_MARCAS (");
@@ -75,16 +75,13 @@ namespace MP.Mapeadores
 
             sql.Append("UPDATE MP_REVISTA_MARCAS SET ");
             sql.Append(String.Concat("NUMEROREVISTAMARCAS = ", revistaDeMarcas.NumeroRevistaMarcas, " , "));
-
             sql.Append(String.Concat("DATAPUBLICACAO = ", revistaDeMarcas.DataPublicacao.ToString("yyyyMMdd"), " , "));
-
             sql.Append("PROCESSADA = " + (revistaDeMarcas.Processada ? "1, " : "0, "));
 
             if (!string.IsNullOrEmpty(revistaDeMarcas.ExtensaoArquivo))
                 sql.Append(String.Concat("EXTENSAOARQUIVO = '", revistaDeMarcas.ExtensaoArquivo, "' "));
 
             sql.Append(" WHERE IDREVISTAMARCAS = " + revistaDeMarcas.IdRevistaMarcas.Value);
-
         }
 
         public IList<IRevistaDeMarcas> ObtenhaRevistasAProcessar(int quantidadeDeRegistros)
@@ -107,9 +104,7 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                    {
                         revistas.Add(MontaRevistaDeMarcas(leitor));
-                    }
                 }
                 finally
                 {
@@ -127,9 +122,7 @@ namespace MP.Mapeadores
             //revistaDeMarcas.IdRevistaMarcas = UtilidadesDePersistencia.GetValorLong(leitor, "IdRevistaMarcas");
 
             revistaDeMarcas.NumeroRevistaMarcas = UtilidadesDePersistencia.getValorInteger(leitor, "NumeroRevistaMarcas");
-
             revistaDeMarcas.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").Value;
-
             revistaDeMarcas.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "Processada");
 
              if (!UtilidadesDePersistencia.EhNulo(leitor, "ExtensaoArquivo"))
@@ -158,9 +151,7 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                    {
                         revistas.Add(MontaRevistaDeMarcas(leitor));
-                    }
                 }
                 finally
                 {

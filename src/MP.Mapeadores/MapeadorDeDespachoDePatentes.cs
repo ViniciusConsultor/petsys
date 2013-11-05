@@ -81,7 +81,7 @@ namespace MP.Mapeadores
 
             if (!string.IsNullOrEmpty(codigo))
             {
-                sql.Append(string.Concat("WHERE CODIGO = '", UtilidadesDePersistencia.FiltraApostrofe(codigo), "'"));
+                sql.Append(string.Concat("WHERE CODIGO = '%", UtilidadesDePersistencia.FiltraApostrofe(codigo), "%'"));
             }
 
             sql.Append(" ORDER BY CODIGO");

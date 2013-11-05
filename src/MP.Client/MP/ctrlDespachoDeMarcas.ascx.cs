@@ -70,9 +70,7 @@ namespace MP.Client.MP
             IList<IDespachoDeMarcas> listaDespachoDeMarcas = new List<IDespachoDeMarcas>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
-            {
                 listaDespachoDeMarcas = servico.ObtenhaPorCodigoDoDespachoComoFiltro(e.Text, 50);
-            }
             
             if (listaDespachoDeMarcas.Count > 0)
             {
@@ -92,19 +90,18 @@ namespace MP.Client.MP
             IDespachoDeMarcas despachoDeMarcas = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
-                return;
-
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
             {
-                despachoDeMarcas = servico.obtenhaDespachoDeMarcasPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
+                LimparControle();
+                return;
             }
-
+                
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                despachoDeMarcas = servico.obtenhaDespachoDeMarcasPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
+            
             DespachoDeMarcasSelecionada = despachoDeMarcas;
 
             if (DespachoDeMarcasFoiSelecionada != null)
-            {
                 DespachoDeMarcasFoiSelecionada(despachoDeMarcas);
-            }
         }
 
         public bool AutoPostBack

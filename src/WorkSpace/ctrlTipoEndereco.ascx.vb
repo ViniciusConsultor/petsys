@@ -88,7 +88,10 @@ Public Class ctrlTipoEndereco
         Dim Valor As String
 
         Valor = DirectCast(sender, RadComboBox).SelectedValue
-        If String.IsNullOrEmpty(Valor) Then Return
+        If String.IsNullOrEmpty(Valor) Then
+            TipoSelecionado = Nothing
+            Exit Sub
+        End If
 
         Using Servico As IServicoDeTipoDeEndereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeTipoDeEndereco)()
             Tipo = Servico.Obtenha(CLng(Valor))

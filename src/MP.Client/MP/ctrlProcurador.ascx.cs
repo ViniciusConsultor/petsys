@@ -56,7 +56,10 @@ namespace MP.Client.MP
                 IProcurador procurador = null;
 
                 if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
+                {
+                    LimparControle();
                     return;
+                }
 
                 var id = Convert.ToInt64(((RadComboBox)sender).SelectedValue);
                 procurador = servico.ObtenhaProcurador(id);
@@ -74,7 +77,7 @@ namespace MP.Client.MP
             {
                 cboProcurador.Items.Clear();
 
-                foreach (IProcurador procurador in servico.ObtenhaProcuradorPeloNome(e.Text, 50))
+                foreach (var procurador in servico.ObtenhaProcuradorPeloNome(e.Text, 50))
                 {
                     var item = new RadComboBoxItem(procurador.Pessoa.Nome, procurador.Pessoa.ID.ToString());
 
@@ -85,6 +88,7 @@ namespace MP.Client.MP
                     item.DataBind();
                 }
             }
+
         }
 
         public bool EnableLoadOnDemand

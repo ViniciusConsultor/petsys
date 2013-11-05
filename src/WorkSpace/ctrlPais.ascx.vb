@@ -39,7 +39,7 @@ Public Class ctrlPais
         Valor = DirectCast(o, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then
             PaisSelecionado = Nothing
-            Return
+            Exit Sub
         End If
 
         Using Servico As IServicoDePais = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePais)()
