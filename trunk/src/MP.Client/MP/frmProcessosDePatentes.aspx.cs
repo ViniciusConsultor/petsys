@@ -121,7 +121,7 @@ namespace MP.Client.MP
         {
             cboTipoDeFiltro.Items.Clear();
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo", "1"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de entrada", "2"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de cadastro", "2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Título da patente", "3"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza", "4"));
         }
@@ -137,7 +137,7 @@ namespace MP.Client.MP
                     pnlProcesso.Visible = true;
                     break;
                 case "2":
-                    pnlDataDeEntrada.Visible = true;
+                    pnlDataDeCadastro.Visible = true;
                     break;
                 case "3":
                     pnlTituloPatente.Visible = true;
@@ -152,12 +152,12 @@ namespace MP.Client.MP
         private void EscondaTodosOsPanelsDeFiltro()
         {
             pnlProcesso.Visible = false;
-            pnlDataDeEntrada.Visible = false;
+            pnlDataDeCadastro.Visible = false;
             pnlTituloPatente.Visible = false;
             pnlNatureza.Visible = false;
         }
         
-        protected void btnPesquisarPorDataDeEntrada_OnClick(object sender, ImageClickEventArgs e)
+        protected void btnPesquisarPorDataDeCadastro_OnClick(object sender, ImageClickEventArgs e)
         {
             if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
             {
@@ -165,16 +165,16 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (!txtDataDeEntrada.SelectedDate.HasValue)
+            if (!txtDataDeCadastro.SelectedDate.HasValue)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe uma data de entrada."), false);
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe uma data."), false);
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorDataDeEntrada>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorDataDeCadastro>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-            filtro.ValorDoFiltro = txtDataDeEntrada.SelectedDate.Value.ToString("yyyyMMdd");
+            filtro.ValorDoFiltro = txtDataDeCadastro.SelectedDate.Value.ToString("yyyyMMdd");
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
         }

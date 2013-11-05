@@ -6,7 +6,7 @@ using Compartilhados.Interfaces.Core.Negocio;
 
 namespace MP.Interfaces.Negocio.Filtros.Patentes
 {
-    public interface IFiltroPatentePorDataDeEntrada :IFiltro
+    public interface IFiltroPatentePorDataDeCadastro : IFiltro
     {
     }
 }

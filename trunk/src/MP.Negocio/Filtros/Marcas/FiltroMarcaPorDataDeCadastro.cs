@@ -8,7 +8,7 @@ using MP.Interfaces.Negocio.Filtros.Marcas;
 namespace MP.Negocio.Filtros.Marcas
 {
     [Serializable]
-    public class FiltroMarcaPorDataDeEntrada : Filtro, IFiltroMarcaPorDataDeEntrada
+    public class FiltroMarcaPorDataDeCadastro : Filtro, IFiltroMarcaPorDataDeCadastro
     {
         public override string ObtenhaQuery()
         {

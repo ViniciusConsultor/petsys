@@ -103,32 +103,90 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label8" runat="server" Text="Despacho"></asp:Label>
+                                <td class="th3" colspan="2">
+                                    <asp:Label ID="Label13" runat="server" Text="Despacho"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="campodependente">
+                                    <asp:Label ID="Label8" runat="server" Text="Código do despacho"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <uc2:ctrlDespachoDeMarcas ID="ctrlDespacho" runat="server" />
                                 </td>
                             </tr>
                             <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label5" runat="server" Text="Texto complementar do despacho"></asp:Label>
+                                <td class="campodependente">
+                                    <asp:Label ID="Label14" runat="server" Text="Descrição do despacho"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtTextoComplementarDoDespacho" runat="server"  MaxLength="4000" TextMode="MultiLine"
+                                    <telerik:RadTextBox ID="txtDescricaoDoDespacho" runat="server" MaxLength="4000" TextMode="MultiLine"
                                         Rows="5" Width="450px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <img alt="" src="../imagens/vazio.gif" />
+                                    <br />
                                 </td>
-                                
+                            </tr>
+                            <tr>
+                                <td class="campodependente">
+                                    <asp:Label ID="Label15" runat="server" Text="Situação do processo"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtSituacaoDoProcesso" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                        Rows="5" Width="450px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="campodependente">
+                                    <asp:Label ID="Label16" runat="server" Text="Providência"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtProvidencia" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                        Rows="5" Width="450px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="campodependente">
+                                    <asp:Label ID="Label17" runat="server" Text="Prazo para a providência (em dias)"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtPrazoParaProvidencia" runat="server" Width="87px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="campodependente">
+                                    <asp:Label ID="Label5" runat="server" Text="Texto complementar do despacho"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtTextoComplementarDoDespacho" runat="server" MaxLength="4000"
+                                        TextMode="MultiLine" Rows="5" Width="450px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                </td>
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label11" runat="server" Text="Apostila" ></asp:Label>
+                                    <asp:Label ID="Label11" runat="server" Text="Apostila"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtApostila" runat="server" MaxLength="4000" TextMode="MultiLine"

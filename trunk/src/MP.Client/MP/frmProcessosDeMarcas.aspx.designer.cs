@@ -166,13 +166,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorCliente;
         
         /// <summary>
-        /// pnlDataDeEntrada control.
+        /// pnlDataDeCadastro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlDataDeEntrada;
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlDataDeCadastro;
         
         /// <summary>
         /// Label4 control.
@@ -184,22 +184,22 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// txtDataDeEntrada control.
+        /// txtDataDeCadastro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtDataDeEntrada;
+        protected global::Telerik.Web.UI.RadDatePicker txtDataDeCadastro;
         
         /// <summary>
-        /// btnPesquisarPorDataDeEntrada control.
+        /// btnPesquisarPorDataDeCadastro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorDataDeEntrada;
+        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorDataDeCadastro;
         
         /// <summary>
         /// pnlMarca control.

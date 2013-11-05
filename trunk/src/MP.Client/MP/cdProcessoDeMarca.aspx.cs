@@ -13,7 +13,7 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class cdProcessoDeMarca : System.Web.UI.Page
+    public partial class cdProcessoDeMarca : SuperPagina
     {
         private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCESSO_DE_MARCA";
         private const string CHAVE_ID = "CHAVE_ID_PROCESSO_DE_MARCA";
@@ -24,8 +24,21 @@ namespace MP.Client.MP
             Modifica,
         }
 
+        private void MostreDespacho(IDespachoDeMarcas despacho)
+        {
+            ctrlDespacho.DespachoDeMarcasSelecionada = despacho;
+            ctrlDespacho.CodigoDespacho = despacho.CodigoDespacho;
+
+            txtProvidencia.Text = despacho.Providencia;
+            txtPrazoParaProvidencia.Text = despacho.PrazoParaProvidenciaEmDias.ToString();
+            txtSituacaoDoProcesso.Text = despacho.SituacaoProcesso;
+            txtDescricaoDoDespacho.Text = despacho.DescricaoDespacho;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            ctrlDespacho.DespachoDeMarcasFoiSelecionada += MostreDespacho;
+            
             ctrlMarcas1.BotaoNovoEhVisivel = true;
             ctrlDespacho.BotaoNovoEhVisivel = true;
             ctrlProcurador.BotaoNovoEhVisivel = true;
@@ -84,11 +97,8 @@ namespace MP.Client.MP
             rblProcessoEhDeTerceiro.SelectedValue = processoDeMarca.ProcessoEhDeTerceiro ? "1" : "0";
 
             if (processoDeMarca.Despacho != null)
-            {
-                ctrlDespacho.DespachoDeMarcasSelecionada = processoDeMarca.Despacho;
-                ctrlDespacho.CodigoDespacho = processoDeMarca.Despacho.CodigoDespacho.ToString();
-            }
-
+                MostreDespacho(processoDeMarca.Despacho);
+        
             txtTextoComplementarDoDespacho.Text = processoDeMarca.TextoComplementarDoDespacho;
             
             if (processoDeMarca.Procurador != null)
@@ -211,6 +221,16 @@ namespace MP.Client.MP
                     btnSalvar_Click();
                     break;
             }
+        }
+
+        protected override string ObtenhaIdFuncao()
+        {
+            return "";
+        }
+
+        protected override RadToolBar ObtenhaBarraDeFerramentas()
+        {
+            return null;
         }
     }
 }

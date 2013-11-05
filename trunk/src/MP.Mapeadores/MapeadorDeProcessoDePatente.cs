@@ -25,14 +25,12 @@ namespace MP.Mapeadores
             IDBHelper DBHelper;
 
             DBHelper = ServerUtils.getDBHelper();
-
             processoDePatente.IdProcessoDePatente = GeradorDeID.getInstancia().getProximoID();
-
-
+            
             sql.Append("INSERT INTO MP_PROCESSOPATENTE (");
             sql.Append("IDPROCESSOPATENTE, IDPATENTE, PROCESSO,");
             sql.Append("DATADECADASTRO, DATADEPUBLICACAO,  DATADEDEPOSITO, DATADECONCESSAO, DATADEEXAME, PROCESSODETERCEIRO, ");
-            sql.Append("IDPROCURADOR, EHESTRANGEIRO, NUMEROPCT, NUMEROWO, DATAPUBLICACAOPCT, DATADEPOSITOPCT, IDDESPACHO, ATIVO)");
+            sql.Append("IDPROCURADOR, EHESTRANGEIRO, NUMEROPCT, NUMEROWO, DATAPUBLICACAOPCT, DATADEPOSITOPCT, IDDESPACHO, IDPASTA, ATIVO)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(processoDePatente.IdProcessoDePatente.Value, ", "));
             sql.Append(String.Concat(processoDePatente.Patente.Identificador, ", "));
@@ -83,10 +81,13 @@ namespace MP.Mapeadores
                 sql.Append("NULL, NULL, NULL, NULL, ");
 
 
-            if (processoDePatente.Despacho != null)
-                sql.Append(string.Concat(processoDePatente.Despacho.IdDespachoDePatente.Value, ", "));
-            else
-                sql.Append("NULL, ");
+            sql.Append(processoDePatente.Despacho != null
+                           ? string.Concat(processoDePatente.Despacho.IdDespachoDePatente.Value, ", ")
+                           : "NULL, ");
+
+            sql.Append(processoDePatente.Pasta != null
+                           ? string.Concat(processoDePatente.Pasta.ID.Value.ToString(), ", ")
+                           : "NULL, ");
 
             sql.Append(processoDePatente.Ativo ? "'1')" : "'0')");
             
@@ -145,12 +146,15 @@ namespace MP.Mapeadores
 
             else
                 sql.Append("NUMEROPCT=NULL, NUMEROWO=NULL, DATAPUBLICACAOPCT=NULL, DATADEPOSITOPCT=NULL, ");
-            
 
-             if (processoDePatente.Despacho != null)
-                sql.Append(string.Concat("IDDESPACHO=",processoDePatente.Despacho.IdDespachoDePatente.Value, ", "));
-            else
-                sql.Append("IDDESPACHO=NULL, ");
+
+            sql.Append(processoDePatente.Despacho != null
+                           ? string.Concat("IDDESPACHO=", processoDePatente.Despacho.IdDespachoDePatente.Value, ", ")
+                           : "IDDESPACHO=NULL, ");
+
+            sql.Append(processoDePatente.Pasta != null
+                           ? string.Concat("IDPASTA = ", processoDePatente.Pasta.ID.Value.ToString(), ", ")
+                           : "IDPASTA = NULL, ");
 
             sql.Append("ATIVO = " + (processoDePatente.Ativo ? "1" : "0"));
             sql.Append(" WHERE IDPROCESSOPATENTE = " + processoDePatente.IdProcessoDePatente);
@@ -233,6 +237,14 @@ namespace MP.Mapeadores
             if (!UtilidadesDePersistencia.EhNulo(leitor,"IDDESPACHO"))
                 processo.Despacho = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IDespachoDePatentesLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDDESPACHO"));
 
+            if (!UtilidadesDePersistencia.EhNulo(leitor,"IDPASTA"))
+            {
+                var pasta = FabricaGenerica.GetInstancia().CrieObjeto<IPasta>();
+                pasta.ID = UtilidadesDePersistencia.GetValorLong(leitor, "IDPASTA");
+                pasta.Nome = UtilidadesDePersistencia.GetValorString(leitor, "NOMEPASTA");
+                processo.Pasta = pasta;
+            }
+            
             processo.Ativo = UtilidadesDePersistencia.GetValorBooleano(leitor, "ATIVO");
             
             return processo;

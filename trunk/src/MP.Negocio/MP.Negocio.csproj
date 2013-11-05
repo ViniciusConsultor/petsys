@@ -66,14 +66,14 @@
     <Compile Include="Filtros\Marcas\FiltroLeituraDeRevistaDeMarcas.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorApresentacao.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorCliente.cs" />
-    <Compile Include="Filtros\Marcas\FiltroMarcaPorDataDeEntrada.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorDataDeCadastro.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorID.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorMarca.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorNatureza.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorNCL.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorProcesso.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaSemFiltro.cs" />
-    <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeEntrada.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeCadastro.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorID.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorNatureza.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorProcesso.cs" />

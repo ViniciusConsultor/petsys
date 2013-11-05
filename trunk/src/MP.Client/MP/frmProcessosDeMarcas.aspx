@@ -65,15 +65,15 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorCliente_OnClick_" />
                                 </td>
                             </tr>
-                            <tr runat="server" id="pnlDataDeEntrada">
+                            <tr runat="server" id="pnlDataDeCadastro">
                                 <td class="th3">
-                                    <asp:Label ID="Label4" runat="server" Text="Data de entrada"></asp:Label>
+                                    <asp:Label ID="Label4" runat="server" Text="Data de cadastro"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadDatePicker ID="txtDataDeEntrada" runat="server">
+                                    <telerik:RadDatePicker ID="txtDataDeCadastro" runat="server">
                                     </telerik:RadDatePicker>
-                                    <asp:ImageButton ID="btnPesquisarPorDataDeEntrada" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorDataDeEntrada_OnClick" />
+                                    <asp:ImageButton ID="btnPesquisarPorDataDeCadastro" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorDataDeCadastro_OnClick" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlMarca">
