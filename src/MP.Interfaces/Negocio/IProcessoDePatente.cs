@@ -22,5 +22,6 @@ namespace MP.Interfaces.Negocio
         bool Ativo { get; set; }
         IPCT PCT { get; set; }
         IDespachoDePatentes Despacho { get; set; }
+        IPasta Pasta { get; set; }
     }
 }

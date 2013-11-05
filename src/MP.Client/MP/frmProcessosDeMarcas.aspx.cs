@@ -82,7 +82,7 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Clear();
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Apresentação", "1"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente", "2"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de entrada", "3"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de cadastro", "3"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Marca", "4"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza", "5"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("NCL", "6"));
@@ -103,7 +103,7 @@ namespace MP.Client.MP
                     pnlCliente.Visible = true;
                     break;
                 case "3":
-                    pnlDataDeEntrada.Visible = true;
+                    pnlDataDeCadastro.Visible = true;
                     break;
                 case "4":
                     pnlMarca.Visible = true;
@@ -125,7 +125,7 @@ namespace MP.Client.MP
         {
             pnlApresentacao.Visible = false;
             pnlCliente.Visible = false;
-            pnlDataDeEntrada.Visible = false;
+            pnlDataDeCadastro.Visible = false;
             pnlMarca.Visible = false;
             pnlNatureza.Visible = false;
             pnlNCL.Visible = false;
@@ -179,7 +179,7 @@ namespace MP.Client.MP
            
         }
 
-        protected void btnPesquisarPorDataDeEntrada_OnClick(object sender, ImageClickEventArgs e)
+        protected void btnPesquisarPorDataDeCadastro_OnClick(object sender, ImageClickEventArgs e)
         {
             if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
             {
@@ -187,16 +187,16 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (!txtDataDeEntrada.SelectedDate.HasValue)
+            if (!txtDataDeCadastro.SelectedDate.HasValue)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe uma data de entrada."), false);
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe uma data."), false);
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorDataDeEntrada>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorDataDeCadastro>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-            filtro.ValorDoFiltro = txtDataDeEntrada.SelectedDate.Value.ToString("yyyyMMdd");
+            filtro.ValorDoFiltro = txtDataDeCadastro.SelectedDate.Value.ToString("yyyyMMdd");
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }

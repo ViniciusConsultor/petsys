@@ -15,7 +15,7 @@ namespace MP.Client.MP
 {
     public partial class ctrlDespachoDeMarcas : System.Web.UI.UserControl
     {
-        public static event DespachoDeMarcasFoiSelecionadaEventHandler DespachoDeMarcasFoiSelecionada;
+        public event DespachoDeMarcasFoiSelecionadaEventHandler DespachoDeMarcasFoiSelecionada;
         public delegate void DespachoDeMarcasFoiSelecionadaEventHandler(IDespachoDeMarcas despachoDeMarcas);
 
         protected void Page_Load(object sender, EventArgs e)

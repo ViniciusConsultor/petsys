@@ -5,6 +5,7 @@
 <%@ Register Src="ctrlPatente.ascx" TagName="ctrlPatente" TagPrefix="uc1" %>
 <%@ Register Src="ctrlProcurador.ascx" TagName="ctrlProcurador" TagPrefix="uc2" %>
 <%@ Register Src="ctrlDespachoDePatentes.ascx" TagName="ctrlDespachoDePatentes" TagPrefix="uc3" %>
+<%@ Register Src="ctrlPasta.ascx" TagName="ctrlPasta" TagPrefix="uc4" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -106,7 +107,7 @@
                                     <asp:Label ID="Label13" runat="server" Text="Despacho"></asp:Label>
                                 </td>
                                 <td class="td">
-                                     <uc3:ctrlDespachoDePatentes ID="ctrlDespachoDePatentes" runat="server" />
+                                    <uc3:ctrlDespachoDePatentes ID="ctrlDespachoDePatentes" runat="server" />
                                 </td>
                             </tr>
                             <tr>
@@ -135,18 +136,27 @@
                                     </asp:RadioButtonList>
                                 </td>
                             </tr>
-                             <tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label20" runat="server" Text="Pasta"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc4:ctrlPasta ID="ctrlPasta" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label19" runat="server" Text="É PCT?"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <asp:RadioButtonList ID="rblEHPCT" runat="server" RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="rblEHPCT_OnSelectedIndexChanged" >
+                                    <asp:RadioButtonList ID="rblEHPCT" runat="server" RepeatDirection="Horizontal" AutoPostBack="true"
+                                        OnSelectedIndexChanged="rblEHPCT_OnSelectedIndexChanged">
                                     </asp:RadioButtonList>
                                 </td>
                             </tr>
                         </table>
                         <table class="tabela" id="pnlPCT" runat="server">
-                            <tr >
+                            <tr>
                                 <td class="th3" colspan="2">
                                     <asp:Label ID="Label14" runat="server" Text="Informações do PCT"></asp:Label>
                                 </td>
@@ -165,7 +175,7 @@
                                     <asp:Label ID="Label16" runat="server" Text="Data do depósito"></asp:Label>
                                 </td>
                                 <td class="td">
-                                     <telerik:RadDatePicker ID="txtDataDoDepositoPCT" runat="server">
+                                    <telerik:RadDatePicker ID="txtDataDoDepositoPCT" runat="server">
                                     </telerik:RadDatePicker>
                                 </td>
                             </tr>
@@ -183,10 +193,11 @@
                                     <asp:Label ID="Label18" runat="server" Text="Data da publicação"></asp:Label>
                                 </td>
                                 <td class="td">
-                                     <telerik:RadDatePicker ID="txtDataDaPublicacaoPCT" runat="server">
+                                    <telerik:RadDatePicker ID="txtDataDaPublicacaoPCT" runat="server">
                                     </telerik:RadDatePicker>
                                 </td>
                             </tr>
+                           
                         </table>
                     </asp:Panel>
                 </ContentTemplate>

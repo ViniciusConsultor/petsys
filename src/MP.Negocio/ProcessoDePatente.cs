@@ -25,5 +25,6 @@ namespace MP.Negocio
         public bool Ativo {get; set; }
         public IPCT PCT { get; set; }
         public IDespachoDePatentes Despacho { get; set; }
+        public IPasta Pasta { get; set; }
     }
 }

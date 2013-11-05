@@ -92,6 +92,12 @@ namespace MP.Client.MP
             rblProcessoEhEstrangeiro.SelectedValue = processoDePatente.ProcessoEhEstrangeiro ? "1" : "0";
             rblEstaAtivo.SelectedValue = processoDePatente.Ativo ? "1" : "0";
 
+            if (processoDePatente.Pasta != null)
+            {
+                ctrlPasta.PastaSelecionada = processoDePatente.Pasta;
+                ctrlPasta.Nome = processoDePatente.Pasta.Nome;
+            }
+
 
             if (processoDePatente.Despacho != null)
             {
@@ -119,10 +125,12 @@ namespace MP.Client.MP
             ctrlPatente1.Inicializa();
             ctrlProcurador.Inicializa();
             ctrlDespachoDePatentes.Inicializa();
+            ctrlPasta.Inicializa();
 
             ctrlPatente1.BotaoNovoEhVisivel = true;
             ctrlProcurador.BotaoNovoEhVisivel = true;
             ctrlDespachoDePatentes.BotaoNovoEhVisivel = true;
+            ctrlPasta.BotaoNovoEhVisivel = true;
 
             rblProcessoEhDeTerceiro.Items.Clear();
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Não", "0"));
@@ -178,6 +186,7 @@ namespace MP.Client.MP
             processoDePatente.ProcessoEhEstrangeiro = rblProcessoEhEstrangeiro.SelectedValue != "0";
             processoDePatente.Ativo = rblEstaAtivo.SelectedValue != "0";
             processoDePatente.Despacho = ctrlDespachoDePatentes.DespachoDePatentesSelecionada;
+            processoDePatente.Pasta = ctrlPasta.PastaSelecionada;
 
             if (rblEHPCT.SelectedValue != "0")
             {
