@@ -78,7 +78,10 @@ namespace MP.Client.MP
             IPasta pasta = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
+            {
+                PastaSelecionada = null;
                 return;
+            }
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePasta>())
                 pasta = servico.obtenha(Convert.ToInt64(((RadComboBox)sender).SelectedValue));

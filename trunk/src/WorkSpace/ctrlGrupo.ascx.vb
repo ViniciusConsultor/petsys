@@ -61,7 +61,10 @@ Partial Public Class ctrlGrupo
         Dim Valor As String
 
         Valor = DirectCast(o, RadComboBox).SelectedValue
-        If String.IsNullOrEmpty(Valor) Then Return
+        If String.IsNullOrEmpty(Valor) Then
+            GrupoSelecionado = Nothing
+            Exit Sub
+        End If
 
         Using Servico As IServicoDeGrupo = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeGrupo)()
             Grupo = Servico.ObtenhaGrupo(CLng(Valor))

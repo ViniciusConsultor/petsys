@@ -87,9 +87,7 @@ namespace MP.Client.MP
             IList<IMarcas> listaDeMarcas = new List<IMarcas>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
-            {
                 listaDeMarcas = servico.obtenhaMarcasPelaDescricaoComoFiltro(string.Empty, 50);
-            }
 
             if (listaDeMarcas.Count > 0)
             {
@@ -117,19 +115,18 @@ namespace MP.Client.MP
             IMarcas marca = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
-                return;
+            {
+                LimparControle();
+                return;                
+            }
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
-            {
                 marca = servico.obtenhaMarcasPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
-            }
 
             MarcaSelecionada = marca;
 
             if (MarcaFoiSelecionada != null)
-            {
                 MarcaFoiSelecionada(marca);
-            }
         }
 
         public bool AutoPostBack
@@ -149,7 +146,6 @@ namespace MP.Client.MP
         
         protected override void OnPreRender(EventArgs e)
         {
-
             var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
 
             if (btnNovo.Visible)

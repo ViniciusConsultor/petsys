@@ -40,7 +40,10 @@ namespace MP.Client.MP
                 IPatente patente = null;
 
                 if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
+                {
+                    LimparControle();
                     return;
+                }
 
                 int codigoSelecionado = int.Parse(((RadComboBox)sender).SelectedValue);
                 patente = servico.ObtenhaPatente(codigoSelecionado);

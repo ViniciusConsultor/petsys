@@ -50,38 +50,38 @@ namespace MP.Mapeadores
                         Apresentacao.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Apresentacao"));
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaClasse"))
-                    marca.CodigoDaClasse = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaClasse");
+                        marca.CodigoDaClasse = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaClasse");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaSubClasse1"))
-                    marca.CodigoDaSubClasse1 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse1");
+                        marca.CodigoDaSubClasse1 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse1");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaSubClasse2"))
-                    marca.CodigoDaSubClasse2 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse2");
+                        marca.CodigoDaSubClasse2 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse2");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "CodigoDaSubClasse3"))
-                    marca.CodigoDaSubClasse3 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse3");
+                        marca.CodigoDaSubClasse3 = UtilidadesDePersistencia.getValorInteger(leitor, "CodigoDaSubClasse3");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "DescricaoDaMarca"))
-                    marca.DescricaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoDaMarca");
+                        marca.DescricaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "DescricaoDaMarca");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "EspecificacaoDeProdutosEServicos"))
-                    marca.EspecificacaoDeProdutosEServicos = UtilidadesDePersistencia.GetValorString(leitor, "EspecificacaoDeProdutosEServicos");
+                        marca.EspecificacaoDeProdutosEServicos = UtilidadesDePersistencia.GetValorString(leitor, "EspecificacaoDeProdutosEServicos");
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "ImagemDaMarca"))
-                    marca.ImagemDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ImagemDaMarca");
+                        marca.ImagemDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ImagemDaMarca");
 
                     marca.Natureza =
                         NaturezaDeMarca.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Natureza"));
 
                     if (!UtilidadesDePersistencia.EhNulo(leitor, "ObservacaoDaMarca"))
-                    marca.ObservacaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ObservacaoDaMarca");
+                        marca.ObservacaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "ObservacaoDaMarca");
 
                     var cliente =
                         FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(
                             UtilidadesDePersistencia.GetValorLong(leitor, "Cliente"));
 
                     marca.Cliente = cliente;
-                    
+
                     listaDeMarcas.Add(marca);
                 }
             }
@@ -107,7 +107,7 @@ namespace MP.Mapeadores
 
             sql = retornaSQLSelecionaTodos();
 
-            if(!string.IsNullOrEmpty(descricaoDaMarca))
+            if (!string.IsNullOrEmpty(descricaoDaMarca))
             {
                 sql.Append(string.Concat("WHERE DescricaoDaMarca LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoDaMarca), "%' "));
             }
@@ -129,8 +129,8 @@ namespace MP.Mapeadores
             sql.Append("IMAGEM_MARCA, OBSERVACAO_MARCA, CODIGOCLASSE, CODIGOCLASSE_SUBCLASSE1, CODIGOCLASSE_SUBCLASSE2, CODIGOCLASSE_SUBCLASSE3) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ", "));
-            sql.Append(String.Concat("'",marca.NCL.Codigo, "', "));
-            sql.Append(String.Concat(marca.Apresentacao.Codigo.ToString() , ", "));
+            sql.Append(String.Concat("'", marca.NCL.Codigo, "', "));
+            sql.Append(String.Concat(marca.Apresentacao.Codigo.ToString(), ", "));
             sql.Append(String.Concat(marca.Cliente.Pessoa.ID.Value.ToString(), ", "));
             sql.Append(String.Concat(marca.Natureza.Codigo.ToString(), ", "));
             sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "', "));
@@ -145,44 +145,32 @@ namespace MP.Mapeadores
 
             DBHelper.ExecuteNonQuery(sql.ToString());
 
-            if(marca.RadicalMarcas.Count > 0)
-            InserirRadicalMarcas(marca);
+            if (marca.RadicalMarcas.Count > 0)
+                InserirRadicalMarcas(marca);
         }
 
         private void InserirRadicalMarcas(IMarcas marca)
         {
-            try
+            foreach (var radical in marca.RadicalMarcas)
             {
-                foreach (var radical in marca.RadicalMarcas)
-                {
-                    var sql = new StringBuilder();
-                    IDBHelper DBHelper;
+                var sql = new StringBuilder();
+                IDBHelper DBHelper;
 
-                    DBHelper = ServerUtils.getDBHelper();
+                DBHelper = ServerUtils.getDBHelper();
 
-                    sql.Append("INSERT INTO MP_RADICAL_MARCA (");
-                    sql.Append("IDRADICAL, DESCRICAORADICAL, CODIGONCL, IDMARCA) ");
-                    sql.Append("VALUES (");
-                    sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
-                    sql.Append(String.Concat("'", radical.DescricaoRadical, "', "));
+                sql.Append("INSERT INTO MP_RADICAL_MARCA (");
+                sql.Append("IDRADICAL, DESCRICAORADICAL, CODIGONCL, IDMARCA) ");
+                sql.Append("VALUES (");
+                sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
+                sql.Append(String.Concat("'", radical.DescricaoRadical, "', "));
 
-                    if (radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo.ToString()))
-                    {
-                        sql.Append(String.Concat("", radical.NCL.Codigo, ", "));
-                    }
-                    else
-                    {
-                        sql.Append(String.Concat("", null, ", "));
-                    }
-                    
-                    sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ") "));
+                if (radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo.ToString()))
+                    sql.Append(String.Concat("", radical.NCL.Codigo, ", "));
+                else
+                    sql.Append(String.Concat("", null, ", "));
 
-                    DBHelper.ExecuteNonQuery(sql.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ") "));
+                DBHelper.ExecuteNonQuery(sql.ToString());
             }
         }
 
@@ -212,7 +200,7 @@ namespace MP.Mapeadores
             sql.Append(marca.CodigoDaSubClasse3.HasValue
                            ? String.Concat("CODIGOCLASSE_SUBCLASSE3 = ", marca.CodigoDaSubClasse3.Value, " , ")
                            : "CODIGOCLASSE_SUBCLASSE3 = NULL, ");
-            
+
             sql.Append(String.Concat("DESCRICAO_MARCA = '", UtilidadesDePersistencia.FiltraApostrofe(marca.DescricaoDaMarca), "' , "));
             sql.Append(String.Concat("ESPECIFICACAO_PROD_SERV = '", UtilidadesDePersistencia.FiltraApostrofe(marca.EspecificacaoDeProdutosEServicos), "' , "));
             sql.Append(String.Concat("IMAGEM_MARCA = '", marca.ImagemDaMarca, "' , "));

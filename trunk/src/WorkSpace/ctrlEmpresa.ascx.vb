@@ -76,7 +76,10 @@ Public Class ctrlEmpresa
         Dim Valor As String
 
         Valor = DirectCast(o, RadComboBox).SelectedValue
-        If String.IsNullOrEmpty(Valor) Then Return
+        If String.IsNullOrEmpty(Valor) Then
+            EmpresaSelecionada = Nothing
+            Exit Sub
+        End If
 
         Using Servico As IServicoDeEmpresa = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeEmpresa)()
             Empresa = Servico.Obtenha(CLng(Valor))

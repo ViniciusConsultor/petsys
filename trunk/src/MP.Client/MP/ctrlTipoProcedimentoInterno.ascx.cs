@@ -74,9 +74,7 @@ namespace MP.Client.MP
             IList<ITipoDeProcedimentoInterno> listaProcedimentosInternos = new List<ITipoDeProcedimentoInterno>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDeProcedimentoInterno>())
-            {
                 listaProcedimentosInternos = servico.obtenhaTipoProcedimentoInternoPelaDescricao(e.Text);
-            }
 
             if (listaProcedimentosInternos.Count > 0)
             {
@@ -98,19 +96,18 @@ namespace MP.Client.MP
             ITipoDeProcedimentoInterno procedimentoInterno = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
+            {
+                LimparControle();
                 return;
+            }
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTipoDeProcedimentoInterno>())
-            {
                 procedimentoInterno = servico.obtenhaTipoProcedimentoInternoPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
-            }
 
             ProcedimentosInternosSelecionado = procedimentoInterno;
 
             if (ProcedimentosInternosFoiSelecionado != null)
-            {
                 ProcedimentosInternosFoiSelecionado(procedimentoInterno);
-            }
         }
 
         public bool AutoPostBack

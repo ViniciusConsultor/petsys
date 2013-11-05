@@ -101,7 +101,10 @@ Public Class ctrlCliente
     Protected Sub cboCliente_OnSelectedIndexChanged(ByVal sender As Object, ByVal e As RadComboBoxSelectedIndexChangedEventArgs)
         Dim Cliente As ICliente
 
-        If String.IsNullOrEmpty(DirectCast(sender, RadComboBox).SelectedValue) Then Exit Sub
+        If String.IsNullOrEmpty(DirectCast(sender, RadComboBox).SelectedValue) Then
+            ClienteSelecionado = Nothing
+            Exit Sub
+        End If
 
         Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
             Cliente = Servico.Obtenha(CLng(DirectCast(sender, RadComboBox).SelectedValue))

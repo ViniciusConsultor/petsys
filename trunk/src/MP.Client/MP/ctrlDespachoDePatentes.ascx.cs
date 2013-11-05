@@ -89,7 +89,10 @@ namespace MP.Client.MP
             IDespachoDePatentes despachoDePatentes = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
+            {
+                LimparControle();
                 return;
+            }
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
                 despachoDePatentes = servico.obtenhaDespachoDePatentesPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));

@@ -77,7 +77,7 @@ namespace MP.Mapeadores
             sql.Append("FROM MP_DESPACHO_MARCA ");
 
             if (!String.IsNullOrEmpty(codigo))
-                sql.Append(string.Concat("WHERE CODIGO_DESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(codigo), "'"));
+                sql.Append(string.Concat("WHERE CODIGO_DESPACHO = LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(codigo), "%'"));
 
             sql.Append(" ORDER BY CODIGO_DESPACHO");
 
@@ -86,6 +86,23 @@ namespace MP.Mapeadores
             listaDeDespachoDeMarcas = obtenhaDespachoDeMarcas(sql, quantidadeMaximaDeRegistros);
             
             return listaDeDespachoDeMarcas;
+        }
+
+        public IDespachoDeMarcas ObtenhaDespachoPorCodigo(string codigo)
+        {
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT IDDESPACHO, CODIGO_DESPACHO, DESCRICAO_DESPACHO, ");
+            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA ");
+            sql.Append("FROM MP_DESPACHO_MARCA ");
+            sql.Append(string.Concat("WHERE CODIGO_DESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(codigo), "'"));
+
+            IList<IDespachoDeMarcas> listaDeDespachoDeMarcas = new List<IDespachoDeMarcas>();
+            listaDeDespachoDeMarcas = obtenhaDespachoDeMarcas(sql, 1);
+
+            if (listaDeDespachoDeMarcas.Count > 0) return listaDeDespachoDeMarcas[0];
+
+            return null;
         }
 
         public void Inserir(IDespachoDeMarcas despachoDeMarcas)

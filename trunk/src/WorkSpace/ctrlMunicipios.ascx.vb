@@ -39,7 +39,7 @@ Partial Public Class ctrlMunicipios
         Valor = DirectCast(o, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then
             MunicipioSelecionado = Nothing
-            Return
+            Exit Sub
         End If
 
         Using Servico As IServicoDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeMunicipio)()

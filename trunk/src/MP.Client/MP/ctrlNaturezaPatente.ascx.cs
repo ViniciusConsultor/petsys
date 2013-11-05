@@ -96,7 +96,10 @@ namespace MP.Client.MP
             INaturezaPatente naturezaPatenteSelecionada = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
+            {
+                LimparControle();
                 return;
+            }
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeNaturezaPatente>())
                 naturezaPatenteSelecionada = servico.obtenhaNaturezaPatentePeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
