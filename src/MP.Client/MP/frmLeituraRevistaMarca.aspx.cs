@@ -267,6 +267,8 @@ namespace MP.Client.MP
                             txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
 
+                            ExibaPanelDeFiltro();
+
                         }
                         else
                         {
