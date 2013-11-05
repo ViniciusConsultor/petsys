@@ -310,6 +310,19 @@ namespace MP.Servicos.Local
             return listaDeProcessos;
         }
 
+        private void AtualizeDespachoNoProcesso(string codigoDoDespacho, IProcessoDeMarca processoDeMarca)
+        {
+            if (string.IsNullOrEmpty(codigoDoDespacho)) return;
+            
+            IDespachoDeMarcas despacho;
+
+            using (var servicoDespacho = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                despacho = servicoDespacho.ObtenhaDespachoPorCodigo(codigoDoDespacho);
+
+            if (despacho !=null)
+                processoDeMarca.Despacho = despacho;
+        }
+
         private IList<IRevistaDeMarcas> LerRevistaXMLParaProcessosExistentes(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
         {
 
@@ -442,27 +455,17 @@ namespace MP.Servicos.Local
                                 codigoDespachoDaProcessoRevista = processo.CodigoDespachoAtual;
                                 objetoRevistaASerSalvo.Apostila = processo.Apostila;
 
-                                if (processoDeMarcaExistente.Despacho != null)
+                                if (!string.IsNullOrEmpty(codigoDespachoDaProcessoRevista))
                                 {
-                                    objetoRevistaASerSalvo.CodigoDespachoAnterior = processoDeMarcaExistente.Despacho.CodigoDespacho;
-                                    processoDeMarcaExistente.Despacho.CodigoDespacho = codigoDespachoDaProcessoRevista;
+                                    var codigoDoDespachoAnterior = processoDeMarcaExistente.Despacho == null
+                                                                       ? null
+                                                                       : processoDeMarcaExistente.Despacho.
+                                                                             CodigoDespacho;
+                                    
+                                    objetoRevistaASerSalvo.CodigoDespachoAnterior = codigoDoDespachoAnterior;
+                                    AtualizeDespachoNoProcesso(codigoDespachoDaProcessoRevista, processoDeMarcaExistente);
                                 }
-                                else if (processoDeMarcaExistente.Despacho == null && !string.IsNullOrEmpty(codigoDespachoDaProcessoRevista))
-                                {
-                                    objetoRevistaASerSalvo.CodigoDespachoAnterior = null;
-
-                                    IDespachoDeMarcas despacho;
-
-                                    using (var servicoDespacho = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
-                                        despacho = servicoDespacho.ObtenhaDespachoPorCodigo(codigoDespachoDaProcessoRevista);
-
-                                    if (despacho != null)
-                                    {
-                                        processoDeMarcaExistente.Despacho = despacho;
-                                        processoDeMarcaExistente.Ativo = !despacho.DesativaProcesso;
-                                    }
-                                }
-
+                                
                                 objetoRevistaASerSalvo.CodigoDespachoAtual = processo.CodigoDespachoAtual;
                                 objetoRevistaASerSalvo.DataProcessamento = processo.DataProcessamento;
                                 objetoRevistaASerSalvo.DataPublicacao = processo.DataPublicacao;

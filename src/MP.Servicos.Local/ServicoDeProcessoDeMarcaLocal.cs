@@ -26,6 +26,7 @@ namespace MP.Servicos.Local
             try
             {
                 ServerUtils.BeginTransaction();
+                VerifiqueSeDespachoDesativaProcesso(processoDeMarca);
                 mapeador.Inserir(processoDeMarca);
                 ServerUtils.CommitTransaction();
             }
@@ -49,6 +50,7 @@ namespace MP.Servicos.Local
             try
             {
                 ServerUtils.BeginTransaction();
+                VerifiqueSeDespachoDesativaProcesso(processoDeMarca);
                 mapeador.Modificar(processoDeMarca);
                 ServerUtils.CommitTransaction();
             }
@@ -61,6 +63,13 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+        private void VerifiqueSeDespachoDesativaProcesso(IProcessoDeMarca processo)
+        {
+            if (processo.Despacho == null) return;
+
+            processo.Ativo = !processo.Despacho.DesativaProcesso;
         }
 
         public void Excluir(long ID)
