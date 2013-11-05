@@ -61,7 +61,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtTextoComplementar" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="5" Width="450px" Enabled="false">
+                                        Rows="5" Width="470px" Enabled="false">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -71,7 +71,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtTitular" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="2" Width="450px" Enabled="false">
+                                        Rows="2" Width="470px" Enabled="false">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -99,7 +99,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtMarca" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="2" Width="450px" Enabled="false">
+                                        Rows="2" Width="470px" Enabled="false">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -127,7 +127,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtTraducao" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="2" Width="450px" Enabled="false">
+                                        Rows="2" Width="470px" Enabled="false">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -155,7 +155,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtEspecificacaoNCL" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="5" Width="450px" Enabled="false">
+                                        Rows="5" Width="470px" Enabled="false">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -202,15 +202,15 @@
                                 <td class="td">
                                     <telerik:RadComboBox ID="cboClassificacaoNacional" runat="server" EnableLoadOnDemand="True"
                                         LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="90%" Skin="Vista"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="80%" Skin="Vista"
                                         CausesValidation="False" AutoPostBack="True" >
                                         <HeaderTemplate>
-                                            <table width="96%">
+                                            <table width="86%">
                                                 <tr>
                                                     <td width="13%">
                                                         Código
                                                     </td>
-                                                    <td width="70%">
+                                                    <td width="60%">
                                                         Especificação
                                                     </td>
                                                     <td width="13%">
@@ -220,12 +220,12 @@
                                             </table>
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <table width="100%">
+                                            <table width="90%">
                                                 <tr>
                                                     <td width="15%">
                                                         <%# DataBinder.Eval(Container, "Text")%>
                                                     </td>
-                                                    <td width="70%">
+                                                    <td width="60%">
                                                         <%#DataBinder.Eval(Container, "Attributes['Especificacao']")%>
                                                     </td>
                                                     <td width="15%">
@@ -243,7 +243,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtApostila" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="5" Width="450px" Enabled="false">
+                                        Rows="5" Width="470px" Enabled="false">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -253,7 +253,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtProcurador" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="2" Width="450px" Enabled="false">
+                                        Rows="2" Width="470px" Enabled="false">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
@@ -291,27 +291,27 @@
                                 <td class="td">
                                     <telerik:RadComboBox ID="cboSobrestador" runat="server" EnableLoadOnDemand="True"
                                         LoadingMessage="Carregando..." MarkFirstMatch="false" ShowDropDownOnTextboxClick="False"
-                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="90%" Skin="Vista"
+                                        AllowCustomText="True" HighlightTemplatedItems="True" Width="80%" Skin="Vista"
                                         CausesValidation="False" AutoPostBack="True" >
                                         <HeaderTemplate>
-                                            <table width="96%">
+                                            <table width="86%">
                                                 <tr>
-                                                    <td width="30%">
+                                                    <td width="25%">
                                                         Processo
                                                     </td>
-                                                    <td width="66%">
+                                                    <td width="61%">
                                                         Marca
                                                     </td>
                                                 </tr>
                                             </table>
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <table width="100%">
+                                            <table width="90%">
                                                 <tr>
-                                                    <td width="32%">
+                                                    <td width="27%">
                                                         <%# DataBinder.Eval(Container, "Text")%>
                                                     </td>
-                                                    <td width="68%">
+                                                    <td width="63%">
                                                         <%#DataBinder.Eval(Container, "Attributes['Marca']")%>
                                                     </td>
                                                 </tr>
