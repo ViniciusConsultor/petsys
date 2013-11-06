@@ -28,18 +28,23 @@ namespace MP.Mapeadores
 
                 sql.Append("INSERT INTO MP_REVISTA_MARCAS (");
                 sql.Append("IDREVISTAMARCAS, NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, NUMEROPROCESSODEMARCA, ");
-                sql.Append("CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO) ");
+                sql.Append("CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO, ");
+                sql.Append("DATADODEPOSITO, DATACONCESSAO) ");
                 sql.Append("VALUES (");
                 sql.Append(String.Concat(processoDaRevistaDeMarca.IdRevistaMarcas.Value.ToString(), ", "));
                 sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroRevistaMarcas, ", "));
 
-                sql.Append(String.Concat(processoDaRevistaDeMarca.DataPublicacao.ToString("yyyyMMdd"), ", "));
+                sql.Append(processoDaRevistaDeMarca.DataPublicacao != null
+                          ? String.Concat(processoDaRevistaDeMarca.DataPublicacao.ToString("yyyyMMdd"), ", ")
+                          : "NULL, ");
 
                 sql.Append(processoDaRevistaDeMarca.DataProcessamento != null
                            ? String.Concat(processoDaRevistaDeMarca.DataProcessamento.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
-                sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroProcessoDeMarca, ", "));
+                sql.Append(processoDaRevistaDeMarca.NumeroProcessoDeMarca != null
+                           ? String.Concat(processoDaRevistaDeMarca.NumeroProcessoDeMarca, ", ")
+                           : "NULL, ");
 
                 sql.Append(processoDaRevistaDeMarca.CodigoDespachoAnterior != null
                            ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAnterior, "', ")
@@ -49,18 +54,27 @@ namespace MP.Mapeadores
                            ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAtual, "', ")
                            : "NULL, ");
 
-                sql.Append(processoDaRevistaDeMarca.Apostila != null
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDeMarca.Apostila)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDeMarca.Apostila), "', ")
                            : "NULL, ");
 
-                sql.Append(processoDaRevistaDeMarca.TextoDoDespacho != null
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDeMarca.TextoDoDespacho)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDeMarca.TextoDoDespacho), "', ")
                            : "NULL, ");
 
                 sql.Append(processoDaRevistaDeMarca.Processada ? "1, " : "0, ");
 
-                if (!string.IsNullOrEmpty(processoDaRevistaDeMarca.ExtensaoArquivo))
-                    sql.Append(String.Concat("'", processoDaRevistaDeMarca.ExtensaoArquivo, "' ) "));
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDeMarca.ExtensaoArquivo)
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDeMarca.ExtensaoArquivo), "', ")
+                           : "NULL, ");
+
+                sql.Append(processoDaRevistaDeMarca.DataDeDeposito != null
+                           ? String.Concat(processoDaRevistaDeMarca.DataDeDeposito.ToString("yyyyMMdd"), ", ")
+                           : "NULL, ");
+
+                sql.Append(processoDaRevistaDeMarca.DataDeConcessao != null
+                           ? String.Concat(processoDaRevistaDeMarca.DataDeConcessao.ToString("yyyyMMdd"), ") ")
+                           : "NULL, ");
 
                 DBHelper.ExecuteNonQuery(sql.ToString());
             }

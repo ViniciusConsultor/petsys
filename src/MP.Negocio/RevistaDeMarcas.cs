@@ -40,5 +40,11 @@ namespace MP.Negocio
 
         public string ExtensaoArquivo
         { get; set; }
+
+        public DateTime DataDeConcessao
+        { get; set; }
+
+        public DateTime DataDeDeposito
+        { get; set; }
     }
 }

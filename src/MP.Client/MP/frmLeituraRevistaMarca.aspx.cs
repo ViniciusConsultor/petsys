@@ -10,9 +10,11 @@ using System.Xml;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Servicos;
+using MP.Interfaces.Utilidades;
 using Telerik.Web.UI;
 
 namespace MP.Client.MP
@@ -50,6 +52,10 @@ namespace MP.Client.MP
             ctrlUF.Inicializa();
             ctrlProcurador.Inicializa();
             ctrlDespachoDeMarcas.Inicializa();
+
+            var controleGrid = this.grdFiltros as Control;
+            UtilidadesWeb.LimparComponente(ref controleGrid);
+            CarregaGridFiltros(new List<ILeituraRevistaDeMarcas>());
         }
 
         private void CarregueGridRevistasJaProcessadas()
@@ -97,10 +103,7 @@ namespace MP.Client.MP
                 {
                     var arquivo = uplRevistaMarca.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
-                    var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
-                    Directory.CreateDirectory(pastaDeDestino);
-                    arquivo.SaveAs(caminhoArquivo, true);
-
+                   
                     IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
                     var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
                     var numeroRevista = arquivo.GetNameWithoutExtension();
@@ -116,6 +119,10 @@ namespace MP.Client.MP
                         revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
                         listaRevistasAProcessar.Add(revistaDeMarcas);
                     }
+
+                    var caminhoArquivo = Path.Combine(pastaDeDestino, revistaDeMarcas.NumeroRevistaMarcas + arquivo.GetExtension());
+                    Directory.CreateDirectory(pastaDeDestino);
+                    arquivo.SaveAs(caminhoArquivo, true);
 
                     MostraListaRevistasAProcessar(listaRevistasAProcessar);
                 }
@@ -153,6 +160,18 @@ namespace MP.Client.MP
             ViewState.Add(CHAVE_REVISTA_SELECIONADA, revistaSelecionada);
         }
 
+        private void MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(IRevistaDeMarcas revistaDeMarcas)
+        {
+            var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+            var caminhoArquivoTxt = Path.Combine(pastaDeDestino, revistaDeMarcas.NumeroRevistaMarcas +
+                revistaDeMarcas.ExtensaoArquivo);
+
+            var arquivo = new StreamReader(caminhoArquivoTxt);
+
+            TradutorDeRevistaTxtParaRevistaXml.TraduzaRevistaDeMarcas(DateTime.Now, revistaDeMarcas.NumeroRevistaMarcas.ToString(),
+                arquivo, pastaDeDestino);
+        }
+
         private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDeMarcas revistaDeMarcas)
         {
             var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
@@ -186,11 +205,12 @@ namespace MP.Client.MP
                 {
                     if (listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
                     {
-                        // leitura .txt
+                        // para arquivo .txt
+                        MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(listaRevistasAProcessar[IndiceSelecionado]);
+                        listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo = ".xml";
                     }
-                    else
-                    {
-                        // leitura .xml
+                   
+                    // leitura .xml
 
                         var xmlRevista = MontaXmlParaProcessamentoDaRevista(listaRevistasAProcessar[IndiceSelecionado]);
                         listaRevistasAProcessar[IndiceSelecionado].Processada = true;
@@ -219,11 +239,32 @@ namespace MP.Client.MP
 
                         }
                         else
+                        {
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista em processada."),
+                                                        UtilidadesWeb.MostraMensagemDeInformacao("Não existe publicações próprias na revista processada."),
                                                         false);
-                    }
 
+                            var revistaDeMarcasParaHistorico =
+                                FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
+
+                            revistaDeMarcasParaHistorico.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
+                            revistaDeMarcasParaHistorico.NumeroRevistaMarcas =
+                                listaRevistasAProcessar[IndiceSelecionado].NumeroRevistaMarcas;
+                            revistaDeMarcasParaHistorico.Processada = true;
+                            revistaDeMarcasParaHistorico.ExtensaoArquivo =
+                                listaRevistasAProcessar[IndiceSelecionado].ExtensaoArquivo;
+
+                            listaDeProcessosExistentes.Add(revistaDeMarcasParaHistorico);
+
+                            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                                servico.Inserir(listaDeProcessosExistentes);
+
+                            CarregueGridRevistasAProcessar();
+                            CarregueGridRevistasJaProcessadas();
+                            txtPublicacoesProprias.Text = "0";
+                            txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                            ExibaPanelDeFiltro();
+                        }
                 }
                 catch (BussinesException ex)
                 {
@@ -285,10 +326,11 @@ namespace MP.Client.MP
                 {
                     if (listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
                     {
-                        // leitura .txt
+                        // para arquivo .txt
+                        MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(listaRevistasProcessadas[IndiceSelecionado]);
+                        listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo = ".xml";
                     }
-                    else
-                    {
+                    
                         // leitura .xml
                         var xmlRevista = MontaXmlParaProcessamentoDaRevista(listaRevistasProcessadas[IndiceSelecionado]);
                         listaRevistasProcessadas[IndiceSelecionado].Processada = true;
@@ -313,11 +355,15 @@ namespace MP.Client.MP
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         }
                         else
+                        {
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista em processada."),
                                                          false);
-                    }
 
+                            txtPublicacoesProprias.Text = "0";
+                            ExibaPanelDeFiltro();
+                            txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                        }
                 }
                 catch (BussinesException ex)
                 {

@@ -18,5 +18,7 @@ namespace MP.Interfaces.Negocio
         string TextoDoDespacho { get; set; }
         bool Processada { get; set; }
         string ExtensaoArquivo { get; set; }
+        DateTime DataDeConcessao { get; set; }
+        DateTime DataDeDeposito { get; set; }
     }
 }
