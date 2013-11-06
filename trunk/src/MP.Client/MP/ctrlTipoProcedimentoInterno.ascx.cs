@@ -93,6 +93,9 @@ namespace MP.Client.MP
 
         protected void cboProcedimentosInternos_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+
+            if (!cboProcedimentosInternos.AutoPostBack) return;
+
             ITipoDeProcedimentoInterno procedimentoInterno = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))

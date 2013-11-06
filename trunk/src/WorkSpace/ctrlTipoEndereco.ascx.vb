@@ -87,6 +87,8 @@ Public Class ctrlTipoEndereco
         Dim Tipo As ITipoDeEndereco
         Dim Valor As String
 
+        If Not cboTiposDeEndereco.AutoPostBack Then Exit Sub
+
         Valor = DirectCast(sender, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then
             TipoSelecionado = Nothing

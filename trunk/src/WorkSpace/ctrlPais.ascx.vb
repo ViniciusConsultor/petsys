@@ -36,6 +36,8 @@ Public Class ctrlPais
         Dim Pais As IPais
         Dim Valor As String
 
+        If Not cboPais.AutoPostBack Then Exit Sub
+
         Valor = DirectCast(o, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then
             PaisSelecionado = Nothing

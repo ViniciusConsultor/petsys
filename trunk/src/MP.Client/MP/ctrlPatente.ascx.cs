@@ -35,6 +35,8 @@ namespace MP.Client.MP
 
         protected void cboPatente_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            if (!cboPatente.AutoPostBack) return;
+            
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
             {
                 IPatente patente = null;

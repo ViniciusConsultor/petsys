@@ -112,13 +112,15 @@ namespace MP.Client.MP
 
         protected void cboMarca_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            IMarcas marca = null;
+            if (!cboMarcas.AutoPostBack) return;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
             {
                 LimparControle();
                 return;                
             }
+
+            IMarcas marca;
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
                 marca = servico.obtenhaMarcasPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
@@ -132,11 +134,6 @@ namespace MP.Client.MP
         public bool AutoPostBack
         {
             set { cboMarcas.AutoPostBack = value; }
-        }
-
-        public ctrlMarcas()
-        {
-            Load += Page_Load;
         }
 
         public bool BotaoNovoEhVisivel

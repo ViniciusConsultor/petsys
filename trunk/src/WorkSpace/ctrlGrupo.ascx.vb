@@ -60,6 +60,8 @@ Partial Public Class ctrlGrupo
         Dim Grupo As IGrupo
         Dim Valor As String
 
+        If Not cboGrupos.AutoPostBack Then Exit Sub
+
         Valor = DirectCast(o, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then
             GrupoSelecionado = Nothing
