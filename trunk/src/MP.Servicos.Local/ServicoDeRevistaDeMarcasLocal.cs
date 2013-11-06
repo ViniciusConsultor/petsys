@@ -61,12 +61,14 @@ namespace MP.Servicos.Local
                 foreach (var processoDaRevista in listaDeTodosProcessosDaRevista)
                 {
                     if (!string.IsNullOrEmpty(filtro.NumeroDoProcesso))
+                    {
                         if (processoDaRevista.NumeroDoProcesso == filtro.NumeroDoProcesso)
                         {
                             listaResultadoPorFiltro.Add(processoDaRevista);
                             return listaResultadoPorFiltro;
                         }
-                        else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho == null)
+                    }
+                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho == null)
                         {
                             // filtro por estado
                             if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper())
@@ -344,7 +346,15 @@ namespace MP.Servicos.Local
             foreach (XmlNode processo in xmlprocessos)
             {
                 var objetoRevista = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
+
                 objetoRevista.NumeroProcessoDeMarca = Convert.ToInt64(processo.Attributes.GetNamedItem("numero").Value);
+
+                if (processo.Attributes.GetNamedItem("data-deposito") != null)
+                    objetoRevista.DataDeDeposito = Convert.ToDateTime(processo.Attributes.GetNamedItem("data-deposito").Value);
+
+                if (processo.Attributes.GetNamedItem("data-concessao") != null)
+                    objetoRevista.DataDeConcessao = Convert.ToDateTime(processo.Attributes.GetNamedItem("data-concessao").Value);
+
                 var despachos = processo["despachos"];
 
                 if (despachos != null)
@@ -354,72 +364,16 @@ namespace MP.Servicos.Local
                     if (despacho != null)
                     {
                         objetoRevista.CodigoDespachoAtual = despacho.Attributes.GetNamedItem("codigo").Value;
+
                         var textoDoDespacho = despacho["texto-complementar"];
                         objetoRevista.TextoDoDespacho = textoDoDespacho != null ? textoDoDespacho.InnerText : null;
                     }
 
                 }
 
-                var classeNacional = processo["classe-nacional"];
-
-                if (classeNacional != null)
-                {
-                    //objetoRevista.codigoClasseNacional = classeNacional.Attributes.GetNamedItem("codigo").Value;
-
-                    var especificacaoClasseNacional = classeNacional["especificacao"];
-
-                    if (especificacaoClasseNacional != null)
-                    {
-                        //objetoRevista.especificacaoClasseNacional = especificacaoClasseNacional.InnerText;
-                    }
-
-                    var subClassesNacional = classeNacional["sub-classes-nacional"];
-
-                    if (subClassesNacional != null)
-                    {
-                        //objetoRevista.listaDeSubClassesNacional = new List<string>();
-
-                        foreach (XmlNode subClasseNacional in subClassesNacional)
-                        {
-                            //if (subClasseNacional.Attributes != null)
-                            //    objetoRevista.listaDeSubClassesNacional.Add(
-                            //        subClasseNacional.Attributes.GetNamedItem("codigo").Value);
-                        }
-                    }
-                }
-
                 var apostila = processo["apostila"];
                 objetoRevista.Apostila = apostila != null ? apostila.InnerText : null;
-                var prioridadeUnionista = processo["prioridade-unionista"];
-
-                if (prioridadeUnionista != null)
-                {
-                    var prioridade = prioridadeUnionista["prioridade"];
-
-                    if (prioridade != null)
-                    {
-                        //objetoRevista.dataPrioridadeUnionista = prioridade.Attributes.GetNamedItem("data").Value;
-                        //objetoRevista.numeroPrioridadeUnionista = prioridade.Attributes.GetNamedItem("numero").Value;
-                        //objetoRevista.paisPrioridadeUnionista = prioridade.Attributes.GetNamedItem("pais").Value;
-                    }
-                }
-
-                //var sobrestadores = processo["sobrestadores"];
-
-                //if (sobrestadores != null)
-                //{
-                //    objetoRevista.dicionarioDeSobrestatores = new Dictionary<string, string>();
-
-                //    foreach (XmlNode sobrestador in sobrestadores)
-                //    {
-                //        if(sobrestador.Attributes != null)
-                //        {
-                //            dicionarioDeSobrestatores.Add(sobrestador.Attributes.GetNamedItem("processo").Value,
-                //                sobrestador.Attributes.GetNamedItem("marca").Value);
-                //        }
-                //    }
-                //}
-
+               
                 objetoRevista.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
                 objetoRevista.DataPublicacao = Convert.ToDateTime(dataRevista);
                 objetoRevista.DataProcessamento = DateTime.Now;
@@ -428,7 +382,7 @@ namespace MP.Servicos.Local
                 listaDeProcessosDaRevistaDeMarcas.Add(objetoRevista);
             }
 
-            string codigoDespachoDaProcessoRevista = string.Empty;
+            var codigoDeDespachoDoProcessoDaRevista = string.Empty;
 
             IList<IRevistaDeMarcas> listaDeDadosDaRevistaASerSalvo = new List<IRevistaDeMarcas>();
 
@@ -452,10 +406,12 @@ namespace MP.Servicos.Local
                             if (processoDeMarcaExistente.IdProcessoDeMarca != null)
                             {
                                 objetoRevistaASerSalvo.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
-                                codigoDespachoDaProcessoRevista = processo.CodigoDespachoAtual;
+
+                                codigoDeDespachoDoProcessoDaRevista = processo.CodigoDespachoAtual;
+
                                 objetoRevistaASerSalvo.Apostila = processo.Apostila;
 
-                                if (!string.IsNullOrEmpty(codigoDespachoDaProcessoRevista))
+                                if (!string.IsNullOrEmpty(codigoDeDespachoDoProcessoDaRevista))
                                 {
                                     var codigoDoDespachoAnterior = processoDeMarcaExistente.Despacho == null
                                                                        ? null
@@ -463,7 +419,27 @@ namespace MP.Servicos.Local
                                                                              CodigoDespacho;
                                     
                                     objetoRevistaASerSalvo.CodigoDespachoAnterior = codigoDoDespachoAnterior;
-                                    AtualizeDespachoNoProcesso(codigoDespachoDaProcessoRevista, processoDeMarcaExistente);
+                                    AtualizeDespachoNoProcesso(codigoDeDespachoDoProcessoDaRevista, processoDeMarcaExistente);
+                                }
+
+                                if (!string.IsNullOrEmpty(processo.Apostila))
+                                {
+                                    processoDeMarcaExistente.Apostila = processo.Apostila;
+                                }
+
+                                if(processo.DataDeDeposito != null)
+                                {
+                                    processoDeMarcaExistente.DataDoDeposito = processo.DataDeDeposito;
+                                }
+
+                                if(processo.DataDeConcessao != null)
+                                {
+                                    processoDeMarcaExistente.DataDeConcessao = processo.DataDeConcessao;
+                                }
+
+                                if (!string.IsNullOrEmpty(processo.TextoDoDespacho))
+                                {
+                                    processoDeMarcaExistente.TextoComplementarDoDespacho = processo.TextoDoDespacho;
                                 }
                                 
                                 objetoRevistaASerSalvo.CodigoDespachoAtual = processo.CodigoDespachoAtual;
