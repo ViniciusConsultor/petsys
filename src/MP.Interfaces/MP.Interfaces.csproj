@@ -69,6 +69,7 @@
     <Compile Include="Mapeadores\IMapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Mapeadores\IMapeadorDeRadicalMarcas.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
+    <Compile Include="Negocio\DTOLayoutLeituraRevistaPatente.cs" />
     <Compile Include="Negocio\Execucao\ISobrestator.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroLeituraDeRevistaDeMarcas.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorApresentacao.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Servicos\IServicoDeRevistaDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeRevistaDePatente.cs" />
     <Compile Include="Servicos\IServicoDeTipoDeProcedimentoInterno.cs" />
+    <Compile Include="Utilidades\TradutorDeRevistaPatenteTXTParaRevistaPatenteXML.cs" />
     <Compile Include="Utilidades\TradutorDeRevistaTXTParaRevistaXML.cs" />
     <Compile Include="Utilidades\UtilidadesDeStream.cs" />
   </ItemGroup>
