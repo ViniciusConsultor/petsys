@@ -87,6 +87,9 @@ namespace MP.Client.MP
 
         protected void cboDespachoDeMarcas_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+
+            if (!cboDespachoDeMarcas.AutoPostBack) return;
+
             IDespachoDeMarcas despachoDeMarcas = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
@@ -108,12 +111,6 @@ namespace MP.Client.MP
         {
             set { cboDespachoDeMarcas.AutoPostBack = value; }
         }
-
-        public ctrlDespachoDeMarcas()
-	    {
-		    Load += Page_Load;
-	    }
-
 
         public bool BotaoNovoEhVisivel
         {

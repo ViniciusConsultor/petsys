@@ -51,7 +51,7 @@ Partial Public Class ctrlBancosEAgencias
     Private Sub cboBancos_SelectedIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboBancos.SelectedIndexChanged
         Dim Banco As IBanco
         Dim Valor As String
-
+        
         Valor = DirectCast(sender, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then
             BancoSelecionado = Nothing

@@ -36,6 +36,8 @@ Partial Public Class ctrlMunicipios
         Dim Municipio As IMunicipio
         Dim Valor As String
 
+        If Not cboMunicipios.AutoPostBack Then Exit Sub
+
         Valor = DirectCast(o, RadComboBox).SelectedValue
         If String.IsNullOrEmpty(Valor) Then
             MunicipioSelecionado = Nothing

@@ -57,6 +57,8 @@ namespace MP.Client.MP
 
         protected void cboInventor_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            if (!cboInventor.AutoPostBack) return;
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
             {
                 IInventor inventor = null;

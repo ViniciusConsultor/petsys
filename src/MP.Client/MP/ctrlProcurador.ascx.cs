@@ -51,6 +51,8 @@ namespace MP.Client.MP
 
         protected void cboProcurador_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            if (!cboProcurador.AutoPostBack) return;
+            
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
             {
                 IProcurador procurador = null;

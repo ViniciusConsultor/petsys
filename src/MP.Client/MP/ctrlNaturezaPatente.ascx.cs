@@ -93,6 +93,9 @@ namespace MP.Client.MP
 
         protected void cboNaturezaPatente_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+
+            if (!cboNaturezaPatente.AutoPostBack) return;
+
             INaturezaPatente naturezaPatenteSelecionada = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))

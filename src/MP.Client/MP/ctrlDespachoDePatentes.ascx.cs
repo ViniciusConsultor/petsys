@@ -86,6 +86,8 @@ namespace MP.Client.MP
 
         protected void cboDespachoDePatentes_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            if (!cboDespachoDePatentes.AutoPostBack) return;
+
             IDespachoDePatentes despachoDePatentes = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))

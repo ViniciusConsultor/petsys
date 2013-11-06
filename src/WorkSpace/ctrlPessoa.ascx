@@ -9,7 +9,7 @@
             </td>
             <td class="td">
                 <asp:RadioButtonList ID="rblTipo" runat="server" AutoPostBack="True" RepeatDirection="Horizontal"
-                    RepeatLayout="Flow" CellPadding="0" CellSpacing="2">
+                    RepeatLayout="Flow">
                 </asp:RadioButtonList>
             </td>
         </tr>

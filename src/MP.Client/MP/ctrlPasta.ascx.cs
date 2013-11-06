@@ -75,6 +75,8 @@ namespace MP.Client.MP
 
         protected void cboPasta_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            if (!cboPasta.AutoPostBack) return;
+            
             IPasta pasta = null;
 
             if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
