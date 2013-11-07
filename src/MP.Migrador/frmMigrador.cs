@@ -72,7 +72,6 @@ namespace MP.Migrador
                             pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
                             pessoas.Add(pessoa);
                             idContatoAnterior = UtilidadesDePersistencia.getValorInteger(linha, "IDCONTATO");
-                            
                         }
 
                         MontaPessoaJuridica(linha, ref pessoa);
