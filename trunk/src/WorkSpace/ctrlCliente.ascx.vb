@@ -88,10 +88,6 @@ Public Class ctrlCliente
         If Not Clientes Is Nothing Then
             For Each Cliente As ICliente In Clientes
                 Dim Item As New RadComboBoxItem(Cliente.Pessoa.Nome.Trim, Cliente.Pessoa.ID.ToString)
-
-                Item.Attributes.Add("DataNascimento", "")
-                Item.Attributes.Add("TelefoneComercial", "")
-                Item.Attributes.Add("TelefoneCelular", "")
                 cboCliente.Items.Add(Item)
                 Item.DataBind()
             Next

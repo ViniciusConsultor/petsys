@@ -71,7 +71,7 @@ Public Class ServicoDePessoaJuridicaLocal
         Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDePessoaJuridica)()
 
         Try
-            Return Mapeador.ObtenhaPessoasPorNomeComoFiltro(Nome, QuantidadeMaximaDeRegistros)
+            Return Mapeador.ObtenhaPessoasPorNomeComoFiltro(Nome, QuantidadeMaximaDeRegistros, 0)
         Finally
             ServerUtils.libereRecursos()
         End Try

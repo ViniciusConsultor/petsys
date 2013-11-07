@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using MP.Client.Relatorios;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
@@ -114,7 +115,16 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
             {
                 var processos = servico.ObtenhaProcessosDeMarcas(IDCliente, IDGrupoDeAtividade, IDsDosDespachos);
+
+                var gerador = new GeradorDeRelatorioDeProcessosDeMarcas(processos);
+                var nomeDoArquivo = gerador.GereRelatorio();
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+                          nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
             }
+
+            
         }
     }
 }

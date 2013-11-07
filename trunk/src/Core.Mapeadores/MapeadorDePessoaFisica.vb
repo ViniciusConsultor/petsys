@@ -115,7 +115,7 @@ Public Class MapeadorDePessoaFisica
         Dim Pessoas As IList(Of IPessoaFisica)
         Dim Pessoa As IPessoaFisica = Nothing
 
-        Pessoas = ObtenhaPessoas(SQL, Integer.MaxValue)
+        Pessoas = ObtenhaPessoas(SQL, Integer.MaxValue, 1)
 
         If Not Pessoas.Count = 0 Then
             Pessoa = Pessoas.Item(0)
@@ -125,7 +125,8 @@ Public Class MapeadorDePessoaFisica
     End Function
 
     Protected Overrides Function CarreguePorNome(ByVal Nome As String, _
-                                                 ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of IPessoaFisica)
+                                                 ByVal QuantidadeMaximaDeRegistros As Integer, _
+                                                 NivelDeRetardo As Integer) As IList(Of IPessoaFisica)
         Dim Sql As String
 
         Sql = Me.ObtenhaQueryBasica
@@ -136,10 +137,10 @@ Public Class MapeadorDePessoaFisica
 
         Sql &= " ORDER BY NOME"
 
-        Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros)
+        Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros, NivelDeRetardo)
     End Function
 
-    Private Function ObtenhaPessoas(ByVal Sql As String, ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of IPessoaFisica)
+    Private Function ObtenhaPessoas(ByVal Sql As String, ByVal QuantidadeMaximaDeRegistros As Integer, NivelDeRetardo As Integer) As IList(Of IPessoaFisica)
         Dim DBHelper As IDBHelper = ServerUtils.criarNovoDbHelper
         Dim Pessoa As IPessoaFisica
         Dim Pessoas As IList(Of IPessoaFisica)
@@ -150,7 +151,7 @@ Public Class MapeadorDePessoaFisica
             Try
                 While Leitor.Read
                     Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
-                    MyBase.PreencheDados(Pessoa, Leitor)
+                    MyBase.PreencheDados(Pessoa, Leitor, NivelDeRetardo)
 
                     If Not UtilidadesDePersistencia.EhNulo(Leitor, "DATANASCIMENTO") Then
                         Pessoa.DataDeNascimento = UtilidadesDePersistencia.getValorDate(Leitor, "DATANASCIMENTO").Value
@@ -168,13 +169,15 @@ Public Class MapeadorDePessoaFisica
                     If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEPAI") Then
                         Pessoa.NomeDoPai = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPAI")
                     End If
+                    
+                    If NivelDeRetardo > 0 Then
+                        Dim MapeadorDeMunicipio As IMapeadorDeMunicipio
 
-                    Dim MapeadorDeMunicipio As IMapeadorDeMunicipio
+                        MapeadorDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMunicipio)()
 
-                    MapeadorDeMunicipio = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMunicipio)()
-
-                    If Not UtilidadesDePersistencia.EhNulo(Leitor, "NATURALIDADE") Then
-                        Pessoa.Naturalidade = MapeadorDeMunicipio.ObtenhaMunicipio(UtilidadesDePersistencia.GetValorLong(Leitor, "NATURALIDADE"))
+                        If Not UtilidadesDePersistencia.EhNulo(Leitor, "NATURALIDADE") Then
+                            Pessoa.Naturalidade = MapeadorDeMunicipio.ObtenhaMunicipio(UtilidadesDePersistencia.GetValorLong(Leitor, "NATURALIDADE"))
+                        End If
                     End If
 
                     If Not UtilidadesDePersistencia.EhNulo(Leitor, "FOTO") Then
@@ -207,7 +210,7 @@ Public Class MapeadorDePessoaFisica
             Finally
                 Leitor.Close()
             End Try
-            
+
         End Using
 
         Return Pessoas
