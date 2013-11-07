@@ -82,5 +82,11 @@ namespace MP.Negocio
 
         public IDictionary<string, string> DicionarioSobrestadores
         { get; set; }
+
+        public string Radical
+        { get; set; }
+
+        public string RadicalNCL
+        { get; set; }
     }
 }

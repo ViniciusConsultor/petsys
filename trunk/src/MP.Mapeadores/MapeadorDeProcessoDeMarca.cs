@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -296,6 +297,121 @@ namespace MP.Mapeadores
 
             return processos;
 
+        }
+
+        public IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
+        {
+            var sql = new StringBuilder();
+
+            sql.AppendLine("SELECT DISTINCT(MP_PROCESSOMARCA.IDPROCESSO) IDPROCESSO, MP_PROCESSOMARCA.IDMARCA MARCA, ");
+            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO NUMEROPROCESSO");
+            sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS, MP_RADICAL_MARCA");
+            sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA AND MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
+            sql.AppendLine(" AND MP_PROCESSOMARCA.ATIVO = 1");
+
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var processos = new List<IProcessoDeMarca>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+                try
+                {
+                    while (leitor.Read())
+                        processos.Add(MontaProcessoDeMarcaParaConsultaDeRadicais(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            
+            return processos;
+        }
+
+        public IList<IProcessoDeMarca> ObtenhaProcessoComRadicailAdicionadoNaMarca(IList<IProcessoDeMarca> processos)
+        {
+            IDictionary<long, List<IRadicalMarcas>> dicionarioDeRadicais = new Dictionary<long, List<IRadicalMarcas>>();
+
+            var sql = new StringBuilder();
+
+            sql.AppendLine("SELECT MP_MARCAS.IDMARCA IDMARCA, MP_RADICAL_MARCA.DESCRICAORADICAL RADICAL, ");
+            sql.AppendLine("MP_RADICAL_MARCA.CODIGONCL RADICALNCL");
+            sql.AppendLine(" FROM MP_MARCAS, MP_RADICAL_MARCA ");
+            sql.AppendLine(" WHERE MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
+
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+                try
+                {
+                    while (leitor.Read())
+                    {
+                        var idMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IDMARCA");
+
+                        var radical = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalMarcas>();
+
+                        var listaDeRadicais = new List<IRadicalMarcas>();
+                        
+                        if(dicionarioDeRadicais.ContainsKey(idMarca))
+                        {
+                            radical.DescricaoRadical = UtilidadesDePersistencia.GetValorString(leitor, "RADICAL");
+
+                            radical.NCL = !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) ? NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) : null;
+                            
+                            radical.IdMarca = idMarca;
+
+                            dicionarioDeRadicais[idMarca].Add(radical);
+                        }
+                        else
+                        {
+                            radical.DescricaoRadical = UtilidadesDePersistencia.GetValorString(leitor, "RADICAL");
+                            radical.NCL = !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) ? NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) : null;
+                            radical.IdMarca = idMarca;
+
+                            listaDeRadicais.Add(radical);
+
+                            dicionarioDeRadicais.Add(idMarca, listaDeRadicais);
+                        }
+                    }
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            foreach (var processo in processos)
+            {
+                foreach (var idMarca in dicionarioDeRadicais.Keys)
+                {
+                    if(processo.Marca.IdMarca != null && processo.Marca.IdMarca.Value.Equals(idMarca))
+                    {
+                        processo.Marca.RadicalMarcas = dicionarioDeRadicais[idMarca];
+                    }
+                }
+            }
+
+            return processos;
+        }
+
+        private IProcessoDeMarca MontaProcessoDeMarcaParaConsultaDeRadicais(IDataReader leitor)
+        {
+            var processoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDeMarca>();
+
+            processoDeMarca.Marca = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "MARCA"));
+            processoDeMarca.IdProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCESSO");
+            processoDeMarca.Processo = UtilidadesDePersistencia.GetValorLong(leitor, "NUMEROPROCESSO");
+            processoDeMarca.DataDoCadastro = DateTime.Now;
+            processoDeMarca.DataDoDeposito = null;
+            processoDeMarca.DataDeConcessao = null;
+            processoDeMarca.ProcessoEhDeTerceiro = false;
+            processoDeMarca.Despacho = null;
+            processoDeMarca.TextoComplementarDoDespacho = null;
+            processoDeMarca.Procurador = null;
+            processoDeMarca.Apostila = null;
+            processoDeMarca.Ativo = true;
+
+            return processoDeMarca;
         }
     }
 }

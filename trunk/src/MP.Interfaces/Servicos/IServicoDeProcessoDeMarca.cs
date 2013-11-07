@@ -21,5 +21,8 @@ namespace MP.Interfaces.Servicos
 
         IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade,
                                                          IList<string> IDsDosDespachos);
+
+        IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado();
+        IList<IProcessoDeMarca> ObtenhaProcessoComRadicailAdicionadoNaMarca(IList<IProcessoDeMarca> processos);
     }
 }

@@ -32,5 +32,7 @@ namespace MP.Interfaces.Negocio
         string NumeroPrioridadeUnionista { get; set; }
         string PaisPrioridadeUnionista { get; set; }
         IDictionary<string, string> DicionarioSobrestadores { get; set; }
+        string Radical { get; set; }
+        string RadicalNCL { get; set; }
     }
 }

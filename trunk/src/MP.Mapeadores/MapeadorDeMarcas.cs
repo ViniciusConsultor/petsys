@@ -164,10 +164,9 @@ namespace MP.Mapeadores
                 sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
                 sql.Append(String.Concat("'", radical.DescricaoRadical, "', "));
 
-                if (radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo.ToString()))
-                    sql.Append(String.Concat("", radical.NCL.Codigo, ", "));
-                else
-                    sql.Append(String.Concat("", null, ", "));
+                sql.Append(radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo)
+                           ? String.Concat("'", radical.NCL.Codigo, "', ")
+                           : "NULL , ");
 
                 sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ") "));
                 DBHelper.ExecuteNonQuery(sql.ToString());
