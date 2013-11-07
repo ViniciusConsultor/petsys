@@ -129,7 +129,7 @@
                             </tr>
                         </table>
                         <telerik:RadTabStrip ID="RadTabStrip1" runat="server" SelectedIndex="0" Skin="Vista"
-                            MultiPageID="RadMultiPage1" CausesValidation="False">
+                            MultiPageID="RadMultiPage1" CausesValidation="False" AutoPostBack="True" OnTabClick="RadTabStrip1_OnTabClick" >
                             <Tabs>
                                 <telerik:RadTab Text="Publicações Próprias" Selected="True">
                                 </telerik:RadTab>
