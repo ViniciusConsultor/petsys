@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Compartilhados.Componentes.Web;
 using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class frmLeituraRevistaPatente : System.Web.UI.Page
+    public partial class frmLeituraRevistaPatente : SuperPagina
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -79,6 +80,16 @@ namespace MP.Client.MP
         protected void btnLimpar_ButtonClick(object sender, EventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        protected override string ObtenhaIdFuncao()
+        {
+            return "";
+        }
+
+        protected override RadToolBar ObtenhaBarraDeFerramentas()
+        {
+            return null;
         }
     }
 }

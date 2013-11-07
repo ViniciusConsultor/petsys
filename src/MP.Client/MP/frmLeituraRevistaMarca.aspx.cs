@@ -535,7 +535,7 @@ namespace MP.Client.MP
 
         protected void RadTabStrip1_OnTabClick(object sender, RadTabStripEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

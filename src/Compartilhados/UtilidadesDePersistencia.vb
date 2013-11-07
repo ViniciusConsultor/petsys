@@ -287,4 +287,24 @@
         Return New Date(dataAsInt \ 10000, dataAsInt \ 100 Mod 100, dataAsInt Mod 100)
     End Function
 
+    Public Shared Function MontaFiltro(Of T)(ByVal sNomeCampo As String, ByVal lista As IList(Of T), ByVal sOperacao As String, ByVal insereAspas As Boolean) As String
+        Dim sAux As String
+
+        If lista.Count = 0 Then Return String.Empty
+        sAux = ""
+
+        For Each oid As T In lista
+            If lista.IndexOf(oid) <> 0 Then
+                sAux &= " " & Trim$(sOperacao) & " "
+            End If
+            
+            sAux &= " " & sNomeCampo & " = " & IIf(insereAspas, "'" & oid.ToString() & "'", oid.ToString()).ToString()
+        Next
+
+        sAux = "(" & Trim(sAux) & ")"
+
+        Return " " & Trim(sAux) & " "
+
+    End Function
+
 End Class
