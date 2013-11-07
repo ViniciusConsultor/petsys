@@ -73,7 +73,7 @@ Public Class MapeadorDePessoaJuridica
         Dim Pessoas As IList(Of IPessoaJuridica)
         Dim Pessoa As IPessoaJuridica = Nothing
 
-        Pessoas = ObtenhaPessoas(SQL, Integer.MaxValue)
+        Pessoas = ObtenhaPessoas(SQL, Integer.MaxValue, 1)
 
         If Not Pessoas.Count = 0 Then
             Pessoa = Pessoas.Item(0)
@@ -83,7 +83,8 @@ Public Class MapeadorDePessoaJuridica
     End Function
 
     Protected Overrides Function CarreguePorNome(ByVal Nome As String, _
-                                                 ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of IPessoaJuridica)
+                                                 ByVal QuantidadeMaximaDeRegistros As Integer, _
+                                                 NivelDeRetardo As Integer) As IList(Of IPessoaJuridica)
         Dim Sql As New StringBuilder
 
         Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
@@ -97,10 +98,10 @@ Public Class MapeadorDePessoaJuridica
 
         Sql.AppendLine(" ORDER BY NOME")
 
-        Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros)
+        Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros, NivelDeRetardo)
     End Function
 
-    Private Function ObtenhaPessoas(ByVal Sql As String, ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of IPessoaJuridica)
+    Private Function ObtenhaPessoas(ByVal Sql As String, ByVal QuantidadeMaximaDeRegistros As Integer, NivelDeRetardo As Integer) As IList(Of IPessoaJuridica)
         Dim DBHelper As IDBHelper = ServerUtils.criarNovoDbHelper
         Dim Pessoa As IPessoaJuridica
         Dim Pessoas As IList(Of IPessoaJuridica)
@@ -111,7 +112,7 @@ Public Class MapeadorDePessoaJuridica
             Try
                 While Leitor.Read
                     Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
-                    MyBase.PreencheDados(Pessoa, Leitor)
+                    MyBase.PreencheDados(Pessoa, Leitor, NivelDeRetardo)
 
                     If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEFANTASIA") Then
                         Pessoa.NomeFantasia = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEFANTASIA")

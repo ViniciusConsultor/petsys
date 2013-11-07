@@ -8,17 +8,8 @@
     <HeaderTemplate>
         <table width="96%">
             <tr>
-                <td width="40%">
+                <td width="96%">
                     Nome
-                </td>
-                <td width="16%">
-                    Nascimento
-                </td>
-                <td width="22%">
-                    Tel. comercial
-                </td>
-                <td width="22%">
-                    Celular
                 </td>
             </tr>
         </table>
@@ -26,17 +17,8 @@
     <ItemTemplate>
         <table width="100%">
             <tr>
-                <td width="40%">
+                <td width="100%">
                     <%# DataBinder.Eval(Container, "Text")%>
-                </td>
-                <td width="16%">
-                    <%#DataBinder.Eval(Container, "Attributes['DataNascimento']")%>
-                </td>
-                <td width="22%">
-                    <%#DataBinder.Eval(Container, "Attributes['TelefoneComercial']")%>
-                </td>
-                <td width="22%">
-                    <%#DataBinder.Eval(Container, "Attributes['TelefoneCelular']")%>
                 </td>
             </tr>
         </table>

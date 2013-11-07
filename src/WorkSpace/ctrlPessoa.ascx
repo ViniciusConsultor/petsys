@@ -26,17 +26,17 @@
                     <HeaderTemplate >
                         <table width="96%" >
                             <tr>
-                                <td  width="40%">
+                                <td width="40%">
                                     Nome
                                 </td>
                                 <td width="16%" >
                                     Nascimento
                                 </td>
                                 <td width="22%">
-                                    Tel. comercial
+                                    CPF
                                 </td>
                                 <td width="22%">
-                                    Celular
+                                    RG
                                 </td>
                             </tr>
                         </table>
@@ -44,17 +44,17 @@
                     <ItemTemplate>
                         <table  width="100%">
                             <tr>
-                                <td  width="40%" >
+                                <td width="40%" >
                                     <%# DataBinder.Eval(Container, "Text")%>
                                 </td>
                                 <td width="16%">
                                     <%#DataBinder.Eval(Container, "Attributes['DataNascimento']")%>
                                 </td>
                                 <td width="22%">
-                                    <%#DataBinder.Eval(Container, "Attributes['TelefoneComercial']")%>
+                                    <%#DataBinder.Eval(Container, "Attributes['CPF']")%>
                                 </td>
                                 <td width="22%">
-                                    <%#DataBinder.Eval(Container, "Attributes['TelefoneCelular']")%>
+                                    <%#DataBinder.Eval(Container, "Attributes['RG']")%>
                                 </td>
                             </tr>
                         </table>

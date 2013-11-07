@@ -275,7 +275,7 @@ namespace MP.Interfaces.Utilidades
 
         private static void CarregueOsDadosDaLinhaNCL(string linha, DtoDadosDaRevistaDeMarca dadosDaRevista)
         {
-            var linhaNCLSemMarcador = linha.Remove(0, 6).Trim();
+            var linhaNCLSemMarcador = linha.Remove(0, 7).Trim();
 
             dadosDaRevista.CodigoNCL = linhaNCLSemMarcador.Substring(0, 2);
             dadosDaRevista.EspecificacaoNCL = linhaNCLSemMarcador.Substring(2).Trim();

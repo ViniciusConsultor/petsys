@@ -15,7 +15,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
     Protected MustOverride Sub Atualize(ByVal Pessoa As T)
     Protected MustOverride Sub Remova(ByVal ID As Long)
     Protected MustOverride Function Carregue(ByVal Id As Long) As T
-    Protected MustOverride Function CarreguePorNome(ByVal Nome As String, ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of T)
+    Protected MustOverride Function CarreguePorNome(ByVal Nome As String, ByVal QuantidadeMaximaDeRegistros As Integer, NivelDeRetardo As Integer) As IList(Of T)
 
     Public Function Inserir(ByVal Pessoa As T) As Long Implements IMapeadorDePessoa(Of T).Inserir
         Dim SQL As New StringBuilder
@@ -215,12 +215,13 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
     End Sub
 
     Public Overloads Function ObtenhaPessoasPorNomeComoFiltro(ByVal Nome As String, _
-                                                              ByVal QuantidadeMaximaDeRegistros As Integer) As IList(Of T) Implements IMapeadorDePessoa(Of T).ObtenhaPessoasPorNomeComoFiltro
+                                                              ByVal QuantidadeMaximaDeRegistros As Integer,
+                                                              NivelDeRetardo As Integer) As IList(Of T) Implements IMapeadorDePessoa(Of T).ObtenhaPessoasPorNomeComoFiltro
         Return Me.CarreguePorNome(Nome, _
-                                  QuantidadeMaximaDeRegistros)
+                                  QuantidadeMaximaDeRegistros, NivelDeRetardo)
     End Function
 
-    Protected Sub PreencheDados(ByRef Pessoa As T, ByVal Leitor As IDataReader)
+    Protected Sub PreencheDados(ByRef Pessoa As T, ByVal Leitor As IDataReader, NivelDeRetardo As Integer)
         Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
         Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
 
@@ -263,8 +264,10 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             Pessoa.DadoBancario = DadosBancarios
         End If
 
-        ObtenhaTelefones(Pessoa)
-        ObtenhaEnderecos(Pessoa)
+        If (NivelDeRetardo > 0) Then
+            ObtenhaTelefones(Pessoa)
+            ObtenhaEnderecos(Pessoa)
+        End If
     End Sub
 
     Private Sub ObtenhaEnderecos(ByVal Pessoa As IPessoa)

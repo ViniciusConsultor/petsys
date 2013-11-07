@@ -1,5 +1,6 @@
 ﻿Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Componentes.Web
+Imports Compartilhados.Interfaces.Core.Negocio.Documento
 Imports Telerik.Web.UI
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
@@ -122,33 +123,20 @@ Partial Public Class ctrlPessoa
                     Item.Attributes.Add("DataNascimento", "")
                 End If
 
-                Dim TelefonesComercial As IList(Of ITelefone)
-                Dim TelefonesCelular As IList(Of ITelefone)
+                Dim CPF As ICPF = TryCast(Pessoa.ObtenhaDocumento(TipoDeDocumento.CPF), ICPF)
 
-                TelefonesComercial = Pessoa.ObtenhaTelefones(TipoDeTelefone.Comercial)
-                TelefonesCelular = Pessoa.ObtenhaTelefones(TipoDeTelefone.Celular)
-
-                If Not TelefonesComercial Is Nothing Then
-                    Dim TelefonesSTR As New StringBuilder
-
-                    For Each Telefone As ITelefone In TelefonesComercial
-                        TelefonesSTR.Append(Telefone.ToString & "<br>")
-                    Next
-
-                    Item.Attributes.Add("TelefoneComercial", TelefonesSTR.ToString.Trim)
+                If Not CPF Is Nothing Then
+                    Item.Attributes.Add("CPF", CPF.ToString())
                 Else
-                    Item.Attributes.Add("TelefoneComercial", "")
+                    Item.Attributes.Add("CPF", "")
                 End If
 
-                If Not TelefonesCelular Is Nothing Then
-                    Dim TelefonesSTR As New StringBuilder
+                Dim RG As IRG = TryCast(Pessoa.ObtenhaDocumento(TipoDeDocumento.RG), IRG)
 
-                    For Each Telefone As ITelefone In TelefonesCelular
-                        TelefonesSTR.Append(Telefone.ToString & "<br>")
-                    Next
-                    Item.Attributes.Add("TelefoneCelular", TelefonesSTR.ToString.Trim)
+                If Not RG Is Nothing Then
+                    Item.Attributes.Add("RG", RG.ToString())
                 Else
-                    Item.Attributes.Add("TelefoneCelular", "")
+                    Item.Attributes.Add("RG", "")
                 End If
 
                 cboPessoaFisica.Items.Add(Item)
