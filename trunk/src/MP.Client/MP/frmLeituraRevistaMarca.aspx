@@ -102,7 +102,7 @@
                                     </telerik:RadGrid>
                                 </td>
                             </tr>
-                        </table>                        
+                        </table>
                         <table class="tabela">
                             <tr>
                                 <td class="td">
@@ -135,7 +135,7 @@
                                 </telerik:RadTab>
                                 <telerik:RadTab Text="Consulta por Filtros">
                                 </telerik:RadTab>
-                                <telerik:RadTab Text="Radicais">
+                                <telerik:RadTab Text="Radicais" >
                                 </telerik:RadTab>
                             </Tabs>
                         </telerik:RadTabStrip>
@@ -161,15 +161,16 @@
                                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                                 <ItemStyle Width="2%"></ItemStyle>
                                                             </telerik:GridButtonColumn>
-                                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column6" Display="false">
+                                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column6"
+                                                                Display="false">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="IdProcessoDeMarca"
                                                                 UniqueName="column" Visible="false">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column1">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="DataDoDeposito" HeaderText="Data do depósito" UniqueName="column2"
-                                                                DataFormatString="{0:dd/MM/yyyy}">
+                                                            <telerik:GridBoundColumn DataField="DataDoDeposito" HeaderText="Data do depósito"
+                                                                UniqueName="column2" DataFormatString="{0:dd/MM/yyyy}">
                                                                 <ItemStyle Width="15%"></ItemStyle>
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Despacho.CodigoDespacho" HeaderText="Despacho"
@@ -191,107 +192,158 @@
                             </telerik:RadPageView>
                             <telerik:RadPageView ID="RadPageView2" runat="server" SkinID="Vista">
                                 <asp:Panel ID="pnlFiltro" runat="server">
-                            <table class="tabela">
-                                <tr>
-                                    <td class="th3">
-                                        <asp:Label ID="Label1" runat="server" Text="Filtros para a revista"></asp:Label>
-                                    </td>
-                                    <td class="td">
-                                        &nbsp;
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="th3">
-                                        <asp:Label ID="Label2" runat="server" Text="Processo:"></asp:Label>
-                                    </td>
-                                    <td class="td">
-                                        <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64"
-                                            Type="Number">
-                                            <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
-                                            </NumberFormat>
-                                        </telerik:RadNumericTextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="th3">
-                                        <asp:Label ID="Label3" runat="server" Text="Estado:"></asp:Label>
-                                    </td>
-                                    <td class="td">
-                                        <uc3:ctrlUF ID="ctrlUF" runat="server" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="th3">
-                                        <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
-                                    </td>
-                                    <td class="td">
-                                        <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="th3">
-                                        <asp:Label ID="Label5" runat="server" Text="Despacho:"></asp:Label>
-                                    </td>
-                                    <td class="td">
-                                        <uc2:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td">
-                                        &nbsp;
-                                    </td>
-                                    <td class="td">
-                                        <telerik:RadButton ID="btnFiltrar" runat="server" Text="Filtrar" Skin="Vista" OnClick="btnFiltrar_ButtonClick">
-                                        </telerik:RadButton>
-                                        <telerik:RadButton ID="btnLimpar" runat="server" Text="Limpar" Skin="Vista" OnClick="btnLimpar_ButtonClick">
-                                        </telerik:RadButton>
-                                    </td>
-                                </tr>
-                            </table>
-                        </asp:Panel>
-                        <table class="tabela">
+                                    <table class="tabela">
                                         <tr>
                                             <td class="th3">
-                                                <telerik:RadGrid ID="grdFiltros" runat="server" AutoGenerateColumns="False"
-                                                    AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdFiltros_ItemCommand"
-                                                    OnItemCreated="grdFiltros_ItemCreated" OnPageIndexChanged="grdFiltros_PageIndexChanged">
-                                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                                    <MasterTableView GridLines="Both">
-                                                        <RowIndicatorColumn>
-                                                            <HeaderStyle Width="20px" />
-                                                        </RowIndicatorColumn>
-                                                        <ExpandCollapseColumn>
-                                                            <HeaderStyle Width="20px" />
-                                                        </ExpandCollapseColumn>
-                                                        <Columns>
-                                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="DetalharProcesso"
-                                                                FilterImageToolTip="Detalhes" HeaderTooltip="Detalhes" ImageUrl="~/imagens/find.gif"
-                                                                UniqueName="column10">
-                                                            </telerik:GridButtonColumn>
-                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column1">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="DataDeDeposito" HeaderText="Data de depósito" UniqueName="column2"
-                                                                DataFormatString="{0:dd/MM/yyyy}">
-                                                                <ItemStyle Width="15%"></ItemStyle>
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho"
-                                                                UniqueName="column3">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Titular" HeaderText="Titular"
-                                                                UniqueName="column4">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Procurador" HeaderText="Procurador"
-                                                                UniqueName="column5">
-                                                            </telerik:GridBoundColumn>
-                                                        </Columns>
-                                                    </MasterTableView>
-                                                </telerik:RadGrid>
+                                                <asp:Label ID="Label1" runat="server" Text="Filtros para a revista"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label2" runat="server" Text="Processo:"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64"
+                                                    Type="Number">
+                                                    <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
+                                                    </NumberFormat>
+                                                </telerik:RadNumericTextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label3" runat="server" Text="Estado:"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <uc3:ctrlUF ID="ctrlUF" runat="server" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label5" runat="server" Text="Despacho:"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <uc2:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="td">
+                                                &nbsp;
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadButton ID="btnFiltrar" runat="server" Text="Filtrar" Skin="Vista" OnClick="btnFiltrar_ButtonClick">
+                                                </telerik:RadButton>
+                                                <telerik:RadButton ID="btnLimpar" runat="server" Text="Limpar" Skin="Vista" OnClick="btnLimpar_ButtonClick">
+                                                </telerik:RadButton>
                                             </td>
                                         </tr>
                                     </table>
+                                </asp:Panel>
+                                <table class="tabela">
+                                    <tr>
+                                        <td class="th3">
+                                            <telerik:RadGrid ID="grdFiltros" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                                PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdFiltros_ItemCommand"
+                                                OnItemCreated="grdFiltros_ItemCreated" OnPageIndexChanged="grdFiltros_PageIndexChanged">
+                                                <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="DetalharProcesso"
+                                                            FilterImageToolTip="Detalhes" HeaderTooltip="Detalhes" ImageUrl="~/imagens/find.gif"
+                                                            UniqueName="column10">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column1">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="DataDeDeposito" HeaderText="Data de depósito"
+                                                            UniqueName="column2" DataFormatString="{0:dd/MM/yyyy}">
+                                                            <ItemStyle Width="15%"></ItemStyle>
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column3">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Titular" HeaderText="Titular" UniqueName="column4">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Procurador" HeaderText="Procurador" UniqueName="column5">
+                                                        </telerik:GridBoundColumn>
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
+                                        </td>
+                                    </tr>
+                                </table>
                             </telerik:RadPageView>
-                             <telerik:RadPageView ID="RadPageView3" runat="server" SkinID="Vista">
+                            <telerik:RadPageView ID="RadPageView3" runat="server" SkinID="Vista">
                                 <asp:Panel ID="pnlRadicais" runat="server">
+                                    <telerik:RadListView ID="listRadical" runat="server" AllowPaging="True" ItemPlaceholderID="pnlPlaceHoder"
+                                        DataKeyNames="ID" Skin="Vista" OnPageIndexChanged="listRadical_OnPageIndexChanged">
+                                        <LayoutTemplate>
+                                            <asp:Panel ID="pnlPlaceHoder" runat="server" />
+                                            <table class="tabela">
+                                                <tr>
+                                                    <td class="td">
+                                                        <telerik:RadDataPager ID="RadDataPager1" runat="server" PagedControlID="listRadical"
+                                                            PageSize="1">
+                                                            <Fields>
+                                                                <telerik:RadDataPagerButtonField FieldType="FirstPrev" />
+                                                                <telerik:RadDataPagerButtonField FieldType="Numeric" PageButtonCount="5" />
+                                                                <telerik:RadDataPagerButtonField FieldType="NextLast" />
+                                                                <telerik:RadDataPagerTemplatePageField>
+                                                                    <PagerTemplate>
+                                                                        <div style="float: right">
+                                                                            <b>Radical
+                                                                                <asp:Label runat="server" ID="TotalPagesLabel" Text="<%# Container.Owner.TotalRowCount > (Container.Owner.StartRowIndex+Container.Owner.PageSize) ? Container.Owner.StartRowIndex+Container.Owner.PageSize : Container.Owner.TotalRowCount %>" />
+                                                                                de
+                                                                                <asp:Label runat="server" ID="TotalItemsLabel" Text="<%# Container.Owner.TotalRowCount%>" />
+                                                                                <br />
+                                                                            </b>
+                                                                        </div>
+                                                                    </PagerTemplate>
+                                                                </telerik:RadDataPagerTemplatePageField>
+                                                            </Fields>
+                                                        </telerik:RadDataPager>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </LayoutTemplate>
+                                        <ItemTemplate>
+                                            <div style="float: left;">
+                                                <table class="tabela">
+                                                    <tr>
+                                                        <td class="th3">
+                                                            <asp:Label ID="Label5" runat="server" Text="Radical:"></asp:Label>
+                                                        </td>
+                                                        <td class="td">
+                                                            <%# Eval("Nome") %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="th3">
+                                                            <asp:Label ID="Label7" runat="server" Text="NCL:"></asp:Label>
+                                                        </td>
+                                                        <td class="td">
+                                                            <%# Eval("Ncl")%>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </ItemTemplate>
+                                    </telerik:RadListView>
                                 </asp:Panel>
                             </telerik:RadPageView>
                         </telerik:RadMultiPage>
