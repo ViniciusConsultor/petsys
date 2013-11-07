@@ -133,6 +133,39 @@ namespace MP.Servicos.Local
             return listaObjetosLeituraRevistaDeMarcas;
         }
 
+        //public IList<ILeituraRevistaDeMarcas> ObtenhaListaDeMarcasDeClientes(XmlDocument revistaXml)
+        //{
+        //    IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevista = new List<ILeituraRevistaDeMarcas>();
+        //    IList<IProcessoDeMarca> listaDeProcessosComMarcaQueContemRadicalDadastrado = new List<IProcessoDeMarca>();
+
+        //    listaDeProcessosDaRevista = LerTodaRevistaXML(revistaXml);
+
+        //    listaDeProcessosComMarcaQueContemRadicalDadastrado = obtenhaProcessosComMarcaQueContemRadicalDadastrado();
+
+            
+        //}
+
+        //private IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
+        //{
+        //    ServerUtils.setCredencial(_Credencial);
+
+        //    var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+        //    try
+        //    {
+        //        return mapeador.obtenhaProcessosComMarcaQueContemRadicalDadastrado();
+        //    }
+        //    finally
+        //    {
+        //        ServerUtils.libereRecursos();
+        //    }
+        //}
+
+        public IList<ILeituraRevistaDeMarcas> obtenhaTodosOsProcessosDaRevistaDeMarcasXML(XmlDocument revistaXml)
+        {
+            return LerTodaRevistaXML(revistaXml);
+        }
+
         private IList<ILeituraRevistaDeMarcas> LerTodaRevistaXML(XmlDocument revistaXml)
         {
             IList<ILeituraRevistaDeMarcas> listaDeProcessos = new List<ILeituraRevistaDeMarcas>();
@@ -517,6 +550,75 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+        public IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>> obtenhaListaDasMarcasColidentesEClientes
+            (IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevistaComMarcaExistente, IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalCadastrado)
+        {
+            IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
+            IList<ILeituraRevistaDeMarcas> listaDeMarcasDeColidentes = new List<ILeituraRevistaDeMarcas>();
+
+            IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>
+                                        dicionarioDeMarcasColidentesEClientes =
+                                            new Dictionary
+                                                <IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>();
+
+            foreach (var processoDeMarcaDoCliente in listaDeProcessosDeMarcasComRadicalCadastrado)
+            {
+                foreach (var radicalDaMarca in processoDeMarcaDoCliente.Marca.RadicalMarcas)
+                {
+                    if (radicalDaMarca.NCL != null)
+                    {
+                        // pesquisar colidencia com o radical especifico
+
+                        foreach (var processoDaRevista in listaDeProcessosDaRevistaComMarcaExistente)
+                        {
+                            if (processoDaRevista.NCL == radicalDaMarca.NCL.Codigo)
+                            {
+                                if (processoDaRevista.Marca.Contains(radicalDaMarca.DescricaoRadical))
+                                {
+                                    var marcaDeCliente =
+                                        FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+
+                                    var marcaColidente =
+                                        FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+
+                                    marcaDeCliente.Marca = processoDeMarcaDoCliente.Marca.DescricaoDaMarca;
+                                    marcaDeCliente.NCL = processoDeMarcaDoCliente.Marca.NCL.Codigo;
+                                    marcaDeCliente.NumeroDoProcesso = processoDeMarcaDoCliente.Processo.ToString();
+                                    marcaDeCliente.Radical = radicalDaMarca.DescricaoRadical;
+                                    marcaDeCliente.RadicalNCL = radicalDaMarca.NCL.Codigo;
+
+                                    listaDeMarcasDeClientes.Add(marcaDeCliente);
+
+                                    marcaColidente.NCL = processoDaRevista.NCL;
+                                    marcaColidente.Marca = processoDaRevista.Marca;
+                                    marcaColidente.NumeroDoProcesso = processoDaRevista.NumeroDoProcesso;
+
+                                    if (!string.IsNullOrEmpty(processoDaRevista.CodigoDoDespacho))
+                                    {
+                                        marcaColidente.CodigoDoDespacho = processoDaRevista.CodigoDoDespacho;
+                                    }
+                                    else
+                                    {
+                                        marcaColidente.CodigoDoDespacho = null;
+                                    }
+
+                                    listaDeMarcasDeColidentes.Add(marcaColidente);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // pesquisar colidencia, sem dependencia do radical
+                    }
+                }
+            }
+
+            dicionarioDeMarcasColidentesEClientes.Add(listaDeMarcasDeColidentes, listaDeMarcasDeClientes);
+
+            return dicionarioDeMarcasColidentesEClientes;
         }
     }
 }

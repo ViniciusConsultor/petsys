@@ -535,7 +535,58 @@ namespace MP.Client.MP
 
         protected void RadTabStrip1_OnTabClick(object sender, RadTabStripEventArgs e)
         {
-            
+            if (e.Tab.Text.Equals("Radicais"))
+            {
+                var revistaSelecionada = (IRevistaDeMarcas)ViewState[CHAVE_REVISTA_SELECIONADA];
+
+                var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
+
+                IList<ILeituraRevistaDeMarcas> listaDeTodosProcessosDaRevistaXML = new List<ILeituraRevistaDeMarcas>();
+                IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalCadastrado = new List<IProcessoDeMarca>();
+                IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalAdiconadoAMarca = new List<IProcessoDeMarca>();
+
+                IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevistaComMarcaExistente = new List<ILeituraRevistaDeMarcas>();
+                
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                {
+                    listaDeTodosProcessosDaRevistaXML = servico.obtenhaTodosOsProcessosDaRevistaDeMarcasXML(xmlRevista);
+                }
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                {
+                    listaDeProcessosDeMarcasComRadicalCadastrado = servico.obtenhaProcessosComMarcaQueContemRadicalDadastrado();
+                }
+
+                // código feito para adicionar a lista de radicais na marca, pois a marca não faz relação com
+                // o objeto IRadicalMarcas
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                {
+                    listaDeProcessosDeMarcasComRadicalAdiconadoAMarca = servico.ObtenhaProcessoComRadicailAdicionadoNaMarca(listaDeProcessosDeMarcasComRadicalCadastrado);
+                }
+
+                foreach (var processoDaRevista in listaDeTodosProcessosDaRevistaXML)
+                {
+                    if(!string.IsNullOrEmpty(processoDaRevista.Marca))
+                    {
+                        listaDeProcessosDaRevistaComMarcaExistente.Add(processoDaRevista);
+                    }
+                }
+
+                // obtendo informações para o preenchimento das grids, com as marcas de clientes e as marcas colidentes da revista
+
+                IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
+                IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentesDaRevista = new List<ILeituraRevistaDeMarcas>();
+
+                IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>
+                                        dicionarioDeMarcasColidentesEClientes =
+                                            new Dictionary
+                                                <IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>();
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                {
+                    dicionarioDeMarcasColidentesEClientes = servico.obtenhaListaDasMarcasColidentesEClientes(listaDeProcessosDaRevistaComMarcaExistente, listaDeProcessosDeMarcasComRadicalAdiconadoAMarca);
+                }
+            }
         }
     }
 }

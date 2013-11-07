@@ -197,5 +197,39 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.obtenhaProcessosComMarcaQueContemRadicalDadastrado();
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
+        public IList<IProcessoDeMarca> ObtenhaProcessoComRadicailAdicionadoNaMarca(IList<IProcessoDeMarca> processos)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.ObtenhaProcessoComRadicailAdicionadoNaMarca(processos);
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }
