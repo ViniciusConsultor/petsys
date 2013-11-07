@@ -18,6 +18,8 @@
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/processarRevista.gif"
                 CommandName="btnLerRevista" CausesValidation="False" CommandArgument="OPE.MP.007.0005" />
+            <telerik:RadToolBarButton runat="server" Text="Imprimir marcas" ImageUrl="~/imagens/imprimir.png"
+                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.MP.007.0005" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>

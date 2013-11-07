@@ -318,11 +318,23 @@ namespace MP.Client.MP
             return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmLeituraRevistaMarca.aspx");
         }
 
+        private string ObtenhaURLRelatorioDeMarcas()
+        {
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmRelatorioDeProcessosDeMarcas.aspx");
+        }
+
         private void AbraTelaDeLeituraDaRevista()
         {
             var URL = ObtenhaURLLeituraDeRevistaDeMarca();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanela(URL, "Leitura da revista de marca", 800, 550), false);
+        }
+
+        private void AbraTelaDeRelatorioDeMarcas()
+        {
+            var URL = ObtenhaURLRelatorioDeMarcas();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanelaModal(URL, "Relatório de processo de marcas", 640, 480), false);
         }
 
         private void Recarregue()
@@ -343,7 +355,9 @@ namespace MP.Client.MP
                 case "btnLerRevista":
                     AbraTelaDeLeituraDaRevista();
                     break;
-
+                case "btnImprimir" :
+                    AbraTelaDeRelatorioDeMarcas();
+                    break;
             }
         }
 
@@ -399,7 +413,7 @@ namespace MP.Client.MP
                     var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDeMarca.aspx",
                                             "?Id=", id);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.ExibeJanela(url,
+                                                        UtilidadesWeb.ExibeJanelaModal(url,
                                                                                        "Modificar processo de marca",
                                                                                        800, 550), false);
                     break;

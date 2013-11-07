@@ -145,8 +145,8 @@ namespace MP.Mapeadores
             processoDeMarca.DataDoDeposito = UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO");
             processoDeMarca.DataDeConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO");
             processoDeMarca.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSOEHTERCEIRO");
-            
-            if (!UtilidadesDePersistencia.EhNulo(leitor,"IDPROCURADOR"))
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "IDPROCURADOR"))
                 processoDeMarca.Procurador = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCURADOR"));
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "IDDESPACHO"))
@@ -156,7 +156,7 @@ namespace MP.Mapeadores
                 processoDeMarca.TextoComplementarDoDespacho = UtilidadesDePersistencia.GetValorString(leitor,
                                                                                                       "TXTCOMPLDESPACHO");
             if (!UtilidadesDePersistencia.EhNulo(leitor, "APOSTILA"))
-                processoDeMarca.Apostila = UtilidadesDePersistencia.GetValorString(leitor,"APOSTILA");
+                processoDeMarca.Apostila = UtilidadesDePersistencia.GetValorString(leitor, "APOSTILA");
             processoDeMarca.Ativo = UtilidadesDePersistencia.GetValorBooleano(leitor, "ATIVO");
             return processoDeMarca;
         }
@@ -238,21 +238,64 @@ namespace MP.Mapeadores
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
-            
+
             IList<long> listaDeProcessos = new List<long>();
 
             using (var leitor = DBHelper.obtenhaReader("SELECT PROCESSO FROM MP_PROCESSOMARCA ORDER BY PROCESSO"))
                 try
                 {
                     while (leitor.Read())
-                    listaDeProcessos.Add(UtilidadesDePersistencia.GetValorLong(leitor, "PROCESSO"));
+                        listaDeProcessos.Add(UtilidadesDePersistencia.GetValorLong(leitor, "PROCESSO"));
                 }
                 finally
                 {
                     leitor.Close();
                 }
-               
+
             return listaDeProcessos;
+        }
+
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade, IList<string> IDsDosDespachos)
+        {
+            var sql = new StringBuilder();
+
+            sql.AppendLine("SELECT MP_PROCESSOMARCA.IDPROCESSO, MP_PROCESSOMARCA.IDMARCA IDDAMARCA, MP_PROCESSOMARCA.PROCESSO, ");
+            sql.AppendLine("MP_PROCESSOMARCA.DATADECADASTRO, MP_PROCESSOMARCA.DATACONCESSAO, MP_PROCESSOMARCA.PROCESSOEHTERCEIRO, MP_PROCESSOMARCA.IDDESPACHO,");
+            sql.AppendLine("MP_PROCESSOMARCA.IDPROCURADOR, MP_PROCESSOMARCA.DATADODEPOSITO, MP_PROCESSOMARCA.TXTCOMPLDESPACHO, ");
+            sql.AppendLine("MP_PROCESSOMARCA.APOSTILA, MP_PROCESSOMARCA.ATIVO, ");
+            sql.AppendLine("MP_MARCAS.IDMARCA, MP_MARCAS.CODIGONCL, MP_MARCAS.CODIGOAPRESENTACAO, MP_MARCAS.IDCLIENTE, MP_MARCAS.CODIGONATUREZA");
+            sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS");
+            sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA ");
+
+            if (IDCliente.HasValue)
+            {
+                sql.AppendLine(" AND MP_MARCAS.IDCLIENTE = " + IDCliente.Value +  " ");
+            }
+
+            if (IDsDosDespachos != null && IDsDosDespachos.Count > 0)
+            {
+                sql.AppendLine(" AND" +  UtilidadesDePersistencia.MontaFiltro<string>("MP_PROCESSOMARCA.IDDESPACHO", IDsDosDespachos, "OR",
+                                                                    false) +  " ");
+            }
+
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var processos = new List<IProcessoDeMarca>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+                try
+                {
+                    while (leitor.Read())
+                        processos.Add(MontaProcessoDeMarca(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            return processos;
+
         }
     }
 }

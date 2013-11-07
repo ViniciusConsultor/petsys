@@ -13,7 +13,7 @@ using Telerik.Web.UI;
 
 namespace MP.Client.MP
 {
-    public partial class cdProcessoDePatente : System.Web.UI.Page
+    public partial class cdProcessoDePatente : SuperPagina
     {
         private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCESSO_DE_PATENTE";
         private const string CHAVE_ID = "CHAVE_ID_PROCESSO_DE_PATENTE";
@@ -272,6 +272,16 @@ namespace MP.Client.MP
         protected void rblEHPCT_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             MostraPCT((sender as RadioButtonList).SelectedValue == "1");
+        }
+
+        protected override string ObtenhaIdFuncao()
+        {
+            return "";
+        }
+
+        protected override RadToolBar ObtenhaBarraDeFerramentas()
+        {
+            return rtbToolBar;
         }
     }
 }

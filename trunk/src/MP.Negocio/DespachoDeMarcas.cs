@@ -14,5 +14,24 @@ namespace MP.Negocio
         public string Providencia { get; set; }
         public bool DesativaProcesso { get; set; }
         public bool DesativaPesquisaDeColidencia {get;set;}
+
+        public override bool Equals(object obj)
+        {
+            if (IdDespacho.HasValue)
+            {
+                var objAComparar = obj as IDespachoDeMarcas;
+
+                if (!objAComparar.IdDespacho.HasValue) return false;
+
+                return objAComparar.IdDespacho.Value.Equals(IdDespacho.Value);
+            }
+
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return IdDespacho.HasValue ? IdDespacho.Value.GetHashCode() : base.GetHashCode();
+        }
     }
 }
