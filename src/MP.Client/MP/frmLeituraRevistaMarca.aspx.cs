@@ -527,5 +527,10 @@ namespace MP.Client.MP
         {
             UtilidadesWeb.PaginacaoDataGrid(ref grdFiltros, Session[CHAVE_PROCESSOS_REUSLTADO_FILTRO], e);
         }
+
+        protected void listRadical_OnPageIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
