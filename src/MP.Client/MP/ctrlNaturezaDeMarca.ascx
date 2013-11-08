@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlNaturezaDeMarca.ascx.cs" Inherits="MP.Client.MP.ctrlNaturezaDeMarca" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadComboBox ID="cboNatureza" runat="server" EmptyMessage="Selecione uma natureza"
+    EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
+    ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
     Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
     <HeaderTemplate>
         <table width="96%">
