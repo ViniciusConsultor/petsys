@@ -34,7 +34,16 @@ namespace MP.Client.MP
         public string Codigo
         {
             get { return cboNatureza.SelectedValue; }
-            set { cboNatureza.SelectedValue = value; }
+            set
+            {
+                var natureza = NaturezaDeMarca.ObtenhaPorCodigo(Convert.ToInt32(value));
+
+                if (natureza != null)
+                {
+                    cboNatureza.SelectedValue = natureza.Codigo.ToString();
+                    cboNatureza.Text = natureza.Nome;
+                }
+            }
         }
 
 

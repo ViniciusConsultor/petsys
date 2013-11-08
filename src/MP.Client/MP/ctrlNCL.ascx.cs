@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Compartilhados.Componentes.Web;
+using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
 using Telerik.Web.UI;
 
@@ -34,7 +35,18 @@ namespace MP.Client.MP
         public string Codigo
         {
             get { return cboNCL.SelectedValue; }
-            set { cboNCL.SelectedValue = value; }
+            set
+            {
+                var ncl = NCL.ObtenhaPorCodigo(value);
+
+                if (ncl !=null)
+                {
+                    cboNCL.SelectedValue = value;
+                    cboNCL.Text = value;
+                }
+
+                
+            }
         }
 
 

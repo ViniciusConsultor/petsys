@@ -109,8 +109,10 @@ namespace MP.Mapeadores
 
             if (!string.IsNullOrEmpty(descricaoDaMarca))
             {
-                sql.Append(string.Concat("WHERE DescricaoDaMarca LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoDaMarca), "%' "));
+                sql.Append(string.Concat("WHERE DESCRICAO_MARCA LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoDaMarca), "%' "));
             }
+
+            sql.AppendLine(" ORDER BY DescricaoDaMarca");
 
             return obtenhaMarca(sql, quantidadeMaximaDeRegistros);
         }
