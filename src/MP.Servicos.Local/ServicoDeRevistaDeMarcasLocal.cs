@@ -565,6 +565,11 @@ namespace MP.Servicos.Local
 
             foreach (var processoDeMarcaDoCliente in listaDeProcessosDeMarcasComRadicalCadastrado)
             {
+                bool marcaAdicionada = false;
+                var marcaDeCliente = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+
+                marcaDeCliente.IdLeitura = GeradorDeID.getInstancia().getProximoID();
+
                 foreach (var radicalDaMarca in processoDeMarcaDoCliente.Marca.RadicalMarcas)
                 {
                     if (radicalDaMarca.NCL != null)
@@ -577,20 +582,23 @@ namespace MP.Servicos.Local
                             {
                                 if (processoDaRevista.Marca.Contains(radicalDaMarca.DescricaoRadical))
                                 {
-                                    var marcaDeCliente =
-                                        FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+                                    if(!marcaAdicionada)
+                                    {
+                                        marcaDeCliente.Marca = processoDeMarcaDoCliente.Marca.DescricaoDaMarca;
+                                        marcaDeCliente.NCL = processoDeMarcaDoCliente.Marca.NCL.Codigo;
+                                        marcaDeCliente.NumeroDoProcesso = processoDeMarcaDoCliente.Processo.ToString();
+                                        marcaDeCliente.Radical = radicalDaMarca.DescricaoRadical;
+                                        marcaDeCliente.RadicalNCL = radicalDaMarca.NCL.Codigo;
+
+                                        listaDeMarcasDeClientes.Add(marcaDeCliente);
+
+                                        marcaAdicionada = true;
+                                    }
 
                                     var marcaColidente =
                                         FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
 
-                                    marcaDeCliente.Marca = processoDeMarcaDoCliente.Marca.DescricaoDaMarca;
-                                    marcaDeCliente.NCL = processoDeMarcaDoCliente.Marca.NCL.Codigo;
-                                    marcaDeCliente.NumeroDoProcesso = processoDeMarcaDoCliente.Processo.ToString();
-                                    marcaDeCliente.Radical = radicalDaMarca.DescricaoRadical;
-                                    marcaDeCliente.RadicalNCL = radicalDaMarca.NCL.Codigo;
-
-                                    listaDeMarcasDeClientes.Add(marcaDeCliente);
-
+                                    marcaColidente.IdLeitura = marcaDeCliente.IdLeitura;
                                     marcaColidente.NCL = processoDaRevista.NCL;
                                     marcaColidente.Marca = processoDaRevista.Marca;
                                     marcaColidente.NumeroDoProcesso = processoDaRevista.NumeroDoProcesso;
@@ -612,6 +620,37 @@ namespace MP.Servicos.Local
                     else
                     {
                         // pesquisar colidencia, sem dependencia do radical
+
+                        foreach (var processoDaRevista in listaDeProcessosDaRevistaComMarcaExistente)
+                        {
+                            if (processoDaRevista.Marca.Contains(radicalDaMarca.DescricaoRadical))
+                            {
+                                if (!marcaAdicionada)
+                                {
+                                    marcaDeCliente.Marca = processoDeMarcaDoCliente.Marca.DescricaoDaMarca;
+                                    marcaDeCliente.NCL = processoDeMarcaDoCliente.Marca.NCL.Codigo;
+                                    marcaDeCliente.NumeroDoProcesso = processoDeMarcaDoCliente.Processo.ToString();
+                                    marcaDeCliente.Radical = radicalDaMarca.DescricaoRadical;
+                                    marcaDeCliente.RadicalNCL = "Todos";
+
+                                    listaDeMarcasDeClientes.Add(marcaDeCliente);
+
+                                    marcaAdicionada = true;
+                                }
+
+                                var marcaColidente =
+                                    FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+
+                                marcaColidente.IdLeitura = marcaDeCliente.IdLeitura;
+                                marcaColidente.NCL = processoDaRevista.NCL;
+                                marcaColidente.Marca = processoDaRevista.Marca;
+                                marcaColidente.NumeroDoProcesso = processoDaRevista.NumeroDoProcesso;
+
+                                marcaColidente.CodigoDoDespacho = !string.IsNullOrEmpty(processoDaRevista.CodigoDoDespacho) ? processoDaRevista.CodigoDoDespacho : null;
+
+                                listaDeMarcasDeColidentes.Add(marcaColidente);
+                            }
+                        }
                     }
                 }
             }

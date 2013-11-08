@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -26,6 +27,9 @@ namespace MP.Client.MP
         private const string CHAVE_PROCESSOS_DA_REVISTA = "CHAVE_PROCESSOS_DA_REVISTA";
         private const string CHAVE_REVISTA_SELECIONADA = "CHAVE_REVISTA_SELECIONADA";
         public const string CHAVE_PROCESSOS_REUSLTADO_FILTRO = "CHAVE_PROCESSOS_REUSLTADO_FILTRO";
+        public const string CHAVE_MARCAS_CLIENTES_COM_RADICAL = "CHAVE_MARCAS_CLIENTES_COM_RADICAL";
+        public const string CHAVE_MARCAS_COLIDENTES = "CHAVE_MARCAS_COLIDENTES";
+        public const string CHAVE_RADICAIS_CLIENTES = "CHAVE_RADICAIS_CLIENTES";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -528,9 +532,36 @@ namespace MP.Client.MP
             UtilidadesWeb.PaginacaoDataGrid(ref grdFiltros, Session[CHAVE_PROCESSOS_REUSLTADO_FILTRO], e);
         }
 
-        protected void listRadical_OnPageIndexChanged(object sender, EventArgs e)
+        protected void listRadical_OnPageIndexChanged(object sender, RadListViewPageChangedEventArgs e)
         {
+            listRadical.CurrentPageIndex = e.NewPageIndex;
+            listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
+            listRadical.DataBind();
+
+            var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura.Value;
+
+            IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasDeClientes =
+                new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
+
+            IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
             
+            dicionarioDeMarcasDeClientes = (IDictionary<long, IList<ILeituraRevistaDeMarcas>>) ViewState[CHAVE_MARCAS_CLIENTES_COM_RADICAL];
+
+            listaDeMarcasDeClientes = dicionarioDeMarcasDeClientes[idLeitura];
+
+            CarregaGridMarcasCliente(listaDeMarcasDeClientes);
+
+            IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasColidentes =
+                new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
+
+            IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentes = new List<ILeituraRevistaDeMarcas>();
+
+            dicionarioDeMarcasColidentes =
+                (IDictionary<long, IList<ILeituraRevistaDeMarcas>>) ViewState[CHAVE_MARCAS_COLIDENTES];
+
+            listaDeMarcasColidentes = dicionarioDeMarcasColidentes[idLeitura];
+
+            CarregaGridMarcasColidentes(listaDeMarcasColidentes);
         }
 
         protected void RadTabStrip1_OnTabClick(object sender, RadTabStripEventArgs e)
@@ -586,6 +617,144 @@ namespace MP.Client.MP
                 {
                     dicionarioDeMarcasColidentesEClientes = servico.obtenhaListaDasMarcasColidentesEClientes(listaDeProcessosDaRevistaComMarcaExistente, listaDeProcessosDeMarcasComRadicalAdiconadoAMarca);
                 }
+
+                if (dicionarioDeMarcasColidentesEClientes.Count > 0)
+                CarregaListaDeRadicais(dicionarioDeMarcasColidentesEClientes);
+                else
+                {
+                    // não existe marcas colidentes
+                }
+            }
+        }
+
+        private void CarregaListaDeRadicais(IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasColidentesEClientes)
+        {
+            IList<ILeituraRevistaDeMarcas> listaDeRadicaisDeClientes = new List<ILeituraRevistaDeMarcas>();
+
+            IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasDeClientes =
+                new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
+
+            IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasDeColidentes =
+                new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
+
+            bool marcaDeClienteCarregadaPrimeiraVez = false;
+            bool marcaColidenteCarregadaPrimeiraVez = false;
+
+            foreach (IList<ILeituraRevistaDeMarcas> listaObjetoLeitura in dicionarioDeMarcasColidentesEClientes.Values)
+            {
+                listaDeRadicaisDeClientes = listaObjetoLeitura;
+
+                foreach (var objetoLeitura in listaObjetoLeitura)
+                {
+                    IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
+                    listaDeMarcasDeClientes.Add(objetoLeitura);
+                    dicionarioDeMarcasDeClientes.Add(objetoLeitura.IdLeitura.Value, listaDeMarcasDeClientes);
+
+                    if (!marcaDeClienteCarregadaPrimeiraVez)
+                    {
+                        CarregaGridMarcasCliente(listaDeMarcasDeClientes);
+                        marcaDeClienteCarregadaPrimeiraVez = true;
+                    }
+                }
+            }
+
+            foreach (var listaMarcasColidentes in dicionarioDeMarcasColidentesEClientes.Keys)
+            {
+                foreach (var marcaColidente in listaMarcasColidentes)
+                {
+                    IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentes = new List<ILeituraRevistaDeMarcas>();
+                    listaDeMarcasColidentes.Add(marcaColidente);
+
+                    if (dicionarioDeMarcasDeColidentes.ContainsKey(marcaColidente.IdLeitura.Value))
+                    {
+                        dicionarioDeMarcasDeColidentes[marcaColidente.IdLeitura.Value].Add(marcaColidente);
+                    }
+                    else
+                    {
+                        dicionarioDeMarcasDeColidentes.Add(marcaColidente.IdLeitura.Value, listaDeMarcasColidentes);
+                    }
+                    
+                    //if (!marcaColidenteCarregadaPrimeiraVez)
+                    //{
+                    //    CarregaGridMarcasColidentes(listaDeMarcasColidentes);
+                    //    marcaColidenteCarregadaPrimeiraVez = true;
+                    //}
+                }
+            }
+            
+            listRadical.DataSource = listaDeRadicaisDeClientes;
+            listRadical.DataBind();
+            ViewState.Add(CHAVE_RADICAIS_CLIENTES, listaDeRadicaisDeClientes);
+
+            ViewState.Add(CHAVE_MARCAS_CLIENTES_COM_RADICAL, dicionarioDeMarcasDeClientes);
+
+            ViewState.Add(CHAVE_MARCAS_COLIDENTES, dicionarioDeMarcasDeColidentes);
+            
+            var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura;
+
+            if (idLeitura != null)
+                CarregaGridMarcasColidentes(dicionarioDeMarcasDeColidentes[idLeitura.Value]);
+        }
+
+        private void CarregaGridMarcasCliente(IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes)
+        {
+            grdMarcasClientes.MasterTableView.DataSource = listaDeMarcasDeClientes;
+            grdMarcasClientes.DataBind();
+        }
+
+        private void CarregaGridMarcasColidentes(IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentes)
+        {
+            grdMarcasColidentes.MasterTableView.DataSource = listaDeMarcasColidentes;
+            grdMarcasColidentes.DataBind();
+        }
+
+        protected void grdMarcasClientes_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            long id = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                id = Convert.ToInt64((e.Item.Cells[2].Text));
+        }
+
+        protected void grdMarcasClientes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasClientes, ViewState[CHAVE_MARCAS_CLIENTES_COM_RADICAL], e);
+        }
+
+        protected void grdMarcasClientes_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdMarcasClientes.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
+        }
+
+        protected void grdMarcasColidentes_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            long id = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                id = Convert.ToInt64((e.Item.Cells[2].Text));
+        }
+
+        protected void grdMarcasColidentes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasColidentes, ViewState[CHAVE_MARCAS_COLIDENTES], e);
+        }
+
+        protected void grdMarcasColidentes_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdMarcasColidentes.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
             }
         }
     }
