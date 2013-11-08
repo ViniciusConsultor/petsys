@@ -36,7 +36,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat(processoDeMarca.Processo, ", "));
             sql.Append(String.Concat(processoDeMarca.DataDoCadastro.ToString("yyyyMMdd"), ", "));
             sql.Append(processoDeMarca.DataDoDeposito.HasValue
-                           ? String.Concat(processoDeMarca.DataDeConcessao.Value.ToString("yyyyMMdd"), ", ")
+                           ? String.Concat(processoDeMarca.DataDoDeposito.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
             sql.Append(processoDeMarca.DataDeConcessao.HasValue
                            ? String.Concat(processoDeMarca.DataDeConcessao.Value.ToString("yyyyMMdd"), ", ")
