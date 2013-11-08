@@ -30,16 +30,102 @@ namespace MP.Migrador
         private IDictionary<string, IGrupoDeAtividade> gruposDeAtividades;
         private IDictionary<string, IMunicipio> municipios;
         private IDictionary<string, ITipoDeEndereco> tiposDeEndereco;
+        private IDictionary<string, IDespachoDeMarcas> despachoDeMarcas;
+
         private IDictionary<string, IPessoa> pessoasMigradas = new Dictionary<string, IPessoa>(); 
+        private IDictionary<string, IMarcas> marcasMigradas = new Dictionary<string, IMarcas>();
         private IDictionary<string, string> grupoDeAtividadeDoContato = new Dictionary<string, string>();
         private HashSet<string> idsDeClientesCadastros = new HashSet<string>();  
+        private HashSet<string> idsDeProduradoresCadastrados = new HashSet<string>();
 
         
         private void btnMigrar_Click(object sender, EventArgs e)
         {
             MigrePessoas();
             MigreMarcas();
+            MigreProcessoDeMarca();
+
             MessageBox.Show("Dados migrados com sucesso!");
+        }
+
+        private void MigreProcessoDeMarca()
+        {
+            DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSolureg = new OleDbConnection(txtStringDeConexaoSolureg.Text))
+            {
+                conexaoSolureg.Open();
+
+                var sql =
+                    "select numero_processo, DATA_PROCESSO, PROCESSO_DE_TERCEIRO, IDCONTATO_PROCURADOR, IDDESPACHO_ATUAL, " +
+                    "CODIGO_DESPACHO, idmarca " +
+                    "from processo " +
+                    "left join DESPACHO on IDDESPACHO = IDDESPACHO_ATUAL";
+
+                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSolureg))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSolureg.Close();
+            }
+
+              var dados = dataSetDadosLegados.Tables[0];
+            
+              foreach (DataRow linha in dados.Rows)
+              {
+                  var processo = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDeMarca>();
+                  
+                  if (!Information.IsDBNull(linha["DATA_PROCESSO"]))
+                  {
+                      var data = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DATA_PROCESSO"));
+
+                    processo.DataDoCadastro = data;
+                    processo.DataDoDeposito = data;
+                  }
+                  else
+                    processo.DataDoCadastro = DateTime.Now;
+                  
+                  if (!Information.IsDBNull(linha["CODIGO_DESPACHO"]))
+                  {
+                      var codigoDoDespacho = UtilidadesDePersistencia.GetValor(linha, "CODIGO_DESPACHO");
+
+                      if (codigoDoDespacho.Length ==1 ) codigoDoDespacho = "00" + codigoDoDespacho;
+
+                      if (codigoDoDespacho.Length ==2 ) codigoDoDespacho = "0" + codigoDoDespacho;
+
+                      processo.Despacho = despachoDeMarcas[codigoDoDespacho];
+
+                  }
+
+                  if (!Information.IsDBNull(linha["numero_processo"]))
+                      processo.Processo = UtilidadesDePersistencia.GetValorLong(linha, "numero_processo");
+                  else
+                      processo.Processo = -1;
+
+                  processo.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(linha, "PROCESSO_DE_TERCEIRO");
+
+                  if (!Information.IsDBNull(linha["IDCONTATO_PROCURADOR"]))
+                      processo.Procurador = CadastreProcurador(pessoasMigradas[UtilidadesDePersistencia.GetValor(linha, "IDCONTATO_PROCURADOR")]);
+
+                  processo.Marca = marcasMigradas[UtilidadesDePersistencia.GetValor(linha, "idmarca")];
+
+                  using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                      servico.Inserir(processo);
+              }
+        }
+
+        private IProcurador CadastreProcurador(IPessoa pessoa)
+        {
+            var procurador = FabricaGenerica.GetInstancia().CrieObjeto<IProcurador>(new object[] { pessoa });
+            
+            if (!idsDeProduradoresCadastrados.Contains(pessoa.ID.Value.ToString()))
+            {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
+                    servico.Inserir(procurador);
+
+                idsDeProduradoresCadastrados.Add(pessoa.ID.Value.ToString());
+            }
+
+            return procurador;
         }
 
         private void MigreMarcas()
@@ -66,8 +152,7 @@ namespace MP.Migrador
 
             var dados = dataSetDadosLegados.Tables[0];
 
-            var marcas = new List<IMarcas>();
-
+            
             foreach (DataRow linha in dados.Rows)
             {
                 var marca = FabricaGenerica.GetInstancia().CrieObjeto<IMarcas>();
@@ -122,7 +207,7 @@ namespace MP.Migrador
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
                 {
                     servico.Inserir(marca);
-                    marcas.Add(marca);
+                    marcasMigradas.Add  (UtilidadesDePersistencia.GetValor(linha,"idmarca"), marca);
                 }
             }
         }
@@ -326,7 +411,7 @@ namespace MP.Migrador
             {
                 var telefone = FabricaGenerica.GetInstancia().CrieObjeto<ITelefone>();
 
-                var numero = ObtenhaApenasNumerosDoTelefone(UtilidadesDePersistencia.GetValor(linha, "num_telefone"));
+                var numero = ObtenhaApenasNumeros(UtilidadesDePersistencia.GetValor(linha, "num_telefone"));
 
                 short DDD = 0;
                 long Numero;
@@ -383,6 +468,7 @@ namespace MP.Migrador
             CarregueGruposDeAtividade();
             CarregueMunicipios();
             CarregueTiposDeEndereco();
+            CarregueDespachosDeMarcas();
         }
 
         private void CarregueGruposDeAtividade()
@@ -490,6 +576,39 @@ namespace MP.Migrador
                 tipo.Nome = UtilidadesDePersistencia.GetValor(linha, "NOME");
 
                 tiposDeEndereco.Add(tipo.Nome, tipo);
+            }
+        }
+
+        private void CarregueDespachosDeMarcas()
+        {
+            despachoDeMarcas = new Dictionary<string, IDespachoDeMarcas>();
+
+            var conexao = FabricaDeContexto.GetInstancia().GetContextoAtual().Conexao;
+
+            DataSet dataSet = new DataSet();
+
+            using (var conexaoPadrao = new OleDbConnection("Provider=SQLOLEDB.1;" + conexao.StringDeConexao))
+            {
+                conexaoPadrao.Open();
+
+                var sql = "select * from mp_despacho_marca ";
+
+                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoPadrao))
+                    data.Fill(dataSet);
+
+                conexaoPadrao.Close();
+            }
+
+            var dados = dataSet.Tables[0];
+
+            foreach (DataRow linha in dados.Rows)
+            {
+                var despacho = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
+
+                despacho.IdDespacho = UtilidadesDePersistencia.GetValorLong(linha, "IDDESPACHO");
+                despacho.CodigoDespacho = UtilidadesDePersistencia.GetValor(linha, "CODIGO_DESPACHO");
+
+                despachoDeMarcas.Add(despacho.CodigoDespacho, despacho);
             }
         }
 
@@ -660,7 +779,7 @@ namespace MP.Migrador
             return municipios[MunicipioSTR + "|" + uf];
         }
 
-        private string ObtenhaApenasNumerosDoTelefone(string NumeroStrDesformatado )
+        private string ObtenhaApenasNumeros(string NumeroStrDesformatado )
         {
             var NumeroAux = new StringBuilder();
 
@@ -669,5 +788,24 @@ namespace MP.Migrador
 
             return Convert.ToInt64(NumeroAux.ToString()).ToString();
         }
+
+
+        private DateTime ObtenhaData(string dataStr)
+        {
+            var datanumero = ObtenhaApenasNumeros(Strings.Mid(dataStr, 1, 10));
+
+            if (datanumero.Length == 7)
+                datanumero = "0" + datanumero;
+
+            datanumero = Strings.Mid(datanumero, 1, 8);
+
+            
+
+            var ano = Convert.ToInt32(Strings.Mid(datanumero, 5, 4));
+            var mes = Convert.ToInt32(Strings.Mid(datanumero, 3, 2));
+            var dia = Convert.ToInt32(Strings.Mid(datanumero, 1, 2));
+            return new DateTime(ano, mes, dia);
+        }
+
     }
 }
