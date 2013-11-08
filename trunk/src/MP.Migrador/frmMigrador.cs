@@ -11,8 +11,11 @@ using Compartilhados;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.Core.Negocio.Documento;
+using Compartilhados.Interfaces.Core.Negocio.Telefone;
 using Compartilhados.Interfaces.Core.Servicos;
 using Core.Interfaces.Servicos;
+using MP.Interfaces.Negocio;
+using MP.Interfaces.Servicos;
 using Microsoft.VisualBasic;
 
 namespace MP.Migrador
@@ -26,11 +29,124 @@ namespace MP.Migrador
 
         private IDictionary<string, IGrupoDeAtividade> gruposDeAtividades;
         private IDictionary<string, IMunicipio> municipios;
+        private IDictionary<string, ITipoDeEndereco> tiposDeEndereco;
+        private IDictionary<string, IPessoa> pessoasMigradas = new Dictionary<string, IPessoa>(); 
+        private IDictionary<string, string> grupoDeAtividadeDoContato = new Dictionary<string, string>();
+        private HashSet<string> idsDeClientesCadastros = new HashSet<string>();  
 
+        
         private void btnMigrar_Click(object sender, EventArgs e)
         {
             MigrePessoas();
+            MigreMarcas();
             MessageBox.Show("Dados migrados com sucesso!");
+        }
+
+        private void MigreMarcas()
+        {
+            DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSolureg = new OleDbConnection(txtStringDeConexaoSolureg.Text))
+            {
+                conexaoSolureg.Open();
+
+                var sql = "select idmarca, codigo_ncl, descricao_apres, descricao_nat, idcontato, " +
+	                      "descricao_marca, especificacao_prod_serv, imagem_marca, observacao_marca, idclasse, " +
+	                      "idclasse_item1, idclasse_item2, idclasse_item3 "+
+                          "from marcas " +
+                          "inner join ncl on marcas.idncl = ncl.idncl " + 
+                          "inner join apresentacao on marcas.idapresentacao = apresentacao.idapresentacao " + 
+                          "inner join natureza on marcas.idnatureza = natureza.idnatureza";
+
+                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSolureg))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSolureg.Close();
+            }
+
+            var dados = dataSetDadosLegados.Tables[0];
+
+            var marcas = new List<IMarcas>();
+
+            foreach (DataRow linha in dados.Rows)
+            {
+                var marca = FabricaGenerica.GetInstancia().CrieObjeto<IMarcas>();
+                IGrupoDeAtividade grupoDeAtividade = null;
+
+                if (grupoDeAtividadeDoContato.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "idcontato")))
+                {
+                    var descricaoDoGrupo = grupoDeAtividadeDoContato[UtilidadesDePersistencia.GetValor(linha, "idcontato")].ToUpper().Trim();
+
+                    if (descricaoDoGrupo.Equals("COMERCIO")) descricaoDoGrupo = "COMÉRCIO";
+
+                    if (descricaoDoGrupo.Equals("MEDICO E FARMACÊUTICO")) descricaoDoGrupo = "MÉDICO E FARMACÊUTICO";
+                    grupoDeAtividade = gruposDeAtividades[descricaoDoGrupo];
+                }
+
+                marca.Cliente = CadastreCliente(pessoasMigradas[UtilidadesDePersistencia.GetValor(linha, "idcontato")], grupoDeAtividade);
+                marca.Apresentacao = Apresentacao.ObtenhaPorNome(UtilidadesDePersistencia.GetValor(linha, "descricao_apres").Trim());
+
+                if (!Information.IsDBNull(linha["descricao_marca"]))
+                    marca.DescricaoDaMarca = UtilidadesDePersistencia.GetValor(linha, "descricao_marca").Trim();
+
+                if (!Information.IsDBNull(linha["especificacao_prod_serv"]))
+                    marca.EspecificacaoDeProdutosEServicos = UtilidadesDePersistencia.GetValor(linha, "especificacao_prod_serv").Trim();
+
+                if (!Information.IsDBNull(linha["imagem_marca"]))
+                    marca.ImagemDaMarca = UtilidadesDePersistencia.GetValor(linha, "imagem_marca");
+
+                var codigoNcl = UtilidadesDePersistencia.GetValor(linha, "codigo_ncl");
+
+                if (codigoNcl.Length == 1) codigoNcl = "0" + codigoNcl;
+
+                marca.NCL = NCL.ObtenhaPorCodigo(codigoNcl);
+
+                if (!Information.IsDBNull(linha["idclasse"]))
+                    marca.CodigoDaClasse = UtilidadesDePersistencia.getValorInteger(linha, "idclasse");
+
+                if (!Information.IsDBNull(linha["idclasse_item1"]))
+                    marca.CodigoDaSubClasse1 = UtilidadesDePersistencia.getValorInteger(linha, "idclasse_item1");
+
+                if (!Information.IsDBNull(linha["idclasse_item2"]))
+                    marca.CodigoDaSubClasse2 = UtilidadesDePersistencia.getValorInteger(linha, "idclasse_item2");
+
+                if (!Information.IsDBNull(linha["idclasse_item3"]))
+                    marca.CodigoDaSubClasse3 = UtilidadesDePersistencia.getValorInteger(linha, "idclasse_item3");
+
+                if (!Information.IsDBNull(linha["observacao_marca"]))
+                    marca.ObservacaoDaMarca = UtilidadesDePersistencia.GetValor(linha, "observacao_marca");
+
+                marca.Natureza =
+                    NaturezaDeMarca.ObtenhaPorNome(UtilidadesDePersistencia.GetValor(linha, "descricao_nat").Trim());
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
+                {
+                    servico.Inserir(marca);
+                    marcas.Add(marca);
+                }
+            }
+        }
+
+        private ICliente CadastreCliente(IPessoa pessoa, IGrupoDeAtividade grupoDeAtividade )
+        {
+
+            var cliente = FabricaGenerica.GetInstancia().CrieObjeto<ICliente>(new object[] {pessoa});
+
+            cliente.GrupoDeAtividade = grupoDeAtividade;
+
+            cliente.DataDoCadastro = DateTime.Now;
+            
+
+            if (!idsDeClientesCadastros.Contains(pessoa.ID.Value.ToString()))
+            {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeCliente>())
+                    servico.Inserir(cliente);
+
+                idsDeClientesCadastros.Add(pessoa.ID.Value.ToString());
+            }
+            
+
+            return cliente;
         }
 
         private void MigrePessoas()
@@ -41,7 +157,14 @@ namespace MP.Migrador
             {
                 conexaoSolureg.Open();
 
-                var sql = "select * from contato " +
+                var sql = "select contato.idcontato, cnpj_cpf, contato.nome_contato, " +
+                        "nome_fantasia, dt_nasc_abertura, sg_cartorio_junta_orgao, insc_estadual_ci, " +
+                        "nr_reg_cart_junta_org, dt_reg_junta_cart_org, objetivo_social, email, dominio, " +
+                        "observacao_contato, contato.idgrupo_atividade, grupo_atividade.descricao desricaogrupoatividade, idtelefone, num_telefone," +
+                        "telefone.nome_contato contatotelefone, idendereco, logradouro, numero,bairro, complemento, cidade, endereco.idestado," +
+                        "cep, idtipo_endereco, sg_estado,  estado.descricao descricaoestado, endereco.idpais, sigla_pais," +
+                        "paises.descricao descricaopais, tipo_endereco.descricao descricaotipoendereco " +
+                        "from contato  " +
                           "left join grupo_atividade on grupo_atividade.idgrupo_atividade =  contato.idgrupo_atividade " +
                           "left join telefone on  telefone.idcontato = contato.idcontato " +
                           "left join endereco on endereco.idcontato = contato.idcontato " +
@@ -74,6 +197,7 @@ namespace MP.Migrador
                             pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
                             pessoas.Add(pessoa);
                             idContatoAnterior = UtilidadesDePersistencia.getValorInteger(linha, "IDCONTATO");
+                            pessoasMigradas.Add(idContatoAnterior.ToString(),pessoa);
                         }
 
                         MontaPessoaJuridica(linha, ref pessoa);
@@ -85,6 +209,7 @@ namespace MP.Migrador
                         pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>();
                         pessoas.Add(pessoa);
                         idContatoAnterior = UtilidadesDePersistencia.getValorInteger(linha, "IDCONTATO");
+                        pessoasMigradas.Add(idContatoAnterior.ToString(), pessoa);
                     }
 
                     MontaPessoaFisica(linha, ref pessoa);
@@ -98,6 +223,7 @@ namespace MP.Migrador
                         pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
                         pessoas.Add(pessoa);
                         idContatoAnterior = UtilidadesDePersistencia.getValorInteger(linha, "IDCONTATO");
+                        pessoasMigradas.Add(idContatoAnterior.ToString(), pessoa);
                     }
 
                     MontaPessoaJuridica(linha, ref pessoa);
@@ -109,9 +235,25 @@ namespace MP.Migrador
                     pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>();
                     pessoas.Add(pessoa);
                     idContatoAnterior = UtilidadesDePersistencia.getValorInteger(linha, "IDCONTATO");
+                    pessoasMigradas.Add(idContatoAnterior.ToString(), pessoa);
                 }
 
                 MontaPessoaFisica(linha, ref pessoa);
+            }
+
+            foreach (var pessoa1 in pessoas)
+            {
+                if (pessoa1.Tipo.Equals(TipoDePessoa.Fisica))
+                {
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
+                        servico.Inserir((IPessoaFisica)pessoa1);
+
+                    continue;
+                }
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
+                    servico.Inserir((IPessoaJuridica)pessoa1);
+
             }
         }
 
@@ -130,6 +272,11 @@ namespace MP.Migrador
 
         private void MontaPessoa(DataRow linha, ref IPessoa pessoa)
         {
+
+            if (!Information.IsDBNull(linha["desricaogrupoatividade"]))
+                if (!grupoDeAtividadeDoContato.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "IDCONTATO")))
+                    grupoDeAtividadeDoContato.Add(UtilidadesDePersistencia.GetValor(linha, "IDCONTATO"), UtilidadesDePersistencia.GetValor(linha, "desricaogrupoatividade"));
+
             pessoa.Nome = UtilidadesDePersistencia.GetValor(linha, "NOME_CONTATO").Trim();
 
             if (!Information.IsDBNull(linha["EMAIL"]))
@@ -165,9 +312,45 @@ namespace MP.Migrador
                 if (!Information.IsDBNull(linha["CIDADE"]))
                     endereco.Municipio = DescubraMunicipio(UtilidadesDePersistencia.GetValor(linha, "CIDADE"), UtilidadesDePersistencia.GetValor(linha, "SG_ESTADO"));
 
+
+                if (!Information.IsDBNull(linha["descricaotipoendereco"]))
+                    endereco.TipoDeEndereco = DescubraTipoDeEndereco(UtilidadesDePersistencia.GetValor(linha, "descricaotipoendereco"));
+                else
+                    endereco.TipoDeEndereco = DescubraTipoDeEndereco("PADRÃO");
+
                 pessoa.AdicioneEndereco(endereco);
             }
 
+
+            if (!Information.IsDBNull(linha["num_telefone"]))
+            {
+                var telefone = FabricaGenerica.GetInstancia().CrieObjeto<ITelefone>();
+
+                var numero = ObtenhaApenasNumerosDoTelefone(UtilidadesDePersistencia.GetValor(linha, "num_telefone"));
+
+                short DDD = 0;
+                long Numero;
+
+                if (numero.Length == 10)
+                {
+                    DDD = Convert.ToInt16((Strings.Mid(numero, 1, 2)));
+                    Numero = Convert.ToInt64((Strings.Mid(numero, 3)));
+                }
+                else
+                {
+                    Numero = Convert.ToInt64(numero);
+                }
+
+                telefone.DDD = DDD;
+                telefone.Numero = Numero;
+
+                if (Numero.ToString().StartsWith("9"))
+                    telefone.Tipo = TipoDeTelefone.Celular;
+                else
+                    telefone.Tipo = TipoDeTelefone.Comercial;
+
+                pessoa.AdicioneTelefone(telefone);
+            }
         }
 
         private void MontaPessoaFisica(DataRow linha, ref IPessoa pessoa)
@@ -194,10 +377,12 @@ namespace MP.Migrador
             {
                 var conexao = servico.ObtenhaConexao();
                 FabricaDeContexto.GetInstancia().GetContextoAtual().Conexao = conexao;
+                FabricaDeContexto.GetInstancia().GetContextoAtual().EmpresaLogada = new EmpresaVisivel(15644,"");
             }
 
             CarregueGruposDeAtividade();
             CarregueMunicipios();
+            CarregueTiposDeEndereco();
         }
 
         private void CarregueGruposDeAtividade()
@@ -205,8 +390,6 @@ namespace MP.Migrador
 
             try
             {
-
-
                 gruposDeAtividades = new Dictionary<string, IGrupoDeAtividade>();
 
                 var conexao = FabricaDeContexto.GetInstancia().GetContextoAtual().Conexao;
@@ -237,9 +420,9 @@ namespace MP.Migrador
                     gruposDeAtividades.Add(grupoDeAtividade.Nome, grupoDeAtividade);
                 }
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -275,6 +458,44 @@ namespace MP.Migrador
 
                 municipios.Add(municipio.Nome + "|" + municipio.UF.Sigla, municipio);
             }
+        }
+
+        private void CarregueTiposDeEndereco()
+        {
+            tiposDeEndereco = new Dictionary<string, ITipoDeEndereco>();
+
+            var conexao = FabricaDeContexto.GetInstancia().GetContextoAtual().Conexao;
+
+            DataSet dataSet = new DataSet();
+
+            using (var conexaoPadrao = new OleDbConnection("Provider=SQLOLEDB.1;" + conexao.StringDeConexao))
+            {
+                conexaoPadrao.Open();
+
+                var sql = "select * from ncl_tipo_endereco ";
+
+                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoPadrao))
+                    data.Fill(dataSet);
+
+                conexaoPadrao.Close();
+            }
+
+            var dados = dataSet.Tables[0];
+
+            foreach (DataRow linha in dados.Rows)
+            {
+                var tipo = FabricaGenerica.GetInstancia().CrieObjeto<ITipoDeEndereco>();
+
+                tipo.ID = UtilidadesDePersistencia.GetValorLong(linha, "ID");
+                tipo.Nome = UtilidadesDePersistencia.GetValor(linha, "NOME");
+
+                tiposDeEndereco.Add(tipo.Nome, tipo);
+            }
+        }
+
+        private ITipoDeEndereco DescubraTipoDeEndereco(string nomeDoTipo)
+        {
+            return tiposDeEndereco[nomeDoTipo];
         }
 
 
@@ -336,25 +557,25 @@ namespace MP.Migrador
             if (MunicipioSTR.Contains("UBERLÂNDIA"))
                 uf = "MG";
 
-            if (MunicipioSTR.Contains("MONTIVIDÍU"))
+            if (MunicipioSTR.Contains("MONTIVIDÍU") || MunicipioSTR.Contains("MONTIVÍDIU"))
                 MunicipioSTR = "MONTIVIDIU";
 
 
             if (MunicipioSTR.Contains("GOIANIRA"))
-                 MunicipioSTR = "GOIANDIRA";
+                MunicipioSTR = "GOIANDIRA";
 
             if (MunicipioSTR.Contains("TEREZOPÓLIS DE GOIÁS"))
-                 MunicipioSTR = "TEREZÓPOLIS DE GOIÁS";
+                MunicipioSTR = "TEREZÓPOLIS DE GOIÁS";
 
             if (MunicipioSTR.Contains("PIRENOPÓLIS") || MunicipioSTR.Contains("PIRENOPOLIS"))
                 MunicipioSTR = "PIRENÓPOLIS";
 
             if (MunicipioSTR.Contains("PLANALTINA DE GOIÁS"))
                 MunicipioSTR = "PLANALTINA";
-            
+
             if (MunicipioSTR.Contains("POV. DE CRUZLÂNDIA"))
                 return null;
-            
+
             if (MunicipioSTR.Contains("SILVANIA"))
                 MunicipioSTR = "SILVÂNIA";
 
@@ -363,11 +584,11 @@ namespace MP.Migrador
 
             if (MunicipioSTR.Contains("IBIRUBA"))
                 return null;
-            
+
             if (MunicipioSTR.Contains("NEROPÓLIS") || MunicipioSTR.Contains("NEROPOLIS"))
                 MunicipioSTR = "NERÓPOLIS";
 
-              if (MunicipioSTR.Contains("MOZARLANDIA"))
+            if (MunicipioSTR.Contains("MOZARLANDIA"))
                 MunicipioSTR = "MOZARLÂNDIA";
 
             if (MunicipioSTR.Contains("SAO PAULO"))
@@ -379,24 +600,74 @@ namespace MP.Migrador
             if (MunicipioSTR.Contains("HEITORAI"))
                 MunicipioSTR = "HEITORAÍ";
 
-            
+
             if (MunicipioSTR.Contains("JARAGUA"))
                 MunicipioSTR = "JARAGUÁ";
 
             if (MunicipioSTR.Contains("PETROLINA DE GOIAS"))
                 MunicipioSTR = "PETROLINA DE GOIÁS";
 
-
-            
             if (MunicipioSTR.Contains("MONTES CLAROS DE GOIAS"))
-                            MunicipioSTR = "MONTES CLAROS DE GOIÁS";
+                MunicipioSTR = "MONTES CLAROS DE GOIÁS";
 
             if (MunicipioSTR.Contains("CAMPOS BELOS"))
                 uf = "GO";
 
-            
+            if (MunicipioSTR.Contains("PARAISO DO TOCANTINS"))
+                MunicipioSTR = "PARAÍSO DO TOCANTINS";
+
+
+            if (MunicipioSTR.Contains("VITORIA DAS MISSÕES"))
+                MunicipioSTR = "VITÓRIA DAS MISSÕES";
+
+            if (MunicipioSTR.Contains("JATAI"))
+                MunicipioSTR = "JATAÍ";
+
+            if (MunicipioSTR.Contains("NOVA IGUAÇU DE GOIAS") || MunicipioSTR.Contains("NOVA IGUAÇÚ DE GOIÁS"))
+                MunicipioSTR = "NOVA IGUAÇU DE GOIÁS";
+
+            if (MunicipioSTR.Contains("BRASÍLIA"))
+                uf = "DF";
+
+            if (MunicipioSTR.Contains("CAXIAS DO SUL"))
+                uf = "RS";
+
+            if (MunicipioSTR.Contains("ITABERAI"))
+                MunicipioSTR = "ITABERAÍ";
+
+            if (MunicipioSTR.Contains("GUAÍRA"))
+                return null;
+
+            if (MunicipioSTR.Contains("SÃO GERALDO DO ARGUAIA"))
+            {
+                MunicipioSTR = "SÃO GERALDO DO ARAGUAIA";
+                uf = "PA";
+            }
+
+            if (MunicipioSTR.Contains("MOSSORÓ"))
+                return null;
+
+            if (MunicipioSTR.Contains("HAYWARD")) return null;
+
+            if (MunicipioSTR.Contains("RONDONOPOLIS"))
+                MunicipioSTR = "RONDONÓPOLIS";
+
+            if (MunicipioSTR.Contains("MATRICHÃ"))
+                MunicipioSTR = "MATRINCHÃ";
+
+            if (MunicipioSTR.Contains("MARINGÁ")) uf = "PR";
 
             return municipios[MunicipioSTR + "|" + uf];
+        }
+
+        private string ObtenhaApenasNumerosDoTelefone(string NumeroStrDesformatado )
+        {
+            var NumeroAux = new StringBuilder();
+
+            foreach (var Caracter in NumeroStrDesformatado.Where(Caracter => Char.IsNumber(Caracter)))
+                NumeroAux.Append(Caracter);
+
+            return Convert.ToInt64(NumeroAux.ToString()).ToString();
         }
     }
 }

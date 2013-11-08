@@ -25,11 +25,19 @@ namespace MP.Client.MP
             cboApresentacao.ClearSelection();
         }
 
-
         public string Codigo
         {
             get { return cboApresentacao.SelectedValue; }
-            set { cboApresentacao.SelectedValue = value; }
+            set
+            {
+                var apresentacao = Apresentacao.ObtenhaPorCodigo(Convert.ToInt32(value));
+
+                if (apresentacao != null)
+                {
+                    cboApresentacao.SelectedValue = apresentacao.Codigo.ToString();
+                    cboApresentacao.Text = apresentacao.Nome;
+                }
+            }
         }
 
 

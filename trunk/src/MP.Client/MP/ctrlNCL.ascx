@@ -3,7 +3,7 @@
 <telerik:RadComboBox ID="cboNCL" runat="server" EmptyMessage="Selecione uma NCL"
     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
+    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" >
     <HeaderTemplate>
         <table width="96%">
             <tr>

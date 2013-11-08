@@ -3,7 +3,7 @@
 <telerik:RadComboBox ID="cboApresentacao" runat="server" EmptyMessage="Selecione uma apresentação"
     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
+    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" >
     <HeaderTemplate>
         <table width="96%">
             <tr>

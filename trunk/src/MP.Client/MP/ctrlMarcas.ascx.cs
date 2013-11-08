@@ -87,7 +87,7 @@ namespace MP.Client.MP
             IList<IMarcas> listaDeMarcas = new List<IMarcas>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
-                listaDeMarcas = servico.obtenhaMarcasPelaDescricaoComoFiltro(string.Empty, 50);
+                listaDeMarcas = servico.obtenhaMarcasPelaDescricaoComoFiltro(e.Text, 50);
 
             if (listaDeMarcas.Count > 0)
             {

@@ -109,7 +109,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
                 End If
 
                 If String.IsNullOrEmpty(Endereco.Bairro) Then
-                    SQL.Append("NULL, ")
+                    SQL.Append("NULL ) ")
                 Else
                     SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Endereco.Bairro), "') "))
                 End If
