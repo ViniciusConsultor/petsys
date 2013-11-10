@@ -102,7 +102,7 @@ namespace MP.Client.MP
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             UtilidadesWeb.LimparComponente(ref controlePanel);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
-
+            ctrlDespachoDeMarcas.AutoPostBack = false;
             pnlDespacho.Visible = false;
         }
 
@@ -120,6 +120,7 @@ namespace MP.Client.MP
 
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
+            ctrlDespachoDeMarcas.AutoPostBack = false;
 
             pnlDespacho.Visible = false;
         }
@@ -340,7 +341,6 @@ namespace MP.Client.MP
         {
             Inicial = 1,
             Novo,
-            Consulta,
             Modifica,
             Remove
         }

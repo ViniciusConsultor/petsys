@@ -124,8 +124,7 @@ namespace MP.Client.MP
 
             ctrlDespachoDePatentes.EnableLoadOnDemand = false;
             ctrlDespachoDePatentes.ShowDropDownOnTextboxClick = false;
-
-            //pnlDespacho.Visible = false;
+            ctrlDespachoDePatentes.AutoPostBack = false;
         }
 
         private void ExibaTelaExcluir()
