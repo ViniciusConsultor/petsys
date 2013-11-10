@@ -304,10 +304,11 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.AppendLine("SELECT DISTINCT(MP_PROCESSOMARCA.IDPROCESSO) IDPROCESSO, MP_PROCESSOMARCA.IDMARCA MARCA, ");
-            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO NUMEROPROCESSO");
+            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO NUMEROPROCESSO, MP_MARCAS.DESCRICAO_MARCA DESCRICAOMARCA");
             sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS, MP_RADICAL_MARCA");
             sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA AND MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
             sql.AppendLine(" AND MP_PROCESSOMARCA.ATIVO = 1");
+            sql.AppendLine(" ORDER BY MP_MARCAS.DESCRICAO_MARCA");
 
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
