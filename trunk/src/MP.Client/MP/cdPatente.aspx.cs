@@ -433,6 +433,7 @@ namespace MP.Client.MP
 
             ctrlPatente.EnableLoadOnDemand = false;
             ctrlPatente.ShowDropDownOnTextboxClick = false;
+            ctrlPatente.AutoPostBack = false;
 
             var controlePanelPatente = pnlDadosPatente as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, true);

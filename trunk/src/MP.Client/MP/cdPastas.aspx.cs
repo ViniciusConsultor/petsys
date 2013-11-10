@@ -93,6 +93,7 @@ namespace MP.Client.MP
 
             ctrlPasta.EnableLoadOnDemand = false;
             ctrlPasta.ShowDropDownOnTextboxClick = false;
+            ctrlPasta.AutoPostBack = false;
             ctrlPasta.TextoItemVazio = "";
         }
 

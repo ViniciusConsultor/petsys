@@ -138,6 +138,7 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
             ctrlMarcas.EnableLoadOnDemand = false;
             ctrlMarcas.ShowDropDownOnTextboxClick = false;
+            ctrlMarcas.AutoPostBack = false;
             
         }
 

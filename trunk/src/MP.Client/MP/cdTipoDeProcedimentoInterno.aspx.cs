@@ -95,6 +95,7 @@ namespace MP.Client.MP
             cboTipoDeProcedimentosInternos.EnableLoadOnDemand = false;
             cboTipoDeProcedimentosInternos.ShowDropDownOnTextboxClick = false;
             cboTipoDeProcedimentosInternos.EmptyMessage = string.Empty;
+            cboTipoDeProcedimentosInternos.AutoPostBack = false;
         }
 
         private void ExibaTelaExcluir()

@@ -116,6 +116,7 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
             ctrlNaturezaPatente.EnableLoadOnDemand = false;
             ctrlNaturezaPatente.ShowDropDownOnTextboxClick = false;
+            ctrlNaturezaPatente.AutoPostBack =false;
         }
 
         private void ExibaTelaExcluir()
