@@ -88,7 +88,7 @@ namespace MP.Interfaces.Negocio
             return layoutsRevistaPatente;
         }
 
-        public static LayoutRevistaPatente ObtenhaPorIdentificador(int identificador)
+        public static LayoutRevistaPatente ObtenhaPorIdentificador(string identificador)
         {
             return ObtenhaTodas().FirstOrDefault(layout => layout.IdentificadorCampo.Equals(identificador));
         }
@@ -102,6 +102,61 @@ namespace MP.Interfaces.Negocio
         public override int GetHashCode()
         {
             return identificadorCampo.GetHashCode();
+        }
+
+        public static void CarregueLista()
+        {
+            layoutsRevistaPatente.Add(Layout11);
+            layoutsRevistaPatente.Add(Layout15);
+            layoutsRevistaPatente.Add(Layout21);
+            layoutsRevistaPatente.Add(Layout22);
+            layoutsRevistaPatente.Add(Layout30);
+            layoutsRevistaPatente.Add(Layout43);
+            layoutsRevistaPatente.Add(Layout45);
+            layoutsRevistaPatente.Add(Layout51);
+            layoutsRevistaPatente.Add(Layout52);
+            layoutsRevistaPatente.Add(Layout54);
+            layoutsRevistaPatente.Add(Layout57);
+            layoutsRevistaPatente.Add(Layout61);
+            layoutsRevistaPatente.Add(Layout62);
+            layoutsRevistaPatente.Add(Layout66);
+            layoutsRevistaPatente.Add(Layout71);
+            layoutsRevistaPatente.Add(Layout72);
+            layoutsRevistaPatente.Add(Layout73);
+            layoutsRevistaPatente.Add(Layout74);
+            layoutsRevistaPatente.Add(Layout81);
+            layoutsRevistaPatente.Add(Layout85);
+            layoutsRevistaPatente.Add(Layout86);
+            layoutsRevistaPatente.Add(Layout87);
+            layoutsRevistaPatente.Add(LayoutCD);
+            layoutsRevistaPatente.Add(LayoutRP);
+            layoutsRevistaPatente.Add(LayoutCO);
+            layoutsRevistaPatente.Add(LayoutDE);
+            layoutsRevistaPatente.Add(LayoutRE);
+            layoutsRevistaPatente.Add(LayoutNP);
+            layoutsRevistaPatente.Add(LayoutCE);
+            layoutsRevistaPatente.Add(LayoutCS);
+            layoutsRevistaPatente.Add(LayoutOB);
+            layoutsRevistaPatente.Add(LayoutUI);
+            layoutsRevistaPatente.Add(LayoutCA);
+            layoutsRevistaPatente.Add(LayoutPE);
+            layoutsRevistaPatente.Add(LayoutPS);
+            layoutsRevistaPatente.Add(LayoutSE);
+            layoutsRevistaPatente.Add(LayoutES);
+            layoutsRevistaPatente.Add(LayoutND);
+            layoutsRevistaPatente.Add(LayoutMO);
+            layoutsRevistaPatente.Add(LayoutVA);
+            layoutsRevistaPatente.Add(LayoutPG);
+            layoutsRevistaPatente.Add(LayoutPZ);
+            layoutsRevistaPatente.Add(LayoutIA);
+            layoutsRevistaPatente.Add(LayoutCR);
+            layoutsRevistaPatente.Add(LayoutLG);
+            layoutsRevistaPatente.Add(LayoutCP);
+            layoutsRevistaPatente.Add(LayoutTP);
+            layoutsRevistaPatente.Add(LayoutDL);
+            layoutsRevistaPatente.Add(LayoutRG);
+            layoutsRevistaPatente.Add(LayoutRQ);
+            layoutsRevistaPatente.Add(LayoutRD);
         }
     }
 }
