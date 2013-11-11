@@ -44,9 +44,20 @@ namespace MP.Client.MP
             CarregueGridRevistasJaProcessadas();
             CarregaGridComProcessosExistentesNaBase(new List<IRevistaDeMarcas>());
             EscondaPanelDeFiltro();
+            DesabilitaAbaRadicais();
         }
 
+        private void DesabilitaAbaRadicais()
+        {
+            this.RadTabStrip1.Tabs[2].Enabled = false;
+            this.pnlRadicais.Visible = false;
+        }
 
+        private void HabilitaAbaRadicais()
+        {
+            this.RadTabStrip1.Tabs[2].Enabled = true;
+            this.pnlRadicais.Visible = true;
+        }
         private void LimpaCampos ()
         {
             var controle1 = pnlRevistaPrincipal as Control;
@@ -260,6 +271,7 @@ namespace MP.Client.MP
                             txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                             ExibaPanelDeFiltro();
+                            HabilitaAbaRadicais();
 
                         }
                         else
@@ -287,6 +299,7 @@ namespace MP.Client.MP
                             txtPublicacoesProprias.Text = "0";
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                             ExibaPanelDeFiltro();
+                            HabilitaAbaRadicais();
                         }
                 }
                 catch (BussinesException ex)
@@ -376,16 +389,18 @@ namespace MP.Client.MP
                             txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                             ExibaPanelDeFiltro();
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                            HabilitaAbaRadicais();
                         }
                         else
                         {
                             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista em processada."),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista processada."),
                                                          false);
 
                             txtPublicacoesProprias.Text = "0";
                             ExibaPanelDeFiltro();
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                            HabilitaAbaRadicais();
                         }
                 }
                 catch (BussinesException ex)
@@ -585,15 +600,6 @@ namespace MP.Client.MP
 
         protected void RadTabStrip1_OnTabClick(object sender, RadTabStripEventArgs e)
         {
-            if (Session[CHAVE_REVISTA_SELECIONADA] == null)
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInformacao("Não possui revista selecionada para consulta das informações."),
-                                                        false);
-                this.pnlRadicais.Visible = false;
-                return;
-            }
-
             if (e.Tab.Text.Equals("Radicais"))
             {
                 e.Tab.PostBack = true;
