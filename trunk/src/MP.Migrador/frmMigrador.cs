@@ -83,11 +83,10 @@ namespace MP.Migrador
                      var codigoNCL = UtilidadesDePersistencia.GetValor(linha, "codigo_ncl").Trim();
 
                      if (codigoNCL.Length == 1) codigoNCL = "0" + codigoNCL;
-
                      radical.NCL = NCL.ObtenhaPorCodigo(codigoNCL);
-
-                     radicaisComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "idmarca")].Add(radical);
                  }
+
+                 radicaisComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "idmarca")].Add(radical);
               }
         }
 
