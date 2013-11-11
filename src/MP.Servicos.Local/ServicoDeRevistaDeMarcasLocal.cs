@@ -230,7 +230,7 @@ namespace MP.Servicos.Local
                         processoLidoDaRevistaDeMarca.Natureza = marca.Attributes.GetNamedItem("natureza").Value;
 
                     var descricaoMarca = marca["nome"];
-                    if (descricaoMarca != null) processoLidoDaRevistaDeMarca.Marca = descricaoMarca.InnerText;
+                    if (descricaoMarca != null) processoLidoDaRevistaDeMarca.Marca = UtilidadesDeString.RemoveAcentos(descricaoMarca.InnerText);
 
                     var traducaoMarca = marca["traducao"];
                     if (traducaoMarca != null) processoLidoDaRevistaDeMarca.TraducaoDaMarca = traducaoMarca.InnerText;
