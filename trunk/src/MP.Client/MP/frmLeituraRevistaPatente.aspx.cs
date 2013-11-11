@@ -72,32 +72,27 @@ namespace MP.Client.MP
 
         protected void grdFiltros_ItemCommand(object sender, GridCommandEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         protected void grdFiltros_ItemCreated(object sender, GridItemEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         protected void grdFiltros_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         protected void uplRevistaPatente_OnFileUploaded(object sender, FileUploadedEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         protected void btnFiltrar_ButtonClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         protected void btnLimpar_ButtonClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         protected override string ObtenhaIdFuncao()
