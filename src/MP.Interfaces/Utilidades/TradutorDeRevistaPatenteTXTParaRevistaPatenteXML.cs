@@ -444,7 +444,7 @@ namespace MP.Interfaces.Utilidades
             return tagAtual.Equals(identificadorLayout) || (LayoutRevistaPatente.ObtenhaPorIdentificador(tagAtual) == null && identificadorLayout.Equals(ultimaTagAvaliada));
         }
 
-        private void MontaRevistaXmlDeMarcas(string caminhoDoArquivo, string numeroDaRevista, DateTime dataDaRevista, IList<DTOLayoutLeituraRevistaPatente> dadosDaRevistaPatente)
+        private void MontaRevistaXmlDePatente(string caminhoDoArquivo, string numeroDaRevista, DateTime dataDaRevista, IList<DTOLayoutLeituraRevistaPatente> dadosDaRevistaPatente)
         {
             var nomeDoArquivo = numeroDaRevista + ".xml";
 
@@ -565,6 +565,7 @@ namespace MP.Interfaces.Utilidades
                 revistaPatenteXml.WriteAttributeString("numero", dadosDaRevistaPatente.NumeroDaPatente);
 
             CrieElementoTituloPatenteParaRevistaDePatente(revistaPatenteXml, dadosDaRevistaPatente);
+            CrieElementoDadosDoPedidoOriginalPatenteParaRevistaDePatente(revistaPatenteXml, dadosDaRevistaPatente);
             CrieElementoNaturezaPatenteParaRevistaDePatente(revistaPatenteXml, dadosDaRevistaPatente);
             CrieElementoObservacaoPatenteParaRevistaDePatente(revistaPatenteXml, dadosDaRevistaPatente);
             CrieElementoResumoPatenteParaRevistaDePatente(revistaPatenteXml, dadosDaRevistaPatente);
@@ -580,7 +581,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Titulo)) return;
 
-            revistaPatenteXml.WriteStartElement("titulo", dadosDaRevistaPatente.Titulo);
+            revistaPatenteXml.WriteStartElement("titulo");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Titulo);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -588,7 +590,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.NaturezaDoDocumento)) return;
 
-            revistaPatenteXml.WriteStartElement("natureza", dadosDaRevistaPatente.NaturezaDoDocumento);
+            revistaPatenteXml.WriteStartElement("natureza");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.NaturezaDoDocumento);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -596,7 +599,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Observacao)) return;
 
-            revistaPatenteXml.WriteStartElement("observacao", dadosDaRevistaPatente.Observacao);
+            revistaPatenteXml.WriteStartElement("observacao");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Observacao);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -604,7 +608,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Resumo)) return;
 
-            revistaPatenteXml.WriteStartElement("resumo", dadosDaRevistaPatente.Resumo);
+            revistaPatenteXml.WriteStartElement("resumo");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Resumo);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -612,7 +617,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Inventor)) return;
 
-            revistaPatenteXml.WriteStartElement("inventores", dadosDaRevistaPatente.Inventor);
+            revistaPatenteXml.WriteStartElement("inventores");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Inventor);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -620,12 +626,14 @@ namespace MP.Interfaces.Utilidades
         {
             if (!string.IsNullOrEmpty(dadosDaRevistaPatente.ClassificacaoInternacional))
             {
-                revistaPatenteXml.WriteStartElement("classificacao internacional", dadosDaRevistaPatente.ClassificacaoInternacional);
+                revistaPatenteXml.WriteStartElement("classificacao internacional");
+                revistaPatenteXml.WriteString(dadosDaRevistaPatente.ClassificacaoInternacional);
                 revistaPatenteXml.WriteEndElement();
             }
             else if (!string.IsNullOrEmpty(dadosDaRevistaPatente.ClassificacaoNacional))
             {
-                revistaPatenteXml.WriteStartElement("classificacao nacional", dadosDaRevistaPatente.ClassificacaoNacional);
+                revistaPatenteXml.WriteStartElement("classificacao nacional");
+                revistaPatenteXml.WriteString(dadosDaRevistaPatente.ClassificacaoNacional);
                 revistaPatenteXml.WriteEndElement();
             }
         }
@@ -634,7 +642,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosDoPedidoDaPatente)) return;
 
-            revistaPatenteXml.WriteStartElement("adicao patente", dadosDaRevistaPatente.DadosDoPedidoDaPatente);
+            revistaPatenteXml.WriteStartElement("adicao patente");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosDoPedidoDaPatente);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -642,7 +651,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosDoPedidoOriginal)) return;
 
-            revistaPatenteXml.WriteStartElement("dados da patente", dadosDaRevistaPatente.DadosDoPedidoOriginal);
+            revistaPatenteXml.WriteStartElement("dados da patente");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosDoPedidoOriginal);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -662,7 +672,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.PrioridadeUnionista)) return;
 
-            revistaPatenteXml.WriteStartElement("prioridade unionista", dadosDaRevistaPatente.PrioridadeUnionista);
+            revistaPatenteXml.WriteStartElement("prioridade unionista");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.PrioridadeUnionista);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -670,7 +681,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Depositante)) return;
 
-            revistaPatenteXml.WriteStartElement("depositante", dadosDaRevistaPatente.Depositante);
+            revistaPatenteXml.WriteStartElement("depositante");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Depositante);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -678,7 +690,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Procurador)) return;
 
-            revistaPatenteXml.WriteStartElement("procurador", dadosDaRevistaPatente.Procurador);
+            revistaPatenteXml.WriteStartElement("procurador");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Procurador);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -686,7 +699,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.PaisesDesignados)) return;
 
-            revistaPatenteXml.WriteStartElement("paises designados", dadosDaRevistaPatente.PaisesDesignados);
+            revistaPatenteXml.WriteStartElement("paises designados");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.PaisesDesignados);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -694,7 +708,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosDepositoInternacional)) return;
 
-            revistaPatenteXml.WriteStartElement("paises deposito internacional", dadosDaRevistaPatente.DadosDepositoInternacional);
+            revistaPatenteXml.WriteStartElement("paises deposito internacional");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosDepositoInternacional);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -702,7 +717,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosPublicacaoInternacional)) return;
 
-            revistaPatenteXml.WriteStartElement("paises publicacao internacional", dadosDaRevistaPatente.DadosPublicacaoInternacional);
+            revistaPatenteXml.WriteStartElement("paises publicacao internacional");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosPublicacaoInternacional);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -710,7 +726,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.ResponsavelPagamentoImpostoDeRenda)) return;
 
-            revistaPatenteXml.WriteStartElement("responsavel IR", dadosDaRevistaPatente.ResponsavelPagamentoImpostoDeRenda);
+            revistaPatenteXml.WriteStartElement("responsavel IR");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.ResponsavelPagamentoImpostoDeRenda);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -718,7 +735,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Complemento)) return;
 
-            revistaPatenteXml.WriteStartElement("complemento", dadosDaRevistaPatente.Complemento);
+            revistaPatenteXml.WriteStartElement("complemento");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Complemento);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -726,7 +744,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Decisao)) return;
 
-            revistaPatenteXml.WriteStartElement("decisao", dadosDaRevistaPatente.Decisao);
+            revistaPatenteXml.WriteStartElement("decisao");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Decisao);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -734,7 +753,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Recorrente)) return;
 
-            revistaPatenteXml.WriteStartElement("recorrente", dadosDaRevistaPatente.Recorrente);
+            revistaPatenteXml.WriteStartElement("recorrente");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Recorrente);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -742,7 +762,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Cedente)) return;
 
-            revistaPatenteXml.WriteStartElement("cedente", dadosDaRevistaPatente.Cedente);
+            revistaPatenteXml.WriteStartElement("cedente");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Cedente);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -750,7 +771,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Cessionaria)) return;
 
-            revistaPatenteXml.WriteStartElement("cessionaria", dadosDaRevistaPatente.Cessionaria);
+            revistaPatenteXml.WriteStartElement("cessionaria");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Cessionaria);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -758,7 +780,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Observacao)) return;
 
-            revistaPatenteXml.WriteStartElement("observacao", dadosDaRevistaPatente.Observacao);
+            revistaPatenteXml.WriteStartElement("observacao");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Observacao);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -766,7 +789,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.UltimaInformacao)) return;
 
-            revistaPatenteXml.WriteStartElement("ultima informacao", dadosDaRevistaPatente.UltimaInformacao);
+            revistaPatenteXml.WriteStartElement("ultima informacao");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.UltimaInformacao);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -774,7 +798,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.CertificadoDeAverbacao)) return;
 
-            revistaPatenteXml.WriteStartElement("certificado averbacao", dadosDaRevistaPatente.CertificadoDeAverbacao);
+            revistaPatenteXml.WriteStartElement("certificado averbacao");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.CertificadoDeAverbacao);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -782,7 +807,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.PaisCedente)) return;
 
-            revistaPatenteXml.WriteStartElement("pais cedente", dadosDaRevistaPatente.PaisCedente);
+            revistaPatenteXml.WriteStartElement("pais cedente");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.PaisCedente);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -802,7 +828,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Setor)) return;
 
-            revistaPatenteXml.WriteStartElement("setor", dadosDaRevistaPatente.Setor);
+            revistaPatenteXml.WriteStartElement("setor");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Setor);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -810,7 +837,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.ServicosIsentosDeAverbacao)) return;
 
-            revistaPatenteXml.WriteStartElement("isentos averbacao", dadosDaRevistaPatente.ServicosIsentosDeAverbacao);
+            revistaPatenteXml.WriteStartElement("isentos averbacao");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.ServicosIsentosDeAverbacao);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -845,7 +873,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.RegimeDeGuarda)) return;
 
-            revistaPatenteXml.WriteStartElement("regime guarda", dadosDaRevistaPatente.RegimeDeGuarda);
+            revistaPatenteXml.WriteStartElement("regime guarda");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.RegimeDeGuarda);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -853,7 +882,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Requerente)) return;
 
-            revistaPatenteXml.WriteStartElement("requerente", dadosDaRevistaPatente.Requerente);
+            revistaPatenteXml.WriteStartElement("requerente");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Requerente);
             revistaPatenteXml.WriteEndElement();
         }
 
@@ -861,7 +891,8 @@ namespace MP.Interfaces.Utilidades
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Redacao)) return;
 
-            revistaPatenteXml.WriteStartElement("redacao", dadosDaRevistaPatente.Redacao);
+            revistaPatenteXml.WriteStartElement("redacao");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.Redacao);
             revistaPatenteXml.WriteEndElement();
         }
     }
