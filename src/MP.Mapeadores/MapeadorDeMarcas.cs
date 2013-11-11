@@ -151,30 +151,6 @@ namespace MP.Mapeadores
                 InserirRadicalMarcas(marca);
         }
 
-        private void InserirRadicalMarcas(IMarcas marca)
-        {
-            foreach (var radical in marca.RadicalMarcas)
-            {
-                var sql = new StringBuilder();
-                IDBHelper DBHelper;
-
-                DBHelper = ServerUtils.getDBHelper();
-
-                sql.Append("INSERT INTO MP_RADICAL_MARCA (");
-                sql.Append("IDRADICAL, DESCRICAORADICAL, CODIGONCL, IDMARCA) ");
-                sql.Append("VALUES (");
-                sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
-                sql.Append(String.Concat("'", radical.DescricaoRadical, "', "));
-
-                sql.Append(radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo)
-                           ? String.Concat("'", radical.NCL.Codigo, "', ")
-                           : "NULL , ");
-
-                sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ") "));
-                DBHelper.ExecuteNonQuery(sql.ToString());
-            }
-        }
-
         public void Modificar(IMarcas marca)
         {
             var sql = new StringBuilder();
@@ -212,11 +188,16 @@ namespace MP.Mapeadores
 
 
             DBHelper.ExecuteNonQuery(sql.ToString());
-
             ModificarRadicaisMarca(marca);
         }
 
         private void ModificarRadicaisMarca(IMarcas marca)
+        {
+            RemovaRadicaisDaMarca(marca.IdMarca.Value);
+            InserirRadicalMarcas(marca);
+        }
+
+        private void RemovaRadicaisDaMarca(long idDaMarca )
         {
             var sql = new StringBuilder();
             IDBHelper DBHelper;
@@ -224,24 +205,50 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.getDBHelper();
 
             sql.Append("DELETE FROM MP_RADICAL_MARCA");
-            sql.Append(string.Concat(" WHERE IDMARCA = ", marca.IdMarca.Value.ToString()));
+            sql.Append(string.Concat(" WHERE IDMARCA = ", idDaMarca.ToString()));
 
-            DBHelper.ExecuteNonQuery(sql.ToString());
-
-            InserirRadicalMarcas(marca);
+            DBHelper.ExecuteNonQuery(sql.ToString()); 
         }
 
         public void Excluir(long idMarca)
         {
+            RemovaRadicaisDaMarca(idMarca);
+            
             var sql = new StringBuilder();
             IDBHelper DBHelper;
-
             DBHelper = ServerUtils.getDBHelper();
-
+            
             sql.Append("DELETE FROM MP_MARCAS");
             sql.Append(string.Concat(" WHERE IDMARCA = ", idMarca.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+
+        }
+
+        private void InserirRadicalMarcas(IMarcas marca)
+        {
+            foreach (var radical in marca.RadicalMarcas)
+            {
+                var sql = new StringBuilder();
+                IDBHelper DBHelper;
+
+                DBHelper = ServerUtils.getDBHelper();
+
+                radical.IdRadicalMarca = GeradorDeID.getInstancia().getProximoID();
+
+                sql.Append("INSERT INTO MP_RADICAL_MARCA (");
+                sql.Append("IDRADICAL, DESCRICAORADICAL, CODIGONCL, IDMARCA) ");
+                sql.Append("VALUES (");
+                sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
+                sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(radical.DescricaoRadical), "', "));
+
+                sql.Append(radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo)
+                           ? String.Concat("'", radical.NCL.Codigo, "', ")
+                           : "NULL , ");
+
+                sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ") "));
+                DBHelper.ExecuteNonQuery(sql.ToString());
+            }
         }
     }
 }

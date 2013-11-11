@@ -9,7 +9,6 @@ namespace MP.Interfaces.Negocio
     {
         long? IdRadicalMarca { get; set; }
         string DescricaoRadical { get; set; }
-        long? IdMarca { get; set; }
         NCL NCL { get; set; }
     }
 }
