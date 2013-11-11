@@ -413,7 +413,7 @@ namespace MP.Client.MP
                     var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDeMarca.aspx",
                                             "?Id=", id);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.ExibeJanelaModal(url,
+                                                        UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar processo de marca",
                                                                                        800, 550), false);
                     break;
