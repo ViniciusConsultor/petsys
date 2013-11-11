@@ -298,7 +298,7 @@
                                                 <tr>
                                                     <td class="td">
                                                         <telerik:RadDataPager ID="RadDataPager1" runat="server" PagedControlID="listRadical"
-                                                            PageSize="1">
+                                                            PageSize="1" Skin="Vista">
                                                             <Fields>
                                                                 <telerik:RadDataPagerButtonField FieldType="FirstPrev" />
                                                                 <telerik:RadDataPagerButtonField FieldType="Numeric" PageButtonCount="5" />
