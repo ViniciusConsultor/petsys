@@ -240,7 +240,7 @@ namespace MP.Mapeadores
                 sql.Append("IDRADICAL, DESCRICAORADICAL, CODIGONCL, IDMARCA) ");
                 sql.Append("VALUES (");
                 sql.Append(String.Concat(radical.IdRadicalMarca.Value.ToString(), ", "));
-                sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(radical.DescricaoRadical), "', "));
+                sql.Append(String.Concat("'", UtilidadesDeString.RemoveAcentos(radical.DescricaoRadical), "', "));
 
                 sql.Append(radical.NCL != null && !string.IsNullOrEmpty(radical.NCL.Codigo)
                            ? String.Concat("'", radical.NCL.Codigo, "', ")
