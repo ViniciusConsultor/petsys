@@ -25,7 +25,7 @@ namespace MP.Mapeadores
             {
                 var sql = new StringBuilder();
                 processoDaRevistaDeMarca.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
-
+                
                 sql.Append("INSERT INTO MP_REVISTA_MARCAS (");
                 sql.Append("IDREVISTAMARCAS, NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, NUMEROPROCESSODEMARCA, ");
                 sql.Append("CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO, ");

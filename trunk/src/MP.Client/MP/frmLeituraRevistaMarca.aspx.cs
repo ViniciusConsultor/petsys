@@ -251,7 +251,6 @@ namespace MP.Client.MP
                             var revistaDeMarcasParaHistorico =
                                 FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
 
-                            revistaDeMarcasParaHistorico.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
                             revistaDeMarcasParaHistorico.NumeroRevistaMarcas =
                                 listaRevistasAProcessar[IndiceSelecionado].NumeroRevistaMarcas;
                             revistaDeMarcasParaHistorico.Processada = true;

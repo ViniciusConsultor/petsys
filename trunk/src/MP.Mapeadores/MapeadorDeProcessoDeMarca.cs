@@ -349,9 +349,7 @@ namespace MP.Mapeadores
                     while (leitor.Read())
                     {
                         var idMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IDMARCA");
-
                         var radical = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalMarcas>();
-
                         var listaDeRadicais = new List<IRadicalMarcas>();
                         
                         if(dicionarioDeRadicais.ContainsKey(idMarca))
@@ -359,19 +357,13 @@ namespace MP.Mapeadores
                             radical.DescricaoRadical = UtilidadesDePersistencia.GetValorString(leitor, "RADICAL");
 
                             radical.NCL = !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) ? NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) : null;
-                            
-                            radical.IdMarca = idMarca;
-
                             dicionarioDeRadicais[idMarca].Add(radical);
                         }
                         else
                         {
                             radical.DescricaoRadical = UtilidadesDePersistencia.GetValorString(leitor, "RADICAL");
                             radical.NCL = !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) ? NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) : null;
-                            radical.IdMarca = idMarca;
-
                             listaDeRadicais.Add(radical);
-
                             dicionarioDeRadicais.Add(idMarca, listaDeRadicais);
                         }
                     }
@@ -382,15 +374,9 @@ namespace MP.Mapeadores
                 }
 
             foreach (var processo in processos)
-            {
                 foreach (var idMarca in dicionarioDeRadicais.Keys)
-                {
                     if(processo.Marca.IdMarca != null && processo.Marca.IdMarca.Value.Equals(idMarca))
-                    {
                         processo.Marca.RadicalMarcas = dicionarioDeRadicais[idMarca];
-                    }
-                }
-            }
 
             return processos;
         }

@@ -11,10 +11,6 @@ namespace MP.Interfaces.Servicos
     {
         IList<IRadicalMarcas> obtenhaRadicalMarcasPelaDescricaoComoFiltro(string descricaoDoRadicalMarcas, int quantidadeMaximaDeRegistros);
         IRadicalMarcas obtenhaRadicalMarcasPeloId(long idRadicalMarcas);
-        void Inserir(IRadicalMarcas radicalMarcas);
-        void Modificar(IRadicalMarcas radicalMarcas);
-        void Excluir(long idRadicalMarcas);
         IList<IRadicalMarcas> obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(long idMarca, int quantidadeMaximaDeRegistros);
-        void ExcluirPorIdDaMarca(long idMarca);
-    }
+        }
 }

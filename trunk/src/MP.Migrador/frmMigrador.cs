@@ -37,15 +37,58 @@ namespace MP.Migrador
         private IDictionary<string, string> grupoDeAtividadeDoContato = new Dictionary<string, string>();
         private HashSet<string> idsDeClientesCadastros = new HashSet<string>();  
         private HashSet<string> idsDeProduradoresCadastrados = new HashSet<string>();
-
+        private IDictionary<string, IList<IRadicalMarcas>> radicaisComChaveLegada = new Dictionary<string, IList<IRadicalMarcas>>();
         
         private void btnMigrar_Click(object sender, EventArgs e)
         {
+            CarregueRadicais();
             MigrePessoas();
             MigreMarcas();
             MigreProcessoDeMarca();
 
             MessageBox.Show("Dados migrados com sucesso!");
+        }
+
+        private void CarregueRadicais()
+        {
+             DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSolureg = new OleDbConnection(txtStringDeConexaoSolureg.Text))
+            {
+                conexaoSolureg.Open();
+
+                var sql =  "select idmarca, descricao_radical, codigo_ncl from marcas_radical " + 
+                           "left join ncl_radical on ncl_radical.idmarcas_radical = marcas_radical.idmarcas_radical " +
+                           "left join ncl on ncl.idncl = ncl_radical.idncl";
+
+                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSolureg))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSolureg.Close();
+            }
+
+              var dados = dataSetDadosLegados.Tables[0];
+            
+              foreach (DataRow linha in dados.Rows)
+              {
+
+                  if (!radicaisComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "idmarca")) )
+                    radicaisComChaveLegada.Add(UtilidadesDePersistencia.GetValor(linha, "idmarca"), new List<IRadicalMarcas>());
+                    
+                  var radical = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalMarcas>();
+                  radical.DescricaoRadical = UtilidadesDePersistencia.GetValor(linha, "descricao_radical").Trim();
+
+                 if (!Information.IsDBNull(linha["codigo_ncl"]))
+                 {
+                     var codigoNCL = UtilidadesDePersistencia.GetValor(linha, "codigo_ncl").Trim();
+
+                     if (codigoNCL.Length == 1) codigoNCL = "0" + codigoNCL;
+
+                     radical.NCL = NCL.ObtenhaPorCodigo(codigoNCL);
+
+                     radicaisComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "idmarca")].Add(radical);
+                 }
+              }
         }
 
         private void MigreProcessoDeMarca()
@@ -157,6 +200,9 @@ namespace MP.Migrador
             {
                 var marca = FabricaGenerica.GetInstancia().CrieObjeto<IMarcas>();
                 IGrupoDeAtividade grupoDeAtividade = null;
+
+                if (radicaisComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "idmarca")))
+                    marca.AdicioneRadicaisMarcas(radicaisComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "idmarca")]);
 
                 if (grupoDeAtividadeDoContato.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "idcontato")))
                 {

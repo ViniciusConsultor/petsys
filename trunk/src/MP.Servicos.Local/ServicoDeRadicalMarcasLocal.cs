@@ -48,76 +48,6 @@ namespace MP.Servicos.Local
             }
         }
 
-        public void Inserir(IRadicalMarcas radicalMarcas)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRadicalMarcas>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeador.Inserir(radicalMarcas);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
-        public void Modificar(IRadicalMarcas radicalMarcas)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRadicalMarcas>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeador.Modificar(radicalMarcas);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
-        public void Excluir(long idRadicalMarcas)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRadicalMarcas>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeador.Excluir(idRadicalMarcas);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
-
         public IList<IRadicalMarcas> obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(long idMarca, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
@@ -127,29 +57,6 @@ namespace MP.Servicos.Local
             try
             {
                 return mapeador.obtenhaRadicalMarcasPeloIdDaMarcaComoFiltro(idMarca, quantidadeMaximaDeRegistros);
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
-        public void ExcluirPorIdDaMarca(long idMarca)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRadicalMarcas>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeador.ExcluirPorIdDaMarca(idMarca);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
             }
             finally
             {

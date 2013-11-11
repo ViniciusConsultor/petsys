@@ -301,11 +301,6 @@ namespace MP.Client.MP
                     servico.Excluir(Convert.ToInt64(ViewState[ID_OBJETO]));
                 }
 
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRadicalMarcas>())
-                {
-                    servico.ExcluirPorIdDaMarca(Convert.ToInt64(ViewState[ID_OBJETO]));
-                }
-
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(
                                                             "Marca excluída com sucesso."), false);
@@ -423,7 +418,6 @@ namespace MP.Client.MP
         {
             Inicial = 1,
             Novo,
-            Consulta,
             Modifica,
             Remove
         }
@@ -465,7 +459,6 @@ namespace MP.Client.MP
                 
                 var radical = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalMarcas>();
 
-                radical.IdRadicalMarca = GeradorDeID.getInstancia().getProximoID();
                 radical.DescricaoRadical = txtRadical.Text;
 
                 if (ctrlNCLRadical != null && !string.IsNullOrEmpty(ctrlNCLRadical.Codigo))
