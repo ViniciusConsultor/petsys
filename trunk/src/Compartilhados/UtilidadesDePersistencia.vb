@@ -1,4 +1,7 @@
-﻿Public Class UtilidadesDePersistencia
+﻿Imports System.Text
+Imports System.Web
+
+Public Class UtilidadesDePersistencia
 
     Public Shared Function FiltraApostrofe(ByVal Valor As String) As String
         Dim Retorno As String = Nothing
@@ -19,7 +22,7 @@
 
         Return Retorno
     End Function
-
+    
     Public Overloads Shared Function GetValorBooleano(ByVal Linha As DataRow, ByVal NomeColuna As String) As Boolean
         Return p_getValorBoolean(Linha.Item(NomeColuna))
     End Function
@@ -29,7 +32,7 @@
     End Function
 
     Public Overloads Shared Function getValorBooleano(ByVal Leitor As IDataReader, ByVal NomeColuna As String) As Boolean
-        Return p_getValorBoolean(leitor.Item(nomeColuna))
+        Return p_getValorBoolean(Leitor.Item(NomeColuna))
     End Function
 
     Public Shared Function EhNulo(ByVal Leitor As IDataReader, ByVal NomeColuna As String) As Boolean
@@ -49,7 +52,7 @@
     End Function
 
     Public Overloads Shared Function GetValorString(ByVal Leitor As IDataReader, ByVal NomeColuna As String) As String
-        Return p_getValor(leitor.Item(nomeColuna))
+        Return p_getValor(Leitor.Item(NomeColuna))
     End Function
 
     Public Overloads Shared Function GetValor(ByVal Linha As DataRow, ByVal NomeColuna As String) As String
@@ -69,7 +72,7 @@
     End Function
 
     Public Overloads Shared Function GetValorLong(ByVal Leitor As IDataReader, ByVal NomeColuna As String) As Long
-        Return p_getValorLong(leitor.Item(nomeColuna))
+        Return p_getValorLong(Leitor.Item(NomeColuna))
     End Function
 
     Public Overloads Shared Function getValorLong(ByVal Linha As DataRow, ByVal NomeColuna As String) As Long
@@ -96,7 +99,7 @@
     End Function
 
     Public Shared Function getValorByte(ByVal Leitor As IDataReader, ByVal NomeColuna As String) As Byte
-        Return p_getValorByte(leitor.Item(nomeColuna))
+        Return p_getValorByte(Leitor.Item(NomeColuna))
     End Function
 
     Public Shared Function getValorByte(ByVal Linha As DataRow, ByVal NomeColuna As String) As Byte
@@ -297,7 +300,7 @@
             If lista.IndexOf(oid) <> 0 Then
                 sAux &= " " & Trim$(sOperacao) & " "
             End If
-            
+
             sAux &= " " & sNomeCampo & " = " & IIf(insereAspas, "'" & oid.ToString() & "'", oid.ToString()).ToString()
         Next
 
@@ -306,5 +309,4 @@
         Return " " & Trim(sAux) & " "
 
     End Function
-
 End Class

@@ -142,6 +142,7 @@
     <Compile Include="Schedule\Schedule.vb" />
     <Compile Include="ServicoRemoto.vb" />
     <Compile Include="TipoDeServidorDeEmail.vb" />
+    <Compile Include="UtilidadesDeString.vb" />
     <Compile Include="UtilitarioDeData.vb" />
     <Compile Include="ValidacaoException.vb" />
     <Compile Include="Visual\Atalho.vb" />
