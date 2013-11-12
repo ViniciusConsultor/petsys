@@ -25,6 +25,5 @@ namespace MP.Interfaces.Negocio
 
         void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas);
         void AdicioneRadicaisMarcas(IList<IRadicalMarcas> listaRadicalMarcas);
-        IList<IRadicalMarcas> ObtenhaRadicaisMarcas();
     }
 }

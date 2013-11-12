@@ -38,11 +38,6 @@ namespace MP.Negocio
             ((List<IRadicalMarcas>)RadicalMarcas).AddRange(listaRadicalMarcas);
         }
 
-        public IList<IRadicalMarcas> ObtenhaRadicaisMarcas()
-        {
-            return RadicalMarcas;
-        }
-
         public Marcas()
         {
             RadicalMarcas = new List<IRadicalMarcas>();
