@@ -88,5 +88,21 @@ namespace MP.Negocio
 
         public string RadicalNCL
         { get; set; }
+
+        public override int GetHashCode()
+        {
+            if (!IdLeitura.HasValue) return base.GetHashCode();
+
+            return IdLeitura.Value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+
+            var objAComparar = obj as ILeituraRevistaDeMarcas;
+
+            return objAComparar.IdLeitura.Equals(IdLeitura);
+        }
     }
 }
