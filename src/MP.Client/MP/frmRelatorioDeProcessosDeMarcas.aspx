@@ -6,9 +6,11 @@
 <%@ Register Src="~/ctrlGrupoDeAtividade.ascx" TagName="ctrlGrupoDeAtividade" TagPrefix="uc2" %>
 <%@ Register Src="ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
-        Style="width: 100%;">
+      <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
+        Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
+            <telerik:RadToolBarButton runat="server" Text="Imprimir marcas" ImageUrl="~/imagens/imprimir.png"
+                CommandName="btnImprimir" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -67,14 +69,12 @@
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="CodigoDespacho" HeaderText="Código do despacho" UniqueName="column5">
                                             </telerik:GridBoundColumn>
-                                             
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
                                 </td>
                             </tr>
                         </table>
-                        <asp:ImageButton ID="btnPesquisar" runat="server" ImageUrl="~/imagens/find.gif" OnClick="btnPesquisar_OnClick" />
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
