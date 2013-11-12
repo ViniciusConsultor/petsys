@@ -40,6 +40,9 @@ namespace MP.Client.Relatorios
             nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".pdf");
             caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
             _documento = new Document();
+
+            _documento.SetPageSize(PageSize.A4.Rotate());
+
             escritor = PdfWriter.GetInstance(_documento,
                                               new FileStream(Path.Combine(caminho, nomeDoArquivoDeSaida),
                                                              FileMode.Create));
@@ -78,9 +81,9 @@ namespace MP.Client.Relatorios
 
         private void EscrevaProcessosNoDocumento()
         {
-            Table tabela = new Table(5);
+            Table tabela = new Table(9);
 
-            tabela.Widths = new Single[] {85, 120, 400, 400, 85};
+            tabela.Widths = new Single[] {100, 100, 100, 100, 100, 400, 400, 90, 85};
 
             tabela.Padding = 1;
             tabela.Spacing = 1;
@@ -88,16 +91,26 @@ namespace MP.Client.Relatorios
 
             tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 13, true));
             tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 13,true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do depósito", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data de concessão", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data da vigência", _Fonte2, Cell.ALIGN_CENTER, 13, true));
             tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_CENTER, 13, true));
             tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 13, true));
             tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 13, true));
             
             foreach (var processo in _processos)
             {
+                
                 tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Processo.ToString(), _Fonte1, Cell.ALIGN_CENTER,13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1, Cell.ALIGN_LEFT, 13, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1, Cell.ALIGN_CENTER, 13, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoDeposito.HasValue ? processo.DataDoDeposito.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDeConcessao.HasValue ? processo.DataDeConcessao.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDaVigencia.HasValue ? processo.DataDaVigencia.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
                 tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.DescricaoDaMarca, _Fonte1, Cell.ALIGN_LEFT, 13, false));
                 tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.Cliente.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Despacho != null ? processo.Despacho.CodigoDespacho.ToString() : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
+                
                 tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Ativo ? "SIM" : "NÃO", _Fonte1, Cell.ALIGN_CENTER, 13, false));
             }
             

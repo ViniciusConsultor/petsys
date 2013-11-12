@@ -95,7 +95,7 @@ namespace MP.Client.MP
             }
         }
 
-        protected void btnPesquisar_OnClick(object sender, ImageClickEventArgs e)
+        private void PesquiseEGereRelatorio()
         {
             long? IDCliente = null;
             long? IDGrupoDeAtividade= null;
@@ -108,9 +108,7 @@ namespace MP.Client.MP
                 IDGrupoDeAtividade = ctrlGrupoDeAtividade.GrupoSelecionado.ID;
            
             if (DespachosSelecionados.Count > 0)
-            {
                 IDsDosDespachos = DespachosSelecionados.Select(despacho => despacho.IdDespacho.Value.ToString()).ToList();
-            }
             
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
             {
@@ -125,6 +123,16 @@ namespace MP.Client.MP
             }
 
             
+        }
+
+        protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
+        {
+            switch (((RadToolBarButton)e.Item).CommandName)
+            {
+                case "btnImprimir":
+                    PesquiseEGereRelatorio();
+                    break;
+            }
         }
     }
 }

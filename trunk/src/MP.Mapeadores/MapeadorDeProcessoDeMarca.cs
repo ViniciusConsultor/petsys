@@ -266,19 +266,22 @@ namespace MP.Mapeadores
             sql.AppendLine("MP_PROCESSOMARCA.IDPROCURADOR, MP_PROCESSOMARCA.DATADODEPOSITO, MP_PROCESSOMARCA.TXTCOMPLDESPACHO, ");
             sql.AppendLine("MP_PROCESSOMARCA.APOSTILA, MP_PROCESSOMARCA.ATIVO, ");
             sql.AppendLine("MP_MARCAS.IDMARCA, MP_MARCAS.CODIGONCL, MP_MARCAS.CODIGOAPRESENTACAO, MP_MARCAS.IDCLIENTE, MP_MARCAS.CODIGONATUREZA");
-            sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS");
-            sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA ");
-
+            sql.AppendLine(" FROM MP_PROCESSOMARCA");
+            sql.AppendLine(" INNER JOIN MP_MARCAS ON MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA");
+            sql.AppendLine(" INNER JOIN NCL_cliente ON NCL_CLIENTE.IDPESSOA = MP_MARCAS.IDCLIENTE");
+            sql.AppendLine(" LEFT JOIN NCL_GRUPO_DE_ATIVIDADE ON NCL_GRUPO_DE_ATIVIDADE.ID = NCL_CLIENTE.IDGRPATIVIDADE");
+            
             if (IDCliente.HasValue)
-            {
-                sql.AppendLine(" AND MP_MARCAS.IDCLIENTE = " + IDCliente.Value +  " ");
-            }
+                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE "  +  " MP_MARCAS.IDCLIENTE = " + IDCliente.Value +  " ");
 
             if (IDsDosDespachos != null && IDsDosDespachos.Count > 0)
-            {
-                sql.AppendLine(" AND" +  UtilidadesDePersistencia.MontaFiltro<string>("MP_PROCESSOMARCA.IDDESPACHO", IDsDosDespachos, "OR",
+                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE " + UtilidadesDePersistencia.MontaFiltro<string>("MP_PROCESSOMARCA.IDDESPACHO", IDsDosDespachos, "OR",
                                                                     false) +  " ");
-            }
+
+            if (IDGrupoDeAtividade.HasValue)
+                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE " + " NCL_GRUPO_DE_ATIVIDADE.ID = " + IDGrupoDeAtividade.Value + " ");
+            
+            sql.AppendLine(" ORDER BY DATADECADASTRO, PROCESSO");
 
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
