@@ -69,56 +69,56 @@ namespace MP.Servicos.Local
                         }
                     }
                     else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho == null)
-                        {
-                            // filtro por estado
-                            if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper())
-                                listaResultadoPorFiltro.Add(processoDaRevista);
-                        }
-                        else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
-                        {
-                            // filtro por estado, procurador
-                            if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
-                                && processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper()))
-                                listaResultadoPorFiltro.Add(processoDaRevista);
-                        }
-                        else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
-                        {
-                            // filtro por estado, despacho
-                            if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
-                                && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
-                                listaResultadoPorFiltro.Add(processoDaRevista);
-                        }
-                        else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
-                        {
-                            // filtro por estado, procurador , despacho
-                            if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
-                                && processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper())
-                                && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
-                                listaResultadoPorFiltro.Add(processoDaRevista);
-                        }
-                        else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
-                        {
-                            // filtro por procurador
-                            if (processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper()))
-                                listaResultadoPorFiltro.Add(processoDaRevista);
-                        }
-                        else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
-                        {
-                            // filtro por procurador, despacho
-                            if (processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper())
-                                && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
-                                listaResultadoPorFiltro.Add(processoDaRevista);
-                        }
-                        else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
-                        {
-                            // filtro por despacho
-                            if (filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
-                                listaResultadoPorFiltro.Add(processoDaRevista);
-                        }
-                        else
-                        {
-                            new List<ILeituraRevistaDeMarcas>();
-                        }
+                    {
+                        // filtro por estado
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper())
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                    }
+                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
+                    {
+                        // filtro por estado, procurador
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
+                            && processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper()))
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                    }
+                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
+                    {
+                        // filtro por estado, despacho
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
+                            && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                    }
+                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
+                    {
+                        // filtro por estado, procurador , despacho
+                        if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
+                            && processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper())
+                            && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                    }
+                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
+                    {
+                        // filtro por procurador
+                        if (processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper()))
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                    }
+                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
+                    {
+                        // filtro por procurador, despacho
+                        if (processoDaRevista.Procurador != null && filtro.Procurador.Pessoa.Nome.ToUpper().Equals(processoDaRevista.Procurador.ToUpper())
+                            && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                    }
+                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
+                    {
+                        // filtro por despacho
+                        if (filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
+                            listaResultadoPorFiltro.Add(processoDaRevista);
+                    }
+                    else
+                    {
+                        new List<ILeituraRevistaDeMarcas>();
+                    }
                 }
 
             }
@@ -142,7 +142,7 @@ namespace MP.Servicos.Local
 
         //    listaDeProcessosComMarcaQueContemRadicalDadastrado = obtenhaProcessosComMarcaQueContemRadicalDadastrado();
 
-            
+
         //}
 
         //private IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
@@ -348,13 +348,13 @@ namespace MP.Servicos.Local
         private void AtualizeDespachoNoProcesso(string codigoDoDespacho, IProcessoDeMarca processoDeMarca)
         {
             if (string.IsNullOrEmpty(codigoDoDespacho)) return;
-            
+
             IDespachoDeMarcas despacho;
 
             using (var servicoDespacho = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
                 despacho = servicoDespacho.ObtenhaDespachoPorCodigo(codigoDoDespacho);
 
-            if (despacho !=null)
+            if (despacho != null)
                 processoDeMarca.Despacho = despacho;
         }
 
@@ -406,7 +406,7 @@ namespace MP.Servicos.Local
 
                 var apostila = processo["apostila"];
                 objetoRevista.Apostila = apostila != null ? apostila.InnerText : null;
-               
+
                 objetoRevista.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
                 objetoRevista.DataPublicacao = Convert.ToDateTime(dataRevista);
                 objetoRevista.DataProcessamento = DateTime.Now;
@@ -450,7 +450,7 @@ namespace MP.Servicos.Local
                                                                        ? null
                                                                        : processoDeMarcaExistente.Despacho.
                                                                              CodigoDespacho;
-                                    
+
                                     objetoRevistaASerSalvo.CodigoDespachoAnterior = codigoDoDespachoAnterior;
                                     AtualizeDespachoNoProcesso(codigoDeDespachoDoProcessoDaRevista, processoDeMarcaExistente);
                                 }
@@ -460,12 +460,12 @@ namespace MP.Servicos.Local
                                     processoDeMarcaExistente.Apostila = processo.Apostila;
                                 }
 
-                                if(processo.DataDeDeposito != null)
+                                if (processo.DataDeDeposito != null)
                                 {
                                     processoDeMarcaExistente.DataDoDeposito = processo.DataDeDeposito;
                                 }
 
-                                if(processo.DataDeConcessao != null)
+                                if (processo.DataDeConcessao != null)
                                 {
                                     processoDeMarcaExistente.DataDeConcessao = processo.DataDeConcessao;
                                 }
@@ -474,7 +474,7 @@ namespace MP.Servicos.Local
                                 {
                                     processoDeMarcaExistente.TextoComplementarDoDespacho = processo.TextoDoDespacho;
                                 }
-                                
+
                                 objetoRevistaASerSalvo.CodigoDespachoAtual = processo.CodigoDespachoAtual;
                                 objetoRevistaASerSalvo.DataProcessamento = processo.DataProcessamento;
                                 objetoRevistaASerSalvo.DataPublicacao = processo.DataPublicacao;
@@ -555,7 +555,7 @@ namespace MP.Servicos.Local
         public IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>> obtenhaListaDasMarcasColidentesEClientes
             (IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevistaComMarcaExistente, IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalCadastrado)
         {
-            IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
+            var listaDeMarcasDeClientes = new HashSet<ILeituraRevistaDeMarcas>();
             IList<ILeituraRevistaDeMarcas> listaDeMarcasDeColidentes = new List<ILeituraRevistaDeMarcas>();
 
             IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>
@@ -563,102 +563,50 @@ namespace MP.Servicos.Local
                                             new Dictionary
                                                 <IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>();
 
-            var rdn= new Random();
+            var rdn = new Random();
 
             foreach (var processoDeMarcaDoCliente in listaDeProcessosDeMarcasComRadicalCadastrado)
             {
-                bool marcaAdicionada = false;
                 var marcaDeCliente = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
-
                 marcaDeCliente.IdLeitura = rdn.Next(0, int.MaxValue);
 
                 foreach (var radicalDaMarca in processoDeMarcaDoCliente.Marca.RadicalMarcas)
-                {
-                    if (radicalDaMarca.NCL != null)
-                    {
-                        // pesquisar colidencia com o radical especifico
-
-                        foreach (var processoDaRevista in listaDeProcessosDaRevistaComMarcaExistente)
+                    foreach (var processoDaRevista in listaDeProcessosDaRevistaComMarcaExistente)
+                        if (radicalDaMarca.NCL == null ||
+                            processoDaRevista.NCL == radicalDaMarca.NCL.Codigo)
                         {
-                            if (processoDaRevista.NCL == radicalDaMarca.NCL.Codigo)
-                            {
-                                if (processoDaRevista.Marca.ToUpper().Contains(radicalDaMarca.DescricaoRadical.ToUpper()))
-                                {
-                                    if(!marcaAdicionada)
-                                    {
-                                        marcaDeCliente.Marca = processoDeMarcaDoCliente.Marca.DescricaoDaMarca;
-                                        marcaDeCliente.NCL = processoDeMarcaDoCliente.Marca.NCL.Codigo;
-                                        marcaDeCliente.NumeroDoProcesso = processoDeMarcaDoCliente.Processo.ToString();
-                                        marcaDeCliente.Radical = radicalDaMarca.DescricaoRadical;
-                                        marcaDeCliente.RadicalNCL = radicalDaMarca.NCL.Codigo;
 
-                                        listaDeMarcasDeClientes.Add(marcaDeCliente);
-
-                                        marcaAdicionada = true;
-                                    }
-
-                                    var marcaColidente =
-                                        FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
-
-                                    marcaColidente.IdLeitura = marcaDeCliente.IdLeitura;
-                                    marcaColidente.NCL = processoDaRevista.NCL;
-                                    marcaColidente.Marca = processoDaRevista.Marca;
-                                    marcaColidente.NumeroDoProcesso = processoDaRevista.NumeroDoProcesso;
-
-                                    if (!string.IsNullOrEmpty(processoDaRevista.CodigoDoDespacho))
-                                    {
-                                        marcaColidente.CodigoDoDespacho = processoDaRevista.CodigoDoDespacho;
-                                    }
-                                    else
-                                    {
-                                        marcaColidente.CodigoDoDespacho = null;
-                                    }
-
-                                    listaDeMarcasDeColidentes.Add(marcaColidente);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // pesquisar colidencia, sem dependencia do radical
-
-                        foreach (var processoDaRevista in listaDeProcessosDaRevistaComMarcaExistente)
-                        {
                             if (processoDaRevista.Marca.ToUpper().Contains(radicalDaMarca.DescricaoRadical.ToUpper()))
                             {
-                                if (!marcaAdicionada)
-                                {
-                                    marcaDeCliente.Marca = processoDeMarcaDoCliente.Marca.DescricaoDaMarca;
-                                    marcaDeCliente.NCL = processoDeMarcaDoCliente.Marca.NCL.Codigo;
-                                    marcaDeCliente.NumeroDoProcesso = processoDeMarcaDoCliente.Processo.ToString();
-                                    marcaDeCliente.Radical = radicalDaMarca.DescricaoRadical;
-                                    marcaDeCliente.RadicalNCL = "Todos";
+                                marcaDeCliente.Marca = processoDeMarcaDoCliente.Marca.DescricaoDaMarca;
+                                marcaDeCliente.NCL = processoDeMarcaDoCliente.Marca.NCL.Codigo;
+                                marcaDeCliente.NumeroDoProcesso = processoDeMarcaDoCliente.Processo.ToString();
+                                marcaDeCliente.Radical = radicalDaMarca.DescricaoRadical;
+                                marcaDeCliente.RadicalNCL = radicalDaMarca.NCL == null
+                                                                ? "Todos"
+                                                                : radicalDaMarca.NCL.Codigo;
 
+                                if (!listaDeMarcasDeClientes.Contains(marcaDeCliente))
                                     listaDeMarcasDeClientes.Add(marcaDeCliente);
 
-                                    marcaAdicionada = true;
-                                }
 
-                                var marcaColidente =
-                                    FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
+                                var marcaColidente = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
 
                                 marcaColidente.IdLeitura = marcaDeCliente.IdLeitura;
                                 marcaColidente.NCL = processoDaRevista.NCL;
                                 marcaColidente.Marca = processoDaRevista.Marca;
                                 marcaColidente.NumeroDoProcesso = processoDaRevista.NumeroDoProcesso;
-
-                                marcaColidente.CodigoDoDespacho = !string.IsNullOrEmpty(processoDaRevista.CodigoDoDespacho) ? processoDaRevista.CodigoDoDespacho : null;
+                                marcaColidente.CodigoDoDespacho =
+                                    !string.IsNullOrEmpty(processoDaRevista.CodigoDoDespacho)
+                                        ? processoDaRevista.CodigoDoDespacho
+                                        : null;
 
                                 listaDeMarcasDeColidentes.Add(marcaColidente);
                             }
                         }
-                    }
-                }
             }
 
-            dicionarioDeMarcasColidentesEClientes.Add(listaDeMarcasDeColidentes, listaDeMarcasDeClientes);
-
+            dicionarioDeMarcasColidentesEClientes.Add(listaDeMarcasDeColidentes, listaDeMarcasDeClientes.ToList());
             return dicionarioDeMarcasColidentesEClientes;
         }
     }

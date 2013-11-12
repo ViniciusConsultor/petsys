@@ -303,12 +303,15 @@ namespace MP.Mapeadores
         public IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
         {
             var sql = new StringBuilder();
-
+            
             sql.AppendLine("SELECT DISTINCT(MP_PROCESSOMARCA.IDPROCESSO) IDPROCESSO, MP_PROCESSOMARCA.IDMARCA MARCA, ");
-            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO NUMEROPROCESSO, MP_MARCAS.DESCRICAO_MARCA DESCRICAOMARCA, MP_MARCAS.CODIGONCL CODIGONCL");
-            sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS, MP_RADICAL_MARCA");
-            sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA AND MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
-            sql.AppendLine(" AND MP_PROCESSOMARCA.ATIVO = 1");
+            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO NUMEROPROCESSO, MP_PROCESSOMARCA.IDDESPACHO, CODIGO_DESPACHO, ");
+            sql.AppendLine("MP_MARCAS.DESCRICAO_MARCA DESCRICAOMARCA, MP_MARCAS.CODIGONCL CODIGONCL ");
+            sql.AppendLine("FROM MP_PROCESSOMARCA ");
+            sql.AppendLine("INNER JOIN MP_MARCAS ON MP_MARCAS.IDMARCA = MP_PROCESSOMARCA.IDMARCA ");
+            sql.AppendLine("INNER JOIN MP_RADICAL_MARCA ON MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA ");
+            sql.AppendLine("LEFT JOIN mp_despacho_marca ON MP_PROCESSOMARCA.IDdespacho = mp_despacho_marca.IDDESPACHO ");
+            sql.AppendLine("WHERE  MP_PROCESSOMARCA.ATIVO = 1 AND DESATIVAPESQCOLIDENCIA = 0");
             sql.AppendLine(" ORDER BY MP_MARCAS.DESCRICAO_MARCA");
 
             IDBHelper DBHelper;
@@ -334,12 +337,22 @@ namespace MP.Mapeadores
         {
             IDictionary<long, List<IRadicalMarcas>> dicionarioDeRadicais = new Dictionary<long, List<IRadicalMarcas>>();
 
+
+            if (processos.Count == 0) return processos;
+
             var sql = new StringBuilder();
+            var listaDeIdsDeMarca = new HashSet<string>();
+
+            foreach (var processo in processos.Where(processo => !listaDeIdsDeMarca.Contains(processo.Marca.IdMarca.Value.ToString())))
+                listaDeIdsDeMarca.Add(processo.Marca.IdMarca.Value.ToString());
+
 
             sql.AppendLine("SELECT MP_MARCAS.IDMARCA IDMARCA, MP_RADICAL_MARCA.DESCRICAORADICAL RADICAL, ");
             sql.AppendLine("MP_RADICAL_MARCA.CODIGONCL RADICALNCL");
             sql.AppendLine(" FROM MP_MARCAS, MP_RADICAL_MARCA ");
             sql.AppendLine(" WHERE MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
+            sql.AppendLine(" AND" + UtilidadesDePersistencia.MontaFiltro<string>("MP_MARCAS.IDMARCA", listaDeIdsDeMarca.ToList(), "OR",
+                                                                    false) + " ");
             sql.AppendLine(" ORDER BY MP_RADICAL_MARCA.DESCRICAORADICAL");
             
             IDBHelper DBHelper;
