@@ -19,6 +19,7 @@ Public Class UtilidadesWeb
     Public Const URL_ATALHOS As String = "~/Loads/Imagens/Atalhos"
     Public Const URL_IMAGEM_MARCA As String = "~/Loads/Imagens/Marcas"
     Public Const URL_REVISTA_MARCA As String = "~/Loads/Revistas/Marcas/"
+    Public Const URL_REVISTA_PATENTE As String = "~/Loads/Revistas/Patentes/"
 
     Public Const PASTA_LOADS As String = "Loads"
 

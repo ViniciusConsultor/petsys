@@ -10,31 +10,22 @@ namespace MP.Interfaces.Utilidades
 {
     public class TradutorDeRevistaPatenteTXTParaRevistaPatenteXML
     {
-        public void ConvertaTextoParaXML(string caminhoArquivo)
+        public static void TraduzaRevistaDePatente(DateTime dataDaRevista, string numeroDaRevista, StreamReader arquivoTxt, string localParaGravarXml)
         {
             string linha = string.Empty;
-            var leitor = new StreamReader(caminhoArquivo);
             int contador = 0;
-            var xml = new XmlDocument();
             IList<DTOLayoutLeituraRevistaPatente> ListaDeLayoutLeituraRevistaPatentes = new List<DTOLayoutLeituraRevistaPatente>();
             DTOLayoutLeituraRevistaPatente dtoLayoutLeituraRevista = null;
-            string linhaNumeroEDataDaRevista = string.Empty;
             string ultimaTagPreenchida = string.Empty;
+            var arquivoTxtConvertido = UtilidadesDeStream.ConvertaArquivoAnsiParaUtf8(arquivoTxt.BaseStream);
 
             LayoutRevistaPatente.CarregueLista();
 
-            while ((linha = leitor.ReadLine()) != null)
+            while ((linha = arquivoTxtConvertido.ReadLine()) != null)
             {
                 linha = linha.ToUpper();
 
-                if (contador == 0)
-                {
-                    linhaNumeroEDataDaRevista = linha;
-                    contador++;
-                    continue;
-                }
-
-                if (contador == 1 || contador == 2)
+                if (contador == 0 || contador == 1 || contador == 2)
                 {
                     contador++;
                     continue;
@@ -53,10 +44,10 @@ namespace MP.Interfaces.Utilidades
                 contador++;
             }
 
-            //MontaRevistaXmlDeMarcas(@"C:\MarcasEPatentes\Revistas\Patente", "P2230", DateTime.Now, ListaDeLayoutLeituraRevistaPatentes);
+            MontaRevistaXmlDePatente(localParaGravarXml, numeroDaRevista, DateTime.Now, ListaDeLayoutLeituraRevistaPatentes);
         }
 
-        private void PreenchaObjetoDTOLayoutLeituraRevistaPatente(string linha, ref DTOLayoutLeituraRevistaPatente dtoLayoutLeituraRevistaPatente,
+        private static void PreenchaObjetoDTOLayoutLeituraRevistaPatente(string linha, ref DTOLayoutLeituraRevistaPatente dtoLayoutLeituraRevistaPatente,
             ref string ultimaTagPreenchida)
         {
             if (linha.Length < 4)
@@ -439,12 +430,12 @@ namespace MP.Interfaces.Utilidades
             }
         }
 
-        private bool VerifiqueTagAtualEPreenchaObjeto(string tagAtual, string identificadorLayout, string ultimaTagAvaliada)
+        private static bool VerifiqueTagAtualEPreenchaObjeto(string tagAtual, string identificadorLayout, string ultimaTagAvaliada)
         {
             return tagAtual.Equals(identificadorLayout) || (LayoutRevistaPatente.ObtenhaPorIdentificador(tagAtual) == null && identificadorLayout.Equals(ultimaTagAvaliada));
         }
 
-        private void MontaRevistaXmlDePatente(string caminhoDoArquivo, string numeroDaRevista, DateTime dataDaRevista, IList<DTOLayoutLeituraRevistaPatente> dadosDaRevistaPatente)
+        private static void MontaRevistaXmlDePatente(string caminhoDoArquivo, string numeroDaRevista, DateTime dataDaRevista, IList<DTOLayoutLeituraRevistaPatente> dadosDaRevistaPatente)
         {
             var nomeDoArquivo = numeroDaRevista + ".xml";
 
@@ -467,7 +458,7 @@ namespace MP.Interfaces.Utilidades
             }
         }
 
-        private void CrieElementoProcessoRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoProcessoRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             revistaPatenteXml.WriteStartElement("processo");
 
@@ -528,7 +519,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoDespachoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoDespachoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             revistaPatenteXml.WriteStartElement("despachos");
             revistaPatenteXml.WriteStartElement("despacho");
@@ -537,7 +528,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoTitularesParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoTitularesParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Titular))
                 return;
@@ -554,7 +545,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.NumeroDaPatente))
                 return;
@@ -577,7 +568,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoTituloPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoTituloPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Titulo)) return;
 
@@ -586,7 +577,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoNaturezaPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoNaturezaPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.NaturezaDoDocumento)) return;
 
@@ -595,7 +586,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoObservacaoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoObservacaoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Observacao)) return;
 
@@ -604,7 +595,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoResumoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoResumoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Resumo)) return;
 
@@ -613,7 +604,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoInventoresPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoInventoresPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Inventor)) return;
 
@@ -622,45 +613,46 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoClassificacaoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoClassificacaoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (!string.IsNullOrEmpty(dadosDaRevistaPatente.ClassificacaoInternacional))
             {
-                revistaPatenteXml.WriteStartElement("classificacao internacional");
+                revistaPatenteXml.WriteStartElement("classificacaoInternacional");
                 revistaPatenteXml.WriteString(dadosDaRevistaPatente.ClassificacaoInternacional);
                 revistaPatenteXml.WriteEndElement();
             }
             else if (!string.IsNullOrEmpty(dadosDaRevistaPatente.ClassificacaoNacional))
             {
-                revistaPatenteXml.WriteStartElement("classificacao nacional");
+                revistaPatenteXml.WriteStartElement("classificacaoNacional");
                 revistaPatenteXml.WriteString(dadosDaRevistaPatente.ClassificacaoNacional);
                 revistaPatenteXml.WriteEndElement();
             }
         }
 
-        private void CrieElementoDadosDoPedidoAdicaoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoDadosDoPedidoAdicaoPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosDoPedidoDaPatente)) return;
 
-            revistaPatenteXml.WriteStartElement("adicao patente");
+            revistaPatenteXml.WriteStartElement("adicaoPatente");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosDoPedidoDaPatente);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoDadosDoPedidoOriginalPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoDadosDoPedidoOriginalPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosDoPedidoOriginal)) return;
 
-            revistaPatenteXml.WriteStartElement("dados da patente");
+            revistaPatenteXml.WriteStartElement("dadosDaPatente");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosDoPedidoOriginal);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoNumeroDoPedidoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoNumeroDoPedidoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.NumeroDoPedido)) return;
 
-            revistaPatenteXml.WriteStartElement("numero do pedido", dadosDaRevistaPatente.NumeroDoPedido);
+            revistaPatenteXml.WriteStartElement("numeroDoPedido");
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.NumeroDoPedido);
 
             if (!string.IsNullOrEmpty(dadosDaRevistaPatente.DataDaPublicacaoDoPedido))
                 revistaPatenteXml.WriteAttributeString("data-publicacao", dadosDaRevistaPatente.DataDaPublicacaoDoPedido);
@@ -668,16 +660,16 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoPrioridadeUnionistaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoPrioridadeUnionistaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.PrioridadeUnionista)) return;
 
-            revistaPatenteXml.WriteStartElement("prioridade unionista");
+            revistaPatenteXml.WriteStartElement("prioridadeUnionista");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.PrioridadeUnionista);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoDepositanteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoDepositanteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Depositante)) return;
 
@@ -686,7 +678,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoProcuradorParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoProcuradorParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Procurador)) return;
 
@@ -695,43 +687,43 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoPaisesDesignadosParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoPaisesDesignadosParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.PaisesDesignados)) return;
 
-            revistaPatenteXml.WriteStartElement("paises designados");
+            revistaPatenteXml.WriteStartElement("paisesDesignados");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.PaisesDesignados);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoDadosDoDepositoInternacionalParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoDadosDoDepositoInternacionalParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosDepositoInternacional)) return;
 
-            revistaPatenteXml.WriteStartElement("paises deposito internacional");
+            revistaPatenteXml.WriteStartElement("paisesDepositoInternacional");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosDepositoInternacional);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoDadosDaPublicacaoInternacionalParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoDadosDaPublicacaoInternacionalParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.DadosPublicacaoInternacional)) return;
 
-            revistaPatenteXml.WriteStartElement("paises publicacao internacional");
+            revistaPatenteXml.WriteStartElement("paisesPublicacaoInternacional");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.DadosPublicacaoInternacional);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoResponsavelIRParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoResponsavelIRParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.ResponsavelPagamentoImpostoDeRenda)) return;
 
-            revistaPatenteXml.WriteStartElement("responsavel IR");
+            revistaPatenteXml.WriteStartElement("responsavelIR");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.ResponsavelPagamentoImpostoDeRenda);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoComplementoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoComplementoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Complemento)) return;
 
@@ -740,7 +732,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoDecisaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoDecisaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Decisao)) return;
 
@@ -749,7 +741,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoRecorrenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoRecorrenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Recorrente)) return;
 
@@ -758,7 +750,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoCedenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoCedenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Cedente)) return;
 
@@ -767,7 +759,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoCessionariaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoCessionariaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Cessionaria)) return;
 
@@ -776,7 +768,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoObservacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoObservacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Observacao)) return;
 
@@ -785,38 +777,38 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoUltimaInformacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoUltimaInformacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.UltimaInformacao)) return;
 
-            revistaPatenteXml.WriteStartElement("ultima informacao");
+            revistaPatenteXml.WriteStartElement("ultimaInformacao");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.UltimaInformacao);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoCertificadoDeAverbacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoCertificadoDeAverbacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.CertificadoDeAverbacao)) return;
 
-            revistaPatenteXml.WriteStartElement("certificado averbacao");
+            revistaPatenteXml.WriteStartElement("certificadoAverbacao");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.CertificadoDeAverbacao);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoPaisCedenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoPaisCedenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.PaisCedente)) return;
 
-            revistaPatenteXml.WriteStartElement("pais cedente");
+            revistaPatenteXml.WriteStartElement("paisCedente");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.PaisCedente);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoPaisDaCessionariaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoPaisDaCessionariaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.PaisDaCessionaria)) return;
 
-            revistaPatenteXml.WriteStartElement("pais cessionaria", dadosDaRevistaPatente.PaisDaCessionaria);
+            revistaPatenteXml.WriteStartElement("paisCessionaria", dadosDaRevistaPatente.PaisDaCessionaria);
 
             if (!string.IsNullOrEmpty(dadosDaRevistaPatente.EnderecoDaCessionaria))
                 revistaPatenteXml.WriteAttributeString("endereco", dadosDaRevistaPatente.EnderecoDaCessionaria);
@@ -824,7 +816,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoSetorParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoSetorParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Setor)) return;
 
@@ -833,23 +825,23 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoIsentosDeAverbacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoIsentosDeAverbacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.ServicosIsentosDeAverbacao)) return;
 
-            revistaPatenteXml.WriteStartElement("isentos averbacao");
+            revistaPatenteXml.WriteStartElement("isentosAverbacao");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.ServicosIsentosDeAverbacao);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoProgramaDeComputadorPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoProgramaDeComputadorPatenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Criador) && string.IsNullOrEmpty(dadosDaRevistaPatente.Linguagem) &&
                 string.IsNullOrEmpty(dadosDaRevistaPatente.CampoDeAplicacao) && string.IsNullOrEmpty(dadosDaRevistaPatente.TipoDePrograma) &&
                 string.IsNullOrEmpty(dadosDaRevistaPatente.DataDaCriacao))
                 return;
 
-            revistaPatenteXml.WriteStartElement("programa de computador");
+            revistaPatenteXml.WriteStartElement("programaDeComputador");
 
             if (!string.IsNullOrEmpty(dadosDaRevistaPatente.Criador))
                 revistaPatenteXml.WriteAttributeString("criador", dadosDaRevistaPatente.Criador);
@@ -869,16 +861,16 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoRegimeDeGuardaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoRegimeDeGuardaParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.RegimeDeGuarda)) return;
 
-            revistaPatenteXml.WriteStartElement("regime guarda");
+            revistaPatenteXml.WriteStartElement("regimeGuarda");
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.RegimeDeGuarda);
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoRequerenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoRequerenteParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Requerente)) return;
 
@@ -887,7 +879,7 @@ namespace MP.Interfaces.Utilidades
             revistaPatenteXml.WriteEndElement();
         }
 
-        private void CrieElementoRedacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
+        private static void CrieElementoRedacaoParaRevistaDePatente(XmlTextWriter revistaPatenteXml, DTOLayoutLeituraRevistaPatente dadosDaRevistaPatente)
         {
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Redacao)) return;
 

@@ -30,12 +30,9 @@
                                             //]]>
                                         </script>
                                     </telerik:RadScriptBlock>
-                                    <telerik:RadAsyncUpload runat="server" ID="uplRevistaPatente" MaxFileInputsCount="1"
-                                        AllowedFileExtensions=".xml,.txt" PostbackTriggers="ButtonSubmit" Skin="Vista"
-                                        HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Procurar"
-                                        OnFileUploaded="uplRevistaPatente_OnFileUploaded" />
-                                    <asp:Button ID="ButtonSubmit" runat="server" Text="Adicionar" OnClientClick="updateRevistaPatente(); return false;"
-                                        CausesValidation="False" CssClass="RadUploadSubmit" />
+                                    <telerik:RadAsyncUpload runat="server" ID="uplRevistaPatente" MaxFileInputsCount="1"  AllowedFileExtensions=".xml,.txt" PostbackTriggers="ButtonSubmit" Skin="Vista"
+                                        HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Procurar"   OnFileUploaded="uplRevistaPatente_OnFileUploaded" />
+                                    <asp:Button ID="ButtonSubmit" runat="server" Text="Adicionar" OnClientClick="updateRevistaPatente(); return false;" CausesValidation="False" CssClass="RadUploadSubmit" />
                                 </td>
                             </tr>
                         </table>
@@ -63,9 +60,7 @@
                                                     UniqueName="column4">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
-                                                <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista(s) a processar"
-                                                    UniqueName="column1">
-                                                </telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="Revista(s) a processar" UniqueName="colunaNumeroRevista" />
                                             </Columns>
                                         </MasterTableView>
                                     </telerik:RadGrid>
@@ -88,9 +83,7 @@
                                                     UniqueName="column4">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
-                                                <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista(s) já processada(s)"
-                                                    UniqueName="column1">
-                                                </telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="Revista(s) já processada(s)" UniqueName="colunaNumeroRevista" />
                                             </Columns>
                                         </MasterTableView>
                                     </telerik:RadGrid>
