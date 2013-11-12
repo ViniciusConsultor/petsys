@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.DBHelper;
@@ -304,7 +305,7 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.AppendLine("SELECT DISTINCT(MP_PROCESSOMARCA.IDPROCESSO) IDPROCESSO, MP_PROCESSOMARCA.IDMARCA MARCA, ");
-            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO NUMEROPROCESSO, MP_MARCAS.DESCRICAO_MARCA DESCRICAOMARCA");
+            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO NUMEROPROCESSO, MP_MARCAS.DESCRICAO_MARCA DESCRICAOMARCA, MP_MARCAS.CODIGONCL CODIGONCL");
             sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS, MP_RADICAL_MARCA");
             sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA AND MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
             sql.AppendLine(" AND MP_PROCESSOMARCA.ATIVO = 1");
@@ -340,7 +341,7 @@ namespace MP.Mapeadores
             sql.AppendLine(" FROM MP_MARCAS, MP_RADICAL_MARCA ");
             sql.AppendLine(" WHERE MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
             sql.AppendLine(" ORDER BY MP_RADICAL_MARCA.DESCRICAORADICAL");
-
+            
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
 
@@ -351,22 +352,13 @@ namespace MP.Mapeadores
                     {
                         var idMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IDMARCA");
                         var radical = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalMarcas>();
-                        var listaDeRadicais = new List<IRadicalMarcas>();
                         
-                        if(dicionarioDeRadicais.ContainsKey(idMarca))
-                        {
-                            radical.DescricaoRadical = UtilidadesDePersistencia.GetValorString(leitor, "RADICAL");
+                        if(!dicionarioDeRadicais.ContainsKey(idMarca))
+                            dicionarioDeRadicais.Add(idMarca,new List<IRadicalMarcas>());
 
-                            radical.NCL = !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) ? NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) : null;
-                            dicionarioDeRadicais[idMarca].Add(radical);
-                        }
-                        else
-                        {
-                            radical.DescricaoRadical = UtilidadesDePersistencia.GetValorString(leitor, "RADICAL");
-                            radical.NCL = !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) ? NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) : null;
-                            listaDeRadicais.Add(radical);
-                            dicionarioDeRadicais.Add(idMarca, listaDeRadicais);
-                        }
+                        radical.DescricaoRadical = UtilidadesDePersistencia.GetValorString(leitor, "RADICAL");
+                        radical.NCL = !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) ? NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "RADICALNCL")) : null;
+                        dicionarioDeRadicais[idMarca].Add(radical);
                     }
                 }
                 finally
@@ -375,9 +367,8 @@ namespace MP.Mapeadores
                 }
 
             foreach (var processo in processos)
-                foreach (var idMarca in dicionarioDeRadicais.Keys)
-                    if(processo.Marca.IdMarca != null && processo.Marca.IdMarca.Value.Equals(idMarca))
-                        processo.Marca.RadicalMarcas = dicionarioDeRadicais[idMarca];
+                foreach (var idMarca in dicionarioDeRadicais.Keys.Where(idMarca => processo.Marca.IdMarca != null && processo.Marca.IdMarca.Value.Equals(idMarca)))
+                    processo.Marca.RadicalMarcas = dicionarioDeRadicais[idMarca];
 
             return processos;
         }
@@ -386,7 +377,13 @@ namespace MP.Mapeadores
         {
             var processoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDeMarca>();
 
-            processoDeMarca.Marca = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "MARCA"));
+
+            var marca = FabricaGenerica.GetInstancia().CrieObjeto<IMarcas>();
+
+            marca.IdMarca = UtilidadesDePersistencia.GetValorLong(leitor, "MARCA");
+            marca.DescricaoDaMarca = UtilidadesDePersistencia.GetValorString(leitor, "DESCRICAOMARCA");
+            marca.NCL = NCL.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "CODIGONCL"));
+            processoDeMarca.Marca = marca;
             processoDeMarca.IdProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCESSO");
             processoDeMarca.Processo = UtilidadesDePersistencia.GetValorLong(leitor, "NUMEROPROCESSO");
             processoDeMarca.DataDoCadastro = DateTime.Now;
