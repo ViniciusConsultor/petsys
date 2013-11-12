@@ -29,6 +29,7 @@ namespace InicializaBancoMP
         {
             InicializaDespachosDeMarcas();
             InicializaDespachosDePatentes();
+            InicializaNaturezasDePatente();
 
             MessageBox.Show("Dados inicializados com sucesso!");
         }
@@ -46,6 +47,94 @@ namespace InicializaBancoMP
             toolStripStatusLabel2.Text = "";
             diretorio = Environment.CurrentDirectory;
         } 
+
+        private void InicializaNaturezasDePatente()
+        {
+            Cursor = Cursors.WaitCursor;
+            toolStripStatusLabel2.Text = "Abrindo arquivo de despachos de marcas...";
+
+            var arquivo = new StreamReader(diretorio + @"\NaturezasDePatente.txt");
+
+            var Naturezas = new List<INaturezaPatente>();
+
+            toolStripStatusLabel2.Text = "Iniciando a leitura do arquivo...";
+
+            while (!arquivo.EndOfStream)
+            {
+                var linha = arquivo.ReadLine();
+
+                if (!String.IsNullOrEmpty(linha))
+                    Naturezas.Add(CriaNaturezaDePatente(linha));
+            }
+
+
+            toolStripStatusLabel2.Text = "Dados carregados com sucesso..";
+            toolStripStatusLabel2.Text = "Iniciando processamento..";
+            toolStripProgressBar1.Visible = true;
+            toolStripProgressBar1.Maximum = Naturezas.Count;
+            Activate();
+            toolStripStatusLabel2.Text = "Inserindo naturezas de patente";
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeNaturezaPatente>())
+            {
+                foreach (var natureza in Naturezas)
+                {
+                    Application.DoEvents();
+                    servico.Inserir(natureza);
+                    toolStripStatusLabel2.Text = "Natureza - " + natureza.SiglaNatureza + " inserido com sucesso...";
+                    toolStripProgressBar1.Increment(1);
+                }
+            }
+
+            toolStripStatusLabel2.Text = "Total de naturezas de patente inseridas: " + Naturezas.Count;
+
+            Cursor = Cursors.Default;
+            toolStripProgressBar1.Value = 0;
+            toolStripProgressBar1.Visible = false;
+            toolStripStatusLabel2.Text = "";   
+        }
+
+        private INaturezaPatente CriaNaturezaDePatente(string linha)
+        {
+            var pedacos = linha.Split('\t');
+
+            var natureza = FabricaGenerica.GetInstancia().CrieObjeto<INaturezaPatente>();
+
+            natureza.DescricaoNaturezaPatente = pedacos[0];
+            natureza.SiglaNatureza = pedacos[1];
+
+            if (!string.IsNullOrEmpty(pedacos[2]))
+                natureza.TempoInicioAnos = Convert.ToInt32(pedacos[2]);
+
+            if (!string.IsNullOrEmpty(pedacos[3]))
+                natureza.QuantidadePagamento = Convert.ToInt32(pedacos[3]);
+            
+            if (!string.IsNullOrEmpty(pedacos[4]))
+                natureza.TempoEntrePagamento = Convert.ToInt32(pedacos[4]);
+
+            if (!string.IsNullOrEmpty(pedacos[5]))
+                natureza.SequenciaInicioPagamento = Convert.ToInt32(pedacos[5]);
+
+            if (!string.IsNullOrEmpty(pedacos[6]))
+                natureza.TemPagamentoIntermediario = pedacos[6].Equals("1");
+
+            if (!string.IsNullOrEmpty(pedacos[7]))
+                natureza.InicioIntermediarioSequencia = Convert.ToInt32(pedacos[7]);
+
+            if (!string.IsNullOrEmpty(pedacos[8]))
+                natureza.QuantidadePagamentoIntermediario = Convert.ToInt32(pedacos[8]);
+
+            if (!string.IsNullOrEmpty(pedacos[9]))
+                natureza.DescricaoPagamento = pedacos[9];
+
+            if (!string.IsNullOrEmpty(pedacos[10]))
+                natureza.DescricaoPagamentoIntermediario = pedacos[10];
+            
+            if (!string.IsNullOrEmpty(pedacos[11]))
+                natureza.TemPedidoDeExame = pedacos[11].Equals("1");
+
+            return natureza;
+        }
 
          private void InicializaDespachosDeMarcas()
          {
