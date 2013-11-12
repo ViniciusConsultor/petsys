@@ -339,6 +339,7 @@ namespace MP.Mapeadores
             sql.AppendLine("MP_RADICAL_MARCA.CODIGONCL RADICALNCL");
             sql.AppendLine(" FROM MP_MARCAS, MP_RADICAL_MARCA ");
             sql.AppendLine(" WHERE MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA");
+            sql.AppendLine(" ORDER BY MP_RADICAL_MARCA.DESCRICAORADICAL");
 
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();

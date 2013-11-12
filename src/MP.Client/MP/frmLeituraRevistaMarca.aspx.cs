@@ -43,20 +43,20 @@ namespace MP.Client.MP
             CarregueGridRevistasAProcessar();
             CarregueGridRevistasJaProcessadas();
             CarregaGridComProcessosExistentesNaBase(new List<IRevistaDeMarcas>());
-            EscondaPanelDeFiltro();
+            DesabilitaAbaFiltros();
             DesabilitaAbaRadicais();
         }
 
         private void DesabilitaAbaRadicais()
         {
             this.RadTabStrip1.Tabs[2].Enabled = false;
-            this.pnlRadicais.Visible = false;
+            //this.pnlRadicais.Visible = false;
         }
 
         private void HabilitaAbaRadicais()
         {
             this.RadTabStrip1.Tabs[2].Enabled = true;
-            this.pnlRadicais.Visible = true;
+            //this.pnlRadicais.Visible = true;
         }
         private void LimpaCampos ()
         {
@@ -76,14 +76,14 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controle7);
         }
 
-        private void EscondaPanelDeFiltro()
+        private void DesabilitaAbaFiltros()
         {
-            pnlFiltro.Visible = false;
+            this.RadTabStrip1.Tabs[1].Enabled = false;
         }
 
-        private void ExibaPanelDeFiltro()
+        private void HabilitaAbaFiltros()
         {
-            pnlFiltro.Visible = true;
+            this.RadTabStrip1.Tabs[1].Enabled = true;
             ctrlUF.Inicializa();
             ctrlProcurador.Inicializa();
             ctrlDespachoDeMarcas.Inicializa();
@@ -173,26 +173,26 @@ namespace MP.Client.MP
         {
             grdRevistasAProcessar.MasterTableView.DataSource = listaRevistasAProcessar;
             grdRevistasAProcessar.DataBind();
-            Session.Add(CHAVE_REVISTAS_A_PROCESSAR, listaRevistasAProcessar);
+            ViewState.Add(CHAVE_REVISTAS_A_PROCESSAR, listaRevistasAProcessar);
         }
 
         private void MostraListaRevistasJaProcessadas(IList<IRevistaDeMarcas> listaRevistasJaProcessadas)
         {
             grdRevistasJaProcessadas.MasterTableView.DataSource = listaRevistasJaProcessadas;
             grdRevistasJaProcessadas.DataBind();
-            Session.Add(CHAVE_REVISTAS_PROCESSADAS, listaRevistasJaProcessadas);
+            ViewState.Add(CHAVE_REVISTAS_PROCESSADAS, listaRevistasJaProcessadas);
         }
 
         private void MostraProcessosDaRevista(IList<IProcessoDeMarca> listaDeProcessosDaRevista)
         {
             gridRevistaProcessos.MasterTableView.DataSource = listaDeProcessosDaRevista;
             gridRevistaProcessos.DataBind();
-            Session.Add(CHAVE_PROCESSOS_DA_REVISTA, listaDeProcessosDaRevista);
+            ViewState.Add(CHAVE_PROCESSOS_DA_REVISTA, listaDeProcessosDaRevista);
         }
 
         private void AdicioneNumeroDaRevistaSelecionada(IRevistaDeMarcas revistaSelecionada)
         {
-            Session.Add(CHAVE_REVISTA_SELECIONADA, revistaSelecionada);
+            ViewState.Add(CHAVE_REVISTA_SELECIONADA, revistaSelecionada);
         }
 
         private void MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(IRevistaDeMarcas revistaDeMarcas)
@@ -227,14 +227,14 @@ namespace MP.Client.MP
 
             if (e.CommandName == "Excluir")
             {
-                var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)Session[CHAVE_REVISTAS_A_PROCESSAR];
+                var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_A_PROCESSAR];
                 listaRevistasAProcessar.RemoveAt(IndiceSelecionado);
                 MostraListaRevistasAProcessar(listaRevistasAProcessar);
             }
 
             else if (e.CommandName == "ProcessarRevista")
             {
-                var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)Session[CHAVE_REVISTAS_A_PROCESSAR];
+                var listaRevistasAProcessar = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_A_PROCESSAR];
 
                 try
                 {
@@ -270,7 +270,7 @@ namespace MP.Client.MP
                             CarregueGridRevistasJaProcessadas();
                             txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
-                            ExibaPanelDeFiltro();
+                            HabilitaAbaFiltros();
                             HabilitaAbaRadicais();
 
                         }
@@ -298,7 +298,7 @@ namespace MP.Client.MP
                             CarregueGridRevistasJaProcessadas();
                             txtPublicacoesProprias.Text = "0";
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
-                            ExibaPanelDeFiltro();
+                            HabilitaAbaFiltros();
                             HabilitaAbaRadicais();
                         }
                 }
@@ -332,7 +332,7 @@ namespace MP.Client.MP
 
         protected void grdRevistasAProcessar_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref grdRevistasAProcessar, Session[CHAVE_REVISTAS_A_PROCESSAR], e);
+            UtilidadesWeb.PaginacaoDataGrid(ref grdRevistasAProcessar, ViewState[CHAVE_REVISTAS_A_PROCESSAR], e);
         }
 
         protected void grdRevistasAProcessar_ItemCreated(object sender, GridItemEventArgs e)
@@ -356,7 +356,7 @@ namespace MP.Client.MP
 
             if (e.CommandName == "ReprocessarRevista")
             {
-                var listaRevistasProcessadas = (IList<IRevistaDeMarcas>)Session[CHAVE_REVISTAS_PROCESSADAS];
+                var listaRevistasProcessadas = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
 
                 try
                 {
@@ -385,11 +385,14 @@ namespace MP.Client.MP
                                                         UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."),
                                                         false);
 
+                            HabilitaAbaRadicais();
+                            HabilitaAbaFiltros();
                             CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
                             txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
-                            ExibaPanelDeFiltro();
                             txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
-                            HabilitaAbaRadicais();
+                            RadTabStrip1.Tabs[0].SelectParents();
+                            RadTabStrip1.Tabs[0].Selected = true;
+
                         }
                         else
                         {
@@ -397,10 +400,13 @@ namespace MP.Client.MP
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista processada."),
                                                          false);
 
-                            txtPublicacoesProprias.Text = "0";
-                            ExibaPanelDeFiltro();
-                            txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                             HabilitaAbaRadicais();
+                            HabilitaAbaFiltros();
+                            txtPublicacoesProprias.Text = "0";
+                            txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                            RadTabStrip1.Tabs[0].SelectParents();
+                            RadTabStrip1.Tabs[0].Selected = true;
+                            
                         }
                 }
                 catch (BussinesException ex)
@@ -413,7 +419,7 @@ namespace MP.Client.MP
 
         protected void grdRevistasJaProcessadas_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref grdRevistasJaProcessadas, Session[CHAVE_REVISTAS_PROCESSADAS], e);
+            UtilidadesWeb.PaginacaoDataGrid(ref grdRevistasJaProcessadas, ViewState[CHAVE_REVISTAS_PROCESSADAS], e);
         }
 
         protected void grdRevistasJaProcessadas_ItemCreated(object sender, GridItemEventArgs e)
@@ -441,7 +447,7 @@ namespace MP.Client.MP
             else
             {
                 IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevista = new List<ILeituraRevistaDeMarcas>();
-                var revistaSelecionada = (IRevistaDeMarcas)Session[CHAVE_REVISTA_SELECIONADA];
+                var revistaSelecionada = (IRevistaDeMarcas)ViewState[CHAVE_REVISTA_SELECIONADA];
                 var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDeMarcas>();
 
                 filtro.NumeroDoProcesso = txtProcesso.Text;
@@ -499,7 +505,7 @@ namespace MP.Client.MP
 
         protected void gridRevistaProcessos_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref gridRevistaProcessos, Session[CHAVE_PROCESSOS_DA_REVISTA], e);
+            UtilidadesWeb.PaginacaoDataGrid(ref gridRevistaProcessos, ViewState[CHAVE_PROCESSOS_DA_REVISTA], e);
         }
 
         protected void gridRevistaProcessos_ItemCreated(object sender, GridItemEventArgs e)
@@ -569,7 +575,7 @@ namespace MP.Client.MP
         protected void listRadical_OnPageIndexChanged(object sender, RadListViewPageChangedEventArgs e)
         {
             listRadical.CurrentPageIndex = e.NewPageIndex;
-            listRadical.DataSource = Session[CHAVE_RADICAIS_CLIENTES];
+            listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
             listRadical.DataBind();
 
             var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura.Value;
@@ -579,7 +585,7 @@ namespace MP.Client.MP
 
             IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
 
-            dicionarioDeMarcasDeClientes = (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)Session[CHAVE_MARCAS_CLIENTES_COM_RADICAL];
+            dicionarioDeMarcasDeClientes = (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)ViewState[CHAVE_MARCAS_CLIENTES_COM_RADICAL];
 
             listaDeMarcasDeClientes = dicionarioDeMarcasDeClientes[idLeitura];
 
@@ -591,7 +597,7 @@ namespace MP.Client.MP
             IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentes = new List<ILeituraRevistaDeMarcas>();
 
             dicionarioDeMarcasColidentes =
-                (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)Session[CHAVE_MARCAS_COLIDENTES];
+                (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)ViewState[CHAVE_MARCAS_COLIDENTES];
 
             listaDeMarcasColidentes = dicionarioDeMarcasColidentes[idLeitura];
 
@@ -605,7 +611,7 @@ namespace MP.Client.MP
                 e.Tab.PostBack = true;
                 this.pnlRadicais.Visible = true;
 
-                var revistaSelecionada = (IRevistaDeMarcas)Session[CHAVE_REVISTA_SELECIONADA];
+                var revistaSelecionada = (IRevistaDeMarcas)ViewState[CHAVE_REVISTA_SELECIONADA];
 
                 var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
 
@@ -732,11 +738,11 @@ namespace MP.Client.MP
             listRadical.Items.Clear();
             listRadical.DataSource = listaDeRadicaisDeClientes;
             listRadical.DataBind();
-            Session.Add(CHAVE_RADICAIS_CLIENTES, listaDeRadicaisDeClientes);
+            ViewState.Add(CHAVE_RADICAIS_CLIENTES, listaDeRadicaisDeClientes);
 
-            Session.Add(CHAVE_MARCAS_CLIENTES_COM_RADICAL, dicionarioDeMarcasDeClientes);
+            ViewState.Add(CHAVE_MARCAS_CLIENTES_COM_RADICAL, dicionarioDeMarcasDeClientes);
 
-            Session.Add(CHAVE_MARCAS_COLIDENTES, dicionarioDeMarcasDeColidentes);
+            ViewState.Add(CHAVE_MARCAS_COLIDENTES, dicionarioDeMarcasDeColidentes);
             
             var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura;
 
@@ -766,7 +772,7 @@ namespace MP.Client.MP
 
         protected void grdMarcasClientes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasClientes, Session[CHAVE_MARCAS_CLIENTES_COM_RADICAL], e);
+            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasClientes, ViewState[CHAVE_MARCAS_CLIENTES_COM_RADICAL], e);
         }
 
         protected void grdMarcasClientes_ItemCreated(object sender, GridItemEventArgs e)
@@ -791,7 +797,7 @@ namespace MP.Client.MP
 
         protected void grdMarcasColidentes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasColidentes, Session[CHAVE_MARCAS_COLIDENTES], e);
+            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasColidentes, ViewState[CHAVE_MARCAS_COLIDENTES], e);
         }
 
         protected void grdMarcasColidentes_ItemCreated(object sender, GridItemEventArgs e)
