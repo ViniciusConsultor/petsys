@@ -618,25 +618,29 @@ namespace MP.Client.MP
                 IList<ILeituraRevistaDeMarcas> listaDeTodosProcessosDaRevistaXML = new List<ILeituraRevistaDeMarcas>();
                 IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalCadastrado = new List<IProcessoDeMarca>();
                 IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalAdiconadoAMarca = new List<IProcessoDeMarca>();
-
                 IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevistaComMarcaExistente = new List<ILeituraRevistaDeMarcas>();
                 
+
+                Logger.GetInstancia().Debug("Buscando todos os processos da revista de marcas xml");
+
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                {
                     listaDeTodosProcessosDaRevistaXML = servico.obtenhaTodosOsProcessosDaRevistaDeMarcasXML(xmlRevista);
-                }
+
+                Logger.GetInstancia().Debug("Buscando todos os processos com marcas que contem radical cadastrado");
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                 {
                     listaDeProcessosDeMarcasComRadicalCadastrado = servico.obtenhaProcessosComMarcaQueContemRadicalDadastrado();
+
+                    // código feito para adicionar a lista de radicais na marca, pois a marca não faz relação com
+                    // o objeto IRadicalMarcas
+                    Logger.GetInstancia().Debug("Buscando processos com radical adicionado na marca");
+
+                    listaDeProcessosDeMarcasComRadicalAdiconadoAMarca = servico.ObtenhaProcessoComRadicailAdicionadoNaMarca(listaDeProcessosDeMarcasComRadicalCadastrado);
+
                 }
 
-                // código feito para adicionar a lista de radicais na marca, pois a marca não faz relação com
-                // o objeto IRadicalMarcas
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
-                {
-                    listaDeProcessosDeMarcasComRadicalAdiconadoAMarca = servico.ObtenhaProcessoComRadicailAdicionadoNaMarca(listaDeProcessosDeMarcasComRadicalCadastrado);
-                }
+
 
                 if (listaDeProcessosDeMarcasComRadicalAdiconadoAMarca.Count > 0)
                 {
@@ -650,8 +654,7 @@ namespace MP.Client.MP
 
                     // obtendo informações para o preenchimento das grids, com as marcas de clientes e as marcas colidentes da revista
                     
-                    IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>
-                                            dicionarioDeMarcasColidentesEClientes;
+                    IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasColidentesEClientes;
 
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
                     {

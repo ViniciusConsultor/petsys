@@ -200,19 +200,7 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-        public IList<IRadicalMarcas> RadicalMarcas
-        {
-            get
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                return _marcasReal.RadicalMarcas;
-            }
-            set
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                _marcasReal.RadicalMarcas = value;
-            }
-        }
+        public IList<IRadicalMarcas> RadicalMarcas { get; set; }
 
         public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
         {
@@ -226,10 +214,5 @@ namespace MP.Negocio.LazyLoad
             _marcasReal.AdicioneRadicaisMarcas(listaRadicalMarcas);
         }
 
-        public IList<IRadicalMarcas> ObtenhaRadicaisMarcas()
-        {
-            if (_marcasReal == null) CarregueObjetoReal();
-            return _marcasReal.ObtenhaRadicaisMarcas();
-        }
     }
 }
