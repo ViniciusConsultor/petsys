@@ -569,7 +569,7 @@ namespace MP.Servicos.Local
             {
                 var marcaDeCliente = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
                 marcaDeCliente.IdLeitura = rdn.Next(0, int.MaxValue);
-
+                
                 foreach (var radicalDaMarca in processoDeMarcaDoCliente.Marca.RadicalMarcas)
                     foreach (var processoDaRevista in listaDeProcessosDaRevistaComMarcaExistente)
                         if (radicalDaMarca.NCL == null ||
