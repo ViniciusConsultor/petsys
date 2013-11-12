@@ -563,12 +563,14 @@ namespace MP.Servicos.Local
                                             new Dictionary
                                                 <IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>>();
 
+            var rdn= new Random();
+
             foreach (var processoDeMarcaDoCliente in listaDeProcessosDeMarcasComRadicalCadastrado)
             {
                 bool marcaAdicionada = false;
                 var marcaDeCliente = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
 
-                marcaDeCliente.IdLeitura = GeradorDeID.getInstancia().getProximoID();
+                marcaDeCliente.IdLeitura = rdn.Next(0, int.MaxValue);
 
                 foreach (var radicalDaMarca in processoDeMarcaDoCliente.Marca.RadicalMarcas)
                 {
@@ -580,7 +582,7 @@ namespace MP.Servicos.Local
                         {
                             if (processoDaRevista.NCL == radicalDaMarca.NCL.Codigo)
                             {
-                                if (processoDaRevista.Marca.Contains(radicalDaMarca.DescricaoRadical))
+                                if (processoDaRevista.Marca.ToUpper().Contains(radicalDaMarca.DescricaoRadical.ToUpper()))
                                 {
                                     if(!marcaAdicionada)
                                     {
@@ -623,7 +625,7 @@ namespace MP.Servicos.Local
 
                         foreach (var processoDaRevista in listaDeProcessosDaRevistaComMarcaExistente)
                         {
-                            if (processoDaRevista.Marca.Contains(radicalDaMarca.DescricaoRadical))
+                            if (processoDaRevista.Marca.ToUpper().Contains(radicalDaMarca.DescricaoRadical.ToUpper()))
                             {
                                 if (!marcaAdicionada)
                                 {
