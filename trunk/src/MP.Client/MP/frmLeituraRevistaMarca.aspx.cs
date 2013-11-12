@@ -76,6 +76,30 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controle7);
         }
 
+        private void LimpaRadicais()
+        {
+            var controle = listRadical as Control;
+            UtilidadesWeb.LimparComponente(ref controle);
+
+            listRadical.ClearEditItems();
+            listRadical.ClearSelectedItems();
+            listRadical.Items.Clear();
+            listRadical.DataSource = new List<ILeituraRevistaDeMarcas>();
+            listRadical.DataBind();
+
+            var panel = pnlRadicais as Control;
+            UtilidadesWeb.LimparComponente(ref panel);
+
+            CarregaGridMarcasCliente(new List<ILeituraRevistaDeMarcas>());
+            CarregaGridMarcasColidentes(new List<ILeituraRevistaDeMarcas>());
+
+            ViewState[CHAVE_RADICAIS_CLIENTES] = null;
+
+            ViewState[CHAVE_MARCAS_CLIENTES_COM_RADICAL] = null;
+
+            ViewState[CHAVE_MARCAS_COLIDENTES] = null;
+        }
+
         private void DesabilitaAbaFiltros()
         {
             this.RadTabStrip1.Tabs[1].Enabled = false;
@@ -265,9 +289,12 @@ namespace MP.Client.MP
                                                     UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."),
                                                     false);
 
+                        this.ExibaTelaInicial();
+                        RadPageView1.Selected = true;
+                        RadTabStrip1.Tabs[0].Selected = true;
                         CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
-                        CarregueGridRevistasAProcessar();
-                        CarregueGridRevistasJaProcessadas();
+                        //CarregueGridRevistasAProcessar();
+                        //CarregueGridRevistasJaProcessadas();
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -294,6 +321,9 @@ namespace MP.Client.MP
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
                             servico.Inserir(listaDeProcessosExistentes);
 
+                        this.ExibaTelaInicial();
+                        RadPageView1.Selected = true;
+                        RadTabStrip1.Tabs[0].Selected = true;
                         CarregueGridRevistasAProcessar();
                         CarregueGridRevistasJaProcessadas();
                         txtPublicacoesProprias.Text = "0";
@@ -384,7 +414,9 @@ namespace MP.Client.MP
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."),
                                                     false);
-
+                        this.ExibaTelaInicial();
+                        RadPageView1.Selected = true;
+                        RadTabStrip1.Tabs[0].Selected = true;
                         HabilitaAbaRadicais();
                         HabilitaAbaFiltros();
                         CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
@@ -400,6 +432,8 @@ namespace MP.Client.MP
                                                      UtilidadesWeb.MostraMensagemDeInformacao("Não existe processos próprios na revista processada."),
                                                      false);
 
+                        this.ExibaTelaInicial();
+                        RadPageView1.Selected = true;
                         HabilitaAbaRadicais();
                         HabilitaAbaFiltros();
                         txtPublicacoesProprias.Text = "0";
@@ -455,24 +489,23 @@ namespace MP.Client.MP
                 filtro.Procurador = ctrlProcurador.ProcuradorSelecionado;
                 filtro.Despacho = ctrlDespachoDeMarcas.DespachoDeMarcasSelecionada;
 
-                if (revistaSelecionada.ExtensaoArquivo.ToUpper().Equals(".TXT"))
+                // leitura .xml
+                var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                    listaDeProcessosDaRevista = servico.ObtenhaResultadoDaConsultaPorFiltroXML(xmlRevista, filtro);
+
+                if (listaDeProcessosDaRevista.Count > 0)
                 {
-                    // leitura .txt
+                    // adicionar viewstate para filtro CHAVE_PROCESSOS_REUSLTADO_FILTRO
+                    CarregaGridFiltros(listaDeProcessosDaRevista);
+                    txtQuantdadeDeProcessos.Text = listaDeProcessosDaRevista.Count.ToString();
                 }
                 else
                 {
-                    // leitura .xml
-                    var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
-
-                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                        listaDeProcessosDaRevista = servico.ObtenhaResultadoDaConsultaPorFiltroXML(xmlRevista, filtro);
-
-                    if (listaDeProcessosDaRevista.Count > 0)
-                    {
-                        // adicionar viewstate para filtro CHAVE_PROCESSOS_REUSLTADO_FILTRO
-                        CarregaGridFiltros(listaDeProcessosDaRevista);
-                        txtQuantdadeDeProcessos.Text = listaDeProcessosDaRevista.Count.ToString();
-                    }
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe resultados para o filtro informado."),
+                                                         false);
                 }
             }
         }
@@ -574,34 +607,37 @@ namespace MP.Client.MP
 
         protected void listRadical_OnPageIndexChanged(object sender, RadListViewPageChangedEventArgs e)
         {
-            listRadical.CurrentPageIndex = e.NewPageIndex;
-            listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
-            listRadical.DataBind();
+            if (ViewState[CHAVE_RADICAIS_CLIENTES] != null)
+            {
+                listRadical.CurrentPageIndex = e.NewPageIndex;
+                listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
+                listRadical.DataBind();
 
-            var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura.Value;
+                var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura.Value;
 
-            IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasDeClientes =
-                new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
+                IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasDeClientes =
+                    new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
 
-            IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
+                IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
 
-            dicionarioDeMarcasDeClientes = (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)ViewState[CHAVE_MARCAS_CLIENTES_COM_RADICAL];
+                dicionarioDeMarcasDeClientes = (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)ViewState[CHAVE_MARCAS_CLIENTES_COM_RADICAL];
 
-            listaDeMarcasDeClientes = dicionarioDeMarcasDeClientes[idLeitura];
+                listaDeMarcasDeClientes = dicionarioDeMarcasDeClientes[idLeitura];
 
-            CarregaGridMarcasCliente(listaDeMarcasDeClientes);
+                CarregaGridMarcasCliente(listaDeMarcasDeClientes);
 
-            IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasColidentes =
-                new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
+                IDictionary<long, IList<ILeituraRevistaDeMarcas>> dicionarioDeMarcasColidentes =
+                    new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
 
-            IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentes = new List<ILeituraRevistaDeMarcas>();
+                IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentes = new List<ILeituraRevistaDeMarcas>();
 
-            dicionarioDeMarcasColidentes =
-                (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)ViewState[CHAVE_MARCAS_COLIDENTES];
+                dicionarioDeMarcasColidentes =
+                    (IDictionary<long, IList<ILeituraRevistaDeMarcas>>)ViewState[CHAVE_MARCAS_COLIDENTES];
 
-            listaDeMarcasColidentes = dicionarioDeMarcasColidentes[idLeitura];
+                listaDeMarcasColidentes = dicionarioDeMarcasColidentes[idLeitura];
 
-            CarregaGridMarcasColidentes(listaDeMarcasColidentes);
+                CarregaGridMarcasColidentes(listaDeMarcasColidentes);
+            }
         }
 
         protected void RadTabStrip1_OnTabClick(object sender, RadTabStripEventArgs e)
@@ -650,18 +686,28 @@ namespace MP.Client.MP
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
                         dicionarioDeMarcasColidentesEClientes = servico.obtenhaListaDasMarcasColidentesEClientes(listaDeProcessosDaRevistaComMarcaExistente, listaDeProcessosDeMarcasComRadicalAdiconadoAMarca);
 
-                    if (dicionarioDeMarcasColidentesEClientes.Count > 0)
+                    if (dicionarioDeMarcasColidentesEClientes.Count > 0 )
                         CarregaListaDeRadicais(dicionarioDeMarcasColidentesEClientes);
                     else
+                    {
                         // não existe marcas colidentes
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe marcas colidentes."),
                                                          false);
+
+                        LimpaRadicais();
+                    }
+                        
                 }
                 else
+                {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe marcas colidentes."),
-                                                         false);
+                                                        UtilidadesWeb.MostraMensagemDeInformacao("Não existe marcas colidentes."),
+                                                        false);
+
+                    LimpaRadicais();
+                }
+                   
 
                 Logger.GetInstancia().Debug("Fim da busca de radicais colidentes");
             }
@@ -678,13 +724,12 @@ namespace MP.Client.MP
                 new Dictionary<long, IList<ILeituraRevistaDeMarcas>>();
 
             bool marcaDeClienteCarregadaPrimeiraVez = false;
-            bool marcaColidenteCarregadaPrimeiraVez = false;
 
             foreach (IList<ILeituraRevistaDeMarcas> listaObjetoLeitura in dicionarioDeMarcasColidentesEClientes.Values)
             {
-                listaDeRadicaisDeClientes = listaObjetoLeitura;
+                listaDeRadicaisDeClientes = listaObjetoLeitura.OrderBy(radical => radical.Radical).ToList();
 
-                foreach (var objetoLeitura in listaObjetoLeitura)
+                foreach (var objetoLeitura in listaDeRadicaisDeClientes)
                 {
                     IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes = new List<ILeituraRevistaDeMarcas>();
                     listaDeMarcasDeClientes.Add(objetoLeitura);
@@ -713,30 +758,36 @@ namespace MP.Client.MP
                     {
                         dicionarioDeMarcasDeColidentes.Add(marcaColidente.IdLeitura.Value, listaDeMarcasColidentes);
                     }
-
-                    //if (!marcaColidenteCarregadaPrimeiraVez)
-                    //{
-                    //    CarregaGridMarcasColidentes(listaDeMarcasColidentes);
-                    //    marcaColidenteCarregadaPrimeiraVez = true;
-                    //}
                 }
             }
 
-            listRadical.ClearEditItems();
-            listRadical.ClearSelectedItems();
-            listRadical.Items.Clear();
-            listRadical.DataSource = listaDeRadicaisDeClientes;
-            listRadical.DataBind();
-            ViewState.Add(CHAVE_RADICAIS_CLIENTES, listaDeRadicaisDeClientes);
+            if (listaDeRadicaisDeClientes.Count > 0)
+            {
+                listRadical.ClearEditItems();
+                listRadical.ClearSelectedItems();
+                listRadical.Items.Clear();
+                listRadical.DataSource = listaDeRadicaisDeClientes;
+                listRadical.DataBind();
+                ViewState.Add(CHAVE_RADICAIS_CLIENTES, listaDeRadicaisDeClientes);
 
-            ViewState.Add(CHAVE_MARCAS_CLIENTES_COM_RADICAL, dicionarioDeMarcasDeClientes);
+                ViewState.Add(CHAVE_MARCAS_CLIENTES_COM_RADICAL, dicionarioDeMarcasDeClientes);
 
-            ViewState.Add(CHAVE_MARCAS_COLIDENTES, dicionarioDeMarcasDeColidentes);
+                ViewState.Add(CHAVE_MARCAS_COLIDENTES, dicionarioDeMarcasDeColidentes);
 
-            var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura;
+                var idLeitura = ((ILeituraRevistaDeMarcas)listRadical.Items[0].DataItem).IdLeitura;
 
-            if (idLeitura != null)
-                CarregaGridMarcasColidentes(dicionarioDeMarcasDeColidentes[idLeitura.Value]);
+                if (idLeitura != null)
+                    CarregaGridMarcasColidentes(dicionarioDeMarcasDeColidentes[idLeitura.Value]);
+            }
+            else
+            {
+                // não existe marcas colidentes
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                 UtilidadesWeb.MostraMensagemDeInformacao("Não existe marcas colidentes."),
+                                                 false);
+
+                LimpaRadicais();
+            }
         }
 
         private void CarregaGridMarcasCliente(IList<ILeituraRevistaDeMarcas> listaDeMarcasDeClientes)
