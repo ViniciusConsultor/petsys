@@ -49,16 +49,146 @@ namespace MP.Migrador
         private void btnMigrar_Click(object sender, EventArgs e)
         {
             CarregueRadicais();
-            CarregueAnuidadesDaPatente();
-            CarregueClassificacaoDaPatente();
-            CarregueClassificacaoDaPatentePrioridadeUnionistaPatente();
             MigrePessoas();
             MigreMarcas();
             MigreProcessoDeMarca();
             CarregueECadastreClientesDaPatente();
             CarregueECadastreInventores();
+            CarregueAnuidadesDaPatente();
+            CarregueClassificacaoDaPatente();
+            CarregueClassificacaoDaPatentePrioridadeUnionistaPatente();
+            MigrePatentesEProcessosDePatentes();
 
             MessageBox.Show("Dados migrados com sucesso!");
+        }
+
+        private void MigrePatentesEProcessosDePatentes()
+        {
+            DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSolureg = new OleDbConnection(txtStringDeConexaoSolureg.Text))
+            {
+                conexaoSolureg.Open();
+
+                var sql = "select * from PROCESSO_PATENTE " +
+                          "inner join TIPO_PATENTE on TIPO_PATENTE.IDTIPO_PATENTE = PROCESSO_PATENTE.IDTIPO_PATENTE";
+
+
+                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSolureg))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSolureg.Close();
+            }
+
+            var dados = dataSetDadosLegados.Tables[0];
+
+
+            using (var servicoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
+            {
+                using (var servicoDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>()) {
+
+                    foreach (DataRow linha in dados.Rows)
+                    {
+                        var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
+
+                        if (
+                            anuidadesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha,
+                                                                                                           "idprocessopatente")))
+                            patente.Anuidades =
+                                anuidadesDePatenteComChaveLegada[
+                                    UtilidadesDePersistencia.GetValor(linha, "idprocessopatente")];
+
+                        if (
+                            clientesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha,
+                                                                                                          "idprocessopatente")))
+                            patente.Clientes =
+                                clientesDePatenteComChaveLegada[
+                                    UtilidadesDePersistencia.GetValor(linha, "idprocessopatente")];
+
+                        patente.DataCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
+
+                        if (
+                            inventoresDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha,
+                                                                                                            "idprocessopatente")))
+                            patente.Inventores =
+                                inventoresDePatenteComChaveLegada[
+                                    UtilidadesDePersistencia.GetValor(linha, "idprocessopatente")];
+
+                        patente.NaturezaPatente = naturezasPatentes[UtilidadesDePersistencia.GetValor(linha, "sigla_tipo")];
+                        patente.ObrigacaoGerada = UtilidadesDePersistencia.GetValorBooleano(linha, "obrigacao_gerada");
+
+                        if (!Information.IsDBNull(linha["observacao"]))
+                            patente.Observacao = UtilidadesDePersistencia.GetValor(linha, "observacao");
+
+                        if (
+                            prioridadesUnionistaDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(
+                                linha, "idprocessopatente")))
+                            patente.PrioridadesUnionista =
+                                prioridadesUnionistaDePatenteComChaveLegada[
+                                    UtilidadesDePersistencia.GetValor(linha, "idprocessopatente")];
+
+                        if (!Information.IsDBNull(linha["QTDE_REINVINDICACAO"]))
+                            patente.QuantidadeReivindicacao = UtilidadesDePersistencia.getValorInteger(linha,
+                                                                                                       "QTDE_REINVINDICACAO");
+
+                        if (!Information.IsDBNull(linha["resumo_patente"]))
+                            patente.Resumo = UtilidadesDePersistencia.GetValor(linha, "resumo_patente");
+
+                        if (!Information.IsDBNull(linha["titulo_patente"]))
+                            patente.TituloPatente = UtilidadesDePersistencia.GetValor(linha, "titulo_patente");
+
+                        servicoDePatente.Insira(patente);
+
+                        var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
+
+                        processoDePatente.Ativo = UtilidadesDePersistencia.GetValorBooleano(linha, "Ativo");
+
+                        if (!Information.IsDBNull(linha["data_concessao_registro"]))
+                            processoDePatente.DataDaConcessao =
+                                ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_concessao_registro"));
+
+                        processoDePatente.DataDoCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
+
+                        processoDePatente.DataDoDeposito =
+                            ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_entrada"));
+                        processoDePatente.Patente = patente;
+                        processoDePatente.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(linha,
+                                                                                                           "processo_de_terceiro");
+                        processoDePatente.ProcessoEhEstrangeiro = UtilidadesDePersistencia.GetValorBooleano(linha,
+                                                                                                            "estrangeiro");
+                        if (!Information.IsDBNull(linha["numero_processo"]))
+                            processoDePatente.Processo = UtilidadesDePersistencia.GetValor(linha, "numero_processo");
+                        else
+                            processoDePatente.Processo = "-1";
+
+                        processoDePatente.Procurador =
+                            CadastreProcurador(
+                                pessoasMigradas[UtilidadesDePersistencia.GetValor(linha, "IDCONTATO_PROCURADOR")]);
+
+
+                        if (!Information.IsDBNull(linha["pct"]))
+                        {
+                            var ehPCT = UtilidadesDePersistencia.GetValorBooleano(linha, "pct");
+
+
+                            if (ehPCT)
+                            {
+                                var pct = FabricaGenerica.GetInstancia().CrieObjeto<IPCT>();
+
+                                pct.Numero = UtilidadesDePersistencia.GetValor(linha, "numeropct");
+                                pct.DataDoDeposito =
+                                    ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_deposito_pct"));
+                                processoDePatente.PCT = pct;
+                            }
+
+                        }
+
+                        servicoDeProcessoDePatente.Inserir(processoDePatente);
+                    }
+                }
+
+            }
+
         }
 
         private void CarregueECadastreClientesDaPatente()
