@@ -609,5 +609,28 @@ namespace MP.Servicos.Local
             dicionarioDeMarcasColidentesEClientes.Add(listaDeMarcasDeColidentes, listaDeMarcasDeClientes.ToList());
             return dicionarioDeMarcasColidentesEClientes;
         }
+
+        public void Excluir(int numeroDaRevistaDeMarcas)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDeMarcas>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeador.Excluir(numeroDaRevistaDeMarcas);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

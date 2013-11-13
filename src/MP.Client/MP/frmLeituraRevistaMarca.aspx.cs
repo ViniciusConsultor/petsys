@@ -379,17 +379,37 @@ namespace MP.Client.MP
 
         protected void grdRevistasJaProcessadas_ItemCommand(object sender, GridCommandEventArgs e)
         {
-            var IndiceSelecionado = 0;
-
-            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                IndiceSelecionado = e.Item.ItemIndex;
-
-            if (e.CommandName == "ReprocessarRevista")
+            try
             {
-                var listaRevistasProcessadas = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+                var IndiceSelecionado = 0;
 
-                try
+                if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                    IndiceSelecionado = e.Item.ItemIndex;
+
+                if (e.CommandName == "Excluir")
                 {
+                    Logger.GetInstancia().Info("Excluindo revista de marcas já processada.");
+
+                    var listaRevistasJaProcessadas = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                    {
+                        servico.Excluir(listaRevistasJaProcessadas[IndiceSelecionado].NumeroRevistaMarcas);
+                    }
+
+                    listaRevistasJaProcessadas.RemoveAt(IndiceSelecionado);
+                    MostraListaRevistasJaProcessadas(listaRevistasJaProcessadas);
+
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInformacao("Revista removida com sucesso."),
+                                                    false);
+                }
+
+                if (e.CommandName == "ReprocessarRevista")
+                {
+                    var listaRevistasProcessadas = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+
+
                     if (listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
                     {
                         // para arquivo .txt
@@ -443,11 +463,11 @@ namespace MP.Client.MP
 
                     }
                 }
-                catch (BussinesException ex)
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
-                }
+            }
+            catch (BussinesException ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
             }
         }
 
