@@ -22,5 +22,7 @@ namespace MP.Interfaces.Servicos
 
         IList<ILeituraRevistaDeMarcas> obtenhaTodosOsProcessosDaRevistaDeMarcasXML(XmlDocument revistaXml);
         IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>> obtenhaListaDasMarcasColidentesEClientes(IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevistaComMarcaExistente, IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalCadastrado);
+
+        void Excluir(int numeroDaRevistaDeMarcas);
     }
 }

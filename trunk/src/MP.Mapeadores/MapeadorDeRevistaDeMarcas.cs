@@ -175,5 +175,18 @@ namespace MP.Mapeadores
 
             return revistas;
         }
+
+        public void Excluir(int numeroDaRevistaDeMarcas)
+        {
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            sql.Append("DELETE FROM MP_REVISTA_MARCAS ");
+            sql.Append(String.Concat("WHERE NUMEROREVISTAMARCAS = ", numeroDaRevistaDeMarcas, " "));
+
+            DBHelper.ExecuteNonQuery(sql.ToString());
+        }
     }
 }
