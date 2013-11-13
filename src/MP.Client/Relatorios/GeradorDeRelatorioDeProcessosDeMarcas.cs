@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
+using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -40,12 +41,14 @@ namespace MP.Client.Relatorios
             nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".pdf");
             caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
             _documento = new Document();
-
             _documento.SetPageSize(PageSize.A4.Rotate());
-
             escritor = PdfWriter.GetInstance(_documento,
-                                              new FileStream(Path.Combine(caminho, nomeDoArquivoDeSaida),
+                                             new FileStream(Path.Combine(caminho, nomeDoArquivoDeSaida),
                                                              FileMode.Create));
+            escritor.PageEvent = new Ouvinte(_Fonte1, _Fonte2, _Fonte3, _Fonte4, null);
+            escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE);
+            escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE);
+            
             EscrevaCabecalho();
             EscrevaRodape();
             _documento.Open();
@@ -88,16 +91,6 @@ namespace MP.Client.Relatorios
             tabela.Padding = 1;
             tabela.Spacing = 1;
             tabela.Width = 100;
-
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 13,true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do depósito", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data de concessão", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data da vigência", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 13, true));
             
             foreach (var processo in _processos)
             {
@@ -115,8 +108,99 @@ namespace MP.Client.Relatorios
             }
             
             _documento.Add(tabela);
-            Chunk linhaQuantidadeDeItens = new Chunk(String.Concat("Quantidade de processos de marcas : ", _processos.Count), _Fonte4);
-            _documento.Add(linhaQuantidadeDeItens);
+            //  Chunk linhaQuantidadeDeItens = new Chunk(String.Concat("Quantidade de processos de marcas : ", _processos.Count), _Fonte4);
+           // _documento.Add(linhaQuantidadeDeItens);
+        }
+
+        private class Ouvinte : IPdfPageEvent
+        {
+            private Font font1;
+            private Font font2;
+            private Font font3;
+            private Font font4;
+            private IEmpresa empresa;
+
+            public Ouvinte(Font font1, Font font2, Font font3, Font font4, IEmpresa empresa)
+            {
+                this.font1 = font1;
+                this.font2 = font2;
+                this.font3 = font3;
+                this.font4 = font4;
+                this.empresa = empresa;
+            }
+            
+            public void OnOpenDocument(PdfWriter writer, Document document)
+            {
+                
+            }
+
+            public void OnStartPage(PdfWriter writer, Document document)
+            {
+                //IPessoaJuridica pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
+
+                //Phrase p = new Phrase(pessoaJuridica.NomeFantasia);
+                //Chunk c = new Chunk(pess);
+                //p.Add(c);
+                
+                //FabricaDeContexto.GetInstancia().GetContextoAtual().EmpresaLogada
+
+                
+
+                //p.
+
+                //Re
+
+                //var cabecalho = new HeaderFooter();
+                //cabecalho.Border = HeaderFooter.NO_BORDER;
+                //cabecalho.Alignment = HeaderFooter.ALIGN_UNDEFINED;
+                //_documento.Header = cabecalho;
+
+            }
+
+            public void OnEndPage(PdfWriter writer, Document document)
+            {
+                
+            }
+
+            public void OnCloseDocument(PdfWriter writer, Document document)
+            {
+                
+            }
+
+            public void OnParagraph(PdfWriter writer, Document document, float paragraphPosition)
+            {
+                
+            }
+
+            public void OnParagraphEnd(PdfWriter writer, Document document, float paragraphPosition)
+            {
+                
+            }
+
+            public void OnChapter(PdfWriter writer, Document document, float paragraphPosition, Paragraph title)
+            {
+                
+            }
+
+            public void OnChapterEnd(PdfWriter writer, Document document, float paragraphPosition)
+            {
+                
+            }
+
+            public void OnSection(PdfWriter writer, Document document, float paragraphPosition, int depth, Paragraph title)
+            {
+                
+            }
+
+            public void OnSectionEnd(PdfWriter writer, Document document, float paragraphPosition)
+            {
+                
+            }
+
+            public void OnGenericTag(PdfWriter writer, Document document, Rectangle rect, string text)
+            {
+                
+            }
         }
     }
 }
