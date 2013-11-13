@@ -26,8 +26,6 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
             if (IsPostBack) return;
 
             Nullable<long> id = null;
@@ -158,7 +156,9 @@ namespace MP.Client.MP
             rblEHPCT.Items.Add(new ListItem("Sim", "1"));
             rblEHPCT.SelectedValue = "0";
             MostraPCT(false);
-            
+
+            txtDataDeCadastro.Enabled = false;
+
         }
 
         private void MostraPCT( bool mostra)

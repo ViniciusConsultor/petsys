@@ -354,7 +354,7 @@ namespace MP.Client.MP
 
         private void btnModificar_Click()
         {
-            GravePatente();
+            ExibaTelaModificar();
         }
 
         private void btnNovo_Click()
@@ -400,8 +400,7 @@ namespace MP.Client.MP
 
         private void ExibaPatenteSelecionada(IPatente patente)
         {
-            ExibaTelaModificar();
-
+            ExibaTelaConsultar();
             txtTituloPatente.Text = patente.TituloPatente;
             ctrlNaturezaPatente.Inicializa();
             ctrlNaturezaPatente.NaturezaPatenteSelecionada = patente.NaturezaPatente;
@@ -421,7 +420,7 @@ namespace MP.Client.MP
             MostrarListaDeAnuidadeDaPatente();
         }
 
-        private void ExibaTelaModificar()
+        private void ExibaTelaConsultar()
         {
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
@@ -431,26 +430,49 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
+            var controlePanelPatente = pnlDadosPatente as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, false);
+
+            UtilidadesWeb.LimparComponente(ref controlePanelPatente);
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, false);
+
+            var controlePanelComplemento = pnlComplemento as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
+
+            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
+
+            var controlePanelAnuidades = pnlAnuidades as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, false);
+
+            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
+            UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, false);
+        }
+
+        private void ExibaTelaModificar()
+        {
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
+            
             ctrlPatente.EnableLoadOnDemand = false;
             ctrlPatente.ShowDropDownOnTextboxClick = false;
             ctrlPatente.AutoPostBack = false;
 
             var controlePanelPatente = pnlDadosPatente as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, true);
-
-            UtilidadesWeb.LimparComponente(ref controlePanelPatente);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, true);
 
             var controlePanelComplemento = pnlComplemento as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, true);
-
-            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, true);
 
             var controlePanelAnuidades = pnlAnuidades as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, true);
-
-            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, true);
 
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
@@ -467,24 +489,6 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = true;
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
-
-            var controlePanelPatente = pnlDadosPatente as Control;
-            UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, false);
-
-            UtilidadesWeb.LimparComponente(ref controlePanelPatente);
-            UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, false);
-
-            var controlePanelComplemento = pnlComplemento as Control;
-            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
-
-            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
-            UtilidadesWeb.HabilitaComponentes(ref controlePanelComplemento, false);
-
-            var controlePanelAnuidades = pnlAnuidades as Control;
-            UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, false);
-
-            UtilidadesWeb.LimparComponente(ref controlePanelComplemento);
-            UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, false);
         }
 
         protected void btnAdicionarCliente_ButtonClick(object sender, EventArgs e)
@@ -551,7 +555,6 @@ namespace MP.Client.MP
         {
             Inicial = 1,
             Novo,
-            Consulta,
             Modifica,
             Remove
         }

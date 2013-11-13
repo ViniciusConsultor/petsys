@@ -9,7 +9,7 @@
       <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
-            <telerik:RadToolBarButton runat="server" Text="Imprimir marcas" ImageUrl="~/imagens/imprimir.png"
+            <telerik:RadToolBarButton runat="server" Text="Gerar" ImageUrl="~/imagens/imprimir.png"
                 CommandName="btnImprimir" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
