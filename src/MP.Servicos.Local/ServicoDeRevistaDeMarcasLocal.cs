@@ -382,7 +382,7 @@ namespace MP.Servicos.Local
 
                 objetoRevista.NumeroProcessoDeMarca = Convert.ToInt64(processo.Attributes.GetNamedItem("numero").Value);
 
-                if (processo.Attributes.GetNamedItem("data-deposito") != null)
+                if (processo.Attributes.GetNamedItem("data-deposito") != null) {}
                     objetoRevista.DataDeDeposito = Convert.ToDateTime(processo.Attributes.GetNamedItem("data-deposito").Value);
 
                 if (processo.Attributes.GetNamedItem("data-concessao") != null)
@@ -497,28 +497,7 @@ namespace MP.Servicos.Local
             return listaDeDadosDaRevistaASerSalvo;
         }
 
-        public void Modificar(IRevistaDeMarcas revistaDeMarcas)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDeMarcas>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeador.Modificar(revistaDeMarcas);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
+       
 
         public IList<IRevistaDeMarcas> ObtenhaRevistasAProcessar(int quantidadeDeRegistros)
         {

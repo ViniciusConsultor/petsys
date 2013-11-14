@@ -34,17 +34,16 @@ namespace MP.Mapeadores
                 sql.Append(String.Concat(processoDaRevistaDeMarca.IdRevistaMarcas.Value.ToString(), ", "));
                 sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroRevistaMarcas, ", "));
 
-                sql.Append(processoDaRevistaDeMarca.DataPublicacao != null
-                          ? String.Concat(processoDaRevistaDeMarca.DataPublicacao.ToString("yyyyMMdd"), ", ")
+                sql.Append(processoDaRevistaDeMarca.DataPublicacao.HasValue
+                          ? String.Concat(processoDaRevistaDeMarca.DataPublicacao.Value .ToString("yyyyMMdd"), ", ")
                           : "NULL, ");
 
-                sql.Append(processoDaRevistaDeMarca.DataProcessamento != null
-                           ? String.Concat(processoDaRevistaDeMarca.DataProcessamento.ToString("yyyyMMdd"), ", ")
+                sql.Append(processoDaRevistaDeMarca.DataProcessamento.HasValue
+                           ? String.Concat(processoDaRevistaDeMarca.DataProcessamento.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
-                sql.Append(processoDaRevistaDeMarca.NumeroProcessoDeMarca != null
-                           ? String.Concat(processoDaRevistaDeMarca.NumeroProcessoDeMarca, ", ")
-                           : "NULL, ");
+                sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroProcessoDeMarca, ", "));
+                          
 
                 sql.Append(processoDaRevistaDeMarca.CodigoDespachoAnterior != null
                            ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAnterior, "', ")
@@ -68,36 +67,19 @@ namespace MP.Mapeadores
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDeMarca.ExtensaoArquivo), "', ")
                            : "NULL, ");
 
-                sql.Append(processoDaRevistaDeMarca.DataDeDeposito != null
-                           ? String.Concat(processoDaRevistaDeMarca.DataDeDeposito.ToString("yyyyMMdd"), ", ")
+                sql.Append(processoDaRevistaDeMarca.DataDeDeposito.HasValue
+                           ? String.Concat(processoDaRevistaDeMarca.DataDeDeposito.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
-                sql.Append(processoDaRevistaDeMarca.DataDeConcessao != null
-                           ? String.Concat(processoDaRevistaDeMarca.DataDeConcessao.ToString("yyyyMMdd"), ") ")
-                           : "NULL, ");
+                sql.Append(processoDaRevistaDeMarca.DataDeConcessao.HasValue
+                           ? String.Concat(processoDaRevistaDeMarca.DataDeConcessao.Value.ToString("yyyyMMdd"), ") ")
+                           : "NULL) ");
 
                 DBHelper.ExecuteNonQuery(sql.ToString());
             }
         }
 
-        public void Modificar(IRevistaDeMarcas revistaDeMarcas)
-        {
-            var sql = new StringBuilder();
-            IDBHelper DBHelper;
-
-            DBHelper = ServerUtils.getDBHelper();
-
-            sql.Append("UPDATE MP_REVISTA_MARCAS SET ");
-            sql.Append(String.Concat("NUMEROREVISTAMARCAS = ", revistaDeMarcas.NumeroRevistaMarcas, " , "));
-            sql.Append(String.Concat("DATAPUBLICACAO = ", revistaDeMarcas.DataPublicacao.ToString("yyyyMMdd"), " , "));
-            sql.Append("PROCESSADA = " + (revistaDeMarcas.Processada ? "1, " : "0, "));
-
-            if (!string.IsNullOrEmpty(revistaDeMarcas.ExtensaoArquivo))
-                sql.Append(String.Concat("EXTENSAOARQUIVO = '", revistaDeMarcas.ExtensaoArquivo, "' "));
-
-            sql.Append(" WHERE IDREVISTAMARCAS = " + revistaDeMarcas.IdRevistaMarcas.Value);
-        }
-
+        
         public IList<IRevistaDeMarcas> ObtenhaRevistasAProcessar(int quantidadeDeRegistros)
         {
             IDBHelper DBHelper;
