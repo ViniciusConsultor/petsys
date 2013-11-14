@@ -9,8 +9,8 @@ namespace MP.Interfaces.Negocio
     {
         long? IdRevistaMarcas { get; set; }
         int NumeroRevistaMarcas { get; set; }
-        DateTime DataPublicacao { get; set; }
-        DateTime DataProcessamento { get; set; }
+        Nullable<DateTime> DataPublicacao { get; set; }
+        Nullable<DateTime> DataProcessamento { get; set; }
         long NumeroProcessoDeMarca { get; set; }
         string CodigoDespachoAnterior { get; set; }
         string CodigoDespachoAtual { get; set; }
@@ -18,7 +18,7 @@ namespace MP.Interfaces.Negocio
         string TextoDoDespacho { get; set; }
         bool Processada { get; set; }
         string ExtensaoArquivo { get; set; }
-        DateTime DataDeConcessao { get; set; }
-        DateTime DataDeDeposito { get; set; }
+        Nullable<DateTime> DataDeConcessao { get; set; }
+        Nullable<DateTime> DataDeDeposito { get; set; }
     }
 }

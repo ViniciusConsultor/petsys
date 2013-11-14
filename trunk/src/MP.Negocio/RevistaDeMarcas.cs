@@ -14,10 +14,10 @@ namespace MP.Negocio
         public int NumeroRevistaMarcas
         { get; set; }
 
-        public DateTime DataPublicacao
+        public DateTime? DataPublicacao
         { get; set; }
 
-        public DateTime DataProcessamento
+        public DateTime? DataProcessamento
         { get; set; }
 
         public long NumeroProcessoDeMarca
@@ -41,10 +41,10 @@ namespace MP.Negocio
         public string ExtensaoArquivo
         { get; set; }
 
-        public DateTime DataDeConcessao
+        public DateTime? DataDeConcessao
         { get; set; }
 
-        public DateTime DataDeDeposito
+        public DateTime? DataDeDeposito
         { get; set; }
     }
 }

@@ -122,7 +122,7 @@ namespace MP.Client.MP
             IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                listaDeRevistas = servico.ObtenhaRevistasJaProcessadas(grdRevistasJaProcessadas.PageSize);
+                listaDeRevistas = servico.ObtenhaRevistasJaProcessadas(int.MaxValue);
 
             if (listaDeRevistas.Count > 0)
                 MostraListaRevistasJaProcessadas(listaDeRevistas);
@@ -139,7 +139,7 @@ namespace MP.Client.MP
             IList<IRevistaDeMarcas> listaDeRevistas = new List<IRevistaDeMarcas>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                listaDeRevistas = servico.ObtenhaRevistasAProcessar(grdRevistasJaProcessadas.PageSize);
+                listaDeRevistas = servico.ObtenhaRevistasAProcessar(int.MaxValue);
 
             if (listaDeRevistas.Count > 0)
                 MostraListaRevistasAProcessar(listaDeRevistas);
