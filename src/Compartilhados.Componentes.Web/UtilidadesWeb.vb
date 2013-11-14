@@ -22,6 +22,7 @@ Public Class UtilidadesWeb
     Public Const URL_REVISTA_PATENTE As String = "~/Loads/Revistas/Patentes/"
 
     Public Const PASTA_LOADS As String = "Loads"
+    Public Const PASTA_FOTO_PESSOA As String = "Loads/Fotos/Pessoas"
 
     Public Shared Sub HabilitaComponentes(ByRef Componente As Control, _
                                           ByVal Habilitar As Boolean)
