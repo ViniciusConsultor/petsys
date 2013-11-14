@@ -6,7 +6,9 @@ using System.Text;
 using System.Web;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
+using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.Core.Servicos;
 using MP.Interfaces.Negocio;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -22,6 +24,7 @@ namespace MP.Client.Relatorios
         private Font _Fonte2;
         private Font _Fonte3;
         private Font _Fonte4;
+        private IEmpresa empresa;
 
         public GeradorDeRelatorioDeProcessosDeMarcas(IList<IProcessoDeMarca> processos)
         {
@@ -38,6 +41,9 @@ namespace MP.Client.Relatorios
             string caminho;
             string nomeDoArquivoDeSaida;
 
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeEmpresa>())
+                empresa = servico.Obtenha(FabricaDeContexto.GetInstancia().GetContextoAtual().EmpresaLogada.ID);
+
             nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".pdf");
             caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
             _documento = new Document();
@@ -45,7 +51,7 @@ namespace MP.Client.Relatorios
             escritor = PdfWriter.GetInstance(_documento,
                                              new FileStream(Path.Combine(caminho, nomeDoArquivoDeSaida),
                                                              FileMode.Create));
-            escritor.PageEvent = new Ouvinte(_Fonte1, _Fonte2, _Fonte3, _Fonte4, null);
+            escritor.PageEvent = new Ouvinte(_Fonte1, _Fonte2, _Fonte3, _Fonte4, empresa);
             escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE);
             escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE);
             
@@ -59,14 +65,50 @@ namespace MP.Client.Relatorios
 
         private void EscrevaCabecalho()
         {
-            HeaderFooter cabecalho;
-            Phrase frase;
+            IPessoaJuridica pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
 
-            frase = new Phrase("Processos de marca " + Environment.NewLine, _Fonte3);
-            cabecalho = new HeaderFooter(frase, false);
-            cabecalho.Border = HeaderFooter.NO_BORDER;
-            cabecalho.Alignment = HeaderFooter.ALIGN_RIGHT;
-            _documento.Header = cabecalho;
+
+            if (!string.IsNullOrEmpty(pessoaJuridica.Logomarca))
+            {
+
+                var imghead = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(pessoaJuridica.Logomarca));
+
+                Chunk c = new Chunk(imghead, 0, 0);
+
+                Phrase p = new Phrase(c);
+
+                p.Add(ObtenhaTabelaDeCabecalho());
+
+                var cabecalho = new HeaderFooter(p, false);
+                cabecalho.Border = HeaderFooter.BOX;
+                cabecalho.Alignment = HeaderFooter.ALIGN_UNDEFINED;
+                _documento.Header = cabecalho;
+            }
+
+        }
+
+
+        private Table ObtenhaTabelaDeCabecalho ()
+        {
+            Table tabela = new Table(9);
+
+            tabela.Widths = new Single[] { 100, 100, 100, 100, 100, 400, 400, 90, 85 };
+
+            tabela.Padding = 1;
+            tabela.Spacing = 1;
+            tabela.Width = 100;
+
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do depósito", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data de concessão", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data da vigência", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+
+            return tabela;
         }
 
         private void EscrevaRodape()
@@ -76,9 +118,11 @@ namespace MP.Client.Relatorios
 
             texto.AppendLine(String.Concat("Impressão em: ", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
 
-            rodape = new HeaderFooter(new Phrase(texto.ToString(), _Fonte4), false);
+            rodape = new HeaderFooter(new Phrase(texto.ToString() + " página :" + _documento.PageNumber, _Fonte4), false);
             rodape.Border = HeaderFooter.NO_BORDER;
             rodape.Alignment = HeaderFooter.ALIGN_RIGHT;
+
+            
             _documento.Footer = rodape;
         }
 
@@ -136,29 +180,14 @@ namespace MP.Client.Relatorios
 
             public void OnStartPage(PdfWriter writer, Document document)
             {
-                //IPessoaJuridica pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
-
-                //Phrase p = new Phrase(pessoaJuridica.NomeFantasia);
-                //Chunk c = new Chunk(pess);
-                //p.Add(c);
                 
-                //FabricaDeContexto.GetInstancia().GetContextoAtual().EmpresaLogada
-
-                
-
-                //p.
-
-                //Re
-
-                //var cabecalho = new HeaderFooter();
-                //cabecalho.Border = HeaderFooter.NO_BORDER;
-                //cabecalho.Alignment = HeaderFooter.ALIGN_UNDEFINED;
-                //_documento.Header = cabecalho;
 
             }
 
             public void OnEndPage(PdfWriter writer, Document document)
             {
+
+               
                 
             }
 
