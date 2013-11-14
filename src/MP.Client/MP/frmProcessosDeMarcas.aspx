@@ -19,7 +19,7 @@
             <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/processarRevista.gif"
                 CommandName="btnLerRevista" CausesValidation="False" CommandArgument="OPE.MP.007.0005" />
             <telerik:RadToolBarButton runat="server" Text="Relatório de processos" ImageUrl="~/imagens/leaf.gif"
-                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.MP.007.0005" />
+                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.MP.007.0006" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>

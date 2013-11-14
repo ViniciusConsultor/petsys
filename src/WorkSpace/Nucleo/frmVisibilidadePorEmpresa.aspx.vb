@@ -40,6 +40,7 @@ Public Class frmVisibilidadePorEmpresa
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), True)
         UtilidadesWeb.HabilitaComponentes(CType(pnlEmpresasVisiveis, Control), False)
         ViewState(CHAVE_ESTADO_FRM_VISIBILIDADE_EMPRESA) = Estado.Inicial
+        cboOperador.ClearSelection()
         MostraEmpresasVisiveis(New List(Of IEmpresa))
     End Sub
 
@@ -273,9 +274,7 @@ Public Class frmVisibilidadePorEmpresa
         CType(rtbToolBar.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBar.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
-        UtilidadesWeb.LimparComponente(CType(pnlDadosDoOperador, Control))
         UtilidadesWeb.LimparComponente(CType(pnlEmpresasVisiveis, Control))
-        UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoOperador, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlEmpresasVisiveis, Control), False)
         ViewState(CHAVE_ESTADO_FRM_VISIBILIDADE_EMPRESA) = Estado.Inicial
         MostraEmpresasVisiveis(New List(Of IEmpresa))
