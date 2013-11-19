@@ -79,9 +79,21 @@ namespace MP.Client.Relatorios
 
             var dadosEmpresa = new Phrase();
 
-            dadosEmpresa.Add(pessoaJuridica.NomeFantasia);
-            dadosEmpresa.Add(pessoaJuridica.)
+            dadosEmpresa.Add(pessoaJuridica.NomeFantasia + Environment.NewLine);
             
+            if (pessoaJuridica.Enderecos.Count > 0)
+            {
+                var endereco = pessoaJuridica.Enderecos[0];
+                dadosEmpresa.Add(endereco.ToString());
+            }
+
+
+            if (pessoaJuridica.Telefones.Count > 0)
+            {
+                var telefone = pessoaJuridica.Telefones[0];
+                dadosEmpresa.Add("Telefone " + telefone.ToString());
+            }
+
             Phrase fraseCabecalho = new Phrase();
 
             var tabela = new Table(2);
@@ -108,9 +120,9 @@ namespace MP.Client.Relatorios
             //fraseCabecalho.Add(dadosEmpresa);
 
             var cabecalho = new HeaderFooter(fraseCabecalho, false);
-            cabecalho.Border = HeaderFooter.BOX;
-            cabecalho.Alignment = HeaderFooter.ALIGN_UNDEFINED;
-
+            cabecalho.Border = HeaderFooter.NO_BORDER;
+            cabecalho.UseVariableBorders = true;
+            
             _documento.Header = cabecalho;
         }
 
