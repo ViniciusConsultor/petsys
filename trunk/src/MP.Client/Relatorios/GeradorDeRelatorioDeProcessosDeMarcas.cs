@@ -67,24 +67,51 @@ namespace MP.Client.Relatorios
         {
             IPessoaJuridica pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
 
+            Chunk imagem;
 
             if (!string.IsNullOrEmpty(pessoaJuridica.Logomarca))
             {
-
                 var imghead = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(pessoaJuridica.Logomarca));
-
-                Chunk c = new Chunk(imghead, 0, 0);
-
-                Phrase p = new Phrase(c);
-
-                p.Add(ObtenhaTabelaDeCabecalho());
-
-                var cabecalho = new HeaderFooter(p, false);
-                cabecalho.Border = HeaderFooter.BOX;
-                cabecalho.Alignment = HeaderFooter.ALIGN_UNDEFINED;
-                _documento.Header = cabecalho;
+                imagem = new Chunk(imghead, 0, 0);
             }
+            else
+                imagem = new Chunk("");
 
+            var dadosEmpresa = new Phrase();
+
+            dadosEmpresa.Add(pessoaJuridica.NomeFantasia);
+            dadosEmpresa.Add(pessoaJuridica.)
+            
+            Phrase fraseCabecalho = new Phrase();
+
+            var tabela = new Table(2);
+            tabela.Border = 0;
+            tabela.Width = 100;
+            
+            var cell = new Cell(new Phrase(imagem));
+            cell.Border = 0;
+            cell.Width = 30;
+            
+
+            tabela.AddCell(cell);
+
+            var cell1 = new Cell(dadosEmpresa);
+            cell1.Border = 0;
+            cell1.Width = 70;
+            
+
+            tabela.AddCell(cell1);
+
+            fraseCabecalho.Add(tabela);
+
+            //fraseCabecalho.Add(imagem);
+            //fraseCabecalho.Add(dadosEmpresa);
+
+            var cabecalho = new HeaderFooter(fraseCabecalho, false);
+            cabecalho.Border = HeaderFooter.BOX;
+            cabecalho.Alignment = HeaderFooter.ALIGN_UNDEFINED;
+
+            _documento.Header = cabecalho;
         }
 
 
@@ -98,15 +125,15 @@ namespace MP.Client.Relatorios
             tabela.Spacing = 1;
             tabela.Width = 100;
 
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do depósito", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data de concessão", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data da vigência", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 13, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 13, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do depósito", _Fonte2, Cell.ALIGN_CENTER, 0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data de concessão", _Fonte2, Cell.ALIGN_CENTER, 0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data da vigência", _Fonte2, Cell.ALIGN_CENTER, 0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_CENTER, 0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_CENTER, 0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER,0, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 0, true));
 
             return tabela;
         }
@@ -139,16 +166,16 @@ namespace MP.Client.Relatorios
             foreach (var processo in _processos)
             {
                 
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Processo.ToString(), _Fonte1, Cell.ALIGN_CENTER,13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1, Cell.ALIGN_CENTER, 13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoDeposito.HasValue ? processo.DataDoDeposito.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDeConcessao.HasValue ? processo.DataDeConcessao.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDaVigencia.HasValue ? processo.DataDaVigencia.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.DescricaoDaMarca, _Fonte1, Cell.ALIGN_LEFT, 13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.Cliente.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 13, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Despacho != null ? processo.Despacho.CodigoDespacho.ToString() : "", _Fonte1, Cell.ALIGN_CENTER, 13, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Processo.ToString(), _Fonte1, Cell.ALIGN_CENTER,0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1, Cell.ALIGN_CENTER, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoDeposito.HasValue ? processo.DataDoDeposito.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDeConcessao.HasValue ? processo.DataDeConcessao.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDaVigencia.HasValue ? processo.DataDaVigencia.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.DescricaoDaMarca, _Fonte1, Cell.ALIGN_LEFT,0 , false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.Cliente.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Despacho != null ? processo.Despacho.CodigoDespacho.ToString() : "", _Fonte1, Cell.ALIGN_CENTER, 0, false));
                 
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Ativo ? "SIM" : "NÃO", _Fonte1, Cell.ALIGN_CENTER, 13, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Ativo ? "SIM" : "NÃO", _Fonte1, Cell.ALIGN_CENTER, 0, false));
             }
             
             _documento.Add(tabela);

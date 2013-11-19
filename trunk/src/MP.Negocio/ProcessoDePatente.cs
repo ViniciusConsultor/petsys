@@ -13,7 +13,6 @@ namespace MP.Negocio
         public IPatente Patente {get; set;}
         public string Processo {get; set;}
         public DateTime DataDoCadastro { get; set; }
-        public DateTime DataDeEntrada {get; set;}
         public bool ProcessoEhDeTerceiro {get; set;}
         public DateTime? DataDaConcessao {get;set;}
         public DateTime? DataDaPublicacao { get; set; }
