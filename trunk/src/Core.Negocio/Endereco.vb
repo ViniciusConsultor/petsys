@@ -1,4 +1,5 @@
 ﻿Imports Compartilhados.Interfaces.Core.Negocio
+Imports System.Text
 
 <Serializable()> _
 Public Class Endereco
@@ -64,5 +65,17 @@ Public Class Endereco
             _TipoDeEndereco = value
         End Set
     End Property
+
+    Public Overrides Function ToString() As String
+        Dim enderecoStr = New StringBuilder()
+        
+        If (Not String.IsNullOrEmpty(Logradouro)) Then enderecoStr.Append(Logradouro & ", ")
+        If (Not String.IsNullOrEmpty(Complemento)) Then enderecoStr.Append(Complemento & " " & vbLf)
+        If (Not String.IsNullOrEmpty(Bairro)) Then enderecoStr.Append(Bairro & " ")
+        If (Not CEP Is Nothing) Then enderecoStr.Append("CEP " & CEP.ToString() & " " & vbLf)
+        If (Not Municipio Is Nothing) Then enderecoStr.Append(Municipio.Nome & " " & Municipio.UF.Sigla)
+
+        Return enderecoStr.ToString()
+    End Function
 
 End Class
