@@ -382,7 +382,7 @@ namespace MP.Servicos.Local
 
                 objetoRevista.NumeroProcessoDeMarca = Convert.ToInt64(processo.Attributes.GetNamedItem("numero").Value);
 
-                if (processo.Attributes.GetNamedItem("data-deposito") != null) {}
+                if (processo.Attributes.GetNamedItem("data-deposito") != null)
                     objetoRevista.DataDeDeposito = Convert.ToDateTime(processo.Attributes.GetNamedItem("data-deposito").Value);
 
                 if (processo.Attributes.GetNamedItem("data-concessao") != null)

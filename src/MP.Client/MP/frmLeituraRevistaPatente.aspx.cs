@@ -71,8 +71,8 @@ namespace MP.Client.MP
                     // lista de processos existentes na base, de acordo com a revista que está sendo processada.
                     IList<IRevistaDePatente> listaDeProcessosExistentes = new List<IRevistaDePatente>();
 
-                    //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                        //listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(listaRevistasAProcessar[IndiceSelecionado], xmlRevista);
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasAProcessar[indiceSelecionado], xmlRevista);
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
