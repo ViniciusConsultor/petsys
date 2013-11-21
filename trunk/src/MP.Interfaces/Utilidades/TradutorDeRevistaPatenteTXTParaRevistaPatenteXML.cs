@@ -60,112 +60,112 @@ namespace MP.Interfaces.Utilidades
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout11.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.NumeroDaPatente += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.NumeroDaPatente += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout11.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout15.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DataDaProrrogacao = valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DataDaProrrogacao = valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout15.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout21.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.NumeroDoPedido += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.NumeroDoPedido += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout21.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout22.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DataDoDeposito = valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DataDoDeposito = valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout22.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout30.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.PrioridadeUnionista += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.PrioridadeUnionista += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout30.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout43.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DataDaPublicacaoDoPedido = valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DataDaPublicacaoDoPedido = valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout43.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout45.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DataDeConcessao = valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DataDeConcessao = valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout45.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout51.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.ClassificacaoInternacional += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.ClassificacaoInternacional += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout51.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout52.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.ClassificacaoNacional += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.ClassificacaoNacional += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout52.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout54.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Titulo += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Titulo += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout54.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout57.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Resumo += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Resumo += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout57.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout61.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DadosDoPedidoDaPatente += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DadosDoPedidoDaPatente += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout61.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout62.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DadosDoPedidoOriginal += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DadosDoPedidoOriginal += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout62.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout66.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.PrioridadeInterna += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.PrioridadeInterna += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout66.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout71.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Depositante += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Depositante += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout71.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout72.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Inventor += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Inventor += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout72.IdentificadorCampo;
                 return;
             }
@@ -174,7 +174,7 @@ namespace MP.Interfaces.Utilidades
             {
                 if (!valorDaLinha.Contains("(") && !valorDaLinha.Contains(")"))
                 {
-                    dtoLayoutLeituraRevistaPatente.Titular = valorDaLinha;
+                    dtoLayoutLeituraRevistaPatente.Titular = valorDaLinha.TrimStart().TrimEnd();
                     return;
                 }
 
@@ -193,238 +193,238 @@ namespace MP.Interfaces.Utilidades
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout74.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Procurador += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Procurador += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout74.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout81.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.PaisesDesignados += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.PaisesDesignados += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout81.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout85.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DataInicioFaseNacional = valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DataInicioFaseNacional = valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout85.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout86.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DadosDepositoInternacional += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DadosDepositoInternacional += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout86.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout87.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DadosPublicacaoInternacional += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DadosPublicacaoInternacional += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout87.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCD.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.CodigoDoDespacho += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.CodigoDoDespacho += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCD.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutRP.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.ResponsavelPagamentoImpostoDeRenda += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.ResponsavelPagamentoImpostoDeRenda += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutRP.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCO.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Complemento += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Complemento += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCO.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutDE.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Decisao += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Decisao += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutDE.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutRE.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Recorrente += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Recorrente += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutRE.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutNP.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.NumeroDoProcesso += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.NumeroDoProcesso += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutNP.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCE.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Cedente += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Cedente += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCE.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCS.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Cessionaria += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Cessionaria += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCS.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutOB.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Observacao += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Observacao += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutOB.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutUI.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.UltimaInformacao += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.UltimaInformacao += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutUI.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCA.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.CertificadoDeAverbacao += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.CertificadoDeAverbacao += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCA.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutPE.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.PaisCedente += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.PaisCedente += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutPE.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutPS.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.PaisDaCessionaria += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.PaisDaCessionaria += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutPS.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutSE.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Setor += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Setor += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutSE.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutES.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.EnderecoDaCessionaria += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.EnderecoDaCessionaria += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutES.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutND.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.NaturezaDoDocumento += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.NaturezaDoDocumento += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutND.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutMO.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.MoedaDePagamento += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.MoedaDePagamento += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutMO.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutVA.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Valor += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Valor += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutVA.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutPG.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Pagamento += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Pagamento += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutPG.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutPZ.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Prazo += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Prazo += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutPZ.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutIA.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.ServicosIsentosDeAverbacao += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.ServicosIsentosDeAverbacao += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutIA.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCR.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Criador += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Criador += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCR.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutLG.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Linguagem += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Linguagem += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutLG.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCP.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.CampoDeAplicacao += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.CampoDeAplicacao += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCP.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutTP.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.TipoDePrograma += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.TipoDePrograma += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutTP.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCR.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.DataDaCriacao = valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.DataDaCriacao = valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCR.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutRG.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.RegimeDeGuarda += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.RegimeDeGuarda += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutRG.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutRQ.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Requerente += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Requerente += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutRQ.IdentificadorCampo;
                 return;
             }
 
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutRD.IdentificadorCampo, ultimaTagPreenchida))
             {
-                dtoLayoutLeituraRevistaPatente.Redacao += valorDaLinha;
+                dtoLayoutLeituraRevistaPatente.Redacao += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutRD.IdentificadorCampo;
                 return;
             }
