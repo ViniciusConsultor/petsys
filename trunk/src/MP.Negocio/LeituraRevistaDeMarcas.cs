@@ -89,6 +89,27 @@ namespace MP.Negocio
         public string RadicalNCL
         { get; set; }
 
+        public string NumeroProtocoloDespacho
+        { get; set; }
+
+        public string DataProtocoloDespacho
+        { get; set; }
+
+        public string CodigoServicoProtocoloDespacho
+        { get; set; }
+
+        public string RazaoSocialRequerenteProtocoloDespacho
+        { get; set; }
+
+        public string PaisRequerenteProtocoloDespacho
+        { get; set; }
+
+        public string EstadoRequerenteProtocoloDespacho
+        { get; set; }
+
+        public string ProcuradorProtocoloDespacho
+        { get; set; }
+
         public override int GetHashCode()
         {
             if (!IdLeitura.HasValue) return base.GetHashCode();

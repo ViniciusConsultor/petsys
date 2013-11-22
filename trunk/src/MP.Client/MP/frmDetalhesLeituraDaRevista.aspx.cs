@@ -64,6 +64,15 @@ namespace MP.Client.MP
             {
                 CarregueComboSobrestadores(processo);
             }
+
+            txtNumeroProtocoloDespacho.Text = processo.NumeroProtocoloDespacho;
+            txtDataProtocoloDespacho.Text = processo.DataProtocoloDespacho;
+            txtCodigoServicoProtocoloDespacho.Text = processo.CodigoServicoProtocoloDespacho;
+            txtRazaoSocialRequerenteProtocoloDespacho.Text = processo.RazaoSocialRequerenteProtocoloDespacho;
+            txtPaisRequerenteProtocoloDespacho.Text = processo.PaisRequerenteProtocoloDespacho;
+            txtEstadoRequerenteProtocoloDespacho.Text = processo.EstadoRequerenteProtocoloDespacho;
+            txtProcuradorProtocoloDespacho.Text = processo.ProcuradorProtocoloDespacho;
+
         }
 
         private void CarregueComboSobrestadores(ILeituraRevistaDeMarcas processo)

@@ -197,6 +197,53 @@ namespace MP.Servicos.Local
                         processoLidoDaRevistaDeMarca.CodigoDoDespacho = despachos["despacho"].Attributes.GetNamedItem("codigo").Value;
                         var textoDoDespacho = despacho["texto-complementar"];
                         processoLidoDaRevistaDeMarca.TextoDoDespacho = textoDoDespacho != null ? textoDoDespacho.InnerText : null;
+
+                        var protocolo = despacho["protocolo"];
+
+                        if(protocolo != null)
+                        {
+                            processoLidoDaRevistaDeMarca.NumeroProtocoloDespacho =
+                                protocolo.Attributes.GetNamedItem("numero") != null
+                                    ? protocolo.Attributes.GetNamedItem("numero").Value
+                                    : null;
+
+                            processoLidoDaRevistaDeMarca.DataProtocoloDespacho =
+                                protocolo.Attributes.GetNamedItem("data") != null
+                                    ? protocolo.Attributes.GetNamedItem("data").Value
+                                    : null;
+
+                            processoLidoDaRevistaDeMarca.CodigoServicoProtocoloDespacho =
+                                protocolo.Attributes.GetNamedItem("codigoServico") != null
+                                    ? protocolo.Attributes.GetNamedItem("codigoServico").Value
+                                    : null;
+
+                            var requerente = protocolo["requerente"];
+
+                            if(requerente != null)
+                            {
+                                processoLidoDaRevistaDeMarca.RazaoSocialRequerenteProtocoloDespacho =
+                                requerente.Attributes.GetNamedItem("nome-razao-social") != null
+                                    ? requerente.Attributes.GetNamedItem("nome-razao-social").Value
+                                    : null;
+
+                                processoLidoDaRevistaDeMarca.PaisRequerenteProtocoloDespacho =
+                                requerente.Attributes.GetNamedItem("pais") != null
+                                    ? requerente.Attributes.GetNamedItem("pais").Value
+                                    : null;
+
+                                processoLidoDaRevistaDeMarca.EstadoRequerenteProtocoloDespacho =
+                                requerente.Attributes.GetNamedItem("uf") != null
+                                    ? requerente.Attributes.GetNamedItem("uf").Value
+                                    : null;
+                            }
+
+                            var procuradorProtocoloDespacho = protocolo["procurador"];
+
+                            processoLidoDaRevistaDeMarca.ProcuradorProtocoloDespacho =
+                                procuradorProtocoloDespacho != null
+                                    ? procuradorProtocoloDespacho.InnerText
+                                    : null;
+                        }
                     }
                 }
 
