@@ -95,20 +95,8 @@ Public Class FabricaDeMenu
         Return Mi.ToString
     End Function
 
-    Private Sub ObtenhaMenuModulo(ByVal MenuItemModulo As IMenuComposto)
-        _JsMenu.AppendLine(String.Concat("MyDesktop.", MenuItemModulo.IDSemFormatacao, " = Ext.extend(Ext.app.Module, {"))
-        _JsMenu.AppendLine(String.Concat("id:'", MenuItemModulo.IDSemFormatacao, "',"))
-        _JsMenu.AppendLine("init : function(){")
-        _JsMenu.AppendLine("this.launcher = {")
-        _JsMenu.AppendLine(String.Concat("text:'", MenuItemModulo.Nome, "',"))
-        _JsMenu.AppendLine(String.Concat("iconCls: '", MenuItemModulo.Imagem, "',"))
-        _JsMenu.AppendLine("handler: function() {")
-        _JsMenu.AppendLine("return false;")
-        _JsMenu.AppendLine("},")
-        _JsMenu.AppendLine("menu: {")
-        _JsMenu.AppendLine("items:[")
-
-        For Each Funcao As IMenuFolha In From Funcao1 In MenuItemModulo.ObtenhaItens Where _Principal.EstaAutorizado(Funcao1.ID)
+    Private Sub MontaMenus(Menus As IMenuComposto)
+        For Each Funcao As IMenuFolha In From Funcao1 In Menus.ObtenhaItens Where _Principal.EstaAutorizado(Funcao1.ID)
             _JsMenu.AppendLine(String.Concat("{text:'", Funcao.Nome, "',"))
             _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
 
@@ -136,7 +124,41 @@ Public Class FabricaDeMenu
 
         'retira a virgula
         _JsMenu.Remove(_JsMenu.Length - 1, 1)
+    End Sub
 
+    Private Sub ObtenhaMenuModulo(ByVal MenuItemModulo As IMenuComposto)
+        _JsMenu.AppendLine(String.Concat("MyDesktop.", MenuItemModulo.IDSemFormatacao, " = Ext.extend(Ext.app.Module, {"))
+        _JsMenu.AppendLine(String.Concat("id:'", MenuItemModulo.IDSemFormatacao, "',"))
+        _JsMenu.AppendLine("init : function(){")
+        _JsMenu.AppendLine("this.launcher = {")
+        _JsMenu.AppendLine(String.Concat("text:'", MenuItemModulo.Nome, "',"))
+        _JsMenu.AppendLine(String.Concat("iconCls: '", MenuItemModulo.Imagem, "',"))
+        _JsMenu.AppendLine("handler: function() {")
+        _JsMenu.AppendLine("return false;")
+        _JsMenu.AppendLine("},")
+        _JsMenu.AppendLine("menu: {")
+        _JsMenu.AppendLine("items:[")
+
+        If MenuItemModulo.Agrupador.Count() > 0 Then
+            For Each Agrupador As KeyValuePair(Of String, IMenuComposto) In MenuItemModulo.Agrupador
+                _JsMenu.Append("{")
+                _JsMenu.AppendLine(String.Concat("text:'", Agrupador.Key, "',"))
+                _JsMenu.AppendLine(String.Concat("iconCls: '", MenuItemModulo.Imagem, "',"))
+                _JsMenu.AppendLine("menu: {")
+                
+                _JsMenu.AppendLine("items:[")
+
+                MontaMenus(Agrupador.Value)
+
+                _JsMenu.AppendLine("]")
+                _JsMenu.AppendLine("}")
+                _JsMenu.Append("},")
+            Next
+
+        End If
+        
+        MontaMenus(MenuItemModulo)
+        
         _JsMenu.AppendLine("]")
         _JsMenu.AppendLine("}")
         _JsMenu.AppendLine("}")

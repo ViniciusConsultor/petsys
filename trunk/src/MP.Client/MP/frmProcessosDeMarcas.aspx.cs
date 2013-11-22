@@ -318,25 +318,13 @@ namespace MP.Client.MP
             return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmLeituraRevistaMarca.aspx");
         }
 
-        private string ObtenhaURLRelatorioDeMarcas()
-        {
-            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmRelatorioDeProcessosDeMarcas.aspx");
-        }
-
         private void AbraTelaDeLeituraDaRevista()
         {
             var URL = ObtenhaURLLeituraDeRevistaDeMarca();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanela(URL, "Leitura da revista de marca", 800, 550), false);
         }
-
-        private void AbraTelaDeRelatorioDeMarcas()
-        {
-            var URL = ObtenhaURLRelatorioDeMarcas();
-            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanelaModal(URL, "Relatório de processo de marcas", 640, 480), false);
-        }
-
+        
         private void Recarregue()
         {
             MostraProcessos(FiltroAplicado, grdProcessosDeMarcas.PageSize, 0);
@@ -354,9 +342,6 @@ namespace MP.Client.MP
                     break;
                 case "btnLerRevista":
                     AbraTelaDeLeituraDaRevista();
-                    break;
-                case "btnImprimir" :
-                    AbraTelaDeRelatorioDeMarcas();
                     break;
             }
         }
