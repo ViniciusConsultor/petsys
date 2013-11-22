@@ -9,7 +9,7 @@
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" Text="Gerar" ImageUrl="~/imagens/imprimir.png"
-                CommandName="btnImprimir" CausesValidation="False" />
+                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.MP.013.0001"  />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>

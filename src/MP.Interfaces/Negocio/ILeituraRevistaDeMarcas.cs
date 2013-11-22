@@ -34,5 +34,14 @@ namespace MP.Interfaces.Negocio
         IDictionary<string, string> DicionarioSobrestadores { get; set; }
         string Radical { get; set; }
         string RadicalNCL { get; set; }
+
+        string NumeroProtocoloDespacho { get; set; }
+        string DataProtocoloDespacho { get; set; }
+        string CodigoServicoProtocoloDespacho { get; set; }
+        string RazaoSocialRequerenteProtocoloDespacho { get; set; }
+        string PaisRequerenteProtocoloDespacho { get; set; }
+        string EstadoRequerenteProtocoloDespacho { get; set; }
+        string ProcuradorProtocoloDespacho { get; set; }
+
     }
 }

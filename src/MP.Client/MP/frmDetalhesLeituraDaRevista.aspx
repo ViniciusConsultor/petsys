@@ -67,6 +67,71 @@
                             </tr>
                             <tr>
                                 <td class="th3">
+                                    <asp:Label ID="Label25" runat="server" Text="Protocolo do despacho:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtNumeroProtocoloDespacho" runat="server" Width="87px" Enabled="false">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label26" runat="server" Text="Data do protocolo do despacho:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtDataProtocoloDespacho" runat="server" Width="87px" Enabled="false">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label27" runat="server" Text="Código do serviço do protocolo do despacho:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtCodigoServicoProtocoloDespacho" runat="server" Width="87px" Enabled="false">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label28" runat="server" Text="Requerente do protocolo do despacho:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtRazaoSocialRequerenteProtocoloDespacho" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                        Rows="2" Width="470px" Enabled="false">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label29" runat="server" Text="País do requerente do protocolo do despacho:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtPaisRequerenteProtocoloDespacho" runat="server" Width="87px" Enabled="false">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label30" runat="server" Text="Estado do requerente do protocolo do despacho:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtEstadoRequerenteProtocoloDespacho" runat="server" Width="87px" Enabled="false">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label31" runat="server" Text="Procurador do protocolo do despacho:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtProcuradorProtocoloDespacho" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                        Rows="2" Width="470px" Enabled="false">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
                                     <asp:Label ID="Label7" runat="server" Text="Titular:"></asp:Label>
                                 </td>
                                 <td class="td">
@@ -319,7 +384,7 @@
                                         </ItemTemplate>
                                     </telerik:RadComboBox>
                                 </td>
-                            </tr>
+                            </tr>                             
                         </table>
                     </asp:Panel>
                 </ContentTemplate>
