@@ -24,7 +24,7 @@ namespace MP.Negocio
 
         public DateTime? DataDeDeposito { get; set; }
 
-        public long NumeroProcessoDaPatente { get; set; }
+        public string NumeroProcessoDaPatente { get; set; }
 
         public long NumeroDoPedido { get; set; }
 
@@ -62,9 +62,9 @@ namespace MP.Negocio
 
         public DateTime? DataInicioFaseNacional { get; set; }
 
-        public DateTime? DadosDepositoInternacional { get; set; }
+        public string DadosDepositoInternacional { get; set; }
 
-        public DateTime? DadosPublicacaoInternacional { get; set; }
+        public string DadosPublicacaoInternacional { get; set; }
 
         public string CodigoDoDespacho { get; set; }
 
@@ -76,7 +76,7 @@ namespace MP.Negocio
 
         public string Recorrente { get; set; }
 
-        public string NumeroDoProcesso { get; set; }
+        public long NumeroDoProcesso { get; set; }
 
         public string Cedente { get; set; }
 
@@ -127,5 +127,7 @@ namespace MP.Negocio
         public DateTime? DataDaProrrogacao { get; set; }
 
         public string ClassificacaoNacional { get; set; }
+
+        public string CodigoDoDespachoAnterior { get; set; }
     }
 }

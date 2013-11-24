@@ -298,5 +298,27 @@ namespace MP.Mapeadores
 
             return 0;
         }
+
+
+        public IList<long> ObtenhaTodosNumerosDeProcessosCadastrados()
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            IList<long> listaDeNumerosDosProcessos = new List<long>();
+
+            using (var leitor = DBHelper.obtenhaReader("SELECT PROCESSO FROM MP_PROCESSOPATENTE ORDER BY PROCESSO"))
+                try
+                {
+                    while (leitor.Read())
+                        listaDeNumerosDosProcessos.Add(UtilidadesDePersistencia.GetValorLong(leitor, "PROCESSO"));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            return listaDeNumerosDosProcessos;
+        }
     }
 }

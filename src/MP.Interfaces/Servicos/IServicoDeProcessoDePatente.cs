@@ -10,7 +10,6 @@ namespace MP.Interfaces.Servicos
 {
     public interface IServicoDeProcessoDePatente : IServico
     {
-
         void Inserir(IProcessoDePatente processoDePatente);
         void Modificar(IProcessoDePatente processoDePatente);
         void Excluir(long ID);
@@ -18,5 +17,6 @@ namespace MP.Interfaces.Servicos
         IProcessoDePatente Obtenha(long ID);
         int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
         void AtivaDesativaProcessoDePatente(long idProcessoDePatente, bool ativo);
+        IList<long> ObtenhaTodosNumerosDeProcessosCadastrados();
     }
 }
