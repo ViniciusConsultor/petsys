@@ -139,5 +139,20 @@ namespace MP.Servicos.Local
         {
             throw new NotImplementedException();
         }
+
+        public IList<long> ObtenhaTodosNumerosDeProcessosCadastrados()
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+
+            try
+            {
+                return mapeador.ObtenhaTodosNumerosDeProcessosCadastrados();
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
+        }
     }
 }
