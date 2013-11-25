@@ -6,6 +6,7 @@ using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.LazyLoad;
 using MP.Interfaces.Servicos;
+using MP.Negocio.Repositorios;
 
 namespace MP.Negocio.LazyLoad
 {
@@ -28,8 +29,7 @@ namespace MP.Negocio.LazyLoad
 
         public void CarregueObjetoReal()
         {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
-                _ObjetoReal = servico.ObtenhaAnuidade(_ID);
+            _ObjetoReal =  RepositorioDeAnuidadePatente.obtenhaInstancia().ObtenhaAnuidade(_ID);
         }
 
         public long Identificador
