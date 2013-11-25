@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using MP.Client.Relatorios;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
@@ -118,6 +119,14 @@ namespace MP.Client.MP
                 {
                     // obtenha processos de marcas de acordo com o período da data de concessão e despachos.
                     var processos = servico.ObtenhaProcessosDeMarcasComRegistroConcedido(dataInicial, dataFinal, IDsDosDespachos);
+
+                    var gerador = new GeradorDeRelatorioDeProcessosDeMarcas(processos);
+                    var nomeDoArquivo = gerador.GereRelatorio();
+
+                    var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+                          nomeDoArquivo;
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
                 }
             }
             else
