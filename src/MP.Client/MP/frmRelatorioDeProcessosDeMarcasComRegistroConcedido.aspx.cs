@@ -117,7 +117,7 @@ namespace MP.Client.MP
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                 {
                     // obtenha processos de marcas de acordo com o período da data de concessão e despachos.
-                    //var processos = servico.ObtenhaProcessosDeMarcasComRegistroConcedido(dataInicial, dataFinal, IDsDosDespachos);
+                    var processos = servico.ObtenhaProcessosDeMarcasComRegistroConcedido(dataInicial, dataFinal, IDsDosDespachos);
                 }
             }
             else

@@ -22,5 +22,8 @@ namespace MP.Interfaces.Mapeadores
 
         IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado();
         IList<IProcessoDeMarca> ObtenhaProcessoComRadicailAdicionadoNaMarca(IList<IProcessoDeMarca> processos);
+
+        IList<IProcessoDeMarca> ObtenhaProcessosDeMarcasComRegistroConcedido(DateTime? dataInicial, DateTime? dataFinal,
+                                                                             IList<string> IDsDosDespachos);
     }
 }

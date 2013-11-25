@@ -414,5 +414,43 @@ namespace MP.Mapeadores
 
             return processoDeMarca;
         }
+
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcasComRegistroConcedido(DateTime? dataInicial, DateTime? dataFinal, IList<string> IDsDosDespachos)
+        {
+            var sql = new StringBuilder();
+
+            sql.AppendLine("SELECT MP_PROCESSOMARCA.IDPROCESSO IDPROCESSO, MP_PROCESSOMARCA.IDMARCA IDMARCA, ");
+            sql.AppendLine("MP_PROCESSOMARCA.DATACONCESSAO DATACONCESSAO, MP_PROCESSOMARCA.DATADECADASTRO DATADECADASTRO, ");
+            sql.AppendLine("MP_PROCESSOMARCA.DATADODEPOSITO DATADODEPOSITO, MP_PROCESSOMARCA.PROCESSOEHTERCEIRO PROCESSOEHTERCEIRO, ");
+            sql.AppendLine("MP_PROCESSOMARCA.PROCESSO PROCESSO, MP_PROCESSOMARCA.IDDESPACHO IDDESPACHO ");
+            sql.AppendLine("FROM MP_PROCESSOMARCA ");
+            sql.AppendLine("WHERE  MP_PROCESSOMARCA.ATIVO = 1 ");
+            sql.AppendLine("AND MP_PROCESSOMARCA.DATACONCESSAO >= " + dataInicial.Value.ToString("yyyyMMdd") + " ");
+            sql.AppendLine("AND MP_PROCESSOMARCA.DATACONCESSAO <= " + dataFinal.Value.ToString("yyyyMMdd") + " ");
+            
+            if (IDsDosDespachos != null && IDsDosDespachos.Count > 0)
+                sql.AppendLine(" AND " + UtilidadesDePersistencia.MontaFiltro<string>("MP_PROCESSOMARCA.IDDESPACHO", IDsDosDespachos, "OR",
+                                                                    false) +  " ");
+            
+            sql.AppendLine(" ORDER BY MP_PROCESSOMARCA.DATACONCESSAO");
+
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var processos = new List<IProcessoDeMarca>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+                try
+                {
+                    while (leitor.Read())
+                        processos.Add(MontaProcessoDeMarca(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            return processos;
+        }
     }
 }
