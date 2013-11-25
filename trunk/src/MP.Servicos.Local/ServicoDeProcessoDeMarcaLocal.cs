@@ -198,6 +198,24 @@ namespace MP.Servicos.Local
             }
         }
 
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcasComRegistroConcedido(DateTime? dataInicial, DateTime? dataFinal, IList<string> IDsDosDespachos)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.ObtenhaProcessosDeMarcasComRegistroConcedido(dataInicial, dataFinal, IDsDosDespachos);
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
+
         public IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
         {
             ServerUtils.setCredencial(_Credencial);
