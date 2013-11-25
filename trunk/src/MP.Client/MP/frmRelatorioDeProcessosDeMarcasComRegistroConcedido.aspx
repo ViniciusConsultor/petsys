@@ -20,23 +20,7 @@
                 <ContentTemplate>
                     <asp:Panel ID="pnlRegistroConcedido" runat="server">
                         <table class="tabela">
-                            <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label7" runat="server" Text="Início do intervalo de Despacho:"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <uc1:ctrlDespachoDeMarcas ID="ctrlDespachoIni" runat="server" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label1" runat="server" Text="Fim do intervalo de Despacho:"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <uc1:ctrlDespachoDeMarcas ID="ctrlDespachoFim" runat="server" />
-                                </td>
-                            </tr>
-                            <tr>
+                        <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label2" runat="server" Text="Data inicial de Concessão:"></asp:Label>
                                 </td>
@@ -52,6 +36,43 @@
                                 <td class="td">
                                     <telerik:RadDatePicker ID="txtDataFimConcessao" runat="server">
                                     </telerik:RadDatePicker>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label7" runat="server" Text="Adicionar os despachos para consulta:"></asp:Label>
+                                </td>
+                                 <td class="td">
+                                    <uc1:ctrlDespachoDeMarcas ID="ctrlDespacho" runat="server" /><asp:ImageButton ID="btnAdicionarDespacho"                                       
+                                    runat="server" ImageUrl="~/imagens/add.gif" ToolTip="Adicionar despacho na lista" OnClick="btnAdicionarDespacho_OnClick" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td" colspan="2">
+                                 <telerik:RadGrid ID="grdDespachos" runat="server" AutoGenerateColumns="False"
+                                    AllowPaging="True" PageSize="5" GridLines="None" Skin="Vista"
+                                    AllowFilteringByColumn="false" OnPageIndexChanged="grdDespachos_OnPageIndexChanged" OnItemCommand="grdDespachos_OnItemCommand" >
+                                    
+                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                    <MasterTableView GridLines="Both">
+                                        <RowIndicatorColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </RowIndicatorColumn>
+                                        <ExpandCollapseColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                <ItemStyle Width="2%"></ItemStyle>
+                                            </telerik:GridButtonColumn>
+                                            <telerik:GridBoundColumn DataField="IdDespacho" HeaderText="ID" UniqueName="column1" Display="false">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CodigoDespacho" HeaderText="Código do despacho" UniqueName="column5">
+                                            </telerik:GridBoundColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
                                 </td>
                             </tr>
                         </table>
