@@ -6,6 +6,7 @@ using System.Xml;
 using Compartilhados;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
+using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
 
@@ -19,6 +20,25 @@ namespace MP.Servicos.Local
 
         public void Inserir(IList<IRevistaDePatente> listaDeObjetoRevistaDeMarcas)
         {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeador.InserirDadosRevistaXml(listaDeObjetoRevistaDeMarcas);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
         }
 
         public void Modificar(IRevistaDePatente revistaDeMarcas)
@@ -117,7 +137,7 @@ namespace MP.Servicos.Local
                             var revistaASerSalva = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
                             var processoDePatenteExistente = servico.Obtenha(processo.NumeroDoProcesso);
 
-                            if(processoDePatenteExistente.IdProcessoDePatente != null)
+                            if(processoDePatenteExistente != null && processoDePatenteExistente.IdProcessoDePatente != null)
                             {
                                 revistaASerSalva.IdRevistaPatente = GeradorDeID.getInstancia().getProximoID();
 
