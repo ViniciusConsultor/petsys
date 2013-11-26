@@ -147,6 +147,8 @@ namespace MP.Client.Relatorios
             tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER,0, true));
             tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 0, true));
 
+            tabela.EndHeaders();
+
             return tabela;
         }
 
@@ -168,12 +170,26 @@ namespace MP.Client.Relatorios
         private void EscrevaProcessosNoDocumento()
         {
             Table tabela = new Table(9);
-
+            
             tabela.Widths = new Single[] {100, 100, 100, 100, 100, 400, 400, 90, 85};
 
             tabela.Padding = 1;
             tabela.Spacing = 1;
             tabela.Width = 100;
+
+            var corBackgroudHeader = new Color(211, 211, 211);
+
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do depósito", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data de concessão", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data da vigência", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+
+            tabela.EndHeaders();
             
             foreach (var processo in _processos)
             {
