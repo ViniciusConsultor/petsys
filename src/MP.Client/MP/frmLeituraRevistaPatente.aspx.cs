@@ -19,7 +19,9 @@ namespace MP.Client.MP
     public partial class frmLeituraRevistaPatente : SuperPagina
     {
         private const string CHAVE_REVISTAS_A_PROCESSAR = "CHAVE_REVISTAS_A_PROCESSAR";
+        private const string CHAVE_REVISTAS_PROCESSADAS = "CHAVE_REVISTAS_PROCESSADAS";
         private const string CHAVE_REVISTA_SELECIONADA = "CHAVE_REVISTA_SELECIONADA";
+        private const string CHAVE_PROCESSOS_DA_REVISTA = "CHAVE_PROCESSOS_DA_REVISTA";
 
         public string CaminhoArquivo { get; set; }
 
@@ -76,50 +78,37 @@ namespace MP.Client.MP
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
-                        //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                        //    servico.Inserir(listaDeProcessosExistentes);
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                            servico.Inserir(listaDeProcessosExistentes);
 
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), 
-                                                    UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."),
-                                                    false);
+                                                    UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."), false);
 
-                        //CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
-                        //CarregueGridRevistasAProcessar();
-                        //CarregueGridRevistasJaProcessadas();
-                        //txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
-                        //txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
-                        //HabilitaAbaFiltros();
-                        //HabilitaAbaRadicais();
-
+                        CarreguePaginaInicial();
+                        RadPageView1.Selected = true;
+                        RadTabStrip1.Tabs[0].Selected = true;
+                        CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
+                        txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                        RadTabStrip1.Tabs[0].SelectParents();
+                        RadTabStrip1.Tabs[0].Selected = true;
                     }
                     else
                     {
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraMensagemDeInformacao("Não existe publicações próprias na revista processada."), false);
 
-                        var revistaDePatenteParaHistorico = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
-
-                        revistaDePatenteParaHistorico.NumeroRevistaPatente = revistasAProcessar[indiceSelecionado].NumeroRevistaPatente;
-                        revistaDePatenteParaHistorico.Processada = true;
-                        revistaDePatenteParaHistorico.ExtensaoArquivo = revistasAProcessar[indiceSelecionado].ExtensaoArquivo;
-
-                        listaDeProcessosExistentes.Add(revistaDePatenteParaHistorico);
-
-                        //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                        //    servico.Inserir(listaDeProcessosExistentes);
-
-                        //CarregueGridRevistasAProcessar();
-                        //CarregueGridRevistasJaProcessadas();
-                        //txtPublicacoesProprias.Text = "0";
-                        //txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
-                        //HabilitaAbaFiltros();
-                        //HabilitaAbaRadicais();
+                        CarreguePaginaInicial();
+                        RadPageView1.Selected = true;
+                        txtPublicacoesProprias.Text = "0";
+                        txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                        RadTabStrip1.Tabs[0].SelectParents();
+                        RadTabStrip1.Tabs[0].Selected = true;
                     }
                 }
                 catch (BussinesException ex)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
                 }
             }
         }
@@ -248,6 +237,47 @@ namespace MP.Client.MP
         private void AdicioneNumeroDaRevistaSelecionada(IRevistaDePatente revistaSelecionada)
         {
             ViewState.Add(CHAVE_REVISTA_SELECIONADA, revistaSelecionada);
+        }
+
+        private void MostraProcessosDaRevista(IList<IProcessoDePatente> listaDeProcessosDaRevista)
+        {
+            gridRevistaProcessos.MasterTableView.DataSource = listaDeProcessosDaRevista;
+            gridRevistaProcessos.DataBind();
+            ViewState.Add(CHAVE_PROCESSOS_DA_REVISTA, listaDeProcessosDaRevista);
+        }
+
+        private void MostraListaRevistasAProcessar(IList<IRevistaDeMarcas> listaRevistasAProcessar)
+        {
+            grdRevistasAProcessar.MasterTableView.DataSource = listaRevistasAProcessar;
+            grdRevistasAProcessar.DataBind();
+            ViewState.Add(CHAVE_REVISTAS_A_PROCESSAR, listaRevistasAProcessar);
+        }
+
+        private void MostraListaRevistasJaProcessadas(IList<IRevistaDeMarcas> listaRevistasJaProcessadas)
+        {
+            grdRevistasJaProcessadas.MasterTableView.DataSource = listaRevistasJaProcessadas;
+            grdRevistasJaProcessadas.DataBind();
+            ViewState.Add(CHAVE_REVISTAS_PROCESSADAS, listaRevistasJaProcessadas);
+        }
+
+        private void CarregaGridComProcessosExistentesNaBase(IList<IRevistaDePatente> listaDeProcessosExistentes)
+        {
+            IList<IProcessoDePatente> listaDeProcessos = new List<IProcessoDePatente>();
+
+            if (listaDeProcessosExistentes.Count > 0)
+            {
+                foreach (var processo in listaDeProcessosExistentes)
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+                        listaDeProcessos.Add(servico.Obtenha(Convert.ToInt64(processo.NumeroProcessoDaPatente)));
+
+                MostraProcessosDaRevista(listaDeProcessos);
+            }
+            else
+            {
+                var controleGrid = gridRevistaProcessos as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraProcessosDaRevista(new List<IProcessoDePatente>());
+            }
         }
     }
 }
