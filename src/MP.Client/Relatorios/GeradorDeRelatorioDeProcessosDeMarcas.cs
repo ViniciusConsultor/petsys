@@ -174,8 +174,9 @@ namespace MP.Client.Relatorios
             tabela.Widths = new Single[] {100, 100, 100, 100, 100, 400, 400, 90, 85};
 
             tabela.Padding = 1;
-            tabela.Spacing = 1;
+            tabela.Spacing = 0;
             tabela.Width = 100;
+            tabela.AutoFillEmptyCells = true;
 
             var corBackgroudHeader = new Color(211, 211, 211);
 
