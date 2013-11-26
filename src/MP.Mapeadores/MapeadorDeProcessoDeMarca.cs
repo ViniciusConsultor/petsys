@@ -426,8 +426,7 @@ namespace MP.Mapeadores
             sql.AppendLine("MP_PROCESSOMARCA.IDPROCURADOR IDPROCURADOR, MP_PROCESSOMARCA.TXTCOMPLDESPACHO TXTCOMPLDESPACHO, ");
             sql.AppendLine("MP_PROCESSOMARCA.APOSTILA APOSTILA, MP_PROCESSOMARCA.ATIVO ATIVO ");
             sql.AppendLine("FROM MP_PROCESSOMARCA ");
-            sql.AppendLine("WHERE  MP_PROCESSOMARCA.ATIVO = 1 ");
-            sql.AppendLine("AND MP_PROCESSOMARCA.DATACONCESSAO >= " + dataInicial.Value.ToString("yyyyMMdd") + " ");
+            sql.AppendLine("WHERE MP_PROCESSOMARCA.DATACONCESSAO >= " + dataInicial.Value.ToString("yyyyMMdd") + " ");
             sql.AppendLine("AND MP_PROCESSOMARCA.DATACONCESSAO <= " + dataFinal.Value.ToString("yyyyMMdd") + " ");
             
             if (IDsDosDespachos != null && IDsDosDespachos.Count > 0)

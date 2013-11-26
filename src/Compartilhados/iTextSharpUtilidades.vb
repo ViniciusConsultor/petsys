@@ -28,6 +28,22 @@ Public Class iTextSharpUtilidades
         Return Celula
     End Function
 
+    Public Shared Function CrieCelula(ByVal Texto As String, _
+                                      ByVal Fonte As Font, _
+                                      ByVal AlinhamentoHorizontal As Integer, _
+                                      ByVal Borda As Integer, _
+                                      ByVal CorBackground As Color, _
+                                      ByVal EhCabecalho As Boolean) As Cell
+        Dim Celula As Cell
+
+        Celula = New Cell(New Phrase(Texto, Fonte))
+        Celula.HorizontalAlignment = AlinhamentoHorizontal
+        Celula.Border = Borda
+        Celula.BackgroundColor = CorBackground
+        Celula.Header = EhCabecalho
+        Return Celula
+    End Function
+
     Public Shared Function CrieCelulaComConteudoHTML(ByVal TextoHTML As String, _
                                                      ByVal Borda As Integer, _
                                                      ByVal EhCabecalho As Boolean) As Cell
