@@ -112,9 +112,7 @@ Namespace LazyLoad
         End Sub
 
         Public Sub CarregueObjetoReal() Implements IObjetoLazyLoad.CarregueObjetoReal
-            Using Servico As IServicoDePessoaJuridica = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDePessoaJuridica)()
-                _Pessoa = Servico.ObtenhaPessoa(Me._ID.Value)
-            End Using
+            _Pessoa = CType(Repositorios.RepositorioDePessoa.ObtenhaInstancia().ObtenhaPessoa(ID.Value, TipoDePessoa.Juridica), IPessoaJuridica)
         End Sub
 
         Public Function ObtenhaTelelefones(ByVal TipoTelefone As TipoDeTelefone) As IList(Of ITelefone) Implements IPessoa.ObtenhaTelefones
