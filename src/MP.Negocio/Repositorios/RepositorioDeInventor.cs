@@ -42,10 +42,10 @@ namespace MP.Negocio.Repositorios
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
             {
-                var despacho = servico.Obtenha(id);
+                var inventor = servico.Obtenha(id);
 
-                cache.Add(id, despacho);
-                return despacho;
+                cache.Add(id, inventor);
+                return inventor;
             }    
         }
     }

@@ -7,6 +7,7 @@ using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.LazyLoad;
 using MP.Interfaces.Servicos;
+using MP.Negocio.Repositorios;
 
 namespace MP.Negocio.LazyLoad
 {
@@ -23,9 +24,7 @@ namespace MP.Negocio.LazyLoad
 
         public void CarregueObjetoReal()
         {
-
-            _ObjetoReal = Repositorios.RepositorioDeInventor.obtenhaInstancia().Obtenha(_ID);
-
+            _ObjetoReal = RepositorioDeInventor.obtenhaInstancia().Obtenha(_ID);
         }
 
         public IPessoa Pessoa

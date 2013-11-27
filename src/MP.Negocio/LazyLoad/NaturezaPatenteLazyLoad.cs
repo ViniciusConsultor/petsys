@@ -6,6 +6,7 @@ using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.LazyLoad;
 using MP.Interfaces.Servicos;
+using MP.Negocio.Repositorios;
 
 namespace MP.Negocio.LazyLoad
 {
@@ -22,8 +23,7 @@ namespace MP.Negocio.LazyLoad
 
         public void CarregueObjetoReal()
         {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeNaturezaPatente>())
-                _objetoReal = servico.obtenhaNaturezaPatentePeloId(_id.Value);
+            _objetoReal = RepositorioDeNaturezaDePatente.obtenhaInstancia().obtenhaDespachoDeMarcasPeloId(_id.Value);
         }
 
         public long? IdNaturezaPatente

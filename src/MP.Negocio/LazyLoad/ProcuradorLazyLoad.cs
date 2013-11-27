@@ -7,6 +7,7 @@ using Compartilhados.Interfaces.Core.Negocio;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.LazyLoad;
 using MP.Interfaces.Servicos;
+using MP.Negocio.Repositorios;
 
 namespace MP.Negocio.LazyLoad
 {
@@ -29,8 +30,7 @@ namespace MP.Negocio.LazyLoad
 
         public void CarregueObjetoReal()
         {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
-                _ObjetoReal = servico.ObtenhaProcurador(_ID);
+            _ObjetoReal =  RepositorioDeProcurador.obtenhaInstancia().ObtenhaProcurador(_ID);
         }
 
         public string MatriculaAPI
