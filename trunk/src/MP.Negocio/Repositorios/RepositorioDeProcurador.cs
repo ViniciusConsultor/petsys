@@ -42,9 +42,9 @@ namespace MP.Negocio.Repositorios
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcurador>())
             {
-                var classificacao = servico.ObtenhaProcurador(id);
-                cache.Add(id, classificacao);
-                return classificacao;
+                var procurador = servico.ObtenhaProcurador(id);
+                cache.Add(id, procurador);
+                return procurador;
             }
         }
     }

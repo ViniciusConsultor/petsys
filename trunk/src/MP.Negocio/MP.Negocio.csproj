@@ -111,7 +111,9 @@
     <Compile Include="Repositorios\RepositorioDeInventor.cs" />
     <Compile Include="Repositorios\RepositorioDeMarcas.cs" />
     <Compile Include="Repositorios\RepositorioDeNaturezaDePatente.cs" />
+    <Compile Include="Repositorios\RepositorioDePatente.cs" />
     <Compile Include="Repositorios\RepositorioDeProcurador.cs" />
+    <Compile Include="Repositorios\RepositorioPrioridadeUnionistaPatente.cs" />
     <Compile Include="RevistaDeMarcas.cs" />
     <Compile Include="RevistaDePatente.cs" />
     <Compile Include="TipoDeProcedimentoInterno.cs" />

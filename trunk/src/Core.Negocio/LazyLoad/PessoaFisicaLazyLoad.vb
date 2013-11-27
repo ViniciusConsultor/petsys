@@ -4,6 +4,7 @@ Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
+Imports Core.Negocio.Repositorios
 
 Namespace LazyLoad
     <Serializable()> _
@@ -207,7 +208,7 @@ Namespace LazyLoad
         End Sub
 
         Public Sub CarregueObjetoReal() Implements IObjetoLazyLoad.CarregueObjetoReal
-            _Pessoa = CType(Repositorios.RepositorioDePessoa.ObtenhaInstancia().ObtenhaPessoa(ID.Value, TipoDePessoa.Fisica), IPessoaFisica)
+            _Pessoa = CType(RepositorioDePessoa.ObtenhaInstancia().ObtenhaPessoa(ID.Value, TipoDePessoa.Fisica), IPessoaFisica)
         End Sub
 
         Public Function ObtenhaTelefones(ByVal TipoTelefone As TipoDeTelefone) As IList(Of ITelefone) Implements IPessoa.ObtenhaTelefones
