@@ -2,6 +2,7 @@
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
+Imports Core.Negocio.Repositorios
 
 Namespace LazyLoad
     <Serializable()> _
@@ -122,9 +123,7 @@ Namespace LazyLoad
         End Property
 
         Public Sub CarregueObjetoReal() Implements IObjetoLazyLoad.CarregueObjetoReal
-            Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeCliente)()
-                _ClienteReal = Servico.Obtenha(_ID)
-            End Using
+            _ClienteReal = RepositorioDeCliente.ObtenhaInstancia().Obtenha(_ID)
         End Sub
 
     End Class

@@ -28,8 +28,8 @@ namespace MP.Negocio.LazyLoad
 
         public void CarregueObjetoReal()
         {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-                _ObjetoReal = servico.obtenhaDespachoDePatentesPeloId(_ID);
+            _ObjetoReal =
+                Repositorios.RepositorioDeDespachoDePatentes.obtenhaInstancia().obtenhaDespachoDePatentesPeloId(_ID);
         }
 
         public long? IdDespachoDePatente

@@ -23,10 +23,9 @@ namespace MP.Negocio.LazyLoad
 
         public void CarregueObjetoReal()
         {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
-            {
-                _ObjetoReal = servico.Obtenha(_ID);
-            }
+
+            _ObjetoReal = Repositorios.RepositorioDeInventor.obtenhaInstancia().Obtenha(_ID);
+
         }
 
         public IPessoa Pessoa

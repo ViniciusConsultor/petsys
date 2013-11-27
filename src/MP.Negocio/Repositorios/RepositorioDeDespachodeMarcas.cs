@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
-using MP.Interfaces.Negocio.Repositorios;
 using MP.Interfaces.Servicos;
 
 namespace MP.Negocio.Repositorios
 {
-    public class RepositorioDeDespachodeMarcas : IRepositorioDeDespachodeMarcas
+    public class RepositorioDeDespachodeMarcas
     {
         private IDictionary<long, IDespachoDeMarcas> cache;
         private const string NOME_CALLCONTEXT = "IRepositorioDeDespachodeMarcas";
@@ -20,10 +20,16 @@ namespace MP.Negocio.Repositorios
             cache = new Dictionary<long, IDespachoDeMarcas>();
         }
 
-        public static IRepositorioDeDespachodeMarcas obtenhaInstancia()
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public static RepositorioDeDespachodeMarcas obtenhaInstancia()
         {
-            var instancia = (IRepositorioDeDespachodeMarcas)CallContext.GetData(NOME_CALLCONTEXT) ??
-                                                      new RepositorioDeDespachodeMarcas();
+            var instancia = (RepositorioDeDespachodeMarcas)CallContext.GetData(NOME_CALLCONTEXT);
+
+            if (instancia == null)
+            {
+                instancia = new RepositorioDeDespachodeMarcas();
+                CallContext.SetData(NOME_CALLCONTEXT, instancia);
+            }
 
             return instancia;
         }

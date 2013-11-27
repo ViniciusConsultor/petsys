@@ -146,6 +146,9 @@
     <Compile Include="Pessoa.vb" />
     <Compile Include="PessoaFisica.vb" />
     <Compile Include="PessoaJuridica.vb" />
+    <Compile Include="Repositorios\RepositorioDeCliente.vb" />
+    <Compile Include="Repositorios\RepositorioDePais.vb" />
+    <Compile Include="Repositorios\RepositorioDePessoa.vb" />
     <Compile Include="Schedules\ScheduleLimpaLogs.vb" />
     <Compile Include="Senha.vb" />
     <Compile Include="Tarefa.vb" />
