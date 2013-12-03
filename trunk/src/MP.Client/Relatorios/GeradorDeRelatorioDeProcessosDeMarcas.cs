@@ -55,116 +55,10 @@ namespace MP.Client.Relatorios
             escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE);
             escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE);
             
-            EscrevaCabecalho();
-            EscrevaRodape();
             _documento.Open();
             EscrevaProcessosNoDocumento();
             _documento.Close();
             return nomeDoArquivoDeSaida;
-        }
-
-        private void EscrevaCabecalho()
-        {
-            IPessoaJuridica pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
-
-            Chunk imagem;
-
-            if (!string.IsNullOrEmpty(pessoaJuridica.Logomarca))
-            {
-                var imghead = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(pessoaJuridica.Logomarca));
-                imagem = new Chunk(imghead, 0, 0);
-            }
-            else
-                imagem = new Chunk("");
-
-            var dadosEmpresa = new Phrase();
-
-            dadosEmpresa.Add(pessoaJuridica.NomeFantasia + Environment.NewLine);
-            
-            if (pessoaJuridica.Enderecos.Count > 0)
-            {
-                var endereco = pessoaJuridica.Enderecos[0];
-                dadosEmpresa.Add(endereco.ToString());
-            }
-
-
-            if (pessoaJuridica.Telefones.Count > 0)
-            {
-                var telefone = pessoaJuridica.Telefones[0];
-                dadosEmpresa.Add("Telefone " + telefone.ToString());
-            }
-
-            Phrase fraseCabecalho = new Phrase();
-
-            var tabela = new Table(2);
-            tabela.Border = 0;
-            tabela.Width = 100;
-            
-            var cell = new Cell(new Phrase(imagem));
-            cell.Border = 0;
-            cell.Width = 30;
-            
-
-            tabela.AddCell(cell);
-
-            var cell1 = new Cell(dadosEmpresa);
-            cell1.Border = 0;
-            cell1.Width = 70;
-            
-
-            tabela.AddCell(cell1);
-
-            fraseCabecalho.Add(tabela);
-
-            //fraseCabecalho.Add(imagem);
-            //fraseCabecalho.Add(dadosEmpresa);
-
-            var cabecalho = new HeaderFooter(fraseCabecalho, false);
-            cabecalho.Border = HeaderFooter.NO_BORDER;
-            cabecalho.UseVariableBorders = true;
-            
-            _documento.Header = cabecalho;
-        }
-
-
-        private Table ObtenhaTabelaDeCabecalho ()
-        {
-            Table tabela = new Table(9);
-
-            tabela.Widths = new Single[] { 100, 100, 100, 100, 100, 400, 400, 90, 85 };
-
-            tabela.Padding = 1;
-            tabela.Spacing = 1;
-            tabela.Width = 100;
-
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do depósito", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data de concessão", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data da vigência", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER,0, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Ativo?", _Fonte2, Cell.ALIGN_CENTER, 0, true));
-
-            tabela.EndHeaders();
-
-            return tabela;
-        }
-
-        private void EscrevaRodape()
-        {
-            HeaderFooter rodape;
-            StringBuilder texto = new StringBuilder();
-
-            texto.AppendLine(String.Concat("Impressão em: ", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
-
-            rodape = new HeaderFooter(new Phrase(texto.ToString() + " página :" + _documento.PageNumber, _Fonte4), false);
-            rodape.Border = HeaderFooter.NO_BORDER;
-            rodape.Alignment = HeaderFooter.ALIGN_RIGHT;
-
-            
-            _documento.Footer = rodape;
         }
 
         private void EscrevaProcessosNoDocumento()
@@ -194,7 +88,6 @@ namespace MP.Client.Relatorios
             
             foreach (var processo in _processos)
             {
-                
                 tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Processo.ToString(), _Fonte1, Cell.ALIGN_CENTER,0, false));
                 tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1, Cell.ALIGN_CENTER, 0, false));
                 tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoDeposito.HasValue ? processo.DataDoDeposito.Value.ToString("dd/MM/yyyy") : "", _Fonte1, Cell.ALIGN_CENTER, 0, false));
@@ -231,20 +124,81 @@ namespace MP.Client.Relatorios
             
             public void OnOpenDocument(PdfWriter writer, Document document)
             {
-                
+                IPessoaJuridica pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
+
+                Chunk imagem;
+
+                if (!string.IsNullOrEmpty(pessoaJuridica.Logomarca))
+                {
+                    var imghead = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(pessoaJuridica.Logomarca));
+                    imagem = new Chunk(imghead, 0, 0);
+                }
+                else
+                    imagem = new Chunk("");
+
+                var dadosEmpresa = new Phrase();
+
+                dadosEmpresa.Add(pessoaJuridica.NomeFantasia + Environment.NewLine);
+
+                if (pessoaJuridica.Enderecos.Count > 0)
+                {
+                    var endereco = pessoaJuridica.Enderecos[0];
+                    dadosEmpresa.Add(endereco.ToString());
+                }
+
+
+                if (pessoaJuridica.Telefones.Count > 0)
+                {
+                    var telefone = pessoaJuridica.Telefones[0];
+                    dadosEmpresa.Add("Telefone " + telefone.ToString());
+                }
+
+                Phrase fraseCabecalho = new Phrase();
+
+                var tabela = new Table(2);
+                tabela.Border = 0;
+                tabela.Width = 100;
+
+                var cell = new Cell(new Phrase(imagem));
+                cell.Border = 0;
+                cell.Width = 30;
+
+                tabela.AddCell(cell);
+
+                var cell1 = new Cell(dadosEmpresa);
+                cell1.Border = 0;
+                cell1.Width = 70;
+                tabela.AddCell(cell1);
+                fraseCabecalho.Add(tabela);
+
+                var cabecalho = new HeaderFooter(fraseCabecalho, false);
+                cabecalho.Border = HeaderFooter.NO_BORDER;
+                cabecalho.UseVariableBorders = true;
+
+                document.Header = cabecalho;
             }
 
             public void OnStartPage(PdfWriter writer, Document document)
             {
                 
-
             }
 
             public void OnEndPage(PdfWriter writer, Document document)
             {
 
-               
+                if (document.PageNumber > 1)
+                    document.Header = null;
                 
+                HeaderFooter rodape;
+                StringBuilder texto = new StringBuilder();
+
+                texto.AppendLine(String.Concat("Impressão em: ", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
+
+                rodape = new HeaderFooter(new Phrase(texto.ToString() + " página :" + document.PageNumber, font4), false);
+                rodape.Border = HeaderFooter.NO_BORDER;
+                rodape.Alignment = HeaderFooter.ALIGN_RIGHT;
+
+                document.Footer = rodape;
             }
 
             public void OnCloseDocument(PdfWriter writer, Document document)

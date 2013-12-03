@@ -10,7 +10,7 @@ Namespace LazyLoad
     <Serializable()> _
     Public Class PessoaFisicaLazyLoad
         Implements IPessoaFisicaLazyLoad
-
+        
         Private _Pessoa As IPessoaFisica
 
         Public Sub New(ByVal ID As Long)
@@ -249,6 +249,10 @@ Namespace LazyLoad
             Return _Pessoa.ObtenhaEnderecos(TipoDeEndereco)
         End Function
 
+        Public Function ObtenhaDocumentos() As IList(Of IDocumento) Implements IPessoa.ObtenhaDocumentos
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            Return _Pessoa.ObtenhaDocumentos()
+        End Function
     End Class
 
 End Namespace

@@ -393,6 +393,7 @@ Partial Public Class cdPessoaJuridica
         If uplFoto.UploadedFiles.Count > 0 Then
             Dim validFile As UploadedFile = uplFoto.UploadedFiles(0)
             Dim PastaDeDestino As String = Server.MapPath(UtilidadesWeb.URL_FOTO_PESSOA)
+            UtilidadesWeb.CrieDiretorio(PastaDeDestino)
             validFile.SaveAs(Path.Combine(PastaDeDestino, validFile.GetName()), True)
             UtilidadesWeb.redimensionaImagem(PastaDeDestino, _
                                               validFile.GetName(), _

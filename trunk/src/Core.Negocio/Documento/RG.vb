@@ -15,7 +15,7 @@ Public Class RG
     End Sub
 
     Public Overrides Function EhValido() As Boolean
-
+        Return True
     End Function
 
     Public Overrides ReadOnly Property Tipo() As TipoDeDocumento

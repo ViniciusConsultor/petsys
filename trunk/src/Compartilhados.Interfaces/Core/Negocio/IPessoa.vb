@@ -21,6 +21,7 @@ Namespace Core.Negocio
         Sub AdicioneEnderecos(ByVal Enderecos As IList(Of IEndereco))
         Property DadoBancario() As IDadoBancario
         Property Site() As String
+        Function ObtenhaDocumentos() As IList(Of IDocumento)
 
     End Interface
 

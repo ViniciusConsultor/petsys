@@ -3,6 +3,7 @@ Imports Compartilhados.Interfaces.Core.Servicos
 Imports Core.Interfaces.Mapeadores
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces.Core.Negocio.Documento
 
 Public Class ServicoDePessoaJuridicaLocal
     Inherits Servico
@@ -21,6 +22,7 @@ Public Class ServicoDePessoaJuridicaLocal
         ServerUtils.BeginTransaction()
 
         Try
+            ExecuteRegrasDeNegocio(Pessoa)
             Mapeador.Inserir(Pessoa)
             ServerUtils.CommitTransaction()
         Catch
@@ -40,6 +42,7 @@ Public Class ServicoDePessoaJuridicaLocal
         ServerUtils.BeginTransaction()
 
         Try
+            ExecuteRegrasDeNegocio(Pessoa)
             Mapeador.Atualizar(Pessoa)
             ServerUtils.CommitTransaction()
         Catch
@@ -48,6 +51,16 @@ Public Class ServicoDePessoaJuridicaLocal
         Finally
             ServerUtils.libereRecursos()
         End Try
+    End Sub
+
+    Private Sub ExecuteRegrasDeNegocio(pessoa As IPessoaJuridica)
+
+        For Each Documento As IDocumento In pessoa.ObtenhaDocumentos()
+            If Not Documento.EhValido() Then
+                Throw New BussinesException("O número do documento " + Documento.Tipo.Descricao + " é inválido.")
+            End If
+        Next
+
     End Sub
 
     Public Function ObtenhaPessoa(ByVal ID As Long) As IPessoaJuridica Implements IServicoDePessoaJuridica.ObtenhaPessoa
