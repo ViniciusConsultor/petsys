@@ -163,6 +163,8 @@ namespace MP.Client.MP
                     var arquivo = uplRevistaMarca.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
 
+                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
                     IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
                     var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
                     var numeroRevista = arquivo.GetNameWithoutExtension();
@@ -222,6 +224,9 @@ namespace MP.Client.MP
         private void MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(IRevistaDeMarcas revistaDeMarcas)
         {
             var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+
+            UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
             var caminhoArquivoTxt = Path.Combine(pastaDeDestino, revistaDeMarcas.NumeroRevistaMarcas +
                 revistaDeMarcas.ExtensaoArquivo);
 
@@ -234,6 +239,9 @@ namespace MP.Client.MP
         private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDeMarcas revistaDeMarcas)
         {
             var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+
+            UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
             CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDeMarcas.NumeroRevistaMarcas +
                 revistaDeMarcas.ExtensaoArquivo);
             AdicioneNumeroDaRevistaSelecionada(revistaDeMarcas);
