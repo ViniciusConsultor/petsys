@@ -92,6 +92,18 @@ Public MustInherit Class Pessoa
         End Set
     End Property
 
+    Public Function ObtenhaDocumentos() As IList(Of IDocumento) Implements IPessoa.ObtenhaDocumentos
+        Dim documentos As IList(Of IDocumento) = New List(Of IDocumento)()
+
+        If _Documentos.Count() = 0 Then Return documentos
+
+        For Each kv As KeyValuePair(Of TipoDeDocumento, IDocumento) In _Documentos
+            documentos.Add(kv.Value)
+        Next
+
+        Return documentos
+    End Function
+
     Public Sub AdicioneTelefones(ByVal Telefones As IList(Of ITelefone)) Implements IPessoa.AdicioneTelefones
         If Not Telefones Is Nothing Then
             CType(_Telefones, List(Of ITelefone)).AddRange(Telefones)

@@ -81,6 +81,11 @@ Namespace LazyLoad
             End Set
         End Property
 
+        Public Function ObtenhaDocumentos() As IList(Of IDocumento) Implements IPessoa.ObtenhaDocumentos
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            Return _Pessoa.ObtenhaDocumentos()
+        End Function
+
         Public ReadOnly Property Telefones() As IList(Of ITelefone) Implements IPessoa.Telefones
             Get
                 If _Pessoa Is Nothing Then CarregueObjetoReal()

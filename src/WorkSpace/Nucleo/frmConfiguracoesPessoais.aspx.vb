@@ -358,6 +358,7 @@ Partial Public Class frmConfiguracoesPessoais
         If uplPapelParede.UploadedFiles.Count > 0 Then
             Dim file As UploadedFile = uplPapelParede.UploadedFiles(0)
             Dim targetFolder As String = Server.MapPath(UtilidadesWeb.URL_PAPEIS_DE_PAREDE)
+            UtilidadesWeb.CrieDiretorio(targetFolder)
             Dim targetFileName As String = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension())
             file.SaveAs(targetFileName)
             imgPapelDeParede.ImageUrl = String.Concat(UtilidadesWeb.URL_PAPEIS_DE_PAREDE, "/", file.GetNameWithoutExtension() + file.GetExtension())
@@ -368,6 +369,7 @@ Partial Public Class frmConfiguracoesPessoais
         If uplAtalho.UploadedFiles.Count > 0 Then
             Dim file As UploadedFile = uplAtalho.UploadedFiles(0)
             Dim targetFolder As String = Server.MapPath(UtilidadesWeb.URL_ATALHOS)
+            UtilidadesWeb.CrieDiretorio(targetFolder)
             Dim targetFileName As String = Path.Combine(targetFolder, file.GetNameWithoutExtension() + file.GetExtension())
             file.SaveAs(targetFileName)
             imgFoto.ImageUrl = String.Concat(UtilidadesWeb.URL_ATALHOS, "/", file.GetNameWithoutExtension() + file.GetExtension())

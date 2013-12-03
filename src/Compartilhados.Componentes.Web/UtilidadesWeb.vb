@@ -432,4 +432,9 @@ Public Class UtilidadesWeb
         Return MSsaida.ToArray()
 
     End Function
+
+    Public Shared Sub CrieDiretorio(nomeDiretorio As String)
+        If Not Directory.Exists(nomeDiretorio) Then Directory.CreateDirectory(nomeDiretorio)
+    End Sub
+
 End Class
