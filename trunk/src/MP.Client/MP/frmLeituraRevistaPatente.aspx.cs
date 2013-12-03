@@ -166,6 +166,8 @@ namespace MP.Client.MP
                     var arquivo = uplRevistaPatente.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_PATENTE);
 
+                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
                     IList<IRevistaDePatente> listaRevistasAProcessar = new List<IRevistaDePatente>();
                     var revistaDePatentes = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
                     var numeroRevista = arquivo.GetNameWithoutExtension().Remove(0, 1);
@@ -218,6 +220,9 @@ namespace MP.Client.MP
         private void MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(IRevistaDePatente revistaDePatente)
         {
             var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_PATENTE);
+
+            UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
             var caminhoArquivoTxt = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
             var arquivo = new StreamReader(caminhoArquivoTxt);
 
@@ -227,6 +232,9 @@ namespace MP.Client.MP
         private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDePatente revistaDePatente)
         {
             var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_PATENTE);
+
+            UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
             CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
             AdicioneNumeroDaRevistaSelecionada(revistaDePatente);
             var xmlRevista = new XmlDocument();

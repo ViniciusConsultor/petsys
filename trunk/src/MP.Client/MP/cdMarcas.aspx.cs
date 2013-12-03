@@ -430,7 +430,11 @@ namespace MP.Client.MP
                 {
                     var arquivo = uplImagem.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_IMAGEM_MARCA);
+
+                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+
                     arquivo.SaveAs(caminhoArquivo);
 
                     UtilidadesWeb.redimensionaImagem(pastaDeDestino, arquivo.GetName(), 200, 200);
