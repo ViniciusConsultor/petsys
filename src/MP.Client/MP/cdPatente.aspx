@@ -199,8 +199,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">     
-                                            <asp:Label ID="lblTituloPrioridadeUnionista" runat="server" Text="Prioridade Unionista" />
+                                        <td class="th3" colspan="2">     
+                                            <asp:Label ID="lblTituloPrioridadeUnionista" runat="server" Text="Prioridade Unionista"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -296,7 +296,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtResumoDaPatente" runat="server" TextMode="MultiLine" Rows="5"
-                                                Width="100%" MaxLength="500" />
+                                                Width="100%" MaxLength="1000" />
                                         </td>
                                     </tr>
                                     <tr>
