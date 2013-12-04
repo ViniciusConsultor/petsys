@@ -647,13 +647,6 @@ namespace MP.Client.MP
 
         private bool PodeAdicionarClassficicaoPatente()
         {
-            if(string.IsNullOrEmpty(txtClassificacao.Text))
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a classificação."), false);
-                return false;
-            }
-
             if (string.IsNullOrEmpty(txtDescricaoClassificacao.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -864,7 +857,7 @@ namespace MP.Client.MP
             if (ctrlNaturezaPatente.NaturezaPatenteSelecionada == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione o tipo da patente."), false);
+                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione a natureza da patente."), false);
                 return false;
             }
 

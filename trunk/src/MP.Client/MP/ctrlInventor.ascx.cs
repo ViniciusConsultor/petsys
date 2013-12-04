@@ -34,6 +34,7 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controle);
             cboInventor.ClearSelection();
             BotaoNovoEhVisivel = false;
+            InventorSelecionado = null;
         }
         
         protected void cboInventor_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
