@@ -320,5 +320,27 @@ namespace MP.Mapeadores
 
             return listaDeNumerosDosProcessos;
         }
+
+        public DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente)
+        {
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
+
+            using (var leitor = DBHelper.obtenhaReader("SELECT DATADEDEPOSITO FROM MP_PROCESSOPATENTE WHERE IDPATENTE = " + idPatente))
+                try
+                {
+                    while (leitor.Read())
+                    {
+                        string dataDeposito = UtilidadesDePersistencia.getValorInteger(leitor, "DATADEDEPOSITO").ToString();
+                        return new DateTime(int.Parse(dataDeposito.Substring(0, 4)), int.Parse(dataDeposito.Substring(4, 2)), int.Parse(dataDeposito.Substring(6, 2)));
+                    }
+                        
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            return null;
+        }
     }
 }
