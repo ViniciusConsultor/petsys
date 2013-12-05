@@ -154,5 +154,20 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }            
         }
+
+        public DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+
+            try
+            {
+                return mapeador.ObtenhaDataDepositoDoProcessoVinvuladoAPatente(idPatente);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
+        }
     }
 }

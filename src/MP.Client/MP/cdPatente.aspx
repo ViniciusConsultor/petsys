@@ -488,7 +488,7 @@
                                         <td class="campodependente" colspan="2">
                                             <telerik:RadGrid ID="grdAnuidades" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                                                 Skin="Vista" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grvObrigacoes_ItemCommand"
-                                                OnItemCreated="grvObrigacoes_ItemCreated" OnPageIndexChanged="grvObrigacoes_PageIndexChanged">
+                                                OnItemCreated="grvObrigacoes_ItemCreated" OnPageIndexChanged="grvObrigacoes_PageIndexChanged" OnItemDataBound="grvObrigacoes_ItemDataBound">
                                                 <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                                 <MasterTableView GridLines="Both">
                                                     <RowIndicatorColumn>

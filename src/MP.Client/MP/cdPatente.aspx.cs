@@ -60,8 +60,6 @@ namespace MP.Client.MP
 
             if(!IsPostBack)
                 ExibaTelaInicial();
-
-            CarregueComboTipoDeClassificacao();
         }
 
         private void ExibaTelaInicial()
@@ -276,8 +274,14 @@ namespace MP.Client.MP
                 var gridItem = (GridDataItem)e.Item;
 
                 foreach (GridColumn column in grdAnuidades.MasterTableView.RenderColumns)
+                {
                     if ((column is GridButtonColumn))
                         gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+
+                    if (column.UniqueName == "colunaAnuidadePaga")
+                        gridItem[column.UniqueName].Text = gridItem[column.UniqueName].Text.Equals("False") ? "Sim" : "Não";
+                }
+                
             }
         }
 
@@ -396,6 +400,8 @@ namespace MP.Client.MP
             ctrlPatente.EnableLoadOnDemand = false;
             ctrlPatente.ShowDropDownOnTextboxClick = false;
             ctrlPatente.AutoPostBack = false;
+
+            CarregueComboTipoDeClassificacao();
         }
 
         private void ExibaPatenteSelecionada(IPatente patente)
@@ -422,6 +428,8 @@ namespace MP.Client.MP
 
         private void ExibaTelaConsultar()
         {
+            CarregueComboTipoDeClassificacao();
+
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = true;
@@ -451,6 +459,8 @@ namespace MP.Client.MP
 
         private void ExibaTelaModificar()
         {
+            CarregueComboTipoDeClassificacao();
+
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSalvar")).Visible = true;
@@ -480,6 +490,8 @@ namespace MP.Client.MP
 
         private void ExibaTelaExcluir()
         {
+            CarregueComboTipoDeClassificacao();
+
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnExcluir")).Visible = false;
@@ -666,15 +678,17 @@ namespace MP.Client.MP
 
         private void CarregueComboTipoDeClassificacao()
         {
-            IList<TipoClassificacaoPatente> tiposDeClassficacaoPatente = new List<TipoClassificacaoPatente>();
+            var itemInternacional = new RadComboBoxItem(TipoClassificacaoPatente.Internacional.Descricao, TipoClassificacaoPatente.Internacional.Codigo.ToString());
+            var itemNacional = new RadComboBoxItem(TipoClassificacaoPatente.Nacional.Descricao, TipoClassificacaoPatente.Nacional.Codigo.ToString());
 
-            tiposDeClassficacaoPatente.Add(TipoClassificacaoPatente.Internacional);
-            tiposDeClassficacaoPatente.Add(TipoClassificacaoPatente.Nacional);
+            if (cboTipoDeClassificacao.Items.Count == 0)
+            {
+                cboTipoDeClassificacao.Items.Add(itemInternacional);
+                cboTipoDeClassificacao.Items.Add(itemNacional);
 
-            cboTipoDeClassificacao.DataValueField = "Codigo";
-            cboTipoDeClassificacao.DataTextField = "Descricao";
-            cboTipoDeClassificacao.DataSource = tiposDeClassficacaoPatente;
-            cboTipoDeClassificacao.DataBind();
+                itemInternacional.DataBind();
+                itemNacional.DataBind();
+            }
         }
 
         private void MostrarListasDeClassificacaoDePatentes()
@@ -816,6 +830,27 @@ namespace MP.Client.MP
 
         protected void btnGerarTodas_ButtonClick(object sender, EventArgs e)
         {
+            DateTime? dataDoDeposito = null;
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+            {
+                if (ctrlPatente.PatenteSelecionada == null) return;
+
+                dataDoDeposito = servico.ObtenhaDataDepositoDoProcessoVinvuladoAPatente(ctrlPatente.PatenteSelecionada.Identificador);
+
+                if(dataDoDeposito == null)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                    UtilidadesWeb.MostraMensagemDeInconsitencia("O processo vinculado a patente não possui data de depósito cadastrada."), false);
+                    return;
+                }
+
+                if (ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza == "MU" ||
+                   ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza == "PI")
+                    CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDoDeposito.Value);
+                else if(ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza == "DI")
+                    CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito.Value);
+            }
         }
 
         private void GravePatente()
@@ -908,6 +943,60 @@ namespace MP.Client.MP
                 patente.Inventores = ListaDeInventores;
 
             return patente;
+        }
+
+        protected void grvObrigacoes_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+                ((GridDataItem) e.Item)["colunaAnuidadePaga"].Text = ((GridDataItem) e.Item)["colunaAnuidadePaga"].Text.Equals("True") ? "Sim" : "Não";
+        }
+
+        private void CalculeAnuidadesPatentesDeNaturezaPIeMU(DateTime dataDeDeposito)
+        {
+            if (ListaDeAnuidadeDaPatente == null)
+                ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
+
+            DateTime? dataDoUltimoLancamento = null;
+
+            for (int i = 0; i < 20; i++)
+            {
+                var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
+
+                anuidadeDaPatente.DescricaoAnuidade = i + 1 + " ANUIDADE";
+                anuidadeDaPatente.DataLancamento = i == 0 ? dataDeDeposito.AddYears(2) : dataDoUltimoLancamento.Value.AddYears(1);
+                dataDoUltimoLancamento = anuidadeDaPatente.DataLancamento;
+                anuidadeDaPatente.DataVencimentoSemMulta = anuidadeDaPatente.DataLancamento.Value.AddMonths(3);
+                anuidadeDaPatente.DataVencimentoComMulta = anuidadeDaPatente.DataVencimentoSemMulta.Value.AddMonths(6);
+                anuidadeDaPatente.DataPagamento = null;
+                anuidadeDaPatente.ValorPagamento = 0;
+                ListaDeAnuidadeDaPatente.Add(anuidadeDaPatente);    
+            }
+
+            MostrarListaDeAnuidadeDaPatente();
+        }
+
+        private void CalculeAnuidadesPatentesDeNaturezaDI(DateTime dataDeDeposito)
+        {
+            if (ListaDeAnuidadeDaPatente == null)
+                ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
+
+            DateTime? dataDoUltimoLancamento = null;
+
+            for (int i = 0; i < 5; i++)
+            {
+                var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
+
+                anuidadeDaPatente.DescricaoAnuidade = i + 1 + " QUIQUÊNIO";
+                anuidadeDaPatente.DataLancamento = i == 0 ? dataDeDeposito.AddYears(4) : dataDoUltimoLancamento.Value.AddYears(5);
+                dataDoUltimoLancamento = anuidadeDaPatente.DataLancamento;
+                anuidadeDaPatente.DataVencimentoSemMulta = anuidadeDaPatente.DataLancamento.Value.AddYears(1).AddDays(-1);
+                anuidadeDaPatente.DataVencimentoComMulta = anuidadeDaPatente.DataVencimentoSemMulta.Value.AddMonths(6);
+                anuidadeDaPatente.DataPagamento = null;
+                anuidadeDaPatente.ValorPagamento = 0;
+                ListaDeAnuidadeDaPatente.Add(anuidadeDaPatente);
+            }
+
+            MostrarListaDeAnuidadeDaPatente();
         }
     }
 }
