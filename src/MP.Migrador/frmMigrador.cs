@@ -688,7 +688,8 @@ namespace MP.Migrador
 
             if (!Information.IsDBNull(linha["CNPJ_CPF"]))
             {
-                pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia().CrieObjeto<ICNPJ>(new object[] { UtilidadesDePersistencia.GetValor(linha, "CNPJ_CPF").Trim() }));
+                if (!string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "CNPJ_CPF").Trim())) 
+                    pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia().CrieObjeto<ICNPJ>(new object[] { UtilidadesDePersistencia.GetValor(linha, "CNPJ_CPF").Trim() }));
             }
         }
 
@@ -781,7 +782,29 @@ namespace MP.Migrador
 
             if (!Information.IsDBNull(linha["CNPJ_CPF"]))
             {
-                pessoa.AdicioneDocumento(FabricaGenerica.GetInstancia().CrieObjeto<ICPF>(new object[] { UtilidadesDePersistencia.GetValor(linha, "CNPJ_CPF").Trim() }));
+                if (!string.IsNullOrEmpty( UtilidadesDePersistencia.GetValor(linha, "CNPJ_CPF").Trim()))
+                {
+                    var cpf =
+                        FabricaGenerica.GetInstancia().CrieObjeto<ICPF>(new object[]
+                                                                            {
+                                                                                UtilidadesDePersistencia.GetValor(
+                                                                                    linha, "CNPJ_CPF").Trim()
+                                                                            });
+
+                    try
+                    {
+                        if (cpf.EhValido())
+                            pessoa.AdicioneDocumento(cpf);    
+                    }
+                    catch( Exception ex)
+                    {
+                        
+                    }
+
+
+                    
+                }
+                    
             }
 
             ((IPessoaFisica)pessoa).EstadoCivil = EstadoCivil.Ignorado;
