@@ -962,7 +962,7 @@ namespace MP.Client.MP
             {
                 var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
 
-                anuidadeDaPatente.DescricaoAnuidade = i + 1 + " ANUIDADE";
+                anuidadeDaPatente.DescricaoAnuidade = i + 1 + "ª ANUIDADE";
                 anuidadeDaPatente.DataLancamento = i == 0 ? dataDeDeposito.AddYears(2) : dataDoUltimoLancamento.Value.AddYears(1);
                 dataDoUltimoLancamento = anuidadeDaPatente.DataLancamento;
                 anuidadeDaPatente.DataVencimentoSemMulta = anuidadeDaPatente.DataLancamento.Value.AddMonths(3);
@@ -981,19 +981,39 @@ namespace MP.Client.MP
                 ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
 
             DateTime? dataDoUltimoLancamento = null;
+            DateTime? dataPrimeiraProrrogacao = null;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 1; i <= 4; i++)
             {
                 var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
 
-                anuidadeDaPatente.DescricaoAnuidade = i + 1 + " QUIQUÊNIO";
-                anuidadeDaPatente.DataLancamento = i == 0 ? dataDeDeposito.AddYears(4) : dataDoUltimoLancamento.Value.AddYears(5);
+                anuidadeDaPatente.DescricaoAnuidade = i + 1 + "º QUIQUÊNIO";
+                anuidadeDaPatente.DataLancamento = i == 1 ? dataDeDeposito.AddYears(4) : dataDoUltimoLancamento.Value.AddYears(5);
                 dataDoUltimoLancamento = anuidadeDaPatente.DataLancamento;
+
+                if (i == 1)
+                    dataPrimeiraProrrogacao = dataDoUltimoLancamento;
+
                 anuidadeDaPatente.DataVencimentoSemMulta = anuidadeDaPatente.DataLancamento.Value.AddYears(1).AddDays(-1);
                 anuidadeDaPatente.DataVencimentoComMulta = anuidadeDaPatente.DataVencimentoSemMulta.Value.AddMonths(6);
                 anuidadeDaPatente.DataPagamento = null;
                 anuidadeDaPatente.ValorPagamento = 0;
+
                 ListaDeAnuidadeDaPatente.Add(anuidadeDaPatente);
+
+                if (i == 2 || i == 3 || i == 4)
+                {
+                    var anuidadeDaPatenteProrrogacao = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
+
+                    anuidadeDaPatenteProrrogacao.DescricaoAnuidade = i - 1 + "ª PRORROGAÇÃO";
+                    anuidadeDaPatenteProrrogacao.DataLancamento = i == 0 ? dataPrimeiraProrrogacao.Value.AddYears(5) : dataDoUltimoLancamento.Value.AddYears(5);
+                    dataDoUltimoLancamento = anuidadeDaPatenteProrrogacao.DataLancamento;
+                    anuidadeDaPatenteProrrogacao.DataVencimentoSemMulta = anuidadeDaPatenteProrrogacao.DataLancamento.Value.AddYears(1).AddDays(-1);
+                    anuidadeDaPatenteProrrogacao.DataVencimentoComMulta = anuidadeDaPatenteProrrogacao.DataVencimentoSemMulta.Value.AddMonths(6);
+                    anuidadeDaPatenteProrrogacao.DataPagamento = null;
+                    anuidadeDaPatenteProrrogacao.ValorPagamento = 0;
+                    ListaDeAnuidadeDaPatente.Add(anuidadeDaPatenteProrrogacao);
+                }
             }
 
             MostrarListaDeAnuidadeDaPatente();
