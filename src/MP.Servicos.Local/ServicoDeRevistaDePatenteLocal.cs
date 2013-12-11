@@ -84,6 +84,8 @@ namespace MP.Servicos.Local
                 if (processo.Attributes.GetNamedItem("numero") != null)
                     revistaDePatente.NumeroProcessoDaPatente = processo.Attributes.GetNamedItem("numero").Value;
 
+                revistaDePatente.NumeroRevistaPatente = Convert.ToInt32(numeroRevista);
+                revistaDePatente.DataPublicacao = Convert.ToDateTime(dataRevista);
                 revistaDePatente.DataDeDeposito = VerifiqueERetorneValorDataDoNo(processo, "data-deposito");
                 revistaDePatente.DataDaProrrogacao = VerifiqueERetorneValorDataDoNo(processo, "data-prorrogacao");
                 revistaDePatente.DataDeConcessao = VerifiqueERetorneValorDataDoNo(processo, "data-concenssao");
@@ -119,12 +121,17 @@ namespace MP.Servicos.Local
                 PreenchaRequerente(processo, revistaDePatente);
                 PreenchaRedacao(processo, revistaDePatente);
 
+                if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente) && revistaDePatente.NumeroProcessoDaPatente.Length == 15)
+                    revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
+                else if (!string.IsNullOrEmpty(revistaDePatente.NumeroDoPedido) && revistaDePatente.NumeroDoPedido.Length == 15)
+                    revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(3, 9);
+
                 listaDeRevistasDePatentes.Add(revistaDePatente);
             }
 
             if (listaDeRevistasDePatentes.Count > 0)
             {
-                IList<long> listaDeNumerosDeProcessosCadastrados = new List<long>();
+                IList<string> listaDeNumerosDeProcessosCadastrados = new List<string>();
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                 {
@@ -132,10 +139,10 @@ namespace MP.Servicos.Local
 
                     foreach (IRevistaDePatente processo in listaDeRevistasDePatentes)
                     {
-                        if(listaDeNumerosDeProcessosCadastrados.Contains(processo.NumeroDoProcesso))
+                        if (listaDeNumerosDeProcessosCadastrados.Contains(processo.NumeroDoProcesso))
                         {
                             var revistaASerSalva = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
-                            var processoDePatenteExistente = servico.Obtenha(processo.NumeroDoProcesso);
+                            var processoDePatenteExistente = servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso);
 
                             if(processoDePatenteExistente != null && processoDePatenteExistente.IdProcessoDePatente != null)
                             {
@@ -172,6 +179,8 @@ namespace MP.Servicos.Local
 
                                 processoDePatenteExistente.ProcessoEhEstrangeiro = string.IsNullOrEmpty(processo.ClassificacaoInternacional);
 
+                                revistaASerSalva.IdDoProcessoDaRevista = processoDePatenteExistente.IdProcessoDePatente;
+
                                 listaDeRevistasASeremSalvas.Add(revistaASerSalva);
 
                                 servico.Modificar(processoDePatenteExistente);
@@ -181,7 +190,7 @@ namespace MP.Servicos.Local
                 }
             }
 
-            return listaDeRevistasDePatentes;
+            return listaDeRevistasASeremSalvas;
         }
 
         private void PreenchaCodigoDoDespacho(XmlNode processo, IRevistaDePatente revistaDePatente)
@@ -267,14 +276,8 @@ namespace MP.Servicos.Local
 
         private void PreenchaNumeroDoPedidoParaRevistaDePatente(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
-            if (xmlNode["patente"] == null) return;
-
-            long numeroDoPedido;
-
-            long.TryParse(xmlNode["patente"].Value, out numeroDoPedido);
-            revistaDePatente.NumeroDoPedido = numeroDoPedido;
-
-            revistaDePatente.DataPublicacao = VerifiqueERetorneValorDataDoNo(xmlNode, "data-publicacao");
+            if (xmlNode["numeroDoPedido"] != null)
+                revistaDePatente.NumeroDoPedido = xmlNode["numeroDoPedido"].Value;
         }
 
         private void PreenchaPrioridadeUnionista(XmlNode xmlNode, IRevistaDePatente revistaDePatente)

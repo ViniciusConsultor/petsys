@@ -26,7 +26,7 @@ namespace MP.Negocio
 
         public string NumeroProcessoDaPatente { get; set; }
 
-        public long NumeroDoPedido { get; set; }
+        public string NumeroDoPedido { get; set; }
 
         public DateTime? DataDaPublicacaoDoPedido { get; set; }
 
@@ -76,7 +76,7 @@ namespace MP.Negocio
 
         public string Recorrente { get; set; }
 
-        public long NumeroDoProcesso { get; set; }
+        public string NumeroDoProcesso { get; set; }
 
         public string Cedente { get; set; }
 
@@ -129,5 +129,7 @@ namespace MP.Negocio
         public string ClassificacaoNacional { get; set; }
 
         public string CodigoDoDespachoAnterior { get; set; }
+
+        public long? IdDoProcessoDaRevista { get; set; }
     }
 }
