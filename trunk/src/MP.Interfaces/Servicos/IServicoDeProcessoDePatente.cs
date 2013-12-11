@@ -17,7 +17,8 @@ namespace MP.Interfaces.Servicos
         IProcessoDePatente Obtenha(long ID);
         int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
         void AtivaDesativaProcessoDePatente(long idProcessoDePatente, bool ativo);
-        IList<long> ObtenhaTodosNumerosDeProcessosCadastrados();
+        IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
         DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente);
+        IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
     }
 }

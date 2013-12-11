@@ -15,7 +15,7 @@ namespace MP.Interfaces.Negocio
         string ExtensaoArquivo { get; set; }
         DateTime? DataDeDeposito { get; set; }
         string NumeroProcessoDaPatente { get; set; }
-        long NumeroDoPedido { get; set; }
+        string NumeroDoPedido { get; set; }
         DateTime? DataDaPublicacaoDoPedido { get; set; }
         DateTime? DataDeConcessao { get; set; }
         string PrioridadeUnionista { get; set; }
@@ -41,7 +41,7 @@ namespace MP.Interfaces.Negocio
         string Complemento { get; set; }
         string Decisao { get; set; }
         string Recorrente { get; set; }
-        long NumeroDoProcesso { get; set; }
+        string NumeroDoProcesso { get; set; }
         string Cedente { get; set; }
         string Cessionaria { get; set; }
         string Observacao { get; set; }
@@ -67,5 +67,6 @@ namespace MP.Interfaces.Negocio
         string Redacao { get; set; }
         DateTime? DataDaProrrogacao { get; set; }
         string ClassificacaoNacional { get; set; }
+        long? IdDoProcessoDaRevista { get; set; }
     }
 }

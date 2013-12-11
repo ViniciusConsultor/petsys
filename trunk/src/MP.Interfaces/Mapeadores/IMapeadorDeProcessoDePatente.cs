@@ -15,7 +15,8 @@ namespace MP.Interfaces.Mapeadores
         IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet);
         IProcessoDePatente Obtenha(long ID);
         int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
-        IList<long> ObtenhaTodosNumerosDeProcessosCadastrados();
+        IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
         DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente);
+        IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
     }
 }

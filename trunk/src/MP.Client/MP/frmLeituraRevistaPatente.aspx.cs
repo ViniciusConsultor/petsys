@@ -274,8 +274,8 @@ namespace MP.Client.MP
 
             if (listaDeProcessosExistentes.Count > 0)
             {
-                foreach (var processo in listaDeProcessosExistentes)
-                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+                    foreach (var processo in listaDeProcessosExistentes)
                         listaDeProcessos.Add(servico.Obtenha(Convert.ToInt64(processo.NumeroProcessoDaPatente)));
 
                 MostraProcessosDaRevista(listaDeProcessos);

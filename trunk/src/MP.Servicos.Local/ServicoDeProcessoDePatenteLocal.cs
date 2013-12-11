@@ -140,7 +140,7 @@ namespace MP.Servicos.Local
             throw new NotImplementedException();
         }
 
-        public IList<long> ObtenhaTodosNumerosDeProcessosCadastrados()
+        public IList<string> ObtenhaTodosNumerosDeProcessosCadastrados()
         {
             ServerUtils.setCredencial(_Credencial);
             var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
@@ -168,6 +168,23 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }            
+        }
+
+
+        public IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+
+            try
+            {
+                return mapeador.ObtenhaPeloNumeroDoProcesso(numeroDoProcesso);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
         }
     }
 }
