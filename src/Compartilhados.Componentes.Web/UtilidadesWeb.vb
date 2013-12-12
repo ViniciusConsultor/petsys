@@ -9,6 +9,7 @@ Imports System.Web.SessionState
 Imports System.Globalization
 Imports System.IO
 Imports System.IO.Compression
+Imports Ionic.Zip
 
 Public Class UtilidadesWeb
 
@@ -436,5 +437,17 @@ Public Class UtilidadesWeb
     Public Shared Sub CrieDiretorio(nomeDiretorio As String)
         If Not Directory.Exists(nomeDiretorio) Then Directory.CreateDirectory(nomeDiretorio)
     End Sub
+
+    Public Shared Sub DescompacteArquivoZip(ByVal nomeECaminhoArquivoZip As String, ByVal CaminhoDestino As String)
+        Using zip1 As ZipFile = ZipFile.Read(nomeECaminhoArquivoZip)
+
+            Dim e As ZipEntry
+            
+            For Each e In zip1
+                e.Extract(CaminhoDestino, ExtractExistingFileAction.OverwriteSilently)
+            Next
+        End Using
+    End Sub
+
 
 End Class
