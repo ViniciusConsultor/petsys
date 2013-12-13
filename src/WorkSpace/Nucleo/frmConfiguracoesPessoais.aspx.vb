@@ -117,11 +117,18 @@ Partial Public Class frmConfiguracoesPessoais
     Private Sub PreenchaMenuFuncionalidadesDoModulo(ByVal MenuModulo As IMenuComposto, _
                                                     ByVal Principal As Principal, _
                                                     ByRef NodeModulo As RadTreeNode)
+
+        If MenuModulo.Agrupador.Count() > 0 Then
+            For Each agrupador As KeyValuePair(Of String, IMenuComposto) In MenuModulo.Agrupador
+                PreenchaMenuFuncionalidadesDoModulo(agrupador.Value, Principal, NodeModulo)
+            Next
+        End If
+
         For Each MenuFuncao As IMenuFolha In MenuModulo.ObtenhaItens
 
             If Principal.EstaAutorizado(MenuFuncao.ID) Then
                 Dim NodeFuncao As RadTreeNode
-
+                
                 NodeFuncao = New RadTreeNode(MenuFuncao.Nome, String.Concat(MenuFuncao.ID.ToString, "|", MenuFuncao.Imagem, "|", MenuFuncao.URL))
                 NodeModulo.Nodes.Add(NodeFuncao)
             End If
