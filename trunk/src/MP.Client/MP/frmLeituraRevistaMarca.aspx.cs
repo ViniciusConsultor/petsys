@@ -12,6 +12,7 @@ using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
+using ICSharpCode.SharpZipLib.Zip;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Servicos;
@@ -165,27 +166,7 @@ namespace MP.Client.MP
 
                     UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
-                    IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
-                    var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
-                    var numeroRevista = arquivo.GetNameWithoutExtension();
-                    revistaDeMarcas.ExtensaoArquivo = arquivo.GetExtension();
-
-                    if (numeroRevista.Substring(0, 2).Equals("rm"))
-                    {
-                        revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista.Substring(2, 4));
-                        listaRevistasAProcessar.Add(revistaDeMarcas);
-                    }
-                    else
-                    {
-                        revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
-                        listaRevistasAProcessar.Add(revistaDeMarcas);
-                    }
-
-                    var caminhoArquivo = Path.Combine(pastaDeDestino, revistaDeMarcas.NumeroRevistaMarcas + arquivo.GetExtension());
-                    Directory.CreateDirectory(pastaDeDestino);
-                    arquivo.SaveAs(caminhoArquivo, true);
-
-                    MostraListaRevistasAProcessar(listaRevistasAProcessar);
+                    ExtrairArquivoZip(arquivo, pastaDeDestino);
                 }
             }
             catch (Exception ex)
@@ -193,6 +174,82 @@ namespace MP.Client.MP
                 Logger.GetInstancia().Erro("Erro ao carregar revista, exceção: ", ex);
                 throw;
             }
+        }
+
+        private void ExtrairArquivoZip(UploadedFile arquivo, string pastaDeDestino)
+        {
+            IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
+            var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
+            var numeroRevista = arquivo.GetNameWithoutExtension();
+
+            if (numeroRevista.Substring(0, 2).Equals("rm"))
+            {
+                revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista.Substring(2, 4));
+            }
+            else
+            {
+                revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
+            }
+
+            var pastaDeDestinoTemp = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA + "/temp/");
+
+            Directory.CreateDirectory(pastaDeDestinoTemp);
+
+            var caminhoArquivoZip = Path.Combine(pastaDeDestinoTemp, revistaDeMarcas.NumeroRevistaMarcas + arquivo.GetExtension());
+
+            arquivo.SaveAs(caminhoArquivoZip, true);
+
+            UtilidadesWeb.DescompacteArquivoZip(caminhoArquivoZip, pastaDeDestinoTemp);
+
+            File.Delete(caminhoArquivoZip);
+
+            var dirInfo = new DirectoryInfo(pastaDeDestinoTemp);
+
+            FileInfo[] arquivos = dirInfo.GetFiles();
+
+            foreach (var arquivoDaPasta in arquivos)
+            {
+                var caminhoArquivoAntigo = Path.Combine(pastaDeDestinoTemp, arquivoDaPasta.Name);
+
+                if (arquivoDaPasta.Name.Equals("rm" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension))
+                {
+                    var arquivoNovo = arquivoDaPasta.Name.Replace("rm" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension,
+                                                revistaDeMarcas.NumeroRevistaMarcas.ToString() + arquivoDaPasta.Extension);
+
+                    var caminhoArquivoNovo = Path.Combine(pastaDeDestino, arquivoNovo);
+
+                    File.Delete(caminhoArquivoNovo);
+                    File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                    File.Delete(caminhoArquivoAntigo);
+
+                    revistaDeMarcas.ExtensaoArquivo = arquivoDaPasta.Extension;
+                    listaRevistasAProcessar.Add(revistaDeMarcas);
+
+                    MostraListaRevistasAProcessar(listaRevistasAProcessar);
+                    return;
+                }
+                if (arquivoDaPasta.Name.Replace(arquivoDaPasta.Extension, "").Equals(revistaDeMarcas.NumeroRevistaMarcas.ToString()))
+                {
+                    var arquivoNovo = revistaDeMarcas.NumeroRevistaMarcas.ToString() + arquivoDaPasta.Extension;
+
+                    var caminhoArquivoNovo = Path.Combine(pastaDeDestino, arquivoNovo);
+
+                    File.Delete(caminhoArquivoNovo);
+                    File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                    File.Delete(caminhoArquivoAntigo);
+
+                    revistaDeMarcas.ExtensaoArquivo = arquivoDaPasta.Extension;
+                    listaRevistasAProcessar.Add(revistaDeMarcas);
+
+                    MostraListaRevistasAProcessar(listaRevistasAProcessar);
+                    return;
+                }
+            }
+
+            revistaDeMarcas.ExtensaoArquivo = arquivo.GetExtension();
+            listaRevistasAProcessar.Add(revistaDeMarcas);
+
+            MostraListaRevistasAProcessar(listaRevistasAProcessar);
         }
 
         private void MostraListaRevistasAProcessar(IList<IRevistaDeMarcas> listaRevistasAProcessar)
