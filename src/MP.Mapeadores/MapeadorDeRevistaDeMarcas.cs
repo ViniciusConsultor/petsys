@@ -118,7 +118,12 @@ namespace MP.Mapeadores
             //revistaDeMarcas.IdRevistaMarcas = UtilidadesDePersistencia.GetValorLong(leitor, "IdRevistaMarcas");
 
             revistaDeMarcas.NumeroRevistaMarcas = UtilidadesDePersistencia.getValorInteger(leitor, "NumeroRevistaMarcas");
-            revistaDeMarcas.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").Value;
+
+            if (UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").HasValue)
+            {
+                revistaDeMarcas.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").Value;
+            }
+            
             revistaDeMarcas.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "Processada");
 
              if (!UtilidadesDePersistencia.EhNulo(leitor, "ExtensaoArquivo"))

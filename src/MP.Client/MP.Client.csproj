@@ -51,6 +51,7 @@
       <HintPath>..\..\bin\Compartilhados.Componentes.Web.dll</HintPath>
     </Reference>
     <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.2.329, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
     <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\itextsharp.dll</HintPath>
