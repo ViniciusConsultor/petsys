@@ -30,7 +30,7 @@
                                             //]]>
                                         </script>
                                     </telerik:RadScriptBlock>
-                                    <telerik:RadAsyncUpload runat="server" ID="uplRevistaPatente" MaxFileInputsCount="1"  AllowedFileExtensions=".xml,.txt" PostbackTriggers="ButtonSubmit" Skin="Vista"
+                                    <telerik:RadAsyncUpload runat="server" ID="uplRevistaPatente" MaxFileInputsCount="1"  AllowedFileExtensions=".zip" PostbackTriggers="ButtonSubmit" Skin="Vista"
                                         HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Procurar"   OnFileUploaded="uplRevistaPatente_OnFileUploaded" />
                                     <asp:Button ID="ButtonSubmit" runat="server" Text="Adicionar" OnClientClick="updateRevistaPatente(); return false;" CausesValidation="False" CssClass="RadUploadSubmit" />
                                 </td>

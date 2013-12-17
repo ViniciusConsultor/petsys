@@ -12,7 +12,6 @@ using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
-using ICSharpCode.SharpZipLib.Zip;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Servicos;

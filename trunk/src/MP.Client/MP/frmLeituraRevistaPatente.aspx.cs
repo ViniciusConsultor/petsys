@@ -176,12 +176,9 @@ namespace MP.Client.MP
                     listaRevistasAProcessar.Add(revistaDePatentes);
 
                     var caminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatentes.NumeroRevistaPatente + arquivo.GetExtension());
-                    
-                    if(!Directory.Exists(pastaDeDestino))
-                        Directory.CreateDirectory(pastaDeDestino);
 
-                    arquivo.SaveAs(caminhoArquivo, true);
-
+                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+                    ExtrairArquivoZip(arquivo, pastaDeDestino);
                     ExibaRevistasDePatentesAProcessar(listaRevistasAProcessar);
                 }
             }
@@ -235,7 +232,7 @@ namespace MP.Client.MP
 
             UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
-            CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
+            CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + ".xml");
             AdicioneNumeroDaRevistaSelecionada(revistaDePatente);
             var xmlRevista = new XmlDocument();
             xmlRevista.Load(CaminhoArquivo);
@@ -254,14 +251,14 @@ namespace MP.Client.MP
             ViewState.Add(CHAVE_PROCESSOS_DA_REVISTA, listaDeProcessosDaRevista);
         }
 
-        private void MostraListaRevistasAProcessar(IList<IRevistaDeMarcas> listaRevistasAProcessar)
+        private void MostraListaRevistasAProcessar(IList<IRevistaDePatente> listaRevistasAProcessar)
         {
             grdRevistasAProcessar.MasterTableView.DataSource = listaRevistasAProcessar;
             grdRevistasAProcessar.DataBind();
             ViewState.Add(CHAVE_REVISTAS_A_PROCESSAR, listaRevistasAProcessar);
         }
 
-        private void MostraListaRevistasJaProcessadas(IList<IRevistaDeMarcas> listaRevistasJaProcessadas)
+        private void MostraListaRevistasJaProcessadas(IList<IRevistaDePatente> listaRevistasJaProcessadas)
         {
             grdRevistasJaProcessadas.MasterTableView.DataSource = listaRevistasJaProcessadas;
             grdRevistasJaProcessadas.DataBind();
@@ -286,6 +283,75 @@ namespace MP.Client.MP
                 UtilidadesWeb.LimparComponente(ref controleGrid);
                 MostraProcessosDaRevista(new List<IProcessoDePatente>());
             }
+        }
+
+        private void ExtrairArquivoZip(UploadedFile arquivo, string pastaDeDestino)
+        {
+            IList<IRevistaDePatente> listaRevistasAProcessar = new List<IRevistaDePatente>();
+            var revistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
+            var numeroRevista = arquivo.GetNameWithoutExtension();
+
+            revistaDePatente.NumeroRevistaPatente = Convert.ToInt32(numeroRevista.Substring(0, 1).ToUpper().Equals("P") ? numeroRevista.Substring(1, 4) : numeroRevista);
+
+            var pastaDeDestinoTemp = Server.MapPath(UtilidadesWeb.URL_REVISTA_PATENTE + "/temp/");
+
+            Directory.CreateDirectory(pastaDeDestinoTemp);
+
+            var caminhoArquivoZip = Path.Combine(pastaDeDestinoTemp, revistaDePatente.NumeroRevistaPatente + arquivo.GetExtension());
+
+            arquivo.SaveAs(caminhoArquivoZip, true);
+
+            UtilidadesWeb.DescompacteArquivoZip(caminhoArquivoZip, pastaDeDestinoTemp);
+
+            File.Delete(caminhoArquivoZip);
+
+            var dirInfo = new DirectoryInfo(pastaDeDestinoTemp);
+
+            FileInfo[] arquivos = dirInfo.GetFiles();
+
+            foreach (var arquivoDaPasta in arquivos)
+            {
+                var caminhoArquivoAntigo = Path.Combine(pastaDeDestinoTemp, arquivoDaPasta.Name);
+
+                if (arquivoDaPasta.Name.Equals("rm" + revistaDePatente.NumeroRevistaPatente + arquivoDaPasta.Extension))
+                {
+                    var arquivoNovo = arquivoDaPasta.Name.Replace("P" + revistaDePatente.NumeroRevistaPatente + arquivoDaPasta.Extension,
+                                                revistaDePatente.NumeroRevistaPatente.ToString() + arquivoDaPasta.Extension);
+
+                    var caminhoArquivoNovo = Path.Combine(pastaDeDestino, arquivoNovo);
+
+                    File.Delete(caminhoArquivoNovo);
+                    File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                    File.Delete(caminhoArquivoAntigo);
+
+                    revistaDePatente.ExtensaoArquivo = arquivoDaPasta.Extension;
+                    listaRevistasAProcessar.Add(revistaDePatente);
+
+                    MostraListaRevistasAProcessar(listaRevistasAProcessar);
+                    return;
+                }
+                if (arquivoDaPasta.Name.Replace(arquivoDaPasta.Extension, "").Equals(revistaDePatente.NumeroRevistaPatente.ToString()))
+                {
+                    var arquivoNovo = revistaDePatente.NumeroRevistaPatente.ToString() + arquivoDaPasta.Extension;
+
+                    var caminhoArquivoNovo = Path.Combine(pastaDeDestino, arquivoNovo);
+
+                    File.Delete(caminhoArquivoNovo);
+                    File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                    File.Delete(caminhoArquivoAntigo);
+
+                    revistaDePatente.ExtensaoArquivo = arquivoDaPasta.Extension;
+                    listaRevistasAProcessar.Add(revistaDePatente);
+
+                    MostraListaRevistasAProcessar(listaRevistasAProcessar);
+                    return;
+                }
+            }
+
+            revistaDePatente.ExtensaoArquivo = arquivo.GetExtension();
+            listaRevistasAProcessar.Add(revistaDePatente);
+
+            MostraListaRevistasAProcessar(listaRevistasAProcessar);
         }
     }
 }
