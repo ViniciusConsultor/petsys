@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Patentes;
 
 namespace MP.Interfaces.Servicos
 {
@@ -14,7 +15,6 @@ namespace MP.Interfaces.Servicos
         IList<IRevistaDePatente> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDePatente> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
         IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml);
-        //IList<ILeituraRevistaDeMarcas> ObtenhaResultadoDaConsultaPorFiltroXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDeMarcas filtro);
-        //IList<ILeituraRevistaDeMarcas> ObtenhaObjetoDeLeituraRevistaDeMarcas(IList<IRevistaDePatente> listaDeProcessosExistentes);
+        IList<IRevistaDePatente> ObtenhaTodosOsProcessosDaRevistaXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDePatentes filtro);
     }
 }

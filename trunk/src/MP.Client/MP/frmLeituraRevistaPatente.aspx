@@ -148,8 +148,8 @@
                                                             </telerik:GridButtonColumn>
                                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="Identificador" UniqueName="IdProcessoPatente" Display="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="Id Processo Patente"
-                                                                UniqueName="IdProcessoDeMarca" Visible="false">
+                                                            <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="Id Processo Patente"
+                                                                UniqueName="IdProcessoDePatente" Visible="false">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column1">
                                                             </telerik:GridBoundColumn>
@@ -190,19 +190,23 @@
                                         <asp:Label ID="Label2" runat="server" Text="Processo:"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64"
-                                            Type="Number">
-                                            <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
-                                            </NumberFormat>
-                                        </telerik:RadNumericTextBox>
+                                        <asp:TextBox ID="txtProcesso" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label3" runat="server" Text="Estado:"></asp:Label>
+                                        <asp:Label ID="lblDepositante" runat="server" Text="Depositante:"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <uc3:ctrlUF ID="ctrlUF" runat="server" />
+                                        <asp:TextBox ID="txtDepositante" runat="server" Width="80%" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="lblTitular" runat="server" Text="Titular:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <asp:TextBox ID="txtTitular" runat="server" Width="80%" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -211,14 +215,6 @@
                                     </td>
                                     <td class="td">
                                         <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="th3">
-                                        <asp:Label ID="Label5" runat="server" Text="Despacho:"></asp:Label>
-                                    </td>
-                                    <td class="td">
-                                        <uc2:ctrlDespachoDeMarcas ID="ctrlDespachoDeMarcas" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>

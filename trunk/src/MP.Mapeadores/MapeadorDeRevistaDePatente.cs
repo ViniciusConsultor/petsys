@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.DBHelper;
+using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
@@ -53,7 +55,8 @@ namespace MP.Mapeadores
                 sql.Append(processoDaRevistaDePatente.DataDeDeposito.HasValue
                            ? String.Concat(processoDaRevistaDePatente.DataDeDeposito.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
 
-                sql.Append(String.Concat(processoDaRevistaDePatente.NumeroDoPedido, ", "));
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroDoPedido)
+                           ? String.Concat(UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoPedido), ", ") : "NULL, ");
 
                 sql.Append(processoDaRevistaDePatente.DataDaPublicacaoDoPedido.HasValue
                            ? String.Concat(processoDaRevistaDePatente.DataDaPublicacaoDoPedido.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
@@ -211,18 +214,88 @@ namespace MP.Mapeadores
             }
         }
 
-        public void Modificar(IRevistaDePatente revistaDePatentes)
-        {
-        }
-
         public IList<IRevistaDePatente> ObtenhaRevistasAProcessar(int quantidadeDeRegistros)
         {
-            return new List<IRevistaDePatente>();
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT IDREVISTAPATENTE IdRevistaPatentes, NUMEROREVISTAPATENTE NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
+            sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
+            sql.Append("FROM MP_REVISTA_PATENTE ");
+            sql.Append("WHERE PROCESSADA = 1");
+            sql.AppendLine(" ORDER BY NUMEROREVISTAPATENTE DESC");
+
+            IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, 0))
+            {
+                try
+                {
+                    while (leitor.Read())
+                        revistas.Add(MontaRevistaDePatente(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return revistas;
+        }
+
+        private IRevistaDePatente MontaRevistaDePatente(IDataReader leitor)
+        {
+            var revistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
+
+            revistaDePatente.NumeroProcessoDaPatente = UtilidadesDePersistencia.GetValorString(leitor, "NumeroRevistaPatentes");
+
+            if (UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").HasValue)
+                revistaDePatente.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").Value;
+
+            revistaDePatente.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "Processada");
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "ExtensaoArquivo"))
+                revistaDePatente.ExtensaoArquivo = UtilidadesDePersistencia.GetValorString(leitor, "ExtensaoArquivo");
+
+            return revistaDePatente;
         }
 
         public IList<IRevistaDePatente> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros)
         {
-            return new List<IRevistaDePatente>();
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT IDREVISTAPATENTE IdRevistaPatentes, NUMEROREVISTAPATENTE NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
+            sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
+            sql.Append("FROM MP_REVISTA_PATENTE ");
+            sql.Append("WHERE PROCESSADA = 1");
+            sql.AppendLine(" ORDER BY NUMEROREVISTAPATENTE DESC");
+
+            IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, 0))
+            {
+                try
+                {
+                    while (leitor.Read())
+                        revistas.Add(MontaRevistaDePatente(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return revistas;
+        }
+
+        public void Excluir(int numeroDaRevistaDePatente)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -226,25 +226,43 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtProcesso;
+        protected global::System.Web.UI.WebControls.TextBox txtProcesso;
         
         /// <summary>
-        /// Label3 control.
+        /// lblDepositante control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lblDepositante;
         
         /// <summary>
-        /// ctrlUF control.
+        /// txtDepositante control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WorkSpace.ctrlUF ctrlUF;
+        protected global::System.Web.UI.WebControls.TextBox txtDepositante;
+        
+        /// <summary>
+        /// lblTitular control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTitular;
+        
+        /// <summary>
+        /// txtTitular control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTitular;
         
         /// <summary>
         /// Label4 control.
@@ -263,24 +281,6 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MP.Client.MP.ctrlProcurador ctrlProcurador;
-        
-        /// <summary>
-        /// Label5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
-        
-        /// <summary>
-        /// ctrlDespachoDeMarcas control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MP.Client.MP.ctrlDespachoDeMarcas ctrlDespachoDeMarcas;
         
         /// <summary>
         /// btnFiltrar control.
