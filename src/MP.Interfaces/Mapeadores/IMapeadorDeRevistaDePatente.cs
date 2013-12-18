@@ -9,8 +9,8 @@ namespace MP.Interfaces.Mapeadores
     public interface IMapeadorDeRevistaDePatente
     {
         void InserirDadosRevistaXml(IList<IRevistaDePatente> listaDeProcessosExistentesNaRevista);
-        void Modificar(IRevistaDePatente revistaDePatentes);
         IList<IRevistaDePatente> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDePatente> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
+        void Excluir(int numeroDaRevistaDePatente);
     }
 }

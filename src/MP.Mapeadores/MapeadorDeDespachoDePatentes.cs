@@ -193,5 +193,26 @@ namespace MP.Mapeadores
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
+
+
+        public IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo, int quantidadeMaximaDeRegistros)
+        {
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT IDDESPACHOPATENTE, CODIGO, ");
+            sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO ");
+            sql.Append("FROM MP_DESPACHO_PATENTE ");
+            sql.Append("WHERE CODIGO = '" + codigo + "'");
+            sql.Append(" ORDER BY CODIGO");
+
+            IList<IDespachoDePatentes> listaDeDespachoDePatentes = new List<IDespachoDePatentes>();
+
+            listaDeDespachoDePatentes = obtenhaDespachoDePatentes(sql, quantidadeMaximaDeRegistros);
+
+            if (listaDeDespachoDePatentes.Count == 0)
+                return null;
+
+            return listaDeDespachoDePatentes[0];
+        }
     }
 }

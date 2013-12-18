@@ -10,6 +10,7 @@ using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Patentes;
 using MP.Interfaces.Servicos;
 using MP.Interfaces.Utilidades;
 using Telerik.Web.UI;
@@ -22,6 +23,7 @@ namespace MP.Client.MP
         private const string CHAVE_REVISTAS_PROCESSADAS = "CHAVE_REVISTAS_PROCESSADAS";
         private const string CHAVE_REVISTA_SELECIONADA = "CHAVE_REVISTA_SELECIONADA";
         private const string CHAVE_PROCESSOS_DA_REVISTA = "CHAVE_PROCESSOS_DA_REVISTA";
+        private const string CHAVE_PROCESSOS_REUSLTADO_FILTRO = "CHAVE_PROCESSOS_REUSLTADO_FILTRO";
 
         public string CaminhoArquivo { get; set; }
 
@@ -35,16 +37,48 @@ namespace MP.Client.MP
         {
             CarregueRevistasAProcessar();
             CarregueRevistasProcessadas();
+            grdFiltros.DataSource = new List<IRevistaDePatente>();
+            gridRevistaProcessos.DataSource = new List<IRevistaDePatente>();
+            HabilteAbaFiltro(false);
+        }
+
+        private void HabilteAbaFiltro(bool habilite)
+        {
+            RadTabStrip1.Tabs[1].Enabled = habilite;
         }
 
         private void CarregueRevistasAProcessar()
         {
-            grdRevistasAProcessar.DataSource = new List<IRevistaDePatente>();
+            IList<IRevistaDePatente> listaDeRevistas = new List<IRevistaDePatente>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                listaDeRevistas = servico.ObtenhaRevistasJaProcessadas(int.MaxValue);
+
+            if (listaDeRevistas.Count > 0)
+                MostraListaRevistasJaProcessadas(listaDeRevistas);
+            else
+            {
+                var controleGrid = this.grdRevistasJaProcessadas as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraListaRevistasJaProcessadas(new List<IRevistaDePatente>());
+            }
         }
 
         private void CarregueRevistasProcessadas()
         {
-            grdRevistasJaProcessadas.DataSource = new List<IRevistaDePatente>();
+            IList<IRevistaDePatente> listaDeRevistas = new List<IRevistaDePatente>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                listaDeRevistas = servico.ObtenhaRevistasAProcessar(int.MaxValue);
+
+            if (listaDeRevistas.Count > 0)
+                MostraListaRevistasAProcessar(listaDeRevistas);
+            else
+            {
+                var controleGrid = this.grdRevistasJaProcessadas as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraListaRevistasAProcessar(new List<IRevistaDePatente>());
+            }
         }
 
         protected void grdRevistasAProcessar_ItemCommand(object sender, GridCommandEventArgs e)
@@ -92,6 +126,7 @@ namespace MP.Client.MP
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
                         RadTabStrip1.Tabs[0].Selected = true;
+                        HabilteAbaFiltro(true);
                     }
                     else
                     {
@@ -104,6 +139,7 @@ namespace MP.Client.MP
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
                         RadTabStrip1.Tabs[0].Selected = true;
+                        HabilteAbaFiltro(false);
                     }
                 }
                 catch (BussinesException ex)
@@ -175,11 +211,8 @@ namespace MP.Client.MP
                     revistaDePatentes.NumeroRevistaPatente = Convert.ToInt32(numeroRevista);
                     listaRevistasAProcessar.Add(revistaDePatentes);
 
-                    var caminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatentes.NumeroRevistaPatente + arquivo.GetExtension());
-
                     UtilidadesWeb.CrieDiretorio(pastaDeDestino);
                     ExtrairArquivoZip(arquivo, pastaDeDestino);
-                    ExibaRevistasDePatentesAProcessar(listaRevistasAProcessar);
                 }
             }
             catch (Exception ex)
@@ -191,6 +224,51 @@ namespace MP.Client.MP
 
         protected void btnFiltrar_ButtonClick(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtProcesso.Text) && string.IsNullOrEmpty(txtDepositante.Text) &&
+                string.IsNullOrEmpty(txtTitular.Text) && ctrlProcurador.ProcuradorSelecionado == null)
+            {
+                // Nenhum filtro informado
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Informe um filtro para consultar as informações."),
+                                                         false);
+            }
+            else
+            {
+                IList<IRevistaDePatente> listaDeProcessosDaRevista = new List<IRevistaDePatente>();
+                var revistaSelecionada = (IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA];
+                var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
+
+                filtro.NumeroDoProcesso = txtProcesso.Text;
+                filtro.Depositante = txtDepositante.Text;
+                filtro.Titular = txtTitular.Text;
+                filtro.Procurador = ctrlProcurador.ProcuradorSelecionado;
+
+                // leitura .xml
+                var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                    listaDeProcessosDaRevista = servico.ObtenhaTodosOsProcessosDaRevistaXML(xmlRevista, filtro);
+
+                if (listaDeProcessosDaRevista.Count > 0)
+                {
+                    // adicionar viewstate para filtro CHAVE_PROCESSOS_REUSLTADO_FILTRO
+                    CarregaGridFiltros(listaDeProcessosDaRevista);
+                    txtQuantdadeDeProcessos.Text = listaDeProcessosDaRevista.Count.ToString();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe resultados para o filtro informado."),
+                                                         false);
+                }
+            }
+        }
+
+        private void CarregaGridFiltros(IList<IRevistaDePatente> listaDeProcessosDaRevista)
+        {
+            grdFiltros.MasterTableView.DataSource = listaDeProcessosDaRevista;
+            grdFiltros.DataBind();
+            Session.Add(CHAVE_PROCESSOS_REUSLTADO_FILTRO, listaDeProcessosDaRevista);
         }
 
         protected void btnLimpar_ButtonClick(object sender, EventArgs e)
@@ -232,7 +310,7 @@ namespace MP.Client.MP
 
             UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
-            CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + ".xml");
+            CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
             AdicioneNumeroDaRevistaSelecionada(revistaDePatente);
             var xmlRevista = new XmlDocument();
             xmlRevista.Load(CaminhoArquivo);
@@ -313,7 +391,7 @@ namespace MP.Client.MP
             {
                 var caminhoArquivoAntigo = Path.Combine(pastaDeDestinoTemp, arquivoDaPasta.Name);
 
-                if (arquivoDaPasta.Name.Equals("rm" + revistaDePatente.NumeroRevistaPatente + arquivoDaPasta.Extension))
+                if (arquivoDaPasta.Name.Equals("P" + revistaDePatente.NumeroRevistaPatente + arquivoDaPasta.Extension))
                 {
                     var arquivoNovo = arquivoDaPasta.Name.Replace("P" + revistaDePatente.NumeroRevistaPatente + arquivoDaPasta.Extension,
                                                 revistaDePatente.NumeroRevistaPatente.ToString() + arquivoDaPasta.Extension);

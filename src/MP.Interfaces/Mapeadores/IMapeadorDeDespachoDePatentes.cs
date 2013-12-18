@@ -13,5 +13,6 @@ namespace MP.Interfaces.Mapeadores
         void Inserir(IDespachoDePatentes despachoDePatentes);
         void Modificar(IDespachoDePatentes despachoDePatentes);
         void Excluir(long idDespachoDePatentes);
+        IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo, int quantidadeMaximaDeRegistros);
     }
 }

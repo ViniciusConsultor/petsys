@@ -14,5 +14,6 @@ namespace MP.Interfaces.Servicos
         void Inserir(IDespachoDePatentes despachoDePatentes);
         void Modificar(IDespachoDePatentes despachoDePatentes);
         void Excluir(long idDespachoDePatentes);
+        IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo, int quantidadeMaximaDeRegistros);
     }
 }

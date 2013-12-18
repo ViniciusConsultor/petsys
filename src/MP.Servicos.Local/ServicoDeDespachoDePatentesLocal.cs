@@ -116,5 +116,22 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+
+        public IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo, int quantidadeMaximaDeRegistros)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeDespachoDePatentes>();
+
+            try
+            {
+                return mapeador.ObtenhaDespachoPeloCodigo(codigo, quantidadeMaximaDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

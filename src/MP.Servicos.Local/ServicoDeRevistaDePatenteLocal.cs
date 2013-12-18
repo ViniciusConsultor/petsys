@@ -8,6 +8,7 @@ using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Patentes;
 using MP.Interfaces.Servicos;
 
 namespace MP.Servicos.Local
@@ -58,76 +59,13 @@ namespace MP.Servicos.Local
 
         public IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml)
         {
-            return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaDePatentes, revistaXml);
+            return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaXml);
         }
 
-        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml)
+        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(XmlDocument revistaXml)
         {
-            var numeroRevista = string.Empty;
-            var dataRevista = string.Empty;
-            IList<IRevistaDePatente> listaDeRevistasDePatentes = new List<IRevistaDePatente>();
-            XmlNodeList dadosDaRevistaDePatente = revistaXml.GetElementsByTagName("revista");
-            XmlNodeList processosDaRevista = revistaXml.GetElementsByTagName("processo");
+            IList<IRevistaDePatente> listaDeRevistasDePatentes = CarregueDadosDeTodaRevistaXML(revistaXml);
             var listaDeRevistasASeremSalvas = new List<IRevistaDePatente>();
-
-            if (dadosDaRevistaDePatente.Count > 0 && dadosDaRevistaDePatente[0] != null && dadosDaRevistaDePatente[0].Attributes != null &&
-                dadosDaRevistaDePatente[0].Attributes.GetNamedItem("numero") != null && dadosDaRevistaDePatente[0].Attributes.GetNamedItem("data") != null)
-            {
-                numeroRevista = dadosDaRevistaDePatente[0].Attributes.GetNamedItem("numero").Value;
-                dataRevista = dadosDaRevistaDePatente[0].Attributes.GetNamedItem("data").Value;
-            }
-
-            foreach (XmlNode processo in processosDaRevista)
-            {
-                var revistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
-
-                if (processo.Attributes.GetNamedItem("numero") != null)
-                    revistaDePatente.NumeroProcessoDaPatente = processo.Attributes.GetNamedItem("numero").Value;
-
-                revistaDePatente.NumeroRevistaPatente = Convert.ToInt32(numeroRevista);
-                revistaDePatente.DataPublicacao = Convert.ToDateTime(dataRevista);
-                revistaDePatente.DataDeDeposito = VerifiqueERetorneValorDataDoNo(processo, "data-deposito");
-                revistaDePatente.DataDaProrrogacao = VerifiqueERetorneValorDataDoNo(processo, "data-prorrogacao");
-                revistaDePatente.DataDeConcessao = VerifiqueERetorneValorDataDoNo(processo, "data-concenssao");
-                revistaDePatente.DataInicioFaseNacional = VerifiqueERetorneValorDataDoNo(processo, "data-inicio-fase-nacional");
-                revistaDePatente.MoedaDePagamento = VerifiqueERetorneValorStringDoNo(processo, "moeda-pagamento");
-                revistaDePatente.Valor = VerifiqueERetorneValorStringDoNo(processo, "valor");
-                revistaDePatente.Pagamento = VerifiqueERetorneValorStringDoNo(processo, "pagamento");
-                revistaDePatente.Prazo = VerifiqueERetorneValorStringDoNo(processo, "prazo");
-                PreenchaCodigoDoDespacho(processo, revistaDePatente);
-                PreenchaTitulares(processo, revistaDePatente);
-                PreenchaPatente(processo, revistaDePatente);
-                PreenchaNumeroDoPedidoParaRevistaDePatente(processo, revistaDePatente);
-                PreenchaPrioridadeUnionista(processo, revistaDePatente);
-                PreenchaDepositante(processo, revistaDePatente);
-                PreenchaProcurador(processo, revistaDePatente);
-                PreenchaPaisesDesignados(processo, revistaDePatente);
-                PreenchaDadosDepositoInternacional(processo, revistaDePatente);
-                PreenchaDadosPublicacaoInternacional(processo, revistaDePatente);
-                PreenchaResponsavelIR(processo, revistaDePatente);
-                PreenchaComplemento(processo, revistaDePatente);
-                PreenchaDecisao(processo, revistaDePatente);
-                PreenchaRecorrente(processo, revistaDePatente);
-                PreenchaCedente(processo, revistaDePatente);
-                PreenchaCessionaria(processo, revistaDePatente);
-                PreenchaObservacao(processo, revistaDePatente);
-                PreenchaUltimaInformacao(processo, revistaDePatente);
-                PreenchaCertificadoAverbacao(processo, revistaDePatente);
-                PreenchaPaisCedente(processo, revistaDePatente);
-                PreenchaPaisCessionaria(processo, revistaDePatente);
-                PreenchaSetor(processo, revistaDePatente);
-                PreenchaInsentosDeAverbacao(processo, revistaDePatente);
-                PreenchaRegimeDeGuarda(processo, revistaDePatente);
-                PreenchaRequerente(processo, revistaDePatente);
-                PreenchaRedacao(processo, revistaDePatente);
-
-                if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente) && revistaDePatente.NumeroProcessoDaPatente.Length == 15)
-                    revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
-                else if (!string.IsNullOrEmpty(revistaDePatente.NumeroDoPedido) && revistaDePatente.NumeroDoPedido.Length == 15)
-                    revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(3, 9);
-
-                listaDeRevistasDePatentes.Add(revistaDePatente);
-            }
 
             if (listaDeRevistasDePatentes.Count > 0)
             {
@@ -147,18 +85,30 @@ namespace MP.Servicos.Local
                             if(processoDePatenteExistente != null && processoDePatenteExistente.IdProcessoDePatente != null)
                             {
                                 revistaASerSalva.IdRevistaPatente = GeradorDeID.getInstancia().getProximoID();
+                                revistaASerSalva.NumeroDoProcesso = processo.NumeroDoProcesso;
+                                revistaASerSalva.ExtensaoArquivo = ".xml";
 
                                 if (processo.DataDeConcessao != null)
+                                {
                                     processoDePatenteExistente.DataDaConcessao = processo.DataDeConcessao;
+                                    revistaASerSalva.DataDeConcessao = processo.DataDeConcessao;
+                                }
+                                
 
                                 if (processo.DataPublicacao != null)
+                                {
                                     processoDePatenteExistente.DataDaPublicacao = processo.DataPublicacao;
+                                    revistaASerSalva.DataPublicacao = processo.DataPublicacao;
+                                }
 
                                 //if (processo.DataPublicacao != null)
                                 //    processoDePatenteExistente.DataDaVigencia = processo.DataPublicacao;
 
                                 if (processo.DataDeDeposito != null)
+                                {
                                     processoDePatenteExistente.DataDoDeposito = processo.DataDeDeposito;
+                                    revistaASerSalva.DataDeDeposito = processo.DataDeDeposito;
+                                }
 
                                 //if (processo.DataPublicacao != null)
                                 //  processoDePatenteExistente.DataDoExame = processo.DataPublicacao;
@@ -442,10 +392,133 @@ namespace MP.Servicos.Local
             IDespachoDePatentes despacho;
 
             using (var servicoDespacho = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-                despacho = servicoDespacho.obtenhaDespachoDePatentesPeloId(Convert.ToInt64(codigoDoDespacho));
+                despacho = servicoDespacho.ObtenhaDespachoPeloCodigo(codigoDoDespacho, int.MaxValue);
 
             if (despacho != null)
                 processoDePatente.Despacho = despacho;
+        }
+
+        private IList<IRevistaDePatente> CarregueDadosDeTodaRevistaXML(XmlDocument revistaXml)
+        {
+            var numeroRevista = string.Empty;
+            var dataRevista = string.Empty;
+            IList<IRevistaDePatente> listaDeRevistasDePatentes = new List<IRevistaDePatente>();
+            XmlNodeList dadosDaRevistaDePatente = revistaXml.GetElementsByTagName("revista");
+            XmlNodeList processosDaRevista = revistaXml.GetElementsByTagName("processo");
+
+            if (dadosDaRevistaDePatente.Count > 0 && dadosDaRevistaDePatente[0] != null && dadosDaRevistaDePatente[0].Attributes != null &&
+                dadosDaRevistaDePatente[0].Attributes.GetNamedItem("numero") != null && dadosDaRevistaDePatente[0].Attributes.GetNamedItem("data") != null)
+            {
+                numeroRevista = dadosDaRevistaDePatente[0].Attributes.GetNamedItem("numero").Value;
+                dataRevista = dadosDaRevistaDePatente[0].Attributes.GetNamedItem("data").Value;
+            }
+
+            foreach (XmlNode processo in processosDaRevista)
+            {
+                var revistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
+
+                if (processo.Attributes.GetNamedItem("numero") != null)
+                    revistaDePatente.NumeroProcessoDaPatente = processo.Attributes.GetNamedItem("numero").Value;
+
+                revistaDePatente.NumeroRevistaPatente = Convert.ToInt32(numeroRevista);
+                revistaDePatente.DataPublicacao = Convert.ToDateTime(dataRevista);
+                revistaDePatente.DataDeDeposito = VerifiqueERetorneValorDataDoNo(processo, "data-deposito");
+                revistaDePatente.DataDaProrrogacao = VerifiqueERetorneValorDataDoNo(processo, "data-prorrogacao");
+                revistaDePatente.DataDeConcessao = VerifiqueERetorneValorDataDoNo(processo, "data-concenssao");
+                revistaDePatente.DataInicioFaseNacional = VerifiqueERetorneValorDataDoNo(processo, "data-inicio-fase-nacional");
+                revistaDePatente.MoedaDePagamento = VerifiqueERetorneValorStringDoNo(processo, "moeda-pagamento");
+                revistaDePatente.Valor = VerifiqueERetorneValorStringDoNo(processo, "valor");
+                revistaDePatente.Pagamento = VerifiqueERetorneValorStringDoNo(processo, "pagamento");
+                revistaDePatente.Prazo = VerifiqueERetorneValorStringDoNo(processo, "prazo");
+                PreenchaCodigoDoDespacho(processo, revistaDePatente);
+                PreenchaTitulares(processo, revistaDePatente);
+                PreenchaPatente(processo, revistaDePatente);
+                PreenchaNumeroDoPedidoParaRevistaDePatente(processo, revistaDePatente);
+                PreenchaPrioridadeUnionista(processo, revistaDePatente);
+                PreenchaDepositante(processo, revistaDePatente);
+                PreenchaProcurador(processo, revistaDePatente);
+                PreenchaPaisesDesignados(processo, revistaDePatente);
+                PreenchaDadosDepositoInternacional(processo, revistaDePatente);
+                PreenchaDadosPublicacaoInternacional(processo, revistaDePatente);
+                PreenchaResponsavelIR(processo, revistaDePatente);
+                PreenchaComplemento(processo, revistaDePatente);
+                PreenchaDecisao(processo, revistaDePatente);
+                PreenchaRecorrente(processo, revistaDePatente);
+                PreenchaCedente(processo, revistaDePatente);
+                PreenchaCessionaria(processo, revistaDePatente);
+                PreenchaObservacao(processo, revistaDePatente);
+                PreenchaUltimaInformacao(processo, revistaDePatente);
+                PreenchaCertificadoAverbacao(processo, revistaDePatente);
+                PreenchaPaisCedente(processo, revistaDePatente);
+                PreenchaPaisCessionaria(processo, revistaDePatente);
+                PreenchaSetor(processo, revistaDePatente);
+                PreenchaInsentosDeAverbacao(processo, revistaDePatente);
+                PreenchaRegimeDeGuarda(processo, revistaDePatente);
+                PreenchaRequerente(processo, revistaDePatente);
+                PreenchaRedacao(processo, revistaDePatente);
+
+                if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente))
+                {
+                    if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("DI") || revistaDePatente.NumeroProcessoDaPatente.StartsWith("PI") ||
+                    revistaDePatente.NumeroProcessoDaPatente.StartsWith("MU"))
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
+                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
+                    }
+                    else if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("BR"))
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(10, 8);
+                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(10, 8);
+                    }
+                    
+                }
+                else if (!string.IsNullOrEmpty(revistaDePatente.NumeroDoPedido))
+                {
+                    if (revistaDePatente.NumeroDoPedido.StartsWith("DI") || revistaDePatente.NumeroDoPedido.StartsWith("PI") ||
+                        revistaDePatente.NumeroDoPedido.StartsWith("MU"))
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(3, 9);
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(3, 9);
+                    }
+                    else if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(10, 8);
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(10, 8);
+                    }
+                }
+
+                listaDeRevistasDePatentes.Add(revistaDePatente);
+            }
+
+            return listaDeRevistasDePatentes;
+        }
+
+        public IList<IRevistaDePatente> ObtenhaTodosOsProcessosDaRevistaXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDePatentes filtro)
+        {
+            IList<IRevistaDePatente> todosProcessoDaRevista = CarregueDadosDeTodaRevistaXML(revistaXml);
+            IList<IRevistaDePatente> revistasFiltradas = new List<IRevistaDePatente>();
+
+            foreach (IRevistaDePatente processo in todosProcessoDaRevista)
+            {
+                bool deveAdicionarProcesso = false;
+
+                if (!string.IsNullOrEmpty(filtro.NumeroDoProcesso) && filtro.NumeroDoProcesso.Equals(processo.NumeroDoProcesso))
+                    deveAdicionarProcesso = true;
+
+                if (!string.IsNullOrEmpty(filtro.Depositante) && filtro.Depositante.Equals(processo.Depositante))
+                    deveAdicionarProcesso = true;
+
+                if (!string.IsNullOrEmpty(filtro.Titular) && filtro.Titular.Equals(processo.Titular))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.Procurador != null && filtro.Procurador.Pessoa.Nome.Equals(processo.Procurador))
+                    deveAdicionarProcesso = true;
+
+                 if(deveAdicionarProcesso)
+                    revistasFiltradas.Add(processo);
+            }
+
+            return revistasFiltradas;
         }
     }
 }
