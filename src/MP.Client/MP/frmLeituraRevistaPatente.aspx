@@ -83,7 +83,8 @@
                                                     UniqueName="column4">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
-                                                <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="Revista(s) já processada(s)" UniqueName="colunaNumeroRevista" />
+                                                <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="Revista(s) já processada(s)" UniqueName="colunaNumeroRevista" >
+                                                </telerik:GridBoundColumn>
                                             </Columns>
                                         </MasterTableView>
                                     </telerik:RadGrid>
@@ -151,20 +152,16 @@
                                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="Id Processo Patente"
                                                                 UniqueName="IdProcessoDePatente" Visible="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column1">
+                                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="DataDoDeposito" HeaderText="Data do depósito" UniqueName="column2"
-                                                                DataFormatString="{0:dd/MM/yyyy}">
-                                                                <ItemStyle Width="15%"></ItemStyle>
+                                                            <telerik:GridBoundColumn DataField="Patente.NaturezaPatente.DescricaoNaturezaPatente" HeaderText="Natureza" UniqueName="column3">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Despacho.CodigoDespacho" HeaderText="Despacho"
-                                                                UniqueName="column3">
+                                                            <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Patente.Cliente.Pessoa.Nome" HeaderText="Titular"
-                                                                UniqueName="column4">
+                                                            <telerik:GridBoundColumn DataField="DataDoCadastro" HeaderText="Data do cadastro" UniqueName="column6" DataFormatString="{0:dd/MM/yyyy}" >
+                                                                 <ItemStyle Width="15%"></ItemStyle>
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Procurador.Pessoa.Nome" HeaderText="Procurador"
-                                                                UniqueName="column5">
+                                                            <telerik:GridBoundColumn DataField="Procurador.Pessoa.Nome" HeaderText="Procurador" UniqueName="column2">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
@@ -249,20 +246,21 @@
                                                                 FilterImageToolTip="Detalhes" HeaderTooltip="Detalhes" ImageUrl="~/imagens/find.gif"
                                                                 UniqueName="column10">
                                                             </telerik:GridButtonColumn>
-                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column1">
+                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Identificador" UniqueName="NumeroDoProcesso" Display="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="DataDeDeposito" HeaderText="Data de depósito" UniqueName="column2"
-                                                                DataFormatString="{0:dd/MM/yyyy}">
-                                                                <ItemStyle Width="15%"></ItemStyle>
+                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Id Processo Patente"
+                                                                UniqueName="IdProcessoDePatente" Visible="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho"
-                                                                UniqueName="column3">
+                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column5">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Titular" HeaderText="Titular"
-                                                                UniqueName="column4">
+                                                            <telerik:GridBoundColumn DataField="NaturezaDoDocumento" HeaderText="Natureza" UniqueName="column3">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Procurador" HeaderText="Procurador"
-                                                                UniqueName="column5">
+                                                            <telerik:GridBoundColumn DataField="Titulo" HeaderText="Patente" UniqueName="column2">
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn DataField="DataDeDeposito" HeaderText="Data do depósito" UniqueName="column6" DataFormatString="{0:dd/MM/yyyy}" >
+                                                                 <ItemStyle Width="15%"></ItemStyle>
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn DataField="Procurador" HeaderText="Procurador" UniqueName="column2">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>

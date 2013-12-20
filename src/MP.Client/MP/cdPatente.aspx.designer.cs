@@ -22,13 +22,13 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadToolBar rtbToolBar;
         
         /// <summary>
-        /// RadDockLayout1 control.
+        /// rdlPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDockLayout RadDockLayout1;
+        protected global::Telerik.Web.UI.RadDockLayout rdlPatente;
         
         /// <summary>
         /// RadDockZone1 control.
@@ -40,13 +40,13 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDockZone RadDockZone1;
         
         /// <summary>
-        /// RadDock1 control.
+        /// rdComboPatente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDock RadDock1;
+        protected global::Telerik.Web.UI.RadDock rdComboPatente;
         
         /// <summary>
         /// Label1 control.
@@ -443,6 +443,42 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox txtReivindicacoes;
+        
+        /// <summary>
+        /// lblRadical control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRadical;
+        
+        /// <summary>
+        /// txtRadical control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtRadical;
+        
+        /// <summary>
+        /// btnAdicionarRadical control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnAdicionarRadical;
+        
+        /// <summary>
+        /// grvRadicais control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid grvRadicais;
         
         /// <summary>
         /// rpvAnuidades control.

@@ -221,11 +221,11 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDREVISTAPATENTE IdRevistaPatentes, NUMEROREVISTAPATENTE NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
+            sql.Append("SELECT distinct(NUMEROREVISTAPATENTE) NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
             sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
             sql.Append("FROM MP_REVISTA_PATENTE ");
-            sql.Append("WHERE PROCESSADA = 1");
-            sql.AppendLine(" ORDER BY NUMEROREVISTAPATENTE DESC");
+            sql.Append("WHERE PROCESSADA = 0");
+            sql.Append(" ORDER BY NUMEROREVISTAPATENTE DESC");
 
             IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
 
@@ -249,7 +249,7 @@ namespace MP.Mapeadores
         {
             var revistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
 
-            revistaDePatente.NumeroProcessoDaPatente = UtilidadesDePersistencia.GetValorString(leitor, "NumeroRevistaPatentes");
+            revistaDePatente.NumeroRevistaPatente = UtilidadesDePersistencia.getValorInteger(leitor, "NumeroRevistaPatentes");
 
             if (UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").HasValue)
                 revistaDePatente.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").Value;
@@ -269,11 +269,11 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDREVISTAPATENTE IdRevistaPatentes, NUMEROREVISTAPATENTE NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
+            sql.Append("SELECT distinct(NUMEROREVISTAPATENTE) NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
             sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
             sql.Append("FROM MP_REVISTA_PATENTE ");
             sql.Append("WHERE PROCESSADA = 1");
-            sql.AppendLine(" ORDER BY NUMEROREVISTAPATENTE DESC");
+            sql.Append(" ORDER BY NUMEROREVISTAPATENTE DESC");
 
             IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
 
@@ -289,6 +289,9 @@ namespace MP.Mapeadores
                     leitor.Close();
                 }
             }
+
+            if (revistas.Count > 0)
+                return new List<IRevistaDePatente>() { revistas[0] };
 
             return revistas;
         }

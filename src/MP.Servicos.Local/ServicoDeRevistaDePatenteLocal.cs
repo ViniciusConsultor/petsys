@@ -42,18 +42,34 @@ namespace MP.Servicos.Local
             }
         }
 
-        public void Modificar(IRevistaDePatente revistaDeMarcas)
-        {
-        }
-
         public IList<IRevistaDePatente> ObtenhaRevistasAProcessar(int quantidadeDeRegistros)
         {
-            return new List<IRevistaDePatente>();
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                return mapeadorProcurador.ObtenhaRevistasAProcessar(quantidadeDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
         }
 
         public IList<IRevistaDePatente> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros)
         {
-            return new List<IRevistaDePatente>();
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                return mapeadorProcurador.ObtenhaRevistasJaProcessadas(quantidadeDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
         }
 
 
@@ -79,14 +95,12 @@ namespace MP.Servicos.Local
                     {
                         if (listaDeNumerosDeProcessosCadastrados.Contains(processo.NumeroDoProcesso))
                         {
-                            var revistaASerSalva = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
+                            var revistaASerSalva = processo;
                             var processoDePatenteExistente = servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso);
 
                             if(processoDePatenteExistente != null && processoDePatenteExistente.IdProcessoDePatente != null)
                             {
                                 revistaASerSalva.IdRevistaPatente = GeradorDeID.getInstancia().getProximoID();
-                                revistaASerSalva.NumeroDoProcesso = processo.NumeroDoProcesso;
-                                revistaASerSalva.ExtensaoArquivo = ".xml";
 
                                 if (processo.DataDeConcessao != null)
                                 {
@@ -129,7 +143,8 @@ namespace MP.Servicos.Local
 
                                 processoDePatenteExistente.ProcessoEhEstrangeiro = string.IsNullOrEmpty(processo.ClassificacaoInternacional);
 
-                                revistaASerSalva.IdDoProcessoDaRevista = processoDePatenteExistente.IdProcessoDePatente;
+                                revistaASerSalva.Processada = true;
+                                revistaASerSalva.ExtensaoArquivo = ".XML";
 
                                 listaDeRevistasASeremSalvas.Add(revistaASerSalva);
 
@@ -154,13 +169,13 @@ namespace MP.Servicos.Local
             if (processo["titulares"] != null && processo["titulares"]["titular"] != null)
             {
                 if(processo["titulares"]["titular"].Attributes.GetNamedItem("nome-razao-social") != null)
-                    revistaDePatente.TipoDePrograma = processo["titulares"]["titular"].Attributes.GetNamedItem("nome-razao-social").Value;
+                    revistaDePatente.Titular = processo["titulares"]["titular"].Attributes.GetNamedItem("nome-razao-social").Value;
 
                 if (processo["titulares"]["titular"].Attributes.GetNamedItem("pais") != null)
-                    revistaDePatente.TipoDePrograma = processo["titulares"]["titular"].Attributes.GetNamedItem("pais").Value;
+                    revistaDePatente.PaisTitular = processo["titulares"]["titular"].Attributes.GetNamedItem("pais").Value;
 
                 if (processo["titulares"]["titular"].Attributes.GetNamedItem("uf") != null)
-                    revistaDePatente.TipoDePrograma = processo["titulares"]["titular"].Attributes.GetNamedItem("uf").Value;
+                    revistaDePatente.UFTitular = processo["titulares"]["titular"].Attributes.GetNamedItem("uf").Value;
             }
         }
 
@@ -181,34 +196,31 @@ namespace MP.Servicos.Local
                 revistaDePatente.NumeroProcessoDaPatente = VerifiqueERetorneValorStringDoNo(processo["patente"], "numero");
 
                 if (processo["patente"]["titulo"] != null)
-                    revistaDePatente.Titulo = processo["patente"]["titulo"].Value;
+                    revistaDePatente.Titulo = processo["patente"]["titulo"].InnerText;
 
                 if (processo["patente"]["dadosDaPatente"] != null)
-                    revistaDePatente.DadosDoPedidoOriginal = processo["patente"]["dadosDaPatente"].Value;
+                    revistaDePatente.DadosDoPedidoOriginal = processo["patente"]["dadosDaPatente"].InnerText;
 
                 if (processo["patente"]["natureza"] != null)
-                    revistaDePatente.NaturezaDoDocumento = processo["patente"]["natureza"].Value;
+                    revistaDePatente.NaturezaDoDocumento = processo["patente"]["natureza"].InnerText;
 
                 if (processo["patente"]["observacao"] != null)
-                    revistaDePatente.Observacao = processo["patente"]["observacao"].Value;
+                    revistaDePatente.Observacao = processo["patente"]["observacao"].InnerText;
 
                 if (processo["patente"]["resumo"] != null)
-                    revistaDePatente.Resumo = processo["patente"]["resumo"].Value;
+                    revistaDePatente.Resumo = processo["patente"]["resumo"].InnerText;
 
                 if (processo["patente"]["inventores"] != null)
-                    revistaDePatente.Inventor = processo["patente"]["inventores"].Value;
+                    revistaDePatente.Inventor = processo["patente"]["inventores"].InnerText;
 
                 if (processo["patente"]["classificacaoInternacional"] != null)
-                    revistaDePatente.ClassificacaoInternacional = processo["patente"]["classificacaoInternacional"].Value;
+                    revistaDePatente.ClassificacaoInternacional = processo["patente"]["classificacaoInternacional"].InnerText;
 
                 if (processo["patente"]["classificacaoNacional"] != null)
-                    revistaDePatente.ClassificacaoNacional = processo["patente"]["classificacaoNacional"].Value;
+                    revistaDePatente.ClassificacaoNacional = processo["patente"]["classificacaoNacional"].InnerText;
 
                 if (processo["patente"]["adicaoPatente"] != null)
-                    revistaDePatente.DadosDoPedidoDaPatente = processo["patente"]["adicaoPatente"].Value;
-
-                if (processo["patente"]["adicaoPatente"] != null)
-                    revistaDePatente.DadosDoPedidoDaPatente = processo["patente"]["adicaoPatente"].Value;
+                    revistaDePatente.DadosDoPedidoDaPatente = processo["patente"]["adicaoPatente"].InnerText;
 
                 if (processo["patente"]["programaDeComputador"] != null)
                     PreenchaInformacoesPatenteProgramaDeComputador(processo["patente"]["programaDeComputador"], revistaDePatente);
@@ -227,126 +239,126 @@ namespace MP.Servicos.Local
         private void PreenchaNumeroDoPedidoParaRevistaDePatente(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["numeroDoPedido"] != null)
-                revistaDePatente.NumeroDoPedido = xmlNode["numeroDoPedido"].Value;
+                revistaDePatente.NumeroDoPedido = xmlNode["numeroDoPedido"].InnerText;
         }
 
         private void PreenchaPrioridadeUnionista(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["prioridadeUnionista"] == null) return;
 
-            revistaDePatente.PrioridadeUnionista = xmlNode["prioridadeUnionista"].Value;
+            revistaDePatente.PrioridadeUnionista = xmlNode["prioridadeUnionista"].InnerText;
         }
 
         private void PreenchaDepositante(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["depositante"] == null) return;
 
-            revistaDePatente.Depositante = xmlNode["depositante"].Value;
+            revistaDePatente.Depositante = xmlNode["depositante"].InnerText;
         }
 
         private void PreenchaProcurador(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["procurador"] == null) return;
 
-            revistaDePatente.Procurador = xmlNode["procurador"].Value;
+            revistaDePatente.Procurador = xmlNode["procurador"].InnerText;
         }
 
         private void PreenchaPaisesDesignados(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["paisesDesignados"] == null) return;
 
-            revistaDePatente.PaisesDesignados = xmlNode["paisesDesignados"].Value;
+            revistaDePatente.PaisesDesignados = xmlNode["paisesDesignados"].InnerText;
         }
 
         private void PreenchaDadosDepositoInternacional(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["paisesDepositoInternacional"] == null) return;
 
-            revistaDePatente.DadosDepositoInternacional = xmlNode["paisesDepositoInternacional"].Value;
+            revistaDePatente.DadosDepositoInternacional = xmlNode["paisesDepositoInternacional"].InnerText;
         }
 
         private void PreenchaDadosPublicacaoInternacional(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["paisesPublicacaoInternacional"] == null) return;
 
-            revistaDePatente.DadosPublicacaoInternacional = xmlNode["paisesPublicacaoInternacional"].Value;
+            revistaDePatente.DadosPublicacaoInternacional = xmlNode["paisesPublicacaoInternacional"].InnerText;
         }
 
         private void PreenchaResponsavelIR(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["responsavelIR"] == null) return;
 
-            revistaDePatente.ResponsavelPagamentoImpostoDeRenda = xmlNode["responsavelIR"].Value;
+            revistaDePatente.ResponsavelPagamentoImpostoDeRenda = xmlNode["responsavelIR"].InnerText;
         }
 
         private void PreenchaComplemento(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["complemento"] == null) return;
 
-            revistaDePatente.ResponsavelPagamentoImpostoDeRenda = xmlNode["complemento"].Value;
+            revistaDePatente.Complemento = xmlNode["complemento"].InnerText;
         }
 
         private void PreenchaDecisao(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["decisao"] == null) return;
 
-            revistaDePatente.Decisao = xmlNode["decisao"].Value;
+            revistaDePatente.Decisao = xmlNode["decisao"].InnerText;
         }
 
         private void PreenchaRecorrente(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["recorrente"] == null) return;
 
-            revistaDePatente.Recorrente= xmlNode["recorrente"].Value;
+            revistaDePatente.Recorrente= xmlNode["recorrente"].InnerText;
         }
 
         private void PreenchaCedente(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["cedente"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["cedente"].Value;
+            revistaDePatente.Cedente = xmlNode["cedente"].InnerText;
         }
 
         private void PreenchaCessionaria(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["cessionaria"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["cessionaria"].Value;
+            revistaDePatente.Cessionaria = xmlNode["cessionaria"].InnerText;
         }
 
         private void PreenchaObservacao(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["observacao"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["observacao"].Value;
+            revistaDePatente.Observacao = xmlNode["observacao"].InnerText;
         }
 
         private void PreenchaUltimaInformacao(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["ultimaInformacao"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["ultimaInformacao"].Value;
+            revistaDePatente.UltimaInformacao = xmlNode["ultimaInformacao"].InnerText;
         }
 
         private void PreenchaCertificadoAverbacao(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["certificadoAverbacao"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["certificadoAverbacao"].Value;
+            revistaDePatente.CertificadoDeAverbacao = xmlNode["certificadoAverbacao"].InnerText;
         }
 
         private void PreenchaPaisCedente(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["paisCedente"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["paisCedente"].Value;
+            revistaDePatente.PaisCedente = xmlNode["paisCedente"].InnerText;
         }
 
         private void PreenchaPaisCessionaria(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["paisCessionaria"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["paisCessionaria"].Value;
+            revistaDePatente.PaisDaCessionaria = xmlNode["paisCessionaria"].InnerText;
             revistaDePatente.EnderecoDaCessionaria = VerifiqueERetorneValorStringDoNo(xmlNode["paisCessionaria"], "endereco");
         }
 
@@ -354,35 +366,35 @@ namespace MP.Servicos.Local
         {
             if (xmlNode["setor"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["setor"].Value;
+            revistaDePatente.Setor = xmlNode["setor"].InnerText;
         }
 
         private void PreenchaInsentosDeAverbacao(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["isentosAverbacao"] == null) return;
 
-            revistaDePatente.Recorrente = xmlNode["isentosAverbacao"].Value;
+            revistaDePatente.ServicosIsentosDeAverbacao = xmlNode["isentosAverbacao"].InnerText;
         }
 
         private void PreenchaRegimeDeGuarda(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["regimeGuarda"] == null) return;
 
-            revistaDePatente.RegimeDeGuarda = xmlNode["regimeGuarda"].Value;
+            revistaDePatente.RegimeDeGuarda = xmlNode["regimeGuarda"].InnerText;
         }
 
         private void PreenchaRequerente(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["requerente"] == null) return;
 
-            revistaDePatente.Requerente = xmlNode["requerente"].Value;
+            revistaDePatente.Requerente = xmlNode["requerente"].InnerText;
         }
 
         private void PreenchaRedacao(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
         {
             if (xmlNode["redacao"] == null) return;
 
-            revistaDePatente.Redacao = xmlNode["redacao"].Value;
+            revistaDePatente.Redacao = xmlNode["redacao"].InnerText;
         }
 
         private void AtualizeDespachoNoProcesso(string codigoDoDespacho, IProcessoDePatente processoDePatente)
@@ -464,11 +476,17 @@ namespace MP.Servicos.Local
                     {
                         revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
                         revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
+
+                        if(string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(0, 3);
                     }
                     else if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("BR"))
                     {
                         revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(10, 8);
                         revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(10, 8);
+
+                        if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 2);
                     }
                     
                 }
@@ -479,11 +497,17 @@ namespace MP.Servicos.Local
                     {
                         revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(3, 9);
                         revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(3, 9);
+
+                        if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(0, 3);
                     }
                     else if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
                     {
                         revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(10, 8);
                         revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(10, 8);
+
+                        if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(3, 2);
                     }
                 }
 
