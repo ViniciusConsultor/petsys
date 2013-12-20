@@ -26,9 +26,9 @@
                 CommandName="btnNao" CausesValidation="False" />
         </Items>
     </telerik:RadToolBar>
-    <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
+    <telerik:RadDockLayout ID="rdlPatente" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Patentes cadastradas" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="rdComboPatente" runat="server" Title="Patentes cadastradas" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista">
                 <ContentTemplate>
                     <table class="tabela">
@@ -406,6 +406,64 @@
                                             </telerik:RadNumericTextBox>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <table class="tabela">
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblRadical" runat="server" Text="Radical" />
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadTextBox ID="txtRadical" runat="server" Width="100%"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
+                                            <telerik:RadButton ID="btnAdicionarRadical" runat="server" Text="Adicionar" ToolTip="Adicionar Radical" 
+                                            OnClick="btnAdicionarRadical_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente" colspan="2">
+                                            <telerik:RadGrid ID="grvRadicais" runat="server" AutoGenerateColumns="False"
+                                                Skin="Vista" AllowPaging="True" PageSize="10" GridLines="None" OnItemCommand="grvRadicais_ItemCommand"
+                                                OnItemCreated="grvRadicais_ItemCreated" OnPageIndexChanged="grvRadicais_PageIndexChanged">
+                                                <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                            HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn DataField="string" HeaderText="Radical" UniqueName="colunaRadical" />
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
+                                        </td>
+                                    </tr>
                                 </table>
                             </asp:Panel>
                         </telerik:RadPageView>
@@ -506,7 +564,7 @@
                                                         <telerik:GridBoundColumn DataField="DataLancamento" HeaderText="Dt. Início" UniqueName="colunaDataLancamento" />
                                                         <telerik:GridBoundColumn DataField="DataVencimentoSemMulta" HeaderText="Dt. S/Multa" UniqueName="colunaDataVencimentoSemMulta" />
                                                         <telerik:GridBoundColumn DataField="DataVencimentoComMulta" HeaderText="Dt. C/Multa" UniqueName="colunaDataVencimentoComMulta" />
-                                                        <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Pagamento" UniqueName="colunaDataPagamento" />
+                                                        <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Dt. Pagamento" UniqueName="colunaDataPagamento" />
                                                         <telerik:GridBoundColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" />
                                                         <telerik:GridBoundColumn DataField="AnuidadePaga" HeaderText="Paga" UniqueName="colunaAnuidadePaga" />
                                                     </Columns>

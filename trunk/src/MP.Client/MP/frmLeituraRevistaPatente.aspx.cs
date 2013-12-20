@@ -52,6 +52,23 @@ namespace MP.Client.MP
             IList<IRevistaDePatente> listaDeRevistas = new List<IRevistaDePatente>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                listaDeRevistas = servico.ObtenhaRevistasAProcessar(int.MaxValue);
+
+            if (listaDeRevistas.Count > 0)
+                MostraListaRevistasAProcessar(listaDeRevistas);
+            else
+            {
+                var controleGrid = this.grdRevistasAProcessar as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraListaRevistasAProcessar(new List<IRevistaDePatente>());
+            }
+        }
+
+        private void CarregueRevistasProcessadas()
+        {
+            IList<IRevistaDePatente> listaDeRevistas = new List<IRevistaDePatente>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
                 listaDeRevistas = servico.ObtenhaRevistasJaProcessadas(int.MaxValue);
 
             if (listaDeRevistas.Count > 0)
@@ -61,23 +78,6 @@ namespace MP.Client.MP
                 var controleGrid = this.grdRevistasJaProcessadas as Control;
                 UtilidadesWeb.LimparComponente(ref controleGrid);
                 MostraListaRevistasJaProcessadas(new List<IRevistaDePatente>());
-            }
-        }
-
-        private void CarregueRevistasProcessadas()
-        {
-            IList<IRevistaDePatente> listaDeRevistas = new List<IRevistaDePatente>();
-
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                listaDeRevistas = servico.ObtenhaRevistasAProcessar(int.MaxValue);
-
-            if (listaDeRevistas.Count > 0)
-                MostraListaRevistasAProcessar(listaDeRevistas);
-            else
-            {
-                var controleGrid = this.grdRevistasJaProcessadas as Control;
-                UtilidadesWeb.LimparComponente(ref controleGrid);
-                MostraListaRevistasAProcessar(new List<IRevistaDePatente>());
             }
         }
 
@@ -159,6 +159,70 @@ namespace MP.Client.MP
 
         protected void grdRevistasJaProcessadas_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            int indiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                indiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "ReprocessarRevista")
+            {
+                var revistasProcessadas = (IList<IRevistaDePatente>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+
+                try
+                {
+                    // Caso o arquivo tenha extensão .txt
+                    if (revistasProcessadas[indiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
+                    {
+                        MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(revistasProcessadas[indiceSelecionado]);
+                        revistasProcessadas[indiceSelecionado].ExtensaoArquivo = ".xml";
+                    }
+
+                    var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistasProcessadas[indiceSelecionado]);
+                    revistasProcessadas[indiceSelecionado].Processada = true;
+
+                    // lista de processos existentes na base, de acordo com a revista que está sendo processada.
+                    IList<IRevistaDePatente> listaDeProcessosExistentes = new List<IRevistaDePatente>();
+
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasProcessadas[indiceSelecionado], xmlRevista);
+
+                    if (listaDeProcessosExistentes.Count > 0)
+                    {
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                            servico.Inserir(listaDeProcessosExistentes);
+
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."), false);
+
+                        CarreguePaginaInicial();
+                        RadPageView1.Selected = true;
+                        RadTabStrip1.Tabs[0].Selected = true;
+                        CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
+                        txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                        RadTabStrip1.Tabs[0].SelectParents();
+                        RadTabStrip1.Tabs[0].Selected = true;
+                        HabilteAbaFiltro(true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInformacao("Não existe publicações próprias na revista processada."), false);
+
+                        CarreguePaginaInicial();
+                        RadPageView1.Selected = true;
+                        txtPublicacoesProprias.Text = "0";
+                        txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
+                        RadTabStrip1.Tabs[0].SelectParents();
+                        RadTabStrip1.Tabs[0].Selected = true;
+                        HabilteAbaFiltro(false);
+                    }
+                }
+                catch (BussinesException ex)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                }
+            }
         }
 
         protected void grdRevistasJaProcessadas_ItemCreated(object sender, GridItemEventArgs e)
@@ -171,6 +235,20 @@ namespace MP.Client.MP
 
         protected void gridRevistaProcessos_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            long id = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                id = Convert.ToInt64((e.Item.Cells[3].Text));
+
+            if (e.CommandName == "Modificar")
+            {
+                var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx",
+                                            "?Id=", id);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.ExibeJanela(url,
+                                                                                   "Modificar processo de marca",
+                                                                                   800, 550), false);
+            }
         }
 
         protected void gridRevistaProcessos_ItemCreated(object sender, GridItemEventArgs e)
@@ -183,6 +261,18 @@ namespace MP.Client.MP
 
         protected void grdFiltros_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "DetalharProcesso")
+            {
+                var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx",
+                                            "?Id=", IndiceSelecionado);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.ExibeJanela(url, "Detalhes do processo da revista marcas",800, 550), false);
+            }
         }
 
         protected void grdFiltros_ItemCreated(object sender, GridItemEventArgs e)
@@ -273,6 +363,10 @@ namespace MP.Client.MP
 
         protected void btnLimpar_ButtonClick(object sender, EventArgs e)
         {
+            txtProcesso.Text = string.Empty;
+            txtDepositante.Text = string.Empty;
+            txtTitular.Text = string.Empty;
+            ctrlProcurador.Inicializa();
         }
 
         protected override string ObtenhaIdFuncao()
@@ -351,7 +445,7 @@ namespace MP.Client.MP
             {
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                     foreach (var processo in listaDeProcessosExistentes)
-                        listaDeProcessos.Add(servico.Obtenha(Convert.ToInt64(processo.NumeroProcessoDaPatente)));
+                        listaDeProcessos.Add(servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso));
 
                 MostraProcessosDaRevista(listaDeProcessos);
             }

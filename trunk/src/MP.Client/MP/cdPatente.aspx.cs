@@ -23,6 +23,7 @@ namespace MP.Client.MP
         private const string CHAVE_PRIORIDADE_UNIONISTA = "CHAVE_PRIORIDADE_UNIONISTA";
         private const string CHAVE_CLASSIFICACAO_PATENTE = "CHAVE_CLASSIFICACAO_PATENTE";
         private const string CHAVE_ANUIDADE_PATENTE = "CHAVE_ANUIDADE_PATENTE";
+        private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
 
         private IList<ICliente> ListaDeClientes
         {
@@ -71,6 +72,8 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
+
+            VisibilidadePatente(true);
 
             var controlePanelPatente = pnlDadosPatente as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, true);
@@ -377,6 +380,8 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
             ViewState[CHAVE_ESTADO] = Estado.Novo;
+
+            VisibilidadePatente(false);
 
             var controlePanelPatente = pnlDadosPatente as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, true);
@@ -834,7 +839,12 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
-                if (ctrlPatente.PatenteSelecionada == null) return;
+                if (ctrlPatente.PatenteSelecionada == null)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma patente para gerar as anuidades."), false);
+                    return;
+                }
 
                 dataDoDeposito = servico.ObtenhaDataDepositoDoProcessoVinvuladoAPatente(ctrlPatente.PatenteSelecionada.Identificador);
 
@@ -1017,6 +1027,60 @@ namespace MP.Client.MP
             }
 
             MostrarListaDeAnuidadeDaPatente();
+        }
+
+        private void VisibilidadePatente(bool visibilidade)
+        {
+            rdComboPatente.Visible = visibilidade;
+        }
+
+        protected void btnAdicionarRadical_ButtonClick(object sender, EventArgs e)
+        {
+            string radical = txtRadical.Text;
+
+            if (string.IsNullOrEmpty(radical))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), 
+                    UtilidadesWeb.MostraMensagemDeInformacao("Informe o radical a ser adicionado."), false);
+                return;
+            }
+
+            if (Radicais.Contains(radical))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                    UtilidadesWeb.MostraMensagemDeInformacao("Radical informado já foi adicionado."), false);
+                return;
+            }
+
+            Radicais.Add(radical);
+        }
+
+        private IList<string> Radicais
+        {
+            get
+            {
+                if(ViewState[CHAVE_RADICAIS] == null)
+                    return new List<string>();
+
+                return (List<string>) ViewState[CHAVE_RADICAIS];
+            }
+
+            set { ViewState[CHAVE_RADICAIS] = value; }
+        }
+
+        protected void grvRadicais_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void grvRadicais_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void grvRadicais_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

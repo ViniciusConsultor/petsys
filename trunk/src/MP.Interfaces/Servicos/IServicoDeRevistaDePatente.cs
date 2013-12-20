@@ -11,7 +11,6 @@ namespace MP.Interfaces.Servicos
     public interface IServicoDeRevistaDePatente : IDisposable
     {
         void Inserir(IList<IRevistaDePatente> listaDeObjetoRevistaDeMarcas);
-        void Modificar(IRevistaDePatente revistaDeMarcas);
         IList<IRevistaDePatente> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDePatente> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
         IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml);
