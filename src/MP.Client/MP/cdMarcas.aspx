@@ -7,6 +7,7 @@
 <%@ Register Src="~/MP/ctrlApresentacao.ascx" TagName="ctrlApresentacao" TagPrefix="uc3" %>
 <%@ Register Src="~/MP/ctrlMarcas.ascx" TagName="ctrlMarcas" TagPrefix="uc4" %>
 <%@ Register TagPrefix="uc5" TagName="ctrlCliente" Src="~/ctrlCliente.ascx" %>
+<%@ Register Src="~/MP/ctrlPeriodo.ascx" TagName="ctrlPeriodo" TagPrefix="uc6" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
@@ -52,6 +53,8 @@
                             <telerik:RadTab Text="Marca" Selected="True">
                             </telerik:RadTab>
                             <telerik:RadTab Text="Complemento">
+                            </telerik:RadTab>
+                            <telerik:RadTab Text="Manutenção">
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
@@ -241,6 +244,34 @@
                                     </MasterTableView>
                                 </telerik:RadGrid>
                             </asp:Panel>
+                        </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView3" runat="server" SkinID="Vista">
+                            <asp:Panel ID="pnlManutencao" runat="server">
+                                <table class="tabela">
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label13" runat="server" Text="Pagamento de manutenção?"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <asp:RadioButtonList ID="rblPagaManutencao" runat="server" AutoPostBack="false"
+                                                RepeatDirection="Horizontal">
+                                            </asp:RadioButtonList>
+                                        </td>
+                                    </tr>                                    
+                                </table>
+                                <asp:Panel ID="pnlDadosDaManutencao" runat="server">
+                                <table class="tabela">
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label14" runat="server" Text="Período:"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <uc6:ctrlPeriodo ID="ctrlPeriodo" runat="server" />
+                                        </td>
+                                    </tr>                                    
+                                </table>
+                             </asp:Panel>
+                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
                 </ContentTemplate>

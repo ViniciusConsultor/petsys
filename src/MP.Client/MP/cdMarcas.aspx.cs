@@ -80,6 +80,23 @@ namespace MP.Client.MP
 
             ctrlCliente.BotaoNovoEhVisivel = true;
             ctrlMarcas.BotaoNovoEhVisivel = false;
+
+            ctrlPeriodo.Inicializa();
+
+            CarregueComponentes();
+        }
+
+        private void CarregueComponentes()
+        {
+            rblPagaManutencao.Items.Clear();
+            rblPagaManutencao.Items.Add(new ListItem("Sim", "1"));
+            rblPagaManutencao.Items.Add(new ListItem("Não", "0"));
+            rblPagaManutencao.SelectedValue = "0";
+
+            rblPagaManutencao.Items.Clear();
+            rblPagaManutencao.Items.Add(new ListItem("Sim", "1"));
+            rblPagaManutencao.Items.Add(new ListItem("Não", "0"));
+            rblPagaManutencao.SelectedValue = "0";
         }
 
         protected void btnNovo_Click()

@@ -229,6 +229,13 @@
     <Compile Include="MP\ctrlPatente.ascx.designer.cs">
       <DependentUpon>ctrlPatente.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlPeriodo.ascx.cs">
+      <DependentUpon>ctrlPeriodo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlPeriodo.ascx.designer.cs">
+      <DependentUpon>ctrlPeriodo.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlProcurador.ascx.cs">
       <DependentUpon>ctrlProcurador.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -324,6 +331,7 @@
     <Content Include="MP\ctrlNCL.ascx" />
     <Content Include="MP\ctrlPasta.ascx" />
     <Content Include="MP\ctrlPatente.ascx" />
+    <Content Include="MP\ctrlPeriodo.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
