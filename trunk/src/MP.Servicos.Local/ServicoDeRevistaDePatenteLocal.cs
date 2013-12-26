@@ -410,7 +410,7 @@ namespace MP.Servicos.Local
                 processoDePatente.Despacho = despacho;
         }
 
-        private IList<IRevistaDePatente> CarregueDadosDeTodaRevistaXML(XmlDocument revistaXml)
+        public IList<IRevistaDePatente> CarregueDadosDeTodaRevistaXML(XmlDocument revistaXml)
         {
             var numeroRevista = string.Empty;
             var dataRevista = string.Empty;

@@ -72,7 +72,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtTituloPatente" runat="server" Rows="5" TextMode="MultiLine"
-                                                Width="100%" MaxLength="500">
+                                                Width="100%" MaxLength="4000">
                                             </telerik:RadTextBox>
                                         </td>
                                     </tr>
@@ -296,7 +296,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtResumoDaPatente" runat="server" TextMode="MultiLine" Rows="5"
-                                                Width="100%" MaxLength="1000" />
+                                                Width="100%" MaxLength="4000" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -310,7 +310,7 @@
                                         </td>
                                         <td class="td">
                                             <telerik:RadTextBox ID="txtObservacoes" runat="server" TextMode="MultiLine" Rows="5"
-                                                Width="100%" MaxLength="250" />
+                                                Width="100%" MaxLength="4000" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -334,7 +334,7 @@
                                                         <asp:Label ID="lblDescricaoClassificacao" runat="server" Text="Descrição da classificação" />
                                                     </td>
                                                     <td class="td">
-                                                        <telerik:RadTextBox ID="txtDescricaoClassificacao" runat="server" TextMode="MultiLine" Rows="5" Width="100%" />
+                                                        <telerik:RadTextBox ID="txtDescricaoClassificacao" runat="server" TextMode="MultiLine" Rows="5" Width="100%" MaxLength="4000" />
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -419,7 +419,7 @@
                                                         <asp:Label ID="lblRadical" runat="server" Text="Radical" />
                                                     </td>
                                                     <td class="td">
-                                                        <telerik:RadTextBox ID="txtRadical" runat="server" Width="100%"/>
+                                                        <telerik:RadTextBox ID="txtRadical" runat="server" Width="100%" MaxLength="50"/>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -458,7 +458,7 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn DataField="string" HeaderText="Radical" UniqueName="colunaRadical" />
+                                                        <telerik:GridBoundColumn DataField="Colidencia" HeaderText="Radical" UniqueName="colunaRadical" />
                                                     </Columns>
                                                 </MasterTableView>
                                             </telerik:RadGrid>

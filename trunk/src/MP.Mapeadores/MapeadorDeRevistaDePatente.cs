@@ -290,15 +290,22 @@ namespace MP.Mapeadores
                 }
             }
 
-            if (revistas.Count > 0)
-                return new List<IRevistaDePatente>() { revistas[0] };
+            IList<IRevistaDePatente> revistasASeremRetornadas = new List<IRevistaDePatente>();
+            long numeroRevistaPatenteAtual = 0;
 
-            return revistas;
+            foreach (IRevistaDePatente revistaDePatente in revistas)
+            {
+                numeroRevistaPatenteAtual = revistaDePatente.NumeroRevistaPatente;
+
+                if(revistasASeremRetornadas.Select(revista => revista.NumeroRevistaPatente == numeroRevistaPatenteAtual).Count() == 0)
+                    revistasASeremRetornadas.Add(revistaDePatente);
+            }
+
+            return revistasASeremRetornadas;
         }
 
         public void Excluir(int numeroDaRevistaDePatente)
         {
-            throw new NotImplementedException();
         }
     }
 }

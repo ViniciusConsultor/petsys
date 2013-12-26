@@ -192,8 +192,30 @@ namespace MP.Negocio.LazyLoad
 
         public IList<ICliente> Clientes
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get 
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Clientes;
+            }
+            set 
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Clientes = value;
+            }
+        }
+
+        public IList<IRadicalPatente> Radicais
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Radicais;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Radicais = value;
+            }
         }
     }
 }

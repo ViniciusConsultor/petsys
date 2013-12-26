@@ -21,5 +21,6 @@ namespace MP.Interfaces.Negocio
         IList<IPrioridadeUnionistaPatente> PrioridadesUnionista { get; set; }
         IList<IInventor> Inventores { get; set; }
         IList<ICliente> Clientes { get; set; }
+        IList<IRadicalPatente> Radicais { get; set; }
     }
 }

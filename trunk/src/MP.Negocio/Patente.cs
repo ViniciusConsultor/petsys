@@ -35,5 +35,7 @@ namespace MP.Negocio
         public IList<IInventor> Inventores { get; set; }
 
         public IList<ICliente> Clientes { get; set; }
+
+        public IList<IRadicalPatente> Radicais { get; set; }
     }
 }

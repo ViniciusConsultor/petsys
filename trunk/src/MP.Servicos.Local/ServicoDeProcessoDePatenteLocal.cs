@@ -186,5 +186,21 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado()
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+
+            try
+            {
+                return mapeador.obtenhaProcessosComPatenteQueContemRadicalCadastrado();
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }
