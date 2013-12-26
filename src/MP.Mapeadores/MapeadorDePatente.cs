@@ -55,6 +55,10 @@ namespace MP.Mapeadores
             if (patente.Clientes != null)
                 foreach (ICliente clientePatente in patente.Clientes)
                     InserirClientesPatente(clientePatente, patente.Identificador);
+
+            if (patente.Radicais != null)
+                foreach (IRadicalPatente radicalPatente in patente.Radicais)
+                    InserirRadicaisPatente(radicalPatente, patente.Identificador);
         }
 
         public void Modificar(IPatente patente)
@@ -78,6 +82,7 @@ namespace MP.Mapeadores
             ExluirPrioridadeUnionista(patente.Identificador);
             ExluirTitular(patente.Identificador);
             ExluirCliente(patente.Identificador);
+            ExluirRadicais(patente.Identificador);
 
             if (patente.Anuidades != null)
                 foreach (IAnuidadePatente anuidadePatente in patente.Anuidades)
@@ -98,6 +103,10 @@ namespace MP.Mapeadores
             if (patente.Clientes != null)
                 foreach (ICliente clientePatente in patente.Clientes)
                     InserirClientesPatente(clientePatente, patente.Identificador);
+
+            if (patente.Radicais != null)
+                foreach (IRadicalPatente radicalPatente in patente.Radicais)
+                    InserirRadicaisPatente(radicalPatente, patente.Identificador);
         }
 
         public void Exluir(long codigoPatente)
@@ -110,6 +119,7 @@ namespace MP.Mapeadores
             ExluirPrioridadeUnionista(codigoPatente);
             ExluirTitular(codigoPatente);
             ExluirCliente(codigoPatente);
+            ExluirRadicais(codigoPatente);
 
             comandoSQL.Append("DELETE FROM MP_PATENTE WHERE IDPATENTE = " + codigoPatente);
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
@@ -395,6 +405,15 @@ namespace MP.Mapeadores
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
 
+        private void ExluirRadicais(long codigoPatente)
+        {
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            comandoSQL.Append("DELETE FROM MP_RADICAL_PATENTE WHERE IDPATENTE = " + codigoPatente);
+            DBHelper.ExecuteNonQuery(comandoSQL.ToString());
+        }
+
         private IAnuidadePatente MapeieObjetoAnuidadePatente(IDataReader reader)
         {
             var anuidadePatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
@@ -460,6 +479,7 @@ namespace MP.Mapeadores
             patente.PrioridadesUnionista = ObtenhaPrioridadeUnionistaPeloIdDaPatente(patente.Identificador);
             patente.Inventores = ObtenhaTitularPeloIdDaPatente(patente.Identificador);
             patente.Clientes = ObtenhaClientesPatente(patente.Identificador);
+            patente.Radicais = ObtenhaRadicais(patente.Identificador);
 
             return patente;
         }
@@ -495,6 +515,48 @@ namespace MP.Mapeadores
             comandoSQL.Append(cliente.Pessoa.ID + ", ");
             comandoSQL.Append(idPatente + ")");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
+        }
+
+        private void InserirRadicaisPatente(IRadicalPatente radical, long idPatente)
+        {
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.getDBHelper();
+
+            radical.IdRadicalPatente = GeradorDeID.getInstancia().getProximoID();
+            radical.IdPatente = idPatente;
+
+            comandoSQL.Append("INSERT INTO MP_RADICAL_PATENTE(IDRADICAL, COLIDENCIA, IDPATENTE) VALUES(");
+            comandoSQL.Append(radical.IdRadicalPatente + ", ");
+            comandoSQL.Append("'" + radical.Colidencia + "', ");
+            comandoSQL.Append(radical.IdPatente + ")");
+            DBHelper.ExecuteNonQuery(comandoSQL.ToString());
+        }
+
+        private IList<IRadicalPatente> ObtenhaRadicais(long id)
+        {
+            IList<IRadicalPatente> radicais = new List<IRadicalPatente>();
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
+
+            comandoSQL.Append("SELECT IDRADICAL, COLIDENCIA, IDPATENTE FROM MP_RADICAL_PATENTE ");
+            comandoSQL.Append("WHERE IDPATENTE = " + id);
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
+                while (reader.Read())
+                    radicais.Add(MapeieObjetoRadicaisPatente(reader));
+
+            return radicais;
+        }
+
+        private IRadicalPatente MapeieObjetoRadicaisPatente(IDataReader reader)
+        {
+            var radicalPatente = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalPatente>();
+
+            radicalPatente.IdRadicalPatente = UtilidadesDePersistencia.GetValorLong(reader, "IDRADICAL");
+            radicalPatente.Colidencia = UtilidadesDePersistencia.GetValorString(reader, "COLIDENCIA");
+            radicalPatente.IdPatente = UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTE");
+
+            return radicalPatente;
         }
 
 #endregion

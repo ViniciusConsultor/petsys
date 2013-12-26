@@ -107,6 +107,9 @@ namespace MP.Client.MP
 
             grdAnuidades.DataSource = new List<IAnuidadePatente>();
             grdAnuidades.DataBind();
+
+            grvRadicais.DataSource = new List<IRadicalPatente>();
+            grvRadicais.DataBind();
             
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
@@ -124,6 +127,7 @@ namespace MP.Client.MP
 
             RadTabStrip1.Tabs[0].Selected = true;
             rpvDadosPatentes.Selected = true;
+            btnGerarTodas.Visible = false;
         }
 
         protected void grdClientes_ItemCommand(object sender, GridCommandEventArgs e)
@@ -429,6 +433,8 @@ namespace MP.Client.MP
             txtReivindicacoes.Text = patente.QuantidadeReivindicacao.ToString();
             ListaDeAnuidadeDaPatente = patente.Anuidades;
             MostrarListaDeAnuidadeDaPatente();
+            Radicais = patente.Radicais;
+            CarregueGridDeRadicais();
         }
 
         private void ExibaTelaConsultar()
@@ -489,6 +495,8 @@ namespace MP.Client.MP
             var controlePanelAnuidades = pnlAnuidades as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, true);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelAnuidades, true);
+
+            btnGerarTodas.Visible = true;
 
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
         }
@@ -952,6 +960,9 @@ namespace MP.Client.MP
             if (ListaDeInventores != null && ListaDeInventores.Count > 0)
                 patente.Inventores = ListaDeInventores;
 
+            if (Radicais != null && Radicais.Count > 0)
+                patente.Radicais = Radicais;
+
             return patente;
         }
 
@@ -1045,24 +1056,41 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (Radicais.Contains(radical))
+            if (Radicais.Any(radicalPatente => radicalPatente.Colidencia == radical))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                    UtilidadesWeb.MostraMensagemDeInformacao("Radical informado já foi adicionado."), false);
+                                                        UtilidadesWeb.MostraMensagemDeInformacao("Radical informado já foi adicionado."), false);
                 return;
             }
 
-            Radicais.Add(radical);
+            var radicalDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalPatente>();
+
+            radicalDaPatente.Colidencia = radical;
+
+            Radicais.Add(radicalDaPatente);
+            CarregueGridDeRadicais();
         }
 
-        private IList<string> Radicais
+        private void CarregueGridDeRadicais()
+        {
+            grvRadicais.DataSource = Radicais;
+            grvRadicais.DataBind();
+            LimpeCamposRadicais();
+        }
+
+        private void LimpeCamposRadicais()
+        {
+            txtRadical.Text = string.Empty;
+        }
+
+        private IList<IRadicalPatente> Radicais
         {
             get
             {
                 if(ViewState[CHAVE_RADICAIS] == null)
-                    return new List<string>();
+                    return new List<IRadicalPatente>();
 
-                return (List<string>) ViewState[CHAVE_RADICAIS];
+                return (List<IRadicalPatente>)ViewState[CHAVE_RADICAIS];
             }
 
             set { ViewState[CHAVE_RADICAIS] = value; }
@@ -1070,17 +1098,24 @@ namespace MP.Client.MP
 
         protected void grvRadicais_ItemCommand(object sender, GridCommandEventArgs e)
         {
-            throw new NotImplementedException();
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "Excluir")
+            {
+                Radicais.RemoveAt(IndiceSelecionado);
+                CarregueGridDeRadicais();
+            }
         }
 
         protected void grvRadicais_ItemCreated(object sender, GridItemEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         protected void grvRadicais_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            throw new NotImplementedException();
         }
     }
 }

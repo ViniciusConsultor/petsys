@@ -20,5 +20,6 @@ namespace MP.Interfaces.Servicos
         IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
         DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente);
         IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
+        IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado();
     }
 }
