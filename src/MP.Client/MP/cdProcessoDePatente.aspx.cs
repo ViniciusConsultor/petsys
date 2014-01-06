@@ -93,7 +93,7 @@ namespace MP.Client.MP
             if (processoDePatente.Pasta != null)
             {
                 ctrlPasta.PastaSelecionada = processoDePatente.Pasta;
-                ctrlPasta.Nome = processoDePatente.Pasta.Nome;
+                ctrlPasta.Codigo = processoDePatente.Pasta.Codigo;
             }
 
 

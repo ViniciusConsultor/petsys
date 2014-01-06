@@ -21,6 +21,7 @@ Partial Public Class cdPessoaFisica
     Private CHAVE_ID As String = "CHAVE_ID_CD_PESSOA_FISICA"
     Private CHAVE_TELEFONES As String = "CHAVE_TELEFONES_PESSOA_FISICA"
     Private CHAVE_ENDERECOS As String = "CHAVE_ENDERECOS_PESSOA_FISICA"
+    Private CHAVE_CONTATOS As String = "CHAVE_CONTATOS_PESSOA_FISICA"
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -295,6 +296,8 @@ Partial Public Class cdPessoaFisica
             End If
         End If
 
+        Pessoa.AdicioneContatos(CType(ViewState(CHAVE_CONTATOS), IList(Of String)))
+
         Return Pessoa
     End Function
 
@@ -359,6 +362,7 @@ Partial Public Class cdPessoaFisica
         txtSite.Text = Pessoa.Site
         ExibaTelefones(Pessoa.Telefones)
         ExibaEnderecos(Pessoa.Enderecos)
+        ExibaContatos(Pessoa.Contatos())
         imgFoto.ImageUrl = Pessoa.Foto
         ViewState(CHAVE_ID) = Pessoa.ID.Value
     End Sub
@@ -595,6 +599,50 @@ Partial Public Class cdPessoaFisica
                     gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
                 End If
             Next
+        End If
+    End Sub
+
+    Private Sub btnAdicionarContato_Click(sender As Object, e As System.EventArgs) Handles btnAdicionarContato.Click
+        Dim Contatos As IList(Of String)
+
+
+        If String.IsNullOrEmpty(txtNomeDoContato.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O nome do contato deve ser informado."), False)
+            Exit Sub
+        End If
+
+        Contatos = CType(ViewState(CHAVE_CONTATOS), IList(Of String))
+
+        If Contatos Is Nothing Then Contatos = New List(Of String)
+
+        If Contatos.Contains(txtNomeDoContato.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("O nome do contato informado já existe na lista de contatos."), False)
+            Exit Sub
+        End If
+
+        Contatos.Add(txtNomeDoContato.Text)
+        ExibaContatos(Contatos)
+        txtNomeDoContato.Text = ""
+    End Sub
+
+    Private Sub ExibaContatos(Contatos As IList(Of String))
+        grdContatos.DataSource = Contatos
+        grdContatos.DataBind()
+        ViewState(CHAVE_CONTATOS) = Contatos
+    End Sub
+
+    Private Sub grdContatos_ItemCommand(sender As Object, e As Telerik.Web.UI.GridCommandEventArgs) Handles grdContatos.ItemCommand
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Dim Contatos As IList(Of String)
+            Contatos = CType(ViewState(CHAVE_CONTATOS), IList(Of String))
+            Contatos.RemoveAt(IndiceSelecionado)
+            ExibaContatos(Contatos)
         End If
     End Sub
 

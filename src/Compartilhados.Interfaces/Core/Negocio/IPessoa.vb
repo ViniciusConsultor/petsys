@@ -22,6 +22,9 @@ Namespace Core.Negocio
         Property DadoBancario() As IDadoBancario
         Property Site() As String
         Function ObtenhaDocumentos() As IList(Of IDocumento)
+        Sub AdicioneContato(Contato As String)
+        Function Contatos() As IList(Of String)
+        Sub AdicioneContatos(Contatos As IList(Of String))
 
     End Interface
 

@@ -8,6 +8,7 @@ namespace MP.Interfaces.Negocio
     public interface IPasta
     {
         long? ID { get; set; }
+        string Codigo { get; set; }
         string Nome { get; set; }
     }
 }

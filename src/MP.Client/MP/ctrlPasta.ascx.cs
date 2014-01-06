@@ -43,7 +43,7 @@ namespace MP.Client.MP
             set { cboPasta.ShowDropDownOnTextboxClick = value; }
         }
 
-        public string Nome
+        public string Codigo
         {
             get { return cboPasta.Text; }
             set { cboPasta.Text = value; }
@@ -66,11 +66,16 @@ namespace MP.Client.MP
             IList<IPasta> pastas = new List<IPasta>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePasta>())
-                pastas = servico.obtenhaPeloNome(e.Text, 50);
+                pastas = servico.obtenhaPeloCodigo(e.Text, 50);
 
             if (pastas.Count > 0)
-                foreach (var item in pastas.Select(pasta => new RadComboBoxItem(pasta.Nome, pasta.ID.Value.ToString())))
+                foreach (var pasta in pastas)
+                {
+                    var item = new RadComboBoxItem(pasta.Codigo, pasta.ID.Value.ToString());
+                    item.Attributes.Add("Nome", pasta.Nome);
                     cboPasta.Items.Add(item);
+                    item.DataBind();
+                }
         }
 
         protected void cboPasta_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)

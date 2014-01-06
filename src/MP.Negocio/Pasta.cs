@@ -10,6 +10,9 @@ namespace MP.Negocio
     public class Pasta : IPasta
     {
         public long? ID { get; set; }
+
+        public string Codigo { get; set;}
+
         public string Nome { get; set; }
     }
 }

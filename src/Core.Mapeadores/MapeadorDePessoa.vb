@@ -65,9 +65,30 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         InsiraTelefones(Pessoa)
         InsiraEnderecos(Pessoa)
+        InsiraContatos(Pessoa)
         Me.Insira(Pessoa)
         Return Pessoa.ID.Value
     End Function
+
+    Private Sub InsiraContatos(Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_PESSOACONTATO WHERE IDPESSOA = " & Pessoa.ID.Value)
+
+        If Not Pessoa.Contatos() Is Nothing AndAlso Not Pessoa.Contatos().Count = 0 Then
+            For Each Contato As String In Pessoa.Contatos()
+                Sql = New StringBuilder
+                SQL.Append("INSERT INTO NCL_PESSOACONTATO (IDPESSOA, NOMECONTATO, INDICE)")
+                Sql.Append(" VALUES ( ")
+                Sql.Append(String.Concat(Pessoa.ID, ", "))
+                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Contato), "', "))
+                SQL.Append(String.Concat(Pessoa.Contatos.IndexOf(Contato), ") "))
+                DBHelper.ExecuteNonQuery(Sql.ToString)
+            Next
+        End If
+
+    End Sub
 
     Private Sub InsiraEnderecos(ByVal Pessoa As IPessoa)
         Dim SQL As StringBuilder
@@ -162,6 +183,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         Me.InsiraTelefones(Pessoa)
         Me.InsiraEnderecos(Pessoa)
+        InsiraContatos(Pessoa)
         Me.Atualize(Pessoa)
         DBHelper = ServerUtils.getDBHelper
         SQL.Append(String.Concat("UPDATE NCL_PESSOA SET NOME = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
@@ -267,7 +289,32 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         If (NivelDeRetardo > 0) Then
             ObtenhaTelefones(Pessoa)
             ObtenhaEnderecos(Pessoa)
+            ObtenhaContatos(Pessoa)
         End If
+    End Sub
+
+    Private Sub ObtenhaContatos(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper
+
+        SQL = New StringBuilder
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        SQL.Append("SELECT IDPESSOA, NOMECONTATO, INDICE FROM NCL_PESSOACONTATO")
+        SQL.Append(" WHERE IDPESSOA = " & Pessoa.ID.Value.ToString)
+        SQL.Append(" ORDER BY INDICE")
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
+            Try
+                While Leitor.Read
+                    Pessoa.AdicioneContato(UtilidadesDePersistencia.GetValorString(Leitor, "NOMECONTATO"))
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+
+        End Using
     End Sub
 
     Private Sub ObtenhaEnderecos(ByVal Pessoa As IPessoa)
@@ -326,7 +373,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         End Using
 
-        
+
     End Sub
 
     Private Sub ObtenhaTelefones(ByVal Pessoa As IPessoa)
@@ -355,7 +402,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             Finally
                 Leitor.Close()
             End Try
-            
+
         End Using
     End Sub
 
