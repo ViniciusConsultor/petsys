@@ -1,8 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="cdPastas.aspx.cs" Inherits="MP.Client.MP.cdPastas" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true"
+    CodeBehind="cdPastas.aspx.cs" Inherits="MP.Client.MP.cdPastas" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/MP/ctrlPasta.ascx" TagName="ctrlPasta" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" onbuttonclick="rtbToolBar_ButtonClick" >
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.011.0001" />
@@ -30,13 +32,22 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label6" runat="server" Text="Pasta"></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="Código"></asp:Label>
                                 </td>
                                 <td class="td">
-                                      <uc1:ctrlPasta ID="ctrlPasta" runat="server" />
+                                    <uc1:ctrlPasta ID="ctrlPasta" runat="server" />
                                 </td>
                             </tr>
-                          
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label1" runat="server" Text="Nome"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtNomeDaPasta" runat="server" MaxLength="100"
+                                        Width="300px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>

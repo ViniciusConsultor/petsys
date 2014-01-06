@@ -9,7 +9,7 @@ namespace MP.Interfaces.Mapeadores
     public interface IMapeadorDePasta
     {
         IPasta obtenha(long id);
-        IList<IPasta> obtenhaPeloNome(string nome, int quantidadeDeItens);
+        IList<IPasta> obtenhaPeloCodigo(string codigo, int quantidadeDeItens);
         void Inserir(IPasta pasta);
         void Modificar(IPasta pasta);
         void Excluir(long id);

@@ -31,6 +31,8 @@
             this.btnMigrar = new System.Windows.Forms.Button();
             this.txtStringDeConexaoSolureg = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtStrConexaoSiscopat = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnMigrar
@@ -59,11 +61,29 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "String de conexão Solureg";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 62);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(137, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "String de conexão Siscopat";
+            // 
+            // txtStrConexaoSiscopat
+            // 
+            this.txtStrConexaoSiscopat.Location = new System.Drawing.Point(12, 78);
+            this.txtStrConexaoSiscopat.Name = "txtStrConexaoSiscopat";
+            this.txtStrConexaoSiscopat.Size = new System.Drawing.Size(323, 20);
+            this.txtStrConexaoSiscopat.TabIndex = 3;
+            // 
             // frmMigrador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 215);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtStrConexaoSiscopat);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtStringDeConexaoSolureg);
             this.Controls.Add(this.btnMigrar);
@@ -80,5 +100,7 @@
         private System.Windows.Forms.Button btnMigrar;
         private System.Windows.Forms.TextBox txtStringDeConexaoSolureg;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtStrConexaoSiscopat;
     }
 }

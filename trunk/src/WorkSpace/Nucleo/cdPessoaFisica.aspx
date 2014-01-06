@@ -427,6 +427,44 @@
                                             </telerik:RadGrid>
                                         </td>
                                     </tr>
+                                        <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label31" runat="server" Text="Contato"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="Label32" runat="server" Text="Nome do contato"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtNomeDoContato" runat="server" MaxLength="255" Skin="Vista"
+                                                Width="300px" SelectionOnFocus="CaretToBeginning">
+                                            </telerik:RadTextBox>
+                                            <asp:Button ID="btnAdicionarContato" runat="server" CssClass="RadUploadSubmit" Text="Adicionar contato" />
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td colspan="2">
+                                            <telerik:RadGrid ID="grdContatos" runat="server" AutoGenerateColumns="False" GridLines="None"
+                                                Skin="Vista">
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
+                                                            ImageUrl="~/imagens/delete.gif">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn  UniqueName="column1" Visible="True" HeaderText="Nome">
+                                                        </telerik:GridBoundColumn>
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
+                                        </td>
+                                    </tr>
                                 </table>
                             </asp:Panel>
                         </telerik:RadPageView>

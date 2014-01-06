@@ -15,11 +15,13 @@ Public MustInherit Class Pessoa
     Private _Enderecos As IList(Of IEndereco)
     Private _Site As String
     Private _DadoBancario As IDadoBancario
+    Private _Contatos As IList(Of String)
 
     Protected Sub New()
         _Documentos = New Dictionary(Of TipoDeDocumento, IDocumento)
         _Telefones = New List(Of ITelefone)
         _Enderecos = New List(Of IEndereco)
+        _Contatos = New List(Of String)()
     End Sub
 
     Public Property Nome() As String Implements IPessoa.Nome
@@ -103,6 +105,22 @@ Public MustInherit Class Pessoa
 
         Return documentos
     End Function
+
+    Public Sub AdicioneContato(ByVal Contato As String) Implements IPessoa.AdicioneContato
+        If Not Contato Is Nothing Then
+            _Contatos.Add(Contato)
+        End If
+    End Sub
+
+    Public Function Contatos() As IList(Of String) Implements IPessoa.Contatos
+        Return _Contatos
+    End Function
+
+    Public Sub AdicioneContatos(ByVal Contatos As IList(Of String)) Implements IPessoa.AdicioneContatos
+        If Not Contatos Is Nothing Then
+            CType(_Contatos, List(Of String)).AddRange(Contatos)
+        End If
+    End Sub
 
     Public Sub AdicioneTelefones(ByVal Telefones As IList(Of ITelefone)) Implements IPessoa.AdicioneTelefones
         If Not Telefones Is Nothing Then

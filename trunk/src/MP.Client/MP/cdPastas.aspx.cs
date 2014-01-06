@@ -128,7 +128,8 @@ namespace MP.Client.MP
             else
                 pasta = ctrlPasta.PastaSelecionada;
 
-            pasta.Nome = ctrlPasta.Nome;
+            pasta.Codigo = ctrlPasta.Codigo;
+            pasta.Nome = txtNomeDaPasta.Text;
             return pasta;
         }
 
@@ -231,7 +232,8 @@ namespace MP.Client.MP
 
         private void Mostre(IPasta pasta)
         {
-           ExibaTelaConsultar();
+            txtNomeDaPasta.Text = pasta.Nome;
+            ExibaTelaConsultar();
         }
 
         protected override string ObtenhaIdFuncao()

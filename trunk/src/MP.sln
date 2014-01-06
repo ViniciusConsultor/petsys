@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InicializaBancoMP", "Inicia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP.Migrador", "MP.Migrador\MP.Migrador.csproj", "{BB06C075-9D40-4B43-83A0-57A88ADA65BA}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MP", "MP\MP.vdproj", "{26ED3D4F-D894-4E95-BCA6-E8F112438623}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,12 @@ Global
 		{BB06C075-9D40-4B43-83A0-57A88ADA65BA}.Release|Mixed Platforms.Build.0 = Release|x86
 		{BB06C075-9D40-4B43-83A0-57A88ADA65BA}.Release|x86.ActiveCfg = Release|x86
 		{BB06C075-9D40-4B43-83A0-57A88ADA65BA}.Release|x86.Build.0 = Release|x86
+		{26ED3D4F-D894-4E95-BCA6-E8F112438623}.Debug|Any CPU.ActiveCfg = Debug
+		{26ED3D4F-D894-4E95-BCA6-E8F112438623}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{26ED3D4F-D894-4E95-BCA6-E8F112438623}.Debug|x86.ActiveCfg = Debug
+		{26ED3D4F-D894-4E95-BCA6-E8F112438623}.Release|Any CPU.ActiveCfg = Release
+		{26ED3D4F-D894-4E95-BCA6-E8F112438623}.Release|Mixed Platforms.ActiveCfg = Release
+		{26ED3D4F-D894-4E95-BCA6-E8F112438623}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

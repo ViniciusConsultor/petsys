@@ -86,6 +86,21 @@ Namespace LazyLoad
             Return _Pessoa.ObtenhaDocumentos()
         End Function
 
+        Public Sub AdicioneContato(ByVal Contato As String) Implements IPessoa.AdicioneContato
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            _Pessoa.AdicioneContato(Contato)
+        End Sub
+
+        Public Function Contatos() As IList(Of String) Implements IPessoa.Contatos
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            Return _Pessoa.Contatos()
+        End Function
+
+        Public Sub AdicioneContatos(ByVal Contatos As IList(Of String)) Implements IPessoa.AdicioneContatos
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            _Pessoa.AdicioneContatos(Contatos)
+        End Sub
+
         Public ReadOnly Property Telefones() As IList(Of ITelefone) Implements IPessoa.Telefones
             Get
                 If _Pessoa Is Nothing Then CarregueObjetoReal()

@@ -554,6 +554,51 @@ Partial Public Class cdPessoaJuridica
     Protected WithEvents grdTelefones As Global.Telerik.Web.UI.RadGrid
 
     '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Label5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtNomeDoContato control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtNomeDoContato As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''btnAdicionarContato control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdicionarContato As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''grdContatos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdContatos As Global.Telerik.Web.UI.RadGrid
+
+    '''<summary>
     '''RadPageView5 control.
     '''</summary>
     '''<remarks>

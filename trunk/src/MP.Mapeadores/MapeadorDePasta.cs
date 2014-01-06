@@ -20,7 +20,7 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.criarNovoDbHelper();
             IPasta pasta = null;
 
-            using (var leitor = DBHelper.obtenhaReader("SELECT ID, NOME FROM MP_PASTA WHERE ID = " + id))
+            using (var leitor = DBHelper.obtenhaReader("SELECT ID, NOME, CODIGO FROM MP_PASTA WHERE ID = " + id))
             {
                 try
                 {
@@ -37,27 +37,19 @@ namespace MP.Mapeadores
 
         }
 
-        private IPasta MontaPasta(IDataReader leitor)
-        {
-            var pasta = FabricaGenerica.GetInstancia().CrieObjeto<IPasta>();
-            pasta.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-            pasta.Nome = UtilidadesDePersistencia.GetValorString(leitor, "Nome");
-            return pasta;
-        }
-
-        public IList<IPasta> obtenhaPeloNome(string nome, int quantidadeDeItens)
+        public IList<IPasta> obtenhaPeloCodigo(string codigo, int quantidadeDeItens)
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT ID, NOME FROM MP_PASTA ");
+            sql.Append("SELECT ID, NOME, CODIGO FROM MP_PASTA ");
 
-            if (!string.IsNullOrEmpty(nome))
-                sql.Append("NOME LIKE '%" + UtilidadesDePersistencia.FiltraApostrofe(nome) + "%'");
+            if (!string.IsNullOrEmpty(codigo))
+                sql.Append("CODIGO LIKE '%" + UtilidadesDePersistencia.FiltraApostrofe(codigo) + "%'");
 
-            sql.AppendLine(" ORDER BY NOME");
+            sql.AppendLine(" ORDER BY CODIGO");
 
             var pastas = new List<IPasta>();
 
@@ -77,6 +69,15 @@ namespace MP.Mapeadores
             return pastas;
         }
 
+        private IPasta MontaPasta(IDataReader leitor)
+        {
+            var pasta = FabricaGenerica.GetInstancia().CrieObjeto<IPasta>();
+            pasta.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
+            pasta.Codigo = UtilidadesDePersistencia.GetValorString(leitor, "CODIGO");
+            pasta.Nome = UtilidadesDePersistencia.GetValorString(leitor, "NOME");
+            return pasta;
+        }
+
         public void Inserir(IPasta pasta)
         {
             var sql = new StringBuilder();
@@ -86,9 +87,10 @@ namespace MP.Mapeadores
             pasta.ID = GeradorDeID.getInstancia().getProximoID();
 
             sql.Append("INSERT INTO MP_PASTA (");
-            sql.Append("ID, NOME)");
+            sql.Append("ID, CODIGO, NOME)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(pasta.ID.Value, ", "));
+            sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(pasta.Codigo), "', "));
             sql.Append(string.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(pasta.Nome), "')"));
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -101,7 +103,8 @@ namespace MP.Mapeadores
             DBHelper = ServerUtils.getDBHelper();
 
             sql.Append("UPDATE MP_PASTA SET ");
-            sql.Append(string.Concat("NOME = '", UtilidadesDePersistencia.FiltraApostrofe(pasta.Nome), "' "));
+            sql.Append(string.Concat("NOME = '", UtilidadesDePersistencia.FiltraApostrofe(pasta.Nome), "', "));
+            sql.Append(string.Concat("CODIGO = '", UtilidadesDePersistencia.FiltraApostrofe(pasta.Codigo), "' "));
             sql.Append("WHERE ID = " + pasta.ID.Value.ToString());
             DBHelper.ExecuteNonQuery(sql.ToString());
         }

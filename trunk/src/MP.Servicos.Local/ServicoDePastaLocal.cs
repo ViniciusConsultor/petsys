@@ -32,7 +32,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IPasta> obtenhaPeloNome(string nome, int quantidadeDeItens)
+        public IList<IPasta> obtenhaPeloCodigo(string codigo, int quantidadeDeItens)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -40,7 +40,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaPeloNome(nome, quantidadeDeItens);
+                return mapeador.obtenhaPeloCodigo(codigo, quantidadeDeItens);
             }
             finally
             {
@@ -48,6 +48,7 @@ namespace MP.Servicos.Local
             }
         }
 
+        
         public void Inserir(IPasta pasta)
         {
             ServerUtils.setCredencial(_Credencial);

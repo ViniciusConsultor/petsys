@@ -42,6 +42,8 @@ namespace MP.Migrador
         private HashSet<string> idsDeInventoresCadastrados = new HashSet<string>();
         private IDictionary<string, IList<IRadicalMarcas>> radicaisComChaveLegada = new Dictionary<string, IList<IRadicalMarcas>>();
         private IDictionary<string, IList<IAnuidadePatente>> anuidadesDePatenteComChaveLegada = new Dictionary<string, IList<IAnuidadePatente>>();
+        private IDictionary<string, IList<IClassificacaoPatente>> classificacoesDePatenteComChaveLegada = new Dictionary<string, IList<IClassificacaoPatente>>();
+
         private IDictionary<string, IList<IPrioridadeUnionistaPatente>> prioridadesUnionistaDePatenteComChaveLegada = new Dictionary<string, IList<IPrioridadeUnionistaPatente>>();
         private IDictionary<string, IList<IInventor>> inventoresDePatenteComChaveLegada = new Dictionary<string, IList<IInventor>>();
         private IDictionary<string, IList<ICliente>> clientesDePatenteComChaveLegada = new Dictionary<string, IList<ICliente>>();
@@ -52,12 +54,15 @@ namespace MP.Migrador
             MigrePessoas();
             MigreMarcas();
             MigreProcessoDeMarca();
-            CarregueECadastreClientesDaPatente();
-            CarregueECadastreInventores();
-            CarregueAnuidadesDaPatente();
-            CarregueClassificacaoDaPatente();
-            CarregueClassificacaoDaPatentePrioridadeUnionistaPatente();
-            MigrePatentesEProcessosDePatentes();
+
+           // CarregueClassificacaoDaPatente();
+
+           // CarregueECadastreClientesDaPatente();
+            //CarregueECadastreInventores();
+            //CarregueAnuidadesDaPatente();
+
+            //CarreguePrioridadeUnionistaPatente();
+           // MigrePatentesEProcessosDePatentes();
 
             MessageBox.Show("Dados migrados com sucesso!");
         }
@@ -263,7 +268,7 @@ namespace MP.Migrador
             return inventor;
         }
 
-        private void CarregueClassificacaoDaPatentePrioridadeUnionistaPatente()
+        private void CarreguePrioridadeUnionistaPatente()
         {
             DataSet dataSetDadosLegados = new DataSet();
 
@@ -301,7 +306,35 @@ namespace MP.Migrador
 
         private void CarregueClassificacaoDaPatente()
         {
+            DataSet dataSetDadosLegados = new DataSet();
 
+            using (var conexaoSiscopat = new OleDbConnection(txtStrConexaoSiscopat.Text))
+            {
+                conexaoSiscopat.Open();
+
+                var sql = "select  * from ClassificPatentes  ";
+
+                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSiscopat))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSiscopat.Close();
+            }
+
+            var dados = dataSetDadosLegados.Tables[0];
+
+            foreach (DataRow linha in dados.Rows)
+            {
+                if (!classificacoesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente").Trim()))
+                    classificacoesDePatenteComChaveLegada.Add(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente").Trim(), new List<IClassificacaoPatente>());
+
+                var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
+
+                classificacao.TipoClassificacao = TipoClassificacaoPatente.Nacional;
+                classificacao.Classificacao = UtilidadesDePersistencia.GetValor(linha, "Classificação").Trim();
+                if (!Information.IsDBNull(linha["Descrição"]))
+                    classificacao.DescricaoClassificacao = UtilidadesDePersistencia.GetValor(linha, "Descrição").Trim();
+                classificacoesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente").Trim()].Add(classificacao);
+            }
         }
 
         private void CarregueAnuidadesDaPatente()
