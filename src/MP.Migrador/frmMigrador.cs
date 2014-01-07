@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.Odbc;
 using System.Data.OleDb;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -41,23 +40,28 @@ namespace MP.Migrador
         private HashSet<string> idsDeProduradoresCadastrados = new HashSet<string>();
         private HashSet<string> idsDeInventoresCadastrados = new HashSet<string>();
         private IDictionary<string, IList<IRadicalMarcas>> radicaisComChaveLegada = new Dictionary<string, IList<IRadicalMarcas>>();
+
+
         private IDictionary<string, IList<IAnuidadePatente>> anuidadesDePatenteComChaveLegada = new Dictionary<string, IList<IAnuidadePatente>>();
         private IDictionary<string, IList<IClassificacaoPatente>> classificacoesDePatenteComChaveLegada = new Dictionary<string, IList<IClassificacaoPatente>>();
-
+        private IDictionary<string, IPasta> pastaMigradas = new Dictionary<string, IPasta>(); 
         private IDictionary<string, IList<IPrioridadeUnionistaPatente>> prioridadesUnionistaDePatenteComChaveLegada = new Dictionary<string, IList<IPrioridadeUnionistaPatente>>();
         private IDictionary<string, IList<IInventor>> inventoresDePatenteComChaveLegada = new Dictionary<string, IList<IInventor>>();
         private IDictionary<string, IList<ICliente>> clientesDePatenteComChaveLegada = new Dictionary<string, IList<ICliente>>();
         
         private void btnMigrar_Click(object sender, EventArgs e)
         {
-            CarregueRadicais();
-            MigrePessoas();
-            MigreMarcas();
-            MigreProcessoDeMarca();
+            //CarregueRadicais();
+            //MigrePessoas();
+            //MigreMarcas();
+            //MigreProcessoDeMarca();
 
-           // CarregueClassificacaoDaPatente();
+            CarregueClassificacaoDaPatente();
+            CarregueECadastrePastas();
 
-           // CarregueECadastreClientesDaPatente();
+            CarregueECadastreClientesDaPatente();
+
+
             //CarregueECadastreInventores();
             //CarregueAnuidadesDaPatente();
 
@@ -65,6 +69,41 @@ namespace MP.Migrador
            // MigrePatentesEProcessosDePatentes();
 
             MessageBox.Show("Dados migrados com sucesso!");
+        }
+
+
+        private void CarregueECadastrePastas()
+        {
+            DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSiscopat = new OdbcConnection(txtStrConexaoSiscopat.Text))
+            {
+                conexaoSiscopat.Open();
+
+                var sql = "select  * from Pastas  ";
+
+                using (var data = new OdbcDataAdapter(sql, conexaoSiscopat))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSiscopat.Close();
+            }
+
+            var dados = dataSetDadosLegados.Tables[0];
+
+            foreach (DataRow linha in dados.Rows)
+            {
+                var pasta = FabricaGenerica.GetInstancia().CrieObjeto<IPasta>();
+
+                pasta.Codigo = UtilidadesDePersistencia.GetValor(linha, "CodPasta").Trim();
+                pasta.Nome = UtilidadesDePersistencia.GetValor(linha, "DescPasta").Trim();
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePasta>())
+                {
+                    servico.Inserir(pasta);
+
+                    pastaMigradas.Add(pasta.Codigo, pasta);
+                }
+            }
         }
 
         private void MigrePatentesEProcessosDePatentes()
@@ -204,7 +243,7 @@ namespace MP.Migrador
             {
                 conexaoSolureg.Open();
 
-                var sql = "select * from patente_titular_inventor where contato_titular = 0";
+                var sql = "select * from clientes";
 
                 using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSolureg))
                     data.Fill(dataSetDadosLegados);
@@ -216,6 +255,9 @@ namespace MP.Migrador
 
             foreach (DataRow linha in dados.Rows)
             {
+
+                using (var )
+
                 if (!clientesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "idpatente")))
                     clientesDePatenteComChaveLegada.Add(UtilidadesDePersistencia.GetValor(linha, "idpatente"), new List<ICliente>());
 
@@ -308,13 +350,13 @@ namespace MP.Migrador
         {
             DataSet dataSetDadosLegados = new DataSet();
 
-            using (var conexaoSiscopat = new OleDbConnection(txtStrConexaoSiscopat.Text))
+            using (var conexaoSiscopat = new OdbcConnection(txtStrConexaoSiscopat.Text))
             {
                 conexaoSiscopat.Open();
 
                 var sql = "select  * from ClassificPatentes  ";
 
-                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSiscopat))
+                using (var data = new OdbcDataAdapter (sql, conexaoSiscopat))
                     data.Fill(dataSetDadosLegados);
 
                 conexaoSiscopat.Close();
@@ -850,6 +892,8 @@ namespace MP.Migrador
         {
             txtStringDeConexaoSolureg.Text =
                 @"Provider=SQLOLEDB.1;Password=sa;Persist Security Info=True;User ID=sa;Initial Catalog=SoluReg;Data Source=.\sqlexpress";
+
+            txtStrConexaoSiscopat.Text = @"DSN=Siscopat";
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeConexao>())
             {
