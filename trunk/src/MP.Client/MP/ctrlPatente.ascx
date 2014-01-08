@@ -9,14 +9,11 @@
     <HeaderTemplate>
         <table width="96%">
             <tr>
-                <td width="26%">
+                <td width="56%">
                     Título Patente
                 </td>
                 <td width="20%">
                     Tipo De Patente
-                </td>
-                <td width="20%">
-                    Resumo
                 </td>
                 <td width="20%">
                     Data Cadastro
@@ -27,14 +24,11 @@
     <ItemTemplate>
         <table width="100%">
             <tr>
-                <td width="40%">
+                <td width="60%">
                     <%# DataBinder.Eval(Container, "Text")%>
                 </td>
                 <td width="20%">
                     <%#DataBinder.Eval(Container, "Attributes['TipoDePatente']")%>
-                </td>
-                <td width="20%">
-                    <%#DataBinder.Eval(Container, "Attributes['Resumo']")%>
                 </td>
                 <td width="20%">
                     <%#DataBinder.Eval(Container, "Attributes['DataDeCadastro']")%>

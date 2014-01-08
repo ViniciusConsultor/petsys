@@ -74,8 +74,7 @@ namespace MP.Client.MP
                 {
                     var item = new RadComboBoxItem(patente.TituloPatente, patente.Identificador.ToString());
 
-                    item.Attributes.Add("TipoDePatente", patente.NaturezaPatente.DescricaoNaturezaPatente);
-                    item.Attributes.Add("Resumo", patente.Resumo);
+                    item.Attributes.Add("TipoDePatente", patente.NaturezaPatente.SiglaNatureza);
                     item.Attributes.Add("DataDeCadastro", patente.DataCadastro != null ? patente.DataCadastro.Value.ToString("dd/MM/yyyy") : "Data não informada");
 
                     cboPatente.Items.Add(item);

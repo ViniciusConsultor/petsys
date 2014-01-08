@@ -18,7 +18,7 @@ namespace MP.Servicos.Local
             
         }
 
-        public IList<INaturezaPatente> obtenhaNaturezaPatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros)
+        public IList<INaturezaPatente> obtenhaNaturezaPatentePelaSiglaComoFiltro(string sigla, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -26,7 +26,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaNaturezaPatentePelaDescricaoComoFiltro(descricao, quantidadeMaximaDeRegistros);
+                return mapeador.obtenhaNaturezaPatentePelaSiglaComoFiltro(sigla, quantidadeMaximaDeRegistros);
             }
             finally
             {

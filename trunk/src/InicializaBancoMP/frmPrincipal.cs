@@ -100,8 +100,9 @@ namespace InicializaBancoMP
 
             var natureza = FabricaGenerica.GetInstancia().CrieObjeto<INaturezaPatente>();
 
-            natureza.DescricaoNaturezaPatente = pedacos[0];
-            natureza.SiglaNatureza = pedacos[1];
+            natureza.SiglaNatureza = pedacos[0];
+            natureza.DescricaoNaturezaPatente = pedacos[1];
+            
 
             if (!string.IsNullOrEmpty(pedacos[2]))
                 natureza.TempoInicioAnos = Convert.ToInt32(pedacos[2]);
