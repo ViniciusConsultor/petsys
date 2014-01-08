@@ -150,8 +150,8 @@ namespace MP.Client.MP
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                 naturezaPatente.IdNaturezaPatente = Convert.ToInt64(ViewState[ID_OBJETO]);
 
-            naturezaPatente.DescricaoNaturezaPatente = ctrlNaturezaPatente.DescricaoNaturezaPatente;
-            naturezaPatente.SiglaNatureza = txtSigla.Text;
+            naturezaPatente.DescricaoNaturezaPatente = txtDescricao.Text;
+            naturezaPatente.SiglaNatureza = ctrlNaturezaPatente.SiglaTipo;
             naturezaPatente.DescricaoPagamento = txtDescricaoPagamento.Text;
             naturezaPatente.DescricaoPagamentoIntermediario = txtDescricaoPagamentoIntermediario.Text;
             naturezaPatente.SequenciaInicioPagamento = Convert.ToInt32(txtIniciarPagamentoSequencia.Text);
@@ -171,11 +171,11 @@ namespace MP.Client.MP
         {
             string mensagem = string.Empty;
 
-            if (string.IsNullOrEmpty(ctrlNaturezaPatente.DescricaoNaturezaPatente))
-                mensagem = mensagem + "Descrição da natureza patente, ";
-
-            if (string.IsNullOrEmpty(txtSigla.Text))
+            if (string.IsNullOrEmpty(ctrlNaturezaPatente.SiglaTipo))
                 mensagem = mensagem + "Sigla, ";
+
+            if (string.IsNullOrEmpty(txtDescricao.Text))
+                mensagem = mensagem + "Descrição da natureza patente, ";
             
             if (string.IsNullOrEmpty(txtTempoInicioPagamentos.Text))
                 mensagem = mensagem + "Tempo para início dos Pagtos , ";
@@ -341,8 +341,8 @@ namespace MP.Client.MP
         {
             ViewState[ID_OBJETO] = naturezaPatente.IdNaturezaPatente.Value.ToString();
 
-            ctrlNaturezaPatente.DescricaoNaturezaPatente = naturezaPatente.DescricaoNaturezaPatente;
             ctrlNaturezaPatente.SiglaTipo = naturezaPatente.SiglaNatureza;
+            ctrlNaturezaPatente.DescricaoNaturezaPatente = naturezaPatente.DescricaoNaturezaPatente;
 
             txtDescricaoPagamento.Text = naturezaPatente.DescricaoPagamento;
             txtDescricaoPagamentoIntermediario.Text = naturezaPatente.DescricaoPagamentoIntermediario;
@@ -352,7 +352,7 @@ namespace MP.Client.MP
             txtQuantidadePagamentos.Text = naturezaPatente.QuantidadePagamento.ToString();
             txtQuantidadePagamentoIntermediario.Text = naturezaPatente.QuantidadePagamentoIntermediario.ToString();
             txtSequenciaInicioPagamentoIntermediario.Text = naturezaPatente.InicioIntermediarioSequencia.ToString();
-            txtSigla.Text = naturezaPatente.SiglaNatureza;
+            txtDescricao.Text = naturezaPatente.DescricaoNaturezaPatente;
             txtTempoInicioPagamentos.Text = naturezaPatente.TempoInicioAnos.ToString();
 
             CarregueCombosFormulario();

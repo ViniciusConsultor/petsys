@@ -8,7 +8,7 @@ namespace MP.Interfaces.Mapeadores
 {
     public interface IMapeadorDeNaturezaPatente
     {
-        IList<INaturezaPatente> obtenhaNaturezaPatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros);
+        IList<INaturezaPatente> obtenhaNaturezaPatentePelaSiglaComoFiltro(string sigla, int quantidadeMaximaDeRegistros);
         INaturezaPatente obtenhaNaturezaPatentePeloId(long idNaturezaPatente);
         INaturezaPatente obtenhaNaturezaPatentePelaDescricaoOuSigla(string descricaoNaturezaPatente, string siglaNatureza);
         void Inserir(INaturezaPatente naturezaPatente);

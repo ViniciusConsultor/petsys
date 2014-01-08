@@ -94,13 +94,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// txtSigla control.
+        /// txtDescricao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtSigla;
+        protected global::Telerik.Web.UI.RadTextBox txtDescricao;
         
         /// <summary>
         /// Label3 control.

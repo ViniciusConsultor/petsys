@@ -14,7 +14,7 @@ namespace MP.Mapeadores
     public class MapeadorDeNaturezaPatente : IMapeadorDeNaturezaPatente
     {
 
-        public IList<INaturezaPatente> obtenhaNaturezaPatentePelaDescricaoComoFiltro(string descricao, int quantidadeMaximaDeRegistros)
+        public IList<INaturezaPatente> obtenhaNaturezaPatentePelaSiglaComoFiltro(string sigla, int quantidadeMaximaDeRegistros)
         {
             var consultaSQL = new StringBuilder();
 
@@ -23,8 +23,8 @@ namespace MP.Mapeadores
             consultaSQL.Append("TEMPO_ENTRE_PAGTO_INTERMED TempoEntrePagamentoIntermediario, DESCRICAO_PAGTO DescricaoPagamento, DESCRICAO_PAGTO_INTERMED DescricaoPagamentoIntermediario, TEM_PED_EXAME TemPedidoDeExame ");
             consultaSQL.Append("FROM MP_NATUREZA_PATENTE ");
 
-            if (!string.IsNullOrEmpty(descricao))
-                consultaSQL.Append(string.Concat("WHERE DESCRICAO_NATUREZA_PATENTE LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricao), "%' "));
+            if (!string.IsNullOrEmpty(sigla))
+                consultaSQL.Append(string.Concat("WHERE SIGLA_NATUREZA LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(sigla), "%' "));
 
             return ObtenhaNaturezaPatente(consultaSQL, quantidadeMaximaDeRegistros);
         }

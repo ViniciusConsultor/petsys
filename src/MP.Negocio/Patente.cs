@@ -10,6 +10,17 @@ namespace MP.Negocio
     [Serializable]
     public class Patente : IPatente
     {
+
+        public Patente()
+        {
+            Clientes = new List<ICliente>();
+            Inventores = new List<IInventor>();
+            Anuidades = new List<IAnuidadePatente>();
+            PrioridadesUnionista = new List<IPrioridadeUnionistaPatente>();
+            Radicais = new List<IRadicalPatente>();
+            Classificacoes = new List<IClassificacaoPatente>();
+        }
+
         public long Identificador { get; set; }
 
         public string TituloPatente { get; set; }

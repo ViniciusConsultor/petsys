@@ -49,14 +49,14 @@ namespace MP.Client.MP
 
         public string DescricaoNaturezaPatente
         {
-            get { return cboNaturezaPatente.Text; }
-            set { cboNaturezaPatente.Text = value; }
+            get { return cboNaturezaPatente.Attributes["Descricao"]; }
+            set { cboNaturezaPatente.Attributes["Descricao"]  = value; }
         }
 
         public string SiglaTipo
         {
-            get { return cboNaturezaPatente.Attributes["SiglaTipo"]; }
-            set { cboNaturezaPatente.Attributes["SiglaTipo"] = value; }
+            get { return cboNaturezaPatente.Text; }
+            set { cboNaturezaPatente.Text= value; }
         }
 
         public INaturezaPatente NaturezaPatenteSelecionada
@@ -75,15 +75,15 @@ namespace MP.Client.MP
             IList<INaturezaPatente> listaNaturezaPatente = new List<INaturezaPatente>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeNaturezaPatente>())
-                listaNaturezaPatente = servico.obtenhaNaturezaPatentePelaDescricaoComoFiltro(e.Text, 50);
+                listaNaturezaPatente = servico.obtenhaNaturezaPatentePelaSiglaComoFiltro(e.Text, 50);
 
             if (listaNaturezaPatente.Count > 0)
             {
                 foreach (var naturezaPatente in listaNaturezaPatente)
                 {
-                    var item = new RadComboBoxItem(naturezaPatente.DescricaoNaturezaPatente, naturezaPatente.IdNaturezaPatente.Value.ToString());
+                    var item = new RadComboBoxItem(naturezaPatente.SiglaNatureza, naturezaPatente.IdNaturezaPatente.Value.ToString());
 
-                    item.Attributes.Add("SiglaTipo", naturezaPatente.SiglaNatureza ?? "Não informada");
+                    item.Attributes.Add("Descricao", naturezaPatente.DescricaoNaturezaPatente ?? "Não informada");
 
                     cboNaturezaPatente.Items.Add(item);
                     item.DataBind();

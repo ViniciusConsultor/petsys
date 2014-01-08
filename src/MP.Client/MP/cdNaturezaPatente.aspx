@@ -44,10 +44,11 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label1" runat="server" Text="Sigla"></asp:Label> 
+                                    <asp:Label ID="Label1" runat="server" Text="Descrição"></asp:Label> 
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtSigla" runat="server" Width="87px" MaxLength="2">
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="4000" TextMode="MultiLine"
+                                        Rows="5" Width="450px">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
