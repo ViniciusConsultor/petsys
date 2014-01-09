@@ -3,20 +3,20 @@
 <telerik:RadComboBox ID="cboPeriodo" runat="server" EmptyMessage="Selecione um período"
     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
+    Width="50%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
     <HeaderTemplate>
-        <table width="96%">
+        <table width="56%">
             <tr>
-                <td width="90%">
+                <td width="50%">
                     Descrição
                 </td>
             </tr>
         </table>
     </HeaderTemplate>
     <ItemTemplate>
-        <table width="100%">
+        <table width="60%">
             <tr>
-                <td width="90%">
+                <td width="56%">
                     <%# DataBinder.Eval(Container, "Text")%>
                 </td>
             </tr>
