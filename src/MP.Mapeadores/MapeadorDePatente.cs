@@ -319,7 +319,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTECLASSIFICACAO, CLASSIFICACAO, DESCRICAO_CLASSIFICACAO, IDPATENTE, TIPO_CLASSIFICACAO FROM MP_PATENTECLASSIFICACAO ");
-            comandoSQL.Append("WHERE IDPATENTECLASSIFICACAO = " + idPatente);
+            comandoSQL.Append("WHERE IDPATENTE = " + idPatente);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
@@ -335,7 +335,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPRIORIDADEUNIONISTA, DATA_PRIORIDADE, NUMERO_PRIORIDADE, IDPATENTE, IDPAIS FROM MP_PATENTEPRIORIDADEUNIONISTA ");
-            comandoSQL.Append("WHERE IDPRIORIDADEUNIONISTA = " + idPatente);
+            comandoSQL.Append("WHERE IDPATENTE = " + idPatente);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())

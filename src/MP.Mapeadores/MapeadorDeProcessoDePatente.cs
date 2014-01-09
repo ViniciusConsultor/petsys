@@ -242,6 +242,7 @@ namespace MP.Mapeadores
                 var pasta = FabricaGenerica.GetInstancia().CrieObjeto<IPasta>();
                 pasta.ID = UtilidadesDePersistencia.GetValorLong(leitor, "IDPASTA");
                 pasta.Nome = UtilidadesDePersistencia.GetValorString(leitor, "NOMEPASTA");
+                pasta.Codigo = UtilidadesDePersistencia.GetValorString(leitor, "CODIGOPASTA");
                 processo.Pasta = pasta;
             }
             

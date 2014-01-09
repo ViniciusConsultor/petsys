@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtStrConexaoSiscopat = new System.Windows.Forms.TextBox();
+            this.chkMigraPatentes = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnMigrar
@@ -64,7 +65,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 62);
+            this.label2.Location = new System.Drawing.Point(12, 94);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(137, 13);
             this.label2.TabIndex = 4;
@@ -72,16 +73,29 @@
             // 
             // txtStrConexaoSiscopat
             // 
-            this.txtStrConexaoSiscopat.Location = new System.Drawing.Point(12, 78);
+            this.txtStrConexaoSiscopat.Location = new System.Drawing.Point(12, 110);
             this.txtStrConexaoSiscopat.Name = "txtStrConexaoSiscopat";
             this.txtStrConexaoSiscopat.Size = new System.Drawing.Size(323, 20);
             this.txtStrConexaoSiscopat.TabIndex = 3;
+            // 
+            // chkMigraPatentes
+            // 
+            this.chkMigraPatentes.AutoSize = true;
+            this.chkMigraPatentes.Checked = true;
+            this.chkMigraPatentes.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMigraPatentes.Location = new System.Drawing.Point(15, 74);
+            this.chkMigraPatentes.Name = "chkMigraPatentes";
+            this.chkMigraPatentes.Size = new System.Drawing.Size(106, 17);
+            this.chkMigraPatentes.TabIndex = 5;
+            this.chkMigraPatentes.Text = "Migrar Patentes?";
+            this.chkMigraPatentes.UseVisualStyleBackColor = true;
             // 
             // frmMigrador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 215);
+            this.Controls.Add(this.chkMigraPatentes);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtStrConexaoSiscopat);
             this.Controls.Add(this.label1);
@@ -102,5 +116,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtStrConexaoSiscopat;
+        private System.Windows.Forms.CheckBox chkMigraPatentes;
     }
 }

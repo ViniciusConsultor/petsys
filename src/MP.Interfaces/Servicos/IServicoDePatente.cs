@@ -17,5 +17,7 @@ namespace MP.Interfaces.Servicos
         IInventor ObtenhaInventor(long id);
         IPatente ObtenhaPatente(long id);
         IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros);
+        IList<IAnuidadePatente> CalculeAnuidadesPatentesDeNaturezaPIeMU(DateTime dataDeDeposito);
+        IList<IAnuidadePatente> CalculeAnuidadesPatentesDeNaturezaDI(DateTime dataDeDeposito);
     }
 }

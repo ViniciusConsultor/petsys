@@ -43,12 +43,14 @@ namespace MP.Migrador
         private IDictionary<string, IList<IRadicalMarcas>> radicaisComChaveLegada = new Dictionary<string, IList<IRadicalMarcas>>();
 
 
+        private IDictionary<string, IList<IClassificacaoPatente>> classificacoesDeDesenhoComChaveLegada = new Dictionary<string, IList<IClassificacaoPatente>>();
         private IDictionary<string, IList<IClassificacaoPatente>> classificacoesDePatenteComChaveLegada = new Dictionary<string, IList<IClassificacaoPatente>>();
         private IDictionary<string, IPasta> pastaMigradas = new Dictionary<string, IPasta>();
         private IDictionary<string, IList<IPrioridadeUnionistaPatente>> prioridadesUnionistaDePatenteComChaveLegada = new Dictionary<string, IList<IPrioridadeUnionistaPatente>>();
         private IDictionary<string, IList<IInventor>> inventoresDePatenteComChaveLegada = new Dictionary<string, IList<IInventor>>();
         private IDictionary<string, ICliente> clientesDePatenteComChaveLegada = new Dictionary<string, ICliente>();
         private IDictionary<string, IProcurador> advogadosDePatenteComChaveLegada = new Dictionary<string, IProcurador>();
+        private IDictionary<string, IList<IInventor>> inventoresDeDesenhoComChaveLegada = new Dictionary<string, IList<IInventor>>();
 
         private void btnMigrar_Click(object sender, EventArgs e)
         {
@@ -57,14 +59,21 @@ namespace MP.Migrador
             MigreMarcas();
             MigreProcessoDeMarca();
 
-            CarregueECadastreInventores();
-            CarregueECadastreAdvogadosDaPatente();
-            CarregueECadastrePastas();
-            CarregueECadastreClientesDaPatente();
-            CarregueClassificacaoDaPatente();
-            CarregueAnuidadesDaPatente();
-            //CarreguePrioridadeUnionistaPatente();
-            MigrePatentesEProcessosDePatentes();
+            if (chkMigraPatentes.Checked)
+            {
+                CarregueECadastreAdvogadosDaPatente();
+                CarregueECadastrePastas();
+                CarregueECadastreClientesDaPatente();
+
+                CarregueClassificacaoDaPatente();
+                CarreguePrioridadeUnionistaPatente();
+                CarregueECadastreInventores();
+                MigrePatentesEProcessosDePatentes();
+
+                CarregueClassificacaoDeDesenho();
+                CarregueECadastreInventoresPatenteDI();
+                MigrePatentesDIEProcessosDePatentes();
+            }
 
             MessageBox.Show("Dados migrados com sucesso!");
         }
@@ -164,8 +173,32 @@ namespace MP.Migrador
             }
         }
 
-        private IList<IAnuidadePatente> ObtenhaAnuidadesDaPatente(DataRow linha)
+        private IList<IAnuidadePatente> ObtenhaAnuidadesDaPatente(DataRow linha, IServicoDePatente servico, INaturezaPatente natureza)
         {
+
+            //var dataDoDeposito = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_depósito"));
+
+            //IList<IAnuidadePatente> anuidades;
+            //var nomenclaturaColuna = "DatPag";
+
+            //if (natureza.SiglaNatureza.Equals("DI"))
+            //{
+            //    anuidades = servico.CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito);
+            //    nomenclaturaColuna = "";
+            //}
+            //else
+            //    anuidades = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDoDeposito);
+
+            //for (var i = 0; i <= anuidades.Count; i++)
+            //{
+            //    var indice = i + 3;
+
+            //    if (!Information.IsDBNull(linha[nomenclaturaColuna + indice.ToString()]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString())))
+            //        anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString()));
+            //}
+
+            //return anuidades;
+
             return null;
         }
 
@@ -178,7 +211,7 @@ namespace MP.Migrador
                 conexaoSiscopat.Open();
 
                 var sql = "select * from Patentes ";
-                
+
                 using (var data = new OdbcDataAdapter(sql, conexaoSiscopat))
                     data.Fill(dataSetDadosLegados);
 
@@ -199,16 +232,16 @@ namespace MP.Migrador
 
                         var numeroDaPatente = UtilidadesDePersistencia.GetValor(linha, "Número_Patente").Trim();
 
-                        patente.Anuidades = ObtenhaAnuidadesDaPatente(linha);
+                        patente.Clientes.Add(clientesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Cliente")]);
 
-                        patente.Clientes.Add(clientesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha,"Código_Cliente")]);
-                                    
                         patente.DataCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
 
                         if (inventoresDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente").Trim()))
                             patente.Inventores = inventoresDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente").Trim()];
 
                         patente.NaturezaPatente = naturezasPatentes[UtilidadesDePersistencia.GetValor(linha, "nat_patente")];
+
+                        patente.Anuidades = ObtenhaAnuidadesDaPatente(linha, servicoDePatente, patente.NaturezaPatente);
 
                         if (classificacoesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente").Trim()))
                             patente.Classificacoes =
@@ -217,16 +250,12 @@ namespace MP.Migrador
 
                         //Verificar isso com o Mauro
                         patente.ObrigacaoGerada = false;
-                        
+
                         if (!Information.IsDBNull(linha["observações"]))
                             patente.Observacao = UtilidadesDePersistencia.GetValor(linha, "observações");
 
-                        //if (
-                        //    prioridadesUnionistaDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(
-                        //        linha, "idprocessopatente")))
-                        //    patente.PrioridadesUnionista =
-                        //        prioridadesUnionistaDePatenteComChaveLegada[
-                        //            UtilidadesDePersistencia.GetValor(linha, "idprocessopatente")];
+                        if (prioridadesUnionistaDePatenteComChaveLegada.ContainsKey(numeroDaPatente))
+                            patente.PrioridadesUnionista = prioridadesUnionistaDePatenteComChaveLegada[numeroDaPatente];
 
                         if (!Information.IsDBNull(linha["Reivindicações"]))
                             patente.QuantidadeReivindicacao = UtilidadesDePersistencia.getValorInteger(linha,
@@ -239,7 +268,6 @@ namespace MP.Migrador
                             patente.TituloPatente = UtilidadesDePersistencia.GetValor(linha, "Título");
 
                         servicoDePatente.Insira(patente);
-
 
                         var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
 
@@ -261,15 +289,15 @@ namespace MP.Migrador
 
                         if (!Information.IsDBNull(linha["data_exame"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_exame")))
                             processoDePatente.DataDoExame = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_exame"));
-                        
+
                         processoDePatente.Patente = patente;
-                        processoDePatente.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(linha,"patente_terceiro");
-                        processoDePatente.ProcessoEhEstrangeiro = UtilidadesDePersistencia.GetValorBooleano(linha,"patente_estrangeira");
+                        processoDePatente.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(linha, "patente_terceiro");
+                        processoDePatente.ProcessoEhEstrangeiro = UtilidadesDePersistencia.GetValorBooleano(linha, "patente_estrangeira");
                         processoDePatente.Processo = numeroDaPatente;
 
 
                         if (!Information.IsDBNull(linha["Código_Advogado"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Código_Advogado")))
-                            processoDePatente.Procurador = advogadosDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha,"Código_Advogado")];
+                            processoDePatente.Procurador = advogadosDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Advogado")];
 
 
                         if (!Information.IsDBNull(linha["pct"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "pct")))
@@ -303,9 +331,130 @@ namespace MP.Migrador
                         if (!Information.IsDBNull(linha["despacho_RPI"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "despacho_RPI")))
 
                             if (despachoDePatente.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "despacho_RPI").Trim().ToUpper()))
-                               processoDePatente.Despacho = despachoDePatente[UtilidadesDePersistencia.GetValor(linha, "despacho_RPI").Trim().ToUpper()];
+                                processoDePatente.Despacho = despachoDePatente[UtilidadesDePersistencia.GetValor(linha, "despacho_RPI").Trim().ToUpper()];
 
                         servicoDeProcessoDePatente.Inserir(processoDePatente);
+
+
+
+
+                    }
+                }
+
+            }
+
+        }
+
+        private void MigrePatentesDIEProcessosDePatentes()
+        {
+            DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSiscopat = new OdbcConnection(txtStrConexaoSiscopat.Text))
+            {
+                conexaoSiscopat.Open();
+
+                var sql = "select * from DesenhoIndustrial ";
+
+                using (var data = new OdbcDataAdapter(sql, conexaoSiscopat))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSiscopat.Close();
+            }
+
+            var dados = dataSetDadosLegados.Tables[0];
+
+
+            using (var servicoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
+            {
+                using (var servicoDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+                {
+
+                    foreach (DataRow linha in dados.Rows)
+                    {
+                        var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
+
+                        var numeroDaPatente = UtilidadesDePersistencia.GetValor(linha, "Número_Desenho").Trim();
+
+                        patente.Clientes.Add(clientesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Cliente")]);
+
+                        patente.DataCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
+
+                        if (inventoresDeDesenhoComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_DEsenho").Trim()))
+                            patente.Inventores = inventoresDeDesenhoComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Nat_Número_DEsenho").Trim()];
+
+                        patente.NaturezaPatente = naturezasPatentes[UtilidadesDePersistencia.GetValor(linha, "nat_desenho")];
+
+                        //patente.Anuidades = ObtenhaAnuidadesDaPatente(linha, servicoDePatente, patente.NaturezaPatente);
+
+                        if (classificacoesDeDesenhoComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_DEsenho").Trim()))
+                            patente.Classificacoes =
+                                classificacoesDeDesenhoComChaveLegada[
+                                    UtilidadesDePersistencia.GetValor(linha, "Nat_Número_DEsenho").Trim()];
+
+                        //Verificar isso com o Mauro
+                        patente.ObrigacaoGerada = false;
+
+                        if (!Information.IsDBNull(linha["observações"]))
+                            patente.Observacao = UtilidadesDePersistencia.GetValor(linha, "observações");
+
+                        if (prioridadesUnionistaDePatenteComChaveLegada.ContainsKey(numeroDaPatente))
+                            patente.PrioridadesUnionista = prioridadesUnionistaDePatenteComChaveLegada[numeroDaPatente];
+
+                        if (!Information.IsDBNull(linha["Reivindicações"]))
+                            patente.QuantidadeReivindicacao = UtilidadesDePersistencia.getValorInteger(linha,
+                                                                                                       "Reivindicações");
+
+                        if (!Information.IsDBNull(linha["Resumo"]))
+                            patente.Resumo = UtilidadesDePersistencia.GetValor(linha, "Resumo");
+
+                        if (!Information.IsDBNull(linha["Título"]))
+                            patente.TituloPatente = UtilidadesDePersistencia.GetValor(linha, "Título");
+
+                        servicoDePatente.Insira(patente);
+
+                        var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
+
+                        processoDePatente.Ativo = !UtilidadesDePersistencia.GetValorBooleano(linha, "Processo_Desativo");
+
+                        processoDePatente.DataDoCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
+
+                        if (!Information.IsDBNull(linha["data_depósito"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_depósito")))
+                            processoDePatente.DataDoDeposito = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_depósito"));
+
+                        if (!Information.IsDBNull(linha["data_concessão"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_concessão")))
+                            processoDePatente.DataDaConcessao =
+                                ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_concessão"));
+
+                        if (!Information.IsDBNull(linha["data_vigência"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_vigência")))
+                            processoDePatente.DataDaVigencia = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_vigência"));
+
+                        if (!Information.IsDBNull(linha["data_publicação"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_publicação")))
+                            processoDePatente.DataDaPublicacao = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_publicação"));
+
+                        //if (!Information.IsDBNull(linha["data_exame"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_exame")))
+                        //    processoDePatente.DataDoExame = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_exame"));
+
+                        processoDePatente.Patente = patente;
+                        processoDePatente.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(linha, "desenho_terceiro");
+                        processoDePatente.ProcessoEhEstrangeiro = false;
+                        processoDePatente.Processo = numeroDaPatente;
+
+
+                        if (!Information.IsDBNull(linha["Código_Advogado"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Código_Advogado")))
+                            processoDePatente.Procurador = advogadosDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Advogado")];
+
+                        
+                        if (!Information.IsDBNull(linha["codPasta"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "codPasta")))
+                            processoDePatente.Pasta =
+                                pastaMigradas[UtilidadesDePersistencia.GetValor(linha, "codPasta")];
+
+                        if (!Information.IsDBNull(linha["despacho_RPI"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "despacho_RPI")))
+
+                            if (despachoDePatente.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "despacho_RPI").Trim().ToUpper()))
+                                processoDePatente.Despacho = despachoDePatente[UtilidadesDePersistencia.GetValor(linha, "despacho_RPI").Trim().ToUpper()];
+
+                        servicoDeProcessoDePatente.Inserir(processoDePatente);
+
                     }
                 }
 
@@ -511,7 +660,7 @@ namespace MP.Migrador
         private void CadastreEArmazeneInventor(string codigoDaPatente, string nomeDoInventor)
         {
             IPessoa pessoa = null;
-            
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
             {
                 var pessoas = servico.ObtenhaPessoasPorNomeComoFiltro(nomeDoInventor.Trim(), 1);
@@ -537,6 +686,35 @@ namespace MP.Migrador
             inventoresDePatenteComChaveLegada[codigoDaPatente].Add(CadastreInventor(pessoa));
         }
 
+        private void CadastreEArmazeneInventorDeDesenho(string codigoDaPatente, string nomeDoInventor)
+        {
+            IPessoa pessoa = null;
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
+            {
+                var pessoas = servico.ObtenhaPessoasPorNomeComoFiltro(nomeDoInventor.Trim(), 1);
+
+                if (pessoas.Count == 0)
+                {
+                    pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>();
+                    pessoa.Nome = nomeDoInventor.Trim();
+                    ((IPessoaFisica)pessoa).EstadoCivil = EstadoCivil.Ignorado;
+                    ((IPessoaFisica)pessoa).Sexo = Sexo.Masculino;
+                    ((IPessoaFisica)pessoa).Nacionalidade = Nacionalidade.Brasileira;
+                    servico.Inserir((IPessoaFisica)pessoa);
+                }
+                else
+                {
+                    pessoa = pessoas[0];
+                }
+            }
+
+            if (!inventoresDeDesenhoComChaveLegada.ContainsKey(codigoDaPatente))
+                inventoresDeDesenhoComChaveLegada.Add(codigoDaPatente, new List<IInventor>());
+
+            inventoresDeDesenhoComChaveLegada[codigoDaPatente].Add(CadastreInventor(pessoa));
+        }
+
         private void CarregueECadastreInventores()
         {
             DataSet dataSetDadosLegados = new DataSet();
@@ -557,7 +735,7 @@ namespace MP.Migrador
 
             foreach (DataRow linha in dados.Rows)
             {
-                if (!Information.IsDBNull(linha["Inventores"]) &&  !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Inventores").Trim()))
+                if (!Information.IsDBNull(linha["Inventores"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Inventores").Trim()))
                 {
                     var inventores = UtilidadesDePersistencia.GetValor(linha, "Inventores").Trim();
 
@@ -578,9 +756,9 @@ namespace MP.Migrador
 
                         foreach (var inventor in arrayComQuebra)
                         {
-                            CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Número_Patente"), inventor);
+                            CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente"), inventor);
                         }
-                        continue; 
+                        continue;
                     }
 
                     if (inventores.Contains(","))
@@ -589,7 +767,7 @@ namespace MP.Migrador
 
                         foreach (var inventor in arrayComVirgula)
                         {
-                            CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Número_Patente"), inventor);
+                            CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente"), inventor);
                         }
                         continue;
                     }
@@ -600,15 +778,90 @@ namespace MP.Migrador
 
                         foreach (var inventor in arrayComPontoEVirgula)
                         {
-                            CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Número_Patente"), inventor);
+                            CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente"), inventor);
                         }
-                        continue; 
+                        continue;
                     }
 
 
-                    CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Número_Patente"), inventores);
+                    CadastreEArmazeneInventor(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Patente"), inventores);
                 }
-                
+
+            }
+        }
+
+        private void CarregueECadastreInventoresPatenteDI()
+        {
+            DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSiscopat = new OdbcConnection(txtStrConexaoSiscopat.Text))
+            {
+                conexaoSiscopat.Open();
+
+                var sql = "select * from desenhoindustrial";
+
+                using (var data = new OdbcDataAdapter(sql, conexaoSiscopat))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSiscopat.Close();
+            }
+
+            var dados = dataSetDadosLegados.Tables[0];
+
+            foreach (DataRow linha in dados.Rows)
+            {
+                if (!Information.IsDBNull(linha["Inventores"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Inventores").Trim()))
+                {
+                    var inventores = UtilidadesDePersistencia.GetValor(linha, "Inventores").Trim();
+
+                    if (inventores.Contains("/"))
+                    {
+                        var arrayComBarra = inventores.Split('/');
+
+                        foreach (var inventor in arrayComBarra)
+                        {
+                            CadastreEArmazeneInventorDeDesenho(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho"), inventor);
+                        }
+                        continue;
+                    }
+
+                    if (inventores.Contains("\n"))
+                    {
+                        var arrayComQuebra = inventores.Split('\n');
+
+                        foreach (var inventor in arrayComQuebra)
+                        {
+                            CadastreEArmazeneInventorDeDesenho(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho"), inventor);
+                        }
+                        continue;
+                    }
+
+                    if (inventores.Contains(","))
+                    {
+                        var arrayComVirgula = inventores.Split(',');
+
+                        foreach (var inventor in arrayComVirgula)
+                        {
+                            CadastreEArmazeneInventorDeDesenho(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho"), inventor);
+                        }
+                        continue;
+                    }
+
+                    if (inventores.Contains(";"))
+                    {
+                        var arrayComPontoEVirgula = inventores.Split(';');
+
+                        foreach (var inventor in arrayComPontoEVirgula)
+                        {
+                            CadastreEArmazeneInventorDeDesenho(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho"), inventor);
+                        }
+                        continue;
+                    }
+
+
+                    CadastreEArmazeneInventorDeDesenho(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho"), inventores);
+                }
+
             }
         }
 
@@ -633,34 +886,41 @@ namespace MP.Migrador
         {
             DataSet dataSetDadosLegados = new DataSet();
 
-            using (var conexaoSolureg = new OleDbConnection(txtStringDeConexaoSolureg.Text))
+            using (var conexaoSiscopat = new OdbcConnection(txtStrConexaoSiscopat.Text))
             {
-                conexaoSolureg.Open();
+                conexaoSiscopat.Open();
 
-                var sql = "select data_prioridade, numero_prioridade, idpatente, sigla_pais from patente_prioridade_unionista " +
-                           "inner join paises on paises.idpais =  patente_prioridade_unionista.idpais";
+                var sql = "select * from prioridades";
 
-                using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSolureg))
+                using (var data = new OdbcDataAdapter(sql, conexaoSiscopat))
                     data.Fill(dataSetDadosLegados);
 
-                conexaoSolureg.Close();
+                conexaoSiscopat.Close();
             }
 
             var dados = dataSetDadosLegados.Tables[0];
 
             foreach (DataRow linha in dados.Rows)
             {
-                if (!prioridadesUnionistaDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "idpatente")))
-                    prioridadesUnionistaDePatenteComChaveLegada.Add(UtilidadesDePersistencia.GetValor(linha, "idpatente"), new List<IPrioridadeUnionistaPatente>());
+                var idPatente = ObtenhaApenasNumeros(UtilidadesDePersistencia.GetValor(linha, "Número_Patente"));
+
+                if (!prioridadesUnionistaDePatenteComChaveLegada.ContainsKey(idPatente))
+                    prioridadesUnionistaDePatenteComChaveLegada.Add(idPatente, new List<IPrioridadeUnionistaPatente>());
 
                 var prioridadeUnionista = FabricaGenerica.GetInstancia().CrieObjeto<IPrioridadeUnionistaPatente>();
 
-                prioridadeUnionista.Pais = paises[UtilidadesDePersistencia.GetValor(linha, "sigla_pais").Trim()];
-                prioridadeUnionista.NumeroPrioridade = UtilidadesDePersistencia.GetValor(linha, "numero_prioridade").Trim();
-                prioridadeUnionista.DataPrioridade =
-                    ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_prioridade").Trim());
+                string sigla = null;
 
-                prioridadesUnionistaDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "idpatente")].Add(prioridadeUnionista);
+                if (UtilidadesDePersistencia.GetValor(linha, "País_Prioridade").Equals("BRASIL"))
+                    sigla = "BR";
+                else
+                    sigla = "US";
+
+                prioridadeUnionista.Pais = paises[sigla];
+                prioridadeUnionista.NumeroPrioridade = UtilidadesDePersistencia.GetValor(linha, "num_prioridade").Trim();
+                prioridadeUnionista.DataPrioridade = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_prioridade").Trim());
+
+                prioridadesUnionistaDePatenteComChaveLegada[idPatente].Add(prioridadeUnionista);
             }
         }
 
@@ -698,41 +958,37 @@ namespace MP.Migrador
             }
         }
 
-        private void CarregueAnuidadesDaPatente()
+        private void CarregueClassificacaoDeDesenho()
         {
-            //DataSet dataSetDadosLegados = new DataSet();
+            DataSet dataSetDadosLegados = new DataSet();
 
-            //using (var conexaoSolureg = new OleDbConnection(txtStringDeConexaoSolureg.Text))
-            //{
-            //    conexaoSolureg.Open();
+            using (var conexaoSiscopat = new OdbcConnection(txtStrConexaoSiscopat.Text))
+            {
+                conexaoSiscopat.Open();
 
-            //    var sql = "select * from patente_anuidade";
+                var sql = "select  * from ClassificDesenhos  ";
 
-            //    using (OleDbDataAdapter data = new OleDbDataAdapter(sql, conexaoSolureg))
-            //        data.Fill(dataSetDadosLegados);
+                using (var data = new OdbcDataAdapter(sql, conexaoSiscopat))
+                    data.Fill(dataSetDadosLegados);
 
-            //    conexaoSolureg.Close();
-            //}
+                conexaoSiscopat.Close();
+            }
 
-            //var dados = dataSetDadosLegados.Tables[0];
+            var dados = dataSetDadosLegados.Tables[0];
 
-            //foreach (DataRow linha in dados.Rows)
-            //{
-            //    if (!anuidadesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "idpatente")))
-            //        anuidadesDePatenteComChaveLegada.Add(UtilidadesDePersistencia.GetValor(linha, "idpatente"), new List<IAnuidadePatente>());
+            foreach (DataRow linha in dados.Rows)
+            {
+                if (!classificacoesDeDesenhoComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho").Trim()))
+                    classificacoesDeDesenhoComChaveLegada.Add(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho").Trim(), new List<IClassificacaoPatente>());
 
-            //    var anuidade = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
+                var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
 
-            //    anuidade.DescricaoAnuidade = UtilidadesDePersistencia.GetValor(linha, "descricao_anuidade").Trim();
-            //    anuidade.DataLancamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_lancamento"));
-            //    anuidade.DataVencimento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_vencimento"));
-            //    anuidade.AnuidadePaga = UtilidadesDePersistencia.GetValorBooleano(linha, "anuidade_paga");
-            //    anuidade.PedidoExame = UtilidadesDePersistencia.GetValorBooleano(linha, "pedido_exame");
-            //    anuidade.DataVencimentoSemMulta = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_vencto_sem_multa"));
-            //    anuidade.DataVencimentoComMulta = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_vencto_com_multa"));
-
-            //    anuidadesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "idpatente")].Add(anuidade);
-            //}
+                classificacao.TipoClassificacao = TipoClassificacaoPatente.Nacional;
+                classificacao.Classificacao = UtilidadesDePersistencia.GetValor(linha, "Classificação").Trim();
+                if (!Information.IsDBNull(linha["Descrição"]))
+                    classificacao.DescricaoClassificacao = UtilidadesDePersistencia.GetValor(linha, "Descrição").Trim();
+                classificacoesDeDesenhoComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Nat_Número_Desenho").Trim()].Add(classificacao);
+            }
         }
 
         private void CarregueRadicais()
