@@ -93,10 +93,21 @@ namespace MP.Client.MP
             rblPagaManutencao.Items.Add(new ListItem("Não", "0"));
             rblPagaManutencao.SelectedValue = "0";
 
-            rblPagaManutencao.Items.Clear();
-            rblPagaManutencao.Items.Add(new ListItem("Sim", "1"));
-            rblPagaManutencao.Items.Add(new ListItem("Não", "0"));
-            rblPagaManutencao.SelectedValue = "0";
+            //var controlePanelDadosDaManutencao = this.pnlDadosDaManutencao as Control;
+            //UtilidadesWeb.HabilitaComponentes(ref controlePanelDadosDaManutencao, false);
+
+            //UtilidadesWeb.LimparComponente(ref controlePanelDadosDaManutencao);
+            //UtilidadesWeb.HabilitaComponentes(ref controlePanelDadosDaManutencao, false);
+
+            pnlDadosDaManutencao.Visible = false;
+
+            rblFormaDeCobranca.Items.Clear();
+            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo:", "S"));
+            rblFormaDeCobranca.Items.Add(new ListItem("Valor em R$:", "R"));
+            //rblFormaDeCobranca.SelectedValue = "0";
+
+            txtValor.Visible = false;
+            lblValor.Visible = false;
         }
 
         protected void btnNovo_Click()
@@ -552,6 +563,32 @@ namespace MP.Client.MP
         }
 
 
-       
+        protected void rblPagaManutencao_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rblManutencao = sender as RadioButtonList;
+
+            if (rblManutencao != null && rblManutencao.SelectedValue == "1")
+            {
+                pnlDadosDaManutencao.Visible = true;
+            }
+            else
+            {
+                pnlDadosDaManutencao.Visible = false;
+                rblFormaDeCobranca.ClearSelection();
+                txtValor.Text = null;
+                ctrlPeriodo.Inicializa();
+            }
+        }
+
+        protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rblFormaDeCobranca = sender as RadioButtonList;
+
+            if(rblFormaDeCobranca != null && !string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
+            {
+                lblValor.Visible = true;
+                txtValor.Visible = true;
+            }
+        }
     }
 }

@@ -67,7 +67,7 @@
                                             <asp:Label ID="Label1" runat="server" Text="Cliente"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <uc5:ctrlCliente ID="ctrlCliente" runat="server" /> 
+                                            <uc5:ctrlCliente ID="ctrlCliente" runat="server" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -253,25 +253,47 @@
                                             <asp:Label ID="Label13" runat="server" Text="Pagamento de manutenção?"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <asp:RadioButtonList ID="rblPagaManutencao" runat="server" AutoPostBack="false"
-                                                RepeatDirection="Horizontal">
+                                            <asp:RadioButtonList ID="rblPagaManutencao" runat="server" AutoPostBack="true" RepeatDirection="Horizontal"
+                                                OnSelectedIndexChanged="rblPagaManutencao_OnSelectedIndexChanged">
                                             </asp:RadioButtonList>
                                         </td>
-                                    </tr>                                    
+                                    </tr>
                                 </table>
                                 <asp:Panel ID="pnlDadosDaManutencao" runat="server">
-                                <table class="tabela">
-                                    <tr>
-                                        <td class="th3">
-                                            <asp:Label ID="Label14" runat="server" Text="Período:"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <uc6:ctrlPeriodo ID="ctrlPeriodo" runat="server" />
-                                        </td>
-                                    </tr>                                    
-                                </table>
-                             </asp:Panel>
-                             </asp:Panel>
+                                    <table class="tabela">
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label14" runat="server" Text="Período:"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <uc6:ctrlPeriodo ID="ctrlPeriodo" runat="server" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label15" runat="server" Text="Forma de cobrança"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="true" RepeatDirection="Horizontal"
+                                                    OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
+                                                </asp:RadioButtonList>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="tabela">
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="lblValor" runat="server" Text="Valor:"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
+                                                    DataType="System.Uint32">
+                                                </telerik:RadNumericTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </asp:Panel>
+                            </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
                 </ContentTemplate>

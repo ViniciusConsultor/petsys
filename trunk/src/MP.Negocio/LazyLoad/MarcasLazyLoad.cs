@@ -200,6 +200,18 @@ namespace MP.Negocio.LazyLoad
 
         public IList<IRadicalMarcas> RadicalMarcas { get; set; }
 
+        public bool PagaManutencao
+        { get; set; }
+
+        public string Periodo
+        { get; set; }
+
+        public string FormaDeCobranca
+        { get; set; }
+
+        public double ValorDeCobranca
+        { get; set; }
+
         public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
         {
             if (_marcasReal == null) CarregueObjetoReal();
