@@ -271,7 +271,7 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                             HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridDateTimeColumn DataField="DataPrioridade" HeaderText="Data" UniqueName="colunaData"/>
+                                                        <telerik:GridDateTimeColumn DataField="DataPrioridade" HeaderText="Data" UniqueName="colunaData" DataFormatString="{0:dd/MM/yyyy}"/>
                                                         <telerik:GridBoundColumn DataField="Pais.Nome" HeaderText="País de Origem" UniqueName="colunaPais" />
                                                         <telerik:GridBoundColumn DataField="NumeroPrioridade" HeaderText="Nº Prioridade" UniqueName="colunaPrioridade" />
                                                     </Columns>
@@ -561,10 +561,10 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Baixar" FilterImageToolTip="Baixar"
                                                         HeaderTooltip="Baixar" ImageUrl="~/imagens/yes.gif" UniqueName="colunaBaixar" />
                                                         <telerik:GridBoundColumn DataField="DescricaoAnuidade" HeaderText="Descrição Parcela" UniqueName="colunaDescricaoAnuidade" />
-                                                        <telerik:GridBoundColumn DataField="DataLancamento" HeaderText="Dt. Início" UniqueName="colunaDataLancamento" />
-                                                        <telerik:GridBoundColumn DataField="DataVencimentoSemMulta" HeaderText="Dt. S/Multa" UniqueName="colunaDataVencimentoSemMulta" />
-                                                        <telerik:GridBoundColumn DataField="DataVencimentoComMulta" HeaderText="Dt. C/Multa" UniqueName="colunaDataVencimentoComMulta" />
-                                                        <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Dt. Pagamento" UniqueName="colunaDataPagamento" />
+                                                        <telerik:GridBoundColumn DataField="DataLancamento" HeaderText="Dt. Início" UniqueName="colunaDataLancamento" DataFormatString="{0:dd/MM/yyyy}"/>
+                                                        <telerik:GridBoundColumn DataField="DataVencimentoSemMulta" HeaderText="Dt. S/Multa" UniqueName="colunaDataVencimentoSemMulta" DataFormatString="{0:dd/MM/yyyy}" />
+                                                        <telerik:GridBoundColumn DataField="DataVencimentoComMulta" HeaderText="Dt. C/Multa" UniqueName="colunaDataVencimentoComMulta" DataFormatString="{0:dd/MM/yyyy}"/>
+                                                        <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Dt. Pagamento" UniqueName="colunaDataPagamento" DataFormatString="{0:dd/MM/yyyy}" />
                                                         <telerik:GridBoundColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" />
                                                         <telerik:GridBoundColumn DataField="AnuidadePaga" HeaderText="Paga" UniqueName="colunaAnuidadePaga" />
                                                     </Columns>
