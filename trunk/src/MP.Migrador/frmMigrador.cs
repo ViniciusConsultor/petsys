@@ -430,10 +430,7 @@ namespace MP.Migrador
 
                         if (!Information.IsDBNull(linha["data_publicação"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_publicação")))
                             processoDePatente.DataDaPublicacao = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_publicação"));
-
-                        //if (!Information.IsDBNull(linha["data_exame"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_exame")))
-                        //    processoDePatente.DataDoExame = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_exame"));
-
+                        
                         processoDePatente.Patente = patente;
                         processoDePatente.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(linha, "desenho_terceiro");
                         processoDePatente.ProcessoEhEstrangeiro = false;
@@ -459,6 +456,37 @@ namespace MP.Migrador
                 }
 
             }
+
+        }
+
+        private void AtualizePessoa(IPessoa pessoa, DataRow linha)
+        {
+            var temQAtualizar = false;
+
+            if (pessoa.Enderecos ==null || pessoa.Enderecos.Count ==0)
+            {
+                var enderecos = MonteEndereco(linha);
+
+                if (enderecos.Count != 0)
+                    pessoa.AdicioneEnderecos(enderecos);
+
+                temQAtualizar = true;
+            }
+
+            if (pessoa.Contatos() == null || pessoa.Contatos().Count == 0)
+            {
+                pessoa.AdicioneContatos(ObtenhaContatosDaPessoa(linha));
+                temQAtualizar = true;
+            }
+
+
+            if (temQAtualizar) 
+                if (pessoa.Tipo == TipoDePessoa.Fisica)
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
+                        servico.Modificar((IPessoaFisica) pessoa);
+                else
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
+                        servico.Modificar((IPessoaJuridica)pessoa);
 
         }
 
@@ -505,6 +533,7 @@ namespace MP.Migrador
                         else
                         {
                             pessoa = pessoas[0];
+                            AtualizePessoa(pessoa,linha);
                         }
                     }
 
@@ -521,6 +550,7 @@ namespace MP.Migrador
                         else
                         {
                             pessoa = pessoas[0];
+                            AtualizePessoa(pessoa, linha);
                         }
                     }
 
@@ -547,9 +577,54 @@ namespace MP.Migrador
 
         }
 
-        private IEndereco MonteEndereco(DataRow linha)
+        private IList<IEndereco> MonteEndereco(DataRow linha)
         {
-            return null;
+            var enderecos = new List<IEndereco>();
+
+            if (!Information.IsDBNull(linha["Ender_Sede"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Ender_Sede")))
+            {
+                var endereco = FabricaGenerica.GetInstancia().CrieObjeto<IEndereco>();
+
+                endereco.Logradouro = UtilidadesDePersistencia.GetValor(linha, "Ender_Sede").Trim();
+
+                if (!Information.IsDBNull(linha["Bairro_Sede"]) &&
+                    !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Bairro_Sede")))
+                    endereco.Bairro = UtilidadesDePersistencia.GetValor(linha, "Bairro_Sede").Trim();
+
+                if (!Information.IsDBNull(linha["CEP_Sede"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "CEP_Sede")))
+                    endereco.CEP = new CEP(Convert.ToInt64(ObtenhaApenasNumeros(UtilidadesDePersistencia.GetValor(linha, "CEP_Sede"))));
+
+                if (!Information.IsDBNull(linha["Cidade_Sede"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Cidade_Sede")))
+                    endereco.Municipio = DescubraMunicipio(UtilidadesDePersistencia.GetValor(linha, "Cidade_Sede"),
+                                                           UtilidadesDePersistencia.GetValor(linha, "UF_sede"));
+               
+               endereco.TipoDeEndereco = DescubraTipoDeEndereco("PADRÃO");
+
+                enderecos.Add(endereco);
+            }
+
+            if (!Information.IsDBNull(linha["Ender_Corresp"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Ender_Corresp")))
+            {
+                var endereco = FabricaGenerica.GetInstancia().CrieObjeto<IEndereco>();
+
+                endereco.Logradouro = UtilidadesDePersistencia.GetValor(linha, "Ender_Corresp").Trim();
+
+                if (!Information.IsDBNull(linha["Bairro_Corresp"]) &&
+                    !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Bairro_Corresp")))
+                    endereco.Bairro = UtilidadesDePersistencia.GetValor(linha, "Bairro_Corresp").Trim();
+
+                if (!Information.IsDBNull(linha["CEP_Corresp"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "CEP_Corresp")))
+                    endereco.CEP = new CEP(Convert.ToInt64(ObtenhaApenasNumeros(UtilidadesDePersistencia.GetValor(linha, "CEP_Corresp"))));
+
+                if (!Information.IsDBNull(linha["Cidade_Corresp"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Cidade_Corresp")))
+                    endereco.Municipio = DescubraMunicipio(UtilidadesDePersistencia.GetValor(linha, "Cidade_Corresp"),
+                                                           UtilidadesDePersistencia.GetValor(linha, "UF_Corresp"));
+
+                endereco.TipoDeEndereco = DescubraTipoDeEndereco("CORRESPONDÊNCIA");
+                enderecos.Add(endereco);
+            }
+
+            return enderecos;
         }
 
         private IList<string> ObtenhaContatosDaPessoa(DataRow linha)
@@ -587,7 +662,7 @@ namespace MP.Migrador
             var endereco = MonteEndereco(linha);
 
             if (endereco != null)
-                pessoa.AdicioneEndereco(endereco);
+                pessoa.AdicioneEnderecos(endereco);
 
             var contatos = ObtenhaContatosDaPessoa(linha);
 
@@ -635,7 +710,7 @@ namespace MP.Migrador
             var endereco = MonteEndereco(linha);
 
             if (endereco != null)
-                pessoa.AdicioneEndereco(endereco);
+                pessoa.AdicioneEnderecos(endereco);
 
             var contatos = ObtenhaContatosDaPessoa(linha);
 
@@ -1474,7 +1549,7 @@ namespace MP.Migrador
             {
                 var conexao = servico.ObtenhaConexao();
                 FabricaDeContexto.GetInstancia().GetContextoAtual().Conexao = conexao;
-                FabricaDeContexto.GetInstancia().GetContextoAtual().EmpresaLogada = new EmpresaVisivel(15644, "");
+                FabricaDeContexto.GetInstancia().GetContextoAtual().EmpresaLogada = new EmpresaVisivel(15645, "");
             }
 
             CarregueGruposDeAtividade();
@@ -1739,8 +1814,14 @@ namespace MP.Migrador
 
             if (string.IsNullOrEmpty(MunicipioSTR)) return null;
 
-            if (MunicipioSTR.Equals("GOIANIA") || MunicipioSTR.Equals("GOANIA") || MunicipioSTR.Equals("GOIÃNIA") || MunicipioSTR.Equals("GOIÂNIA GO"))
+            if (MunicipioSTR.Equals("GOIANIA") || MunicipioSTR.Equals("GOANIA") || MunicipioSTR.Equals("GOIÃNIA") || MunicipioSTR.Equals("GOIÂNIA GO") ||
+            MunicipioSTR.Equals("GOIÂNIA74") || MunicipioSTR.Equals("GOIÂNIA"))
+            {
                 MunicipioSTR = "GOIÂNIA";
+                uf = "GO";
+            }
+                
+
 
             if (MunicipioSTR.Equals("ANAPOLIS") || MunicipioSTR.Equals("ANAPOLIES") || MunicipioSTR.Equals("ANAPÓLIS"))
                 MunicipioSTR = "ANÁPOLIS";
@@ -1816,8 +1897,13 @@ namespace MP.Migrador
             if (MunicipioSTR.Contains("SÃO MIGUEL DO PASSA QUATRO"))
                 return null;
 
-            if (MunicipioSTR.Contains("IBIRUBA"))
-                return null;
+            if (MunicipioSTR.Contains("IBIRUBA") || MunicipioSTR.Contains("IBIRUBÁ"))
+            {
+                MunicipioSTR = "IBIRUBÁ";
+                uf = "RS";
+
+            }
+                
 
             if (MunicipioSTR.Contains("NEROPÓLIS") || MunicipioSTR.Contains("NEROPOLIS"))
                 MunicipioSTR = "NERÓPOLIS";
@@ -1881,6 +1967,12 @@ namespace MP.Migrador
             if (MunicipioSTR.Contains("MOSSORÓ"))
                 return null;
 
+            if (MunicipioSTR.Contains("HAYWARD"))
+                return null;
+
+            if (MunicipioSTR.Contains("AGUAS CLARAS"))
+                return null;
+            
             if (MunicipioSTR.Contains("HAYWARD")) return null;
 
             if (MunicipioSTR.Contains("RONDONOPOLIS"))
@@ -1891,6 +1983,13 @@ namespace MP.Migrador
 
             if (MunicipioSTR.Contains("MARINGÁ")) uf = "PR";
 
+            if (MunicipioSTR.Contains("SÃO LUIZ DE MONTES BELOS"))
+                MunicipioSTR = "SÃO LUÍS DE MONTES BELOS";
+
+            if (MunicipioSTR.Contains("CIDADE DE SALTO"))
+                return null;
+
+            
             return municipios[MunicipioSTR + "|" + uf];
         }
 
