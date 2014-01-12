@@ -2,21 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Xml;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
+using MP.Client.Relatorios;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Servicos;
 using MP.Interfaces.Utilidades;
 using Telerik.Web.UI;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
 
 namespace MP.Client.MP
 {
@@ -415,6 +421,8 @@ namespace MP.Client.MP
                         listaDeProcessos.Add(servico.ObtenhaProcessoDeMarcaPeloNumero(processo.NumeroProcessoDeMarca));
 
                 MostraProcessosDaRevista(listaDeProcessos);
+
+                pnlRelatorios.Visible = true;
             }
             else
             {
@@ -935,5 +943,46 @@ namespace MP.Client.MP
                         gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
             }
         }
+
+        protected void btnRelPublicPropriasAnalitico_OnClick(object sender, ImageClickEventArgs e)
+        {
+            //if (ViewState[CHAVE_PROCESSOS_DA_REVISTA] != null)
+            //{
+            //    IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
+
+            //    listaDeProcessos = ((IList<IProcessoDeMarca>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
+
+            //    var gerador = new GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias(listaDeProcessos);
+            //    var nomeDoArquivo = gerador.GereRelatorioAnalitico();
+
+            //    var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+            //          nomeDoArquivo;
+            //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+            //                                            UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            //}
+        }
+
+        protected void btnRelPublicPropriasSintetico_OnClick(object sender, ImageClickEventArgs e)
+        {
+            if (ViewState[CHAVE_PROCESSOS_DA_REVISTA] != null)
+            {
+                IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
+
+                listaDeProcessos = ((IList<IProcessoDeMarca>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
+
+                var gerador = new GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias(listaDeProcessos);
+                var nomeDoArquivo = gerador.GereRelatorioSintetico();
+
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+                      nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
+        }
+
+        public override void  VerifyRenderingInServerForm(Control control)
+        {
+        }
+
     }
 }
