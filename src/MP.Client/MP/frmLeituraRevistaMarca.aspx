@@ -115,7 +115,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label11" runat="server" Text="Publicações próprias"></asp:Label>
+                                    <asp:Label ID="Label11" runat="server" Text="Publicações próprias:"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtPublicacoesProprias" runat="server" Enabled="false" Width="87px">
@@ -124,7 +124,7 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label6" runat="server" Text="Processos"></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="Processos:"></asp:Label>
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtQuantdadeDeProcessos" runat="server" Enabled="false" Width="87px">
@@ -132,6 +132,28 @@
                                 </td>
                             </tr>
                         </table>
+                        <asp:Panel ID="pnlRelatorios" Visible="false" runat="server">
+                        <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label10" runat="server" Text="Gerar relatório Analítico:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnRelPublicPropriasAnalitico" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                        ToolTip="Gerar Relatório Analítico das publicações próprias" OnClick="btnRelPublicPropriasAnalitico_OnClick" />
+                                </td>                                
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label9" runat="server" Text="Gerar relatório Sintético:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnRelPublicPropriasSintetico" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                        ToolTip="Gerar Relatório Sintético das publicações próprias" OnClick="btnRelPublicPropriasSintetico_OnClick" />
+                                </td>
+                            </tr>
+                        </table>
+                        </asp:Panel>               
                         <telerik:RadTabStrip ID="RadTabStrip1" runat="server" SelectedIndex="0" Skin="Vista"
                             MultiPageID="RadMultiPage1" CausesValidation="False" AutoPostBack="True" OnTabClick="RadTabStrip1_OnTabClick">
                             <Tabs>
@@ -183,7 +205,7 @@
                                                             <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Titular"
                                                                 UniqueName="column4">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Procurador.Pessoa.Nome" HeaderText="Procurador"
+                                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca"
                                                                 UniqueName="column5">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
