@@ -58,6 +58,10 @@ namespace MP.Client.MP
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlPatente.PatenteFoiSelecionada += ExibaPatenteSelecionada;
+            ctrlClientePesquisa.ClienteFoiSelecionado += ctrlClientePesquisa_ClienteFoiSelecionado;
+
+            if (!VerifiqueSeClienteDaPesquisaEstaSelecionado())
+                ctrlPatente.SetaIdDoClienteSelecionado(0);
 
             if(!IsPostBack)
                 ExibaTelaInicial();
@@ -128,6 +132,7 @@ namespace MP.Client.MP
             RadTabStrip1.Tabs[0].Selected = true;
             rpvDadosPatentes.Selected = true;
             btnGerarTodas.Visible = false;
+            ctrlClientePesquisa.BotaoNovoEhVisivel = false; 
         }
 
         protected void grdClientes_ItemCommand(object sender, GridCommandEventArgs e)
@@ -450,6 +455,8 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
 
+            VisibilidadePatente(false);
+
             var controlePanelPatente = pnlDadosPatente as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, false);
 
@@ -485,6 +492,8 @@ namespace MP.Client.MP
             ctrlPatente.ShowDropDownOnTextboxClick = false;
             ctrlPatente.AutoPostBack = false;
 
+            VisibilidadePatente(false);
+
             var controlePanelPatente = pnlDadosPatente as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, true);
             UtilidadesWeb.HabilitaComponentes(ref controlePanelPatente, true);
@@ -515,6 +524,8 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = true;
 
             ViewState[CHAVE_ESTADO] = Estado.Remove;
+
+            VisibilidadePatente(false);
         }
 
         protected void btnAdicionarCliente_ButtonClick(object sender, EventArgs e)
@@ -864,11 +875,11 @@ namespace MP.Client.MP
                     return;
                 }
 
-                if (ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza == "MU" ||
-                   ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza == "PI")
-                    CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDoDeposito.Value);
-                else if(ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza == "DI")
+                if (ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza.ToUpper().Equals("DI"))
                     CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito.Value);
+                else
+                    CalculeAnuidadesPatentesDeNatureza(dataDoDeposito.Value);
+                    
             }
         }
 
@@ -973,7 +984,7 @@ namespace MP.Client.MP
                 ((GridDataItem) e.Item)["colunaAnuidadePaga"].Text = ((GridDataItem) e.Item)["colunaAnuidadePaga"].Text.Equals("True") ? "Sim" : "Não";
         }
 
-        private void CalculeAnuidadesPatentesDeNaturezaPIeMU(DateTime dataDeDeposito)
+        private void CalculeAnuidadesPatentesDeNatureza(DateTime dataDeDeposito)
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
                ListaDeAnuidadeDaPatente  = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDeDeposito);
@@ -1065,6 +1076,17 @@ namespace MP.Client.MP
 
         protected void grvRadicais_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+        }
+
+        private void ctrlClientePesquisa_ClienteFoiSelecionado(ICliente cliente)
+        {
+            if (cliente.Pessoa.ID.HasValue)
+                ctrlPatente.SetaIdDoClienteSelecionado(cliente.Pessoa.ID.Value);
+        }
+
+        private bool VerifiqueSeClienteDaPesquisaEstaSelecionado()
+        {
+            return ctrlClientePesquisa.ClienteSelecionado != null;
         }
     }
 }

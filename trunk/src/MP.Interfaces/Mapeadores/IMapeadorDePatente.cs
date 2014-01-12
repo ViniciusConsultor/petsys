@@ -17,5 +17,6 @@ namespace MP.Interfaces.Mapeadores
         IInventor ObtenhaInventor(long id);
         IPatente ObtenhaPatente(long id);
         IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros);
+        IList<IPatente> ObtenhaPatentesDoCliente(string titulo, long idCliente, int quantidadeDeRegistros);
     }
 }

@@ -34,6 +34,19 @@
                     <table class="tabela">
                         <tr>
                             <td class="th3">
+                                <asp:Label ID="Label2" runat="server" Text="Cliente"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc3:ctrlCliente ID="ctrlClientePesquisa" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">     
+                                <br/>                                                  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
                                 <asp:Label ID="Label1" runat="server" Text="Patente"></asp:Label>
                             </td>
                             <td class="td">

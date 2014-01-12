@@ -226,6 +226,28 @@ namespace MP.Mapeadores
             return patentes;
         }
 
+        public IList<IPatente> ObtenhaPatentesDoCliente(string titulo, long idCliente, int quantidadeDeRegistros)
+        {
+            IList<IPatente> patentes = new List<IPatente>();
+            var comandoSQL = new StringBuilder();
+            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
+
+            comandoSQL.Append("SELECT PATENTE.IDPATENTE, PATENTE.TITULOPATENTE, PATENTE.IDNATUREZAPATENTE, PATENTE.OBRIGACAOGERADA, ");
+            comandoSQL.Append("PATENTE.DATACADASTRO, PATENTE.OBSERVACAO, PATENTE.RESUMO_PATENTE, PATENTE.QTDEREINVINDICACAO ");
+            comandoSQL.Append("FROM MP_PATENTE PATENTE ");
+            comandoSQL.Append("INNER JOIN MP_PATENTECLIENTE CLIPATENTE ON CLIPATENTE.IDPATENTE = PATENTE.IDPATENTE ");
+            comandoSQL.Append("WHERE CLIPATENTE.IDCLIENTE = " + idCliente);
+
+            if (!string.IsNullOrEmpty(titulo))
+                comandoSQL.Append("AND TITULOPATENTE like '%" + titulo + "%'");
+
+            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), quantidadeDeRegistros))
+                while (reader.Read())
+                    patentes.Add(MapeieObjetoPatente(reader));
+
+            return patentes;
+        }
+
 #region Métodos Privados
 
         private void InserirAnuidade(IAnuidadePatente anuidadePatente, long idPatente)

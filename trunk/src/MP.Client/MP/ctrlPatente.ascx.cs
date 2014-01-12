@@ -15,6 +15,8 @@ namespace MP.Client.MP
 {
     public partial class ctrlPatente : UserControl
     {
+        private const string ID_CLIENTE_SELECIONADO = "ID_CLIENTE_SELECIONADO";
+
         public static event PatenteFoiSelecionadaEventHandler PatenteFoiSelecionada;
         public delegate void PatenteFoiSelecionadaEventHandler(IPatente patente);
 
@@ -70,7 +72,10 @@ namespace MP.Client.MP
             {
                 cboPatente.Items.Clear();
 
-                foreach (IPatente patente in servico.ObtenhaPatentesPeloTitulo(e.Text, 50))
+                IList<IPatente> patentes = IdClienteSelecionado != 0 ? servico.ObtenhaPatentesDoCliente(e.Text, IdClienteSelecionado, 50)
+                                                                     : servico.ObtenhaPatentesPeloTitulo(e.Text, 50);
+
+                foreach (IPatente patente in patentes)
                 {
                     var item = new RadComboBoxItem(patente.TituloPatente, patente.Identificador.ToString());
 
@@ -137,6 +142,17 @@ namespace MP.Client.MP
             var URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual();
             URL = String.Concat(URL, "MP/cdPatente.aspx");
             return URL;
+        }
+
+        private long IdClienteSelecionado
+        {
+            get { return (long) ViewState[ID_CLIENTE_SELECIONADO]; }
+            set { ViewState[ID_CLIENTE_SELECIONADO] = value; }
+        }
+
+        public void SetaIdDoClienteSelecionado(long idCliente)
+        {
+            IdClienteSelecionado = idCliente;
         }
     }
 }
