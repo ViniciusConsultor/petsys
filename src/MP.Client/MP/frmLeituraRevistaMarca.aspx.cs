@@ -946,20 +946,20 @@ namespace MP.Client.MP
 
         protected void btnRelPublicPropriasAnalitico_OnClick(object sender, ImageClickEventArgs e)
         {
-            //if (ViewState[CHAVE_PROCESSOS_DA_REVISTA] != null)
-            //{
-            //    IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
+            if (ViewState[CHAVE_PROCESSOS_DA_REVISTA] != null)
+            {
+                IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
 
-            //    listaDeProcessos = ((IList<IProcessoDeMarca>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
+                listaDeProcessos = ((IList<IProcessoDeMarca>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
 
-            //    var gerador = new GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias(listaDeProcessos);
-            //    var nomeDoArquivo = gerador.GereRelatorioAnalitico();
+                var gerador = new GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias(listaDeProcessos);
+                var nomeDoArquivo = gerador.GereRelatorioAnalitico();
 
-            //    var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
-            //          nomeDoArquivo;
-            //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
-            //                                            UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
-            //}
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+                      nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
         }
 
         protected void btnRelPublicPropriasSintetico_OnClick(object sender, ImageClickEventArgs e)
