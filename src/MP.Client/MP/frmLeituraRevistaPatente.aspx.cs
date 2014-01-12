@@ -596,13 +596,13 @@ namespace MP.Client.MP
 
                     Logger.GetInstancia().Debug("Obtendo lista de patentes colidentes");
 
-                    if (revistaDePatentes.Count > 0)
+                    if (listaDeProcessosDaRevistaComPatenteExistente.Count > 0)
                         CarregaListaDeRadicais(listaDeProcessosDaRevistaComPatenteExistente, listaDeProcessosDePatentesComRadicalCadastrado);
                     else
                     {
                         // não existe marcas colidentes
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe patentes colidentes."),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe revista com títulos das patentes."),
                                                          false);
 
                         LimpaRadicais();
@@ -660,8 +660,8 @@ namespace MP.Client.MP
         private void CarregaListaDeRadicais(IList<IRevistaDePatente> revistaDePatentes, IList<IProcessoDePatente> processoDePatentes)
         {
             IList<IRadicalPatente> listaDeRadicaisDeClientes = new List<IRadicalPatente>();
+            IList<IRadicalPatente> listaDeRadicais = new List<IRadicalPatente>();
             IDictionary<IRadicalPatente, IList<IRevistaDePatente>> dicionarioDePatentesDeClientes = new Dictionary<IRadicalPatente, IList<IRevistaDePatente>>();
-            IDictionary<IRadicalPatente, IList<IRevistaDePatente>> dicionarioDePatentesDeColidentes = new Dictionary<IRadicalPatente, IList<IRevistaDePatente>>();
 
             bool marcaDeClienteCarregadaPrimeiraVez = false;
 
@@ -682,24 +682,6 @@ namespace MP.Client.MP
                     }
                 }
             }
-
-            //foreach (var listaMarcasColidentes in dicionarioDeMarcasColidentesEClientes.Keys)
-            //{
-            //    foreach (var marcaColidente in listaMarcasColidentes)
-            //    {
-            //        IList<ILeituraRevistaDeMarcas> listaDeMarcasColidentes = new List<ILeituraRevistaDeMarcas>();
-            //        listaDeMarcasColidentes.Add(marcaColidente);
-
-            //        if (dicionarioDePatentesDeColidentes.ContainsKey(marcaColidente.IdLeitura.Value))
-            //        {
-            //            dicionarioDePatentesDeColidentes[marcaColidente.IdLeitura.Value].Add(marcaColidente);
-            //        }
-            //        else
-            //        {
-            //            dicionarioDePatentesDeColidentes.Add(marcaColidente.IdLeitura.Value, listaDeMarcasColidentes);
-            //        }
-            //    }
-            //}
 
             if (listaDeRadicaisDeClientes.Count > 0)
             {

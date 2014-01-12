@@ -19,12 +19,12 @@ namespace MP.Servicos.Local
         public void Insira(IPatente patente)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
                 ServerUtils.BeginTransaction();
-                mapeadorProcurador.Insira(patente);
+                mapeadorDePatente.Insira(patente);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -41,12 +41,12 @@ namespace MP.Servicos.Local
         public void Modificar(IPatente patente)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
                 ServerUtils.BeginTransaction();
-                mapeadorProcurador.Modificar(patente);
+                mapeadorDePatente.Modificar(patente);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -63,12 +63,12 @@ namespace MP.Servicos.Local
         public void Exluir(long codigoPatente)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
                 ServerUtils.BeginTransaction();
-                mapeadorProcurador.Exluir(codigoPatente);
+                mapeadorDePatente.Exluir(codigoPatente);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -85,11 +85,11 @@ namespace MP.Servicos.Local
         public IAnuidadePatente ObtenhaAnuidade(long id)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaAnuidade(id);
+                return mapeadorDePatente.ObtenhaAnuidade(id);
             }
             finally
             {
@@ -100,11 +100,11 @@ namespace MP.Servicos.Local
         public IClassificacaoPatente ObtenhaClassificacao(long id)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaClassificacao(id);
+                return mapeadorDePatente.ObtenhaClassificacao(id);
             }
             finally
             {
@@ -115,11 +115,11 @@ namespace MP.Servicos.Local
         public IPrioridadeUnionistaPatente ObtenhaPrioridadeUnionista(long id)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaPrioridadeUnionista(id);
+                return mapeadorDePatente.ObtenhaPrioridadeUnionista(id);
             }
             finally
             {
@@ -130,11 +130,11 @@ namespace MP.Servicos.Local
         public IInventor ObtenhaInventor(long id)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaInventor(id);
+                return mapeadorDePatente.ObtenhaInventor(id);
             }
             finally
             {
@@ -145,11 +145,11 @@ namespace MP.Servicos.Local
         public IPatente ObtenhaPatente(long id)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaPatente(id);
+                return mapeadorDePatente.ObtenhaPatente(id);
             }
             finally
             {
@@ -161,11 +161,11 @@ namespace MP.Servicos.Local
         public IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
-            var mapeadorProcurador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
 
             try
             {
-                return mapeadorProcurador.ObtenhaPatentesPeloTitulo(titulo, quantidadeDeRegistros);
+                return mapeadorDePatente.ObtenhaPatentesPeloTitulo(titulo, quantidadeDeRegistros);
             }
             finally
             {
@@ -179,11 +179,11 @@ namespace MP.Servicos.Local
 
             DateTime? dataDoUltimoLancamento = null;
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 18; i++)
             {
                 var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
 
-                anuidadeDaPatente.DescricaoAnuidade = i + 1 + "ª ANUIDADE";
+                anuidadeDaPatente.DescricaoAnuidade = i + 3 + "ª ANUIDADE";
                 anuidadeDaPatente.DataLancamento = i == 0 ? dataDeDeposito.AddYears(2) : dataDoUltimoLancamento.Value.AddYears(1);
                 dataDoUltimoLancamento = anuidadeDaPatente.DataLancamento;
                 anuidadeDaPatente.DataVencimentoSemMulta = anuidadeDaPatente.DataLancamento.Value.AddMonths(3);
@@ -207,7 +207,7 @@ namespace MP.Servicos.Local
             {
                 var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
 
-                anuidadeDaPatente.DescricaoAnuidade = i + 1 + "º QUIQUÊNIO";
+                anuidadeDaPatente.DescricaoAnuidade = i + 2 + "º QUIQUÊNIO";
                 anuidadeDaPatente.DataLancamento = i == 1 ? dataDeDeposito.AddYears(4) : dataDoUltimoLancamento.Value.AddYears(5);
                 dataDoUltimoLancamento = anuidadeDaPatente.DataLancamento;
 
@@ -237,6 +237,21 @@ namespace MP.Servicos.Local
             }
 
             return ListaDeAnuidadeDaPatente;
+        }
+
+        public IList<IPatente> ObtenhaPatentesDoCliente(string titulo, long idCliente, int quantidadeDeRegistros)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+
+            try
+            {
+                return mapeadorDePatente.ObtenhaPatentesDoCliente(titulo, idCliente, quantidadeDeRegistros);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
         }
     }
 }

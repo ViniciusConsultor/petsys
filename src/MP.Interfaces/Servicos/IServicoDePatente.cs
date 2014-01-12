@@ -19,5 +19,6 @@ namespace MP.Interfaces.Servicos
         IList<IPatente> ObtenhaPatentesPeloTitulo(string titulo, int quantidadeDeRegistros);
         IList<IAnuidadePatente> CalculeAnuidadesPatentesDeNaturezaPIeMU(DateTime dataDeDeposito);
         IList<IAnuidadePatente> CalculeAnuidadesPatentesDeNaturezaDI(DateTime dataDeDeposito);
+        IList<IPatente> ObtenhaPatentesDoCliente(string titulo, long idCliente, int quantidadeDeRegistros);
     }
 }

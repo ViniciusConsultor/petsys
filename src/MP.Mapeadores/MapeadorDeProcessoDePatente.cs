@@ -400,7 +400,7 @@ namespace MP.Mapeadores
             {
                 try
                 {
-                    if (leitor.Read())
+                    while (leitor.Read())
                         listaDeProcessos.Add(MontaProcessoDePatente(leitor)); 
                 }
                 finally
