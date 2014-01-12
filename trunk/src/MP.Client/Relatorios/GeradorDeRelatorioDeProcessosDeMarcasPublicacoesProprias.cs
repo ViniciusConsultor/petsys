@@ -46,49 +46,50 @@ namespace MP.Client.Relatorios
 
         private void EscrevaProcessosNoDocumentoAnalitico()
         {
-            var tabela = new Table(1);
+            var tabela = new Table(6);
 
-            //tabela.Widths = new Single[] { 100, 100, 100, 100, 100, 400, 400, 90, 85 };
-            tabela.Widths = new Single[] { 100 };
-
+            tabela.Widths = new Single[] { 60, 60, 60, 200, 200, 200};
+           
             tabela.Padding = 1;
             tabela.Spacing = 0;
             tabela.Width = 100;
             tabela.AutoFillEmptyCells = true;
 
             var corBackgroudHeader = new Color(211, 211, 211);
-            
-            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, false));
-            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, false));
-            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
-            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
-            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
-            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Texto do despacho", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
-            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Procurador", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
 
-            //tabela.EndHeaders();
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, false));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, false));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Marca", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+            //tabela.AddCell(iTextSharpUtilidades.CrieCelula("Texto do despacho", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Procurador", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+
+            tabela.EndHeaders();
 
             foreach (var processo in _processos)
             {
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo: " + processo.Processo.ToString(), _Fonte1, Cell.ALIGN_LEFT, 0, false));
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula("Data do cadastro: " + processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1, Cell.ALIGN_LEFT, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Processo.ToString(), _Fonte1, Cell.ALIGN_CENTER, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1, Cell.ALIGN_CENTER, 0, false));
+
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Despacho != null ? processo.Despacho.CodigoDespacho : "", _Fonte1, Cell.ALIGN_CENTER, 0, false));
+
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.Cliente.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 0, false));
+
+                if (processo.Marca != null && !string.IsNullOrEmpty(processo.Marca.DescricaoDaMarca))
+                    tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.DescricaoDaMarca, _Fonte1, Cell.ALIGN_LEFT, 0, false));
+                else
+                    tabela.AddCell(iTextSharpUtilidades.CrieCelula(string.Empty, _Fonte1, Cell.ALIGN_LEFT, 0, false));
+
                 
-                //tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.Cliente.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 0, false));
-
-                //if (processo.Marca != null && !string.IsNullOrEmpty(processo.Marca.DescricaoDaMarca))
-                //    tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Marca.DescricaoDaMarca, _Fonte1, Cell.ALIGN_LEFT, 0, false));
-                //else
-                //    tabela.AddCell(iTextSharpUtilidades.CrieCelula(string.Empty, _Fonte1, Cell.ALIGN_LEFT, 0, false));
-
-                //tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Despacho != null ? processo.Despacho.CodigoDespacho : "", _Fonte1, Cell.ALIGN_CENTER, 0, false));
 
                 //tabela.AddCell(iTextSharpUtilidades.CrieCelula(!string.IsNullOrEmpty(processo.TextoComplementarDoDespacho) ? processo.TextoComplementarDoDespacho : "", _Fonte1, Cell.ALIGN_LEFT, 0, false));
 
-                //if (processo.Procurador != null && processo.Procurador.Pessoa != null &&
-                //    !string.IsNullOrEmpty(processo.Procurador.Pessoa.Nome))
-                //    tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Procurador.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 0, false));
-                //else
-                //    tabela.AddCell(iTextSharpUtilidades.CrieCelula(string.Empty, _Fonte1, Cell.ALIGN_LEFT, 0, false));
+                if (processo.Procurador != null && processo.Procurador.Pessoa != null &&
+                    !string.IsNullOrEmpty(processo.Procurador.Pessoa.Nome))
+                    tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Procurador.Pessoa.Nome, _Fonte1, Cell.ALIGN_LEFT, 0, false));
+                else
+                    tabela.AddCell(iTextSharpUtilidades.CrieCelula(string.Empty, _Fonte1, Cell.ALIGN_LEFT, 0, false));
 
 
 
