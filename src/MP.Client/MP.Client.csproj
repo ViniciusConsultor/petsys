@@ -159,6 +159,13 @@
     <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.designer.cs">
       <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\cdTitular.aspx.cs">
+      <DependentUpon>cdTitular.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdTitular.aspx.designer.cs">
+      <DependentUpon>cdTitular.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlApresentacao.ascx.cs">
       <DependentUpon>ctrlApresentacao.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -250,6 +257,13 @@
     <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.designer.cs">
       <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlTitular.ascx.cs">
+      <DependentUpon>ctrlTitular.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlTitular.ascx.designer.cs">
+      <DependentUpon>ctrlTitular.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.cs">
       <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -322,6 +336,7 @@
     <Content Include="MP\cdProcessoDeMarca.aspx" />
     <Content Include="MP\cdProcessoDePatente.aspx" />
     <Content Include="MP\cdTipoDeProcedimentoInterno.aspx" />
+    <Content Include="MP\cdTitular.aspx" />
     <Content Include="MP\ctrlApresentacao.ascx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlDespachoDePatentes.ascx" />
@@ -335,6 +350,7 @@
     <Content Include="MP\ctrlPeriodo.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
+    <Content Include="MP\ctrlTitular.ascx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />
     <Content Include="MP\frmLeituraRevistaPatente.aspx" />

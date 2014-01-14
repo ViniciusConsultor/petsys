@@ -16,7 +16,7 @@ namespace MP.Client.MP
 {
     public partial class cdTitular : SuperPagina
     {
-        private string CHAVE_ESTADO_CD_INVENTOR = "CHAVE_ESTADO_CD_INVENTOR";
+        private string CHAVE_ESTADO_CD_TITULAR = "CHAVE_ESTADO_CD_TITULAR";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,7 +39,7 @@ namespace MP.Client.MP
 
         private void ExibaTelaInicial()
         {
-            Control controle = pnlDadosDoInventor;
+            Control controle = pnlDadosDoTitular;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
@@ -53,7 +53,7 @@ namespace MP.Client.MP
             ctrlPessoa1.Inicializa();
             ctrlPessoa1.BotaoDetalharEhVisivel = false;
             ctrlPessoa1.BotaoNovoEhVisivel = true;
-            ViewState[CHAVE_ESTADO_CD_INVENTOR] = Estado.Inicial;
+            ViewState[CHAVE_ESTADO_CD_TITULAR] = Estado.Inicial;
         }
 
         protected void btnNovo_Click()
@@ -63,7 +63,7 @@ namespace MP.Client.MP
 
         private void ExibaTelaNovo()
         {
-            Control controle = pnlDadosDoInventor;
+            Control controle = pnlDadosDoTitular;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
@@ -72,7 +72,7 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
-            ViewState[CHAVE_ESTADO_CD_INVENTOR] = Estado.Novo;
+            ViewState[CHAVE_ESTADO_CD_TITULAR] = Estado.Novo;
             UtilidadesWeb.HabilitaComponentes(ref controle, true);
             txtDataDoCadastro.SelectedDate = DateTime.Now;
             txtDataDoCadastro.Enabled = false;
@@ -80,7 +80,7 @@ namespace MP.Client.MP
 
         private void ExibaTelaModificar()
         {
-            Control controle = pnlDadosDoInventor;
+            Control controle = pnlDadosDoTitular;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = false;
@@ -89,7 +89,7 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = false;
-            ViewState[CHAVE_ESTADO_CD_INVENTOR] = Estado.Modifica;
+            ViewState[CHAVE_ESTADO_CD_TITULAR] = Estado.Modifica;
             UtilidadesWeb.HabilitaComponentes(ref controle, true);
             txtDataDoCadastro.Enabled = false;
         }
@@ -103,12 +103,12 @@ namespace MP.Client.MP
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnCancelar")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnSim")).Visible = true;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNao")).Visible = true;
-            ViewState[CHAVE_ESTADO_CD_INVENTOR] = Estado.Remove;
+            ViewState[CHAVE_ESTADO_CD_TITULAR] = Estado.Remove;
         }
 
         private void ExibaTelaConsultar()
         {
-            Control controle = pnlDadosDoInventor;
+            Control controle = pnlDadosDoTitular;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnNovo")).Visible = false;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnModificar")).Visible = true;
@@ -137,21 +137,21 @@ namespace MP.Client.MP
 
         private void btnSalva_Click()
         {
-            var inventor = MontaObjeto();
+            var titular = MontaObjeto();
             string mensagem = null;
 
             try
             {
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTitular>())
                 {
-                    if (ViewState[CHAVE_ESTADO_CD_INVENTOR].Equals(Estado.Novo))
+                    if (ViewState[CHAVE_ESTADO_CD_TITULAR].Equals(Estado.Novo))
                     {
-                        servico.Inserir(inventor);
+                        servico.Inserir(titular);
                         mensagem = "Titular inserido com sucesso.";
                     }
                     else
                     {
-                        servico.Atualizar(inventor);
+                        servico.Atualizar(titular);
                         mensagem = "Titular atualizado com sucesso.";
                     }
                 }
@@ -184,7 +184,7 @@ namespace MP.Client.MP
         {
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTitular>())
                 {
                     servico.Remover(ctrlPessoa1.PessoaSelecionada.ID.Value);
                 }

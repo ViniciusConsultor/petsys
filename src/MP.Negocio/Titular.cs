@@ -11,7 +11,9 @@ namespace MP.Negocio
     [Serializable]
     public class Titular : PapelPessoa, ITitular
     {
-        public Titular(IPessoa pessoa) : base(pessoa) { }
+        public Titular(IPessoa pessoa) : base(pessoa)
+        {
+        }
 
         public DateTime? DataDoCadastro { get; set; }
 

@@ -68,6 +68,7 @@
     <Compile Include="Mapeadores\IMapeadorDeRevistaDePatente.cs" />
     <Compile Include="Mapeadores\IMapeadorDeTipoDeProcedimentoInterno.cs" />
     <Compile Include="Mapeadores\IMapeadorDeRadicalMarcas.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeTitular.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
     <Compile Include="Negocio\DTOLayoutLeituraRevistaPatente.cs" />
     <Compile Include="Negocio\Execucao\ISobrestator.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Negocio\IRevistaDeMarcas.cs" />
     <Compile Include="Negocio\IRevistaDePatente.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
+    <Compile Include="Negocio\ITitular.cs" />
     <Compile Include="Negocio\LayoutRevistaPatente.cs" />
     <Compile Include="Negocio\LazyLoad\IAnuidadePatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IClassificacaoPatenteLazyLoad.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Negocio\LazyLoad\IPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IPrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\IProcuradorLazyLoad.cs" />
+    <Compile Include="Negocio\LazyLoad\ITitularLazyLoad.cs" />
     <Compile Include="Negocio\NaturezaDeMarca.cs" />
     <Compile Include="Negocio\NCL.cs" />
     <Compile Include="Negocio\Periodo.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="Servicos\IServicoDeRevistaDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeRevistaDePatente.cs" />
     <Compile Include="Servicos\IServicoDeTipoDeProcedimentoInterno.cs" />
+    <Compile Include="Servicos\IServicoDeTitular.cs" />
     <Compile Include="Utilidades\TradutorDeRevistaPatenteTXTParaRevistaPatenteXML.cs" />
     <Compile Include="Utilidades\TradutorDeRevistaTXTParaRevistaXML.cs" />
     <Compile Include="Utilidades\UtilidadesDeStream.cs" />

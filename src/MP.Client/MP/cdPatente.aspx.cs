@@ -24,6 +24,7 @@ namespace MP.Client.MP
         private const string CHAVE_CLASSIFICACAO_PATENTE = "CHAVE_CLASSIFICACAO_PATENTE";
         private const string CHAVE_ANUIDADE_PATENTE = "CHAVE_ANUIDADE_PATENTE";
         private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
+        private const string CHAVE_TITULARES = "CHAVE_TITULARES";
 
         private IList<ICliente> ListaDeClientes
         {
@@ -53,6 +54,12 @@ namespace MP.Client.MP
         {
             get { return (IList<IAnuidadePatente>)ViewState[CHAVE_ANUIDADE_PATENTE]; }
             set { ViewState[CHAVE_ANUIDADE_PATENTE] = value; }
+        }
+
+        private IList<ITitular> ListaDeTitulares
+        {
+            get { return (IList<ITitular>)ViewState[CHAVE_TITULARES]; }
+            set { ViewState[CHAVE_TITULARES] = value; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -114,6 +121,9 @@ namespace MP.Client.MP
 
             grvRadicais.DataSource = new List<IRadicalPatente>();
             grvRadicais.DataBind();
+
+            grdTitulares.DataSource = new List<ITitular>();
+            grdTitulares.DataBind();
             
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
@@ -441,6 +451,8 @@ namespace MP.Client.MP
             MostrarListaDeAnuidadeDaPatente();
             Radicais = patente.Radicais;
             CarregueGridDeRadicais();
+            ListaDeTitulares = patente.Titulares;
+            MostrarTitulares();
         }
 
         private void ExibaTelaConsultar()
@@ -975,6 +987,9 @@ namespace MP.Client.MP
             if (Radicais != null && Radicais.Count > 0)
                 patente.Radicais = Radicais;
 
+            if (ListaDeTitulares != null && ListaDeTitulares.Count > 0)
+                patente.Titulares = ListaDeTitulares;
+
             return patente;
         }
 
@@ -1087,6 +1102,68 @@ namespace MP.Client.MP
         private bool VerifiqueSeClienteDaPesquisaEstaSelecionado()
         {
             return ctrlClientePesquisa.ClienteSelecionado != null;
+        }
+
+        protected void grdTitulares_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            var IndiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                IndiceSelecionado = e.Item.ItemIndex;
+
+            if (e.CommandName == "Excluir")
+            {
+                ListaDeTitulares.RemoveAt(IndiceSelecionado);
+                MostrarTitulares();
+            }
+        }
+
+        protected void grdTitulares_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdTitulares.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
+        }
+
+        protected void grdTitulares_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdTitulares, ViewState[CHAVE_INVENTORES], e);
+        }
+
+        protected void btnAdicionarTitular_ButtonClick(object sender, EventArgs e)
+        {
+
+            if (ctrlTitular.TitularSelecionado == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione o titular que deseja adicionar."), false);
+                return;
+            }
+
+            if (ListaDeTitulares == null)
+                ListaDeTitulares = new List<ITitular>();
+
+            if (ListaDeTitulares.Contains(ctrlTitular.TitularSelecionado))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Titular já foi adicionado."), false);
+                return;
+            }
+
+            ListaDeTitulares.Add(ctrlTitular.TitularSelecionado);
+            MostrarTitulares();
+            ctrlTitular.Inicializa();
+        }
+
+        private void MostrarTitulares()
+        {
+            grdTitulares.MasterTableView.DataSource = ListaDeTitulares;
+            grdTitulares.DataBind();
         }
     }
 }

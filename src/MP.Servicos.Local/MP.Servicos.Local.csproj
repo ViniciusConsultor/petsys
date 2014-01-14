@@ -69,6 +69,7 @@
     <Compile Include="ServicoDeRevistaDeMarcasLocal.cs" />
     <Compile Include="ServicoDeRevistaDePatenteLocal.cs" />
     <Compile Include="ServicoDeTipoDeProcedimentoInternoLocal.cs" />
+    <Compile Include="ServicoDeTitularLocal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Servicos.Local.snk" />

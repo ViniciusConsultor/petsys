@@ -253,5 +253,20 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }            
         }
+
+        public ITitular ObtenhaTitular(long id)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+
+            try
+            {
+                return mapeadorDePatente.ObtenhaTitular(id);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
+        }
     }
 }

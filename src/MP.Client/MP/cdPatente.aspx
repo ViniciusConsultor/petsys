@@ -7,6 +7,7 @@
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc3" %>
 <%@ Register Src="~/MP/ctrlInventor.ascx" TagName="ctrlInventor" TagPrefix="uc4" %>
 <%@ Register Src="~/ctrlPais.ascx" TagName="ctrlPais" TagPrefix="uc5" %>
+<%@ Register Src="~/MP/ctrlTitular.ascx" TagName="ctrlTitular" TagPrefix="uc6" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
@@ -188,6 +189,58 @@
                                             <telerik:RadGrid ID="grdInventores" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                                                 Skin="Vista" PageSize="10" GridLines="None" OnItemCommand="grdInventores_ItemCommand"
                                                 OnItemCreated="grdInventores_ItemCreated" OnPageIndexChanged="grdInventores_PageIndexChanged">
+                                                <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                            HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn DataField="Pessoa.Nome" HeaderText="Nome" UniqueName="colunaNome" />
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblTitular" runat="server" Text="Titular"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <uc6:ctrlTitular ID="ctrlTitular" runat="server" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
+                                            <telerik:RadButton ID="btnAdicionarTitular" runat="server" Text="Adicionar" ToolTip="Adicionar Titular" 
+                                            OnClick="btnAdicionarTitular_ButtonClick"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">     
+                                            <br/>                                                  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente" colspan="2">
+                                            <telerik:RadGrid ID="grdTitulares" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                                Skin="Vista" PageSize="10" GridLines="None" OnItemCommand="grdTitulares_ItemCommand"
+                                                OnItemCreated="grdTitulares_ItemCreated" OnPageIndexChanged="grdTitulares_PageIndexChanged">
                                                 <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                                 <MasterTableView GridLines="Both">
                                                     <RowIndicatorColumn>
