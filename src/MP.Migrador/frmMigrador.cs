@@ -51,6 +51,7 @@ namespace MP.Migrador
         private IDictionary<string, ICliente> clientesDePatenteComChaveLegada = new Dictionary<string, ICliente>();
         private IDictionary<string, IProcurador> advogadosDePatenteComChaveLegada = new Dictionary<string, IProcurador>();
         private IDictionary<string, IList<IInventor>> inventoresDeDesenhoComChaveLegada = new Dictionary<string, IList<IInventor>>();
+        private IDictionary<string, ITitular> titularesDePatenteComChaveLegada = new Dictionary<string, ITitular>();
 
         private void btnMigrar_Click(object sender, EventArgs e)
         {
@@ -64,6 +65,7 @@ namespace MP.Migrador
                 CarregueECadastreAdvogadosDaPatente();
                 CarregueECadastrePastas();
                 CarregueECadastreClientesDaPatente();
+                CarregueECadastreInventoresDaPatente();
 
                 CarregueClassificacaoDaPatente();
                 CarreguePrioridadeUnionistaPatente();
@@ -175,31 +177,32 @@ namespace MP.Migrador
 
         private IList<IAnuidadePatente> ObtenhaAnuidadesDaPatente(DataRow linha, IServicoDePatente servico, INaturezaPatente natureza)
         {
+            var dataDoDeposito = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_depósito"));
 
-            //var dataDoDeposito = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_depósito"));
+            IList<IAnuidadePatente> anuidades;
+            var nomenclaturaColuna = "DatPag";
 
-            //IList<IAnuidadePatente> anuidades;
-            //var nomenclaturaColuna = "DatPag";
+            if (natureza.SiglaNatureza.Equals("DI"))
+            {
+                anuidades = servico.CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito);
+                nomenclaturaColuna = "";
+            }
+            else
+                anuidades = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDoDeposito);
 
-            //if (natureza.SiglaNatureza.Equals("DI"))
-            //{
-            //    anuidades = servico.CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito);
-            //    nomenclaturaColuna = "";
-            //}
-            //else
-            //    anuidades = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDoDeposito);
+            for (var i = 0; i < anuidades.Count; i++)
+            {
+                var indice = i + 3;
 
-            //for (var i = 0; i <= anuidades.Count; i++)
-            //{
-            //    var indice = i + 3;
+                if (!Information.IsDBNull(linha[nomenclaturaColuna + indice.ToString()]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString())))
+                {
+                    anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString()));
+                    anuidades[i].AnuidadePaga = true;
+                }
+                    
+            }
 
-            //    if (!Information.IsDBNull(linha[nomenclaturaColuna + indice.ToString()]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString())))
-            //        anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString()));
-            //}
-
-            //return anuidades;
-
-            return null;
+            return anuidades;
         }
 
         private void MigrePatentesEProcessosDePatentes()
@@ -233,6 +236,9 @@ namespace MP.Migrador
                         var numeroDaPatente = UtilidadesDePersistencia.GetValor(linha, "Número_Patente").Trim();
 
                         patente.Clientes.Add(clientesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Cliente")]);
+
+                        if (titularesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Código_Titular")))
+                            patente.Titulares.Add(titularesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Titular")]);
 
                         patente.DataCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
 
@@ -377,6 +383,9 @@ namespace MP.Migrador
 
                         patente.Clientes.Add(clientesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Cliente")]);
 
+                        if (titularesDePatenteComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Código_Titular")))
+                            patente.Titulares.Add(titularesDePatenteComChaveLegada[UtilidadesDePersistencia.GetValor(linha, "Código_Titular")]);
+
                         patente.DataCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
 
                         if (inventoresDeDesenhoComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_DEsenho").Trim()))
@@ -487,6 +496,93 @@ namespace MP.Migrador
                 else
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
                         servico.Modificar((IPessoaJuridica)pessoa);
+
+        }
+
+        private void CarregueECadastreInventoresDaPatente()
+        {
+            DataSet dataSetDadosLegados = new DataSet();
+
+            using (var conexaoSiscopat = new OdbcConnection(txtStrConexaoSiscopat.Text))
+            {
+                conexaoSiscopat.Open();
+
+                var sql = "select * from Clientes";
+
+                using (var data = new OdbcDataAdapter(sql, conexaoSiscopat))
+                    data.Fill(dataSetDadosLegados);
+
+                conexaoSiscopat.Close();
+            }
+
+            var dados = dataSetDadosLegados.Tables[0];
+
+            foreach (DataRow linha in dados.Rows)
+            {
+                var ehPessoaJuridica = false;
+
+                if (UtilidadesDePersistencia.GetValor(linha, "Código_Titular").Equals("0") || UtilidadesDePersistencia.GetValor(linha, "Código_Titular").Equals("3")) continue;
+
+                if (!Information.IsDBNull(linha["cgc"]))
+                    if (UtilidadesDePersistencia.GetValor(linha, "cgc").Trim().Length > 14)
+                        ehPessoaJuridica = true;
+
+                IPessoa pessoa = null;
+
+                if (ehPessoaJuridica)
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
+                    {
+                        var pessoas = servico.ObtenhaPessoasPorNomeComoFiltro(UtilidadesDePersistencia.GetValor(linha, "Nome_Cliente").Trim(), 1);
+
+                        if (pessoas.Count == 0)
+                        {
+                            pessoa = MontePessoaJuridicaPatente(linha);
+                            servico.Inserir((IPessoaJuridica)pessoa);
+                        }
+                        else
+                        {
+                            pessoa = pessoas[0];
+                            AtualizePessoa(pessoa, linha);
+                        }
+                    }
+
+                else
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
+                    {
+                        var pessoas = servico.ObtenhaPessoasPorNomeComoFiltro(UtilidadesDePersistencia.GetValor(linha, "Nome_Cliente").Trim(), 1);
+
+                        if (pessoas.Count == 0)
+                        {
+                            pessoa = MontePessoaFisicaPatente(linha);
+                            servico.Inserir((IPessoaFisica)pessoa);
+                        }
+                        else
+                        {
+                            pessoa = pessoas[0];
+                            AtualizePessoa(pessoa, linha);
+                        }
+                    }
+
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTitular>())
+                {
+                    var titular = servico.Obtenha(pessoa);
+
+                    if (titular == null)
+                    {
+                        titular = FabricaGenerica.GetInstancia().CrieObjeto<ITitular>(new object[] { pessoa });
+
+                        if (!Information.IsDBNull(linha["Observações"]))
+                            titular.InformacoesAdicionais = UtilidadesDePersistencia.GetValor(linha, "Observações").Trim();
+
+                        titular.DataDoCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "Data_Cadastramento").Trim());
+
+                        servico.Inserir(titular);
+                    }
+
+                    titularesDePatenteComChaveLegada.Add(UtilidadesDePersistencia.GetValor(linha, "Código_Titular"), titular);
+                }
+            }
 
         }
 
