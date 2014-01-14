@@ -24,11 +24,11 @@
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Inventor" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Titular" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
-                    <asp:Panel ID="pnlDadosDoInventor" runat="server">
+                    <asp:Panel ID="pnlDadosDoTitular" runat="server">
                         <table class="tabela">
                             <tr>
                                 <td class="th3">

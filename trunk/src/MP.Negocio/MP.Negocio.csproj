@@ -91,6 +91,7 @@
     <Compile Include="LazyLoad\PatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\PrioridadeUnionistaPatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
+    <Compile Include="LazyLoad\TitularLazyLoad.cs" />
     <Compile Include="LeituraRevistaDeMarcas.cs" />
     <Compile Include="Marcas.cs" />
     <Compile Include="NaturezaPatente.cs" />
@@ -115,10 +116,12 @@
     <Compile Include="Repositorios\RepositorioDeNaturezaDePatente.cs" />
     <Compile Include="Repositorios\RepositorioDePatente.cs" />
     <Compile Include="Repositorios\RepositorioDeProcurador.cs" />
+    <Compile Include="Repositorios\RepositorioDeTitular.cs" />
     <Compile Include="Repositorios\RepositorioPrioridadeUnionistaPatente.cs" />
     <Compile Include="RevistaDeMarcas.cs" />
     <Compile Include="RevistaDePatente.cs" />
     <Compile Include="TipoDeProcedimentoInterno.cs" />
+    <Compile Include="Titular.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Negocio.snk" />

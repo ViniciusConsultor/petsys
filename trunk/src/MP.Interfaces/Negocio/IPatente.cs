@@ -22,5 +22,6 @@ namespace MP.Interfaces.Negocio
         IList<IInventor> Inventores { get; set; }
         IList<ICliente> Clientes { get; set; }
         IList<IRadicalPatente> Radicais { get; set; }
+        IList<ITitular> Titulares { get; set; }
     }
 }

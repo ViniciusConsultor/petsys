@@ -217,5 +217,19 @@ namespace MP.Negocio.LazyLoad
                 _objetoReal.Radicais = value;
             }
         }
+
+        public IList<ITitular> Titulares
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Titulares;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Titulares = value;
+            }
+        }
     }
 }

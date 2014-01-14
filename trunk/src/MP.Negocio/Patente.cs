@@ -10,7 +10,6 @@ namespace MP.Negocio
     [Serializable]
     public class Patente : IPatente
     {
-
         public Patente()
         {
             Clientes = new List<ICliente>();
@@ -19,6 +18,7 @@ namespace MP.Negocio
             PrioridadesUnionista = new List<IPrioridadeUnionistaPatente>();
             Radicais = new List<IRadicalPatente>();
             Classificacoes = new List<IClassificacaoPatente>();
+            Titulares = new List<ITitular>();
         }
 
         public long Identificador { get; set; }
@@ -48,5 +48,7 @@ namespace MP.Negocio
         public IList<ICliente> Clientes { get; set; }
 
         public IList<IRadicalPatente> Radicais { get; set; }
+
+        public IList<ITitular> Titulares { get; set; }
     }
 }
