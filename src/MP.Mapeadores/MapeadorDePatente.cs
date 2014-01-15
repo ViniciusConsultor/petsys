@@ -291,7 +291,7 @@ namespace MP.Mapeadores
             comandoSQL.Append(anuidadePatente.DataLancamento.HasValue ? anuidadePatente.DataLancamento.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
             comandoSQL.Append(anuidadePatente.DataVencimento.HasValue ? anuidadePatente.DataVencimento.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
             comandoSQL.Append(anuidadePatente.DataPagamento.HasValue ? anuidadePatente.DataPagamento.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
-            comandoSQL.Append(anuidadePatente.ValorPagamento + ", ");
+            comandoSQL.Append(anuidadePatente.ValorPagamento.ToString().Replace(",", ".") + ", ");
             comandoSQL.Append("'" + (anuidadePatente.AnuidadePaga ? "1" : "0" )+ "', ");
             comandoSQL.Append("'" + (anuidadePatente.PedidoExame ? "1" : "0") + "', ");
             comandoSQL.Append(anuidadePatente.DataVencimentoSemMulta != null ? anuidadePatente.DataVencimentoSemMulta.Value.ToString("yyyyMMdd") + ", " : "NULL, ");

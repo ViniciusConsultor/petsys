@@ -25,6 +25,7 @@ namespace MP.Client.MP
         private const string CHAVE_ANUIDADE_PATENTE = "CHAVE_ANUIDADE_PATENTE";
         private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
         private const string CHAVE_TITULARES = "CHAVE_TITULARES";
+        private const string CHAVE_INDICE_BAIXA_ANUIDADE = "CHAVE_INDICE_BAIXA_ANUIDADE";
 
         private IList<ICliente> ListaDeClientes
         {
@@ -60,6 +61,12 @@ namespace MP.Client.MP
         {
             get { return (IList<ITitular>)ViewState[CHAVE_TITULARES]; }
             set { ViewState[CHAVE_TITULARES] = value; }
+        }
+
+        private int IndiceBaixaAnuidade
+        {
+            get { return (int)ViewState[CHAVE_INDICE_BAIXA_ANUIDADE]; }
+            set { ViewState[CHAVE_INDICE_BAIXA_ANUIDADE] = value; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -138,6 +145,8 @@ namespace MP.Client.MP
             ctrlCliente.BotaoNovoEhVisivel = true;
             ctrlInventor.Inicializa();
             ctrlInventor.BotaoNovoEhVisivel = true;
+            ctrlClientePesquisa.Inicializa();
+            ctrlClientePesquisa.BotaoNovoEhVisivel = false;
 
             RadTabStrip1.Tabs[0].Selected = true;
             rpvDadosPatentes.Selected = true;
@@ -284,8 +293,11 @@ namespace MP.Client.MP
 
             if (e.CommandName == "Baixar")
             {
+                IndiceBaixaAnuidade = IndiceSelecionado;
                 BaixarAnuidade(ListaDeAnuidadeDaPatente[IndiceSelecionado]);
                 ListaDeAnuidadeDaPatente.RemoveAt(IndiceSelecionado);
+                grdAnuidades.MasterTableView.DataSource = ListaDeAnuidadeDaPatente;
+                grdAnuidades.DataBind();
             }
         }
 
@@ -838,7 +850,7 @@ namespace MP.Client.MP
             if (ListaDeAnuidadeDaPatente == null)
                 ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
 
-            ListaDeAnuidadeDaPatente.Add(anuidadeDaPatente);
+            ListaDeAnuidadeDaPatente.Insert(IndiceBaixaAnuidade, anuidadeDaPatente);
             MostrarListaDeAnuidadeDaPatente();
             VisibilidadeBaixar(true);
 
@@ -887,7 +899,11 @@ namespace MP.Client.MP
                     return;
                 }
 
-                if (ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza.ToUpper().Equals("DI"))
+                if (ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza.ToUpper().Equals("DI") ||
+                    ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza.ToUpper().Equals("MI") ||
+                    ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza.ToUpper().Equals("30") ||
+                    ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza.ToUpper().Equals("31") ||
+                    ctrlPatente.PatenteSelecionada.NaturezaPatente.SiglaNatureza.ToUpper().Equals("32"))
                     CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito.Value);
                 else
                     CalculeAnuidadesPatentesDeNatureza(dataDoDeposito.Value);

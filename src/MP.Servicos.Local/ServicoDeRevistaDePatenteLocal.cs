@@ -93,7 +93,7 @@ namespace MP.Servicos.Local
 
                     foreach (IRevistaDePatente processo in listaDeRevistasDePatentes)
                     {
-                        if (listaDeNumerosDeProcessosCadastrados.Contains(processo.NumeroDoProcesso))
+                        if (processo.NumeroDoProcesso != null && listaDeNumerosDeProcessosCadastrados.Contains(processo.NumeroDoProcesso.Replace("-", "")))
                         {
                             var revistaASerSalva = processo;
                             var processoDePatenteExistente = servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso);
@@ -469,45 +469,43 @@ namespace MP.Servicos.Local
                 PreenchaRequerente(processo, revistaDePatente);
                 PreenchaRedacao(processo, revistaDePatente);
 
-                if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente))
+                if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente) && revistaDePatente.NumeroProcessoDaPatente.Length > 10)
                 {
-                    if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("DI") || revistaDePatente.NumeroProcessoDaPatente.StartsWith("PI") ||
-                    revistaDePatente.NumeroProcessoDaPatente.StartsWith("MU"))
+                    if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("BR"))
                     {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
-                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9);
-
-                        if(string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
-                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(0, 3);
-                    }
-                    else if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("BR"))
-                    {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(10, 8);
-                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(10, 8);
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 13).Trim().Replace("-", "");
+                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 13).Trim().Replace("-", "");
 
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                             revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 2);
                     }
+                    else
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9).Replace("-", "");
+                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 9).Replace("-", "");
+
+                        if(string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(0, 3);
+                    }
                     
                 }
-                else if (!string.IsNullOrEmpty(revistaDePatente.NumeroDoPedido))
+                else if (!string.IsNullOrEmpty(revistaDePatente.NumeroDoPedido) && revistaDePatente.NumeroDoPedido.Length > 10)
                 {
-                    if (revistaDePatente.NumeroDoPedido.StartsWith("DI") || revistaDePatente.NumeroDoPedido.StartsWith("PI") ||
-                        revistaDePatente.NumeroDoPedido.StartsWith("MU"))
+                    if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
                     {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(3, 9);
-                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(3, 9);
-
-                        if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
-                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(0, 3);
-                    }
-                    else if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
-                    {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(10, 8);
-                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(10, 8);
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(5, 13).Trim().Replace("-", "");
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(5, 13).Trim().Replace("-", "");
 
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                             revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(3, 2);
+                    }
+                    else
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(3, 9).Replace("-", "");
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(3, 9).Replace("-", "");
+
+                        if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(0, 3);
                     }
                 }
 
