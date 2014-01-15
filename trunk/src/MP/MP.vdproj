@@ -3333,6 +3333,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_708201AC2887403B83B6A8A73831B5DB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_70CE65A5D015442E9476F8CE16F7338C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -3730,6 +3736,12 @@
         "Entry"
         {
         "MsmKey" = "8:_7C31EE4B8CD7408EABA6B1461BC42CDB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7C5AE48D52764A928E4046C5A673C84B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -7395,6 +7407,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_FC2C36C2B1ED4902BA6575991E700D2D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FC3847466864412DA2780D625E804CFE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -7564,12 +7582,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6882847E9574421888CF71FAC4366B8E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_F06E6D57D88C47BAB484DACF10DBBB16"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -7697,6 +7709,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6A4A4CDC07AE44049B3A79954494CE30"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6882847E9574421888CF71FAC4366B8E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -18541,6 +18559,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_708201AC2887403B83B6A8A73831B5DB"
+            {
+            "SourcePath" = "8:..\\..\\bin\\Paises.csv"
+            "TargetName" = "8:Paises.csv"
+            "Tag" = "8:"
+            "Folder" = "8:_69C7AB7FF7CE402BB5EA85549B43563A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70CE65A5D015442E9476F8CE16F7338C"
             {
             "SourcePath" = "8:..\\WorkSpace\\imagens\\default\\menu\\unchecked.gif"
@@ -19889,6 +19927,26 @@
             "TargetName" = "8:corners.gif"
             "Tag" = "8:"
             "Folder" = "8:_5A6CBD2B8230477690967A7D868F0C92"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7C5AE48D52764A928E4046C5A673C84B"
+            {
+            "SourcePath" = "8:..\\..\\bin\\municipios.sql"
+            "TargetName" = "8:municipios.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_69C7AB7FF7CE402BB5EA85549B43563A"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -31556,6 +31614,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FC2C36C2B1ED4902BA6575991E700D2D"
+            {
+            "SourcePath" = "8:..\\..\\bin\\DespachosDeMarcas.csv"
+            "TargetName" = "8:DespachosDeMarcas.csv"
+            "Tag" = "8:"
+            "Folder" = "8:_69C7AB7FF7CE402BB5EA85549B43563A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FC3847466864412DA2780D625E804CFE"
             {
             "SourcePath" = "8:..\\WorkSpace\\imagens\\bg_titulo_erro.jpg"
@@ -33968,7 +34046,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MP"
         "ProductCode" = "8:{4EA7FC36-EC19-4A35-996C-3BA83CCD6A49}"
-        "PackageCode" = "8:{3BC140BA-14E1-49F8-8691-A38587A34D8D}"
+        "PackageCode" = "8:{AD0BA106-1329-4A38-B580-87F3CC373E48}"
         "UpgradeCode" = "8:{E87E30DB-1BB8-4667-B49F-CCB876BE8588}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:TRUE"
