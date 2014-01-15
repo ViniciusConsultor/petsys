@@ -277,7 +277,7 @@
                                         <tr>
                                             <td class="td">
                                                 <telerik:RadListView ID="listRadical" runat="server" AllowPaging="True" ItemPlaceholderID="pnlPlaceHoder"
-                                                    DataKeyNames="IdLeitura" Skin="Vista" OnPageIndexChanged="listRadical_OnPageIndexChanged">
+                                                    DataKeyNames="IdPatente" Skin="Vista" OnPageIndexChanged="listRadical_OnPageIndexChanged">
                                                     <LayoutTemplate>
                                                         <asp:Panel ID="pnlPlaceHoder" runat="server" />
                                                         <table class="tabela">
@@ -315,17 +315,17 @@
                                                                         <asp:Label ID="Label5" runat="server" Text="Radical:"></asp:Label>
                                                                     </td>
                                                                     <td class="td">
-                                                                        <telerik:RadTextBox ID="txtRadical" runat="server" Enabled="false" Width="87px" Text='<%# Eval("Radical") %>'>
+                                                                        <telerik:RadTextBox ID="txtRadical" runat="server" Enabled="false" Width="87px" Text='<%# Eval("Colidencia") %>'>
                                                                         </telerik:RadTextBox>
                                                                     </td>
-                                                                    <td class="th3">
+                                                                    <%--<td class="th3">
                                                                         <asp:Label ID="Label7" runat="server" Text="NCL:"></asp:Label>
                                                                     </td>
                                                                     <td class="td">
                                                                         <telerik:RadTextBox ID="txtRadicalNCL" runat="server" Enabled="false" Width="87px"
                                                                             Text='<%# Eval("RadicalNCL")%>'>
                                                                         </telerik:RadTextBox>
-                                                                    </td>
+                                                                    </td>--%>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -354,14 +354,12 @@
                                                             <HeaderStyle Width="20px" />
                                                         </ExpandCollapseColumn>
                                                         <Columns>
-                                                            <telerik:GridBoundColumn DataField="IdLeitura" HeaderText="ID" UniqueName="column6"
+                                                            <telerik:GridBoundColumn DataField="IdRevistaPatente" HeaderText="ID" UniqueName="column6"
                                                                 Display="false">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NCL" HeaderText="Classficação" UniqueName="column1">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Patente.Titulo" HeaderText="Patente" UniqueName="column2">
-                                                            </telerik:GridBoundColumn>
+                                                            </telerik:GridBoundColumn>                                                                                                                        
                                                             <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column3">
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn DataField="Titulo" HeaderText="Patente" UniqueName="column2">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
@@ -389,16 +387,12 @@
                                                             <HeaderStyle Width="20px" />
                                                         </ExpandCollapseColumn>
                                                         <Columns>
-                                                            <telerik:GridBoundColumn DataField="IdLeitura" HeaderText="ID" UniqueName="column6"
+                                                            <telerik:GridBoundColumn DataField="IdRevistaPatente" HeaderText="ID" UniqueName="column6"
                                                                 Display="false">
+                                                            </telerik:GridBoundColumn>                                                            
+                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column3">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column1">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NCL" HeaderText="NCL" UniqueName="column2">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Marca" HeaderText="Marca" UniqueName="column3">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column4">
+                                                            <telerik:GridBoundColumn DataField="Titulo" HeaderText="Patente" UniqueName="column2">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
