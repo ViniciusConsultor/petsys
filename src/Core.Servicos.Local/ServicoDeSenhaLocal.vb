@@ -101,7 +101,7 @@ Public Class ServicoDeSenhaLocal
             ServerUtils.BeginTransaction()
 
             Dim id As Long = Mapeador.RegistreDefinicaoDeNovaSenha(Operador)
-            EnviaEmailDeDefinicaoDaSenha(id, Link)
+            EnviaEmailDeDefinicaoDaSenha(id, Link, Operador.Pessoa)
             ServerUtils.CommitTransaction()
 
         Catch ex As Exception
@@ -112,7 +112,7 @@ Public Class ServicoDeSenhaLocal
         End Try
     End Sub
 
-    Private Sub EnviaEmailDeDefinicaoDaSenha(ByVal Id As Long, ByVal Link As String)
+    Private Sub EnviaEmailDeDefinicaoDaSenha(ByVal Id As Long, ByVal Link As String, Pessoa As IPessoa)
         Dim Configuracao As IConfiguracaoDoSistema
 
         Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
@@ -127,7 +127,7 @@ Public Class ServicoDeSenhaLocal
                 Dim CorpoDoEmail As String = Link & Id
                 GerenciadorDeEmail.EnviaEmail("Redefinição de senha.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
-                                              Configuracao.RemetenteDaNotificaoDeErros, _
+                                              Pessoa.EnderecoDeEmail.ToString(),
                                               CorpoDoEmail)
             End If
         End If

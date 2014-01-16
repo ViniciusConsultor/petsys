@@ -39,10 +39,10 @@
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label4" runat="server" Text="E-mail do remetente da notificação de erros"></asp:Label>
+                                        <asp:Label ID="Label4" runat="server" Text="E-mail do destinatário da notificação de erros"></asp:Label>
                                     </td>
                                     <td class="td">
-                                        <telerik:RadTextBox ID="txtRemetenteNotificacaoDeErros" runat="server" MaxLength="255"
+                                        <telerik:RadTextBox ID="txtDestinatarioDeNotificacaoDeErro" runat="server" MaxLength="255"
                                             Skin="Vista" Width="300px" SelectionOnFocus="CaretToBeginning">
                                         </telerik:RadTextBox>
                                     </td>
@@ -119,7 +119,7 @@
                                 </tr>
                                 <tr>
                                     <td class="th3">
-                                        <asp:Label ID="Label29" runat="server" Text="Remetente"></asp:Label>
+                                        <asp:Label ID="Label29" runat="server" Text="E-mail do remetente"></asp:Label>
                                     </td>
                                     <td class="td">
                                         <telerik:RadTextBox ID="txtRemetente" runat="server" MaxLength="255" SelectionOnFocus="CaretToBeginning"

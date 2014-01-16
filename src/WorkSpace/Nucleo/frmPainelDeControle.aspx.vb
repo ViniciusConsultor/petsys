@@ -42,7 +42,7 @@ Partial Public Class frmPainelDeControle
 
         If Not Configuracao Is Nothing Then
             chkNotificarErrosNaAplicacaoAutomaticamente.Checked = Configuracao.NotificarErrosAutomaticamente
-            txtRemetenteNotificacaoDeErros.Text = Configuracao.RemetenteDaNotificaoDeErros
+            txtDestinatarioDeNotificacaoDeErro.Text = Configuracao.DestinatarioDaNotificaoDeErros
 
             If Not Configuracao.ConfiguracaoDeEmailDoSistema Is Nothing Then
                 cboTipoDeServidor.SelectedValue = Configuracao.ConfiguracaoDeEmailDoSistema.TipoDoServidor.ID
@@ -87,7 +87,7 @@ Partial Public Class frmPainelDeControle
 
     Private Function ValidaDados() As String
         If chkNotificarErrosNaAplicacaoAutomaticamente.Checked Then
-            If String.IsNullOrEmpty(txtRemetenteNotificacaoDeErros.Text) Then Return "O e-mail do remetente da notificação de erros deve ser informado."
+            If String.IsNullOrEmpty(txtDestinatarioDeNotificacaoDeErro.Text) Then Return "O e-mail do destinatário da notificação de erros deve ser informado."
             Return ValidaDadosObrigatoriosDoEmail()
         End If
 
@@ -149,7 +149,7 @@ Partial Public Class frmPainelDeControle
         Configuracao.NotificarErrosAutomaticamente = chkNotificarErrosNaAplicacaoAutomaticamente.Checked
 
         If chkNotificarErrosNaAplicacaoAutomaticamente.Checked Then
-            Configuracao.RemetenteDaNotificaoDeErros = txtRemetenteNotificacaoDeErros.Text
+            Configuracao.DestinatarioDaNotificaoDeErros = txtDestinatarioDeNotificacaoDeErro.Text
         End If
 
         If ExisteAlgumCampoDeEmailComValores() Then

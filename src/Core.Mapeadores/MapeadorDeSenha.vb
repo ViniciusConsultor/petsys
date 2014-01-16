@@ -79,7 +79,7 @@ Public Class MapeadorDeSenha
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(idRequisicaoReDefinicao.ToString, ", "))
         Sql.Append(String.Concat(Operador.Pessoa.ID.ToString(), ", "))
-        Sql.Append(String.Concat("'", Now.ToString("yyyyMMddhhmmss"), "',"))
+        Sql.Append(String.Concat("'", Now.ToString("yyyyMMddhhmmss"), "'"))
         Sql.Append(")")
 
         DBHelper.ExecuteNonQuery(Sql.ToString, False)

@@ -14,6 +14,9 @@ Public Class EsqueceuSenha
                 FabricaDeContexto.GetInstancia.GetContextoAtual.Conexao = Servico.ObtenhaConexao
             End Using
             txtLogin.Focus()
+
+            btnEnviarEmail.Visible = True
+            btnSair.Visible = False
         End If
     End Sub
 
@@ -37,9 +40,15 @@ Public Class EsqueceuSenha
         Using Servico As IServicoDeSenha = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSenha)()
             Servico.RegistreDefinicaoDeNovaSenha(operador, UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "DefinicaoDeNovaSenha.aspx?id=")
 
+            btnEnviarEmail.Visible = False
+            btnSair.Visible = True
+
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("A requisição de redefinição da sua senha foi enviada no seu e-mail."), False)
         End Using
 
     End Sub
 
+    Private Sub btnSair_Click(sender As Object, e As System.EventArgs) Handles btnSair.Click
+        Response.Redirect("Login.aspx")
+    End Sub
 End Class

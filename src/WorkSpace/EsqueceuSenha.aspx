@@ -35,6 +35,8 @@
                                         <br/>
                                         <asp:Button ID="btnEnviarEmail" runat="server" CssClass="botao130X30" Text="Definir nova senha" ToolTip="Clique para enviar um e-mail para definição de nova senha.">
                                         </asp:Button>
+                                          <asp:Button ID="btnSair" runat="server" CssClass="botao130X30" Text="Sair" ToolTip="Clique para voltar para o login." CausesValidation="False">
+                                        </asp:Button>
                                     </td>
                                     <td>
                                     </td>

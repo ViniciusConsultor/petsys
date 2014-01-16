@@ -25,13 +25,13 @@ Public Class ConfiguracaoDoSistema
         End Set
     End Property
 
-    Private _RemetenteDaNotificaoDeErros As String
-    Public Property RemetenteDaNotificaoDeErros() As String Implements IConfiguracaoDoSistema.RemetenteDaNotificaoDeErros
+    Private _DestinatarioDaNotificaoDeErros As String
+    Public Property DestinatarioDaNotificaoDeErros() As String Implements IConfiguracaoDoSistema.DestinatarioDaNotificaoDeErros
         Get
-            Return _RemetenteDaNotificaoDeErros
+            Return _DestinatarioDaNotificaoDeErros
         End Get
         Set(ByVal value As String)
-            _RemetenteDaNotificaoDeErros = value
+            _DestinatarioDaNotificaoDeErros = value
         End Set
     End Property
 

@@ -75,4 +75,13 @@ Partial Public Class DefinicaoDeNovaSenha
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnRedefinir As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnIrParaLogin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnIrParaLogin As Global.System.Web.UI.WebControls.Button
 End Class

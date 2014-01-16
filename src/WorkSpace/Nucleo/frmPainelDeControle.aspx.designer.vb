@@ -104,13 +104,13 @@ Partial Public Class frmPainelDeControle
     Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtRemetenteNotificacaoDeErros control.
+    '''txtDestinatarioDeNotificacaoDeErro control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtRemetenteNotificacaoDeErros As Global.Telerik.Web.UI.RadTextBox
+    Protected WithEvents txtDestinatarioDeNotificacaoDeErro As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
     '''rpvEmail control.
