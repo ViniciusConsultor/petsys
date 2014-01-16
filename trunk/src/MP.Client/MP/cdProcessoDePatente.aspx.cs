@@ -126,6 +126,7 @@ namespace MP.Client.MP
             ctrlPasta.Inicializa();
 
             ctrlPatente1.BotaoNovoEhVisivel = true;
+            ctrlPatente1.BotaoDetalharEhVisivel = true;
             ctrlProcurador.BotaoNovoEhVisivel = true;
             ctrlDespachoDePatentes.BotaoNovoEhVisivel = true;
             ctrlPasta.BotaoNovoEhVisivel = true;

@@ -77,8 +77,27 @@ namespace MP.Client.MP
             if (!VerifiqueSeClienteDaPesquisaEstaSelecionado())
                 ctrlPatente.SetaIdDoClienteSelecionado(0);
 
-            if(!IsPostBack)
+            if (IsPostBack) return;
+
+            Nullable<long> id = null;
+
+            if (!string.IsNullOrEmpty(Request.QueryString["Id"]))
+                id = Convert.ToInt64(Request.QueryString["Id"]);
+
+
+            if (id == null)
                 ExibaTelaInicial();
+            else
+                ExibaTelaDetalhes(id.Value);
+        }
+
+        private void ExibaTelaDetalhes(long id)
+        {
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
+            {
+                var patente = servico.ObtenhaPatente(id);
+                ExibaPatenteSelecionada(patente);
+            }
         }
 
         private void ExibaTelaInicial()
@@ -443,6 +462,8 @@ namespace MP.Client.MP
         private void ExibaPatenteSelecionada(IPatente patente)
         {
             ExibaTelaConsultar();
+            ctrlPatente.PatenteSelecionada  = patente;
+            ctrlPatente.TituloPatente = patente.TituloPatente;
             txtTituloPatente.Text = patente.TituloPatente;
             ctrlNaturezaPatente.Inicializa();
             ctrlNaturezaPatente.NaturezaPatenteSelecionada = patente.NaturezaPatente;

@@ -40,6 +40,7 @@ namespace MP.Client.MP
             ctrlDespacho.DespachoDeMarcasFoiSelecionada += MostreDespacho;
             
             ctrlMarcas1.BotaoNovoEhVisivel = true;
+            ctrlMarcas1.BotaoDetalharEhVisivel = true;
             ctrlDespacho.BotaoNovoEhVisivel = true;
             ctrlProcurador.BotaoNovoEhVisivel = true;
 
