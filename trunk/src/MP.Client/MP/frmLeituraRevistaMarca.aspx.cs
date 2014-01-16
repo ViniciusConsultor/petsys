@@ -950,10 +950,12 @@ namespace MP.Client.MP
             {
                 IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
 
+                var numeroDaRevistaSelecionada = ((IRevistaDeMarcas)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaMarcas.ToString();
+
                 listaDeProcessos = ((IList<IProcessoDeMarca>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
 
                 var gerador = new GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias(listaDeProcessos);
-                var nomeDoArquivo = gerador.GereRelatorioAnalitico();
+                var nomeDoArquivo = gerador.GereRelatorioAnalitico(numeroDaRevistaSelecionada);
 
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
                       nomeDoArquivo;
@@ -970,8 +972,10 @@ namespace MP.Client.MP
 
                 listaDeProcessos = ((IList<IProcessoDeMarca>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
 
+                var numeroDaRevistaSelecionada = ((IRevistaDeMarcas)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaMarcas.ToString();
+
                 var gerador = new GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias(listaDeProcessos);
-                var nomeDoArquivo = gerador.GereRelatorioSintetico();
+                var nomeDoArquivo = gerador.GereRelatorioSintetico(numeroDaRevistaSelecionada);
 
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
                       nomeDoArquivo;

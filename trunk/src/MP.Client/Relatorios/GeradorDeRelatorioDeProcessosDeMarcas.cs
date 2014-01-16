@@ -124,7 +124,11 @@ namespace MP.Client.Relatorios
             
             public void OnOpenDocument(PdfWriter writer, Document document)
             {
-                IPessoaJuridica pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
+            }
+
+            public void OnStartPage(PdfWriter writer, Document document)
+            {
+                var pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
 
                 Chunk imagem;
 
@@ -150,51 +154,41 @@ namespace MP.Client.Relatorios
                 if (pessoaJuridica.Telefones.Count > 0)
                 {
                     var telefone = pessoaJuridica.Telefones[0];
-                    dadosEmpresa.Add("Telefone " + telefone.ToString());
+                    dadosEmpresa.Add("Telefone " + telefone);
                 }
 
-                Phrase fraseCabecalho = new Phrase();
-
-                var tabela = new Table(2);
-                tabela.Border = 0;
-                tabela.Width = 100;
+                var tabelaHeader = new Table(2);
+                tabelaHeader.Border = 0;
+                tabelaHeader.Width = 100;
 
                 var cell = new Cell(new Phrase(imagem));
                 cell.Border = 0;
                 cell.Width = 30;
 
-                tabela.AddCell(cell);
+                tabelaHeader.AddCell(cell);
 
                 var cell1 = new Cell(dadosEmpresa);
                 cell1.Border = 0;
                 cell1.Width = 70;
-                tabela.AddCell(cell1);
-                fraseCabecalho.Add(tabela);
+                tabelaHeader.AddCell(cell1);
 
-                var cabecalho = new HeaderFooter(fraseCabecalho, false);
-                cabecalho.Border = HeaderFooter.NO_BORDER;
-                cabecalho.UseVariableBorders = true;
+                var linhaVazia = new Cell(new Phrase("\n", font2));
+                linhaVazia.Colspan = 2;
+                linhaVazia.DisableBorderSide(1);
 
-                document.Header = cabecalho;
-            }
+                tabelaHeader.AddCell(linhaVazia);
 
-            public void OnStartPage(PdfWriter writer, Document document)
-            {
-                
+                document.Add(tabelaHeader);
             }
 
             public void OnEndPage(PdfWriter writer, Document document)
             {
-
-                if (document.PageNumber > 1)
-                    document.Header = null;
-                
                 HeaderFooter rodape;
                 StringBuilder texto = new StringBuilder();
 
                 texto.AppendLine(String.Concat("Impressão em: ", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
 
-                rodape = new HeaderFooter(new Phrase(texto.ToString() + " página :" + document.PageNumber, font4), false);
+                rodape = new HeaderFooter(new Phrase(texto.ToString() + " página :" + (document.PageNumber + 1), font4), false);
                 rodape.Border = HeaderFooter.NO_BORDER;
                 rodape.Alignment = HeaderFooter.ALIGN_RIGHT;
 
