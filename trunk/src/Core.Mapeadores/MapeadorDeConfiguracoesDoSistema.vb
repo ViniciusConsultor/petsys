@@ -30,7 +30,7 @@ Public Class MapeadorDeConfiguracoesDoSistema
                     ConfiguracaoDoSistema.NotificarErrosAutomaticamente = UtilidadesDePersistencia.GetValorBooleano(Leitor, "NOTIFERROSREMAIL")
 
                     If Not UtilidadesDePersistencia.EhNulo(Leitor, "EMAILREMETNOTIFERROS") Then
-                        ConfiguracaoDoSistema.RemetenteDaNotificaoDeErros = UtilidadesDePersistencia.GetValorString(Leitor, "EMAILREMETNOTIFERROS")
+                        ConfiguracaoDoSistema.DestinatarioDaNotificaoDeErros = UtilidadesDePersistencia.GetValorString(Leitor, "EMAILREMETNOTIFERROS")
                     End If
 
                     'OU SEJA TEM CONFIGURACAO DE E-MAIL CADASTRADO
@@ -90,10 +90,10 @@ Public Class MapeadorDeConfiguracoesDoSistema
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat("'", IIf(Configuracao.NotificarErrosAutomaticamente, "S", "N"), "', "))
 
-        If String.IsNullOrEmpty(Configuracao.RemetenteDaNotificaoDeErros) Then
+        If String.IsNullOrEmpty(Configuracao.DestinatarioDaNotificaoDeErros) Then
             Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.RemetenteDaNotificaoDeErros), "', "))
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.DestinatarioDaNotificaoDeErros), "', "))
         End If
 
         If Not Configuracao.ConfiguracaoDeEmailDoSistema Is Nothing Then

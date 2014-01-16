@@ -53,6 +53,8 @@
                                         <br />
                                         <asp:Button ID="btnRedefinir" runat="server" CssClass="botao130X30" Text="Redefinir"
                                             ToolTip="Clique para redifir a sua senha."></asp:Button>
+                                         <asp:Button ID="btnIrParaLogin" runat="server" CssClass="botao130X30" Text="Entrar"
+                                            ToolTip="Clique para entrar no sistema." CausesValidation="False"></asp:Button>
                                     </td>
                                     <td>
                                     </td>

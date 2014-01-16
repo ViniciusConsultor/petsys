@@ -22,6 +22,9 @@ Public Class DefinicaoDeNovaSenha
 
                     IDOperador = ServicoDeSenha.ObtenhaIDOperadorParaRedifinirSenha(CLng(Request.QueryString("ID")))
 
+                    btnIrParaLogin.Visible = False
+                    btnRedefinir.Visible = True
+
                     If IDOperador.HasValue Then
                         ViewState("IDOPERADOR") = IDOperador.Value
                         Exit Sub
@@ -66,11 +69,15 @@ Public Class DefinicaoDeNovaSenha
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Senha alterada com sucesso."), False)
 
-            Response.Redirect("Login.aspx")
-
+            btnRedefinir.Visible = False
+            btnIrParaLogin.Visible = True
+            
         Catch ex As BussinesException
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
         End Try
     End Sub
 
+    Private Sub btnIrParaLogin_Click(sender As Object, e As System.EventArgs) Handles btnIrParaLogin.Click
+        Response.Redirect("Login.aspx")
+    End Sub
 End Class

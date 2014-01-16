@@ -56,7 +56,7 @@ Public Class Global_asax
                 Dim mensagemDoErro As String = ObtenhaMensagemDeLog(Erro)
                 GerenciadorDeEmail.EnviaEmail("Erro ocorrido no sistema.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
-                                              Configuracao.RemetenteDaNotificaoDeErros, _
+                                              Configuracao.DestinatarioDaNotificaoDeErros, _
                                               mensagemDoErro)
             End If
         End If
