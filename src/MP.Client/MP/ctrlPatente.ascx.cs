@@ -95,6 +95,7 @@ namespace MP.Client.MP
             cboPatente.ClearSelection();
             PatenteFoiSelecionada = null;
             BotaoNovoEhVisivel = false;
+            BotaoDetalharEhVisivel = false;
         }
 
         public bool EnableLoadOnDemand
@@ -118,6 +119,11 @@ namespace MP.Client.MP
             set { btnNovo.Visible = value; }
         }
 
+        public bool BotaoDetalharEhVisivel
+        {
+            set { btnDetalhar.Visible = value; }
+        }
+
         protected override void OnPreRender(EventArgs e)
         {
 
@@ -125,6 +131,9 @@ namespace MP.Client.MP
 
             if (btnNovo.Visible)
                 btnNovo.Visible = principal.EstaAutorizado(btnNovo.CommandArgument);
+
+            if (btnDetalhar.Visible)
+                btnDetalhar.Visible = principal.EstaAutorizado(btnDetalhar.CommandArgument);
 
             base.OnPreRender(e);
         }
@@ -153,6 +162,15 @@ namespace MP.Client.MP
         public void SetaIdDoClienteSelecionado(long idCliente)
         {
             IdClienteSelecionado = idCliente;
+        }
+
+        protected void btnDetalhar_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var url = ObtenhaURL();
+            url = String.Concat(url, "?Id=", PatenteSelecionada.Identificador.ToString());
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.ExibeJanela(url, "Cadastro de patente", 800, 550),
+                                                    false);
         }
     }
 }

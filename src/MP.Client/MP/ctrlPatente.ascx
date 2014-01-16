@@ -39,3 +39,5 @@
 </telerik:RadComboBox>
 <asp:ImageButton ID="btnNovo" runat="server" ImageUrl="~/imagens/new.gif" ToolTip="Novo"
     CausesValidation="False" CommandArgument="OPE.MP.006.0001" OnClick="btnNovo_OnClick" />
+<asp:ImageButton ID="btnDetalhar" runat="server" ImageUrl="~/imagens/details.gif" ToolTip="Detalhar" CausesValidation="False"
+                    CommandArgument="OPE.MP.006.0004"  OnClick="btnDetalhar_OnClick"/>

@@ -26,9 +26,28 @@ namespace MP.Client.MP
         {
             ctrlMarcas.MarcaFoiSelecionada += MostreMarcas;
 
-            if (!IsPostBack)
+            if (IsPostBack) return;
+
+            Nullable<long> id = null;
+
+            if (!string.IsNullOrEmpty(Request.QueryString["Id"]))
+                id = Convert.ToInt64(Request.QueryString["Id"]);
+
+
+            if (id == null)
+                ExibaTelaInicial();
+            else
+                ExibaTelaDetalhes(id.Value);
+        }
+
+
+        private void ExibaTelaDetalhes  (long id)
+        {
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
             {
-                this.ExibaTelaInicial();
+                var marca = servico.obtenhaMarcasPeloId(id);
+
+                MostreMarcas(marca);
             }
         }
 
@@ -80,7 +99,7 @@ namespace MP.Client.MP
 
             ctrlCliente.BotaoNovoEhVisivel = true;
             ctrlMarcas.BotaoNovoEhVisivel = false;
-
+            ctrlMarcas.BotaoDetalharEhVisivel = false;
             ctrlPeriodo.Inicializa();
 
             CarregueComponentes();
@@ -397,7 +416,8 @@ namespace MP.Client.MP
             ctrlCliente.ClienteSelecionado = marca.Cliente;
             ctrlNCL.Codigo = marca.NCL.Codigo.ToString();
             ctrlNatureza.Codigo = marca.Natureza.Codigo.ToString();
-
+            ctrlMarcas.MarcaSelecionada = marca;
+            ctrlMarcas.DescricaoDaMarca = marca.DescricaoDaMarca;
 
             if (marca.CodigoDaClasse.HasValue)
                 txtClasse.Text = marca.CodigoDaClasse.ToString();

@@ -140,6 +140,11 @@ namespace MP.Client.MP
         {
             set { btnNovo.Visible = value; }
         }
+
+        public bool BotaoDetalharEhVisivel
+        {
+            set { btnDetalhar.Visible = value; }   
+        }
         
         protected override void OnPreRender(EventArgs e)
         {
@@ -147,6 +152,9 @@ namespace MP.Client.MP
 
             if (btnNovo.Visible)
                 btnNovo.Visible = principal.EstaAutorizado(btnNovo.CommandArgument);
+
+            if (btnDetalhar.Visible)
+                btnDetalhar.Visible = principal.EstaAutorizado(btnDetalhar.CommandArgument);
 
             base.OnPreRender(e);
         }
@@ -164,6 +172,15 @@ namespace MP.Client.MP
             var URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual();
             URL = String.Concat(URL, "MP/cdMarcas.aspx");
             return URL;
+        }
+        
+        protected void btnDetalhar_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var url = ObtenhaURL();
+            url = String.Concat(url, "?Id=", MarcaSelecionada.IdMarca.Value.ToString());
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.ExibeJanela(url, "Cadastro de marcas", 800, 550),
+                                                    false);
         }
     }
 }
