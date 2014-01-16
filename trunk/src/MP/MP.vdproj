@@ -34046,7 +34046,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MP"
         "ProductCode" = "8:{4EA7FC36-EC19-4A35-996C-3BA83CCD6A49}"
-        "PackageCode" = "8:{AD0BA106-1329-4A38-B580-87F3CC373E48}"
+        "PackageCode" = "8:{666E05D4-0303-41E8-B331-20E7593B43A3}"
         "UpgradeCode" = "8:{E87E30DB-1BB8-4667-B49F-CCB876BE8588}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:TRUE"
