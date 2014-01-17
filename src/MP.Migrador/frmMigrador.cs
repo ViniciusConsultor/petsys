@@ -175,34 +175,114 @@ namespace MP.Migrador
             }
         }
 
-        private IList<IAnuidadePatente> ObtenhaAnuidadesDaPatente(DataRow linha, IServicoDePatente servico, INaturezaPatente natureza)
+        private IList<IAnuidadePatente> ObtenhaAnuidadesPatenteDesenhoIndustrial (DataRow linha, IList< IAnuidadePatente> anuidades )
         {
-            var dataDoDeposito = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_depósito"));
-
-            IList<IAnuidadePatente> anuidades;
-            var nomenclaturaColuna = "DatPag";
-
-            if (natureza.SiglaNatureza.Equals("DI"))
+            for (var i = 0; i < anuidades.Count; i++)
             {
-                anuidades = servico.CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito);
-                nomenclaturaColuna = "";
-            }
-            else
-                anuidades = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDoDeposito);
+                var indice = i + 2;
 
+                switch (anuidades[i].DescricaoAnuidade)
+                {
+                    case "2º QUIQUÊNIO" :
+                        if (!Information.IsDBNull(linha["DatPagQui2"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPagQui2" )))
+                        {
+                            anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPagQui2"));
+                            anuidades[i].AnuidadePaga = true;
+                        }
+                        break;
+                    case "3º QUIQUÊNIO":
+                        if (!Information.IsDBNull(linha["DatPagQui3"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPagQui3")))
+                        {
+                            anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPagQui3"));
+                            anuidades[i].AnuidadePaga = true;
+                        }
+                        break;
+                    case "4º QUIQUÊNIO":
+                        if (!Information.IsDBNull(linha["DatPagQui4"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPagQui4")))
+                        {
+                            anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPagQui4"));
+                            anuidades[i].AnuidadePaga = true;
+                        }
+                        break;
+                    case "5º QUIQUÊNIO":
+                        if (!Information.IsDBNull(linha["DatPagQui5"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPagQui5")))
+                        {
+                            anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPagQui5"));
+                            anuidades[i].AnuidadePaga = true;
+                        }
+                        break;
+                    case "1ª PRORROGAÇÃO":
+
+                        if (!Information.IsDBNull(linha["DatPagProrrog1"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPagProrrog1")))
+                        {
+                            anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPagProrrog1"));
+                            anuidades[i].AnuidadePaga = true;
+                        }
+                        break;
+                    case "2ª PRORROGAÇÃO":
+                        if (!Information.IsDBNull(linha["DatPagProrrog2"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPagProrrog2")))
+                        {
+                            anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPagProrrog2"));
+                            anuidades[i].AnuidadePaga = true;
+                        }
+                        break;
+                    case "3ª PRORROGAÇÃO":
+                        if (!Information.IsDBNull(linha["DatPagProrrog3"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPagProrrog3")))
+                        {
+                            anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPagProrrog3"));
+                            anuidades[i].AnuidadePaga = true;
+                        }
+                        break;
+                }
+
+                
+            }
+
+            return anuidades;
+        }
+
+        private IList<IAnuidadePatente> ObtenhaAnuidadesPatente(DataRow linha, IList<IAnuidadePatente> anuidades)
+        {
             for (var i = 0; i < anuidades.Count; i++)
             {
                 var indice = i + 3;
 
-                if (!Information.IsDBNull(linha[nomenclaturaColuna + indice.ToString()]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString())))
+                if (!Information.IsDBNull(linha["DatPag" + indice.ToString()]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "DatPag" + indice.ToString())))
                 {
-                    anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, nomenclaturaColuna + indice.ToString()));
+                    anuidades[i].DataPagamento = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DatPag" + indice.ToString()));
                     anuidades[i].AnuidadePaga = true;
                 }
-                    
+
             }
 
             return anuidades;
+        }
+
+        private IList<IAnuidadePatente> ObtenhaAnuidadesDaPatente(DataRow linha, IServicoDePatente servico, INaturezaPatente natureza)
+        {
+
+            if (Information.IsDBNull(linha["data_depósito"]) || string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "data_depósito")))
+                return null;
+
+            var dataDoDeposito = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_depósito"));
+
+            IList<IAnuidadePatente> anuidades;
+            
+            if (natureza.SiglaNatureza.Equals("DI") || 
+                natureza.SiglaNatureza.Equals("30") || 
+                natureza.SiglaNatureza.Equals("31") || 
+                natureza.SiglaNatureza.Equals("32") || 
+                natureza.SiglaNatureza.Equals("MI"))
+            {
+                anuidades = servico.CalculeAnuidadesPatentesDeNaturezaDI(dataDoDeposito);
+                return ObtenhaAnuidadesPatenteDesenhoIndustrial(linha, anuidades);
+            }
+            else
+            {
+                anuidades = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDoDeposito);
+                return ObtenhaAnuidadesPatente(linha, anuidades);
+            }
+                
         }
 
         private void MigrePatentesEProcessosDePatentes()
@@ -393,7 +473,7 @@ namespace MP.Migrador
 
                         patente.NaturezaPatente = naturezasPatentes[UtilidadesDePersistencia.GetValor(linha, "nat_desenho")];
 
-                        //patente.Anuidades = ObtenhaAnuidadesDaPatente(linha, servicoDePatente, patente.NaturezaPatente);
+                        patente.Anuidades = ObtenhaAnuidadesDaPatente(linha, servicoDePatente, patente.NaturezaPatente);
 
                         if (classificacoesDeDesenhoComChaveLegada.ContainsKey(UtilidadesDePersistencia.GetValor(linha, "Nat_Número_DEsenho").Trim()))
                             patente.Classificacoes =
