@@ -108,8 +108,8 @@ namespace MP.Client.MP
         private void CarregueComponentes()
         {
             rblPagaManutencao.Items.Clear();
-            rblPagaManutencao.Items.Add(new ListItem("Sim", "1"));
-            rblPagaManutencao.Items.Add(new ListItem("Não", "0"));
+            rblPagaManutencao.Items.Add(new ListItem("  Sim  ", "1"));
+            rblPagaManutencao.Items.Add(new ListItem("  Não", "0"));
             rblPagaManutencao.SelectedValue = "0";
 
             //var controlePanelDadosDaManutencao = this.pnlDadosDaManutencao as Control;
@@ -121,8 +121,8 @@ namespace MP.Client.MP
             pnlDadosDaManutencao.Visible = false;
 
             rblFormaDeCobranca.Items.Clear();
-            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo: ", "S"));
-            rblFormaDeCobranca.Items.Add(new ListItem(" Valor em R$: ", "R"));
+            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo:   ", "S"));
+            rblFormaDeCobranca.Items.Add(new ListItem("   Valor em R$:", "R"));
             //rblFormaDeCobranca.SelectedValue = "0";
 
             txtValor.Visible = false;
@@ -249,6 +249,17 @@ namespace MP.Client.MP
             marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
             marca.ObservacaoDaMarca = txtObservacao.Text;
 
+            marca.PagaManutencao = rblPagaManutencao.SelectedValue.Equals("1");
+
+            if (!string.IsNullOrEmpty(ctrlPeriodo.Codigo))
+                marca.Periodo = ctrlPeriodo.Codigo;
+
+            if (!string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
+                marca.FormaDeCobranca = rblFormaDeCobranca.SelectedValue;
+
+            if(!string.IsNullOrEmpty(txtValor.Text))
+                marca.ValorDeCobranca = Convert.ToDouble(txtValor.Text);
+            
             marca.AdicioneRadicaisMarcas((IList<IRadicalMarcas>) ViewState[CHAVE_RADICAIS]);
 
             return marca;
@@ -435,6 +446,26 @@ namespace MP.Client.MP
             txtObservacao.Text = marca.ObservacaoDaMarca;
 
             imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
+
+            rblPagaManutencao.SelectedValue = marca.PagaManutencao ? "1" : "0";
+
+            if (marca.PagaManutencao)
+            {
+                pnlDadosDaManutencao.Visible = true;
+
+                if (!string.IsNullOrEmpty(marca.Periodo))
+                    ctrlPeriodo.Codigo = marca.Periodo;
+
+                if (!string.IsNullOrEmpty(marca.FormaDeCobranca))
+                {
+                    txtValor.Visible = true;
+
+                    rblFormaDeCobranca.SelectedValue = marca.FormaDeCobranca;
+
+                    if (marca.ValorDeCobranca > 0)
+                        txtValor.Text = marca.ValorDeCobranca.ToString();
+                }
+            }
 
             IList<IRadicalMarcas> listaDeRadicalMarcas = new List<IRadicalMarcas>();
 

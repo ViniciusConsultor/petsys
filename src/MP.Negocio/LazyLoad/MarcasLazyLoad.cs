@@ -201,16 +201,61 @@ namespace MP.Negocio.LazyLoad
         public IList<IRadicalMarcas> RadicalMarcas { get; set; }
 
         public bool PagaManutencao
-        { get; set; }
+        {
+            get
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                return _marcasReal.PagaManutencao;
+            }
+            set
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                _marcasReal.PagaManutencao = value;
+            }
+            
+        }
 
         public string Periodo
-        { get; set; }
+        {
+            get
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                return _marcasReal.Periodo;
+            }
+            set
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                _marcasReal.Periodo = value;
+            }
+        }
 
         public string FormaDeCobranca
-        { get; set; }
+        {
+            get
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                return _marcasReal.FormaDeCobranca;
+            }
+            set
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                _marcasReal.FormaDeCobranca = value;
+            }
+        }
 
         public double ValorDeCobranca
-        { get; set; }
+        {
+            get
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                return _marcasReal.ValorDeCobranca;
+            }
+            set
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                _marcasReal.ValorDeCobranca = value;
+            }
+        }
 
         public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
         {
