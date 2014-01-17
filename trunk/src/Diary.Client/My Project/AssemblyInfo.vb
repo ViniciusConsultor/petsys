@@ -10,9 +10,9 @@ Imports System.Security
 ' Review the values of the assembly attributes
 <Assembly: AssemblyTitle("Diary.Client")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Simple TI")> 
+<Assembly: AssemblyCompany("CHM Sistemas")> 
 <Assembly: AssemblyProduct("Diary.Client")> 
-<Assembly: AssemblyCopyright("Simple TI Copyright © 2010")>
+<Assembly: AssemblyCopyright("CHM Sistemas Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 
@@ -32,4 +32,4 @@ Imports System.Security
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("3.0.0.0")> 
+<Assembly: AssemblyFileVersion("1.0.0")> 

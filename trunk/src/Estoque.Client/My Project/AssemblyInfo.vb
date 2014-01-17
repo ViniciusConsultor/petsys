@@ -9,9 +9,9 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 <Assembly: AssemblyTitle("Estoque.Client")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Simple TI")> 
+<Assembly: AssemblyCompany("CHM Sistemas")> 
 <Assembly: AssemblyProduct("Estoque.Client")> 
-<Assembly: AssemblyCopyright("Simple TI Copyright © 2010")>
+<Assembly: AssemblyCopyright("CHM Sistemas Copyright © 2010")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,4 +31,4 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("3.0.0.0")> 
+<Assembly: AssemblyFileVersion("1.0.0")> 
