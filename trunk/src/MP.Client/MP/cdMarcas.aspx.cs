@@ -121,8 +121,8 @@ namespace MP.Client.MP
             pnlDadosDaManutencao.Visible = false;
 
             rblFormaDeCobranca.Items.Clear();
-            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo:", "S"));
-            rblFormaDeCobranca.Items.Add(new ListItem("Valor em R$:", "R"));
+            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo: ", "S"));
+            rblFormaDeCobranca.Items.Add(new ListItem(" Valor em R$: ", "R"));
             //rblFormaDeCobranca.SelectedValue = "0";
 
             txtValor.Visible = false;

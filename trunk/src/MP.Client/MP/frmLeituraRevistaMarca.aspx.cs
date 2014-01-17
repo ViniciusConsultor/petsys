@@ -36,6 +36,7 @@ namespace MP.Client.MP
         public const string CHAVE_MARCAS_CLIENTES_COM_RADICAL = "CHAVE_MARCAS_CLIENTES_COM_RADICAL";
         public const string CHAVE_MARCAS_COLIDENTES = "CHAVE_MARCAS_COLIDENTES";
         public const string CHAVE_RADICAIS_CLIENTES = "CHAVE_RADICAIS_CLIENTES";
+        public const string CHAVE_MARCAS_COLIDENTES_PAGINA_ATUAL_GRID = "CHAVE_MARCAS_COLIDENTES_PAGINA_ATUAL_GRID";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -892,6 +893,7 @@ namespace MP.Client.MP
         {
             grdMarcasColidentes.MasterTableView.DataSource = listaDeMarcasColidentes;
             grdMarcasColidentes.DataBind();
+            ViewState.Add(CHAVE_MARCAS_COLIDENTES_PAGINA_ATUAL_GRID, listaDeMarcasColidentes);
         }
 
         protected void grdMarcasClientes_ItemCommand(object sender, GridCommandEventArgs e)
@@ -929,7 +931,8 @@ namespace MP.Client.MP
 
         protected void grdMarcasColidentes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasColidentes, ViewState[CHAVE_MARCAS_COLIDENTES], e);
+            //UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasColidentes, ViewState[CHAVE_MARCAS_COLIDENTES], e);
+            UtilidadesWeb.PaginacaoDataGrid(ref grdMarcasColidentes, ViewState[CHAVE_MARCAS_COLIDENTES_PAGINA_ATUAL_GRID], e);
         }
 
         protected void grdMarcasColidentes_ItemCreated(object sender, GridItemEventArgs e)
