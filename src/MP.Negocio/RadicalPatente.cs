@@ -14,5 +14,8 @@ namespace MP.Negocio
         public string Colidencia { get; set; }
 
         public long? IdPatente { get; set; }
+
+        //Está propriedade é utilizada somente na leitura da revista de patente
+        public string Classificacao { get; set; }
     }
 }

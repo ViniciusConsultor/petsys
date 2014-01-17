@@ -409,7 +409,8 @@ namespace MP.Mapeadores
                 }
             }
 
-            return listaDeProcessos.Where(processoDePatente => processoDePatente.Patente != null && processoDePatente.Patente.Radicais != null && processoDePatente.Patente.Radicais.Count > 0).ToList();
+            return listaDeProcessos.Where(processoDePatente => processoDePatente.Patente != null && ((processoDePatente.Patente.Radicais != null && processoDePatente.Patente.Radicais.Count > 0) ||
+                (processoDePatente.Patente.Classificacoes != null && processoDePatente.Patente.Classificacoes.Count > 0))).ToList();
         }
     }
 }

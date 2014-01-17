@@ -231,5 +231,22 @@ namespace MP.Negocio.LazyLoad
                 _objetoReal.Titulares = value;
             }
         }
+
+
+        public string ClassificacoesConcatenadas
+        {
+            get
+            {
+                string classificacoesConcatenadas = string.Empty;
+
+                foreach (IClassificacaoPatente classificacaoPatente in Classificacoes)
+                    classificacoesConcatenadas += classificacaoPatente.Classificacao + ", ";
+
+                if (string.IsNullOrEmpty(classificacoesConcatenadas))
+                    return classificacoesConcatenadas;
+
+                return classificacoesConcatenadas.Substring(0, classificacoesConcatenadas.Length - 2);
+            }
+        }
     }
 }

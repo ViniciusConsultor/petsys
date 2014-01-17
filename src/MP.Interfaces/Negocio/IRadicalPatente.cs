@@ -9,6 +9,7 @@ namespace MP.Interfaces.Negocio
     {
         long? IdRadicalPatente { get; set; }
         string Colidencia { get; set; }
+        string Classificacao { get; set; }
         long? IdPatente { get; set; }
     }
 }

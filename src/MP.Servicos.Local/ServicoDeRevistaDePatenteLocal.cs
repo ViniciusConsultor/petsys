@@ -107,7 +107,6 @@ namespace MP.Servicos.Local
                                     processoDePatenteExistente.DataDaConcessao = processo.DataDeConcessao;
                                     revistaASerSalva.DataDeConcessao = processo.DataDeConcessao;
                                 }
-                                
 
                                 if (processo.DataPublicacao != null)
                                 {
@@ -115,8 +114,11 @@ namespace MP.Servicos.Local
                                     revistaASerSalva.DataPublicacao = processo.DataPublicacao;
                                 }
 
-                                //if (processo.DataPublicacao != null)
-                                //    processoDePatenteExistente.DataDaVigencia = processo.DataPublicacao;
+                                if (processo.DataDaCriacao != null)
+                                {
+                                    processoDePatenteExistente.DataDaVigencia = processo.DataDaCriacao;
+                                    revistaASerSalva.DataDaCriacao = processo.DataDaCriacao;
+                                }
 
                                 if (processo.DataDeDeposito != null)
                                 {
@@ -124,8 +126,11 @@ namespace MP.Servicos.Local
                                     revistaASerSalva.DataDeDeposito = processo.DataDeDeposito;
                                 }
 
-                                //if (processo.DataPublicacao != null)
-                                //  processoDePatenteExistente.DataDoExame = processo.DataPublicacao;
+                                if (processo.DataProcessamento != null)
+                                {
+                                    processoDePatenteExistente.DataDoExame = processo.DataProcessamento;
+                                    revistaASerSalva.DataProcessamento = processo.DataProcessamento;
+                                }
 
                                 if (processo.CodigoDoDespacho != null)
                                 {
@@ -135,19 +140,20 @@ namespace MP.Servicos.Local
                                     AtualizeDespachoNoProcesso(processo.CodigoDoDespacho, processoDePatenteExistente);
                                 }
 
-                                //if (string.IsNullOrEmpty(processo.Procurador))
-                                //    processoDePatenteExistente.Procurador = processo.Procurador;
-
-                                //if (processo.DataPublicacao != null)
-                                //    processoDePatenteExistente.PCT = processo.NumeroProcessoDaPatente;
+                                if (!string.IsNullOrEmpty(processo.ClassificacaoInternacional))
+                                {
+                                    processoDePatenteExistente.PCT = FabricaGenerica.GetInstancia().CrieObjeto<IPCT>();
+                                    processoDePatenteExistente.PCT.DataDaPublicacao = processo.DataPublicacao;
+                                    processoDePatenteExistente.PCT.DataDoDeposito = processo.DataDeDeposito;
+                                    processoDePatenteExistente.PCT.Numero = processo.NumeroDoProcesso;
+                                    processoDePatenteExistente.PCT.NumeroWO = processo.DadosPublicacaoInternacional;
+                                }
 
                                 processoDePatenteExistente.ProcessoEhEstrangeiro = string.IsNullOrEmpty(processo.ClassificacaoInternacional);
 
                                 revistaASerSalva.Processada = true;
                                 revistaASerSalva.ExtensaoArquivo = ".XML";
-
                                 listaDeRevistasASeremSalvas.Add(revistaASerSalva);
-
                                 servico.Modificar(processoDePatenteExistente);
                             }
                         }
@@ -489,6 +495,14 @@ namespace MP.Servicos.Local
                     }
                     
                 }
+                else if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente) && revistaDePatente.NumeroProcessoDaPatente.Length < 10)
+                {
+                    revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente;
+                    revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente;
+
+                    if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                        revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente;
+                }
                 else if (!string.IsNullOrEmpty(revistaDePatente.NumeroDoPedido) && revistaDePatente.NumeroDoPedido.Length > 10)
                 {
                     if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
@@ -507,6 +521,14 @@ namespace MP.Servicos.Local
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                             revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(0, 3);
                     }
+                }
+                else
+                {
+                    revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido;
+                    revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido;
+
+                    if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                        revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido;
                 }
 
                 listaDeRevistasDePatentes.Add(revistaDePatente);

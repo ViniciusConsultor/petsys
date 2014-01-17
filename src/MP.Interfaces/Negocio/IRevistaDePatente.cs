@@ -68,5 +68,6 @@ namespace MP.Interfaces.Negocio
         DateTime? DataDaProrrogacao { get; set; }
         string ClassificacaoNacional { get; set; }
         long? IdDoProcessoDaRevista { get; set; }
+        string Classificacao { get; }
     }
 }
