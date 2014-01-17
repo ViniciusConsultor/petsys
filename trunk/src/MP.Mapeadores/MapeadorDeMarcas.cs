@@ -82,6 +82,18 @@ namespace MP.Mapeadores
 
                     marca.Cliente = cliente;
 
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "PagaManutencao"))
+                        marca.PagaManutencao = UtilidadesDePersistencia.GetValorBooleano(leitor, "PagaManutencao");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Periodo"))
+                        marca.Periodo = UtilidadesDePersistencia.GetValorString(leitor, "Periodo");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "FormaDeCobranca"))
+                        marca.FormaDeCobranca = UtilidadesDePersistencia.GetValorString(leitor, "FormaDeCobranca");
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "ValorDeCobranca"))
+                        marca.ValorDeCobranca = UtilidadesDePersistencia.getValorDouble(leitor, "ValorDeCobranca");
+
                     listaDeMarcas.Add(marca);
                 }
             }
@@ -95,7 +107,8 @@ namespace MP.Mapeadores
 
             sql.Append("SELECT IDMARCA IdMarca, CODIGONCL NCL, CODIGOAPRESENTACAO Apresentacao, IDCLIENTE Cliente, CODIGONATUREZA Natureza, ");
             sql.Append("DESCRICAO_MARCA DescricaoDaMarca, ESPECIFICACAO_PROD_SERV EspecificacaoDeProdutosEServicos, IMAGEM_MARCA ImagemDaMarca, OBSERVACAO_MARCA ObservacaoDaMarca, CODIGOCLASSE CodigoDaClasse, ");
-            sql.Append("CODIGOCLASSE_SUBCLASSE1 CodigoDaSubClasse1, CODIGOCLASSE_SUBCLASSE2 CodigoDaSubClasse2, CODIGOCLASSE_SUBCLASSE3 CodigoDaSubClasse3 ");
+            sql.Append("CODIGOCLASSE_SUBCLASSE1 CodigoDaSubClasse1, CODIGOCLASSE_SUBCLASSE2 CodigoDaSubClasse2, CODIGOCLASSE_SUBCLASSE3 CodigoDaSubClasse3, ");
+            sql.Append("PAGAMANUTENCAO PagaManutencao, PERIODO Periodo, FORMADECOBRANCA FormaDeCobranca, VALORDECOBRANCA ValorDeCobranca ");
             sql.Append("FROM MP_MARCAS ");
 
             return sql;
@@ -128,7 +141,8 @@ namespace MP.Mapeadores
 
             sql.Append("INSERT INTO MP_MARCAS (");
             sql.Append("IDMARCA, CODIGONCL, CODIGOAPRESENTACAO, IDCLIENTE, CODIGONATUREZA, DESCRICAO_MARCA, ESPECIFICACAO_PROD_SERV, ");
-            sql.Append("IMAGEM_MARCA, OBSERVACAO_MARCA, CODIGOCLASSE, CODIGOCLASSE_SUBCLASSE1, CODIGOCLASSE_SUBCLASSE2, CODIGOCLASSE_SUBCLASSE3) ");
+            sql.Append("IMAGEM_MARCA, OBSERVACAO_MARCA, CODIGOCLASSE, CODIGOCLASSE_SUBCLASSE1, CODIGOCLASSE_SUBCLASSE2, CODIGOCLASSE_SUBCLASSE3, ");
+            sql.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ", "));
             sql.Append(String.Concat("'", marca.NCL.Codigo, "', "));
@@ -143,8 +157,23 @@ namespace MP.Mapeadores
             sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaClasse.ToString(), ", ") : "NULL, ");
             sql.Append(marca.CodigoDaSubClasse1.HasValue ? String.Concat(marca.CodigoDaSubClasse1.ToString(), ", ") : "NULL, ");
             sql.Append(marca.CodigoDaSubClasse2.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ", ") : "NULL, ");
-            sql.Append(marca.CodigoDaSubClasse3.HasValue ? String.Concat(marca.CodigoDaSubClasse3.ToString(), ") ") : "NULL) ");
+            sql.Append(marca.CodigoDaSubClasse3.HasValue ? String.Concat(marca.CodigoDaSubClasse3.ToString(), ") ") : "NULL, ");
+            
+            sql.Append(marca.PagaManutencao ? String.Concat("'" , 1 , "', ") : String.Concat("'" , 0 , "', "));
 
+            sql.Append(string.IsNullOrEmpty(marca.Periodo)
+                           ? "NULL, "
+                           : String.Concat("'", marca.Periodo, "', "));
+
+            sql.Append(string.IsNullOrEmpty(marca.FormaDeCobranca)
+                            ? "NULL, "
+                            : String.Concat("'", marca.FormaDeCobranca, "', "));
+
+            sql.Append((marca.ValorDeCobranca == null || marca.ValorDeCobranca == 0)
+                            ? "NULL) "
+                            : String.Concat(marca.ValorDeCobranca.ToString().Replace(",", ".") + ") "));
+
+            
             DBHelper.ExecuteNonQuery(sql.ToString());
 
             if (marca.RadicalMarcas.Count > 0)
@@ -183,11 +212,27 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("IMAGEM_MARCA = '", marca.ImagemDaMarca, "' , "));
             sql.Append(String.Concat("CODIGONCL = '", marca.NCL.Codigo, "' , "));
             sql.Append(String.Concat("CODIGONATUREZA = ", marca.Natureza.Codigo, " , "));
-            sql.Append(String.Concat("OBSERVACAO_MARCA = '", marca.ObservacaoDaMarca, "' "));
+            sql.Append(String.Concat("OBSERVACAO_MARCA = '", marca.ObservacaoDaMarca, "', "));
+
+            sql.Append(marca.PagaManutencao ? String.Concat("PAGAMANUTENCAO = '", 1, "', ") : String.Concat("PAGAMANUTENCAO = '", 0, "', "));
+
+            sql.Append(string.IsNullOrEmpty(marca.Periodo)
+                           ? "PERIODO = NULL, "
+                           : String.Concat("PERIODO = '" , marca.Periodo, "', "));
+
+            sql.Append(string.IsNullOrEmpty(marca.FormaDeCobranca)
+                            ? "FORMADECOBRANCA = NULL, "
+                            : String.Concat("FORMADECOBRANCA = '", marca.FormaDeCobranca, "', "));
+
+            sql.Append((marca.ValorDeCobranca == null || marca.ValorDeCobranca == 0)
+                            ? "VALORDECOBRANCA = NULL "
+                            : String.Concat("VALORDECOBRANCA = " , marca.ValorDeCobranca.ToString().Replace(",", ".") , " "));
+            
+
             sql.Append(String.Concat("WHERE IDMARCA = ", marca.IdMarca.Value.ToString()));
 
-
             DBHelper.ExecuteNonQuery(sql.ToString());
+
             ModificarRadicaisMarca(marca);
         }
 
