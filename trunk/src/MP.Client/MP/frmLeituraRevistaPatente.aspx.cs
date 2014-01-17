@@ -548,13 +548,14 @@ namespace MP.Client.MP
 
                 var radical = ((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.Value;
 
-                IDictionary<long, IList<IRevistaDePatente>> dicionarioDePatentesDeClientes = new Dictionary<long, IList<IRevistaDePatente>>();
+                IDictionary<long, IList<IProcessoDePatente>> dicionarioDePatentesDeClientes = new Dictionary<long, IList<IProcessoDePatente>>();
 
-                IList<IRevistaDePatente> listaDePatentesDeClientes = new List<IRevistaDePatente>();
+                IList<IProcessoDePatente> listaDePatentesDeClientes = new List<IProcessoDePatente>();
 
-                dicionarioDePatentesDeClientes = (IDictionary<long, IList<IRevistaDePatente>>)ViewState[CHAVE_PATENTES_COLIDENTES];
+                dicionarioDePatentesDeClientes = (IDictionary<long, IList<IProcessoDePatente>>)ViewState[CHAVE_PATENTES_CLIENTES_COM_RADICAL];
 
-                listaDePatentesDeClientes = dicionarioDePatentesDeClientes[radical];
+                if (dicionarioDePatentesDeClientes.ContainsKey(radical))
+                    listaDePatentesDeClientes = dicionarioDePatentesDeClientes[radical];
 
                 CarregaGridPatentesCliente(listaDePatentesDeClientes);
 
@@ -564,7 +565,8 @@ namespace MP.Client.MP
 
                 dicionarioDePatentesColidentes = (IDictionary<long, IList<IRevistaDePatente>>)ViewState[CHAVE_PATENTES_COLIDENTES];
 
-                listaDePatentesColidentes = dicionarioDePatentesColidentes[radical];
+                if(dicionarioDePatentesColidentes.ContainsKey(radical))
+                    listaDePatentesColidentes = dicionarioDePatentesColidentes[radical];
 
                 CarregaGridPatentesColidentes(listaDePatentesColidentes);
             }
@@ -576,10 +578,31 @@ namespace MP.Client.MP
 
         protected void grdPatenteClientes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            if (ViewState[CHAVE_RADICAIS_CLIENTES] != null)
+            {
+                listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
+                listRadical.DataBind();
+
+                var dicionarioDePatentesDeClientes = (IDictionary<long, IList<IRevistaDePatente>>)ViewState[CHAVE_PATENTES_CLIENTES_COM_RADICAL];
+
+                if (!((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.HasValue)
+                    return;
+
+                var radical = ((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.Value;
+                UtilidadesWeb.PaginacaoDataGrid(ref grdPatenteClientes, dicionarioDePatentesDeClientes[radical], e);
+            }
         }
 
         protected void grdPatenteClientes_ItemCreated(object sender, GridItemEventArgs e)
         {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem) e.Item;
+
+                foreach (GridColumn column in grdPatenteClientes.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
         }
 
         protected void grdPatentesColidentes_ItemCommand(object sender, GridCommandEventArgs e)
@@ -588,10 +611,31 @@ namespace MP.Client.MP
 
         protected void grdPatentesColidentes_ItemCreated(object sender, GridItemEventArgs e)
         {
+            if ((e.Item is GridDataItem))
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                foreach (GridColumn column in grdPatentesColidentes.MasterTableView.RenderColumns)
+                    if ((column is GridButtonColumn))
+                        gridItem[column.UniqueName].ToolTip = column.HeaderTooltip;
+            }
         }
 
         protected void grdPatentesColidentes_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            if (ViewState[CHAVE_RADICAIS_CLIENTES] != null)
+            {
+                listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
+                listRadical.DataBind();
+
+                var dicionarioDePatentesDeColidentes = (IDictionary<long, IList<IRevistaDePatente>>)ViewState[CHAVE_PATENTES_COLIDENTES];
+
+                if (!((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.HasValue)
+                    return;
+
+                var radical = ((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.Value;
+                UtilidadesWeb.PaginacaoDataGrid(ref grdPatentesColidentes, dicionarioDePatentesDeColidentes[radical], e);
+            }
         }
 
         protected void RadTabStrip1_OnTabClick(object sender, RadTabStripEventArgs e)
@@ -673,7 +717,7 @@ namespace MP.Client.MP
             var panel = pnlRadicais as Control;
             UtilidadesWeb.LimparComponente(ref panel);
 
-            CarregaGridPatentesCliente(new List<IRevistaDePatente>());
+            CarregaGridPatentesCliente(new List<IProcessoDePatente>());
             CarregaGridPatentesColidentes(new List<IRevistaDePatente>());
 
             ViewState[CHAVE_PATENTES_CLIENTES_COM_RADICAL] = null;
@@ -681,9 +725,9 @@ namespace MP.Client.MP
             ViewState[CHAVE_RADICAIS_CLIENTES] = null;
         }
 
-        private void CarregaGridPatentesCliente(IList<IRevistaDePatente> listaDeRevistaDeClientes)
+        private void CarregaGridPatentesCliente(IList<IProcessoDePatente> listaDeProcessoDeClientes)
         {
-            grdPatenteClientes.MasterTableView.DataSource = listaDeRevistaDeClientes;
+            grdPatenteClientes.MasterTableView.DataSource = listaDeProcessoDeClientes;
             grdPatenteClientes.DataBind();
         }
 
@@ -696,30 +740,94 @@ namespace MP.Client.MP
         private void CarregaListaDeRadicais(IList<IRevistaDePatente> revistaDePatentes, IList<IProcessoDePatente> processoDePatentes)
         {
             IList<IRadicalPatente> listaDeRadicaisDeClientes = new List<IRadicalPatente>();
-            IDictionary<long, IList<IRevistaDePatente>> dicionarioDePatentesDeClientes = new Dictionary<long, IList<IRevistaDePatente>>();
+            IList<IRadicalPatente> listaDeRadicaisASeremRemovidos = new List<IRadicalPatente>();
+            IDictionary<long, IList<IProcessoDePatente>> dicionarioDePatentesDeClientes = new Dictionary<long, IList<IProcessoDePatente>>();
             IDictionary<long, IList<IRevistaDePatente>> dicionarioDePatentesDeColidentes = new Dictionary<long, IList<IRevistaDePatente>>();
 
             bool patenteDeClienteCarregadaPrimeiraVez = false;
 
             foreach (IProcessoDePatente processoDePatente in processoDePatentes)
-                foreach (IRadicalPatente radicalPatente in processoDePatente.Patente.Radicais)
-                    if(!listaDeRadicaisDeClientes.Contains(radicalPatente))
-                        listaDeRadicaisDeClientes.Add(radicalPatente);
+            {
+                if (processoDePatente.Patente.Radicais != null && processoDePatente.Patente.Radicais.Count > 0)
+                    foreach (IRadicalPatente radicalPatente in processoDePatente.Patente.Radicais)
+                        if (!listaDeRadicaisDeClientes.Contains(radicalPatente) && !string.IsNullOrEmpty(radicalPatente.Colidencia))
+                            listaDeRadicaisDeClientes.Add(radicalPatente);
+
+                if (processoDePatente.Patente.Classificacoes != null && processoDePatente.Patente.Classificacoes.Count > 0)
+                {
+                    int indice = 0;
+
+                    foreach (IClassificacaoPatente classificacaoPatente in processoDePatente.Patente.Classificacoes)
+                    {
+                        var radicalComClassificacao = FabricaGenerica.GetInstancia().CrieObjeto<IRadicalPatente>();
+                        radicalComClassificacao.Classificacao = classificacaoPatente.Classificacao;
+                        radicalComClassificacao.IdRadicalPatente = processoDePatente.IdProcessoDePatente + indice;
+                        radicalComClassificacao.IdPatente = processoDePatente.Patente.Identificador;
+
+                        if (!listaDeRadicaisDeClientes.Contains(radicalComClassificacao) && !string.IsNullOrEmpty(radicalComClassificacao.Classificacao))
+                        {
+                            listaDeRadicaisDeClientes.Add(radicalComClassificacao);
+                            indice++;
+                        }
+                    }
+                }
+            }
 
             foreach (IRadicalPatente radical in listaDeRadicaisDeClientes)
             {
                 IList<IRevistaDePatente> listaDePatentesColidentes = new List<IRevistaDePatente>();
-                listaDePatentesColidentes = revistaDePatentes.ToList().FindAll(revista => revista.Titulo.Contains(radical.Colidencia));
+                IList<IProcessoDePatente> listaDeProcessosDeClientes = new List<IProcessoDePatente>();
 
-                if (radical.IdRadicalPatente.HasValue)
-                    dicionarioDePatentesDeColidentes.Add(radical.IdRadicalPatente.Value, listaDePatentesColidentes);
-
-                if (!patenteDeClienteCarregadaPrimeiraVez)
+                if(!string.IsNullOrEmpty(radical.Colidencia))
                 {
-                    CarregaGridPatentesCliente(listaDePatentesColidentes);
-                    patenteDeClienteCarregadaPrimeiraVez = true;
+                    listaDePatentesColidentes = revistaDePatentes.ToList().FindAll(revista => revista.Titulo.Contains(radical.Colidencia));
+                    listaDeProcessosDeClientes = processoDePatentes.ToList().FindAll(processo => processo.Patente.Radicais != null && 
+                        processo.Patente.Radicais.Contains(radical));
+
+                    if (radical.IdRadicalPatente.HasValue && listaDePatentesColidentes.Count > 0)
+                    {
+                        dicionarioDePatentesDeColidentes.Add(radical.IdRadicalPatente.Value, listaDePatentesColidentes);
+                        dicionarioDePatentesDeClientes.Add(radical.IdRadicalPatente.Value, listaDeProcessosDeClientes);
+                    }
+
+                    if (!patenteDeClienteCarregadaPrimeiraVez)
+                    {
+                        CarregaGridPatentesCliente(listaDeProcessosDeClientes);
+                        CarregaGridPatentesColidentes(listaDePatentesColidentes);
+                        patenteDeClienteCarregadaPrimeiraVez = true;
+                    }
+                }
+                else if (!string.IsNullOrEmpty(radical.Classificacao))
+                {
+                    listaDePatentesColidentes = revistaDePatentes.ToList().FindAll(revista => 
+                        (!string.IsNullOrEmpty(revista.ClassificacaoInternacional) && revista.ClassificacaoInternacional.Contains(radical.Classificacao)) ||
+                        (!string.IsNullOrEmpty(revista.ClassificacaoNacional) && revista.ClassificacaoNacional.Contains(radical.Classificacao)));
+
+                    foreach (IProcessoDePatente processoDePatente in processoDePatentes)
+                        foreach (IClassificacaoPatente classificacaoPatente in processoDePatente.Patente.Classificacoes)
+                            if (radical.Classificacao.Contains(classificacaoPatente.Classificacao) && listaDePatentesColidentes.Count > 0)
+                                listaDeProcessosDeClientes.Add(processoDePatente);
+
+                    if (listaDePatentesColidentes.Count == 0)
+                        listaDeRadicaisASeremRemovidos.Add(radical);
+
+                    if (radical.IdRadicalPatente.HasValue && listaDePatentesColidentes.Count > 0)
+                    {
+                        dicionarioDePatentesDeColidentes.Add(radical.IdRadicalPatente.Value, listaDePatentesColidentes);
+                        dicionarioDePatentesDeClientes.Add(radical.IdRadicalPatente.Value, listaDeProcessosDeClientes);
+                    }
+
+                    if (!patenteDeClienteCarregadaPrimeiraVez)
+                    {
+                        CarregaGridPatentesCliente(listaDeProcessosDeClientes);
+                        CarregaGridPatentesColidentes(listaDePatentesColidentes);
+                        patenteDeClienteCarregadaPrimeiraVez = true;
+                    }
                 }
             }
+
+            foreach (IRadicalPatente radicalPatente in listaDeRadicaisASeremRemovidos)
+                listaDeRadicaisDeClientes.Remove(radicalPatente);
 
             if (listaDeRadicaisDeClientes.Count > 0)
             {
@@ -729,12 +837,8 @@ namespace MP.Client.MP
                 listRadical.DataSource = listaDeRadicaisDeClientes;
                 listRadical.DataBind();
                 ViewState.Add(CHAVE_RADICAIS_CLIENTES, listaDeRadicaisDeClientes);
+                ViewState.Add(CHAVE_PATENTES_CLIENTES_COM_RADICAL, dicionarioDePatentesDeClientes);
                 ViewState.Add(CHAVE_PATENTES_COLIDENTES, dicionarioDePatentesDeColidentes);
-                if(((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.HasValue)
-                {
-                    var idRadical = ((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.Value;
-                    CarregaGridPatentesColidentes(dicionarioDePatentesDeColidentes[idRadical]);
-                }
             }
             else
             {

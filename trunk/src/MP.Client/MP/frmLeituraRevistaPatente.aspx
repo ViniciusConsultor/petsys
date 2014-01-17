@@ -312,20 +312,20 @@
                                                             <table class="tabela">
                                                                 <tr>
                                                                     <td class="th3">
-                                                                        <asp:Label ID="Label5" runat="server" Text="Radical:"></asp:Label>
+                                                                        <asp:Label ID="Label5" runat="server" Text="Colidência:"></asp:Label>
                                                                     </td>
                                                                     <td class="td">
                                                                         <telerik:RadTextBox ID="txtRadical" runat="server" Enabled="false" Width="87px" Text='<%# Eval("Colidencia") %>'>
                                                                         </telerik:RadTextBox>
                                                                     </td>
-                                                                    <%--<td class="th3">
-                                                                        <asp:Label ID="Label7" runat="server" Text="NCL:"></asp:Label>
+                                                                    <td class="th3">
+                                                                        <asp:Label ID="Label7" runat="server" Text="Classificação:"></asp:Label>
                                                                     </td>
                                                                     <td class="td">
-                                                                        <telerik:RadTextBox ID="txtRadicalNCL" runat="server" Enabled="false" Width="87px"
-                                                                            Text='<%# Eval("RadicalNCL")%>'>
+                                                                        <telerik:RadTextBox ID="txtClassificações" runat="server" Enabled="false" Width="87px"
+                                                                            Text='<%# Eval("Classificacao")%>'>
                                                                         </telerik:RadTextBox>
-                                                                    </td>--%>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -354,12 +354,13 @@
                                                             <HeaderStyle Width="20px" />
                                                         </ExpandCollapseColumn>
                                                         <Columns>
-                                                            <telerik:GridBoundColumn DataField="IdRevistaPatente" HeaderText="ID" UniqueName="column6"
-                                                                Display="false">
+                                                            <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column6" Display="false">
                                                             </telerik:GridBoundColumn>                                                                                                                        
-                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column3">
+                                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column3">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Titulo" HeaderText="Patente" UniqueName="column2">
+                                                            <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn DataField="Patente.ClassificacoesConcatenadas" HeaderText="Classificação" UniqueName="colunaClassificacao">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
@@ -393,6 +394,8 @@
                                                             <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column3">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Titulo" HeaderText="Patente" UniqueName="column2">
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn DataField="Classificacao" HeaderText="Classificação" UniqueName="colunaClassificacao">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>

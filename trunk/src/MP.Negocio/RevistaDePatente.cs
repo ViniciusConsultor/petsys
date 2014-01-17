@@ -131,5 +131,14 @@ namespace MP.Negocio
         public string CodigoDoDespachoAnterior { get; set; }
 
         public long? IdDoProcessoDaRevista { get; set; }
+
+        public string Classificacao
+        {
+            get
+            {
+                string classificacao = !string.IsNullOrEmpty(ClassificacaoNacional) ? ClassificacaoNacional : ClassificacaoInternacional;
+                return classificacao;
+            }
+        }
     }
 }

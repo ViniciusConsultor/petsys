@@ -23,5 +23,6 @@ namespace MP.Interfaces.Negocio
         IList<ICliente> Clientes { get; set; }
         IList<IRadicalPatente> Radicais { get; set; }
         IList<ITitular> Titulares { get; set; }
+        string ClassificacoesConcatenadas { get; }
     }
 }

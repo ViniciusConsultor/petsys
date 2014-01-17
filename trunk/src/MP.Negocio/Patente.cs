@@ -50,5 +50,20 @@ namespace MP.Negocio
         public IList<IRadicalPatente> Radicais { get; set; }
 
         public IList<ITitular> Titulares { get; set; }
+
+        public string ClassificacoesConcatenadas { 
+            get 
+            { 
+                string classificacoesConcatenadas = string.Empty;
+
+                foreach (IClassificacaoPatente classificacaoPatente in Classificacoes)
+                    classificacoesConcatenadas += classificacaoPatente.Classificacao + ", ";
+
+                if (string.IsNullOrEmpty(classificacoesConcatenadas))
+                    return classificacoesConcatenadas;
+
+                return classificacoesConcatenadas.Substring(0, classificacoesConcatenadas.Length - 2);
+            }
+        }
     }
 }
