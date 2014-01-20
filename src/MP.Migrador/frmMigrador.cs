@@ -2143,6 +2143,9 @@ namespace MP.Migrador
             if (MunicipioSTR.Contains("MOSSORÓ"))
                 return null;
 
+            if (MunicipioSTR.Contains("CUIABA"))
+                MunicipioSTR = "CUIABÁ";
+
             if (MunicipioSTR.Contains("HAYWARD"))
                 return null;
 
@@ -2152,7 +2155,7 @@ namespace MP.Migrador
             if (MunicipioSTR.Contains("HAYWARD")) return null;
 
             if (MunicipioSTR.Contains("RONDONOPOLIS"))
-                MunicipioSTR = "RONDONÓPOLIS";
+                MunicipioSTR     = "RONDONÓPOLIS";
 
             if (MunicipioSTR.Contains("MATRICHÃ"))
                 MunicipioSTR = "MATRINCHÃ";
