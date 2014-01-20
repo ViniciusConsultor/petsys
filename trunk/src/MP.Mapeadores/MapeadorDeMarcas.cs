@@ -157,7 +157,7 @@ namespace MP.Mapeadores
             sql.Append(marca.CodigoDaClasse.HasValue ? String.Concat(marca.CodigoDaClasse.ToString(), ", ") : "NULL, ");
             sql.Append(marca.CodigoDaSubClasse1.HasValue ? String.Concat(marca.CodigoDaSubClasse1.ToString(), ", ") : "NULL, ");
             sql.Append(marca.CodigoDaSubClasse2.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ", ") : "NULL, ");
-            sql.Append(marca.CodigoDaSubClasse3.HasValue ? String.Concat(marca.CodigoDaSubClasse3.ToString(), ") ") : "NULL, ");
+            sql.Append(marca.CodigoDaSubClasse3.HasValue ? String.Concat(marca.CodigoDaSubClasse3.ToString(), ", ") : "NULL, ");
             
             sql.Append(marca.PagaManutencao ? String.Concat("'" , 1 , "', ") : String.Concat("'" , 0 , "', "));
 
