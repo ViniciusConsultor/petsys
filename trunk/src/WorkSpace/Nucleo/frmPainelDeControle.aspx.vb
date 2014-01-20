@@ -1,4 +1,5 @@
 ﻿Imports Compartilhados.Componentes.Web
+Imports Compartilhados.Interfaces
 Imports Telerik.Web.UI
 Imports Core.Interfaces.Servicos
 Imports Compartilhados.Fabricas
@@ -192,4 +193,25 @@ Partial Public Class frmPainelDeControle
         Return Configuracao
     End Function
 
- End Class
+    Private Sub btnTestarConfiguracaoEmail_Click(sender As Object, e As System.EventArgs) Handles btnTestarConfiguracaoEmail.Click
+        Dim Configuracao As IConfiguracaoDoSistema
+
+        Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
+            Configuracao = ServicoDeConfiguracao.ObtenhaConfiguracaoDoSistema()
+        End Using
+
+        If Not Configuracao Is Nothing Then
+            Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema
+
+            ConfiguracaoDeEmail = Configuracao.ConfiguracaoDeEmailDoSistema
+            If Not Configuracao Is Nothing Then
+                GerenciadorDeEmail.EnviaEmail("Teste de envio de e-mail.", _
+                                              ConfiguracaoDeEmail.EmailRemetente, _
+                                              Configuracao.DestinatarioDaNotificaoDeErros, _
+                                              "Teste de envio de e-mail.")
+            End If
+        End If
+    End Sub
+
+
+End Class
