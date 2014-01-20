@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE5690EE-7C9F-40EA-A41A-C4137EEB58AB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Compartilhados.Interfaces</RootNamespace>
+    <AssemblyName>Compartilhados.Interfaces</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Compartilhados.Interfaces.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>Compartilhados.Interfaces.xml</DocumentationFile>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <WarningsAsErrors>41998,41999,42004,42016,42017,42018,42019,42020,42021,42022,42024,42025,42026,42029,42030,42031,42032,42036,42099,42104,42105,42106,42107,42108,42109</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>Full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>Compartilhados.Interfaces.xml</DocumentationFile>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <WarningsAsErrors>41998,41999,42004,42016,42017,42018,42019,42020,42021,42022,42024,42025,42026,42029,42030,42031,42032,42036,42099,42104,42105,42106,42107,42108,42109</WarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Negocio\IAgencia.vb" />
+    <Compile Include="Core\Negocio\IAgenda.vb" />
+    <Compile Include="Core\Negocio\IBanco.vb" />
+    <Compile Include="Core\Negocio\CEP.vb" />
+    <Compile Include="Core\Negocio\DiaDaSemana.vb" />
+    <Compile Include="Core\Negocio\Documento\ICNPJ.vb" />
+    <Compile Include="Core\Negocio\Documento\IInscricaoEstadual.vb" />
+    <Compile Include="Core\Negocio\Documento\IInscricaoMunicipal.vb" />
+    <Compile Include="Core\Negocio\EstadoCivil.vb" />
+    <Compile Include="Core\Negocio\GrauDeInstrucao.vb" />
+    <Compile Include="Core\Negocio\ICliente.vb" />
+    <Compile Include="Core\Negocio\Documento\ICPF.vb" />
+    <Compile Include="Core\Negocio\Documento\IDocumento.vb" />
+    <Compile Include="Core\Negocio\ICompromisso.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDeAgendaDoSistema.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDeAgendaDoUsuario.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDeEmailDoSistema.vb" />
+    <Compile Include="Core\Negocio\IConfiguracaoDoSistema.vb" />
+    <Compile Include="Core\Negocio\IContaBancaria.vb" />
+    <Compile Include="Core\Negocio\IDadoBancario.vb" />
+    <Compile Include="Core\Negocio\IEmpresa.vb" />
+    <Compile Include="Core\Negocio\IEndereco.vb" />
+    <Compile Include="Core\Negocio\IFiltro.vb" />
+    <Compile Include="Core\Negocio\IFornecedor.vb" />
+    <Compile Include="Core\Negocio\IGrupo.vb" />
+    <Compile Include="Core\Negocio\IGrupoDeAtividade.vb" />
+    <Compile Include="Core\Negocio\ILembrete.vb" />
+    <Compile Include="Core\Negocio\IMunicipio.vb" />
+    <Compile Include="Core\Negocio\IOperador.vb" />
+    <Compile Include="Core\Negocio\IPais.vb" />
+    <Compile Include="Core\Negocio\IPapelPessoa.vb" />
+    <Compile Include="Core\Negocio\IPessoa.vb" />
+    <Compile Include="Core\Negocio\IPessoaFisica.vb" />
+    <Compile Include="Core\Negocio\IPessoaJuridica.vb" />
+    <Compile Include="Core\Negocio\Documento\IRG.vb" />
+    <Compile Include="Core\Negocio\EnderecoDeEmail.vb" />
+    <Compile Include="Core\Negocio\ITarefa.vb" />
+    <Compile Include="Core\Negocio\IVendedor.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\FabricaDeObjetoLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IClienteLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\ICompromissoLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IFornecedorLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\ILembreteLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IObjetoLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IPaisLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IPessoaFisicaLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\IPessoaJuridicaLazyLoad.vb" />
+    <Compile Include="Core\Negocio\LazyLoad\ITarefaLazyLoad.vb" />
+    <Compile Include="Core\Negocio\OperacaoDeFiltro.vb" />
+    <Compile Include="Core\Negocio\PrioridadeDaTarefa.vb" />
+    <Compile Include="Core\Negocio\StatusDaTarefa.vb" />
+    <Compile Include="Core\Negocio\StatusDoCompromisso.vb" />
+    <Compile Include="Core\Negocio\Telefone\ITelefone.vb" />
+    <Compile Include="Core\Negocio\Nacionalidade.vb" />
+    <Compile Include="Core\Negocio\Raca.vb" />
+    <Compile Include="Core\Negocio\Sexo.vb" />
+    <Compile Include="Core\Negocio\StatusDoGrupo.vb" />
+    <Compile Include="Core\Negocio\StatusDoOperador.vb" />
+    <Compile Include="Core\Negocio\TipoDeDocumento.vb" />
+    <Compile Include="Core\Negocio\ITipoDeEndereco.vb" />
+    <Compile Include="Core\Negocio\TipoDeFormatoDeSaidaDoDocumento.vb" />
+    <Compile Include="Core\Negocio\TipoDePessoa.vb" />
+    <Compile Include="Core\Negocio\TipoDeTelefone.vb" />
+    <Compile Include="Core\Negocio\UF.vb" />
+    <Compile Include="Core\Servicos\IServicoDeAgenda.vb" />
+    <Compile Include="Core\Servicos\IServicoDeBancosEAgencias.vb" />
+    <Compile Include="Core\Servicos\IServicoDeCliente.vb" />
+    <Compile Include="Core\Servicos\IServicoDeConfiguracoesDoSistema.vb" />
+    <Compile Include="Core\Servicos\IServicoDeEmpresa.vb" />
+    <Compile Include="Core\Servicos\IServicoDeFornecedor.vb" />
+    <Compile Include="Core\Servicos\IServicoDeGeracaoDeID.vb" />
+    <Compile Include="Core\Servicos\IServicoDeGrupoDeAtividade.vb" />
+    <Compile Include="Core\Servicos\IServicoDeMunicipio.vb" />
+    <Compile Include="Core\Servicos\IServicoDePais.vb" />
+    <Compile Include="Core\Servicos\IServicoDePerfil.vb" />
+    <Compile Include="Core\Servicos\IServicoDePessoaFisica.vb" />
+    <Compile Include="Core\Servicos\IServicoDePessoaJuridica.vb" />
+    <Compile Include="Core\Negocio\SimENao.vb" />
+    <Compile Include="Core\Servicos\IServicoDeTipoDeEndereco.vb" />
+    <Compile Include="GeradorDeID.vb" />
+    <Compile Include="GerenciadorDeEmail.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Compartilhados.Interfaces.snk" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Compartilhados\Compartilhados.vbproj">
+      <Project>{06F3AE73-7806-44D1-9DAD-7C227869B4B8}</Project>
+      <Name>Compartilhados</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
