@@ -266,6 +266,15 @@ Partial Public Class frmPainelDeControle
     Protected WithEvents txtRemetente As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
+    '''btnTestarConfiguracaoEmail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnTestarConfiguracaoEmail As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''rpvAgenda control.
     '''</summary>
     '''<remarks>

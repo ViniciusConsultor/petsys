@@ -24,7 +24,7 @@ Public Class GerenciadorDeEmail
 
                 If .RequerAutenticacao Then
                     Gerenciador.Credentials = New NetworkCredential(.UsuarioDeAutenticacaoDoServidorDeSaida, _
-                                                                    .SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida)
+                                                                    AjudanteDeCriptografia.Descriptografe(.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida))
                 End If
 
                 Gerenciador.EnableSsl = .HabilitarSSL

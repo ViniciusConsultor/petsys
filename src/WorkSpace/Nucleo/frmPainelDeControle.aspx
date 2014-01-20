@@ -127,6 +127,12 @@
                                         </telerik:RadTextBox>
                                     </td>
                                 </tr>
+                                 <tr>
+                                    <td class="td" colspan="2">
+                                        <asp:Button ID="btnTestarConfiguracaoEmail" runat="server" Text="Testar configuração de e-mail" />
+                                    </td>
+                                    
+                                </tr>
                             </table>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="rpvAgenda" runat="server">

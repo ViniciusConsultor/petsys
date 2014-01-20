@@ -304,11 +304,9 @@ Partial Public Class cdOperador
     End Sub
 
     Private Sub grdGrupos_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdGrupos.ItemCommand
-        Dim ID As Long
         Dim IndiceSelecionado As Integer
 
         If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
-            ID = CLng(e.Item.Cells(3).Text)
             IndiceSelecionado = e.Item().ItemIndex
         End If
 
