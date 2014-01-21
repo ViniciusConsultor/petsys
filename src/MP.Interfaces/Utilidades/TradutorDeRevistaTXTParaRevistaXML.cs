@@ -14,33 +14,39 @@ namespace MP.Interfaces.Utilidades
         {
             DtoDadosDaRevistaDeMarca dadosDaRevista = null;
             var revista = new List<DtoDadosDaRevistaDeMarca>();
-            var arquivoTxtConvertido = UtilidadesDeStream.ConvertaArquivoAnsiParaUtf8(arquivoTxt.BaseStream);
-
-            while (!arquivoTxtConvertido.EndOfStream)
+            using (var arquivoTxtConvertido = UtilidadesDeStream.ConvertaArquivoAnsiParaUtf8(arquivoTxt.BaseStream))
             {
-                var linha = arquivoTxtConvertido.ReadLine();
-
-                if (string.IsNullOrEmpty(linha))
+                while (!arquivoTxtConvertido.EndOfStream)
                 {
-                    if (dadosDaRevista != null && !string.IsNullOrEmpty(dadosDaRevista.NumeroProcesso) && !revista.Contains(dadosDaRevista))
-                        revista.Add(dadosDaRevista);
-                    dadosDaRevista = new DtoDadosDaRevistaDeMarca();
+                    var linha = arquivoTxtConvertido.ReadLine();
 
-                    continue;
+                    if (string.IsNullOrEmpty(linha))
+                    {
+                        if (dadosDaRevista != null && !string.IsNullOrEmpty(dadosDaRevista.NumeroProcesso) &&
+                            !revista.Contains(dadosDaRevista))
+                            revista.Add(dadosDaRevista);
+                        dadosDaRevista = new DtoDadosDaRevistaDeMarca();
+
+                        continue;
+                    }
+
+                    if (linha.StartsWith("No.")) CarregueOsDadosDaLinhaDeNo(linha, dadosDaRevista);
+                    if (linha.StartsWith("Tit.")) CarregueOsDadosDaLinhaDeTitular(linha, dadosDaRevista);
+                    if (linha.StartsWith("Procurador:")) CarregueOsDadosDaLinhaDeProcurador(linha, dadosDaRevista);
+                    if (linha.StartsWith("*")) CarregueOsDadosDaLinhaDeTextoComplementar(linha, dadosDaRevista);
+                    if (linha.StartsWith("Marca:")) CarregueOsDadosDaLinhaMarca(linha, dadosDaRevista);
+                    if (linha.StartsWith("Apres.:"))
+                        CarregueOsDadosDaLinhaDeApresentacaoENatureza(linha, dadosDaRevista);
+                    if (linha.StartsWith("Apostila:")) CarregueOsDadosDaLinhaApostila(linha, dadosDaRevista);
+                    if (linha.StartsWith("NCL")) CarregueOsDadosDaLinhaNCL(linha, dadosDaRevista);
+                    if (linha.StartsWith("CFE(4)")) CarregueOsDadosDaLinhaClasseVienaEdicao4(linha, dadosDaRevista);
+                    if (linha.StartsWith("Prior.:")) CarregueOsDadosDaLinhaPrioridadeUnionista(linha, dadosDaRevista);
+                    if (linha.StartsWith("Clas.Prod/Serv:"))
+                        CarregueOsDadosDaLinhaClasseNacional(linha, dadosDaRevista);
+                    if (linha.StartsWith("Especific.:"))
+                        CarregueOsDadosDaLinhaEspecificacaoDeClasseNacional(linha, dadosDaRevista);
                 }
-                
-                if (linha.StartsWith("No.")) CarregueOsDadosDaLinhaDeNo(linha, dadosDaRevista);
-                if (linha.StartsWith("Tit.")) CarregueOsDadosDaLinhaDeTitular(linha, dadosDaRevista);
-                if (linha.StartsWith("Procurador:")) CarregueOsDadosDaLinhaDeProcurador(linha, dadosDaRevista);
-                if (linha.StartsWith("*")) CarregueOsDadosDaLinhaDeTextoComplementar(linha, dadosDaRevista);
-                if (linha.StartsWith("Marca:")) CarregueOsDadosDaLinhaMarca(linha, dadosDaRevista);
-                if (linha.StartsWith("Apres.:")) CarregueOsDadosDaLinhaDeApresentacaoENatureza(linha, dadosDaRevista);
-                if (linha.StartsWith("Apostila:")) CarregueOsDadosDaLinhaApostila(linha, dadosDaRevista);
-                if (linha.StartsWith("NCL")) CarregueOsDadosDaLinhaNCL(linha, dadosDaRevista);
-                if (linha.StartsWith("CFE(4)")) CarregueOsDadosDaLinhaClasseVienaEdicao4(linha, dadosDaRevista);
-                if (linha.StartsWith("Prior.:")) CarregueOsDadosDaLinhaPrioridadeUnionista(linha, dadosDaRevista);
-                if (linha.StartsWith("Clas.Prod/Serv:")) CarregueOsDadosDaLinhaClasseNacional(linha, dadosDaRevista);
-                if (linha.StartsWith("Especific.:")) CarregueOsDadosDaLinhaEspecificacaoDeClasseNacional(linha, dadosDaRevista);
+                arquivoTxtConvertido.Close();
             }
 
             MontaRevistaXmlDeMarcas(localParaGravarXml, numeroDaRevista, dataDaRevista, revista);

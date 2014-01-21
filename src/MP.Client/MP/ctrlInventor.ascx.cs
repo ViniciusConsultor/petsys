@@ -47,7 +47,7 @@ namespace MP.Client.MP
                 {
                     var item = new RadComboBoxItem(inventor.Pessoa.Nome, inventor.Pessoa.ID.ToString());
 
-                    item.Attributes.Add("DataDoCadastro", inventor.DataDoCadastro.ToString());
+                    item.Attributes.Add("DataDoCadastro", inventor.DataDoCadastro.Value.ToString("dd/MM/yyyy"));
                     item.Attributes.Add("InformacoesAdicionais", inventor.InformacoesAdicionais);
 
                     cboInventor.Items.Add(item);

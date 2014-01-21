@@ -1092,6 +1092,7 @@
     <Content Include="Nucleo\cdPaises.aspx" />
     <Content Include="Nucleo\cdTipoDeEndereco.aspx" />
     <Content Include="Nucleo\frmVisibilidadePorEmpresa.aspx" />
+    <Content Include="StyleSheetResponsivo.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

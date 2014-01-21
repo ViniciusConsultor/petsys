@@ -52,19 +52,22 @@ namespace InicializaBancoMP
         {
             Cursor = Cursors.WaitCursor;
             toolStripStatusLabel2.Text = "Abrindo arquivo de despachos de marcas...";
-
-            var arquivo = new StreamReader(diretorio + @"\NaturezasDePatente.txt");
-
             var Naturezas = new List<INaturezaPatente>();
 
-            toolStripStatusLabel2.Text = "Iniciando a leitura do arquivo...";
-
-            while (!arquivo.EndOfStream)
+            using (var arquivo = new StreamReader(diretorio + @"\NaturezasDePatente.txt"))
             {
-                var linha = arquivo.ReadLine();
 
-                if (!String.IsNullOrEmpty(linha))
-                    Naturezas.Add(CriaNaturezaDePatente(linha));
+                toolStripStatusLabel2.Text = "Iniciando a leitura do arquivo...";
+
+                while (!arquivo.EndOfStream)
+                {
+                    var linha = arquivo.ReadLine();
+
+                    if (!String.IsNullOrEmpty(linha))
+                        Naturezas.Add(CriaNaturezaDePatente(linha));
+                }
+
+                arquivo.Close();
             }
 
 
@@ -142,18 +145,23 @@ namespace InicializaBancoMP
              Cursor = Cursors.WaitCursor;
              toolStripStatusLabel2.Text = "Abrindo arquivo de despachos de marcas...";
 
-             var arquivo = new StreamReader(diretorio + @"\DespachosDeMarcas.txt");
-
              var Despachos = new List<IDespachoDeMarcas>();
 
-             toolStripStatusLabel2.Text = "Iniciando a leitura do arquivo...";
-
-             while (!arquivo.EndOfStream)
+             using (var arquivo = new StreamReader(diretorio + @"\DespachosDeMarcas.txt"))
              {
-                 var linha = arquivo.ReadLine();
 
-                 if (!String.IsNullOrEmpty(linha))
-                     Despachos.Add(CriaDespachoDeMarca(linha));
+                 toolStripStatusLabel2.Text = "Iniciando a leitura do arquivo...";
+
+                 while (!arquivo.EndOfStream)
+                 {
+                     var linha = arquivo.ReadLine();
+
+                     if (!String.IsNullOrEmpty(linha))
+                         Despachos.Add(CriaDespachoDeMarca(linha));
+                 }
+
+                 arquivo.Close();
+                 
              }
 
 
@@ -213,18 +221,21 @@ namespace InicializaBancoMP
             Cursor = Cursors.WaitCursor;
             toolStripStatusLabel2.Text = "Abrindo arquivo de despachos de patentes...";
 
-            var arquivo = new StreamReader(diretorio + @"\DespachosDePatentes.txt");
-
             var Despachos = new List<IDespachoDePatentes>();
 
-            toolStripStatusLabel2.Text = "Iniciando a leitura do arquivo...";
-
-            while (!arquivo.EndOfStream)
+            using (var arquivo = new StreamReader(diretorio + @"\DespachosDePatentes.txt"))
             {
-                var linha = arquivo.ReadLine();
+                toolStripStatusLabel2.Text = "Iniciando a leitura do arquivo...";
 
-                if (!String.IsNullOrEmpty(linha))
-                    Despachos.Add(CriaDespachoDePatente(linha));
+                while (!arquivo.EndOfStream)
+                {
+                    var linha = arquivo.ReadLine();
+
+                    if (!String.IsNullOrEmpty(linha))
+                        Despachos.Add(CriaDespachoDePatente(linha));
+                }
+
+                arquivo.Close();
             }
 
 

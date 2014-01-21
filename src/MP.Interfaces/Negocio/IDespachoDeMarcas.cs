@@ -15,5 +15,6 @@ namespace MP.Interfaces.Negocio
         string Providencia { get; set; }
         bool DesativaProcesso { get; set; }
         bool DesativaPesquisaDeColidencia { get; set; }
+        ITemplateDeEmail TemplateDeEmail { get; set; }
     }
 }

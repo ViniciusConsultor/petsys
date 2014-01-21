@@ -19,7 +19,7 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT IDDESPACHO, CODIGO_DESPACHO, DESCRICAO_DESPACHO, ");
-            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA ");
+            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA, TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_MARCA ");
             sql.Append("WHERE IDDESPACHO = " + idDespachoDeMarcas);
 
@@ -61,6 +61,13 @@ namespace MP.Mapeadores
 
                     despachoDeMarcas.DesativaPesquisaDeColidencia = UtilidadesDePersistencia.GetValorBooleano(leitor, "DESATIVAPESQCOLIDENCIA");
 
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "TEMPLATEEMAIL"))
+                    {
+                        despachoDeMarcas.TemplateDeEmail = FabricaGenerica.GetInstancia().CrieObjeto<ITemplateDeEmail>();
+                        despachoDeMarcas.TemplateDeEmail.Template = UtilidadesDePersistencia.GetValorString(leitor, "TEMPLATEEMAIL");
+                    }
+                        
+
                     listaDeDespachoDeMarcas.Add(despachoDeMarcas);
                 }
             }
@@ -73,7 +80,7 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT IDDESPACHO, CODIGO_DESPACHO, DESCRICAO_DESPACHO, ");
-            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA ");
+            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA, TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_MARCA ");
 
             if (!String.IsNullOrEmpty(codigo))
@@ -93,7 +100,7 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT IDDESPACHO, CODIGO_DESPACHO, DESCRICAO_DESPACHO, ");
-            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA ");
+            sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA,  TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_MARCA ");
             sql.Append(string.Concat("WHERE CODIGO_DESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(codigo), "'"));
 
@@ -140,6 +147,30 @@ namespace MP.Mapeadores
             sql.Append(despachoDeMarcas.DesativaProcesso ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+
+            if (despachoDeMarcas.TemplateDeEmail != null)
+                ModifiqueTemplate(despachoDeMarcas);
+        }
+
+        private void ModifiqueTemplate(IDespachoDeMarcas despacho)
+        {
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("UPDATE MP_DESPACHO_MARCA SET ");
+            
+            if (despacho.TemplateDeEmail == null || string.IsNullOrWhiteSpace(despacho.TemplateDeEmail.Template))
+                sql.Append("TEMPLATEEMAIL = NULL");
+            else
+                sql.Append(String.Concat("TEMPLATEEMAIL = '",
+                                         UtilidadesDePersistencia.FiltraApostrofe(despacho.TemplateDeEmail.Template), "'"));
+
+            sql.Append(String.Concat(" WHERE IDDESPACHO = ", despacho.IdDespacho.Value.ToString()));    
+
+            DBHelper.ExecuteNonQuery(sql.ToString(),false);
         }
 
         public void Modificar(IDespachoDeMarcas despachoDeMarcas)
@@ -175,6 +206,8 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("WHERE IDDESPACHO = ", despachoDeMarcas.IdDespacho.Value.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+
+            ModifiqueTemplate(despachoDeMarcas);
         }
 
         public void Excluir(long idDespachoDeMarcas)

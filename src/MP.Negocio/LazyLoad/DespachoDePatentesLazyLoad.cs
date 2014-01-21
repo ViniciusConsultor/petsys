@@ -150,6 +150,20 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
+        public ITemplateDeEmail TemplateDeEmail
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.TemplateDeEmail;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.TemplateDeEmail = value;
+            }
+        }
+
        
     }
 }
