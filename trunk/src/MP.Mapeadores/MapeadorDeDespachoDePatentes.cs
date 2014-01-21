@@ -18,7 +18,7 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT IDDESPACHOPATENTE, CODIGO, ");
-            sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO ");
+            sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO, TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_PATENTE ");
             sql.Append("WHERE IDDESPACHOPATENTE = " + idDespachoDePatentes);
 
@@ -64,6 +64,16 @@ namespace MP.Mapeadores
                     despachoDePatentes.DesativaProcesso = UtilidadesDePersistencia.GetValorBooleano(leitor, "DESATIVAPROCESSO");
                     despachoDePatentes.AgendarPagamento = UtilidadesDePersistencia.GetValorBooleano(leitor, "AGENDAPAGAMENTO");
 
+
+                    if (!UtilidadesDePersistencia.EhNulo(leitor, "TEMPLATEEMAIL"))
+                    {
+                        despachoDePatentes.TemplateDeEmail =
+                            FabricaGenerica.GetInstancia().CrieObjeto<ITemplateDeEmail>();
+                        despachoDePatentes.TemplateDeEmail.Template = UtilidadesDePersistencia.GetValorString(leitor,
+                                                                                                     "TEMPLATEEMAIL");
+                    }
+                    
+
                     listaDeDespachoDePatentes.Add(despachoDePatentes);
                 }
             }
@@ -76,7 +86,7 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT IDDESPACHOPATENTE, CODIGO, ");
-            sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO ");
+            sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO, TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_PATENTE ");
 
             if (!string.IsNullOrEmpty(codigo))
@@ -134,8 +144,32 @@ namespace MP.Mapeadores
 
             sql.Append(despachoDePatentes.DesativaProcesso ? String.Concat("'", 1, "', ") : String.Concat("'", 0, "', "));
             sql.Append(despachoDePatentes.AgendarPagamento ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
-
+            
             DBHelper.ExecuteNonQuery(sql.ToString());
+
+            if (despachoDePatentes.TemplateDeEmail != null)
+                ModificarTemplate(despachoDePatentes);
+        }
+
+        public void ModificarTemplate(IDespachoDePatentes despacho)
+        {
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("UPDATE MP_DESPACHO_PATENTE SET ");
+
+            if (despacho.TemplateDeEmail == null || string.IsNullOrWhiteSpace(despacho.TemplateDeEmail.Template))
+                sql.Append("TEMPLATEEMAIL = NULL");
+            else
+                sql.Append(String.Concat("TEMPLATEEMAIL = '",
+                                         UtilidadesDePersistencia.FiltraApostrofe(despacho.TemplateDeEmail.Template), "'"));
+
+            sql.Append(String.Concat(" WHERE IDDESPACHOPATENTE = ", despacho.IdDespachoDePatente.Value.ToString()));
+
+            DBHelper.ExecuteNonQuery(sql.ToString(), false);
         }
 
         public void Modificar(IDespachoDePatentes despachoDePatentes)
@@ -173,12 +207,12 @@ namespace MP.Mapeadores
 
 
             sql.Append(despachoDePatentes.DesativaProcesso ? String.Concat("DESATIVAPROCESSO = '", 1, "', ") : String.Concat("DESATIVAPROCESSO = '", 0, "', "));
-
-            sql.Append(despachoDePatentes.AgendarPagamento ? String.Concat("AGENDAPAGAMENTO = '", 1, "'") : String.Concat("AGENDAPAGAMENTO = '", 0, "'"));
-
+            sql.Append(despachoDePatentes.AgendarPagamento ? String.Concat("AGENDAPAGAMENTO = '", 1, "', ") : String.Concat("AGENDAPAGAMENTO = '", 0, "', "));
             sql.Append(String.Concat("WHERE IDDESPACHOPATENTE = ", despachoDePatentes.IdDespachoDePatente.Value.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+
+            ModificarTemplate(despachoDePatentes);
         }
 
         public void Excluir(long idDespachoDePatentes)
@@ -200,7 +234,7 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT IDDESPACHOPATENTE, CODIGO, ");
-            sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO ");
+            sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO, TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_PATENTE ");
             sql.Append("WHERE CODIGO = '" + codigo + "'");
             sql.Append(" ORDER BY CODIGO");

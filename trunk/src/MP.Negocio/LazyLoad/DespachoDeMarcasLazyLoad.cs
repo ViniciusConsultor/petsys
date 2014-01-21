@@ -133,5 +133,19 @@ namespace MP.Negocio.LazyLoad
             _ObjetoReal.DesativaPesquisaDeColidencia = value;
             }
         }
+
+        public ITemplateDeEmail TemplateDeEmail
+        {
+            get
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                return _ObjetoReal.TemplateDeEmail;
+            }
+            set
+            {
+                VerifiqueSeObjetoEstaCarregado();
+                _ObjetoReal.TemplateDeEmail = value;
+            }
+        }
     }
 }

@@ -18,5 +18,6 @@ namespace MP.Negocio
         public bool DesativaProcesso { get; set; }
         public bool AgendarPagamento { get; set; }
         public string Descricao { get; set; }
+        public ITemplateDeEmail TemplateDeEmail { get; set; }
     }
 }

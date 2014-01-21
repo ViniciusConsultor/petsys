@@ -43,7 +43,7 @@ namespace MP.Client.MP
                 foreach (var titular in servico.ObtenhaPorNomeComoFiltro(e.Text, 50))
                 {
                     var item = new RadComboBoxItem(titular.Pessoa.Nome, titular.Pessoa.ID.ToString());
-                    item.Attributes.Add("DataDoCadastro", titular.DataDoCadastro.ToString());
+                    item.Attributes.Add("DataDoCadastro", titular.DataDoCadastro.Value.ToString("dd/MM/yyyy"));
                     item.Attributes.Add("InformacoesAdicionais", titular.InformacoesAdicionais);
                     cboTitular.Items.Add(item);
                     item.DataBind();

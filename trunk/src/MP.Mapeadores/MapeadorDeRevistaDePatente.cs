@@ -49,9 +49,10 @@ namespace MP.Mapeadores
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.ExtensaoArquivo)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.ExtensaoArquivo), "', ") : "NULL, ");
-
-                sql.Append(String.Concat("'", processoDaRevistaDePatente.NumeroProcessoDaPatente, "', "));
-
+                
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroProcessoDaPatente)
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroProcessoDaPatente), "', ") : "NULL, ");
+                
                 sql.Append(processoDaRevistaDePatente.DataDeDeposito.HasValue
                            ? String.Concat(processoDaRevistaDePatente.DataDeDeposito.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
 
@@ -133,7 +134,8 @@ namespace MP.Mapeadores
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.Recorrente)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.Recorrente), "', ") : "NULL, ");
 
-                sql.Append(String.Concat(processoDaRevistaDePatente.NumeroDoProcesso, ", "));
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroDoProcesso)
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoProcesso), "', ") : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.Cedente)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.Cedente), "', ") : "NULL, ");
@@ -221,15 +223,15 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT distinct(NUMEROREVISTAPATENTE) NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
-            sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
+            sql.Append("SELECT distinct(NUMEROREVISTAPATENTE), DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
             sql.Append("FROM MP_REVISTA_PATENTE ");
             sql.Append("WHERE PROCESSADA = 0");
             sql.Append(" ORDER BY NUMEROREVISTAPATENTE DESC");
 
             IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, 0))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros))
             {
                 try
                 {
@@ -249,7 +251,7 @@ namespace MP.Mapeadores
         {
             var revistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
 
-            revistaDePatente.NumeroRevistaPatente = UtilidadesDePersistencia.getValorInteger(leitor, "NumeroRevistaPatentes");
+            revistaDePatente.NumeroRevistaPatente = UtilidadesDePersistencia.getValorInteger(leitor, "NUMEROREVISTAPATENTE");
 
             if (UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").HasValue)
                 revistaDePatente.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").Value;
@@ -269,15 +271,15 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT distinct(NUMEROREVISTAPATENTE) NumeroRevistaPatentes, DATAPUBLICACAO DataPublicacao, ");
-            sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
+            sql.Append("SELECT distinct(NUMEROREVISTAPATENTE), DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
             sql.Append("FROM MP_REVISTA_PATENTE ");
             sql.Append("WHERE PROCESSADA = 1");
             sql.Append(" ORDER BY NUMEROREVISTAPATENTE DESC");
 
             IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, 0))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(),quantidadeDeRegistros))
             {
                 try
                 {
@@ -290,18 +292,7 @@ namespace MP.Mapeadores
                 }
             }
 
-            IList<IRevistaDePatente> revistasASeremRetornadas = new List<IRevistaDePatente>();
-            long numeroRevistaPatenteAtual = 0;
-
-            foreach (IRevistaDePatente revistaDePatente in revistas)
-            {
-                numeroRevistaPatenteAtual = revistaDePatente.NumeroRevistaPatente;
-
-                if(revistasASeremRetornadas.Select(revista => revista.NumeroRevistaPatente == numeroRevistaPatenteAtual).Count() == 0)
-                    revistasASeremRetornadas.Add(revistaDePatente);
-            }
-
-            return revistasASeremRetornadas;
+            return revistas;
         }
 
         public void Excluir(int numeroDaRevistaDePatente)

@@ -17,31 +17,38 @@ namespace MP.Interfaces.Utilidades
             IList<DTOLayoutLeituraRevistaPatente> ListaDeLayoutLeituraRevistaPatentes = new List<DTOLayoutLeituraRevistaPatente>();
             DTOLayoutLeituraRevistaPatente dtoLayoutLeituraRevista = null;
             string ultimaTagPreenchida = string.Empty;
-            var arquivoTxtConvertido = UtilidadesDeStream.ConvertaArquivoAnsiParaUtf8(arquivoTxt.BaseStream);
 
-            LayoutRevistaPatente.CarregueLista();
-
-            while ((linha = arquivoTxtConvertido.ReadLine()) != null)
+            using (var arquivoTxtConvertido = UtilidadesDeStream.ConvertaArquivoAnsiParaUtf8(arquivoTxt.BaseStream))
             {
-                linha = linha.ToUpper();
 
-                if (contador == 0 || contador == 1 || contador == 2)
+                LayoutRevistaPatente.CarregueLista();
+
+                while ((linha = arquivoTxtConvertido.ReadLine()) != null)
                 {
+                    linha = linha.ToUpper();
+
+                    if (contador == 0 || contador == 1 || contador == 2)
+                    {
+                        contador++;
+                        continue;
+                    }
+
+                    if (linha.StartsWith(LayoutRevistaPatente.LayoutCD.IdentificadorCampo))
+                    {
+                        if (dtoLayoutLeituraRevista != null)
+                            ListaDeLayoutLeituraRevistaPatentes.Add(dtoLayoutLeituraRevista);
+
+                        dtoLayoutLeituraRevista = null;
+                        ultimaTagPreenchida = string.Empty;
+                    }
+
+                    PreenchaObjetoDTOLayoutLeituraRevistaPatente(linha, ref dtoLayoutLeituraRevista,
+                                                                 ref ultimaTagPreenchida);
                     contador++;
-                    continue;
                 }
 
-                if (linha.StartsWith(LayoutRevistaPatente.LayoutCD.IdentificadorCampo))
-                {
-                    if (dtoLayoutLeituraRevista != null)
-                        ListaDeLayoutLeituraRevistaPatentes.Add(dtoLayoutLeituraRevista);
+                arquivoTxtConvertido.Close();
 
-                    dtoLayoutLeituraRevista = null;
-                    ultimaTagPreenchida = string.Empty;
-                }
-
-                PreenchaObjetoDTOLayoutLeituraRevistaPatente(linha, ref dtoLayoutLeituraRevista, ref ultimaTagPreenchida);
-                contador++;
             }
 
             MontaRevistaXmlDePatente(localParaGravarXml, numeroDaRevista, DateTime.Now, ListaDeLayoutLeituraRevistaPatentes);

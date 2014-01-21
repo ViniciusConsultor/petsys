@@ -1,0 +1,26 @@
+﻿@media only screen and (max-width: 480px)
+{
+    .containertabela
+    {
+        position: absolute;
+        left: 10%;
+        top: 25%;
+        border-top-style: none;
+        border-right-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+    }
+    
+    .containerCopyright
+    {
+        position: absolute;
+        left: 5%;
+        top: 90%;
+        border-top-style: none;
+        border-right-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+    }
+}
+
+

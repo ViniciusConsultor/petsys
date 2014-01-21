@@ -95,7 +95,7 @@ namespace MP.Mapeadores
 
             IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, 0))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros))
             {
                 try
                 {

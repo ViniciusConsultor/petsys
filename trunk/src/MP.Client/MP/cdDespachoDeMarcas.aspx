@@ -3,6 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc1" %>
+<%@ Register Src="ctrlTemplateDeEmail.ascx" TagName="ctrlTemplateDeEmail" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -74,8 +75,8 @@
                                     <asp:Label ID="Label5" runat="server" Text="Prazo para providência (dias)"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtPrazoProvidencia" runat="server" Width="87px"
-                                        Type="Number" DataType="System.Uint32">
+                                    <telerik:RadNumericTextBox ID="txtPrazoProvidencia" runat="server" Width="87px" Type="Number"
+                                        DataType="System.Uint32">
                                         <NumberFormat DecimalDigits="0"></NumberFormat>
                                     </telerik:RadNumericTextBox>
                                 </td>
@@ -111,6 +112,7 @@
                                 </td>
                             </tr>
                         </table>
+                        <uc2:ctrlTemplateDeEmail ID="ctrlTemplateDeEmail" runat="server" />
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>

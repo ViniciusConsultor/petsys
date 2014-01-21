@@ -293,10 +293,13 @@ namespace MP.Client.MP
             var caminhoArquivoTxt = Path.Combine(pastaDeDestino, revistaDeMarcas.NumeroRevistaMarcas +
                 revistaDeMarcas.ExtensaoArquivo);
 
-            var arquivo = new StreamReader(caminhoArquivoTxt);
-
-            TradutorDeRevistaTxtParaRevistaXml.TraduzaRevistaDeMarcas(DateTime.Now, revistaDeMarcas.NumeroRevistaMarcas.ToString(),
+            using(var arquivo = new StreamReader(caminhoArquivoTxt))
+            {
+                TradutorDeRevistaTxtParaRevistaXml.TraduzaRevistaDeMarcas(DateTime.Now, revistaDeMarcas.NumeroRevistaMarcas.ToString(),
                 arquivo, pastaDeDestino);
+                arquivo.Close();
+            }
+                
         }
 
         private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDeMarcas revistaDeMarcas)

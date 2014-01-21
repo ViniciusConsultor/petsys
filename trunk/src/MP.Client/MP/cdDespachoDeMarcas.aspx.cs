@@ -23,9 +23,7 @@ namespace MP.Client.MP
             ctrlDespachoDeMarcas.DespachoDeMarcasFoiSelecionada += MostreDespachoDeMarcas;
 
             if (!IsPostBack)
-            {
-                this.ExibaTelaInicial();
-            }
+                ExibaTelaInicial();
         }
 
         private void ExibaTelaInicial()
@@ -48,8 +46,9 @@ namespace MP.Client.MP
             ctrlDespachoDeMarcas.EnableLoadOnDemand = true;
             ctrlDespachoDeMarcas.ShowDropDownOnTextboxClick = true;
             ctrlDespachoDeMarcas.AutoPostBack = true;
-
-
+            
+            ctrlTemplateDeEmail.Inicializa();
+            
             ViewState[CHAVE_ESTADO] = Estado.Inicial;
             ViewState[ID_OBJETO] = null;
 
@@ -153,9 +152,7 @@ namespace MP.Client.MP
             var despachoDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDeMarcas>();
 
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
-            {
                 despachoDeMarcas.IdDespacho = Convert.ToInt64(ViewState[ID_OBJETO]);
-            }
 
             despachoDeMarcas.CodigoDespacho = txtCodigo.Text;
             despachoDeMarcas.DescricaoDespacho = txtDescricao.Text;
@@ -164,6 +161,12 @@ namespace MP.Client.MP
             despachoDeMarcas.SituacaoProcesso = txtSituacao.Text;
             despachoDeMarcas.DesativaProcesso = rblDesativaProcesso.SelectedValue != "0";
             despachoDeMarcas.DesativaPesquisaDeColidencia = rblDesativaPesquisa.SelectedValue != "0";
+
+            if (!string.IsNullOrEmpty(ctrlTemplateDeEmail.TextoDoTemplate))
+            {
+                despachoDeMarcas.TemplateDeEmail = FabricaGenerica.GetInstancia().CrieObjeto<ITemplateDeEmail>();
+                despachoDeMarcas.TemplateDeEmail.Template = ctrlTemplateDeEmail.TextoDoTemplate;
+            }
 
             return despachoDeMarcas;
         }
@@ -324,6 +327,10 @@ namespace MP.Client.MP
             txtSituacao.Text = despachoDeMarcas.SituacaoProcesso;
             rblDesativaPesquisa.SelectedValue = despachoDeMarcas.DesativaPesquisaDeColidencia ? "1": "0";
             rblDesativaProcesso.SelectedValue = despachoDeMarcas.DesativaProcesso ? "1" : "0";
+            
+            if (despachoDeMarcas.TemplateDeEmail != null)
+                ctrlTemplateDeEmail.TextoDoTemplate = despachoDeMarcas.TemplateDeEmail.Template ;
+            
             ExibaTelaConsultar();
         }
 

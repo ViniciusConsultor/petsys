@@ -15,6 +15,8 @@ namespace MP.Negocio
         public bool DesativaProcesso { get; set; }
         public bool DesativaPesquisaDeColidencia {get;set;}
 
+        public ITemplateDeEmail TemplateDeEmail {get; set; }
+
         public override bool Equals(object obj)
         {
             if (IdDespacho.HasValue)

@@ -137,13 +137,29 @@ namespace MP.Client.MP
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraMensagemDeInformacao("Não existe publicações próprias na revista processada."), false);
 
-                        CarreguePaginaInicial();
+                        var revistaDePatenteParaHistorico = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
+
+                        revistaDePatenteParaHistorico.NumeroRevistaPatente =
+                            revistasAProcessar[indiceSelecionado].NumeroRevistaPatente;
+                        revistaDePatenteParaHistorico.Processada = true;
+                        revistaDePatenteParaHistorico.ExtensaoArquivo = revistasAProcessar[indiceSelecionado].ExtensaoArquivo;
+                        revistaDePatenteParaHistorico.NumeroDoProcesso =
+                            revistasAProcessar[indiceSelecionado].NumeroDoProcesso;
+                        revistaDePatenteParaHistorico.NumeroProcessoDaPatente = revistasAProcessar[indiceSelecionado].NumeroProcessoDaPatente;
+
+                        listaDeProcessosExistentes.Add(revistaDePatenteParaHistorico);
+
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                            servico.Inserir(listaDeProcessosExistentes);
+
+                        CarregueRevistasProcessadas();
+                        CarregueRevistasAProcessar();
                         RadPageView1.Selected = true;
                         txtPublicacoesProprias.Text = "0";
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
                         RadTabStrip1.Tabs[0].Selected = true;
-                        HabilteAbaFiltro(false);
+                        HabilteAbaFiltro(true);
                     }
                 }
                 catch (BussinesException ex)
@@ -226,7 +242,7 @@ namespace MP.Client.MP
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
                         RadTabStrip1.Tabs[0].Selected = true;
-                        HabilteAbaFiltro(false);
+                        HabilteAbaFiltro(true);
                     }
                 }
                 catch (BussinesException ex)
@@ -402,9 +418,12 @@ namespace MP.Client.MP
             UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
             var caminhoArquivoTxt = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
-            var arquivo = new StreamReader(caminhoArquivoTxt);
+            using(var arquivo = new StreamReader(caminhoArquivoTxt))
+            {
+                TradutorDeRevistaPatenteTXTParaRevistaPatenteXML.TraduzaRevistaDePatente(DateTime.Now, revistaDePatente.NumeroRevistaPatente.ToString(), arquivo, pastaDeDestino);
+                arquivo.Close();
+            }
 
-            TradutorDeRevistaPatenteTXTParaRevistaPatenteXML.TraduzaRevistaDePatente(DateTime.Now, revistaDePatente.NumeroRevistaPatente.ToString(), arquivo, pastaDeDestino);
         }
 
         private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDePatente revistaDePatente)

@@ -57,6 +57,7 @@ namespace MP.Client.MP
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, false);
 
             pnlDespacho.Visible = true;
+            ctrlTemplateDeEmail.Inicializa();
             ctrlDespachoDePatentes.Inicializa();
             ctrlDespachoDePatentes.EnableLoadOnDemand = true;
             ctrlDespachoDePatentes.ShowDropDownOnTextboxClick = true;
@@ -97,7 +98,6 @@ namespace MP.Client.MP
 
             var controlePanel = this.PanelCdDespachoDePatentes as Control;
             UtilidadesWeb.HabilitaComponentes(ref controlePanel, true);
-            //UtilidadesWeb.LimparComponente(ref controlePanel);
             ViewState[CHAVE_ESTADO] = Estado.Novo;
 
             ctrlDespachoDePatentes.Inicializa();
@@ -170,6 +170,12 @@ namespace MP.Client.MP
             despachoDePatentes.Situacao = txtSituacao.Text;
             despachoDePatentes.TipoProvidencia = txtProvidencia.Text;
             despachoDePatentes.Titulo = txtTitulo.Text;
+
+            if (!string.IsNullOrEmpty(ctrlTemplateDeEmail.TextoDoTemplate))
+            {
+                despachoDePatentes.TemplateDeEmail = FabricaGenerica.GetInstancia().CrieObjeto<ITemplateDeEmail>();
+                despachoDePatentes.TemplateDeEmail.Template = ctrlTemplateDeEmail.TextoDoTemplate;
+            }
 
             return despachoDePatentes;
         }
@@ -299,6 +305,9 @@ namespace MP.Client.MP
 
             rblAgendaPagamento.SelectedValue = despachodepatentes.AgendarPagamento ? "1" : "0";
             rblDesativaProcesso.SelectedValue = despachodepatentes.DesativaProcesso ? "1" : "0";
+
+            if (despachodepatentes.TemplateDeEmail != null)
+                ctrlTemplateDeEmail.TextoDoTemplate = despachodepatentes.TemplateDeEmail.Template;
 
             ExibaTelaConsultar();
         }

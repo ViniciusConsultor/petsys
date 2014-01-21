@@ -57,6 +57,9 @@ namespace MP.Client.MP
             cboTipoDeFiltro.SelectedValue = "1";
             ctrlOperacaoFiltro1.Inicializa();
             ctrlNaturezaPatente1.Inicializa();
+            ctrlCliente1.Inicializa();
+            ctrlInventor.Inicializa();
+            ctrlTitular.Inicializa();
             
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatenteSemFiltro>();
             FiltroAplicado = filtro;
@@ -124,6 +127,9 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de cadastro", "2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Título da patente", "3"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza", "4"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente","5"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Inventor", "6"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Titular", "7"));
         }
 
 
@@ -145,6 +151,15 @@ namespace MP.Client.MP
                 case "4":
                     pnlNatureza.Visible = true;
                     break;
+                case "5":
+                    pnlCliente.Visible = true;
+                    break;
+                case "6":
+                    pnlInventor.Visible = true;
+                    break;
+                case "7":
+                    pnlTitular.Visible = true;
+                    break;
             }
         }
 
@@ -155,6 +170,9 @@ namespace MP.Client.MP
             pnlDataDeCadastro.Visible = false;
             pnlTituloPatente.Visible = false;
             pnlNatureza.Visible = false;
+            pnlCliente.Visible = false;
+            pnlInventor.Visible = false;
+            pnlTitular.Visible = false;
         }
         
         protected void btnPesquisarPorDataDeCadastro_OnClick(object sender, ImageClickEventArgs e)
@@ -317,6 +335,72 @@ namespace MP.Client.MP
                                                                                        800, 550), false);
                     break;
             }
+        }
+
+        protected void btnPesquisarPorCliente_OnClick_(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            if (ctrlCliente1.ClienteSelecionado == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe um cliente."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorCliente>();
+            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.ValorDoFiltro = ctrlCliente1.ClienteSelecionado.Pessoa.ID.Value.ToString();
+            FiltroAplicado = filtro;
+            MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
+        }
+
+        protected void btnPesquisarPorTitular_OnClick_(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            if (ctrlTitular.TitularSelecionado == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe um titular."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorTitular>();
+            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.ValorDoFiltro = ctrlTitular.TitularSelecionado.Pessoa.ID.Value.ToString();
+            FiltroAplicado = filtro;
+            MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
+        }
+
+        protected void btnPesquisarPorInventor_OnClick_(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            if (ctrlInventor.InventorSelecionado == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe um inventor."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorInventor>();
+            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.ValorDoFiltro = ctrlInventor.InventorSelecionado.Pessoa.ID.Value.ToString();
+            FiltroAplicado = filtro;
+            MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
         }
     }
 }

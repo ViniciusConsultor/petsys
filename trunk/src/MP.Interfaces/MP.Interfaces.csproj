@@ -83,10 +83,13 @@
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorProcesso.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaSemFiltro.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroLeituraDeRevistaDePatentes.cs" />
+    <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorCliente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorDataDeCadastro.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorID.cs" />
+    <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorInventor.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorNatureza.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorProcesso.cs" />
+    <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTitular.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatenteSemFiltro.cs" />
     <Compile Include="Negocio\IClasseNacional.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Negocio\IRadicalPatente.cs" />
     <Compile Include="Negocio\IRevistaDeMarcas.cs" />
     <Compile Include="Negocio\IRevistaDePatente.cs" />
+    <Compile Include="Negocio\ITemplateDeEmail.cs" />
     <Compile Include="Negocio\ITipoDeProcedimentoInterno.cs" />
     <Compile Include="Negocio\ITitular.cs" />
     <Compile Include="Negocio\LayoutRevistaPatente.cs" />

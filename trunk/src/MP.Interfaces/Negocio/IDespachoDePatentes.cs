@@ -16,5 +16,6 @@ namespace MP.Interfaces.Negocio
         bool DesativaProcesso { get; set; }
         bool AgendarPagamento { get; set; }
         string Descricao { get; set; }
+        ITemplateDeEmail TemplateDeEmail { get; set; }
     }
 }
