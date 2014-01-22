@@ -37,7 +37,7 @@
                                 </telerik:RadDateInput>
                             </td>
                         </tr>
-                        <tr>
+                        <%--<tr>
                             <td class="th3">
                                 <asp:Label ID="Label5" runat="server" Text="Está diponível para acesso?"></asp:Label>
                             </td>
@@ -46,7 +46,7 @@
                                         RepeatDirection="Horizontal">
                                     </asp:RadioButtonList>
                             </td>
-                        </tr>
+                        </tr>--%>
                     </table>
                 </ContentTemplate>
             </telerik:RadDock>
