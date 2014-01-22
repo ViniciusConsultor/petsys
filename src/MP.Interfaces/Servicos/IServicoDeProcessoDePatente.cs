@@ -12,6 +12,7 @@ namespace MP.Interfaces.Servicos
     {
         void Inserir(IProcessoDePatente processoDePatente);
         void Modificar(IProcessoDePatente processoDePatente);
+        void AtualizeProcessoAposLeituraDaRevista(IProcessoDePatente processoDePatente);
         void Excluir(IProcessoDePatente processoDePatente);
         IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet);
         IProcessoDePatente Obtenha(long ID);

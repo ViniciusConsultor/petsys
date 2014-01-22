@@ -154,7 +154,7 @@ namespace MP.Servicos.Local
                                 revistaASerSalva.Processada = true;
                                 revistaASerSalva.ExtensaoArquivo = ".XML";
                                 listaDeRevistasASeremSalvas.Add(revistaASerSalva);
-                                servico.Modificar(processoDePatenteExistente);
+                                servico.AtualizeProcessoAposLeituraDaRevista(processoDePatenteExistente);
                             }
                         }
                     }

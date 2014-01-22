@@ -537,7 +537,7 @@ namespace MP.Servicos.Local
 
                                 listaDeDadosDaRevistaASerSalvo.Add(objetoRevistaASerSalvo);
 
-                                servico.Modificar(processoDeMarcaExistente);
+                                servico.AtualizeProcessoAposLeituraDaRevista(processoDeMarcaExistente);
                             }
                         }
                     }
