@@ -37,9 +37,8 @@
                                         </script>
                                     </telerik:RadScriptBlock>
                                     <telerik:RadAsyncUpload runat="server" ID="uplRevistaMarca" MaxFileInputsCount="1"
-                                        AllowedFileExtensions=".zip" PostbackTriggers="ButtonSubmit" Skin="Vista"
-                                        HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Procurar"
-                                        OnFileUploaded="uplRevistaMarca_OnFileUploaded" />
+                                        AllowedFileExtensions=".zip" PostbackTriggers="ButtonSubmit" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
+                                        Localization-Select="Procurar" OnFileUploaded="uplRevistaMarca_OnFileUploaded" />
                                     <asp:Button ID="ButtonSubmit" runat="server" Text="Adicionar" OnClientClick="updateRevistaMarca(); return false;"
                                         CausesValidation="False" CssClass="RadUploadSubmit" />
                                 </td>
@@ -90,9 +89,9 @@
                                             </ExpandCollapseColumn>
                                             <Columns>
                                                 <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
-                                                                <ItemStyle Width="2%"></ItemStyle>
-                                                            </telerik:GridButtonColumn>
+                                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                    <ItemStyle Width="2%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
                                                 <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ReprocessarRevista"
                                                     FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
                                                     UniqueName="column4">
@@ -133,27 +132,27 @@
                             </tr>
                         </table>
                         <asp:Panel ID="pnlRelatorios" Visible="false" runat="server">
-                        <table class="tabela">
-                            <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label10" runat="server" Text="Gerar relatório Analítico:"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <asp:ImageButton ID="btnRelPublicPropriasAnalitico" runat="server" ImageUrl="~/imagens/imprimir.png"
-                                        ToolTip="Gerar Relatório Analítico das publicações próprias" OnClick="btnRelPublicPropriasAnalitico_OnClick" />
-                                </td>                                
-                            </tr>
-                             <tr>
-                                <td class="th3">
-                                    <asp:Label ID="Label9" runat="server" Text="Gerar relatório Sintético:"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <asp:ImageButton ID="btnRelPublicPropriasSintetico" runat="server" ImageUrl="~/imagens/imprimir.png"
-                                        ToolTip="Gerar Relatório Sintético das publicações próprias" OnClick="btnRelPublicPropriasSintetico_OnClick" />
-                                </td>
-                            </tr>
-                        </table>
-                        </asp:Panel>               
+                            <table class="tabela">
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label10" runat="server" Text="Gerar relatório Analítico:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <asp:ImageButton ID="btnRelPublicPropriasAnalitico" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                            ToolTip="Gerar Relatório Analítico das publicações próprias" OnClick="btnRelPublicPropriasAnalitico_OnClick" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label9" runat="server" Text="Gerar relatório Sintético:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <asp:ImageButton ID="btnRelPublicPropriasSintetico" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                            ToolTip="Gerar Relatório Sintético das publicações próprias" OnClick="btnRelPublicPropriasSintetico_OnClick" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </asp:Panel>
                         <telerik:RadTabStrip ID="RadTabStrip1" runat="server" SelectedIndex="0" Skin="Vista"
                             MultiPageID="RadMultiPage1" CausesValidation="False" AutoPostBack="True" OnTabClick="RadTabStrip1_OnTabClick">
                             <Tabs>
@@ -182,7 +181,7 @@
                                                         <ExpandCollapseColumn>
                                                             <HeaderStyle Width="20px" />
                                                         </ExpandCollapseColumn>
-                                                        <Columns>                                                            
+                                                        <Columns>
                                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
                                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                                 <ItemStyle Width="2%"></ItemStyle>
@@ -205,8 +204,7 @@
                                                             <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Titular"
                                                                 UniqueName="column4">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca"
-                                                                UniqueName="column5">
+                                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column5">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
@@ -379,73 +377,85 @@
                                     </table>
                                     <table class="tabela">
                                         <tr>
-                                            <td class="th3" colspan="2">
-                                                <asp:Label ID="Label7" runat="server" Text="Marcas de clientes:"></asp:Label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td" colspan="2">
-                                                <telerik:RadGrid ID="grdMarcasClientes" runat="server" AutoGenerateColumns="False"
-                                                    AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdMarcasClientes_ItemCommand"
-                                                    OnItemCreated="grdMarcasClientes_ItemCreated" OnPageIndexChanged="grdMarcasClientes_PageIndexChanged">
-                                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                                    <MasterTableView GridLines="Both">
-                                                        <RowIndicatorColumn>
-                                                            <HeaderStyle Width="20px" />
-                                                        </RowIndicatorColumn>
-                                                        <ExpandCollapseColumn>
-                                                            <HeaderStyle Width="20px" />
-                                                        </ExpandCollapseColumn>
-                                                        <Columns>
-                                                            <telerik:GridBoundColumn DataField="IdLeitura" HeaderText="ID" UniqueName="column6"
-                                                                Display="false">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NCL" HeaderText="NCL" UniqueName="column1">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Marca" HeaderText="Marca" UniqueName="column2">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column3">
-                                                            </telerik:GridBoundColumn>
-                                                        </Columns>
-                                                    </MasterTableView>
-                                                </telerik:RadGrid>
+                                            <td colspan="2">
+                                                <fieldset class="field">
+                                                    <legend class="fieldlegend">
+                                                        <asp:Label ID="Label12" runat="server" Text="Marcas de clientes:"></asp:Label>
+                                                    </legend>
+                                                    <table class="tabela">
+                                                        <tr>
+                                                            <td class="td" colspan="2">
+                                                                <telerik:RadGrid ID="grdMarcasClientes" runat="server" AutoGenerateColumns="False"
+                                                                    AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdMarcasClientes_ItemCommand"
+                                                                    OnItemCreated="grdMarcasClientes_ItemCreated" OnPageIndexChanged="grdMarcasClientes_PageIndexChanged">
+                                                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                                                    <MasterTableView GridLines="Both">
+                                                                        <RowIndicatorColumn>
+                                                                            <HeaderStyle Width="20px" />
+                                                                        </RowIndicatorColumn>
+                                                                        <ExpandCollapseColumn>
+                                                                            <HeaderStyle Width="20px" />
+                                                                        </ExpandCollapseColumn>
+                                                                        <Columns>
+                                                                            <telerik:GridBoundColumn DataField="IdLeitura" HeaderText="ID" UniqueName="column6"
+                                                                                Display="false">
+                                                                            </telerik:GridBoundColumn>
+                                                                            <telerik:GridBoundColumn DataField="NCL" HeaderText="NCL" UniqueName="column1">
+                                                                            </telerik:GridBoundColumn>
+                                                                            <telerik:GridBoundColumn DataField="Marca" HeaderText="Marca" UniqueName="column2">
+                                                                            </telerik:GridBoundColumn>
+                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column3">
+                                                                            </telerik:GridBoundColumn>
+                                                                        </Columns>
+                                                                    </MasterTableView>
+                                                                </telerik:RadGrid>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
                                             </td>
                                         </tr>
                                     </table>
                                     <table class="tabela">
                                         <tr>
-                                            <td class="th3" colspan="2">
-                                                <asp:Label ID="Label8" runat="server" Text="Marcas Colidentes:"></asp:Label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td" colspan="2">
-                                                <telerik:RadGrid ID="grdMarcasColidentes" runat="server" AutoGenerateColumns="False"
-                                                    AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdMarcasColidentes_ItemCommand"
-                                                    OnItemCreated="grdMarcasColidentes_ItemCreated" OnPageIndexChanged="grdMarcasColidentes_PageIndexChanged">
-                                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                                    <MasterTableView GridLines="Both">
-                                                        <RowIndicatorColumn>
-                                                            <HeaderStyle Width="20px" />
-                                                        </RowIndicatorColumn>
-                                                        <ExpandCollapseColumn>
-                                                            <HeaderStyle Width="20px" />
-                                                        </ExpandCollapseColumn>
-                                                        <Columns>
-                                                            <telerik:GridBoundColumn DataField="IdLeitura" HeaderText="ID" UniqueName="column6"
-                                                                Display="false">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column1">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NCL" HeaderText="NCL" UniqueName="column2">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Marca" HeaderText="Marca" UniqueName="column3">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column4">
-                                                            </telerik:GridBoundColumn>
-                                                        </Columns>
-                                                    </MasterTableView>
-                                                </telerik:RadGrid>
+                                            <td colspan="2">
+                                                <fieldset class="field">
+                                                    <legend class="fieldlegend">
+                                                        <asp:Label ID="Label8" runat="server" Text="Marcas Colidentes:"></asp:Label>
+                                                    </legend>
+                                                    <table class="tabela">
+                                                        <tr>
+                                                            <td class="td" colspan="2">
+                                                                <telerik:RadGrid ID="grdMarcasColidentes" runat="server" AutoGenerateColumns="False"
+                                                                    AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdMarcasColidentes_ItemCommand"
+                                                                    OnItemCreated="grdMarcasColidentes_ItemCreated" OnPageIndexChanged="grdMarcasColidentes_PageIndexChanged">
+                                                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                                                    <MasterTableView GridLines="Both">
+                                                                        <RowIndicatorColumn>
+                                                                            <HeaderStyle Width="20px" />
+                                                                        </RowIndicatorColumn>
+                                                                        <ExpandCollapseColumn>
+                                                                            <HeaderStyle Width="20px" />
+                                                                        </ExpandCollapseColumn>
+                                                                        <Columns>
+                                                                            <telerik:GridBoundColumn DataField="IdLeitura" HeaderText="ID" UniqueName="column6"
+                                                                                Display="false">
+                                                                            </telerik:GridBoundColumn>
+                                                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column1">
+                                                                            </telerik:GridBoundColumn>
+                                                                            <telerik:GridBoundColumn DataField="NCL" HeaderText="NCL" UniqueName="column2">
+                                                                            </telerik:GridBoundColumn>
+                                                                            <telerik:GridBoundColumn DataField="Marca" HeaderText="Marca" UniqueName="column3">
+                                                                            </telerik:GridBoundColumn>
+                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column4">
+                                                                            </telerik:GridBoundColumn>
+                                                                        </Columns>
+                                                                    </MasterTableView>
+                                                                </telerik:RadGrid>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
                                             </td>
                                         </tr>
                                     </table>
