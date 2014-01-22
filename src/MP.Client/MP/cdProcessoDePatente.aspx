@@ -455,86 +455,87 @@
                             <asp:Panel ID="pnlPrioridadeUnionista" runat="server">
                                 <table class="tabela">
                                     <tr>
-                                        <td class="th3" colspan="2">
-                                            <asp:Label ID="lblTituloPrioridadeUnionista" runat="server" Text="Prioridade Unionista" />
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <td colspan="2">
-                                            <br />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <table class="tabela">
-                                                <tr>
-                                                    <td class="th3">
-                                                        <asp:Label ID="lblDataPrioridade" runat="server" Text="Data" />
-                                                    </td>
-                                                    <td class="td">
-                                                        <telerik:RadDatePicker ID="txtDataPrioridade" runat="server" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="th3">
-                                                        <asp:Label ID="lblPaisDeOrigem" runat="server" Text="País de Origem" />
-                                                    </td>
-                                                    <td class="td">
-                                                        <uc9:ctrlPais ID="ctrlPais" runat="server" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="th3">
-                                                        <asp:Label ID="lblNumeroPrioridade" runat="server" Text="Número Prioridade" />
-                                                    </td>
-                                                    <td class="td">
-                                                        <telerik:RadTextBox ID="txtNumeroPrioridade" runat="server" Width="10%" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <br />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="right">
-                                            <telerik:RadButton ID="btnAdicionarPrioridadeUnionista" runat="server" Text="Adicionar"
-                                                ToolTip="Adicionar Prioridade Unionista" OnClick="btnAdicionarPrioridadeUnionista_ButtonClick" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <br />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="campodependente" colspan="2">
-                                            <telerik:RadGrid ID="grdPrioridadeUnionista" runat="server" AutoGenerateColumns="False"
-                                                Skin="Vista" AllowPaging="True" PageSize="10" GridLines="None" OnItemCommand="grdPrioridadeUnionista_ItemCommand"
-                                                OnItemCreated="grdPrioridadeUnionista_ItemCreated" OnPageIndexChanged="grdPrioridadeUnionista_PageIndexChanged">
-                                                <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                                <MasterTableView GridLines="Both">
-                                                    <RowIndicatorColumn>
-                                                        <HeaderStyle Width="20px" />
-                                                    </RowIndicatorColumn>
-                                                    <ExpandCollapseColumn>
-                                                        <HeaderStyle Width="20px" />
-                                                    </ExpandCollapseColumn>
-                                                    <Columns>
-                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                            HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
-                                                        </telerik:GridButtonColumn>
-                                                        <telerik:GridDateTimeColumn DataField="DataPrioridade" HeaderText="Data" UniqueName="colunaData"
-                                                            DataFormatString="{0:dd/MM/yyyy}" />
-                                                        <telerik:GridBoundColumn DataField="Pais.Nome" HeaderText="País de Origem" UniqueName="colunaPais" />
-                                                        <telerik:GridBoundColumn DataField="NumeroPrioridade" HeaderText="Nº Prioridade"
-                                                            UniqueName="colunaPrioridade" />
-                                                    </Columns>
-                                                </MasterTableView>
-                                            </telerik:RadGrid>
+                                            <fieldset class="field">
+                                                <legend class="fieldlegend">
+                                                    <asp:Label ID="lblTituloPrioridadeUnionista" runat="server" Text="Prioridade Unionista" />
+                                                </legend>
+                                                <table class="tabela">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <table class="tabela">
+                                                                <tr>
+                                                                    <td class="th3">
+                                                                        <asp:Label ID="lblDataPrioridade" runat="server" Text="Data" />
+                                                                    </td>
+                                                                    <td class="td">
+                                                                        <telerik:RadDatePicker ID="txtDataPrioridade" runat="server" />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="th3">
+                                                                        <asp:Label ID="lblPaisDeOrigem" runat="server" Text="País de Origem" />
+                                                                    </td>
+                                                                    <td class="td">
+                                                                        <uc9:ctrlPais ID="ctrlPais" runat="server" />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="th3">
+                                                                        <asp:Label ID="lblNumeroPrioridade" runat="server" Text="Número Prioridade" />
+                                                                    </td>
+                                                                    <td class="td">
+                                                                        <telerik:RadTextBox ID="txtNumeroPrioridade" runat="server" Width="10%" />
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <br />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" align="right">
+                                                            <telerik:RadButton ID="btnAdicionarPrioridadeUnionista" runat="server" Text="Adicionar"
+                                                                ToolTip="Adicionar Prioridade Unionista" OnClick="btnAdicionarPrioridadeUnionista_ButtonClick" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <br />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="campodependente" colspan="2">
+                                                            <telerik:RadGrid ID="grdPrioridadeUnionista" runat="server" AutoGenerateColumns="False"
+                                                                Skin="Vista" AllowPaging="True" PageSize="10" GridLines="None" OnItemCommand="grdPrioridadeUnionista_ItemCommand"
+                                                                OnItemCreated="grdPrioridadeUnionista_ItemCreated" OnPageIndexChanged="grdPrioridadeUnionista_PageIndexChanged">
+                                                                <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                                                <MasterTableView GridLines="Both">
+                                                                    <RowIndicatorColumn>
+                                                                        <HeaderStyle Width="20px" />
+                                                                    </RowIndicatorColumn>
+                                                                    <ExpandCollapseColumn>
+                                                                        <HeaderStyle Width="20px" />
+                                                                    </ExpandCollapseColumn>
+                                                                    <Columns>
+                                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                                            HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="colunaExcluir">
+                                                                        </telerik:GridButtonColumn>
+                                                                        <telerik:GridDateTimeColumn DataField="DataPrioridade" HeaderText="Data" UniqueName="colunaData"
+                                                                            DataFormatString="{0:dd/MM/yyyy}" />
+                                                                        <telerik:GridBoundColumn DataField="Pais.Nome" HeaderText="País de Origem" UniqueName="colunaPais" />
+                                                                        <telerik:GridBoundColumn DataField="NumeroPrioridade" HeaderText="Nº Prioridade"
+                                                                            UniqueName="colunaPrioridade" />
+                                                                    </Columns>
+                                                                </MasterTableView>
+                                                            </telerik:RadGrid>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </fieldset>
                                         </td>
                                     </tr>
                                 </table>
