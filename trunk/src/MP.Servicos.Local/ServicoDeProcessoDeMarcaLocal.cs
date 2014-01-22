@@ -21,13 +21,15 @@ namespace MP.Servicos.Local
         {
             ServerUtils.setCredencial(_Credencial);
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
-
+            var mapeadorDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
+            var mapeadorDeProcessoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+            
             try
             {
                 ServerUtils.BeginTransaction();
                 VerifiqueSeDespachoDesativaProcesso(processoDeMarca);
-                mapeador.Inserir(processoDeMarca);
+                mapeadorDeMarca.Inserir(processoDeMarca.Marca);
+                mapeadorDeProcessoDeMarca.Inserir(processoDeMarca);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -45,13 +47,40 @@ namespace MP.Servicos.Local
         {
             ServerUtils.setCredencial(_Credencial);
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+            var mapeadorDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
+            var mapeadorDeProcessoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
 
             try
             {
                 ServerUtils.BeginTransaction();
                 VerifiqueSeDespachoDesativaProcesso(processoDeMarca);
-                mapeador.Modificar(processoDeMarca);
+                mapeadorDeMarca.Modificar(processoDeMarca.Marca);
+                mapeadorDeProcessoDeMarca.Modificar(processoDeMarca);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
+        public void Excluir(IProcessoDeMarca processoDeMarca)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeadorDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
+            var mapeadorDeProcessoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeadorDeProcessoDeMarca.Excluir(processoDeMarca.IdProcessoDeMarca.Value);
+                mapeadorDeMarca.Excluir(processoDeMarca.Marca.IdMarca.Value);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -70,30 +99,6 @@ namespace MP.Servicos.Local
             if (processo.Despacho == null) return;
 
             processo.Ativo = !processo.Despacho.DesativaProcesso;
-        }
-
-        public void Excluir(long ID)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeador.Excluir(ID);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-            
         }
 
         public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)

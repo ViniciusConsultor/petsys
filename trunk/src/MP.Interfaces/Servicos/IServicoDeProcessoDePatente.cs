@@ -12,13 +12,12 @@ namespace MP.Interfaces.Servicos
     {
         void Inserir(IProcessoDePatente processoDePatente);
         void Modificar(IProcessoDePatente processoDePatente);
-        void Excluir(long ID);
+        void Excluir(IProcessoDePatente processoDePatente);
         IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet);
         IProcessoDePatente Obtenha(long ID);
         int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
         void AtivaDesativaProcessoDePatente(long idProcessoDePatente, bool ativo);
         IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
-        DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente);
         IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
         IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado();
     }

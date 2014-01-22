@@ -379,7 +379,8 @@ namespace MP.Client.MP
                     {
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                         {
-                            servico.Excluir(id);
+                            var processo = servico.Obtenha(id);
+                            servico.Excluir(processo);
                         }
 
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),

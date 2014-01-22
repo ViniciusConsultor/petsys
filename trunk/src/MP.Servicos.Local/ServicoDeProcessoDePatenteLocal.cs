@@ -21,12 +21,14 @@ namespace MP.Servicos.Local
         {
             ServerUtils.setCredencial(_Credencial);
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+            var mapeadorPatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
 
             try
             {
                 ServerUtils.BeginTransaction();
-                mapeador.Inserir(processoDePatente);
+                mapeadorPatente.Insira(processoDePatente.Patente);
+                mapeadorDeProcessoDePatente.Inserir(processoDePatente);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -44,12 +46,14 @@ namespace MP.Servicos.Local
         {
             ServerUtils.setCredencial(_Credencial);
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+            var mapeadorPatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
 
             try
             {
                 ServerUtils.BeginTransaction();
-                mapeador.Modificar(processoDePatente);
+                mapeadorPatente.Modificar(processoDePatente.Patente);
+                mapeadorDeProcessoDePatente.Modificar(processoDePatente);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -63,16 +67,18 @@ namespace MP.Servicos.Local
             }
         }
 
-        public void Excluir(long ID)
+        public void Excluir(IProcessoDePatente processoDePatente)
         {
             ServerUtils.setCredencial(_Credencial);
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+            var mapeadorPatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
 
             try
             {
                 ServerUtils.BeginTransaction();
-                mapeador.Excluir(ID);
+                mapeadorPatente.Exluir(processoDePatente.Patente.Identificador);
+                mapeadorDeProcessoDePatente.Excluir(processoDePatente.IdProcessoDePatente.Value);
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -85,7 +91,7 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
-
+        
         public IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet)
         {
             ServerUtils.setCredencial(_Credencial);
