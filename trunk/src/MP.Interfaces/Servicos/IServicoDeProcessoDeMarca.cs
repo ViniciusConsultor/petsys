@@ -12,6 +12,7 @@ namespace MP.Interfaces.Servicos
     {
         void Inserir(IProcessoDeMarca processoDeMarca);
         void Modificar(IProcessoDeMarca processoDeMarca);
+        void AtualizeProcessoAposLeituraDaRevista(IProcessoDeMarca processoDeMarca);
         void Excluir(IProcessoDeMarca processoDeMarca);
         IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet);
         IProcessoDeMarca Obtenha(long ID);

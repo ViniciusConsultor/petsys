@@ -238,6 +238,8 @@ namespace MP.Mapeadores
 
         private void ModificarRadicaisMarca(IMarcas marca)
         {
+            if (marca.RadicalMarcas == null) return;
+
             RemovaRadicaisDaMarca(marca.IdMarca.Value);
             InserirRadicalMarcas(marca);
         }

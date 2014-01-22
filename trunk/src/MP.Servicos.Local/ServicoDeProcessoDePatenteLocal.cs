@@ -67,6 +67,29 @@ namespace MP.Servicos.Local
             }
         }
 
+        public void AtualizeProcessoAposLeituraDaRevista(IProcessoDePatente processoDePatente)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeadorDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeadorDeProcessoDePatente.Modificar(processoDePatente);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
         public void Excluir(IProcessoDePatente processoDePatente)
         {
             ServerUtils.setCredencial(_Credencial);

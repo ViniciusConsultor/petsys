@@ -69,6 +69,30 @@ namespace MP.Servicos.Local
             }
         }
 
+        public void AtualizeProcessoAposLeituraDaRevista(IProcessoDeMarca processoDeMarca)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeadorDeProcessoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                VerifiqueSeDespachoDesativaProcesso(processoDeMarca);
+                mapeadorDeProcessoDeMarca.Modificar(processoDeMarca);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
         public void Excluir(IProcessoDeMarca processoDeMarca)
         {
             ServerUtils.setCredencial(_Credencial);
