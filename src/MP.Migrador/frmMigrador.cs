@@ -353,7 +353,7 @@ namespace MP.Migrador
                         if (!Information.IsDBNull(linha["Título"]))
                             patente.TituloPatente = UtilidadesDePersistencia.GetValor(linha, "Título");
 
-                        servicoDePatente.Insira(patente);
+                        //servicoDePatente.Insira(patente);
 
                         var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
 
@@ -499,7 +499,7 @@ namespace MP.Migrador
                         if (!Information.IsDBNull(linha["Título"]))
                             patente.TituloPatente = UtilidadesDePersistencia.GetValor(linha, "Título");
 
-                        servicoDePatente.Insira(patente);
+                        //servicoDePatente.Insira(patente);
 
                         var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
 
@@ -1442,11 +1442,11 @@ namespace MP.Migrador
                 marca.Natureza =
                     NaturezaDeMarca.ObtenhaPorNome(UtilidadesDePersistencia.GetValor(linha, "descricao_nat").Trim());
 
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
-                {
-                    servico.Inserir(marca);
-                    marcasMigradas.Add(UtilidadesDePersistencia.GetValor(linha, "idmarca"), marca);
-                }
+                //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
+                //{
+                //    servico.Inserir(marca);
+                //    marcasMigradas.Add(UtilidadesDePersistencia.GetValor(linha, "idmarca"), marca);
+                //}
             }
         }
 

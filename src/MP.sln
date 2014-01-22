@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP.Servicos.Local", "MP.Servicos.Local\MP.Servicos.Local.csproj", "{9EFBACE1-60DC-4121-8142-00BE1306A5D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{52355709-14DD-4BD1-9C00-CB96BE85E730}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\MP\INSERT_MP.sql = ..\doc\Banco de dados\MP\INSERT_MP.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{2BD549CC-6EBE-470A-B8A0-25A7EA8B2E70}"
 	ProjectSection(SolutionItems) = preProject

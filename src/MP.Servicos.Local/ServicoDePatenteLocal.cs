@@ -15,73 +15,7 @@ namespace MP.Servicos.Local
         public ServicoDePatenteLocal(ICredencial Credencial) : base(Credencial)
         {
         }
-
-        public void Insira(IPatente patente)
-        {
-            ServerUtils.setCredencial(_Credencial);
-            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeadorDePatente.Insira(patente);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }            
-        }
-
-        public void Modificar(IPatente patente)
-        {
-            ServerUtils.setCredencial(_Credencial);
-            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeadorDePatente.Modificar(patente);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }            
-        }
-
-        public void Exluir(long codigoPatente)
-        {
-            ServerUtils.setCredencial(_Credencial);
-            var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeadorDePatente.Exluir(codigoPatente);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }            
-        }
-
+        
         public IAnuidadePatente ObtenhaAnuidade(long id)
         {
             ServerUtils.setCredencial(_Credencial);

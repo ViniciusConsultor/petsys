@@ -8,9 +8,6 @@ namespace MP.Interfaces.Servicos
 {
     public interface IServicoDePatente : IDisposable
     {
-        void Insira(IPatente patente);
-        void Modificar(IPatente patente);
-        void Exluir(long codigoPatente);
         IAnuidadePatente ObtenhaAnuidade(long id);
         IClassificacaoPatente ObtenhaClassificacao(long id);
         IPrioridadeUnionistaPatente ObtenhaPrioridadeUnionista(long id);

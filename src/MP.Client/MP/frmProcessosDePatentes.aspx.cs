@@ -297,13 +297,9 @@ namespace MP.Client.MP
         protected void grdProcessosDePatentes_OnItemCommand(object sender, GridCommandEventArgs e)
         {
             long id = 0;
-            int indiceSelecionado;
-
+            
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-            {
                 id = Convert.ToInt64((e.Item.Cells[4].Text));
-                indiceSelecionado = e.Item.ItemIndex;
-            }
 
             switch (e.CommandName)
             {
@@ -312,7 +308,10 @@ namespace MP.Client.MP
                     try
                     {
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
-                            servico.Excluir(id);
+                        {
+                            var processo = servico.Obtenha(id);
+                            servico.Excluir(processo);
+                        }
                         
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                                 UtilidadesWeb.MostraMensagemDeInformacao(
