@@ -113,8 +113,8 @@
                                 </td>
                                 <td class="td">
                                     <uc5:ctrlTitular ID="ctrlTitular" runat="server" />
-                                    <asp:ImageButton ID="btnPesquisarPorTitular" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
-                                        OnClick="btnPesquisarPorTitular_OnClick_" />
+                                    <asp:ImageButton ID="btnPesquisarPorTitular" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorTitular_OnClick_" />
                                 </td>
                             </tr>
                         </table>
@@ -148,6 +148,10 @@
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
                                                 ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo excluir o processo?"
                                                 ConfirmTitle="Apagar processo">
+                                                <ItemStyle Width="2%"></ItemStyle>
+                                            </telerik:GridButtonColumn>
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
+                                                HeaderTooltip="Enviar e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column1"
