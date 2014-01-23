@@ -254,6 +254,21 @@ namespace MP.Client.MP
             RadTabStrip1.Tabs[0].Selected = true;
             rpvDadosPatentes.Selected = true;
             btnGerarTodas.Visible = false;
+
+            ctrlPeriodo.Inicializa();
+
+            rblPagaManutencao.Items.Clear();
+            rblPagaManutencao.Items.Add(new ListItem("  Sim  ", "1"));
+            rblPagaManutencao.Items.Add(new ListItem("  Não", "0"));
+            rblPagaManutencao.SelectedValue = "0";
+
+            pnlDadosDaManutencao.Visible = false;
+
+            rblFormaDeCobranca.Items.Clear();
+            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo:   ", "S"));
+            rblFormaDeCobranca.Items.Add(new ListItem("   Valor em R$:", "R"));
+            txtValor.Visible = false;
+            lblValor.Visible = false;
         }
 
         private void MostraPCT(bool mostra)
@@ -581,6 +596,24 @@ namespace MP.Client.MP
             CarregueGridDeRadicais();
             ListaDeTitulares = patente.Titulares;
             MostrarTitulares();
+
+            if (patente.PagaManutencao)
+            {
+                pnlDadosDaManutencao.Visible = true;
+
+                if (patente.Periodo != null)
+                    ctrlPeriodo.Codigo = patente.Periodo.Codigo.ToString();
+
+                if (!string.IsNullOrEmpty(patente.FormaDeCobranca))
+                {
+                    txtValor.Visible = true;
+
+                    rblFormaDeCobranca.SelectedValue = patente.FormaDeCobranca;
+
+                    if (patente.ValorDeCobranca > 0)
+                        txtValor.Text = patente.ValorDeCobranca.ToString();
+                }
+            }
         }
 
         protected void btnAdicionarCliente_ButtonClick(object sender, EventArgs e)
@@ -961,6 +994,17 @@ namespace MP.Client.MP
             if (ListaDeTitulares != null && ListaDeTitulares.Count > 0)
                 patente.Titulares = ListaDeTitulares;
 
+            patente.PagaManutencao = rblPagaManutencao.SelectedValue.Equals("1");
+
+            if (!string.IsNullOrEmpty(ctrlPeriodo.Codigo))
+                patente.Periodo = Periodo.ObtenhaPorCodigo(Convert.ToInt32(ctrlPeriodo.Codigo));
+
+            if (!string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
+                patente.FormaDeCobranca = rblFormaDeCobranca.SelectedValue;
+
+            if (!string.IsNullOrEmpty(txtValor.Text))
+                patente.ValorDeCobranca = Convert.ToDouble(txtValor.Text);
+
             return patente;
         }
 
@@ -1119,6 +1163,32 @@ namespace MP.Client.MP
         {
             grdTitulares.MasterTableView.DataSource = ListaDeTitulares;
             grdTitulares.DataBind();
+        }
+
+        protected void rblPagaManutencao_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rblManutencao = sender as RadioButtonList;
+
+            if (rblManutencao != null && rblManutencao.SelectedValue == "1")
+                pnlDadosDaManutencao.Visible = true;
+            else
+            {
+                pnlDadosDaManutencao.Visible = false;
+                rblFormaDeCobranca.ClearSelection();
+                txtValor.Text = null;
+                ctrlPeriodo.Inicializa();
+            }
+        }
+
+        protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rblFormaDeCobranca = sender as RadioButtonList;
+
+            if (rblFormaDeCobranca != null && !string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
+            {
+                lblValor.Visible = true;
+                txtValor.Visible = true;
+            }
         }
     }
 }

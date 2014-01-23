@@ -248,5 +248,62 @@ namespace MP.Negocio.LazyLoad
                 return classificacoesConcatenadas.Substring(0, classificacoesConcatenadas.Length - 2);
             }
         }
+
+
+        public bool PagaManutencao
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.PagaManutencao;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.PagaManutencao = value;
+            }
+        }
+
+        public Periodo Periodo
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Periodo;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Periodo = value;
+            }
+        }
+
+        public string FormaDeCobranca
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.FormaDeCobranca;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.FormaDeCobranca = value;
+            }
+        }
+
+        public double ValorDeCobranca
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.ValorDeCobranca;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.ValorDeCobranca = value;
+            }
+        }
     }
 }

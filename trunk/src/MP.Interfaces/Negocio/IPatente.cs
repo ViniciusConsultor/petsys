@@ -24,5 +24,9 @@ namespace MP.Interfaces.Negocio
         IList<IRadicalPatente> Radicais { get; set; }
         IList<ITitular> Titulares { get; set; }
         string ClassificacoesConcatenadas { get; }
+        bool PagaManutencao { get; set; }
+        Periodo Periodo { get; set; }
+        string FormaDeCobranca { get; set; }
+        double ValorDeCobranca { get; set; }
     }
 }
