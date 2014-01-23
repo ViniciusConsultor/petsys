@@ -363,13 +363,9 @@ namespace MP.Client.MP
         protected void grdProcessosDeMarcas_OnItemCommand(object sender, GridCommandEventArgs e)
         {
             long id = 0;
-            int indiceSelecionado;
-
+            
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-            {
-                id = Convert.ToInt64((e.Item.Cells[4].Text));
-                indiceSelecionado = e.Item.ItemIndex;
-            }
+                id = Convert.ToInt64((e.Item.Cells[5].Text));
 
             switch (e.CommandName)
             {
@@ -401,6 +397,15 @@ namespace MP.Client.MP
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar processo de marca",
+                                                                                       800, 550), false);
+                    break;
+
+                case "Email" :
+                    var url2 = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmEnviaEmail.aspx",
+                                            "?Id=", id, "&Tipo=M");
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url2,
+                                                                                       "Enviar e-mail",
                                                                                        800, 550), false);
                     break;
             }

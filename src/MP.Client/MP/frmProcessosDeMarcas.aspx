@@ -6,8 +6,8 @@
 <%@ Register Src="ctrlNaturezaDeMarca.ascx" TagName="ctrlNaturezaDeMarca" TagPrefix="uc2" %>
 <%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc3" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
-<%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %> 
-<%@ Register Src="ctrlMarcas.ascx" TagName="ctrlMarcas" TagPrefix="uc6" %> 
+<%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
+<%@ Register Src="ctrlMarcas.ascx" TagName="ctrlMarcas" TagPrefix="uc6" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
@@ -148,20 +148,27 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8" ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo excluir o processo?" ConfirmTitle="Apagar processo">
+                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
+                                                ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo excluir o processo?"
+                                                ConfirmTitle="Apagar processo">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1" Display="false">
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
+                                                HeaderTooltip="Enviar e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
+                                                <ItemStyle Width="2%"></ItemStyle>
+                                            </telerik:GridButtonColumn>
+                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column1"
+                                                Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
                                             </telerik:GridBoundColumn>
-                                             <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Marca.DescricaoDaMarca" HeaderText="Marca" UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Marca.Cliente.Pessoa.Nome" HeaderText="Cliente"
                                                 UniqueName="column2">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDoCadastro" HeaderText="Data do cadastro" UniqueName="column6"
-                                                DataFormatString="{0:dd/MM/yyyy}">
+                                            <telerik:GridBoundColumn DataField="DataDoCadastro" HeaderText="Data do cadastro"
+                                                UniqueName="column6" DataFormatString="{0:dd/MM/yyyy}">
                                                 <ItemStyle Width="15%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                         </Columns>

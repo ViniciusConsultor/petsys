@@ -551,6 +551,7 @@
     <Content Include="imagens\elbow-plus-nl.gif" />
     <Content Include="imagens\elbow-plus.gif" />
     <Content Include="imagens\elbow.gif" />
+    <Content Include="imagens\email.gif" />
     <Content Include="imagens\error-tip-corners.gif" />
     <Content Include="imagens\exclamation.gif" />
     <Content Include="imagens\folder-open.gif" />
@@ -1533,7 +1534,9 @@
     <Content Include="Nucleo\cdMunicipio.aspx" />
     <None Include="WorkSpace.snk" />
     <Content Include="RadEditor\StyleSheetRadEditor.css" />
-    <Content Include="RadEditor\ToolsFile.xml" />
+    <Content Include="RadEditor\ToolsFile.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="StyleSheet.css" />
     <Content Include="StyleSheetLogin.css" />
     <Content Include="WorkSpace.Master" />
