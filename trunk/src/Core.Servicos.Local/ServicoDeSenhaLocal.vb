@@ -125,10 +125,17 @@ Public Class ServicoDeSenhaLocal
             ConfiguracaoDeEmail = Configuracao.ConfiguracaoDeEmailDoSistema
             If Not Configuracao Is Nothing Then
                 Dim CorpoDoEmail As String = Link & Id
+
+                Dim destinarios = New List(Of String)
+
+                destinarios.Add(Pessoa.EnderecoDeEmail.ToString)
+
                 GerenciadorDeEmail.EnviaEmail("Redefinição de senha.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
-                                              Pessoa.EnderecoDeEmail.ToString(),
-                                              CorpoDoEmail)
+                                              destinarios, _
+                                              Nothing,
+                                              CorpoDoEmail,
+                                              Nothing)
             End If
         End If
     End Sub

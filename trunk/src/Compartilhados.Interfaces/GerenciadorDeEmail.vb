@@ -3,13 +3,16 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Interfaces.Core.Servicos
 Imports Compartilhados.Fabricas
 Imports System.Net
+Imports System.IO
 
 Public Class GerenciadorDeEmail
 
     Public Shared Sub EnviaEmail(ByVal Assunto As String, _
                                  ByVal Remetente As String, _
-                                 ByVal Destinatario As String, _
-                                 ByVal Mensagem As String)
+                                 ByVal DestinatariosEmCopia As IList(Of String), _
+                                 ByVal DestinatariosEmCopiaOculta As IList(Of String), _
+                                 ByVal Mensagem As String,
+                                 ByVal Anexos As IDictionary(Of String, Stream))
         Dim Configuracao As IConfiguracaoDoSistema
 
         Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
@@ -32,17 +35,32 @@ Public Class GerenciadorDeEmail
                 Dim MensagemDeEmail As MailMessage = New MailMessage
                 MensagemDeEmail.From = New MailAddress(Remetente)
 
-                MensagemDeEmail.To.Add(New MailAddress(Destinatario))
-                'Caso precise enviar com cópia
-                'MensagemDeEmail.To.Add(New MailAddress("email2@provedor.com.br", "Destinatário 2"))
+                For Each Destinatario As String In DestinatariosEmCopia
+                    MensagemDeEmail.CC.Add(New MailAddress(Destinatario))
+                Next
 
+                If Not DestinatariosEmCopiaOculta Is Nothing AndAlso DestinatariosEmCopiaOculta.Count = 0 Then
+                    For Each DestinatarioOculto As String In DestinatariosEmCopia
+                        MensagemDeEmail.Bcc.Add(New MailAddress(DestinatarioOculto))
+                    Next
+                End If
+
+                MensagemDeEmail.IsBodyHtml = True
                 MensagemDeEmail.Subject = Assunto
                 MensagemDeEmail.Body = Mensagem
 
+                If Not Anexos Is Nothing AndAlso Anexos.Count = 0 Then
+                    For Each item As KeyValuePair(Of String, Stream) In Anexos
+                        Dim anexo = New Attachment(item.Value, item.Key)
+
+                        MensagemDeEmail.Attachments.Add(anexo)
+                    Next
+                End If
+                
                 Try
                     Gerenciador.Send(MensagemDeEmail)
                 Catch ex As Exception
-
+                    Logger.GetInstancia().Erro("Ocorreu um erro ao tentar enviar um e-mail", ex)
                 End Try
 
             End With

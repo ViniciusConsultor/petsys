@@ -54,10 +54,16 @@ Public Class Global_asax
             ConfiguracaoDeEmail = Configuracao.ConfiguracaoDeEmailDoSistema
             If Not Configuracao Is Nothing Then
                 Dim mensagemDoErro As String = ObtenhaMensagemDeLog(Erro)
+
+                Dim destinario = New List(Of String)
+
+                destinario.Add(Configuracao.DestinatarioDaNotificaoDeErros)
+
                 GerenciadorDeEmail.EnviaEmail("Erro ocorrido no sistema.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
-                                              Configuracao.DestinatarioDaNotificaoDeErros, _
-                                              mensagemDoErro)
+                                              destinario, _
+                                              Nothing, _
+                                              mensagemDoErro, Nothing)
             End If
         End If
     End Sub
