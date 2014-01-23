@@ -25,7 +25,7 @@ namespace MP.Mapeadores
             patente.Identificador = GeradorDeID.getInstancia().getProximoID();
 
             comandoSQL.Append("INSERT INTO MP_PATENTE(IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
-            comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO) VALUES(");
+            comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO, PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA) VALUES(");
             comandoSQL.Append(patente.Identificador + ", ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.TituloPatente) + "', ");
             comandoSQL.Append(patente.NaturezaPatente.IdNaturezaPatente + ", ");
@@ -33,7 +33,11 @@ namespace MP.Mapeadores
             comandoSQL.Append(patente.DataCadastro.HasValue ? patente.DataCadastro.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.Observacao) + "', ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.Resumo) + "', ");
-            comandoSQL.Append(patente.QuantidadeReivindicacao + ")");
+            comandoSQL.Append(patente.QuantidadeReivindicacao + ", ");
+            comandoSQL.Append(patente.PagaManutencao ? String.Concat("'", 1, "', ") : String.Concat("'", 0, "', "));
+            comandoSQL.Append(patente.Periodo == null? "NULL, " : String.Concat("'", patente.Periodo.Codigo, "', "));
+            comandoSQL.Append(string.IsNullOrEmpty(patente.FormaDeCobranca) ? "NULL, " : String.Concat("'", patente.FormaDeCobranca, "', "));
+            comandoSQL.Append((patente.ValorDeCobranca == null || patente.ValorDeCobranca == 0) ? "NULL) " : String.Concat(patente.ValorDeCobranca.ToString().Replace(",", ".") + ") "));
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
 
             if (patente.Anuidades != null)
@@ -76,7 +80,11 @@ namespace MP.Mapeadores
             comandoSQL.Append("DATACADASTRO = " + (patente.DataCadastro.HasValue ? patente.DataCadastro.Value.ToString("yyyyMMdd") + ", " : "NULL, "));
             comandoSQL.Append("OBSERVACAO = '" + patente.Observacao + "', ");
             comandoSQL.Append("RESUMO_PATENTE = '" + patente.Resumo + "', ");
-            comandoSQL.Append("QTDEREINVINDICACAO = " + patente.QuantidadeReivindicacao);
+            comandoSQL.Append("QTDEREINVINDICACAO = " + patente.QuantidadeReivindicacao + ", ");
+            comandoSQL.Append(patente.PagaManutencao ? String.Concat("PAGAMANUTENCAO = '", 1, "', ") : String.Concat("PAGAMANUTENCAO = '", 0, "', ")); 
+            comandoSQL.Append(patente.Periodo == null ? "PERIODO = NULL, " : String.Concat("PERIODO = '", patente.Periodo.Codigo, "', "));
+            comandoSQL.Append(string.IsNullOrEmpty(patente.FormaDeCobranca) ? "FORMADECOBRANCA = NULL, " : String.Concat("FORMADECOBRANCA = '", patente.FormaDeCobranca, "', "));
+            comandoSQL.Append((patente.ValorDeCobranca == null || patente.ValorDeCobranca == 0) ? "VALORDECOBRANCA = NULL " : String.Concat("VALORDECOBRANCA = ", patente.ValorDeCobranca.ToString().Replace(",", "."), " "));
             comandoSQL.Append(" WHERE IDPATENTE = " + patente.Identificador);
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
@@ -223,7 +231,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
-            comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO FROM MP_PATENTE ");
             comandoSQL.Append("WHERE IDPATENTE = " + id);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
@@ -240,7 +248,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
-            comandoSQL.Append("QTDEREINVINDICACAO FROM MP_PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO FROM MP_PATENTE ");
 
             if (!string.IsNullOrEmpty(titulo))
                 comandoSQL.Append("WHERE TITULOPATENTE like '%" + titulo + "%'");
@@ -259,8 +267,8 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT PATENTE.IDPATENTE, PATENTE.TITULOPATENTE, PATENTE.IDNATUREZAPATENTE, PATENTE.OBRIGACAOGERADA, ");
-            comandoSQL.Append("PATENTE.DATACADASTRO, PATENTE.OBSERVACAO, PATENTE.RESUMO_PATENTE, PATENTE.QTDEREINVINDICACAO ");
-            comandoSQL.Append("FROM MP_PATENTE PATENTE ");
+            comandoSQL.Append("PATENTE.DATACADASTRO, PATENTE.OBSERVACAO, PATENTE.RESUMO_PATENTE, PATENTE.QTDEREINVINDICACAO, ");
+            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA FROM MP_PATENTE PATENTE ");
             comandoSQL.Append("INNER JOIN MP_PATENTECLIENTE CLIPATENTE ON CLIPATENTE.IDPATENTE = PATENTE.IDPATENTE ");
             comandoSQL.Append("WHERE CLIPATENTE.IDCLIENTE = " + idCliente);
 
@@ -571,6 +579,18 @@ namespace MP.Mapeadores
             patente.Clientes = ObtenhaClientesPatente(patente.Identificador);
             patente.Radicais = ObtenhaRadicais(patente.Identificador);
             patente.Titulares = ObtenhaTitularesPeloIdDaPatente(patente.Identificador);
+
+            if (!UtilidadesDePersistencia.EhNulo(reader, "PagaManutencao"))
+                patente.PagaManutencao = UtilidadesDePersistencia.GetValorBooleano(reader, "PagaManutencao");
+
+            if (!UtilidadesDePersistencia.EhNulo(reader, "Periodo"))
+                patente.Periodo = Periodo.ObtenhaPorCodigo(Convert.ToInt32(UtilidadesDePersistencia.GetValorString(reader, "Periodo")));
+
+            if (!UtilidadesDePersistencia.EhNulo(reader, "FormaDeCobranca"))
+                patente.FormaDeCobranca = UtilidadesDePersistencia.GetValorString(reader, "FormaDeCobranca");
+
+            if (!UtilidadesDePersistencia.EhNulo(reader, "ValorDeCobranca"))
+                patente.ValorDeCobranca = UtilidadesDePersistencia.getValorDouble(reader, "ValorDeCobranca");
 
             return patente;
         }

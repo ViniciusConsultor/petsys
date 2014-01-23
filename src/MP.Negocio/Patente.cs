@@ -65,5 +65,13 @@ namespace MP.Negocio
                 return classificacoesConcatenadas.Substring(0, classificacoesConcatenadas.Length - 2);
             }
         }
+
+        public bool PagaManutencao { get; set; }
+
+        public Periodo Periodo { get; set; }
+
+        public string FormaDeCobranca { get; set; }
+
+        public double ValorDeCobranca { get; set; }
     }
 }
