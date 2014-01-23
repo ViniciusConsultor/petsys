@@ -263,6 +263,13 @@
     <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.designer.cs">
       <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmEnviaEmail.aspx.cs">
+      <DependentUpon>frmEnviaEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmEnviaEmail.aspx.designer.cs">
+      <DependentUpon>frmEnviaEmail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\frmLeituraRevistaMarca.aspx.cs">
       <DependentUpon>frmLeituraRevistaMarca.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -343,6 +350,7 @@
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\ctrlTitular.ascx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
+    <Content Include="MP\frmEnviaEmail.aspx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />
     <Content Include="MP\frmLeituraRevistaPatente.aspx" />
     <Content Include="MP\frmProcessosDeMarcas.aspx" />

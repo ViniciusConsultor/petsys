@@ -205,10 +205,16 @@ Partial Public Class frmPainelDeControle
 
             ConfiguracaoDeEmail = Configuracao.ConfiguracaoDeEmailDoSistema
             If Not Configuracao Is Nothing Then
+                Dim destinarios = New List(Of String)
+
+                destinarios.Add(Configuracao.DestinatarioDaNotificaoDeErros)
+
                 GerenciadorDeEmail.EnviaEmail("Teste de envio de e-mail.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
-                                              Configuracao.DestinatarioDaNotificaoDeErros, _
-                                              "Teste de envio de e-mail.")
+                                              destinarios, _
+                                              Nothing, _
+                                              "Teste de envio de e-mail.", _
+                                              Nothing)
             End If
         End If
     End Sub
