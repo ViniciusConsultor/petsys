@@ -150,10 +150,10 @@
                                                 ConfirmTitle="Apagar processo">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
+                                            <%--<telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
                                                 HeaderTooltip="Enviar e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
                                                 <ItemStyle Width="2%"></ItemStyle>
-                                            </telerik:GridButtonColumn>
+                                            </telerik:GridButtonColumn>--%>
                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column1"
                                                 Display="false">
                                             </telerik:GridBoundColumn>

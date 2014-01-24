@@ -365,7 +365,8 @@ namespace MP.Client.MP
             long id = 0;
             
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                id = Convert.ToInt64((e.Item.Cells[5].Text));
+                //id = Convert.ToInt64((e.Item.Cells[5].Text));
+                id = Convert.ToInt64((e.Item.Cells[4].Text));
 
             switch (e.CommandName)
             {
