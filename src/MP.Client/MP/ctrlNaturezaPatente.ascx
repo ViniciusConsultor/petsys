@@ -4,7 +4,7 @@
     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
     Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnItemsRequested="cboNaturezaPatente_ItemsRequested"
-    OnSelectedIndexChanged="cboNaturezaPatente_SelectedIndexChanged">
+    OnSelectedIndexChanged="cboNaturezaPatente_SelectedIndexChanged" MaxLength="2">
     <HeaderTemplate>
         <table width="96%">
             <tr>

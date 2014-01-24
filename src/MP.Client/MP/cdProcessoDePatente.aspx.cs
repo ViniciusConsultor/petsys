@@ -600,6 +600,7 @@ namespace MP.Client.MP
             if (patente.PagaManutencao)
             {
                 pnlDadosDaManutencao.Visible = true;
+                rblPagaManutencao.SelectedValue = patente.PagaManutencao ? "1" : "0";
 
                 if (patente.Periodo != null)
                     ctrlPeriodo.Codigo = patente.Periodo.Codigo.ToString();
@@ -611,7 +612,7 @@ namespace MP.Client.MP
                     rblFormaDeCobranca.SelectedValue = patente.FormaDeCobranca;
 
                     if (patente.ValorDeCobranca > 0)
-                        txtValor.Text = patente.ValorDeCobranca.ToString();
+                        txtValor.Value = patente.ValorDeCobranca;
                 }
             }
         }
@@ -1002,8 +1003,8 @@ namespace MP.Client.MP
             if (!string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
                 patente.FormaDeCobranca = rblFormaDeCobranca.SelectedValue;
 
-            if (!string.IsNullOrEmpty(txtValor.Text))
-                patente.ValorDeCobranca = Convert.ToDouble(txtValor.Text);
+            if (!string.IsNullOrEmpty(txtValor.Text) && txtValor.Value.HasValue)
+                patente.ValorDeCobranca = txtValor.Value.Value;
 
             return patente;
         }

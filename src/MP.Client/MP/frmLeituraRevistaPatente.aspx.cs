@@ -250,6 +250,25 @@ namespace MP.Client.MP
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
                 }
             }
+
+            if (e.CommandName == "Excluir")
+            {
+                Logger.GetInstancia().Info("Excluindo revista de patentes já processada.");
+
+                var listaRevistasJaProcessadas = (IList<IRevistaDePatente>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                {
+                    servico.Excluir(Convert.ToInt32(listaRevistasJaProcessadas[indiceSelecionado].NumeroRevistaPatente));
+                }
+
+                listaRevistasJaProcessadas.RemoveAt(indiceSelecionado);
+                MostraListaRevistasJaProcessadas(listaRevistasJaProcessadas);
+
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInformacao("Revista removida com sucesso."),
+                                                false);
+            }
         }
 
         protected void grdRevistasJaProcessadas_ItemCreated(object sender, GridItemEventArgs e)
@@ -562,7 +581,7 @@ namespace MP.Client.MP
                 listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
                 listRadical.DataBind();
 
-                if(!((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.HasValue)
+                if(listRadical.Items.Count > 0 && !((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.HasValue)
                     return;
 
                 var radical = ((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.Value;

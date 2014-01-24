@@ -659,11 +659,11 @@ namespace MP.Interfaces.Utilidades
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.NumeroDoPedido)) return;
 
             revistaPatenteXml.WriteStartElement("numeroDoPedido");
-            revistaPatenteXml.WriteString(dadosDaRevistaPatente.NumeroDoPedido);
 
             if (!string.IsNullOrEmpty(dadosDaRevistaPatente.DataDaPublicacaoDoPedido))
                 revistaPatenteXml.WriteAttributeString("data-publicacao", dadosDaRevistaPatente.DataDaPublicacaoDoPedido);
 
+            revistaPatenteXml.WriteString(dadosDaRevistaPatente.NumeroDoPedido);
             revistaPatenteXml.WriteEndElement();
         }
 

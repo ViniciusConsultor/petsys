@@ -232,6 +232,9 @@ namespace MP.Client.MP
         {
             ITitular titular;
 
+            txtDataDoCadastro.SelectedDate = DateTime.Now;
+            txtInformacoesAdicionais.Text = string.Empty;
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeTitular>())
             {
                 titular = servico.Obtenha(pessoa);

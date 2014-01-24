@@ -187,7 +187,14 @@ namespace MP.Servicos.Local
 
         private DateTime? VerifiqueERetorneValorDataDoNo(XmlNode xmlNode, string tagDoNo)
         {
-            return xmlNode.Attributes.GetNamedItem(tagDoNo) != null ? Convert.ToDateTime(xmlNode.Attributes.GetNamedItem(tagDoNo).Value) : (DateTime?)null;
+            try
+            {
+                return xmlNode.Attributes.GetNamedItem(tagDoNo) != null ? Convert.ToDateTime(xmlNode.Attributes.GetNamedItem(tagDoNo).Value) : (DateTime?)DateTime.MinValue;
+            }
+            catch (Exception)
+            {
+                return DateTime.MinValue;
+            }
         }
 
         private string VerifiqueERetorneValorStringDoNo(XmlNode xmlNode, string tagDoNo)
@@ -546,7 +553,7 @@ namespace MP.Servicos.Local
             {
                 bool deveAdicionarProcesso = false;
 
-                if (!string.IsNullOrEmpty(filtro.NumeroDoProcesso) && filtro.NumeroDoProcesso.Equals(processo.NumeroDoProcesso))
+                if (!string.IsNullOrEmpty(filtro.NumeroDoProcesso) && processo.NumeroDoProcesso.Contains(filtro.NumeroDoProcesso))
                     deveAdicionarProcesso = true;
 
                 if (!string.IsNullOrEmpty(filtro.Depositante) && filtro.Depositante.Equals(processo.Depositante))
@@ -563,6 +570,28 @@ namespace MP.Servicos.Local
             }
 
             return revistasFiltradas;
+        }
+
+        public void Excluir(int numeroDaRevistaDePatente)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeador.Excluir(numeroDaRevistaDePatente);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
         }
     }
 }
