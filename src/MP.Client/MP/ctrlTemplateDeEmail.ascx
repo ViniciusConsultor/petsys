@@ -8,7 +8,7 @@
         </td>
         <td class="td">
             <telerik:RadEditor ID="txtTextoDoTemplate" runat="server" EditModes="Design" ToolsFile="~/RadEditor/ToolsFile.xml"
-                Language="pt-BR" MaxHtmlLength="4000" Skin="Vista" AutoResizeHeight="True"  Width="100%"
+                Language="pt-BR" MaxHtmlLength="4000" Skin="Vista" AutoResizeHeight="false"  Width="500px"
                 ContentAreaCssFile="~/RadEditor/StyleSheetRadEditor.css">
                 <Content>
                 </Content>
