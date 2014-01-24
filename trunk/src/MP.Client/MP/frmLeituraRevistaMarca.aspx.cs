@@ -312,7 +312,19 @@ namespace MP.Client.MP
                 revistaDeMarcas.ExtensaoArquivo);
             AdicioneNumeroDaRevistaSelecionada(revistaDeMarcas);
             var xmlRevista = new XmlDocument();
-            xmlRevista.Load(CaminhoArquivo);
+
+            try
+            {
+                xmlRevista.Load(CaminhoArquivo);
+            }
+            catch (BussinesException ex)
+            {
+                var mensagem = "Não foi encontrado o arquivo: " + revistaDeMarcas.NumeroRevistaMarcas +
+                               revistaDeMarcas.ExtensaoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia(mensagem + " Exceção:" + ex.Message), false);
+            }
+            
             return xmlRevista;
         }
 
