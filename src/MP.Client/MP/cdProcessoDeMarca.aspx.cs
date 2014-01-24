@@ -146,7 +146,14 @@ namespace MP.Client.MP
             txtEspecificacao.Text = marca.EspecificacaoDeProdutosEServicos;
             txtObservacao.Text = marca.ObservacaoDaMarca;
 
-            imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_MARCA + "/" + marca.ImagemDaMarca;
+            if (string.IsNullOrEmpty(marca.ImagemDaMarca))
+            {
+                imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
+            }
+            else
+            {
+                imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_MARCA + "/" + marca.ImagemDaMarca;
+            }
 
             rblPagaManutencao.SelectedValue = marca.PagaManutencao ? "1" : "0";
 
