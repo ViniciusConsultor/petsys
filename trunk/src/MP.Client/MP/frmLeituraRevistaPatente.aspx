@@ -83,6 +83,10 @@
                                                 <HeaderStyle Width="20px" />
                                             </ExpandCollapseColumn>
                                             <Columns>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                    <ItemStyle Width="2%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
                                                 <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ReprocessarRevista"
                                                     FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
                                                     UniqueName="column4">

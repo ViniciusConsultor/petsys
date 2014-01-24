@@ -249,6 +249,9 @@ namespace MP.Client.MP
         {
             IInventor inventor;
 
+            txtInformacoesAdicionais.Text = string.Empty;
+            txtDataDoCadastro.SelectedDate = DateTime.Now;
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInventor>())
             {
                 inventor = servico.Obtenha(pessoa);

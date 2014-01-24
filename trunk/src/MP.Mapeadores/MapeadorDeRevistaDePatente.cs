@@ -297,6 +297,15 @@ namespace MP.Mapeadores
 
         public void Excluir(int numeroDaRevistaDePatente)
         {
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
+
+            DBHelper = ServerUtils.getDBHelper();
+
+            sql.Append("DELETE FROM MP_REVISTA_PATENTE ");
+            sql.Append(String.Concat("WHERE NUMEROREVISTAPATENTE = ", numeroDaRevistaDePatente, " "));
+
+            DBHelper.ExecuteNonQuery(sql.ToString());
         }
     }
 }

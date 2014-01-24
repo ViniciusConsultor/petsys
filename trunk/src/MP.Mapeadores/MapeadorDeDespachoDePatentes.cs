@@ -207,7 +207,7 @@ namespace MP.Mapeadores
 
 
             sql.Append(despachoDePatentes.DesativaProcesso ? String.Concat("DESATIVAPROCESSO = '", 1, "', ") : String.Concat("DESATIVAPROCESSO = '", 0, "', "));
-            sql.Append(despachoDePatentes.AgendarPagamento ? String.Concat("AGENDAPAGAMENTO = '", 1, "', ") : String.Concat("AGENDAPAGAMENTO = '", 0, "', "));
+            sql.Append(despachoDePatentes.AgendarPagamento ? String.Concat("AGENDAPAGAMENTO = '", 1, "', ") : String.Concat("AGENDAPAGAMENTO = '", 0, "' "));
             sql.Append(String.Concat("WHERE IDDESPACHOPATENTE = ", despachoDePatentes.IdDespachoDePatente.Value.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());

@@ -73,7 +73,7 @@
                                     <asp:Label ID="lblContato" runat="server" Text="Contato" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtContato" MaxLength="255" Rows="5" runat="server" TextMode="MultiLine">
+                                    <telerik:RadTextBox ID="txtContato" MaxLength="255" Rows="5" runat="server" TextMode="MultiLine" Width="90%">
                                     </telerik:RadTextBox>
                                 </td>
                             </tr>
