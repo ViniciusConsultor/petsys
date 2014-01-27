@@ -353,8 +353,6 @@ namespace MP.Migrador
                         if (!Information.IsDBNull(linha["Título"]))
                             patente.TituloPatente = UtilidadesDePersistencia.GetValor(linha, "Título");
 
-                        //servicoDePatente.Insira(patente);
-
                         var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
 
                         processoDePatente.Ativo = !UtilidadesDePersistencia.GetValorBooleano(linha, "Processo_Desativo");
@@ -498,8 +496,6 @@ namespace MP.Migrador
 
                         if (!Information.IsDBNull(linha["Título"]))
                             patente.TituloPatente = UtilidadesDePersistencia.GetValor(linha, "Título");
-
-                        //servicoDePatente.Insira(patente);
 
                         var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
 
@@ -1293,7 +1289,7 @@ namespace MP.Migrador
 
                 var sql =
                     "select numero_processo, DATA_PROCESSO, PROCESSO_DE_TERCEIRO, IDCONTATO_PROCURADOR, IDDESPACHO_ATUAL, " +
-                    "CODIGO_DESPACHO, idmarca " +
+                    "CODIGO_DESPACHO, idmarca, DATA_CONCESSAO_REGISTRO " +
                     "from processo " +
                     "left join DESPACHO on IDDESPACHO = IDDESPACHO_ATUAL";
 
@@ -1314,10 +1310,19 @@ namespace MP.Migrador
                     var data = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DATA_PROCESSO"));
 
                     processo.DataDoCadastro = data;
-                    processo.DataDoDeposito = data;
+                    
                 }
                 else
                     processo.DataDoCadastro = DateTime.Now;
+
+
+                if (!Information.IsDBNull(linha["DATA_CONCESSAO_REGISTRO"]))
+                {
+                    var data = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DATA_CONCESSAO_REGISTRO"));
+
+                    processo.DataDoDeposito = data;
+                }
+
 
                 if (!Information.IsDBNull(linha["CODIGO_DESPACHO"]))
                 {
@@ -1442,11 +1447,7 @@ namespace MP.Migrador
                 marca.Natureza =
                     NaturezaDeMarca.ObtenhaPorNome(UtilidadesDePersistencia.GetValor(linha, "descricao_nat").Trim());
 
-                //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeMarcas>())
-                //{
-                //    servico.Inserir(marca);
-                //    marcasMigradas.Add(UtilidadesDePersistencia.GetValor(linha, "idmarca"), marca);
-                //}
+                marcasMigradas.Add(UtilidadesDePersistencia.GetValor(linha, "idmarca"), marca);
             }
         }
 
