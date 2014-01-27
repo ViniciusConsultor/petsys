@@ -19,8 +19,8 @@ namespace MP.Negocio
         {
             get
             {
-                if (DataDoDeposito.HasValue)
-                    return DataDoDeposito.Value.AddYears(10);
+                if (DataDeConcessao.HasValue)
+                    return DataDeConcessao.Value.AddYears(10);
                 
                 return null;
             }
