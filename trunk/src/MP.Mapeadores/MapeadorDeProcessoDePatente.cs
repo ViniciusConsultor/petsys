@@ -213,8 +213,13 @@ namespace MP.Mapeadores
             processo.DataDaConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DATADECONCESSAO");
             processo.DataDoExame = UtilidadesDePersistencia.getValorDate(leitor, "DATADEEXAME");
             processo.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSODETERCEIRO");
-            processo.Procurador = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "IDPROCURADOR"))
+            {
+                processo.Procurador = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(
                     UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCURADOR"));
+            }
+
             processo.ProcessoEhEstrangeiro = UtilidadesDePersistencia.GetValorBooleano(leitor, "EHESTRANGEIRO");
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "NUMEROPCT") ||

@@ -61,7 +61,7 @@ Namespace DBHelper
                 If String.IsNullOrEmpty(Mensagem) Then
                     Throw New Exception(ex.Message & vbCrLf _
                                       & "ORIGEM: DBHelper.ExecuteNonQuery " & vbCrLf _
-                                      & "SQL: " & SQL)
+                                      & "SQL: " & SQL, ex)
                 Else
                     Throw New BussinesException(Mensagem)
                 End If
