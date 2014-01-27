@@ -42,6 +42,9 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Boleto.Net">
+      <HintPath>..\..\lib\Boleto.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Compartilhados, Version=1.0.0.1, Culture=neutral, PublicKeyToken=1972c105628c14e0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Compartilhados.dll</HintPath>
@@ -256,6 +259,13 @@
     <Compile Include="MP\ctrlTitular.ascx.designer.cs">
       <DependentUpon>ctrlTitular.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmBoletoBancarioCEF.aspx.cs">
+      <DependentUpon>frmBoletoBancarioCEF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmBoletoBancarioCEF.aspx.designer.cs">
+      <DependentUpon>frmBoletoBancarioCEF.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.cs">
       <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -349,6 +359,7 @@
     <Content Include="MP\ctrlTemplateDeEmail.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\ctrlTitular.ascx" />
+    <Content Include="MP\frmBoletoBancarioCEF.aspx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
     <Content Include="MP\frmEnviaEmail.aspx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />
