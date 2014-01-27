@@ -71,10 +71,61 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
             {
                 grdProcessosDeMarcas.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
-                grdProcessosDeMarcas.DataSource = servico.ObtenhaProcessosDeMarcas(filtro, quantidadeDeProcessos, offSet);
+                grdProcessosDeMarcas.DataSource = ConvertaProcessoParaDTO(servico.ObtenhaProcessosDeMarcas(filtro, quantidadeDeProcessos, offSet));
                 grdProcessosDeMarcas.DataBind();
             }
 
+        }
+
+        private IList<DTOProcessoDeMarca> ConvertaProcessoParaDTO(IList<IProcessoDeMarca> processosDeMarca )
+        {
+            var processos = new List<DTOProcessoDeMarca>();
+
+            foreach (var processo in processosDeMarca)
+            {
+                var dto = new DTOProcessoDeMarca();
+
+                if (processo.Marca.Apresentacao != null)
+                    dto.Apresentacao = processo.Marca.Apresentacao.Nome;
+
+                if (processo.Marca.Cliente.Pessoa.Tipo == TipoDePessoa.Fisica)
+                {
+                    var cpf = processo.Marca.Cliente.Pessoa.ObtenhaDocumento(TipoDeDocumento.CPF);
+
+                    if (cpf != null)
+                        dto.CPFCNPJ = cpf.ToString();
+
+                }
+                else
+                {
+                    var cnpj = processo.Marca.Cliente.Pessoa.ObtenhaDocumento(TipoDeDocumento.CNPJ);
+
+                    if (cnpj != null)
+                        dto.CPFCNPJ = cnpj.ToString();    
+                }
+
+                if (processo.Marca.NCL != null)
+                    dto.Classe = processo.Marca.NCL.Codigo;
+
+                dto.Cliente = processo.Marca.Cliente.Pessoa.Nome;
+
+                if (processo.DataDoDeposito != null)
+                    dto.DataDeposito = processo.DataDoDeposito.Value.ToString("dd/MM/yyyy");
+
+                dto.DataDoCadastro = processo.DataDoCadastro.ToString("dd/MM/yyyy");
+                dto.DescricaoMarca = processo.Marca.DescricaoDaMarca;
+
+                dto.IdProcesso = processo.IdProcessoDeMarca.Value.ToString();
+
+                dto.Natureza = processo.Marca.Natureza.Nome;
+
+                dto.NumeroProcesso = processo.Processo.ToString();
+
+                processos.Add(dto);
+
+            }
+
+            return processos;
         }
 
         private void CarregaOpcoesDeFiltro()

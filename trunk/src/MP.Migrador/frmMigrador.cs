@@ -1310,7 +1310,8 @@ namespace MP.Migrador
                     var data = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DATA_PROCESSO"));
 
                     processo.DataDoCadastro = data;
-                    
+                    processo.DataDoDeposito = data;
+
                 }
                 else
                     processo.DataDoCadastro = DateTime.Now;
@@ -1320,7 +1321,7 @@ namespace MP.Migrador
                 {
                     var data = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "DATA_CONCESSAO_REGISTRO"));
 
-                    processo.DataDoDeposito = data;
+                    processo.DataDeConcessao = data;
                 }
 
 

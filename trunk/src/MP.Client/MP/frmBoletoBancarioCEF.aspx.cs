@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BoletoNet;
 using Compartilhados.Componentes.Web;
+using MP.Client.Relatorios;
 using Telerik.Web.UI;
 
 namespace MP.Client.MP
@@ -82,7 +85,9 @@ namespace MP.Client.MP
             boleto.DataProcessamento = DateTime.Now;
             boleto.DataDocumento = DateTime.Now;
 
-            var boletoBancario = new BoletoBancario();
+            var urlImagemLogo = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/Imagens/teste.jpg";
+
+            var boletoBancario = new BoletoBancario(urlImagemLogo);
             boletoBancario.CodigoBanco = codigoDoBanco;
             boletoBancario.Boleto = boleto;
             boletoBancario.MostrarCodigoCarteira = true;
@@ -91,17 +96,29 @@ namespace MP.Client.MP
 
             boletoBancario.MostrarComprovanteEntrega = false;
 
-            pnlDados.Visible = false;
+            var htmlGerado = boletoBancario.MontaHtml();
 
+            var caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
+
+            var im = HtmlRenderer.HtmlRender.RenderToImage(htmlGerado);
             
+            var nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".jpg");
+            
+            im.Save(Path.Combine(caminho, nomeDoArquivoDeSaida));
 
-            pnlBoletos.Controls.Add(boletoBancario);
-
-
+            im.Dispose();
+            
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+                          nomeDoArquivoDeSaida;
+            
+            
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
 
             // incrementar o nosso numero e o numero do documento e atualizar no banco.
         }
 
+        
         protected override string ObtenhaIdFuncao()
         {
             return "FUN.MP.017";

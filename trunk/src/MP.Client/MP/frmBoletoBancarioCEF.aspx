@@ -116,9 +116,6 @@
                             </tr>
                          </table>
                     </asp:Panel>
-                    <asp:Panel ID="pnlBoletos" runat="server">
-                    
-                    </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>
