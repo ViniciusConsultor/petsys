@@ -198,8 +198,8 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDTITULARINVENTOR, IDPATENTE FROM MP_PATENTETITULARINVENTOR ");
-            comandoSQL.Append("WHERE IDTITULARINVENTOR = " + id);
+            comandoSQL.Append("SELECT IDINVENTOR, IDPATENTE FROM MP_PATENTEINVENTOR ");
+            comandoSQL.Append("WHERE IDINVENTOR = " + id);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
@@ -345,7 +345,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("INSERT INTO MP_PATENTETITULARINVENTOR(IDTITULARINVENTOR, IDPATENTE) VALUES(");
+            comandoSQL.Append("INSERT INTO MP_PATENTEINVENTOR(IDINVENTOR, IDPATENTE) VALUES(");
             comandoSQL.Append(inventor.Pessoa.ID + ", ");
             comandoSQL.Append(idPatente + ")");
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
@@ -417,7 +417,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
-            comandoSQL.Append("SELECT IDTITULARINVENTOR, IDPATENTE FROM MP_PATENTETITULARINVENTOR ");
+            comandoSQL.Append("SELECT IDINVENTOR, IDPATENTE FROM MP_PATENTEINVENTOR ");
             comandoSQL.Append("WHERE IDPATENTE = " + idPatente);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
@@ -475,7 +475,7 @@ namespace MP.Mapeadores
             var comandoSQL = new StringBuilder();
             IDBHelper DBHelper = ServerUtils.getDBHelper();
 
-            comandoSQL.Append("DELETE FROM MP_PATENTETITULARINVENTOR WHERE IDPATENTE = " + codigoPatente);
+            comandoSQL.Append("DELETE FROM MP_PATENTEINVENTOR WHERE IDPATENTE = " + codigoPatente);
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
         }
 
@@ -550,7 +550,7 @@ namespace MP.Mapeadores
 
         private IInventor MapeieObjetoIventorPatente(IDataReader reader)
         {
-            var inventor = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IInventorLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDTITULARINVENTOR"));
+            var inventor = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IInventorLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDINVENTOR"));
             return inventor;
         }
 
