@@ -17,6 +17,7 @@ namespace MP.Client.MP
     {
         public const string carteira = "SR";
         public const int codigoDoBanco = 104;
+        public const string CHAVE_BOLETO = "CHAVE_BOLETO";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -96,22 +97,29 @@ namespace MP.Client.MP
 
             boletoBancario.MostrarComprovanteEntrega = false;
 
-            var htmlGerado = boletoBancario.MontaHtml();
+            Session.Add(CHAVE_BOLETO, boletoBancario);
 
-            var caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + "BoletoCEF.aspx";
 
-            var im = HtmlRenderer.HtmlRender.RenderToImage(htmlGerado);
-            
-            var nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".jpg");
-            
-            im.Save(Path.Combine(caminho, nomeDoArquivoDeSaida));
+            Response.Redirect(url);
 
-            im.Dispose();
+            //var htmlGerado = boletoBancario.MontaHtml();
+
+            //var caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
+
+            //var im = HtmlRenderer.HtmlRender.RenderToImage(htmlGerado);
+
+            //var nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".jpg");
+
+            //im.Save(Path.Combine(caminho, nomeDoArquivoDeSaida));
+
+            //im.Dispose();
+
+            //var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+            //              nomeDoArquivoDeSaida;
+
             
-            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
-                          nomeDoArquivoDeSaida;
-            
-            
+
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
 
