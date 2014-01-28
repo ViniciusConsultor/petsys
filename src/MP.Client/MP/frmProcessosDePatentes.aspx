@@ -15,7 +15,7 @@
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.009.0001" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
-            <telerik:RadToolBarButton runat="server" Text="Ler revista" CommandArgument="OPE.MP.009.0005"
+            <telerik:RadToolBarButton runat="server" Text="Ler revista" CommandArgument="FUN.MP.016"
                 ImageUrl="~/imagens/processarRevista.gif" CommandName="btnLerRevista" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
@@ -145,7 +145,7 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
+                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8" 
                                                 ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo excluir o processo?"
                                                 ConfirmTitle="Apagar processo">
                                                 <ItemStyle Width="2%"></ItemStyle>

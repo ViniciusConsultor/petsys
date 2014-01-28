@@ -60,7 +60,9 @@ namespace MP.Client.MP
             ctrlCliente1.Inicializa();
             ctrlInventor.Inicializa();
             ctrlTitular.Inicializa();
-            
+
+            ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
+
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatenteSemFiltro>();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -410,6 +412,19 @@ namespace MP.Client.MP
             filtro.ValorDoFiltro = ctrlInventor.InventorSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
+
+            if (grdProcessosDePatentes.Columns[0].Visible)
+                grdProcessosDePatentes.Columns[0].Visible = principal.EstaAutorizado("OPE.MP.009.0002");
+
+            if (grdProcessosDePatentes.Columns[1].Visible)
+                grdProcessosDePatentes.Columns[1].Visible = principal.EstaAutorizado("OPE.MP.009.0003");
+
+            base.OnPreRender(e);
         }
     }
 }

@@ -104,6 +104,8 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
             LimpaTela();
 
+            txtDataDoDeposito.Enabled = FabricaDeContexto.GetInstancia().GetContextoAtual().EstaAutorizado("OPE.MP.009.0004");
+
             IProcessoDePatente processoDePatente = null;
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
@@ -222,6 +224,7 @@ namespace MP.Client.MP
             MostraPCT(false);
 
             txtDataDeCadastro.Enabled = false;
+            txtDataDoDeposito.Enabled = true;
 
             grdClientes.DataSource = new List<ICliente>();
             grdClientes.DataBind();

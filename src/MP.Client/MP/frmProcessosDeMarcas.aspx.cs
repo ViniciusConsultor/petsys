@@ -61,6 +61,8 @@ namespace MP.Client.MP
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
 
+            ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
+
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaSemFiltro>();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -138,6 +140,8 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza", "5"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("NCL", "6"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo", "7"));
+
+
         }
 
 
@@ -461,6 +465,19 @@ namespace MP.Client.MP
                                                                                        800, 550), false);
                     break;
             }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
+
+            if (grdProcessosDeMarcas.Columns[0].Visible)
+                grdProcessosDeMarcas.Columns[0].Visible = principal.EstaAutorizado("OPE.MP.007.0002");
+
+            if (grdProcessosDeMarcas.Columns[1].Visible)
+                grdProcessosDeMarcas.Columns[1].Visible = principal.EstaAutorizado("OPE.MP.007.0003");
+
+            base.OnPreRender(e);
         }
     }
 }
