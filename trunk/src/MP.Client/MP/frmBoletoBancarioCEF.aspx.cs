@@ -91,34 +91,21 @@ namespace MP.Client.MP
             boletoBancario.CodigoBanco = codigoDoBanco;
             boletoBancario.Boleto = boleto;
             boletoBancario.MostrarCodigoCarteira = true;
-
             boletoBancario.Boleto.Valida();
-
             boletoBancario.MostrarComprovanteEntrega = false;
 
-            var htmlGerado = boletoBancario.MontaHtml();
+            var chaveDoBoleto = Guid.NewGuid().ToString();
 
-            var caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
+            Session.Add(chaveDoBoleto, boletoBancario);
 
-            var im = HtmlRenderer.HtmlRender.RenderToImage(htmlGerado);
-
-            var nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".jpg");
-
-            im.Save(Path.Combine(caminho, nomeDoArquivoDeSaida));
-
-            im.Dispose();
-
-            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
-                          nomeDoArquivoDeSaida;
-
-            
-
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
-
+            var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmVisualizarBoletoGerado.aspx",
+                                            "?Id=", chaveDoBoleto);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanela(url,
+                                                                               "Visualizar boleto gerado",
+                                                                               800, 550), false);
             // incrementar o nosso numero e o numero do documento e atualizar no banco.
         }
-
         
         protected override string ObtenhaIdFuncao()
         {

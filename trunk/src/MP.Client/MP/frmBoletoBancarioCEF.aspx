@@ -1,9 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Workspace.Master" AutoEventWireup="true" CodeBehind="frmBoletoBancarioCEF.aspx.cs" Inherits="MP.Client.MP.frmBoletoBancarioCEF" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Workspace.Master" AutoEventWireup="true"
+    CodeBehind="frmBoletoBancarioCEF.aspx.cs" Inherits="MP.Client.MP.frmBoletoBancarioCEF" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
+    <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
             <telerik:RadDock ID="RadDock2" runat="server" Title="Boleto bancário" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
@@ -27,7 +27,7 @@
                                     <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
                                         DataType="System.Uint32">
                                     </telerik:RadNumericTextBox>
-                                 </td>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="th3">
@@ -105,7 +105,7 @@
                                 </td>
                             </tr>
                             <tr>
-                            <td class="th3">
+                                <td class="th3">
                                     <asp:Label ID="Label11" runat="server" Text="Gerar boleto:"></asp:Label>
                                 </td>
                                 <td class="td">
@@ -114,7 +114,7 @@
                                     </telerik:RadButton>
                                 </td>
                             </tr>
-                         </table>
+                        </table>
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
