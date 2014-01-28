@@ -177,9 +177,9 @@
                                             <telerik:GridBoundColumn DataField="Natureza" HeaderText="Natureza" UniqueName="column13">
                                                 <ItemStyle Width="10%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="CPFCNPJ" HeaderText="CPF/CNPJ" UniqueName="column14">
-                                            <ItemStyle Width="10%"></ItemStyle> 
-                                            </telerik:GridBoundColumn>
+                                           <%-- <telerik:GridBoundColumn DataField="CPFCNPJ" HeaderText="CPF/CNPJ" UniqueName="column14">
+                                            <ItemStyle Width="10%"></ItemStyle> --%>
+                                           <%-- </telerik:GridBoundColumn>--%>
                                             <telerik:GridBoundColumn DataField="Cliente" HeaderText="Cliente"  UniqueName="column2">
                                             <ItemStyle Width="30%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
