@@ -40,6 +40,21 @@
                                     <br />
                                 </td>
                             </tr>
+                            <tr runat="server" id="pnlEscolhaDeDestinariosDeMarca">
+                                <td class="th3">
+                                    <asp:Label ID="Label1" runat="server" Text="Escolha os destinários"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:CheckBox ID="chkProcuradorMarca" runat="server" Text="Procurador" AutoPostBack="True" OnCheckedChanged="chkProcuradorMarca_OnCheckedChanged" />
+                                    <asp:CheckBox ID="chkClienteMarca" runat="server" Text="Cliente"  AutoPostBack="True" OnCheckedChanged="chkClienteMarca_OnCheckedChanged" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label2" runat="server" Text="Destinatários CC"></asp:Label>
@@ -55,6 +70,7 @@
                                     <br />
                                 </td>
                             </tr>
+                           
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label3" runat="server" Text="Destinatários CCo"></asp:Label>

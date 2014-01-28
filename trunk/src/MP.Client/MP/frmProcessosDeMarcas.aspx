@@ -153,10 +153,10 @@
                                                 ConfirmTitle="Apagar processo">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                          <%--  <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
                                                 HeaderTooltip="Enviar e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
                                                 <ItemStyle Width="2%"></ItemStyle>
-                                            </telerik:GridButtonColumn>--%>
+                                            </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="IdProcesso" HeaderText="ID" UniqueName="column1"  Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="NumeroProcesso" HeaderText="Processo" UniqueName="column5">
@@ -166,23 +166,24 @@
                                                 <ItemStyle Width="20%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Classe" HeaderText="Classe" UniqueName="column10">
-                                                <ItemStyle Width="10%"></ItemStyle>
+                                                <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataDeposito" HeaderText="Data do depósito" UniqueName="column11">
-                                                <ItemStyle Width="15%"></ItemStyle>
+                                                <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Apresentacao" HeaderText="Apresentação" UniqueName="column12">
-                                                <ItemStyle Width="10%"></ItemStyle>
+                                                <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Natureza" HeaderText="Natureza" UniqueName="column13">
-                                                <ItemStyle Width="10%"></ItemStyle>
+                                                <ItemStyle Width="7%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                           <%-- <telerik:GridBoundColumn DataField="CPFCNPJ" HeaderText="CPF/CNPJ" UniqueName="column14">
-                                            <ItemStyle Width="10%"></ItemStyle> --%>
-                                           <%-- </telerik:GridBoundColumn>--%>
+                                          
                                             <telerik:GridBoundColumn DataField="Cliente" HeaderText="Cliente"  UniqueName="column2">
                                             <ItemStyle Width="30%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
+                                             <telerik:GridBoundColumn DataField="CPFCNPJ" HeaderText="CPF/CNPJ" UniqueName="column14">
+                                            <ItemStyle Width="12%"></ItemStyle>
+                                           </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

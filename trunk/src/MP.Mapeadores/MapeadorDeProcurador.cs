@@ -7,6 +7,7 @@ using Compartilhados;
 using Compartilhados.DBHelper;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.Core.Negocio.LazyLoad;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
 
@@ -83,11 +84,13 @@ namespace MP.Mapeadores
                 while (reader.Read())
                 {
                     TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
-                    IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa) FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
-                                                                                FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
+                    IPessoa pessoa;
 
-                    pessoa.ID = UtilidadesDePersistencia.GetValorLong(reader, "ID");
-                    pessoa.Nome = UtilidadesDePersistencia.GetValorString(reader, "NOME");
+                    if (tipoDePessoa.Equals(TipoDePessoa.Fisica))
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaFisicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
+                    else
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaJuridicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
+                    
                     listaDeProcuradores.Add(MapeieObjetoProcurador(reader, pessoa));
                 }
 
@@ -129,12 +132,13 @@ namespace MP.Mapeadores
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), quantidadeMaximaDeRegistros))
                 while (reader.Read())
                 {
-                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPOPESSOA"));
-                    IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa)FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
-                                                                                FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
+                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
+                    IPessoa pessoa;
 
-                    pessoa.ID = UtilidadesDePersistencia.GetValorLong(reader, "ID");
-                    pessoa.Nome = UtilidadesDePersistencia.GetValorString(reader, "NOME");
+                    if (tipoDePessoa.Equals(TipoDePessoa.Fisica))
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaFisicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
+                    else
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaJuridicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
                     listaDeProcuradores.Add(MapeieObjetoProcurador(reader, pessoa));
                 }
 
@@ -158,11 +162,12 @@ namespace MP.Mapeadores
                 while (reader.Read())
                 {
                     TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
-                    IPessoa pessoa = tipoDePessoa.Equals(TipoDePessoa.Fisica) ? (IPessoa)FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>() :
-                                                                                FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
+                    IPessoa pessoa;
 
-                    pessoa.ID = UtilidadesDePersistencia.GetValorLong(reader, "ID");
-                    pessoa.Nome = UtilidadesDePersistencia.GetValorString(reader, "NOME");
+                    if (tipoDePessoa.Equals(TipoDePessoa.Fisica))
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaFisicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
+                    else
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaJuridicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
                     procuradorRetorno = MapeieObjetoProcurador(reader, pessoa);
                 }
 

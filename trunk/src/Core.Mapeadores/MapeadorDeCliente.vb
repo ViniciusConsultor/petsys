@@ -4,6 +4,7 @@ Imports System.Text
 Imports Compartilhados.DBHelper
 Imports Compartilhados
 Imports Compartilhados.Fabricas
+Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
 
 Public Class MapeadorDeCliente
     Implements IMapeadorDeCliente
@@ -188,14 +189,11 @@ Public Class MapeadorDeCliente
                     Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
 
                     If Tipo.Equals(TipoDePessoa.Fisica) Then
-                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
+                        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDDAPESSOA"))
                     Else
-                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDDAPESSOA"))
                     End If
-
-                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDDAPESSOA")
-                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPESSOA")
-
+                    
                     Cliente = MontaObjetoCliente(Leitor, Pessoa)
 
                     Clientes.Add(Cliente)
@@ -231,13 +229,10 @@ Public Class MapeadorDeCliente
                     Tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
 
                     If Tipo.Equals(TipoDePessoa.Fisica) Then
-                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaFisica)()
+                        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaFisicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDDAPESSOA"))
                     Else
-                        Pessoa = FabricaGenerica.GetInstancia.CrieObjeto(Of IPessoaJuridica)()
+                        Pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDDAPESSOA"))
                     End If
-
-                    Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDDAPESSOA")
-                    Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPESSOA")
 
                     Cliente = MontaObjetoCliente(Leitor, Pessoa)
                 End If
