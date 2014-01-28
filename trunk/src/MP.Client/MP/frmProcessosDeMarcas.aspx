@@ -17,7 +17,7 @@
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/processarRevista.gif"
-                CommandName="btnLerRevista" CausesValidation="False" CommandArgument="OPE.MP.007.0005" />
+                CommandName="btnLerRevista" CausesValidation="False" CommandArgument="FUN.MP.015" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>

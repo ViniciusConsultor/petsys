@@ -197,8 +197,11 @@ namespace MP.Client.MP
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
             LimpaTela();
 
+            txtDataDeDeposito.Enabled = FabricaDeContexto.GetInstancia().GetContextoAtual().EstaAutorizado("OPE.MP.007.0004");
+            
+            
             IProcessoDeMarca processoDeMarca = null;
-
+            
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                 processoDeMarca = servico.Obtenha(id);
 
@@ -263,6 +266,7 @@ namespace MP.Client.MP
             rblProcessoEhDeTerceiro.Items.Add(new ListItem("Sim", "1"));
             rblProcessoEhDeTerceiro.SelectedValue = "0";
             txtDataDeCadastro.Enabled = false;
+            txtDataDeDeposito.Enabled = true;
 
             rblEstaAtivo.Items.Clear();
             rblEstaAtivo.Items.Add(new ListItem("Não", "0"));

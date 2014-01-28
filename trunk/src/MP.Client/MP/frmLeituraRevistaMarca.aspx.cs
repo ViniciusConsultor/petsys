@@ -663,7 +663,7 @@ namespace MP.Client.MP
 
         protected override string ObtenhaIdFuncao()
         {
-            return "";
+            return "FUN.MP.015";
         }
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()
