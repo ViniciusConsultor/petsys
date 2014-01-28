@@ -79,9 +79,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telerik.Web.UI, Version=2013.1.220.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Web.UI, Version=2010.1.309.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\..\lib\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="WorkSpace, Version=1.0.0.0, Culture=neutral, PublicKeyToken=edfc2dbc3d03de90, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -328,6 +328,13 @@
     <Compile Include="MP\frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx.designer.cs">
       <DependentUpon>frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmVisualizarBoletoGerado.aspx.cs">
+      <DependentUpon>frmVisualizarBoletoGerado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmVisualizarBoletoGerado.aspx.designer.cs">
+      <DependentUpon>frmVisualizarBoletoGerado.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcas.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
@@ -374,10 +381,14 @@
     <Content Include="MP\frmProcessosDePatentes.aspx" />
     <Content Include="MP\frmRelatorioDeProcessosDeMarcas.aspx" />
     <Content Include="MP\frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx" />
+    <Content Include="MP\frmVisualizarBoletoGerado.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WorkSpace.Master" />
+    <Content Include="MP\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
