@@ -386,7 +386,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WorkSpace.Master" />
-    <Content Include="MP\Web.config" />
+    <Content Include="MP\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

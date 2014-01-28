@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
 
@@ -37,42 +38,59 @@ namespace MP.Client.MP
             }
         }
 
-        private void MostraDadosDoEmailParaPatente (long id)
+        private IList<string> Destinarios
         {
-           using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
-           {
-               var processo = servico.Obtenha(id);
 
-               if (processo == null)
-               {
+            get { return (IList<string>)ViewState["DESTINARIOSDEEMAIL"]; }
+            set { ViewState["DESTINARIOSDEEMAIL"] = value; }
+        }
+
+        private IProcessoDeMarca ProcessoDeMarca
+        {
+            get { return (IProcessoDeMarca)ViewState["MARCASELECIONADA"]; }
+            set { ViewState["MARCASELECIONADA"] = value; }
+        }
+
+        private void MostraDadosDoEmailParaPatente(long id)
+        {
+            pnlEscolhaDeDestinariosDeMarca.Visible = false;
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+            {
+                var processo = servico.Obtenha(id);
+
+                if (processo == null)
+                {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                            UtilidadesWeb.MostraMensagemDeInconsitencia("O processo de patente não existe no Banco de Dados."),
                                                            false);
-                   return;
-               }
+                    return;
+                }
 
-               if (processo.Despacho == null)
-                   ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                           UtilidadesWeb.MostraMensagemDeInconsitencia(
-                                                               "O processo de patente ainda não possui despacho cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
-                                                           false);
-               else
-               {
-                   if (processo.Despacho.TemplateDeEmail == null)
-                       ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                       UtilidadesWeb.MostraMensagemDeInconsitencia(
-                                                           "O despacho do processo de patente não possui template de e-mail cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
-                                                       false);
-                   else
-                    ctrlTemplateDeEmail.TextoDoTemplate = processo.Despacho.TemplateDeEmail.Template;
-               } 
+                if (processo.Despacho == null)
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                "O processo de patente ainda não possui despacho cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
+                                                            false);
+                else
+                {
+                    if (processo.Despacho.TemplateDeEmail == null)
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                            "O despacho do processo de patente não possui template de e-mail cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
+                                                        false);
+                    else
+                        ctrlTemplateDeEmail.TextoDoTemplate = processo.Despacho.TemplateDeEmail.Template;
+                }
 
-               
-           }
+
+            }
         }
 
         private void MostraDadosDoEmailParaMarca(long id)
         {
+
+            pnlEscolhaDeDestinariosDeMarca.Visible = true;
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
             {
                 var processo = servico.Obtenha(id);
@@ -84,6 +102,8 @@ namespace MP.Client.MP
                                                            false);
                     return;
                 }
+
+                ProcessoDeMarca = processo;
 
                 if (processo.Despacho == null)
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -110,16 +130,18 @@ namespace MP.Client.MP
             ctrlTemplateDeEmail.Inicializa();
             var controle = pnlDadosDoEmail as Control;
             UtilidadesWeb.LimparComponente(ref controle);
+
+            Destinarios = new List<string>();
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
         {
-            
+
         }
 
         protected void uplAnexos_OnFileUploaded(object sender, FileUploadedEventArgs e)
         {
-            
+
         }
 
         protected override string ObtenhaIdFuncao()
@@ -130,6 +152,102 @@ namespace MP.Client.MP
         protected override RadToolBar ObtenhaBarraDeFerramentas()
         {
             return rtbToolBar;
+        }
+
+        protected void chkProcuradorMarca_OnCheckedChanged(object sender, EventArgs e)
+        {
+            var procurador = ProcessoDeMarca.Procurador;
+
+            if (procurador == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                "O processo da marca não possui procurador."),
+                                                            false);
+                return;
+            }
+
+
+            if (procurador.Pessoa.EnderecoDeEmail == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                "O procurador do processo da marca não possui e-mail cadastrado. Cadastre-o ou informe manualmente."),
+                                                            false);
+                return;
+            }
+
+            if (chkProcuradorMarca.Checked)
+            {
+                if (VerificaSeEmailFoiAdicionadoNaLista(procurador.Pessoa.EnderecoDeEmail.ToString())) return;
+
+                Destinarios.Add(procurador.Pessoa.EnderecoDeEmail.ToString());
+            }
+            else
+                Destinarios.Remove(procurador.Pessoa.EnderecoDeEmail.ToString());
+
+            ExibaDestinariosCC();
+        }
+
+        private bool VerificaSeEmailFoiAdicionadoNaLista(string email)
+        {
+            if (Destinarios.Contains(email))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                "O e-mail informado já está na lista de destinários."),
+                                                            false);
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ExibaDestinariosCC()
+        {
+            txtDestinariosCC.Text = "";
+
+            foreach (var destinario in Destinarios)
+                txtDestinariosCC.Text += destinario + ";";
+        }
+
+
+        protected void chkClienteMarca_OnCheckedChanged(object sender, EventArgs e)
+        {
+
+            var cliente = ProcessoDeMarca.Marca.Cliente;
+
+            if (cliente == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                "A marca não possui cliente."),
+                                                            false);
+                return;
+            }
+
+
+            if (cliente.Pessoa.EnderecoDeEmail == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                "O cliente da marca não possui e-mail cadastrado. Cadastre-o ou informe manualmente."),
+                                                            false);
+                return;
+            }
+
+
+            if (chkClienteMarca.Checked)
+            {
+                if (VerificaSeEmailFoiAdicionadoNaLista(cliente.Pessoa.EnderecoDeEmail.ToString())) return;
+
+                Destinarios.Add(cliente.Pessoa.EnderecoDeEmail.ToString());
+            }
+            else
+                Destinarios.Remove(cliente.Pessoa.EnderecoDeEmail.ToString());
+
+            ExibaDestinariosCC();
+
         }
     }
 }
