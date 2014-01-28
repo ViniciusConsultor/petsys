@@ -89,13 +89,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoletoCEF.aspx.cs">
-      <DependentUpon>BoletoCEF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BoletoCEF.aspx.designer.cs">
-      <DependentUpon>BoletoCEF.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MP\cdCadastroDeProcuradores.aspx.cs">
       <DependentUpon>cdCadastroDeProcuradores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -347,7 +340,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Client.snk" />
-    <Content Include="BoletoCEF.aspx" />
     <Content Include="MP\cdCadastroDeProcuradores.aspx" />
     <Content Include="MP\cdDespachoDeMarcas.aspx" />
     <Content Include="MP\cdDespachoDePatentes.aspx" />

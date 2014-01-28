@@ -17,7 +17,6 @@ namespace MP.Client.MP
     {
         public const string carteira = "SR";
         public const int codigoDoBanco = 104;
-        public const string CHAVE_BOLETO = "CHAVE_BOLETO";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -97,26 +96,20 @@ namespace MP.Client.MP
 
             boletoBancario.MostrarComprovanteEntrega = false;
 
-            Session.Add(CHAVE_BOLETO, boletoBancario);
+            var htmlGerado = boletoBancario.MontaHtml();
 
-            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + "BoletoCEF.aspx";
+            var caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
 
-            Response.Redirect(url);
+            var im = HtmlRenderer.HtmlRender.RenderToImage(htmlGerado);
 
-            //var htmlGerado = boletoBancario.MontaHtml();
+            var nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".jpg");
 
-            //var caminho = String.Concat(HttpContext.Current.Request.PhysicalApplicationPath, UtilidadesWeb.PASTA_LOADS);
+            im.Save(Path.Combine(caminho, nomeDoArquivoDeSaida));
 
-            //var im = HtmlRenderer.HtmlRender.RenderToImage(htmlGerado);
+            im.Dispose();
 
-            //var nomeDoArquivoDeSaida = String.Concat(DateTime.Now.ToString("yyyyMMddhhmmss"), ".jpg");
-
-            //im.Save(Path.Combine(caminho, nomeDoArquivoDeSaida));
-
-            //im.Dispose();
-
-            //var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
-            //              nomeDoArquivoDeSaida;
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +
+                          nomeDoArquivoDeSaida;
 
             
 
