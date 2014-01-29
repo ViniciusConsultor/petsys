@@ -209,12 +209,17 @@ Partial Public Class frmPainelDeControle
 
                 destinarios.Add(Configuracao.DestinatarioDaNotificaoDeErros)
 
-                GerenciadorDeEmail.EnviaEmail("Teste de envio de e-mail.", _
+                Try
+                    GerenciadorDeEmail.EnviaEmail("Teste de envio de e-mail.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
                                               destinarios, _
                                               Nothing, _
                                               "Teste de envio de e-mail.", _
                                               Nothing)
+                Catch ex As Exception
+                    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+                End Try
+                
             End If
         End If
     End Sub

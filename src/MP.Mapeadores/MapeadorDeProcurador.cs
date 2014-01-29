@@ -83,13 +83,13 @@ namespace MP.Mapeadores
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
                 while (reader.Read())
                 {
-                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
+                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPOPESSOA"));
                     IPessoa pessoa;
 
                     if (tipoDePessoa.Equals(TipoDePessoa.Fisica))
-                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaFisicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaFisicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPESSOA"));
                     else
-                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaJuridicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "ID"));
+                        pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaJuridicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(reader, "IDPESSOA"));
                     
                     listaDeProcuradores.Add(MapeieObjetoProcurador(reader, pessoa));
                 }

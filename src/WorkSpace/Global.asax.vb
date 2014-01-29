@@ -59,11 +59,16 @@ Public Class Global_asax
 
                 destinario.Add(Configuracao.DestinatarioDaNotificaoDeErros)
 
-                GerenciadorDeEmail.EnviaEmail("Erro ocorrido no sistema.", _
+                Try
+                    GerenciadorDeEmail.EnviaEmail("Erro ocorrido no sistema.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _
                                               destinario, _
                                               Nothing, _
                                               mensagemDoErro, Nothing)
+                Catch ex As Exception
+
+                End Try
+                
             End If
         End If
     End Sub

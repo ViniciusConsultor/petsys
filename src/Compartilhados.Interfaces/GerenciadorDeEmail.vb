@@ -49,7 +49,7 @@ Public Class GerenciadorDeEmail
                 MensagemDeEmail.Subject = Assunto
                 MensagemDeEmail.Body = Mensagem
 
-                If Not Anexos Is Nothing AndAlso Anexos.Count = 0 Then
+                If Not Anexos Is Nothing AndAlso Anexos.Count > 0 Then
                     For Each item As KeyValuePair(Of String, Stream) In Anexos
                         Dim anexo = New Attachment(item.Value, item.Key)
 
@@ -61,6 +61,7 @@ Public Class GerenciadorDeEmail
                     Gerenciador.Send(MensagemDeEmail)
                 Catch ex As Exception
                     Logger.GetInstancia().Erro("Ocorreu um erro ao tentar enviar um e-mail", ex)
+                    Throw
                 End Try
 
             End With

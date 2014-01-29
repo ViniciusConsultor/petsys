@@ -38,7 +38,14 @@ Public Class EsqueceuSenha
         End Using
 
         Using Servico As IServicoDeSenha = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSenha)()
-            Servico.RegistreDefinicaoDeNovaSenha(operador, UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "DefinicaoDeNovaSenha.aspx?id=")
+
+            Try
+                Servico.RegistreDefinicaoDeNovaSenha(operador, UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & "DefinicaoDeNovaSenha.aspx?id=")
+            Catch ex As Exception
+                ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+                Exit Sub
+            End Try
+
 
             btnEnviarEmail.Visible = False
             btnSair.Visible = True
