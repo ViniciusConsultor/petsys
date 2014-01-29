@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BoletoNet;
+using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
@@ -106,10 +107,10 @@ namespace MP.Client.MP
         {
             // Boleto para CEF, com carteira SR e nosso número com 11 dígitos.
 
-            //if(ExisteErroDePreenchimento())
-            //{
-            //    return;
-            //}
+            if (ExisteErroDePreenchimento())
+            {
+                return;
+            }
 
             var vencimento = txtVencimento.SelectedDate.Value.ToString("dd/MM/yyyy");
             var valorBoleto = txtValor.Text;
@@ -185,7 +186,29 @@ namespace MP.Client.MP
                                                                                800, 550), false);
             // incrementar o nosso numero e o numero do documento e atualizar no banco.
         }
-        
+
+        private bool ExisteErroDePreenchimento()
+        {
+            if(!txtVencimento.SelectedDate.HasValue)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInformacao("Selecione uma data para vencimento do boleto."),
+                                                    false);
+
+                return true;
+            }
+            if(string.IsNullOrEmpty(txtValor.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInformacao("Informe o valor do boleto para cobrança."),
+                                                    false);
+
+                return true;
+            }
+
+            return false;
+        }
+
         protected override string ObtenhaIdFuncao()
         {
             return "FUN.MP.017";
