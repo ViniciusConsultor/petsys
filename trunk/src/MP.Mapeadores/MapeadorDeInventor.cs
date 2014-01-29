@@ -8,6 +8,7 @@ using Compartilhados.DBHelper;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
 using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.Core.Negocio.LazyLoad;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
 
@@ -95,19 +96,14 @@ namespace MP.Mapeadores
                 {
                     while (leitor.Read())
                     {
-                        IPessoa pessoa;
                         IInventor inventor = null;
+                        TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPO"));
+                        IPessoa pessoa;
 
-                        var tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPO"));
-
-                    if (tipo.Equals(TipoDePessoa.Fisica))
-                        pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>();
-                    else
-                        pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
-
-
-                        pessoa.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-                        pessoa.Nome = UtilidadesDePersistencia.GetValorString(leitor, "NOME");
+                        if (tipoDePessoa.Equals(TipoDePessoa.Fisica))
+                            pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaFisicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "ID"));
+                        else
+                            pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaJuridicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "ID"));
                         inventor = MontaObjetoInvetor(leitor, pessoa);
                         inventores.Add(inventor);
                     }
@@ -142,17 +138,13 @@ namespace MP.Mapeadores
                 {
                     if (leitor.Read())
                     {
+                        TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPO"));
                         IPessoa pessoa;
-                       
-                        var tipo = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPO"));
 
-                        if (tipo.Equals(TipoDePessoa.Fisica))
-                            pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaFisica>();
+                        if (tipoDePessoa.Equals(TipoDePessoa.Fisica))
+                            pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaFisicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "ID"));
                         else
-                            pessoa = FabricaGenerica.GetInstancia().CrieObjeto<IPessoaJuridica>();
-
-                        pessoa.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-                        pessoa.Nome = UtilidadesDePersistencia.GetValorString(leitor, "NOME");
+                            pessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPessoaJuridicaLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "ID"));
                         inventor = MontaObjetoInvetor(leitor, pessoa);
                     }
                 }

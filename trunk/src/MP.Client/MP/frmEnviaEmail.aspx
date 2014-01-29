@@ -6,8 +6,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
-            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
-                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.002.0001" />
+            <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Enviar"
+                CommandName="btnEnviar" CausesValidation="False" CommandArgument="OPE.MP.002.0001" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -45,14 +45,37 @@
                                     <asp:Label ID="Label1" runat="server" Text="Escolha os destinários"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <asp:CheckBox ID="chkProcuradorMarca" runat="server" Text="Procurador" AutoPostBack="True" OnCheckedChanged="chkProcuradorMarca_OnCheckedChanged" />
-                                    <asp:CheckBox ID="chkClienteMarca" runat="server" Text="Cliente"  AutoPostBack="True" OnCheckedChanged="chkClienteMarca_OnCheckedChanged" />
+                                    <asp:CheckBox ID="chkProcuradorMarca" runat="server" Text="Procurador" AutoPostBack="True"
+                                        OnCheckedChanged="chkProcuradorMarca_OnCheckedChanged" />
+                                    <asp:CheckBox ID="chkClienteMarca" runat="server" Text="Cliente" AutoPostBack="True"
+                                        OnCheckedChanged="chkClienteMarca_OnCheckedChanged" />
                                 </td>
                             </tr>
-                            
+                            <tr runat="server" id="pnlEscolhaDeDestinatoriosPatente">
+                                <td class="th3">
+                                    <asp:Label ID="Label5" runat="server" Text="Escolha os destinários"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:CheckBox ID="chkProcuradorPatente" runat="server" Text="Procurador" AutoPostBack="True"
+                                        OnCheckedChanged="chkProcuradorPatente_OnCheckedChanged" />
+                                    <asp:CheckBox ID="chkClientesPatente" runat="server" Text="Clientes" AutoPostBack="True"
+                                        OnCheckedChanged="chkClientesPatente_OnCheckedChanged" />
+                                    <asp:CheckBox ID="chkInventoresPatente" runat="server" Text="Invetores" AutoPostBack="true"
+                                        OnCheckedChanged="chkInventoresPatente_OnCheckedChanged" />
+                                    <asp:CheckBox ID="chkTitularesPatente" runat="server" Text="Titulares" AutoPostBack="True"
+                                        OnCheckedChanged="chkTitularesPatente_OnCheckedChanged" />
+                                </td>
+                            </tr>
                             <tr>
-                                <td colspan="2">
-                                    <br />
+                                <td class="th3">
+                                    <asp:Label ID="Label7" runat="server" Text="E-mail"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtDestinarioCCManual" runat="server" Width="450px">
+                                    </telerik:RadTextBox>
+                                    <telerik:RadButton ID="btnAdicionarDestinatarioCC" runat="server" Text="Adicionar"
+                                        Skin="Vista" OnClick="btnAdicionarDestinatarioCC_OnClick">
+                                    </telerik:RadButton>
                                 </td>
                             </tr>
                             <tr>
@@ -60,18 +83,28 @@
                                     <asp:Label ID="Label2" runat="server" Text="Destinatários CC"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDestinariosCC" runat="server" MaxLength="4000" Width="450px"
-                                        TextMode="MultiLine" Rows="3">
-                                    </telerik:RadTextBox>
+                                    <telerik:RadGrid ID="grdDestinatariosCC" runat="server" AutoGenerateColumns="False"
+                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdDestinatariosCC_OnItemCommand" OnPageIndexChanged=grdDestinatariosCC_OnPageIndexChanged> 
+                                        <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                        <MasterTableView GridLines="Both">
+                                            <RowIndicatorColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>
+                                            <Columns>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                </telerik:GridButtonColumn>
+                                                <telerik:GridBoundColumn HeaderText="E-mail" UniqueName="column">
+                                                </telerik:GridBoundColumn>
+                                            </Columns>
+                                        </MasterTableView>
+                                    </telerik:RadGrid>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <br />
-                                </td>
-                            </tr>
-                           
-                            <tr>
+                            <%--<tr>
                                 <td class="th3">
                                     <asp:Label ID="Label3" runat="server" Text="Destinatários CCo"></asp:Label>
                                 </td>
@@ -80,13 +113,8 @@
                                         TextMode="MultiLine" Rows="3">
                                     </telerik:RadTextBox>
                                 </td>
-                            </tr>
+                            </tr>--%>
                             <tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <br />
-                                    </td>
-                                </tr>
                                 <td class="th3">
                                     <asp:Label ID="Label4" runat="server" Text="Anexos"></asp:Label>
                                 </td>
@@ -113,6 +141,32 @@
                                         OnFileUploaded="uplAnexos_OnFileUploaded" />
                                     <asp:Button ID="ButtonSubmit" runat="server" Text="Anexar" OnClientClick="updateAnexo(); return false;"
                                         CausesValidation="False" CssClass="RadUploadSubmit" />
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label3" runat="server" Text="Arquivos anexados"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadGrid ID="grdAnexos" runat="server" AutoGenerateColumns="False"
+                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" > 
+                                        <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                        <MasterTableView GridLines="Both">
+                                            <RowIndicatorColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>
+                                            <Columns>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                </telerik:GridButtonColumn>
+                                                <telerik:GridBoundColumn HeaderText="Arquivo anexado" UniqueName="column">
+                                                </telerik:GridBoundColumn>
+                                            </Columns>
+                                        </MasterTableView>
+                                    </telerik:RadGrid>
                                 </td>
                             </tr>
                         </table>
