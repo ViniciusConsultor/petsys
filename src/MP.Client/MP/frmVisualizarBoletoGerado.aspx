@@ -10,7 +10,7 @@
        <%-- <script src="html2canvas.js"></script>
         <script src="jquery.js"></script>
 
-</head>
+
 <script>
     $("#btnExportar").click(function () {
         html2canvas($('#pnlBoletoGerado'), {
@@ -41,6 +41,7 @@
     });
 
 </script>--%>
+</head>
 <body>
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
