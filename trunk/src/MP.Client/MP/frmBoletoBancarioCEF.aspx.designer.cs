@@ -40,6 +40,24 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDock RadDock2;
         
         /// <summary>
+        /// Label12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label12;
+        
+        /// <summary>
+        /// ctrlCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WorkSpace.ctrlCliente ctrlCliente;
+        
+        /// <summary>
         /// pnlDados control.
         /// </summary>
         /// <remarks>

@@ -2,14 +2,25 @@
     CodeBehind="frmBoletoBancarioCEF.aspx.cs" Inherits="MP.Client.MP.frmBoletoBancarioCEF" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="uc5" TagName="ctrlCliente" Src="~/ctrlCliente.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
             <telerik:RadDock ID="RadDock2" runat="server" Title="Boleto bancário" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
+                <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label12" runat="server" Text="Cliente"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc5:ctrlCliente ID="ctrlCliente" runat="server" />
+                                </td>
+                            </tr>
+                 </table>
                     <asp:Panel ID="pnlDados" runat="server">
-                        <table class="tabela">
+                        <table class="tabela">                            
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label1" runat="server" Text="Vencimento:"></asp:Label>
