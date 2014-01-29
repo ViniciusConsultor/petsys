@@ -594,6 +594,7 @@ namespace MP.Client.MP
             MostrarListasDeClassificacaoDePatentes();
             txtReivindicacoes.Text = patente.QuantidadeReivindicacao.ToString();
             ListaDeAnuidadeDaPatente = patente.Anuidades;
+            btnGerarTodas.Visible = true;
             MostrarListaDeAnuidadeDaPatente();
             Radicais = patente.Radicais;
             CarregueGridDeRadicais();

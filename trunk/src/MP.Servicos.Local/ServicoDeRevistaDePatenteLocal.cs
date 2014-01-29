@@ -486,8 +486,8 @@ namespace MP.Servicos.Local
                 {
                     if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("BR"))
                     {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 13).Trim().Replace("-", "");
-                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 13).Trim().Replace("-", "");
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 14).Replace("-", "").Replace(" ", "");
+                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 14).Replace("-", "").Replace(" ", "");
 
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                             revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 2);
@@ -514,8 +514,8 @@ namespace MP.Servicos.Local
                 {
                     if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
                     {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(5, 13).Trim().Replace("-", "");
-                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(5, 13).Trim().Replace("-", "");
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(5, 14).Replace("-", "").Replace(" ", "");
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(5, 14).Replace("-", "").Replace(" ", "");
 
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                             revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(3, 2);
