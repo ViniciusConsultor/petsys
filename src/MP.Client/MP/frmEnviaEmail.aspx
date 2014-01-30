@@ -67,6 +67,11 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td colspan="2">
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label7" runat="server" Text="E-mail"></asp:Label>
                                 </td>
@@ -84,7 +89,8 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadGrid ID="grdDestinatariosCC" runat="server" AutoGenerateColumns="False"
-                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdDestinatariosCC_OnItemCommand" OnPageIndexChanged=grdDestinatariosCC_OnPageIndexChanged> 
+                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdDestinatariosCC_OnItemCommand"
+                                        OnPageIndexChanged="grdDestinatariosCC_OnPageIndexChanged">
                                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                         <MasterTableView GridLines="Both">
                                             <RowIndicatorColumn>
@@ -104,16 +110,55 @@
                                     </telerik:RadGrid>
                                 </td>
                             </tr>
-                            <%--<tr>
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="th3">
-                                    <asp:Label ID="Label3" runat="server" Text="Destinatários CCo"></asp:Label>
+                                    <asp:Label ID="Label9" runat="server" Text="E-mail"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDestinariosCCo" runat="server" MaxLength="4000" Width="450px"
-                                        TextMode="MultiLine" Rows="3">
+                                    <telerik:RadTextBox ID="txtDestinarioCCoManual" runat="server" Width="450px">
                                     </telerik:RadTextBox>
+                                    <telerik:RadButton ID="btnAdicionarDestinarioCCo" runat="server" Text="Adicionar"
+                                        Skin="Vista" OnClick="btnAdicionarDestinarioCCo_OnClick">
+                                    </telerik:RadButton>
                                 </td>
-                            </tr>--%>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="Destinatários CCo"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadGrid ID="grdDestinatariosCCo" runat="server" AutoGenerateColumns="False"
+                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdDestinatariosCCo_OnItemCommand"
+                                        OnPageIndexChanged="grdDestinatariosCCo_OnPageIndexChanged">
+                                        <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                        <MasterTableView GridLines="Both">
+                                            <RowIndicatorColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>
+                                            <Columns>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                </telerik:GridButtonColumn>
+                                                <telerik:GridBoundColumn HeaderText="E-mail" UniqueName="column">
+                                                </telerik:GridBoundColumn>
+                                            </Columns>
+                                        </MasterTableView>
+                                    </telerik:RadGrid>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label4" runat="server" Text="Anexos"></asp:Label>
@@ -143,13 +188,14 @@
                                         CausesValidation="False" CssClass="RadUploadSubmit" />
                                 </td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label3" runat="server" Text="Arquivos anexados"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadGrid ID="grdAnexos" runat="server" AutoGenerateColumns="False"
-                                        AllowPaging="True" PageSize="10" GridLines="None" Width="98%" > 
+                                    <telerik:RadGrid ID="grdAnexos" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                        PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdAnexos_OnItemCommand"
+                                        OnPageIndexChanged="grdAnexos_OnPageIndexChanged">
                                         <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                         <MasterTableView GridLines="Both">
                                             <RowIndicatorColumn>

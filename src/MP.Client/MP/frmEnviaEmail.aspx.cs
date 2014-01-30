@@ -144,8 +144,6 @@ namespace MP.Client.MP
                     else
                         ctrlTemplateDeEmail.TextoDoTemplate = processo.Despacho.TemplateDeEmail.Template;
                 }
-
-
             }
         }
 
@@ -157,6 +155,8 @@ namespace MP.Client.MP
 
             Destinarios = new List<string>();
             Anexos = new ConcurrentDictionary<string, Stream>();
+            DestinariosCo = new List<string>();
+            ExibaDestinariosCCo();
             ExibaDestinariosCC();
             ExibaArquivosAnexados();
         }
@@ -303,6 +303,12 @@ namespace MP.Client.MP
         {
             grdAnexos.DataSource = Anexos.Keys;
             grdAnexos.DataBind();
+        }
+
+        private void ExibaDestinariosCCo()
+        {
+            grdDestinatariosCCo.DataSource = DestinariosCo;
+            grdDestinatariosCCo.DataBind();
         }
 
 
@@ -552,6 +558,74 @@ namespace MP.Client.MP
         protected void grdDestinatariosCC_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
             UtilidadesWeb.PaginacaoDataGrid(ref grdDestinatariosCC,Destinarios,e);
+        }
+
+        protected void grdAnexos_OnItemCommand(object sender, GridCommandEventArgs e)
+        {
+            string nomeDoArquivo = null;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+               nomeDoArquivo = e.Item.Cells[3].Text;
+
+            switch (e.CommandName)
+            {
+                case "Excluir":
+
+                    Anexos.Remove(nomeDoArquivo);
+                    ExibaArquivosAnexados();
+                    break;
+            }
+        }
+
+        protected void grdAnexos_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref  grdAnexos, Anexos.Keys, e);
+        }
+
+        protected void btnAdicionarDestinarioCCo_OnClick(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtDestinarioCCoManual.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                           UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                               "Informe um e-mail."),
+                                                           false);
+                return;
+            }
+
+
+            if (DestinariosCo.Contains(txtDestinarioCCoManual.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                          UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                              "E-mail já informado na lista de destinatários CCo."),
+                                                          false);
+                return;
+            }
+
+            DestinariosCo.Add(txtDestinarioCCoManual.Text);
+            ExibaDestinariosCCo();
+        }
+
+        protected void grdDestinatariosCCo_OnItemCommand(object sender, GridCommandEventArgs e)
+        {
+            var indiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                indiceSelecionado = e.Item.ItemIndex;
+
+            switch (e.CommandName)
+            {
+                case "Excluir":
+                    DestinariosCo.RemoveAt(indiceSelecionado);
+                    ExibaDestinariosCCo();
+                    break;
+            }
+        }
+
+        protected void grdDestinatariosCCo_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref  grdDestinatariosCCo, DestinariosCo, e);
         }
     }
 }
