@@ -40,6 +40,9 @@ namespace MP.Negocio
         public double ValorDeCobranca
         { get; set; }
 
+        public string Mes
+        { get; set; }
+
         public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
         {
             RadicalMarcas.Add(radicalMarcas);

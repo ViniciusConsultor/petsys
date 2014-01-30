@@ -62,7 +62,17 @@ namespace MP.Client.MP
                 marca.CodigoDaSubClasse3 = Convert.ToInt32(txtSubClasse3.Text);
 
             marca.DescricaoDaMarca = txtNomeDaMarca.Text;
-            marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
+
+            if (!string.IsNullOrEmpty(imgImagemMarca.ImageUrl))
+            {
+                marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
+            }
+            else
+            {
+                marca.ImagemDaMarca = UtilidadesWeb.URL_IMAGEM_SEM_FOTO_MARCA;
+            }
+
+            //marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
             marca.NCL = NCL.ObtenhaPorCodigo(ctrlNCL.Codigo);
             marca.Natureza = NaturezaDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
 
@@ -73,6 +83,9 @@ namespace MP.Client.MP
 
             if (!string.IsNullOrEmpty(ctrlPeriodo.Codigo))
                 marca.Periodo = ctrlPeriodo.Codigo;
+            
+            if (!string.IsNullOrEmpty(ctrlMes.Codigo))
+                marca.Mes = ctrlMes.Codigo;
 
             if (!string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
                 marca.FormaDeCobranca = rblFormaDeCobranca.SelectedValue;
@@ -91,6 +104,8 @@ namespace MP.Client.MP
             ctrlDespacho.BotaoNovoEhVisivel = true;
             ctrlProcurador.BotaoNovoEhVisivel = true;
             ctrlCliente.BotaoNovoEhVisivel = true;
+
+            ctrlPeriodo.PeriodoFoiSelecionado += ctrlPeriodo_PeriodoFoiSelecionado;
 
             if (IsPostBack) return;
 
@@ -148,11 +163,11 @@ namespace MP.Client.MP
 
             if (string.IsNullOrEmpty(marca.ImagemDaMarca))
             {
-                imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
+                imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO_MARCA;
             }
             else
             {
-                imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_MARCA + "/" + marca.ImagemDaMarca;
+               imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
             }
 
             rblPagaManutencao.SelectedValue = marca.PagaManutencao ? "1" : "0";
@@ -163,6 +178,14 @@ namespace MP.Client.MP
 
                 if (!string.IsNullOrEmpty(marca.Periodo))
                     ctrlPeriodo.Codigo = marca.Periodo;
+
+                if (!string.IsNullOrEmpty(marca.Mes))
+                {
+                    ctrlMes.Visible = true;
+                    lblMes.Visible = true;
+                    ctrlMes.Codigo = marca.Mes;
+                }
+                    
 
                 if (!string.IsNullOrEmpty(marca.FormaDeCobranca))
                 {
@@ -279,6 +302,7 @@ namespace MP.Client.MP
             ctrlCliente.Inicializa();
             ctrlNCLRadical.Inicializa();
             ctrlPeriodo.Inicializa();
+            ctrlMes.Inicializa();
 
             MostraRadicalMarcas(new List<IRadicalMarcas>());
             CarregueComponentes();
@@ -519,6 +543,7 @@ namespace MP.Client.MP
                 rblFormaDeCobranca.ClearSelection();
                 txtValor.Text = null;
                 ctrlPeriodo.Inicializa();
+                ctrlMes.Inicializa();
             }
         }
 
@@ -531,6 +556,24 @@ namespace MP.Client.MP
                 lblValor.Visible = true;
                 txtValor.Visible = true;
             }
-        } 
+        }
+
+        private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
+        {
+            if(periodo != null)
+            {
+                if (periodo.Codigo.Equals(4) || periodo.Codigo.Equals(5) || periodo.Codigo.Equals(6))
+                {
+                    lblMes.Visible = true;
+                    ctrlMes.Visible = true;
+                }
+                else
+                {
+                    lblMes.Visible = false;
+                    ctrlMes.Visible = false;
+                    ctrlMes.Inicializa();
+                }
+            }
+        }
     }
 }

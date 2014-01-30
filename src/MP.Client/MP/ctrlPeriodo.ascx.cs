@@ -12,6 +12,9 @@ namespace MP.Client.MP
 {
     public partial class ctrlPeriodo : System.Web.UI.UserControl
     {
+        public event PeriodoFoiSelecionadoEventHandler PeriodoFoiSelecionado;
+        public delegate void PeriodoFoiSelecionadoEventHandler(Periodo periodo);
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -56,6 +59,37 @@ namespace MP.Client.MP
                     cboPeriodo.Text = periodo.Descricao;
                 }
             }
+        }
+
+        public Periodo PeriodoSelecionado
+        {
+            get { return (Periodo)ViewState[ClientID]; }
+            set { ViewState.Add(this.ClientID, value); }
+        }
+
+        protected void cboPeriodo_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            if (!cboPeriodo.AutoPostBack) return;
+
+            Periodo periodo = null;
+
+            if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
+            {
+                LimparControle();
+                return;
+            }
+
+            periodo = Periodo.ObtenhaPorCodigo(Convert.ToInt32(((RadComboBox)o).SelectedValue));
+
+            PeriodoSelecionado = periodo;
+
+            if (PeriodoFoiSelecionado != null)
+                PeriodoFoiSelecionado(periodo);
+        }
+
+        public bool AutoPostBack
+        {
+            set { cboPeriodo.AutoPostBack = value; }
         }
     }
 }

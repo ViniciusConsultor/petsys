@@ -194,6 +194,13 @@
     <Compile Include="MP\ctrlMarcas.ascx.designer.cs">
       <DependentUpon>ctrlMarcas.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlMes.ascx.cs">
+      <DependentUpon>ctrlMes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlMes.ascx.designer.cs">
+      <DependentUpon>ctrlMes.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlNaturezaDeMarca.ascx.cs">
       <DependentUpon>ctrlNaturezaDeMarca.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -362,6 +369,7 @@
     <Content Include="MP\ctrlDespachoDePatentes.ascx" />
     <Content Include="MP\ctrlInventor.ascx" />
     <Content Include="MP\ctrlMarcas.ascx" />
+    <Content Include="MP\ctrlMes.ascx" />
     <Content Include="MP\ctrlNaturezaDeMarca.ascx" />
     <Content Include="MP\ctrlNaturezaPatente.ascx" />
     <Content Include="MP\ctrlNCL.ascx" />
