@@ -1,9 +1,9 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlPeriodo.ascx.cs" Inherits="MP.Client.MP.ctrlPeriodo" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlMes.ascx.cs" Inherits="MP.Client.MP.ctrlMes" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<telerik:RadComboBox ID="cboPeriodo" runat="server" EmptyMessage="Selecione um período"
+<telerik:RadComboBox ID="cboMes" runat="server" EmptyMessage="Selecione um mês:"
     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-    Width="50%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnSelectedIndexChanged="cboPeriodo_SelectedIndexChanged">
+    Width="50%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnSelectedIndexChanged="cboMes_SelectedIndexChanged">
     <HeaderTemplate>
         <table width="56%">
             <tr>
@@ -23,3 +23,4 @@
         </table>
     </ItemTemplate>
 </telerik:RadComboBox>
+

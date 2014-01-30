@@ -26,6 +26,7 @@ namespace MP.Interfaces.Negocio
         string Periodo { get; set; }
         string FormaDeCobranca { get; set; }
         double ValorDeCobranca { get; set; }
+        string Mes { get; set; }
 
 
         void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas);

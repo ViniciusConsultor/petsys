@@ -257,6 +257,20 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
+        public string Mes
+        {
+            get
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                return _marcasReal.Mes;
+            }
+            set
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                _marcasReal.Mes = value;
+            }
+        }
+
         public void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas)
         {
             if (_marcasReal == null) CarregueObjetoReal();
