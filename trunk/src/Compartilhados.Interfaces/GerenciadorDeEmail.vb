@@ -39,8 +39,8 @@ Public Class GerenciadorDeEmail
                     MensagemDeEmail.CC.Add(New MailAddress(Destinatario))
                 Next
 
-                If Not DestinatariosEmCopiaOculta Is Nothing AndAlso DestinatariosEmCopiaOculta.Count = 0 Then
-                    For Each DestinatarioOculto As String In DestinatariosEmCopia
+                If Not DestinatariosEmCopiaOculta Is Nothing AndAlso DestinatariosEmCopiaOculta.Count > 0 Then
+                    For Each DestinatarioOculto As String In DestinatariosEmCopiaOculta
                         MensagemDeEmail.Bcc.Add(New MailAddress(DestinatarioOculto))
                     Next
                 End If
