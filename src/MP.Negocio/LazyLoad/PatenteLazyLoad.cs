@@ -278,6 +278,20 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
+        public string Mes
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Mes;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Mes = value;
+            }
+        }
+
         public string FormaDeCobranca
         {
             get

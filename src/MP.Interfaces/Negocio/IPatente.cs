@@ -28,5 +28,6 @@ namespace MP.Interfaces.Negocio
         Periodo Periodo { get; set; }
         string FormaDeCobranca { get; set; }
         double ValorDeCobranca { get; set; }
+        string Mes { get; set; }
     }
 }
