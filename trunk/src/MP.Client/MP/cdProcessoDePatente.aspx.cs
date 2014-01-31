@@ -815,29 +815,6 @@ namespace MP.Client.MP
             CarregueComboTipoDeClassificacao();
         }
 
-        protected void btnNovaAnuidade_ButtonClick(object sender, EventArgs e)
-        {
-            if (!PodeAdicionarAnuidadeDaPatente())
-                return;
-
-            var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
-
-            anuidadeDaPatente.DescricaoAnuidade = txtDescricaoDaAnuidade.Text;
-            anuidadeDaPatente.DataLancamento = txtInicioPrazoPagamento.SelectedDate;
-            anuidadeDaPatente.DataVencimentoSemMulta = txtPagamentoSemMulta.SelectedDate;
-            anuidadeDaPatente.DataVencimentoComMulta = txtPagamentoComMulta.SelectedDate;
-            anuidadeDaPatente.DataPagamento = txtDataPagamento.SelectedDate;
-
-            if (!string.IsNullOrEmpty(txtValorPagamento.Text))
-                anuidadeDaPatente.ValorPagamento = double.Parse(txtValorPagamento.Text);
-
-            if (ListaDeAnuidadeDaPatente == null)
-                ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
-
-            ListaDeAnuidadeDaPatente.Add(anuidadeDaPatente);
-            MostrarListaDeAnuidadeDaPatente();
-        }
-
         private bool PodeAdicionarAnuidadeDaPatente()
         {
             if (string.IsNullOrEmpty(txtDescricaoDaAnuidade.Text))
@@ -887,8 +864,12 @@ namespace MP.Client.MP
 
         private void VisibilidadeBaixar(bool visibilidade)
         {
-            btnNovaAnuidade.Visible = visibilidade;
             btnBaixar.Visible = !visibilidade;
+            btnCancelarBaixaAnuidade.Visible = !visibilidade;
+            txtDescricaoDaAnuidade.Enabled = visibilidade;
+            txtInicioPrazoPagamento.Enabled = visibilidade;
+            txtPagamentoSemMulta.Enabled = visibilidade;
+            txtPagamentoComMulta.Enabled = visibilidade;
         }
 
         protected void btnBaixar_ButtonClick(object sender, EventArgs e)
@@ -942,19 +923,12 @@ namespace MP.Client.MP
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
-                if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                    UtilidadesWeb.MostraMensagemDeInconsitencia("É necessário efetuar o cadastro do processo de patente para gerar as anuidades."), false);
-                    return;
-                }
-
                 var processo = servico.Obtenha((long) ViewState[CHAVE_ID_PROCESSO_DE_PATENTE]);
 
-                if (processo.DataDoDeposito == null)
+                if (processo.DataDoDeposito == null || txtDataDoDeposito.SelectedDate == null)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                    UtilidadesWeb.MostraMensagemDeInconsitencia("O processo de patente não possui data de depósito cadastrada."), false);
+                    UtilidadesWeb.MostraMensagemDeInconsitencia("É necessário informar a data de depósito do processo."), false);
                     return;
                 }
 
@@ -966,7 +940,6 @@ namespace MP.Client.MP
                     CalculeAnuidadesPatentesDeNaturezaDI(processo.DataDoDeposito.Value);
                 else
                     CalculeAnuidadesPatentesDeNatureza(processo.DataDoDeposito.Value);
-
             }
         }
 
@@ -1091,7 +1064,7 @@ namespace MP.Client.MP
             get
             {
                 if (ViewState[CHAVE_RADICAIS] == null)
-                    return new List<IRadicalPatente>();
+                    ViewState[CHAVE_RADICAIS] = new List<IRadicalPatente>();
 
                 return (List<IRadicalPatente>)ViewState[CHAVE_RADICAIS];
             }
@@ -1209,7 +1182,7 @@ namespace MP.Client.MP
                 txtValor.Visible = true;
             }
         }
-
+        
         private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
         {
             if (periodo != null)
@@ -1226,6 +1199,27 @@ namespace MP.Client.MP
                     ctrlMes.Inicializa();
                 }
             }
+        }
+
+        protected void btnCancelarBaixaAnuidade_ButtonClick(object sender, EventArgs e)
+        {
+            var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();
+
+            anuidadeDaPatente.DescricaoAnuidade = txtDescricaoDaAnuidade.Text;
+            anuidadeDaPatente.DataLancamento = txtInicioPrazoPagamento.SelectedDate;
+            anuidadeDaPatente.DataVencimentoSemMulta = txtPagamentoSemMulta.SelectedDate;
+            anuidadeDaPatente.DataVencimentoComMulta = txtPagamentoComMulta.SelectedDate;
+            anuidadeDaPatente.DataPagamento = txtDataPagamento.SelectedDate;
+
+            if (!string.IsNullOrEmpty(txtValorPagamento.Text))
+                anuidadeDaPatente.ValorPagamento = double.Parse(txtValorPagamento.Text.Replace(".", ","));
+
+            if (ListaDeAnuidadeDaPatente == null)
+                ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
+
+            ListaDeAnuidadeDaPatente.Insert(IndiceBaixaAnuidade, anuidadeDaPatente);
+            MostrarListaDeAnuidadeDaPatente();
+            VisibilidadeBaixar(true);
         }
     }
 }

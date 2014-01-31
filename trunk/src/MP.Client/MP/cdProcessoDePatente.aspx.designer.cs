@@ -1012,15 +1012,6 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadNumericTextBox txtValorPagamento;
         
         /// <summary>
-        /// btnNovaAnuidade control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnNovaAnuidade;
-        
-        /// <summary>
         /// btnBaixar control.
         /// </summary>
         /// <remarks>
@@ -1028,6 +1019,15 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton btnBaixar;
+        
+        /// <summary>
+        /// btnCancelarBaixaAnuidade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnCancelarBaixaAnuidade;
         
         /// <summary>
         /// btnGerarTodas control.
