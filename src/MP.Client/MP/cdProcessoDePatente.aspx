@@ -743,10 +743,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2" align="right">
-                                            <telerik:RadButton ID="btnNovaAnuidade" runat="server" Text="Adicionar" OnClick="btnNovaAnuidade_ButtonClick" />
-                                            <telerik:RadButton ID="btnBaixar" runat="server" Text="Baixar" OnClick="btnBaixar_ButtonClick"
-                                                Visible="False" />
+                                        <td colspan="2" align="right">                                            
+                                            <telerik:RadButton ID="btnBaixar" runat="server" Text="Baixar" OnClick="btnBaixar_ButtonClick" Visible="False" />
+                                            <telerik:RadButton ID="btnCancelarBaixaAnuidade" runat="server" Text="Cancelar" OnClick="btnCancelarBaixaAnuidade_ButtonClick" Visible="False" />
                                             <telerik:RadButton ID="btnGerarTodas" runat="server" Text="Gerar todas" OnClick="btnGerarTodas_ButtonClick" />
                                         </td>
                                     </tr>
