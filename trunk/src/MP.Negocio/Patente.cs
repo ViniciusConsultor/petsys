@@ -73,5 +73,8 @@ namespace MP.Negocio
         public string FormaDeCobranca { get; set; }
 
         public double ValorDeCobranca { get; set; }
+
+        public string Mes
+        { get; set; }
     }
 }

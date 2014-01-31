@@ -12,6 +12,7 @@
 <%@ Register Src="ctrlTitular.ascx" TagName="ctrlTitular" TagPrefix="uc8" %>
 <%@ Register Src="~/ctrlPais.ascx" TagName="ctrlPais" TagPrefix="uc9" %>
 <%@ Register Src="ctrlPeriodo.ascx" TagName="ctrlPeriodo" TagPrefix="uc10" %>
+<%@ Register Src="ctrlMes.ascx" TagName="ctrlMes" TagPrefix="uc11" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -818,6 +819,14 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="lblMes" runat="server" Text="Mês da cobrança:" Visible="false"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <uc11:ctrlMes ID="ctrlMes" runat="server" Visible="false"/>
+                                            </td>
+                                        </tr>
                                             <td class="th3">
                                                 <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
                                             </td>

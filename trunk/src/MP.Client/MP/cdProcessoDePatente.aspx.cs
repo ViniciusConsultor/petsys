@@ -79,6 +79,8 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ctrlPeriodo.PeriodoFoiSelecionado += ctrlPeriodo_PeriodoFoiSelecionado;
+
             if (IsPostBack) return;
 
             Nullable<long> id = null;
@@ -259,6 +261,7 @@ namespace MP.Client.MP
             btnGerarTodas.Visible = false;
 
             ctrlPeriodo.Inicializa();
+            ctrlMes.Inicializa();
 
             rblPagaManutencao.Items.Clear();
             rblPagaManutencao.Items.Add(new ListItem("  Sim  ", "1"));
@@ -608,6 +611,13 @@ namespace MP.Client.MP
 
                 if (patente.Periodo != null)
                     ctrlPeriodo.Codigo = patente.Periodo.Codigo.ToString();
+
+                if (!string.IsNullOrEmpty(patente.Mes))
+                {
+                    ctrlMes.Visible = true;
+                    lblMes.Visible = true;
+                    ctrlMes.Codigo = patente.Mes;
+                }
 
                 if (!string.IsNullOrEmpty(patente.FormaDeCobranca))
                 {
@@ -1004,6 +1014,9 @@ namespace MP.Client.MP
             if (!string.IsNullOrEmpty(ctrlPeriodo.Codigo))
                 patente.Periodo = Periodo.ObtenhaPorCodigo(Convert.ToInt32(ctrlPeriodo.Codigo));
 
+            if (!string.IsNullOrEmpty(ctrlMes.Codigo))
+                patente.Mes = ctrlMes.Codigo;
+
             if (!string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
                 patente.FormaDeCobranca = rblFormaDeCobranca.SelectedValue;
 
@@ -1182,6 +1195,7 @@ namespace MP.Client.MP
                 rblFormaDeCobranca.ClearSelection();
                 txtValor.Text = null;
                 ctrlPeriodo.Inicializa();
+                ctrlMes.Inicializa();
             }
         }
 
@@ -1193,6 +1207,24 @@ namespace MP.Client.MP
             {
                 lblValor.Visible = true;
                 txtValor.Visible = true;
+            }
+        }
+
+        private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
+        {
+            if (periodo != null)
+            {
+                if (periodo.Codigo.Equals(4) || periodo.Codigo.Equals(5) || periodo.Codigo.Equals(6))
+                {
+                    lblMes.Visible = true;
+                    ctrlMes.Visible = true;
+                }
+                else
+                {
+                    lblMes.Visible = false;
+                    ctrlMes.Visible = false;
+                    ctrlMes.Inicializa();
+                }
             }
         }
     }
