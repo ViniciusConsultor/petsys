@@ -10,9 +10,12 @@ using BoletoNet;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces;
 using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.Core.Servicos;
 using MP.Client.Relatorios;
+using MP.Interfaces.Negocio;
+using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
 
 namespace MP.Client.MP
@@ -21,6 +24,7 @@ namespace MP.Client.MP
     {
         public const string carteira = "SR";
         public const int codigoDoBanco = 104;
+        public const string CHAVE_CLIENTE_SELECIONADO = "CHAVE_CLIENTE_SELECIONADO";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,6 +36,8 @@ namespace MP.Client.MP
 
         private void ctrlCliente_ClienteFoiSelecionado(ICliente cliente)
         {
+            Session.Add("CHAVE_CLIENTE_SELECIONADO", cliente);
+
             pnlDados.Visible = true;
 
             if(cliente.Pessoa != null)
@@ -115,8 +121,29 @@ namespace MP.Client.MP
             var vencimento = txtVencimento.SelectedDate.Value.ToString("dd/MM/yyyy");
             var valorBoleto = txtValor.Text;
 
-            //var numeroDocumento =  busca no banco
-            var numeroDocumento = "00001";
+            IBoletosGeradosAux dadosAuxiliares = null;
+
+            // Busca dados auxiliares no banco, se for a primeira vez, efetua o insert
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoletosGeradosAux>())
+            {
+                dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+
+                if (!dadosAuxiliares.ID.HasValue)
+                {
+                    var boletosGeradosAux = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
+
+                    boletosGeradosAux.ID = GeradorDeID.getInstancia().getProximoID();
+                    boletosGeradosAux.ProximoNossoNumero = 8210001001;
+                    boletosGeradosAux.ProximoNumeroBoleto = 1;
+
+                    servico.InserirPrimeiraVez(boletosGeradosAux);
+
+                    dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                }
+            }
+
+            var numeroDocumento = dadosAuxiliares.ProximoNumeroBoleto.Value;
 
             // Numero do documento - numero de controle interno, não afeta o calculo da linha digitavel e nem o codigo de barras
             // mais pode ser útil, exemplo: quando o cliente ligar, vc pode consultar por este número e ver 
@@ -124,32 +151,31 @@ namespace MP.Client.MP
 
             // cedente
 
-            var proximoNossoNumero = "10000709";// busca no banco
+            var cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value; // o final do nosso número é incrementado ao final
 
-            var cedente_nossoNumeroBoleto = "82" + proximoNossoNumero; // o final do nosso número é incrementado ao final
+            var cedenteCpfCnpj = "222.111.111-00"; // busca no banco
+            var cedenteNome = "ALTERNATIVA MARCAS E PATENTES"; // busca no banco
+            var cedenteAgencia = "1394"; // busca no banco
+            var cedenteConta = "302864"; // busca no banco
+            var cedenteDigitoConta = "4"; // busca no banco
 
-            var cedente_cpfCnpj = "222.111.111-00"; // busca no banco
-            var cedente_nome = "ALTERNATIVA MARCAS E PATENTES"; // busca no banco
-            var cedente_agencia = "1394"; // busca no banco
-            var cedente_conta = "302864"; // busca no banco
-            var cedente_digitoConta = "4"; // busca no banco
+            var cedenteCodigo = "00100302864"; // operacao + conta - busca no banco
 
-            var cedente_codigo = "00100302864"; // operacao + conta - busca no banco
-
-            var cedente = new Cedente(cedente_cpfCnpj, cedente_nome, cedente_agencia, cedente_conta, cedente_digitoConta) { Codigo = cedente_codigo };
+            var cedente = new Cedente(cedenteCpfCnpj, cedenteNome, cedenteAgencia, cedenteConta, cedenteDigitoConta) { Codigo = cedenteCodigo };
 
             var boleto = new Boleto(Convert.ToDateTime(vencimento),
-                                    (decimal)Convert.ToDouble(valorBoleto), carteira, cedente_nossoNumeroBoleto,
-                                    cedente) { NumeroDocumento = numeroDocumento };
+                                    (decimal)Convert.ToDouble(valorBoleto), carteira, cedenteNossoNumeroBoleto.ToString(),
+                                    cedente) { NumeroDocumento = numeroDocumento.ToString() };
 
             //sacado         
-            var sacado_cpfCnpj = txtCNPJCPF.Text;
-            var sacado_nome = txtNome.Text;
-            var sacado_endereco = txtEndereco.Text;
+            var sacadoCpfCnpj = txtCNPJCPF.Text;
+            var sacadoNome = txtNome.Text;
+            var sacadoEndereco = txtEndereco.Text;
+            var sacadoObservacao = txtFinalidadeBoleto.Text;
 
-            var sacado = new Sacado(sacado_cpfCnpj, sacado_nome);
+            var sacado = new Sacado(sacadoCpfCnpj, sacadoNome);
             boleto.Sacado = sacado;
-            boleto.Sacado.Endereco.End = sacado_endereco;
+            boleto.Sacado.Endereco.End = sacadoEndereco;
             boleto.Sacado.Endereco.Bairro = txtBairro.Text;
             boleto.Sacado.Endereco.Cidade = txtCidade.Text;
             boleto.Sacado.Endereco.CEP = txtCep.Text;
@@ -165,7 +191,7 @@ namespace MP.Client.MP
             boleto.DataProcessamento = DateTime.Now;
             boleto.DataDocumento = DateTime.Now;
 
-            var urlImagemLogo = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/Imagens/teste.jpg";
+            var urlImagemLogo = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/Imagens/logoReciboBoleto.jpg";
 
             var boletoBancario = new BoletoBancario(urlImagemLogo);
             boletoBancario.CodigoBanco = codigoDoBanco;
@@ -184,7 +210,38 @@ namespace MP.Client.MP
                                                 UtilidadesWeb.ExibeJanela(url,
                                                                                "Visualizar boleto gerado",
                                                                                800, 550), false);
+
+            // Salvar dados do Boleto gerado
+
+            var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
+
+            if (Session["CHAVE_CLIENTE_SELECIONADO"] != null)
+            {
+                boletoGerado.Cliente = (ICliente)Session["CHAVE_CLIENTE_SELECIONADO"];
+            }
+
+            boletoGerado.DataGeracao = boleto.DataProcessamento;
+            boletoGerado.DataVencimento = txtVencimento.SelectedDate.Value;
+            boletoGerado.NossoNumero = cedenteNossoNumeroBoleto;
+            boletoGerado.NumeroBoleto = numeroDocumento;
+            boletoGerado.NumeroProcesso = null; // verificar número do processo
+            boletoGerado.Observacao = sacadoObservacao;
+            boletoGerado.Valor = Convert.ToDouble(valorBoleto);
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoletosGerados>())
+            {
+                servico.Inserir(boletoGerado);
+            }
+
             // incrementar o nosso numero e o numero do documento e atualizar no banco.
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoletosGeradosAux>())
+            {
+                dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
+                dadosAuxiliares.ProximoNumeroBoleto = dadosAuxiliares.ProximoNumeroBoleto + 1;
+
+                servico.AtualizarProximasInformacoes(dadosAuxiliares);
+            }
         }
 
         private bool ExisteErroDePreenchimento()
