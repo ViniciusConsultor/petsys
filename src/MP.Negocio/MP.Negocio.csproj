@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoletosGerados.cs" />
+    <Compile Include="BoletosGeradosAux.cs" />
     <Compile Include="ClasseNacional.cs" />
     <Compile Include="ClasseViena.cs" />
     <Compile Include="DespachoDeMarcas.cs" />
