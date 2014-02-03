@@ -132,7 +132,7 @@ namespace MP.Mapeadores
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString(), quantidadeMaximaDeRegistros))
                 while (reader.Read())
                 {
-                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPO"));
+                    TipoDePessoa tipoDePessoa = TipoDePessoa.Obtenha(UtilidadesDePersistencia.getValorShort(reader, "TIPOPESSOA"));
                     IPessoa pessoa;
 
                     if (tipoDePessoa.Equals(TipoDePessoa.Fisica))
