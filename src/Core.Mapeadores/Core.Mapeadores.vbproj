@@ -78,6 +78,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapeadorDeCedente.vb" />
     <Compile Include="MapeadorDePais.vb" />
     <Compile Include="MapeadorDeTipoDeEndereco.vb" />
     <Compile Include="MapeadorDeAgenda.vb" />

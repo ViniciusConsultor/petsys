@@ -81,6 +81,7 @@
     <Compile Include="Agencia.vb" />
     <Compile Include="Agenda.vb" />
     <Compile Include="Banco.vb" />
+    <Compile Include="Cedente.vb" />
     <Compile Include="Cliente.vb" />
     <Compile Include="Compromisso.vb" />
     <Compile Include="Conexao.vb" />

@@ -99,6 +99,9 @@
     <Compile Include="Negocio\IBoletosGeradosAux.cs" />
     <Compile Include="Negocio\IClasseNacional.cs" />
     <Compile Include="Negocio\IClasseViena.cs" />
+    <Compile Include="Negocio\IConfiguracaoDeBoletoBancario.cs" />
+    <Compile Include="Negocio\IConfiguracaoDeIndicesFinanceiros.cs" />
+    <Compile Include="Negocio\IConfiguracaoDeModulo.cs" />
     <Compile Include="Negocio\IDespachoDeMarcas.cs" />
     <Compile Include="Negocio\IDespachoDePatentes.cs" />
     <Compile Include="Negocio\IInventor.cs" />

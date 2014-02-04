@@ -81,6 +81,7 @@
     <Compile Include="Mapeadores\IMapeadorDeAgenda.vb" />
     <Compile Include="Mapeadores\IMapeadorDeAutorizacao.vb" />
     <Compile Include="Mapeadores\IMapeadorDeBancosEAgencias.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeCedente.vb" />
     <Compile Include="Mapeadores\IMapeadorDeCliente.vb" />
     <Compile Include="Mapeadores\IMapeadorDeConfiguracoesDoSistema.vb" />
     <Compile Include="Mapeadores\IMapeadorDeEmpresa.vb" />

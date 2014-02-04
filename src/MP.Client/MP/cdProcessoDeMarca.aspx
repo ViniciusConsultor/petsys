@@ -425,7 +425,9 @@
                             </asp:Panel>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="RadPageView3" runat="server" SkinID="Vista">
-                            <asp:Panel ID="pnlManutencao" runat="server">
+                            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                 <asp:Panel ID="pnlManutencao" runat="server">
                                 <table class="tabela">
                                     <tr>
                                         <td class="th3">
@@ -478,6 +480,9 @@
                                     </table>
                                 </asp:Panel>
                             </asp:Panel>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                           
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
                 </ContentTemplate>
