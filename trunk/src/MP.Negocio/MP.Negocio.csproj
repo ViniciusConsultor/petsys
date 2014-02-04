@@ -98,6 +98,7 @@
     <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
     <Compile Include="LazyLoad\TitularLazyLoad.cs" />
     <Compile Include="LeituraRevistaDeMarcas.cs" />
+    <Compile Include="Manutencao.cs" />
     <Compile Include="Marcas.cs" />
     <Compile Include="NaturezaPatente.cs" />
     <Compile Include="Pasta.cs" />

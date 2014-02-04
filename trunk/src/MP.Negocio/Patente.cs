@@ -66,15 +66,11 @@ namespace MP.Negocio
             }
         }
 
-        public bool PagaManutencao { get; set; }
+        public IManutencao Manutencao
+        {
+            get; set;
+        }
 
-        public Periodo Periodo { get; set; }
-
-        public string FormaDeCobranca { get; set; }
-
-        public double ValorDeCobranca { get; set; }
-
-        public string Mes
-        { get; set; }
+       
     }
 }

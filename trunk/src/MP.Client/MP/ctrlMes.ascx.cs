@@ -12,9 +12,6 @@ namespace MP.Client.MP
 {
     public partial class ctrlMes : System.Web.UI.UserControl
     {
-        //public event MesFoiSelecionadoEventHandler MesFoiSelecionado;
-        //public delegate void MesFoiSelecionadoEventHandler(Mes mes);
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -61,35 +58,7 @@ namespace MP.Client.MP
             }
         }
 
-        //public Mes MesSelecionado
-        //{
-        //    get { return (Mes)ViewState[ClientID]; }
-        //    set { ViewState.Add(this.ClientID, value); }
-        //}
 
-        protected void cboMes_SelectedIndexChanged(object o, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            //if (!cboMes.AutoPostBack) return;
-
-            //Mes mes = null;
-
-            //if (string.IsNullOrEmpty(((RadComboBox)o).SelectedValue))
-            //{
-            //    LimparControle();
-            //    return;
-            //}
-
-            //mes = Mes.ObtenhaPorCodigo(Convert.ToInt32(((RadComboBox) o).SelectedValue));
-
-            //MesSelecionado = mes;
-
-            //if (MesFoiSelecionado != null)
-            //    MesFoiSelecionado(mes);
-        }
-
-        //public bool AutoPostBack
-        //{
-        //    set { cboMes.AutoPostBack = value; }
-        //}
     }
+
 }
