@@ -107,5 +107,19 @@ Public Class ctrlPais
             cboPais.AutoPostBack = value
         End Set
     End Property
+    
+     Public Sub CarreguePaisSelecionado()
+        If(PaisSelecionado Is Nothing)
+            Return
+        End If
+         
+         Dim Item As New RadComboBoxItem(PaisSelecionado.Nome, PaisSelecionado.ID.ToString)
+        Item.Attributes.Add("Sigla", PaisSelecionado.Sigla)
+        cboPais.Items.Add(Item)
+        Item.DataBind()
+         
+        cboPais.Text = PaisSelecionado.Nome
+        cboPais.SelectedValue = PaisSelecionado.ID.ToString()
+    End Sub
 
 End Class

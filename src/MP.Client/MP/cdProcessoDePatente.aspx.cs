@@ -165,6 +165,7 @@ namespace MP.Client.MP
             }
 
             ctrlPaisProcesso.PaisSelecionado = processoDePatente.Pais;
+            ctrlPaisProcesso.CarreguePaisSelecionado();
             ExibaPatenteSelecionada(processoDePatente.Patente);
         }
 
@@ -278,7 +279,7 @@ namespace MP.Client.MP
 
             rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
             pnlMesInicioCobranca.Visible = false;
-            ctrlPaisProcesso.PaisSelecionado = null;
+            ctrlPaisProcesso.LimparControle();
         }
 
         private void MostraPCT(bool mostra)
