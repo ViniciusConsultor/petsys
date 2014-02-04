@@ -354,6 +354,7 @@
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioDePublicacoesDasPatentes.cs.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioGeralDePatentes.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MP.Interfaces\MP.Interfaces.csproj">

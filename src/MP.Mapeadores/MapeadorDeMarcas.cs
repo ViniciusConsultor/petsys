@@ -82,21 +82,20 @@ namespace MP.Mapeadores
 
                     marca.Cliente = cliente;
 
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "PagaManutencao"))
-                        marca.PagaManutencao = UtilidadesDePersistencia.GetValorBooleano(leitor, "PagaManutencao");
+                    if (UtilidadesDePersistencia.GetValorBooleano(leitor, "PagaManutencao"))
+                    {
+                        var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
 
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Periodo"))
-                        marca.Periodo = UtilidadesDePersistencia.GetValorString(leitor, "Periodo");
+                        manutencao.Periodo = Periodo.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Periodo"));
+                        manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "FormaDeCobranca"));
+                        manutencao.ValorDeCobranca =  UtilidadesDePersistencia.getValorDouble(leitor, "ValorDeCobranca");
 
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "FormaDeCobranca"))
-                        marca.FormaDeCobranca = UtilidadesDePersistencia.GetValorString(leitor, "FormaDeCobranca");
+                        if (!UtilidadesDePersistencia.EhNulo(leitor, "Mes"))
+                            manutencao.MesQueIniciaCobranca = Mes.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Mes"));
 
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "ValorDeCobranca"))
-                        marca.ValorDeCobranca = UtilidadesDePersistencia.getValorDouble(leitor, "ValorDeCobranca");
-
-                    if (!UtilidadesDePersistencia.EhNulo(leitor, "Mes"))
-                        marca.Mes = UtilidadesDePersistencia.GetValorString(leitor, "Mes");
-
+                        marca.Manutencao = manutencao;
+                    }
+                    
                     listaDeMarcas.Add(marca);
                 }
             }
@@ -161,26 +160,24 @@ namespace MP.Mapeadores
             sql.Append(marca.CodigoDaSubClasse1.HasValue ? String.Concat(marca.CodigoDaSubClasse1.ToString(), ", ") : "NULL, ");
             sql.Append(marca.CodigoDaSubClasse2.HasValue ? String.Concat(marca.CodigoDaSubClasse2.ToString(), ", ") : "NULL, ");
             sql.Append(marca.CodigoDaSubClasse3.HasValue ? String.Concat(marca.CodigoDaSubClasse3.ToString(), ", ") : "NULL, ");
-            
-            sql.Append(marca.PagaManutencao ? String.Concat("'" , 1 , "', ") : String.Concat("'" , 0 , "', "));
 
-            sql.Append(string.IsNullOrEmpty(marca.Periodo)
-                           ? "NULL, "
-                           : String.Concat("'", marca.Periodo, "', "));
 
-            sql.Append(string.IsNullOrEmpty(marca.FormaDeCobranca)
-                            ? "NULL, "
-                            : String.Concat("'", marca.FormaDeCobranca, "', "));
+            if (marca.Manutencao == null)
+            {
+                sql.Append("'0', NULL, NULL, NULL, NULL)");
+            }
+            else
+            {
+                sql.Append("'1', ");
+                sql.Append(String.Concat("'", marca.Manutencao.Periodo.Codigo, "', "));
+                sql.Append(String.Concat("'", marca.Manutencao.FormaDeCobranca.Codigo, "', "));
+                sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(marca.Manutencao.ValorDeCobranca), ", "));
 
-            sql.Append((marca.ValorDeCobranca == null || marca.ValorDeCobranca == 0)
-                            ? "NULL, "
-                            : String.Concat(marca.ValorDeCobranca.ToString().Replace(",", ".") + ", "));
+                sql.Append(marca.Manutencao.MesQueIniciaCobranca == null
+                               ? "NULL) "
+                               : String.Concat("'", marca.Manutencao.MesQueIniciaCobranca.Codigo, "') "));
+            }
 
-            sql.Append(string.IsNullOrEmpty(marca.Mes)
-                           ? "NULL) "
-                           : String.Concat("'", marca.Mes, "') "));
-
-            
             DBHelper.ExecuteNonQuery(sql.ToString());
 
             if (marca.RadicalMarcas.Count > 0)
@@ -221,24 +218,25 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("CODIGONATUREZA = ", marca.Natureza.Codigo, " , "));
             sql.Append(String.Concat("OBSERVACAO_MARCA = '", marca.ObservacaoDaMarca, "', "));
 
-            sql.Append(marca.PagaManutencao ? String.Concat("PAGAMANUTENCAO = '", 1, "', ") : String.Concat("PAGAMANUTENCAO = '", 0, "', "));
+            if (marca.Manutencao == null)
+            {
+                sql.Append("PAGAMANUTENCAO = '0', ") ;
+                sql.Append("PERIODO = NULL, ");
+                sql.Append("FORMADECOBRANCA = NULL, ");
+                sql.Append("VALORDECOBRANCA = NULL, ");
+                sql.Append("MES = NULL ");
+            }
+            else
+            {
+                sql.Append("PAGAMANUTENCAO = '1', ");
+                sql.Append(String.Concat("PERIODO = '", marca.Manutencao.Periodo.Codigo, "', "));
+                sql.Append(String.Concat("FORMADECOBRANCA = '", marca.Manutencao.FormaDeCobranca.Codigo, "', "));
+                sql.Append(string.Concat("VALORDECOBRANCA = ", UtilidadesDePersistencia.TPVd(marca.Manutencao.ValorDeCobranca), ", "));
 
-            sql.Append(string.IsNullOrEmpty(marca.Periodo)
-                           ? "PERIODO = NULL, "
-                           : String.Concat("PERIODO = '" , marca.Periodo, "', "));
-
-            sql.Append(string.IsNullOrEmpty(marca.FormaDeCobranca)
-                            ? "FORMADECOBRANCA = NULL, "
-                            : String.Concat("FORMADECOBRANCA = '", marca.FormaDeCobranca, "', "));
-
-            sql.Append((marca.ValorDeCobranca == null || marca.ValorDeCobranca == 0)
-                            ? "VALORDECOBRANCA = NULL, "
-                            : String.Concat("VALORDECOBRANCA = " , marca.ValorDeCobranca.ToString().Replace(",", ".") , ", "));
-
-            sql.Append(string.IsNullOrEmpty(marca.Mes)
-                           ? "MES = NULL "
-                           : String.Concat("MES = '", marca.Mes, "' "));
-            
+                sql.Append(marca.Manutencao.MesQueIniciaCobranca == null
+                               ? "MES = NULL "
+                               : String.Concat("MES = '", marca.Manutencao.MesQueIniciaCobranca.Codigo, "' "));
+            }
 
             sql.Append(String.Concat("WHERE IDMARCA = ", marca.IdMarca.Value.ToString()));
 

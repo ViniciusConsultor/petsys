@@ -34,14 +34,22 @@ namespace MP.Mapeadores
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.Observacao) + "', ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.Resumo) + "', ");
             comandoSQL.Append(patente.QuantidadeReivindicacao + ", ");
-            comandoSQL.Append(patente.PagaManutencao ? String.Concat("'", 1, "', ") : String.Concat("'", 0, "', "));
-            comandoSQL.Append(patente.Periodo == null? "NULL, " : String.Concat("'", patente.Periodo.Codigo, "', "));
-            comandoSQL.Append(string.IsNullOrEmpty(patente.FormaDeCobranca) ? "NULL, " : String.Concat("'", patente.FormaDeCobranca, "', "));
-            comandoSQL.Append((patente.ValorDeCobranca == null || patente.ValorDeCobranca == 0) ? "NULL, " : String.Concat(patente.ValorDeCobranca.ToString().Replace(",", ".") + ", "));
 
-            comandoSQL.Append(string.IsNullOrEmpty(patente.Mes)
-                           ? "NULL) "
-                           : String.Concat("'", patente.Mes, "') "));
+            if (patente.Manutencao == null)
+                comandoSQL.Append("'0', NULL, NULL, NULL, NULL)");
+
+            else
+            {
+                comandoSQL.Append("'1', ");
+                comandoSQL.Append(String.Concat("'", patente.Manutencao.Periodo.Codigo, "', "));
+                comandoSQL.Append(String.Concat("'", patente.Manutencao.FormaDeCobranca.Codigo, "', "));
+                comandoSQL.Append(String.Concat(UtilidadesDePersistencia.TPVd(patente.Manutencao.ValorDeCobranca), ", "));
+
+                comandoSQL.Append(patente.Manutencao.MesQueIniciaCobranca == null
+                               ? "NULL) "
+                               : String.Concat("'", patente.Manutencao.MesQueIniciaCobranca.Codigo, "') "));
+            }
+
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
 
@@ -86,15 +94,27 @@ namespace MP.Mapeadores
             comandoSQL.Append("OBSERVACAO = '" + patente.Observacao + "', ");
             comandoSQL.Append("RESUMO_PATENTE = '" + patente.Resumo + "', ");
             comandoSQL.Append("QTDEREINVINDICACAO = " + patente.QuantidadeReivindicacao + ", ");
-            comandoSQL.Append(patente.PagaManutencao ? String.Concat("PAGAMANUTENCAO = '", 1, "', ") : String.Concat("PAGAMANUTENCAO = '", 0, "', ")); 
-            comandoSQL.Append(patente.Periodo == null ? "PERIODO = NULL, " : String.Concat("PERIODO = '", patente.Periodo.Codigo, "', "));
-            comandoSQL.Append(string.IsNullOrEmpty(patente.FormaDeCobranca) ? "FORMADECOBRANCA = NULL, " : String.Concat("FORMADECOBRANCA = '", patente.FormaDeCobranca, "', "));
-            comandoSQL.Append((patente.ValorDeCobranca == null || patente.ValorDeCobranca == 0) ? "VALORDECOBRANCA = NULL, " : String.Concat("VALORDECOBRANCA = ", patente.ValorDeCobranca.ToString().Replace(",", "."), ", "));
-
-            comandoSQL.Append(string.IsNullOrEmpty(patente.Mes)
-                           ? "MES = NULL "
-                           : String.Concat("MES = '", patente.Mes, "' "));
             
+            if (patente.Manutencao == null)
+            {
+                comandoSQL.Append("PAGAMANUTENCAO = '0', ");
+                comandoSQL.Append("PERIODO = NULL, ");
+                comandoSQL.Append("FORMADECOBRANCA = NULL, ");
+                comandoSQL.Append("VALORDECOBRANCA = NULL, ");
+                comandoSQL.Append("MES = NULL ");
+            }
+            else
+            {
+                comandoSQL.Append("PAGAMANUTENCAO = '1', ");
+                comandoSQL.Append(String.Concat("PERIODO = '", patente.Manutencao.Periodo.Codigo, "', "));
+                comandoSQL.Append(String.Concat("FORMADECOBRANCA = '", patente.Manutencao.FormaDeCobranca.Codigo, "', "));
+                comandoSQL.Append(string.Concat("VALORDECOBRANCA = ", UtilidadesDePersistencia.TPVd(patente.Manutencao.ValorDeCobranca), ", "));
+
+                comandoSQL.Append(patente.Manutencao.MesQueIniciaCobranca == null
+                               ? "MES = NULL "
+                               : String.Concat("MES = '", patente.Manutencao.MesQueIniciaCobranca.Codigo, "' "));
+            }
+
             comandoSQL.Append(" WHERE IDPATENTE = " + patente.Identificador);
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
@@ -292,7 +312,7 @@ namespace MP.Mapeadores
             return patentes;
         }
 
-#region Métodos Privados
+        #region Métodos Privados
 
         private void InserirAnuidade(IAnuidadePatente anuidadePatente, long idPatente)
         {
@@ -310,7 +330,7 @@ namespace MP.Mapeadores
             comandoSQL.Append(anuidadePatente.DataVencimento.HasValue ? anuidadePatente.DataVencimento.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
             comandoSQL.Append(anuidadePatente.DataPagamento.HasValue ? anuidadePatente.DataPagamento.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
             comandoSQL.Append(anuidadePatente.ValorPagamento.ToString().Replace(",", ".") + ", ");
-            comandoSQL.Append("'" + (anuidadePatente.AnuidadePaga ? "1" : "0" )+ "', ");
+            comandoSQL.Append("'" + (anuidadePatente.AnuidadePaga ? "1" : "0") + "', ");
             comandoSQL.Append("'" + (anuidadePatente.PedidoExame ? "1" : "0") + "', ");
             comandoSQL.Append(anuidadePatente.DataVencimentoSemMulta != null ? anuidadePatente.DataVencimentoSemMulta.Value.ToString("yyyyMMdd") + ", " : "NULL, ");
             comandoSQL.Append(anuidadePatente.DataVencimentoComMulta != null ? anuidadePatente.DataVencimentoComMulta.Value.ToString("yyyyMMdd") + ") " : "NULL) ");
@@ -326,8 +346,8 @@ namespace MP.Mapeadores
             classificacaoPatente.Identificador = GeradorDeID.getInstancia().getProximoID();
 
             comandoSQL.Append("INSERT INTO MP_PATENTECLASSIFICACAO(IDPATENTECLASSIFICACAO, CLASSIFICACAO, DESCRICAO_CLASSIFICACAO, IDPATENTE, TIPO_CLASSIFICACAO) VALUES(");
-            comandoSQL.Append( classificacaoPatente.Identificador + ", ");
-            comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe( classificacaoPatente.Classificacao) + "', ");
+            comandoSQL.Append(classificacaoPatente.Identificador + ", ");
+            comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(classificacaoPatente.Classificacao) + "', ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(classificacaoPatente.DescricaoClassificacao) + "', ");
             comandoSQL.Append(idPatente + ", ");
             comandoSQL.Append(classificacaoPatente.TipoClassificacao.Codigo + ")");
@@ -530,7 +550,7 @@ namespace MP.Mapeadores
             anuidadePatente.PedidoExame = UtilidadesDePersistencia.GetValorBooleano(reader, "PEDIDOEXAME");
             anuidadePatente.DataVencimentoSemMulta = UtilidadesDePersistencia.getValorDate(reader, "DATAVENCTO_SEM_MULTA");
             anuidadePatente.DataVencimentoComMulta = UtilidadesDePersistencia.getValorDate(reader, "DATAVENCTO_COM_MULTA");
-            
+
             return anuidadePatente;
         }
 
@@ -539,7 +559,7 @@ namespace MP.Mapeadores
             var classificacaoPatente = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
 
             classificacaoPatente.Identificador = UtilidadesDePersistencia.GetValorLong(reader, "IDPATENTECLASSIFICACAO");
-            classificacaoPatente. Classificacao = UtilidadesDePersistencia.GetValorString(reader, "CLASSIFICACAO");
+            classificacaoPatente.Classificacao = UtilidadesDePersistencia.GetValorString(reader, "CLASSIFICACAO");
             classificacaoPatente.DescricaoClassificacao = UtilidadesDePersistencia.GetValorString(reader, "DESCRICAO_CLASSIFICACAO");
             classificacaoPatente.TipoClassificacao = TipoClassificacaoPatente.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(reader, "TIPO_CLASSIFICACAO"));
 
@@ -590,21 +610,21 @@ namespace MP.Mapeadores
             patente.Radicais = ObtenhaRadicais(patente.Identificador);
             patente.Titulares = ObtenhaTitularesPeloIdDaPatente(patente.Identificador);
 
-            if (!UtilidadesDePersistencia.EhNulo(reader, "PagaManutencao"))
-                patente.PagaManutencao = UtilidadesDePersistencia.GetValorBooleano(reader, "PagaManutencao");
+            if (UtilidadesDePersistencia.GetValorBooleano(reader, "PagaManutencao"))
+            {
+                var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
 
-            if (!UtilidadesDePersistencia.EhNulo(reader, "Periodo"))
-                patente.Periodo = Periodo.ObtenhaPorCodigo(Convert.ToInt32(UtilidadesDePersistencia.GetValorString(reader, "Periodo")));
+                manutencao.Periodo = Periodo.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(reader, "Periodo"));
+                manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(reader, "FormaDeCobranca"));
+                manutencao.ValorDeCobranca =  UtilidadesDePersistencia.getValorDouble(reader, "ValorDeCobranca");
 
-            if (!UtilidadesDePersistencia.EhNulo(reader, "FormaDeCobranca"))
-                patente.FormaDeCobranca = UtilidadesDePersistencia.GetValorString(reader, "FormaDeCobranca");
+                if (!UtilidadesDePersistencia.EhNulo(reader, "Mes"))
+                    manutencao.MesQueIniciaCobranca = Mes.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(reader, "Mes"));
 
-            if (!UtilidadesDePersistencia.EhNulo(reader, "ValorDeCobranca"))
-                patente.ValorDeCobranca = UtilidadesDePersistencia.getValorDouble(reader, "ValorDeCobranca");
+                patente.Manutencao = manutencao;
+            }
 
-            if (!UtilidadesDePersistencia.EhNulo(reader, "MES"))
-                patente.Mes = UtilidadesDePersistencia.GetValorString(reader, "MES");
-
+            
             return patente;
         }
 
@@ -683,6 +703,6 @@ namespace MP.Mapeadores
             return radicalPatente;
         }
 
-#endregion
+        #endregion
     }
 }

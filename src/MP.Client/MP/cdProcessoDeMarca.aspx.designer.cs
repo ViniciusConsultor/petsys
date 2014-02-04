@@ -769,6 +769,15 @@ namespace MP.Client.MP {
         protected global::MP.Client.MP.ctrlPeriodo ctrlPeriodo;
         
         /// <summary>
+        /// pnlMesDeCobrança control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlMesDeCobrança;
+        
+        /// <summary>
         /// lblMes control.
         /// </summary>
         /// <remarks>

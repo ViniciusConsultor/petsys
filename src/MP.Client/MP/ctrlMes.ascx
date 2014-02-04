@@ -3,7 +3,7 @@
 <telerik:RadComboBox ID="cboMes" runat="server" EmptyMessage="Selecione um mês:"
     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
-    Width="50%" Skin="Vista" CausesValidation="False" AutoPostBack="True" OnSelectedIndexChanged="cboMes_SelectedIndexChanged">
+    Width="50%" Skin="Vista" CausesValidation="False" AutoPostBack="False" >
     <HeaderTemplate>
         <table width="56%">
             <tr>

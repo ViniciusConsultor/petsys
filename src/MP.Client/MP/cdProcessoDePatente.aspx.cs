@@ -18,7 +18,7 @@ namespace MP.Client.MP
     {
         private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCESSO_DE_PATENTE";
         private const string CHAVE_ID_PROCESSO_DE_PATENTE = "CHAVE_ID_PROCESSO_DE_PATENTE";
-        
+
         private const string CHAVE_ID_PATENTE = "CHAVE_ID_PATENTE";
         private const string CHAVE_CLIENTES = "CHAVE_CLIENTES";
         private const string CHAVE_INVENTORES = "CHAVE_INVENTORES";
@@ -154,7 +154,7 @@ namespace MP.Client.MP
                 ctrlDespachoDePatentes.DespachoDePatentesSelecionada = processoDePatente.Despacho;
                 ctrlDespachoDePatentes.CodigoDespachoDePatentes = processoDePatente.Despacho.Codigo;
             }
-            
+
             if (processoDePatente.PCT != null)
             {
                 rblEHPCT.SelectedValue = "1";
@@ -190,7 +190,7 @@ namespace MP.Client.MP
 
             var controle5 = pnlRadicais as Control;
             UtilidadesWeb.LimparComponente(ref controle5);
-            
+
             ctrlProcurador.Inicializa();
             ctrlDespachoDePatentes.Inicializa();
             ctrlPasta.Inicializa();
@@ -256,7 +256,7 @@ namespace MP.Client.MP
             ctrlCliente.BotaoNovoEhVisivel = true;
             ctrlInventor.Inicializa();
             ctrlInventor.BotaoNovoEhVisivel = true;
-            
+
             RadTabStrip1.Tabs[0].Selected = true;
             rpvDadosPatentes.Selected = true;
             btnGerarTodas.Visible = false;
@@ -272,10 +272,12 @@ namespace MP.Client.MP
             pnlDadosDaManutencao.Visible = false;
 
             rblFormaDeCobranca.Items.Clear();
-            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo:   ", "S"));
-            rblFormaDeCobranca.Items.Add(new ListItem("   Valor em R$:", "R"));
-            txtValor.Visible = false;
-            lblValor.Visible = false;
+
+            foreach (var formaCobrança in FormaCobrancaManutencao.ObtenhaTodas())
+                rblFormaDeCobranca.Items.Add(new ListItem(formaCobrança.Descricao  ,formaCobrança.Codigo));
+
+            rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
+            pnlMesInicioCobranca.Visible = false;
             ctrlPaisProcesso.PaisSelecionado = null;
         }
 
@@ -327,17 +329,35 @@ namespace MP.Client.MP
                 inconsitencias.Add("É necessário informar a natureza da patente.");
 
             if (ListaDeClientes == null || (ListaDeClientes != null && ListaDeClientes.Count == 0))
-               inconsitencias.Add("É necessário informar pelo menos um cliente.");
+                inconsitencias.Add("É necessário informar pelo menos um cliente.");
 
             if (ListaDeInventores == null || (ListaDeInventores != null && ListaDeInventores.Count == 0))
                 inconsitencias.Add("É necessário informar pelo menos um inventor.");
-            
+
             if (string.IsNullOrEmpty(txtProcesso.Text)) inconsitencias.Add("É necessário informar o número do processo da patente.");
 
             if (!txtDataDeCadastro.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de cadastro.");
 
             if (rblProcessoEhDeTerceiro.SelectedValue == "0" && ctrlProcurador.ProcuradorSelecionado == null) inconsitencias.Add("É necessário informar o procurador.");
-            
+
+            if (rblPagaManutencao.SelectedValue == "1")
+            {
+                if (string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
+                    inconsitencias.Add("É necessário informar a forma de cobrança.");
+
+                if (ctrlPeriodo.PeriodoSelecionado == null)
+                    inconsitencias.Add("É necessário informar o período de cobrança.");
+
+                if (string.IsNullOrEmpty(txtValor.Text))
+                    inconsitencias.Add("É necessário informar o valor de cobrança.");
+
+                if (Util.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
+                {
+                    if (string.IsNullOrEmpty(ctrlMes.Codigo))
+                        inconsitencias.Add("É necessário informar o mês de início de cobrança.");
+                }
+            }
+
             return inconsitencias;
         }
 
@@ -607,30 +627,22 @@ namespace MP.Client.MP
             ListaDeTitulares = patente.Titulares;
             MostrarTitulares();
 
-            if (patente.PagaManutencao)
+            rblPagaManutencao.SelectedValue = patente.Manutencao != null ? "1" : "0";
+
+            if (patente.Manutencao != null)
             {
                 pnlDadosDaManutencao.Visible = true;
-                rblPagaManutencao.SelectedValue = patente.PagaManutencao ? "1" : "0";
+                ctrlPeriodo.Codigo = patente.Manutencao.Periodo.Codigo.ToString();
+                ctrlPeriodo.PeriodoSelecionado = patente.Manutencao.Periodo;
 
-                if (patente.Periodo != null)
-                    ctrlPeriodo.Codigo = patente.Periodo.Codigo.ToString();
-
-                if (!string.IsNullOrEmpty(patente.Mes))
+                if (patente.Manutencao.MesQueIniciaCobranca != null)
                 {
-                    ctrlMes.Visible = true;
-                    lblMes.Visible = true;
-                    ctrlMes.Codigo = patente.Mes;
+                    pnlMesInicioCobranca.Visible = true;
+                    ctrlMes.Codigo = patente.Manutencao.MesQueIniciaCobranca.Codigo.ToString();
                 }
 
-                if (!string.IsNullOrEmpty(patente.FormaDeCobranca))
-                {
-                    txtValor.Visible = true;
-
-                    rblFormaDeCobranca.SelectedValue = patente.FormaDeCobranca;
-
-                    if (patente.ValorDeCobranca > 0)
-                        txtValor.Value = patente.ValorDeCobranca;
-                }
+                rblFormaDeCobranca.SelectedValue = patente.Manutencao.FormaDeCobranca.Codigo;
+                txtValor.Value = patente.Manutencao.ValorDeCobranca;
             }
         }
 
@@ -926,7 +938,7 @@ namespace MP.Client.MP
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
-                var processo = servico.Obtenha((long) ViewState[CHAVE_ID_PROCESSO_DE_PATENTE]);
+                var processo = servico.Obtenha((long)ViewState[CHAVE_ID_PROCESSO_DE_PATENTE]);
 
                 if (processo.DataDoDeposito == null || txtDataDoDeposito.SelectedDate == null)
                 {
@@ -946,7 +958,7 @@ namespace MP.Client.MP
             }
         }
 
-      
+
         private IPatente MonteObjetoPatente()
         {
             var patente = FabricaGenerica.GetInstancia().CrieObjeto<IPatente>();
@@ -985,19 +997,19 @@ namespace MP.Client.MP
             if (ListaDeTitulares != null && ListaDeTitulares.Count > 0)
                 patente.Titulares = ListaDeTitulares;
 
-            patente.PagaManutencao = rblPagaManutencao.SelectedValue.Equals("1");
 
-            if (!string.IsNullOrEmpty(ctrlPeriodo.Codigo))
-                patente.Periodo = Periodo.ObtenhaPorCodigo(Convert.ToInt32(ctrlPeriodo.Codigo));
+            if (rblPagaManutencao.SelectedValue.Equals("1"))
+            {
+                var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
+                manutencao.Periodo = ctrlPeriodo.PeriodoSelecionado;
 
-            if (!string.IsNullOrEmpty(ctrlMes.Codigo))
-                patente.Mes = ctrlMes.Codigo;
+                if (!string.IsNullOrEmpty(ctrlMes.Codigo))
+                    manutencao.MesQueIniciaCobranca = Mes.ObtenhaPorCodigo(Convert.ToInt32(ctrlMes.Codigo));
 
-            if (!string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
-                patente.FormaDeCobranca = rblFormaDeCobranca.SelectedValue;
-
-            if (!string.IsNullOrEmpty(txtValor.Text) && txtValor.Value.HasValue)
-                patente.ValorDeCobranca = txtValor.Value.Value;
+                manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(rblFormaDeCobranca.SelectedValue);
+                manutencao.ValorDeCobranca = txtValor.Value.Value;
+                patente.Manutencao = manutencao;
+            }
 
             return patente;
         }
@@ -1175,32 +1187,15 @@ namespace MP.Client.MP
             }
         }
 
-        protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
-        {
-            var rblFormaDeCobranca = sender as RadioButtonList;
-
-            if (rblFormaDeCobranca != null && !string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
-            {
-                lblValor.Visible = true;
-                txtValor.Visible = true;
-            }
-        }
         
         private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
         {
-            if (periodo != null)
+            if (Util.PeriodoEhTrimestreSemestreOuAnual(periodo))
+                pnlMesInicioCobranca.Visible = true;
+            else
             {
-                if (periodo.Codigo.Equals(4) || periodo.Codigo.Equals(5) || periodo.Codigo.Equals(6))
-                {
-                    lblMes.Visible = true;
-                    ctrlMes.Visible = true;
-                }
-                else
-                {
-                    lblMes.Visible = false;
-                    ctrlMes.Visible = false;
-                    ctrlMes.Inicializa();
-                }
+                pnlMesInicioCobranca.Visible = false;
+                ctrlMes.Inicializa();
             }
         }
 

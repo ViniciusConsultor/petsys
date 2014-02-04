@@ -200,74 +200,17 @@ namespace MP.Negocio.LazyLoad
 
         public IList<IRadicalMarcas> RadicalMarcas { get; set; }
 
-        public bool PagaManutencao
+        public IManutencao Manutencao
         {
             get
             {
                 if (_marcasReal == null) CarregueObjetoReal();
-                return _marcasReal.PagaManutencao;
+                return _marcasReal.Manutencao;
             }
             set
             {
                 if (_marcasReal == null) CarregueObjetoReal();
-                _marcasReal.PagaManutencao = value;
-            }
-            
-        }
-
-        public string Periodo
-        {
-            get
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                return _marcasReal.Periodo;
-            }
-            set
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                _marcasReal.Periodo = value;
-            }
-        }
-
-        public string FormaDeCobranca
-        {
-            get
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                return _marcasReal.FormaDeCobranca;
-            }
-            set
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                _marcasReal.FormaDeCobranca = value;
-            }
-        }
-
-        public double ValorDeCobranca
-        {
-            get
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                return _marcasReal.ValorDeCobranca;
-            }
-            set
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                _marcasReal.ValorDeCobranca = value;
-            }
-        }
-
-        public string Mes
-        {
-            get
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                return _marcasReal.Mes;
-            }
-            set
-            {
-                if (_marcasReal == null) CarregueObjetoReal();
-                _marcasReal.Mes = value;
+                _marcasReal.Manutencao = value;
             }
         }
 

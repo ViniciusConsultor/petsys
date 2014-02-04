@@ -477,18 +477,18 @@
                                     <table class="tabela">
                                         <tr>
                                             <td class="th3">
-                                                <asp:Label ID="Label30" runat="server" Text="Período:"></asp:Label>
+                                                <asp:Label ID="Label30" runat="server" Text="Período"></asp:Label>
                                             </td>
                                             <td class="td">
                                                 <uc8:ctrlPeriodo ID="ctrlPeriodo" runat="server" />
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr runat="server" id="pnlMesDeCobrança">
                                             <td class="th3">
-                                                <asp:Label ID="lblMes" runat="server" Text="Mês da cobrança:" Visible="false"></asp:Label>
+                                                <asp:Label ID="lblMes" runat="server" Text="Mês da cobrança"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <uc9:ctrlMes ID="ctrlMes" runat="server" Visible="false"/>
+                                                <uc9:ctrlMes ID="ctrlMes" runat="server" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -496,20 +496,17 @@
                                                 <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="true" RepeatDirection="Horizontal"
-                                                    OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
+                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="False" RepeatDirection="Horizontal">
                                                 </asp:RadioButtonList>
                                             </td>
                                         </tr>
-                                    </table>
-                                    <table class="tabela">
                                         <tr>
                                             <td class="th3">
-                                                <asp:Label ID="lblValor" runat="server" Text="Valor:"></asp:Label>
+                                                <asp:Label ID="lblValor" runat="server" Text="Valor"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
-                                                    DataType="System.Uint32">
+                                                <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Currency"
+                                                    DataType="System.Double">
                                                 </telerik:RadNumericTextBox>
                                             </td>
                                         </tr>

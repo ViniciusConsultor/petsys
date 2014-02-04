@@ -94,6 +94,7 @@
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTitular.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatenteSemFiltro.cs" />
+    <Compile Include="Negocio\FormaCobrancaManutencao.cs" />
     <Compile Include="Negocio\IBoletosGerados.cs" />
     <Compile Include="Negocio\IBoletosGeradosAux.cs" />
     <Compile Include="Negocio\IClasseNacional.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Negocio\IDespachoDePatentes.cs" />
     <Compile Include="Negocio\IInventor.cs" />
     <Compile Include="Negocio\ILeituraRevistaDeMarcas.cs" />
+    <Compile Include="Negocio\IManutencao.cs" />
     <Compile Include="Negocio\IMarcas.cs" />
     <Compile Include="Negocio\INaturezaPatente.cs" />
     <Compile Include="Negocio\IPasta.cs" />

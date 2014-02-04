@@ -20,7 +20,7 @@ namespace MP.Client.MP
         private const string CHAVE_ID_PROCESSO_DE_MARCA = "CHAVE_ID_PROCESSO_DE_MARCA";
         private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
         private const string CHAVE_ID_MARCA = "CHAVE_ID_MARCA";
-        
+
         private enum Estado : byte
         {
             Novo,
@@ -64,34 +64,30 @@ namespace MP.Client.MP
             marca.DescricaoDaMarca = txtNomeDaMarca.Text;
 
             if (!string.IsNullOrEmpty(imgImagemMarca.ImageUrl))
-            {
                 marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
-            }
             else
-            {
                 marca.ImagemDaMarca = UtilidadesWeb.URL_IMAGEM_SEM_FOTO_MARCA;
-            }
 
-            //marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
             marca.NCL = NCL.ObtenhaPorCodigo(ctrlNCL.Codigo);
             marca.Natureza = NaturezaDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
 
             marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
             marca.ObservacaoDaMarca = txtObservacao.Text;
 
-            marca.PagaManutencao = rblPagaManutencao.SelectedValue.Equals("1");
+            if (rblPagaManutencao.SelectedValue.Equals("1"))
+            {
+                var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
 
-            if (!string.IsNullOrEmpty(ctrlPeriodo.Codigo))
-                marca.Periodo = ctrlPeriodo.Codigo;
-            
-            if (!string.IsNullOrEmpty(ctrlMes.Codigo))
-                marca.Mes = ctrlMes.Codigo;
+                manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(rblFormaDeCobranca.SelectedValue);
+                manutencao.Periodo = ctrlPeriodo.PeriodoSelecionado;
 
-            if (!string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
-                marca.FormaDeCobranca = rblFormaDeCobranca.SelectedValue;
+                if (!string.IsNullOrEmpty(ctrlMes.Codigo))
+                    manutencao.MesQueIniciaCobranca = Mes.ObtenhaPorCodigo(Convert.ToInt32(ctrlMes.Codigo));
 
-            if (!string.IsNullOrEmpty(txtValor.Text))
-                marca.ValorDeCobranca = Convert.ToDouble(txtValor.Text);
+                manutencao.ValorDeCobranca = Convert.ToDouble(txtValor.Text);
+
+                marca.Manutencao = manutencao;
+            }
 
             marca.AdicioneRadicaisMarcas((IList<IRadicalMarcas>)ViewState[CHAVE_RADICAIS]);
 
@@ -126,14 +122,16 @@ namespace MP.Client.MP
             rblPagaManutencao.Items.Add(new ListItem("  Sim  ", "1"));
             rblPagaManutencao.Items.Add(new ListItem("  Não", "0"));
             rblPagaManutencao.SelectedValue = "0";
-            
+
             pnlDadosDaManutencao.Visible = false;
 
             rblFormaDeCobranca.Items.Clear();
-            rblFormaDeCobranca.Items.Add(new ListItem("% Salário mínimo:   ", "S"));
-            rblFormaDeCobranca.Items.Add(new ListItem("   Valor em R$:", "R"));
-            txtValor.Visible = false;
-            lblValor.Visible = false;
+
+            foreach (var formaDeCobranca in FormaCobrancaManutencao.ObtenhaTodas())
+                rblFormaDeCobranca.Items.Add(new ListItem(formaDeCobranca.Descricao, formaDeCobranca.Codigo));
+
+            rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
+            pnlMesDeCobrança.Visible = false;
         }
 
         private void MostreMarcas(IMarcas marca)
@@ -162,40 +160,28 @@ namespace MP.Client.MP
             txtObservacao.Text = marca.ObservacaoDaMarca;
 
             if (string.IsNullOrEmpty(marca.ImagemDaMarca))
-            {
                 imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO_MARCA;
-            }
             else
-            {
-               imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
-            }
+                imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
 
-            rblPagaManutencao.SelectedValue = marca.PagaManutencao ? "1" : "0";
+            rblPagaManutencao.SelectedValue = marca.Manutencao != null ? "1" : "0";
 
-            if (marca.PagaManutencao)
+            if (marca.Manutencao != null)
             {
                 pnlDadosDaManutencao.Visible = true;
 
-                if (!string.IsNullOrEmpty(marca.Periodo))
-                    ctrlPeriodo.Codigo = marca.Periodo;
+                ctrlPeriodo.Codigo = marca.Manutencao.Periodo.Codigo.ToString();
+                ctrlPeriodo.PeriodoSelecionado = marca.Manutencao.Periodo;
 
-                if (!string.IsNullOrEmpty(marca.Mes))
+                if (marca.Manutencao.MesQueIniciaCobranca != null)
                 {
-                    ctrlMes.Visible = true;
-                    lblMes.Visible = true;
-                    ctrlMes.Codigo = marca.Mes;
+                    pnlMesDeCobrança.Visible = true;
+                    ctrlMes.Codigo = marca.Manutencao.MesQueIniciaCobranca.Codigo.ToString();
                 }
-                    
 
-                if (!string.IsNullOrEmpty(marca.FormaDeCobranca))
-                {
-                    txtValor.Visible = true;
+                rblFormaDeCobranca.SelectedValue = marca.Manutencao.FormaDeCobranca.Codigo;
+                txtValor.Text = marca.Manutencao.ValorDeCobranca.ToString();
 
-                    rblFormaDeCobranca.SelectedValue = marca.FormaDeCobranca;
-
-                    if (marca.ValorDeCobranca > 0)
-                        txtValor.Text = marca.ValorDeCobranca.ToString();
-                }
             }
 
             IList<IRadicalMarcas> listaDeRadicalMarcas = new List<IRadicalMarcas>();
@@ -221,10 +207,10 @@ namespace MP.Client.MP
             LimpaTela();
 
             txtDataDeDeposito.Enabled = FabricaDeContexto.GetInstancia().GetContextoAtual().EstaAutorizado("OPE.MP.007.0004");
-            
-            
+
+
             IProcessoDeMarca processoDeMarca = null;
-            
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                 processoDeMarca = servico.Obtenha(id);
 
@@ -250,9 +236,9 @@ namespace MP.Client.MP
 
             if (processoDeMarca.Despacho != null)
                 MostreDespacho(processoDeMarca.Despacho);
-        
+
             txtTextoComplementarDoDespacho.Text = processoDeMarca.TextoComplementarDoDespacho;
-            
+
             if (processoDeMarca.Procurador != null)
             {
                 ctrlProcurador.ProcuradorSelecionado = processoDeMarca.Procurador;
@@ -319,7 +305,7 @@ namespace MP.Client.MP
 
             if (!ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                 processoDeMarca.IdProcessoDeMarca = Convert.ToInt64(ViewState[CHAVE_ID_PROCESSO_DE_MARCA]);
-            
+
             processoDeMarca.Processo = Convert.ToInt64(txtProcesso.Text);
             processoDeMarca.DataDoCadastro = txtDataDeCadastro.SelectedDate.Value;
             processoDeMarca.DataDoDeposito = txtDataDeDeposito.SelectedDate;
@@ -333,7 +319,7 @@ namespace MP.Client.MP
             processoDeMarca.Apostila = txtApostila.Text;
 
             processoDeMarca.Marca = MontaObjetoMarca();
-            
+
             return processoDeMarca;
         }
 
@@ -344,17 +330,35 @@ namespace MP.Client.MP
             if (string.IsNullOrEmpty(txtNomeDaMarca.Text)) inconsitencias.Add("É necessário informar o nome da marca.");
 
             if (string.IsNullOrEmpty(ctrlNCL.Codigo)) inconsitencias.Add("É necessário informar a classificação.");
-            
+
             if (string.IsNullOrEmpty(ctrlNatureza.Codigo)) inconsitencias.Add("É necessário informar a natureza.");
-            
+
             if (string.IsNullOrEmpty(ctrlApresentacao.Codigo)) inconsitencias.Add("É necessário informar a apresentação.");
-            
+
             if (ctrlCliente.ClienteSelecionado == null) inconsitencias.Add("É necessário informar o cliente.");
-            
+
             if (!txtProcesso.Value.HasValue) inconsitencias.Add("É necessário informar número do processo.");
-            
-            if (rblProcessoEhDeTerceiro.SelectedValue == "1" && ctrlProcurador.ProcuradorSelecionado == null ) inconsitencias.Add("É necessário informar um procurador.");
-            
+
+            if (rblProcessoEhDeTerceiro.SelectedValue == "1" && ctrlProcurador.ProcuradorSelecionado == null) inconsitencias.Add("É necessário informar um procurador.");
+
+            if (rblPagaManutencao.SelectedValue == "1")
+            {
+                if (string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
+                    inconsitencias.Add("É necessário informar a forma de cobrança.");
+
+                if (ctrlPeriodo.PeriodoSelecionado == null)
+                    inconsitencias.Add("É necessário informar o período de cobrança.");
+
+                if (string.IsNullOrEmpty(txtValor.Text))
+                    inconsitencias.Add("É necessário informar o valor de cobrança.");
+
+                if (Util.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
+                {
+                    if (string.IsNullOrEmpty(ctrlMes.Codigo))
+                        inconsitencias.Add("É necessário informar o mês de início de cobrança.");
+                }
+            }
+
             return inconsitencias;
 
         }
@@ -547,33 +551,17 @@ namespace MP.Client.MP
             }
         }
 
-        protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
-        {
-            var rblFormaDeCobranca = sender as RadioButtonList;
-
-            if (rblFormaDeCobranca != null && !string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
-            {
-                lblValor.Visible = true;
-                txtValor.Visible = true;
-            }
-        }
-
+      
         private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
         {
-            if(periodo != null)
+            if (Util.PeriodoEhTrimestreSemestreOuAnual(periodo))
+                pnlMesDeCobrança.Visible = true;
+            else
             {
-                if (periodo.Codigo.Equals(4) || periodo.Codigo.Equals(5) || periodo.Codigo.Equals(6))
-                {
-                    lblMes.Visible = true;
-                    ctrlMes.Visible = true;
-                }
-                else
-                {
-                    lblMes.Visible = false;
-                    ctrlMes.Visible = false;
-                    ctrlMes.Inicializa();
-                }
+                pnlMesDeCobrança.Visible = false;
+                ctrlMes.Inicializa();
             }
+
         }
     }
 }

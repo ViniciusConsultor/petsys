@@ -249,75 +249,19 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
-
-        public bool PagaManutencao
+        public IManutencao Manutencao
         {
             get
             {
                 if (_objetoReal == null) CarregueObjetoReal();
-                return _objetoReal.PagaManutencao;
+                return _objetoReal.Manutencao;
             }
             set
             {
                 if (_objetoReal == null) CarregueObjetoReal();
-                _objetoReal.PagaManutencao = value;
+                _objetoReal.Manutencao = value;
             }
         }
 
-        public Periodo Periodo
-        {
-            get
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                return _objetoReal.Periodo;
-            }
-            set
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                _objetoReal.Periodo = value;
-            }
-        }
-
-        public string Mes
-        {
-            get
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                return _objetoReal.Mes;
-            }
-            set
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                _objetoReal.Mes = value;
-            }
-        }
-
-        public string FormaDeCobranca
-        {
-            get
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                return _objetoReal.FormaDeCobranca;
-            }
-            set
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                _objetoReal.FormaDeCobranca = value;
-            }
-        }
-
-        public double ValorDeCobranca
-        {
-            get
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                return _objetoReal.ValorDeCobranca;
-            }
-            set
-            {
-                if (_objetoReal == null) CarregueObjetoReal();
-                _objetoReal.ValorDeCobranca = value;
-            }
-        }
     }
 }

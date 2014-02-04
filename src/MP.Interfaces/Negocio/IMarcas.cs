@@ -22,13 +22,7 @@ namespace MP.Interfaces.Negocio
         Nullable<int> CodigoDaSubClasse2 { get; set; }
         Nullable<int> CodigoDaSubClasse3 { get; set; }
         IList<IRadicalMarcas> RadicalMarcas { get; set; }
-        bool PagaManutencao { get; set; }
-        string Periodo { get; set; }
-        string FormaDeCobranca { get; set; }
-        double ValorDeCobranca { get; set; }
-        string Mes { get; set; }
-
-
+        IManutencao Manutencao { get; set; }
         void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas);
         void AdicioneRadicaisMarcas(IList<IRadicalMarcas> listaRadicalMarcas);
     }
