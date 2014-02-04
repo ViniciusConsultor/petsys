@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Compartilhados.Interfaces.Core.Negocio;
 
 namespace MP.Interfaces.Negocio
 {
@@ -23,5 +24,6 @@ namespace MP.Interfaces.Negocio
         IPCT PCT { get; set; }
         IDespachoDePatentes Despacho { get; set; }
         IPasta Pasta { get; set; }
+        IPais Pais { get; set; }
     }
 }

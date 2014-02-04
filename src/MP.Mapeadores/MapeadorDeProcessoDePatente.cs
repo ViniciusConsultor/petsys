@@ -30,7 +30,7 @@ namespace MP.Mapeadores
             sql.Append("INSERT INTO MP_PROCESSOPATENTE (");
             sql.Append("IDPROCESSOPATENTE, IDPATENTE, PROCESSO,");
             sql.Append("DATADECADASTRO, DATADEPUBLICACAO,  DATADEDEPOSITO, DATADECONCESSAO, DATADEEXAME, PROCESSODETERCEIRO, ");
-            sql.Append("IDPROCURADOR, EHESTRANGEIRO, NUMEROPCT, NUMEROWO, DATAPUBLICACAOPCT, DATADEPOSITOPCT, IDDESPACHO, IDPASTA, ATIVO)");
+            sql.Append("IDPROCURADOR, EHESTRANGEIRO, NUMEROPCT, NUMEROWO, DATAPUBLICACAOPCT, DATADEPOSITOPCT, IDDESPACHO, IDPASTA, ATIVO, PAIS)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(processoDePatente.IdProcessoDePatente.Value, ", "));
             sql.Append(String.Concat(processoDePatente.Patente.Identificador, ", "));
@@ -89,7 +89,8 @@ namespace MP.Mapeadores
                            ? string.Concat(processoDePatente.Pasta.ID.Value.ToString(), ", ")
                            : "NULL, ");
 
-            sql.Append(processoDePatente.Ativo ? "'1')" : "'0')");
+            sql.Append(processoDePatente.Ativo ? "'1'," : "'0',");
+            sql.Append(processoDePatente.Pais != null ? processoDePatente.Pais.ID.ToString() : "NULL");
             
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -156,7 +157,8 @@ namespace MP.Mapeadores
                            ? string.Concat("IDPASTA = ", processoDePatente.Pasta.ID.Value.ToString(), ", ")
                            : "IDPASTA = NULL, ");
 
-            sql.Append("ATIVO = " + (processoDePatente.Ativo ? "1" : "0"));
+            sql.Append("ATIVO = " + (processoDePatente.Ativo ? "1, " : "0, "));
+            sql.Append("PAIS = " + (processoDePatente.Pais != null ? processoDePatente.Pais.ID.ToString() : "NULL"));
             sql.Append(" WHERE IDPROCESSOPATENTE = " + processoDePatente.IdProcessoDePatente);
 
             DBHelper.ExecuteNonQuery(sql.ToString());
@@ -213,6 +215,7 @@ namespace MP.Mapeadores
             processo.DataDaConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DATADECONCESSAO");
             processo.DataDoExame = UtilidadesDePersistencia.getValorDate(leitor, "DATADEEXAME");
             processo.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSODETERCEIRO");
+            processo.Pais = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IPaisLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "PAIS"));
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "IDPROCURADOR"))
             {
@@ -361,8 +364,8 @@ namespace MP.Mapeadores
             sql.AppendLine("MP_PROCESSOPATENTE.DATADEPUBLICACAO, MP_PROCESSOPATENTE.DATADEDEPOSITO, MP_PROCESSOPATENTE.DATADECONCESSAO, MP_PROCESSOPATENTE.DATADEEXAME, ");
             sql.AppendLine("MP_PROCESSOPATENTE.DATADECADASTRO, MP_PROCESSOPATENTE.PROCESSODETERCEIRO, MP_PROCESSOPATENTE.IDPROCURADOR, ");
             sql.AppendLine("MP_PROCESSOPATENTE.EHESTRANGEIRO, MP_PROCESSOPATENTE.NUMEROPCT, MP_PROCESSOPATENTE.NUMEROWO, MP_PROCESSOPATENTE.DATAPUBLICACAOPCT, ");
-            sql.AppendLine("MP_PROCESSOPATENTE.DATADEPOSITOPCT, MP_PROCESSOPATENTE.IDDESPACHO, MP_PROCESSOPATENTE.ATIVO, MP_PROCESSOPATENTE.IDPASTA IDPASTA, MP_PASTA.NOME NOMEPASTA,");
-            sql.AppendLine("MP_PASTA.CODIGO CODIGOPASTA, MP_PATENTE.IDPATENTE ");
+            sql.AppendLine("MP_PROCESSOPATENTE.DATADEPOSITOPCT, MP_PROCESSOPATENTE.IDDESPACHO, MP_PROCESSOPATENTE.ATIVO, MP_PROCESSOPATENTE.PAIS, ");
+            sql.AppendLine("MP_PROCESSOPATENTE.IDPASTA IDPASTA, MP_PASTA.NOME NOMEPASTA, MP_PASTA.CODIGO CODIGOPASTA, MP_PATENTE.IDPATENTE ");
             sql.AppendLine(" FROM MP_PROCESSOPATENTE");
             sql.AppendLine(" INNER JOIN MP_PATENTE ON MP_PATENTE.IDPATENTE = MP_PROCESSOPATENTE.IDPATENTE");
             sql.AppendLine(" LEFT JOIN MP_PASTA ON MP_PASTA.ID = MP_PROCESSOPATENTE.IDPASTA");
@@ -395,8 +398,8 @@ namespace MP.Mapeadores
             sql.AppendLine("MP_PROCESSOPATENTE.DATADEPUBLICACAO, MP_PROCESSOPATENTE.DATADEDEPOSITO, MP_PROCESSOPATENTE.DATADECONCESSAO, MP_PROCESSOPATENTE.DATADEEXAME, ");
             sql.AppendLine("MP_PROCESSOPATENTE.DATADECADASTRO, MP_PROCESSOPATENTE.PROCESSODETERCEIRO, MP_PROCESSOPATENTE.IDPROCURADOR, ");
             sql.AppendLine("MP_PROCESSOPATENTE.EHESTRANGEIRO, MP_PROCESSOPATENTE.NUMEROPCT, MP_PROCESSOPATENTE.NUMEROWO, MP_PROCESSOPATENTE.DATAPUBLICACAOPCT, ");
-            sql.AppendLine("MP_PROCESSOPATENTE.DATADEPOSITOPCT, MP_PROCESSOPATENTE.IDDESPACHO, MP_PROCESSOPATENTE.ATIVO, MP_PROCESSOPATENTE.IDPASTA, MP_PASTA.NOME NOMEPASTA,");
-            sql.AppendLine("MP_PATENTE.IDPATENTE, MP_PASTA.CODIGO CODIGOPASTA ");
+            sql.AppendLine("MP_PROCESSOPATENTE.DATADEPOSITOPCT, MP_PROCESSOPATENTE.IDDESPACHO, MP_PROCESSOPATENTE.ATIVO, MP_PROCESSOPATENTE.PAIS, ");
+            sql.AppendLine("MP_PROCESSOPATENTE.IDPASTA IDPASTA, MP_PASTA.NOME NOMEPASTA, MP_PASTA.CODIGO CODIGOPASTA, MP_PATENTE.IDPATENTE ");
             sql.AppendLine(" FROM MP_PROCESSOPATENTE");
             sql.AppendLine(" INNER JOIN MP_PATENTE ON MP_PATENTE.IDPATENTE = MP_PROCESSOPATENTE.IDPATENTE");
             sql.AppendLine(" LEFT JOIN MP_PASTA ON MP_PASTA.ID = MP_PROCESSOPATENTE.IDPASTA");

@@ -55,8 +55,12 @@
                                             <asp:Label ID="Label1" runat="server" Text="Processo"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtProcesso" runat="server" Width="87px">
-                                            </telerik:RadTextBox>
+                                            <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64" Type="Number" Width="10%" MaxLength="8">
+                                                <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
+                                                </NumberFormat>
+                                            </telerik:RadNumericTextBox>
+                                            <%--<telerik:RadTextBox ID="txtProcesso" runat="server" Width="87px">
+                                            </telerik:RadTextBox>--%>
                                         </td>
                                     </tr>
                                     <tr>
@@ -148,6 +152,19 @@
                                         </td>
                                         <td class="td">
                                             <uc5:ctrlNaturezaPatente ID="ctrlNaturezaPatente" runat="server" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblPais" runat="server" Text="País" />
+                                        </td>
+                                        <td class="td">
+                                            <uc9:ctrlPais ID="ctrlPaisProcesso" runat="server" />
                                         </td>
                                     </tr>
                                     <tr>
