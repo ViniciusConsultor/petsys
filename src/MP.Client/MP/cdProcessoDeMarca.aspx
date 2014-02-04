@@ -47,88 +47,53 @@
                                         <td class="th3">
                                             <asp:Label ID="Label9" runat="server" Text="Nome"></asp:Label>
                                         </td>
-                                        <td class="td">
+                                        <td class="td" colspan="3">
                                             <telerik:RadTextBox ID="txtNomeDaMarca" runat="server" MaxLength="255" Width="450px">
                                             </telerik:RadTextBox>
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
+                                        </td>                                        
                                     </tr>
                                     <tr>
                                         <td class="th3">
                                             <asp:Label ID="Label1" runat="server" Text="Processo"></asp:Label>
                                         </td>
-                                        <td class="td">
+                                        <td class="td" colspan="3">
                                             <telerik:RadNumericTextBox ID="txtProcesso" runat="server" Width="87px" Type="Number">
                                                 <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
                                                 </NumberFormat>
                                             </telerik:RadNumericTextBox>
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
+                                        </td>                                        
                                     </tr>
                                     <tr>
                                         <td class="th3">
                                             <asp:Label ID="Label18" runat="server" Text="Cliente"></asp:Label>
                                         </td>
-                                        <td class="td">
+                                        <td class="td" colspan="3">
                                             <uc5:ctrlCliente ID="ctrlCliente" runat="server" />
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="th3">
                                             <asp:Label ID="Label19" runat="server" Text="Apresentação"></asp:Label>
                                         </td>
-                                        <td class="td">
+                                        <td class="td" colspan="3">
                                             <uc4:ctrlApresentacao ID="ctrlApresentacao" runat="server" />
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="th3">
                                             <asp:Label ID="Label20" runat="server" Text="Natureza"></asp:Label>
                                         </td>
-                                        <td class="td">
+                                        <td class="td" colspan="3">
                                             <uc6:ctrlNaturezaDeMarca ID="ctrlNatureza" runat="server" />
                                         </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
-                                        <td class="td">
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                    </table>
-                                    <table class="Tabela">                                        
-                                        <tr>
+                                    </tr>                                       
+                                    <tr>
                                             <td class="th3">                                             
                                             <asp:Label ID="Label12" runat="server" Text="Está ativo?"></asp:Label>
                                             </td>
                                             <td class="td">
                                                 <asp:RadioButtonList ID="rblEstaAtivo" runat="server" RepeatDirection="Horizontal">
                                                 </asp:RadioButtonList>
-                                            </td>
-                                             <td class="td">
-                                                 &nbsp;
                                             </td>
                                             <td class="th3" rowspan="5">
                                                 <asp:Label ID="Label253" runat="server" Text="Imagem da marca"></asp:Label>
