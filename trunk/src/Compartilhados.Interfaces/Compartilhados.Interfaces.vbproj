@@ -88,6 +88,7 @@
     <Compile Include="Core\Negocio\Documento\IInscricaoMunicipal.vb" />
     <Compile Include="Core\Negocio\EstadoCivil.vb" />
     <Compile Include="Core\Negocio\GrauDeInstrucao.vb" />
+    <Compile Include="Core\Negocio\ICedente.vb" />
     <Compile Include="Core\Negocio\ICliente.vb" />
     <Compile Include="Core\Negocio\Documento\ICPF.vb" />
     <Compile Include="Core\Negocio\Documento\IDocumento.vb" />
@@ -144,6 +145,7 @@
     <Compile Include="Core\Negocio\UF.vb" />
     <Compile Include="Core\Servicos\IServicoDeAgenda.vb" />
     <Compile Include="Core\Servicos\IServicoDeBancosEAgencias.vb" />
+    <Compile Include="Core\Servicos\IServicoDeCedente.vb" />
     <Compile Include="Core\Servicos\IServicoDeCliente.vb" />
     <Compile Include="Core\Servicos\IServicoDeConfiguracoesDoSistema.vb" />
     <Compile Include="Core\Servicos\IServicoDeEmpresa.vb" />

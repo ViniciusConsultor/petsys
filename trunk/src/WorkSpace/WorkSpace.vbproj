@@ -105,6 +105,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ctrlCedente.ascx" />
     <Content Include="ctrlCliente.ascx" />
     <Content Include="ctrlOperacaoFiltro.ascx" />
     <Content Include="ctrlPais.ascx" />
@@ -1088,6 +1089,7 @@
     <Content Include="Logout.aspx" />
     <Content Include="naoautenticado.html" />
     <Content Include="naoautorizado.html" />
+    <Content Include="Nucleo\cdCedente.aspx" />
     <Content Include="Nucleo\cdEmpresa.aspx" />
     <Content Include="Nucleo\cdGrupoDeAtividade.aspx" />
     <Content Include="Nucleo\cdPaises.aspx" />
@@ -1101,6 +1103,13 @@
   <ItemGroup>
     <Compile Include="AsyncUploadHandlerCustom.ashx.vb">
       <DependentUpon>AsyncUploadHandlerCustom.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlCedente.ascx.designer.vb">
+      <DependentUpon>ctrlCedente.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlCedente.ascx.vb">
+      <DependentUpon>ctrlCedente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ctrlCliente.ascx.designer.vb">
       <DependentUpon>ctrlCliente.ascx</DependentUpon>
@@ -1191,6 +1200,13 @@
     </Compile>
     <Compile Include="Nucleo\cdBancosEAgencias.aspx.vb">
       <DependentUpon>cdBancosEAgencias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\cdCedente.aspx.designer.vb">
+      <DependentUpon>cdCedente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\cdCedente.aspx.vb">
+      <DependentUpon>cdCedente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\cdCompromisso.aspx.designer.vb">
