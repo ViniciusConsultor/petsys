@@ -164,6 +164,7 @@ namespace MP.Client.MP
                 txtDataDoDepositoPCT.SelectedDate = processoDePatente.PCT.DataDoDeposito;
             }
 
+            ctrlPaisProcesso.PaisSelecionado = processoDePatente.Pais;
             ExibaPatenteSelecionada(processoDePatente.Patente);
         }
 
@@ -275,6 +276,7 @@ namespace MP.Client.MP
             rblFormaDeCobranca.Items.Add(new ListItem("   Valor em R$:", "R"));
             txtValor.Visible = false;
             lblValor.Visible = false;
+            ctrlPaisProcesso.PaisSelecionado = null;
         }
 
         private void MostraPCT(bool mostra)
@@ -303,6 +305,7 @@ namespace MP.Client.MP
             processoDePatente.Ativo = rblEstaAtivo.SelectedValue != "0";
             processoDePatente.Despacho = ctrlDespachoDePatentes.DespachoDePatentesSelecionada;
             processoDePatente.Pasta = ctrlPasta.PastaSelecionada;
+            processoDePatente.Pais = ctrlPaisProcesso.PaisSelecionado;
 
             if (rblEHPCT.SelectedValue != "0")
             {
