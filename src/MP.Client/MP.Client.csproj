@@ -54,10 +54,6 @@
       <HintPath>..\..\bin\Compartilhados.Componentes.Web.dll</HintPath>
     </Reference>
     <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
-    <Reference Include="HtmlRenderer, Version=1.4.12.0, Culture=neutral, PublicKeyToken=0ceb411f7492f8be, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\HtmlRenderer.dll</HintPath>
-    </Reference>
     <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\itextsharp.dll</HintPath>

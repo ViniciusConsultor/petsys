@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Servicos;
 
 namespace MP.Negocio
 {
@@ -13,11 +15,23 @@ namespace MP.Negocio
         public FormaCobrancaManutencao FormaDeCobranca { get; set; }
         public double ValorDeCobranca { get; set; }
         public Mes MesQueIniciaCobranca { get; set; }
+        
         public double ObtenhaValorRealEmEspecie()
         {
             if (FormaDeCobranca.Equals(FormaCobrancaManutencao.ValorFixo)) return ValorDeCobranca;
+            
+            IConfiguracaoDeModulo configuracaoDeModulo;
 
-            //TODO: Aqui faz o calculo buscando o valor do SM
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeConfiguracoesDoModulo>())
+                configuracaoDeModulo = servico.ObtenhaConfiguracao();
+
+            if (configuracaoDeModulo != null && configuracaoDeModulo.ConfiguracaoDeIndicesFinanceiros !=null) 
+            {
+                var valorSalarioMinimoVigente = configuracaoDeModulo.ConfiguracaoDeIndicesFinanceiros.ValorDoSalarioMinimo ;
+             
+                if (valorSalarioMinimoVigente.HasValue)
+                    return ValorDeCobranca * valorSalarioMinimoVigente.Value;
+            }
             return 0;
         }
     }

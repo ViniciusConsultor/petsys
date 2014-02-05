@@ -135,8 +135,7 @@ namespace MP.Servicos.Local
             var ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
 
             DateTime? dataDoUltimoLancamento = null;
-            DateTime? dataPrimeiraProrrogacao = null;
-
+            
             for (int i = 1; i <= 4; i++)
             {
                 var anuidadeDaPatente = FabricaGenerica.GetInstancia().CrieObjeto<IAnuidadePatente>();

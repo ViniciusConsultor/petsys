@@ -23,7 +23,7 @@
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Cliente" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Cedente" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />

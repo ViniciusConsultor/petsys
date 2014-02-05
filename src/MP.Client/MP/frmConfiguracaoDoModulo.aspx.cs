@@ -69,8 +69,6 @@ namespace MP.Client.MP
 
         private IConfiguracaoDeIndicesFinanceiros ObtenhaConfiguracaoDeIndiceFinanceiro()
         {
-            if (!txtValorSalarioMinimo.Value.HasValue) return null;
-
             var configuracao = FabricaGenerica.GetInstancia().CrieObjeto<IConfiguracaoDeIndicesFinanceiros>();
 
             configuracao.ValorDoSalarioMinimo = txtValorSalarioMinimo.Value;
@@ -80,8 +78,6 @@ namespace MP.Client.MP
 
         private IConfiguracaoDeBoletoBancario ObtenhaConfiguracaoDeBoletoBancario()
         {
-            if (ctrlCedente.CedenteSelecionado == null) return null;
-
             var configuracao = FabricaGenerica.GetInstancia().CrieObjeto<IConfiguracaoDeBoletoBancario>();
 
             configuracao.Cedente = ctrlCedente.CedenteSelecionado;
