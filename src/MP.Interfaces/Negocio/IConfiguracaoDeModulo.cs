@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MP.Interfaces.Negocio
 {
-    interface IConfiguracaoDeModulo
+    public interface IConfiguracaoDeModulo
     {
         IConfiguracaoDeBoletoBancario ConfiguracaoDeBoletoBancario { get; set; }
         IConfiguracaoDeIndicesFinanceiros ConfiguracaoDeIndicesFinanceiros { get; set; }

@@ -279,6 +279,13 @@
     <Compile Include="MP\frmBoletoBancarioCEF.aspx.designer.cs">
       <DependentUpon>frmBoletoBancarioCEF.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmConfiguracaoDoModulo.aspx.cs">
+      <DependentUpon>frmConfiguracaoDoModulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmConfiguracaoDoModulo.aspx.designer.cs">
+      <DependentUpon>frmConfiguracaoDoModulo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.cs">
       <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -391,6 +398,7 @@
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\ctrlTitular.ascx" />
     <Content Include="MP\frmBoletoBancarioCEF.aspx" />
+    <Content Include="MP\frmConfiguracaoDoModulo.aspx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
     <Content Include="MP\frmEnviaEmail.aspx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />

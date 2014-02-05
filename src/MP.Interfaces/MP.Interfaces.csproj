@@ -145,6 +145,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeBoletosGerados.cs" />
     <Compile Include="Servicos\IServicoDeBoletosGeradosAux.cs" />
+    <Compile Include="Servicos\IServicoDeConfiguracoesDoModulo.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDePatentes.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />

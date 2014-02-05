@@ -63,6 +63,9 @@
     <Compile Include="BoletosGeradosAux.cs" />
     <Compile Include="ClasseNacional.cs" />
     <Compile Include="ClasseViena.cs" />
+    <Compile Include="ConfiguracaoDeBoletoBancario.cs" />
+    <Compile Include="ConfiguracaoDeIndicesFinanceiros.cs" />
+    <Compile Include="ConfiguracaoDeModulo.cs" />
     <Compile Include="DespachoDeMarcas.cs" />
     <Compile Include="DespachoDePatentes.cs" />
     <Compile Include="Filtros\Marcas\FiltroLeituraDeRevistaDeMarcas.cs" />
