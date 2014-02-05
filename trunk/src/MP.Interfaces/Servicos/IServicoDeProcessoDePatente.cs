@@ -21,5 +21,6 @@ namespace MP.Interfaces.Servicos
         IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
         IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
         IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado();
+        IList<IProcessoDePatente> ObtenhaTodosProcessosCadastrados();
     }
 }

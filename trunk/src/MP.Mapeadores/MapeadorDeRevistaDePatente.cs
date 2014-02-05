@@ -57,7 +57,8 @@ namespace MP.Mapeadores
                            ? String.Concat(processoDaRevistaDePatente.DataDeDeposito.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroDoPedido)
-                           ? String.Concat(UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoPedido), ", ") : "NULL, ");
+                           ? String.Concat(UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoPedido.Length == 15 ?
+                           processoDaRevistaDePatente.NumeroDoPedido.Remove(0, 4) : processoDaRevistaDePatente.NumeroDoPedido), ", ") : "NULL, ");
 
                 sql.Append(processoDaRevistaDePatente.DataDaPublicacaoDoPedido.HasValue
                            ? String.Concat(processoDaRevistaDePatente.DataDaPublicacaoDoPedido.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
@@ -135,7 +136,8 @@ namespace MP.Mapeadores
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.Recorrente), "', ") : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroDoProcesso)
-                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoProcesso), "', ") : "NULL, ");
+                           ? String.Concat(UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoProcesso.Length == 15 ?
+                           processoDaRevistaDePatente.NumeroDoProcesso.Remove(0, 4) : processoDaRevistaDePatente.NumeroDoProcesso), ", ") : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.Cedente)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.Cedente), "', ") : "NULL, ");

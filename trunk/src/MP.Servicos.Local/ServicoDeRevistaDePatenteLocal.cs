@@ -85,18 +85,33 @@ namespace MP.Servicos.Local
 
             if (listaDeRevistasDePatentes.Count > 0)
             {
-                IList<string> listaDeNumerosDeProcessosCadastrados = new List<string>();
+                IList<IProcessoDePatente> processosCadastrados = new List<IProcessoDePatente>();
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                 {
-                    listaDeNumerosDeProcessosCadastrados = servico.ObtenhaTodosNumerosDeProcessosCadastrados();
+                    processosCadastrados = servico.ObtenhaTodosProcessosCadastrados();
 
                     foreach (IRevistaDePatente processo in listaDeRevistasDePatentes)
                     {
-                        if (processo.NumeroDoProcesso != null && listaDeNumerosDeProcessosCadastrados.Contains(processo.NumeroDoProcesso.Replace("-", "")))
+                        bool verificaSeProcessoExiste = false;
+
+                        if (processo != null && processo.NumeroDoProcesso != null)
+                        {
+                            processo.NumeroDoProcesso = processo.NumeroDoProcesso.Replace("-", string.Empty);
+
+                            if(processo.NumeroDoProcesso.Length == 15)
+                                verificaSeProcessoExiste = processosCadastrados.ToList().Find(processoDePatente => processoDePatente.Pais != null && processoDePatente.Patente != null &&
+                                    (processoDePatente.Pais.Sigla + processoDePatente.Patente.NaturezaPatente.SiglaNatureza + processoDePatente.Processo) == processo.NumeroDoProcesso) != null;
+                            else
+                                verificaSeProcessoExiste = processosCadastrados.ToList().Find(processoDePatente => processoDePatente.Processo == processo.NumeroDoProcesso) != null;
+                        }
+
+                        if (verificaSeProcessoExiste)
                         {
                             var revistaASerSalva = processo;
-                            var processoDePatenteExistente = servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso);
+                            var processoDePatenteExistente = processo.NumeroDoProcesso.Length == 15 ? 
+                                servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso.Remove(0, 4)) :
+                                servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso);
 
                             if(processoDePatenteExistente != null && processoDePatenteExistente.IdProcessoDePatente != null)
                             {
@@ -486,11 +501,11 @@ namespace MP.Servicos.Local
                 {
                     if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("BR"))
                     {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 14).Replace("-", "").Replace(" ", "");
-                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Substring(5, 14).Replace("-", "").Replace(" ", "");
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Replace("-", "").Replace(" ", "");
+                        revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Replace("-", "").Replace(" ", "");
 
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
-                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(3, 2);
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(2, 2);
                     }
                     else
                     {
@@ -514,11 +529,11 @@ namespace MP.Servicos.Local
                 {
                     if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
                     {
-                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Substring(5, 14).Replace("-", "").Replace(" ", "");
-                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Substring(5, 14).Replace("-", "").Replace(" ", "");
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Replace("-", "").Replace(" ", "");
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido.Replace("-", "").Replace(" ", "");
 
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
-                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(3, 2);
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido.Substring(2, 2);
                     }
                     else
                     {
