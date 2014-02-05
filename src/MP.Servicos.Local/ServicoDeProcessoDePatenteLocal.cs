@@ -231,5 +231,20 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public IList<IProcessoDePatente> ObtenhaTodosProcessosCadastrados()
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+
+            try
+            {
+                return mapeador.ObtenhaTodosProcessosCadastrados();
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

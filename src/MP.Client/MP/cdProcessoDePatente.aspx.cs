@@ -126,11 +126,11 @@ namespace MP.Client.MP
         {
             ViewState[CHAVE_ID_PROCESSO_DE_PATENTE] = processoDePatente.IdProcessoDePatente;
             txtProcesso.Text = processoDePatente.Processo;
-            txtDataDeCadastro.SelectedDate = processoDePatente.DataDoCadastro;
-            txtDataDeConcessao.SelectedDate = processoDePatente.DataDaConcessao;
-            txtDataDePublicacao.SelectedDate = processoDePatente.DataDaPublicacao;
-            txtDataDoDeposito.SelectedDate = processoDePatente.DataDoDeposito;
-            txtDataDaVigencia.SelectedDate = processoDePatente.DataDaVigencia;
+            txtDataDeCadastro.SelectedDate = processoDePatente.DataDoCadastro != DateTime.MinValue ? processoDePatente.DataDoCadastro : (DateTime?) null;
+            txtDataDeConcessao.SelectedDate = processoDePatente.DataDaConcessao != DateTime.MinValue ? processoDePatente.DataDaConcessao : null;
+            txtDataDePublicacao.SelectedDate = processoDePatente.DataDaPublicacao != DateTime.MinValue ? processoDePatente.DataDaPublicacao : null;
+            txtDataDoDeposito.SelectedDate = processoDePatente.DataDoDeposito != DateTime.MinValue ? processoDePatente.DataDoDeposito : null;
+            txtDataDaVigencia.SelectedDate = processoDePatente.DataDaVigencia != DateTime.MinValue ? processoDePatente.DataDaVigencia : null;
             txtDataDoExame.SelectedDate = processoDePatente.DataDoExame;
             rblProcessoEhDeTerceiro.SelectedValue = processoDePatente.ProcessoEhDeTerceiro ? "1" : "0";
 
@@ -340,6 +340,8 @@ namespace MP.Client.MP
             if (!txtDataDeCadastro.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de cadastro.");
 
             if (rblProcessoEhDeTerceiro.SelectedValue == "0" && ctrlProcurador.ProcuradorSelecionado == null) inconsitencias.Add("É necessário informar o procurador.");
+
+            if (ctrlPaisProcesso.PaisSelecionado == null) inconsitencias.Add("Informe o país no qual o processo está vinculado.");
 
             if (rblPagaManutencao.SelectedValue == "1")
             {
