@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeBoletosGerados.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoletosGeradosAux.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeConfiguracoesDoModulo.cs" />
     <Compile Include="Mapeadores\IMapeadorDeDespachoDeMarcas.cs" />
     <Compile Include="Mapeadores\IMapeadorDeDespachoDePatentes.cs" />
     <Compile Include="Mapeadores\IMapeadorDeInventor.cs" />

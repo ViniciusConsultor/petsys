@@ -108,7 +108,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat(boletoGerado.NossoNumero.Value, ", "));
             sql.Append(String.Concat(boletoGerado.Cliente.Pessoa.ID.Value, ", "));
 
-            sql.Append((boletoGerado.Valor == null || boletoGerado.Valor == 0)
+            sql.Append(boletoGerado.Valor == 0
                            ? String.Concat(0, ", ")
                            : String.Concat(boletoGerado.Valor.ToString().Replace(",", ".") + ", "));
             

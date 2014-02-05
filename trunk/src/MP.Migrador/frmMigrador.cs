@@ -856,7 +856,7 @@ namespace MP.Migrador
                         if (cpf.EhValido())
                             pessoa.AdicioneDocumento(cpf);
                     }
-                    catch (Exception ex)
+                    catch 
                     {
 
                     }
@@ -1699,7 +1699,7 @@ namespace MP.Migrador
                         if (cpf.EhValido())
                             pessoa.AdicioneDocumento(cpf);
                     }
-                    catch (Exception ex)
+                    catch 
                     {
 
                     }
@@ -1774,7 +1774,7 @@ namespace MP.Migrador
                     gruposDeAtividades.Add(grupoDeAtividade.Nome, grupoDeAtividade);
                 }
             }
-            catch (Exception ex)
+            catch 
             {
 
             }
