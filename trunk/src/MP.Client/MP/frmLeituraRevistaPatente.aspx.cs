@@ -9,6 +9,7 @@ using System.Xml;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using MP.Client.Relatorios.Patentes;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Patentes;
 using MP.Interfaces.Servicos;
@@ -495,6 +496,7 @@ namespace MP.Client.MP
                         listaDeProcessos.Add(processo.NumeroDoProcesso.Length == 15 ? servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso.Remove(0,4)) : 
                                                                                       servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso));
                 MostraProcessosDaRevista(listaDeProcessos);
+                pnlRelatorios.Visible = true;
             }
             else
             {
@@ -886,6 +888,39 @@ namespace MP.Client.MP
                                                  false);
 
                 LimpaRadicais();
+            }
+        }
+
+        protected void btnRelPublicPropriasAnalitico_OnClick(object sender, ImageClickEventArgs e)
+        {
+            if (ViewState[CHAVE_PROCESSOS_DA_REVISTA] != null)
+            {
+                IList<IProcessoDePatente> listaDeProcessos = new List<IProcessoDePatente>();
+
+                var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
+
+                listaDeProcessos = ((IList<IProcessoDePatente>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
+
+                var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos);
+                var nomeDoArquivo = gerador.GereRelatorioAnalitico(numeroDaRevistaSelecionada);
+
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
+        }
+
+        protected void btnRelPublicPropriasSintetico_OnClick(object sender, ImageClickEventArgs e)
+        {
+            if (ViewState[CHAVE_PROCESSOS_DA_REVISTA] != null)
+            {
+                IList<IProcessoDePatente> listaDeProcessos = new List<IProcessoDePatente>();
+                listaDeProcessos = ((IList<IProcessoDePatente>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
+
+                var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
+                var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos);
+                var nomeDoArquivo = gerador.GereRelatorioSintetico(numeroDaRevistaSelecionada);
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
             }
         }
     }

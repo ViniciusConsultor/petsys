@@ -126,6 +126,28 @@
                                 </td>
                             </tr>
                         </table>
+                        <asp:Panel ID="pnlRelatorios" Visible="false" runat="server">
+                            <table class="tabela">
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label10" runat="server" Text="Gerar relatório Analítico:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <asp:ImageButton ID="btnRelPublicPropriasAnalitico" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                            ToolTip="Gerar Relatório Analítico das publicações próprias" OnClick="btnRelPublicPropriasAnalitico_OnClick" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label9" runat="server" Text="Gerar relatório Sintético:"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <asp:ImageButton ID="btnRelPublicPropriasSintetico" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                            ToolTip="Gerar Relatório Sintético das publicações próprias" OnClick="btnRelPublicPropriasSintetico_OnClick" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </asp:Panel>
                         <telerik:RadTabStrip ID="RadTabStrip1" runat="server" SelectedIndex="0" Skin="Vista"
                             MultiPageID="RadMultiPage1" CausesValidation="False" OnTabClick="RadTabStrip1_OnTabClick">
                             <Tabs>
