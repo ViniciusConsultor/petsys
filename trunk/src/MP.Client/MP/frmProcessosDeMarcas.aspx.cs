@@ -477,6 +477,9 @@ namespace MP.Client.MP
             if (grdProcessosDeMarcas.Columns[1].Visible)
                 grdProcessosDeMarcas.Columns[1].Visible = principal.EstaAutorizado("OPE.MP.007.0003");
 
+            if (grdProcessosDeMarcas.Columns[2].Visible)
+                grdProcessosDeMarcas.Columns[2].Visible = principal.EstaAutorizado("OPE.MP.007.0005");
+
             base.OnPreRender(e);
         }
     }

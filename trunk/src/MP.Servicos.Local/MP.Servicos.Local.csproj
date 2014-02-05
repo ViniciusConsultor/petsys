@@ -57,6 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicoDeBoletosGeradosAuxLocal.cs" />
     <Compile Include="ServicoDeBoletosGeradosLocal.cs" />
+    <Compile Include="ServicoDeConfiguracoesDoModuloLocal.cs" />
     <Compile Include="ServicoDeDespachoDeMarcasLocal.cs" />
     <Compile Include="ServicoDeDespachoDePatentesLocal.cs" />
     <Compile Include="ServicoDeInventorLocal.cs" />

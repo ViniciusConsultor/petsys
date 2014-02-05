@@ -424,6 +424,9 @@ namespace MP.Client.MP
             if (grdProcessosDePatentes.Columns[1].Visible)
                 grdProcessosDePatentes.Columns[1].Visible = principal.EstaAutorizado("OPE.MP.009.0003");
 
+            if (grdProcessosDePatentes.Columns[2].Visible)
+                grdProcessosDePatentes.Columns[2].Visible = principal.EstaAutorizado("OPE.MP.009.0005");
+
             base.OnPreRender(e);
         }
     }

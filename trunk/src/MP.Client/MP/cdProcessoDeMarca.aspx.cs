@@ -441,9 +441,6 @@ namespace MP.Client.MP
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
 
                     arquivo.SaveAs(caminhoArquivo);
-
-                    UtilidadesWeb.redimensionaImagem(pastaDeDestino, arquivo.GetName(), 200, 200);
-
                     imgImagemMarca.ImageUrl = string.Concat(UtilidadesWeb.URL_IMAGEM_MARCA, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
                 }
             }
