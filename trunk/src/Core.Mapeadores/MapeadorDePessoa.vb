@@ -254,7 +254,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "SITE") Then
             Pessoa.Site = UtilidadesDePersistencia.GetValorString(Leitor, "SITE")
         End If
-
+        
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDAGENCIA") Then
             Dim PessoaBanco As IPessoa
             Dim Banco As IBanco
@@ -263,12 +263,12 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
             PessoaBanco = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDBANCO"))
             Banco = FabricaGenerica.GetInstancia.CrieObjeto(Of IBanco)(New Object() {PessoaBanco})
-            'TODO: BUSCAR O NUMERO DO BANCO
+            Banco.Numero = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMEROBANCO")
 
             PessoaAgencia = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDAGENCIA"))
             Agencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgencia)(New Object() {PessoaAgencia})
             Agencia.Banco = Banco
-            'TODO: BUSCAR O NUMERO DA AGENCIA
+            Agencia.Numero = UtilidadesDePersistencia.GetValorString(Leitor, "NUMEROAGENCIA")
 
             Dim DadosBancarios = FabricaGenerica.GetInstancia.CrieObjeto(Of IDadoBancario)()
             DadosBancarios.Agencia = Agencia
@@ -287,6 +287,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If (NivelDeRetardo > 0) Then
+
             ObtenhaTelefones(Pessoa)
             ObtenhaEnderecos(Pessoa)
             ObtenhaContatos(Pessoa)
