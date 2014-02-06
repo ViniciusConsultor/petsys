@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -77,9 +78,15 @@ namespace MP.Client.MP
             Modifica,
         }
 
+        private void VerificaSeNaturezaEhDeDesenhoIndustrial(INaturezaPatente natureza)
+        {
+            ExibaTabDeImagemDeDesenhoIndustrial(natureza.EhNaturezaDeDesenhoIndustrial());
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlPeriodo.PeriodoFoiSelecionado += ctrlPeriodo_PeriodoFoiSelecionado;
+            ctrlNaturezaPatente.NaturezaPatenteFoiSelecionada += VerificaSeNaturezaEhDeDesenhoIndustrial;
 
             if (IsPostBack) return;
 
@@ -258,7 +265,7 @@ namespace MP.Client.MP
             ctrlInventor.Inicializa();
             ctrlInventor.BotaoNovoEhVisivel = true;
 
-            RadTabStrip1.Tabs[0].Selected = true;
+            tabPatente.Tabs[0].Selected = true;
             rpvDadosPatentes.Selected = true;
             btnGerarTodas.Visible = false;
 
@@ -271,15 +278,18 @@ namespace MP.Client.MP
             rblPagaManutencao.SelectedValue = "0";
 
             pnlDadosDaManutencao.Visible = false;
-
             rblFormaDeCobranca.Items.Clear();
-
+            
             foreach (var formaCobrança in FormaCobrancaManutencao.ObtenhaTodas())
                 rblFormaDeCobranca.Items.Add(new ListItem(formaCobrança.Descricao  ,formaCobrança.Codigo));
 
             rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
             pnlMesInicioCobranca.Visible = false;
             ctrlPaisProcesso.LimparControle();
+
+            //Tab da imagem do desenho industrial
+            ExibaTabDeImagemDeDesenhoIndustrial(false);
+            imgImagem.ImageUrl = Util.URL_IMAGEM_SEM_FOTO_PATENTE;
         }
 
         private void MostraPCT(bool mostra)
@@ -354,11 +364,9 @@ namespace MP.Client.MP
                 if (string.IsNullOrEmpty(txtValor.Text))
                     inconsitencias.Add("É necessário informar o valor de cobrança.");
 
-                if (Util.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
-                {
+                if (Periodo.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
                     if (string.IsNullOrEmpty(ctrlMes.Codigo))
                         inconsitencias.Add("É necessário informar o mês de início de cobrança.");
-                }
             }
 
             return inconsitencias;
@@ -647,7 +655,24 @@ namespace MP.Client.MP
                 rblFormaDeCobranca.SelectedValue = patente.Manutencao.FormaDeCobranca.Codigo;
                 txtValor.Value = patente.Manutencao.ValorDeCobranca;
             }
+
+            if (patente.PatenteEhDeDesenhoIndutrial())
+            {
+                ExibaTabDeImagemDeDesenhoIndustrial(true);
+                
+                if (string.IsNullOrEmpty(patente.Imagem))
+                    imgImagem.ImageUrl = Util.URL_IMAGEM_SEM_FOTO_PATENTE;
+                else
+                    imgImagem.ImageUrl = patente.Imagem;
+            }
+                
         }
+
+        private void ExibaTabDeImagemDeDesenhoIndustrial( bool exiba)
+        {
+            tabPatente.Tabs[6].Visible = exiba;
+        }
+
 
         protected void btnAdicionarCliente_ButtonClick(object sender, EventArgs e)
         {
@@ -950,11 +975,7 @@ namespace MP.Client.MP
                     return;
                 }
 
-                if (processo.Patente.NaturezaPatente.SiglaNatureza.ToUpper().Equals("DI") ||
-                    processo.Patente.NaturezaPatente.SiglaNatureza.ToUpper().Equals("MI") ||
-                    processo.Patente.NaturezaPatente.SiglaNatureza.ToUpper().Equals("30") ||
-                    processo.Patente.NaturezaPatente.SiglaNatureza.ToUpper().Equals("31") ||
-                    processo.Patente.NaturezaPatente.SiglaNatureza.ToUpper().Equals("32"))
+                if (processo.Patente.PatenteEhDeDesenhoIndutrial())
                     CalculeAnuidadesPatentesDeNaturezaDI(processo.DataDoDeposito.Value);
                 else
                     CalculeAnuidadesPatentesDeNatureza(processo.DataDoDeposito.Value);
@@ -1193,7 +1214,7 @@ namespace MP.Client.MP
         
         private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
         {
-            if (Util.PeriodoEhTrimestreSemestreOuAnual(periodo))
+            if (Periodo.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
                 pnlMesInicioCobranca.Visible = true;
             else
             {
@@ -1221,6 +1242,29 @@ namespace MP.Client.MP
             ListaDeAnuidadeDaPatente.Insert(IndiceBaixaAnuidade, anuidadeDaPatente);
             MostrarListaDeAnuidadeDaPatente();
             VisibilidadeBaixar(true);
+        }
+
+        protected void uplImagem_OnFileUploaded(object sender, FileUploadedEventArgs e)
+        {
+            try
+            {
+                if (uplImagem.UploadedFiles.Count > 0)
+                {
+                    var arquivo = uplImagem.UploadedFiles[0];
+                    var pastaDeDestino = Server.MapPath(Util.URL_IMAGEM_PATENTE);
+
+                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+
+                    var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+
+                    arquivo.SaveAs(caminhoArquivo);
+                    imgImagem.ImageUrl = string.Concat(Util.URL_IMAGEM_PATENTE, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.GetInstancia().Erro("Erro ao carregar imagem, exceção: ", ex);
+            }
         }
     }
 }

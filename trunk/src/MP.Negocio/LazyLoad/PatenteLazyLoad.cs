@@ -263,5 +263,24 @@ namespace MP.Negocio.LazyLoad
             }
         }
 
+        public bool PatenteEhDeDesenhoIndutrial()
+        {
+            if (_objetoReal == null) CarregueObjetoReal();
+            return _objetoReal.PatenteEhDeDesenhoIndutrial();
+        }
+
+        public string Imagem
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Imagem;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Imagem = value;
+            }
+        }
     }
 }

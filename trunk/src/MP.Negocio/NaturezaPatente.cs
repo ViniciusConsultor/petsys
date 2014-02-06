@@ -36,5 +36,16 @@ namespace MP.Negocio
         public string DescricaoPagamentoIntermediario { get; set; }
 
         public bool TemPedidoDeExame { get; set; }
+
+        public bool EhNaturezaDeDesenhoIndustrial()
+        {
+            if (string.IsNullOrEmpty(SiglaNatureza)) return false;
+
+            return SiglaNatureza.ToUpper().Equals("DI") ||
+                   SiglaNatureza.ToUpper().Equals("MI") ||
+                   SiglaNatureza.ToUpper().Equals("30") ||
+                   SiglaNatureza.ToUpper().Equals("31") ||
+                   SiglaNatureza.ToUpper().Equals("32");
+        }
     }
 }

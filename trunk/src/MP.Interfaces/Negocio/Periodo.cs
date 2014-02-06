@@ -64,5 +64,13 @@ namespace MP.Interfaces.Negocio
         {
             return _codigo.GetHashCode();
         }
+
+        public static bool PeriodoEhTrimestreSemestreOuAnual(Periodo periodo)
+        {
+            if (periodo == null) return false;
+
+            return (periodo.Equals(Periodo.Trimestral) || periodo.Equals(Periodo.Semestral) ||
+                    periodo.Equals(Periodo.Anual));
+        }
     }
 }

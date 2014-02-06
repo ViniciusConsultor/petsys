@@ -9,13 +9,17 @@ namespace MP.Client
     public class Util
     {
 
-        public static bool PeriodoEhTrimestreSemestreOuAnual(Periodo periodo)
-        {
-           if (periodo == null) return false;
+        public const string URL_IMAGEM_MARCA = "~/Loads/Imagens/Marcas";
+        public const string URL_REVISTA_MARCA = "~/Loads/Revistas/Marcas/";
+        public const string URL_IMAGEM_SEM_FOTO_MARCA = "~/Loads/Imagens/Marcas/sem_foto_g.gif";
 
-            return (periodo.Equals(Periodo.Trimestral) || periodo.Equals(Periodo.Semestral) ||
-                    periodo.Equals(Periodo.Anual));
+        public const string URL_IMAGEM_PATENTE = "~/Loads/Imagens/Patentes";
+        public const string URL_REVISTA_PATENTE = "~/Loads/Revistas/Patentes/";
+        public const string URL_IMAGEM_SEM_FOTO_PATENTE = "~/Loads/Imagens/Patentes/sem_foto_g.gif";
 
-        }
+        public const string URL_IMAGEM_CABECALHO_BOLETO = "~/Loads/Imagens/Boleto/";
+
+
+        
     }
 }

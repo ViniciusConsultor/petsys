@@ -18,11 +18,7 @@ Public Class UtilidadesWeb
     Public Const URL_FOTO_PESSOA As String = "~/Loads/Fotos/Pessoas"
     Public Const URL_PAPEIS_DE_PAREDE As String = "~/Loads/Imagens/PapeisDeParede"
     Public Const URL_ATALHOS As String = "~/Loads/Imagens/Atalhos"
-    Public Const URL_IMAGEM_MARCA As String = "~/Loads/Imagens/Marcas"
-    Public Const URL_REVISTA_MARCA As String = "~/Loads/Revistas/Marcas/"
-    Public Const URL_REVISTA_PATENTE As String = "~/Loads/Revistas/Patentes/"
-
-    Public Const URL_IMAGEM_SEM_FOTO_MARCA As String = "~/Loads/Imagens/Marcas/sem_foto_g.gif"
+    
 
     Public Const PASTA_LOADS As String = "Loads"
     Public Const PASTA_FOTO_PESSOA As String = "Loads/Fotos/Pessoas"

@@ -66,7 +66,7 @@ namespace MP.Client.MP
             if (!string.IsNullOrEmpty(imgImagemMarca.ImageUrl))
                 marca.ImagemDaMarca = imgImagemMarca.ImageUrl;
             else
-                marca.ImagemDaMarca = UtilidadesWeb.URL_IMAGEM_SEM_FOTO_MARCA;
+                marca.ImagemDaMarca = Util.URL_IMAGEM_SEM_FOTO_MARCA;
 
             marca.NCL = NCL.ObtenhaPorCodigo(ctrlNCL.Codigo);
             marca.Natureza = NaturezaDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
@@ -160,7 +160,7 @@ namespace MP.Client.MP
             txtObservacao.Text = marca.ObservacaoDaMarca;
 
             if (string.IsNullOrEmpty(marca.ImagemDaMarca))
-                imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO_MARCA;
+                imgImagemMarca.ImageUrl = Util.URL_IMAGEM_SEM_FOTO_MARCA;
             else
                 imgImagemMarca.ImageUrl = marca.ImagemDaMarca;
 
@@ -352,11 +352,9 @@ namespace MP.Client.MP
                 if (string.IsNullOrEmpty(txtValor.Text))
                     inconsitencias.Add("É necessário informar o valor de cobrança.");
 
-                if (Util.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
-                {
+                if (Periodo.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
                     if (string.IsNullOrEmpty(ctrlMes.Codigo))
                         inconsitencias.Add("É necessário informar o mês de início de cobrança.");
-                }
             }
 
             return inconsitencias;
@@ -434,14 +432,14 @@ namespace MP.Client.MP
                 if (uplImagem.UploadedFiles.Count > 0)
                 {
                     var arquivo = uplImagem.UploadedFiles[0];
-                    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_IMAGEM_MARCA);
+                    var pastaDeDestino = Server.MapPath(Util.URL_IMAGEM_MARCA);
 
                     UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
 
                     arquivo.SaveAs(caminhoArquivo);
-                    imgImagemMarca.ImageUrl = string.Concat(UtilidadesWeb.URL_IMAGEM_MARCA, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+                    imgImagemMarca.ImageUrl = string.Concat(Util.URL_IMAGEM_MARCA, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
                 }
             }
             catch (Exception ex)
@@ -551,7 +549,7 @@ namespace MP.Client.MP
       
         private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
         {
-            if (Util.PeriodoEhTrimestreSemestreOuAnual(periodo))
+            if (Periodo.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
                 pnlMesDeCobrança.Visible = true;
             else
             {

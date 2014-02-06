@@ -1,17 +1,16 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="cdAgenda.aspx.vb" Inherits="WorkSpace.cdAgenda" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Assembly="Compartilhados.Componentes.Web" Namespace="Compartilhados.Componentes.Web"
-    TagPrefix="cc1" %>
+
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
-                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.NCL.009.0001" />
+                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.NCL.012.0001" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
-                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.NCL.009.0002" />
+                CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.NCL.012.0002" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/delete.gif" Text="Excluir"
-                CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.NCL.009.0003" />
+                CommandName="btnExcluir" CausesValidation="False" CommandArgument="OPE.NCL.012.0003" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/save.gif" Text="Salvar"
                 CommandName="btnSalvar" CausesValidation="True" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/cancel.gif" Text="Cancelar"

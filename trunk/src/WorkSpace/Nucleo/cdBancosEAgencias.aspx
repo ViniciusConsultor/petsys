@@ -7,7 +7,7 @@
     <telerik:RadToolBar ID="rtbToolBarBancos" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
-                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FUN.NCL.009.0001" />
+                CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.NCL.009.0001" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/edit.gif" Text="Modificar"
                 CommandName="btnModificar" CausesValidation="False" CommandArgument="OPE.NCL.009.0002" />
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/delete.gif" Text="Excluir"

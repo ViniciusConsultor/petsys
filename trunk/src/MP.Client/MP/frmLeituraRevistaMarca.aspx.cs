@@ -168,7 +168,7 @@ namespace MP.Client.MP
                 if (uplRevistaMarca.UploadedFiles.Count > 0)
                 {
                     var arquivo = uplRevistaMarca.UploadedFiles[0];
-                    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+                    var pastaDeDestino = Server.MapPath(Util.URL_REVISTA_MARCA);
 
                     UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
@@ -197,7 +197,7 @@ namespace MP.Client.MP
                 revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
             }
 
-            var pastaDeDestinoTemp = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA + "/temp/");
+            var pastaDeDestinoTemp = Server.MapPath(Util.URL_REVISTA_MARCA + "/temp/");
 
             Directory.CreateDirectory(pastaDeDestinoTemp);
 
@@ -286,7 +286,7 @@ namespace MP.Client.MP
 
         private void MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(IRevistaDeMarcas revistaDeMarcas)
         {
-            var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+            var pastaDeDestino = Server.MapPath(Util.URL_REVISTA_MARCA);
 
             UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
@@ -304,7 +304,7 @@ namespace MP.Client.MP
 
         private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDeMarcas revistaDeMarcas)
         {
-            var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_REVISTA_MARCA);
+            var pastaDeDestino = Server.MapPath(Util.URL_REVISTA_MARCA);
 
             UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 

@@ -31,7 +31,6 @@ Partial Public Class cdBancosEAgencias
     Private Enum Estado As Byte
         Inicial = 1
         Novo
-        Consulta
         Modifica
         Remove
     End Enum

@@ -25,5 +25,8 @@ namespace MP.Interfaces.Negocio
         IList<ITitular> Titulares { get; set; }
         string ClassificacoesConcatenadas { get; }
         IManutencao Manutencao { get; set; }
+        bool PatenteEhDeDesenhoIndutrial();
+        string Imagem { get; set; }
+    
     }
 }

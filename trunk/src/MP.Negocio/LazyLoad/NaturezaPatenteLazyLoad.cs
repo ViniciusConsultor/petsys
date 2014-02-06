@@ -213,5 +213,11 @@ namespace MP.Negocio.LazyLoad
                 _objetoReal.TemPedidoDeExame = value;
             }
         }
+
+        public bool EhNaturezaDeDesenhoIndustrial()
+        {
+            if (_objetoReal == null) CarregueObjetoReal();
+            return _objetoReal.EhNaturezaDeDesenhoIndustrial();
+        }
     }
 }
