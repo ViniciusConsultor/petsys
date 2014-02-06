@@ -10,6 +10,19 @@ Public Class MapeadorDePessoaJuridica
     Inherits MapeadorDePessoa(Of IPessoaJuridica)
     Implements IMapeadorDePessoaJuridica
 
+    Private Function ObtenhaQueryBasica() As String
+        Dim Sql As New StringBuilder
+
+        Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
+        Sql.Append("NOMEFANTASIA, CNPJ, IE, IM, SITE, NCL_PESSOA.IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, NCL_BANCO.NUMERO  NUMEROBANCO, NCL_AGENCIABANCO.NUMERO  NUMEROAGENCIA , LOGOMARCA ")
+        Sql.Append("FROM NCL_PESSOA ")
+        Sql.Append("INNER JOIN NCL_PESSOAJURIDICA ON ID = NCL_PESSOAJURIDICA.IDPESSOA ")
+        Sql.Append("LEFT JOIN NCL_BANCO ON NCL_BANCO.IDPESSOA = NCL_PESSOA.IDBANCO ")
+        Sql.Append("LEFT JOIN NCL_AGENCIABANCO ON  NCL_AGENCIABANCO.IDBANCO =  NCL_PESSOA.IDBANCO ")
+
+        Return Sql.ToString()
+    End Function
+
     Protected Overrides Sub Atualize(ByVal Pessoa As IPessoaJuridica)
         Dim Sql As New StringBuilder
         Dim DBHelper As IDBHelper
@@ -60,11 +73,8 @@ Public Class MapeadorDePessoaJuridica
     Protected Overrides Function Carregue(ByVal Id As Long) As IPessoaJuridica
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
-        Sql.Append("NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, LOGOMARCA ")
-        Sql.Append("FROM NCL_PESSOA, NCL_PESSOAJURIDICA")
-        Sql.Append(" WHERE ID = IDPESSOA ")
-        Sql.Append(String.Concat("AND ID = ", Id.ToString))
+        Sql.Append(ObtenhaQueryBasica())
+        Sql.Append(String.Concat(" WHERE ID = ", Id.ToString))
 
         Return ObtenhaPessoa(Sql.ToString)
     End Function
@@ -87,13 +97,10 @@ Public Class MapeadorDePessoaJuridica
                                                  NivelDeRetardo As Integer) As IList(Of IPessoaJuridica)
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
-        Sql.Append("IDPESSOA, NOMEFANTASIA, CNPJ, IE, IM, SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, LOGOMARCA ")
-        Sql.Append("FROM NCL_PESSOA, NCL_PESSOAJURIDICA")
-        Sql.Append(" WHERE ID = IDPESSOA ")
+        Sql.Append(ObtenhaQueryBasica())
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql.Append(String.Concat("AND NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
+            Sql.Append(String.Concat(" WHERE NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
         Sql.AppendLine(" ORDER BY NOME")
