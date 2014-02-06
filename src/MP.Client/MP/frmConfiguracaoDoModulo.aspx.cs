@@ -129,14 +129,14 @@ namespace MP.Client.MP
                 if (uplImagem.UploadedFiles.Count > 0)
                 {
                     var arquivo = uplImagem.UploadedFiles[0];
-                    var pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_IMAGEM_MARCA);
+                    var pastaDeDestino = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO);
 
                     UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
 
                     arquivo.SaveAs(caminhoArquivo);
-                    imgImagem.ImageUrl = string.Concat(UtilidadesWeb.URL_IMAGEM_MARCA, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+                    imgImagem.ImageUrl = string.Concat(Util.URL_IMAGEM_CABECALHO_BOLETO, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
                 }
             }
             catch (Exception ex)

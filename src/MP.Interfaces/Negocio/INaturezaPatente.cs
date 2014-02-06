@@ -21,5 +21,7 @@ namespace MP.Interfaces.Negocio
         string DescricaoPagamento { get; set; }
         string DescricaoPagamentoIntermediario { get; set; }
         bool TemPedidoDeExame { get; set; }
+
+        bool EhNaturezaDeDesenhoIndustrial();
     }
 }

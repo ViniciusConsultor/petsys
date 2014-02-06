@@ -25,7 +25,7 @@ namespace MP.Mapeadores
             patente.Identificador = GeradorDeID.getInstancia().getProximoID();
 
             comandoSQL.Append("INSERT INTO MP_PATENTE(IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
-            comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO, PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES) VALUES(");
+            comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO, IMAGEM, PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES) VALUES(");
             comandoSQL.Append(patente.Identificador + ", ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.TituloPatente) + "', ");
             comandoSQL.Append(patente.NaturezaPatente.IdNaturezaPatente + ", ");
@@ -34,6 +34,10 @@ namespace MP.Mapeadores
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.Observacao) + "', ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.Resumo) + "', ");
             comandoSQL.Append(patente.QuantidadeReivindicacao + ", ");
+
+            comandoSQL.Append(string.IsNullOrEmpty(patente.Imagem)
+                                  ? "NULL, "
+                                  : string.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(patente.Imagem), "', "));
 
             if (patente.Manutencao == null)
                 comandoSQL.Append("'0', NULL, NULL, NULL, NULL)");
@@ -94,6 +98,11 @@ namespace MP.Mapeadores
             comandoSQL.Append("OBSERVACAO = '" + patente.Observacao + "', ");
             comandoSQL.Append("RESUMO_PATENTE = '" + patente.Resumo + "', ");
             comandoSQL.Append("QTDEREINVINDICACAO = " + patente.QuantidadeReivindicacao + ", ");
+
+            comandoSQL.Append(string.IsNullOrEmpty(patente.Imagem)
+                                  ? "IMAGEM = NULL, "
+                                  : string.Concat("IMAGEM = '", UtilidadesDePersistencia.FiltraApostrofe(patente.Imagem), "', "));
+
             
             if (patente.Manutencao == null)
             {
@@ -261,7 +270,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
-            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES FROM MP_PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES, IMAGEM FROM MP_PATENTE ");
             comandoSQL.Append("WHERE IDPATENTE = " + id);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
@@ -278,7 +287,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
-            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES FROM MP_PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES, IMAGEM FROM MP_PATENTE ");
 
             if (!string.IsNullOrEmpty(titulo))
                 comandoSQL.Append("WHERE TITULOPATENTE like '%" + titulo + "%'");
@@ -298,7 +307,7 @@ namespace MP.Mapeadores
 
             comandoSQL.Append("SELECT PATENTE.IDPATENTE, PATENTE.TITULOPATENTE, PATENTE.IDNATUREZAPATENTE, PATENTE.OBRIGACAOGERADA, ");
             comandoSQL.Append("PATENTE.DATACADASTRO, PATENTE.OBSERVACAO, PATENTE.RESUMO_PATENTE, PATENTE.QTDEREINVINDICACAO, ");
-            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES FROM MP_PATENTE PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES, IMAGEM FROM MP_PATENTE PATENTE ");
             comandoSQL.Append("INNER JOIN MP_PATENTECLIENTE CLIPATENTE ON CLIPATENTE.IDPATENTE = PATENTE.IDPATENTE ");
             comandoSQL.Append("WHERE CLIPATENTE.IDCLIENTE = " + idCliente);
 
@@ -609,6 +618,9 @@ namespace MP.Mapeadores
             patente.Clientes = ObtenhaClientesPatente(patente.Identificador);
             patente.Radicais = ObtenhaRadicais(patente.Identificador);
             patente.Titulares = ObtenhaTitularesPeloIdDaPatente(patente.Identificador);
+
+            if (!UtilidadesDePersistencia.EhNulo(reader, "IMAGEM"))
+                patente.Imagem = UtilidadesDePersistencia.GetValorString(reader, "IMAGEM");
 
             if (UtilidadesDePersistencia.GetValorBooleano(reader, "PagaManutencao"))
             {

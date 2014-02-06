@@ -71,6 +71,13 @@ namespace MP.Negocio
             get; set;
         }
 
-       
+        public bool PatenteEhDeDesenhoIndutrial()
+        {
+            if (NaturezaPatente == null) return false;
+
+            return NaturezaPatente.EhNaturezaDeDesenhoIndustrial();
+        }
+
+        public string Imagem { get; set; }
     }
 }
