@@ -184,7 +184,7 @@ namespace MP.Client.MP
                 {
                     cedenteAgencia = cedentePessoa.DadoBancario.Agencia.Numero;
                     cedenteConta = cedentePessoa.DadoBancario.Conta.Numero;
-                    cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.ToString();
+                    cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.Value.ToString("000");
 
                     if(!string.IsNullOrEmpty(cedenteConta))
                     {
@@ -228,36 +228,11 @@ namespace MP.Client.MP
             // formata código do cedente
             if(!string.IsNullOrEmpty(cedenteOperacaoConta) && !string.IsNullOrEmpty(cedenteConta))
             {
-                string operacao;
-                switch (cedenteOperacaoConta.Length)
-                {
-                    case 1:
-                        operacao = "00" + cedenteOperacaoConta;
-                        break;
-                    case 2:
-                        operacao = "0" + cedenteOperacaoConta;
-                        break;
-                    default:
-                        operacao = cedenteOperacaoConta;
-                        break;
-                }
-
                 string conta;
-                var contaSemDigito = cedenteConta.Substring(0, cedenteConta.Length - 1);
-                switch (contaSemDigito.Length)
-                {
-                    case 6:
-                        conta = "00" + contaSemDigito;
-                        break;
-                    case 7:
-                        conta = "0" + contaSemDigito;
-                        break;
-                    default:
-                        conta = contaSemDigito;
-                        break;
-                }
+                var contaSemDigito = Convert.ToInt32(cedenteConta.Substring(0, cedenteConta.Length - 1));
 
-                cedenteCodigo = operacao + conta;
+                conta = contaSemDigito.ToString("00000000");
+                cedenteCodigo = cedenteOperacaoConta + conta;
             }
 
             var cedente = new Cedente(cedenteCpfCnpj, cedenteNome, cedenteAgencia, cedenteConta, cedenteDigitoConta) { Codigo = cedenteCodigo };
@@ -290,9 +265,16 @@ namespace MP.Client.MP
             boleto.DataProcessamento = DateTime.Now;
             boleto.DataDocumento = DateTime.Now;
 
-            //var urlImagemLogo = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/Imagens/Marcas/logoReciboBoleto.jpg";
-            
-            var boletoBancario = new BoletoBancario(imagemDoRecibo);
+            BoletoBancario boletoBancario;
+
+            if (string.IsNullOrEmpty(imagemDoRecibo))
+                boletoBancario = new BoletoBancario();
+            else
+            {
+                var urlImagemLogo = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + imagemDoRecibo.Remove(0,1);
+                boletoBancario = new BoletoBancario(urlImagemLogo);
+            }
+
             boletoBancario.CodigoBanco = codigoDoBanco;
             boletoBancario.Boleto = boleto;
             boletoBancario.MostrarCodigoCarteira = true;
