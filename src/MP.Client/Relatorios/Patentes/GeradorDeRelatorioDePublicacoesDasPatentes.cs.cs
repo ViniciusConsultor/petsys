@@ -51,7 +51,7 @@ namespace MP.Client.Relatorios.Patentes
         {
             var tabela = new Table(6);
 
-            tabela.Widths = new Single[] { 60, 100, 50, 100, 60, 100 };
+            tabela.Widths = new Single[] { 100, 250, 90, 65, 40, 20 };
 
             tabela.Padding = 0;
             tabela.Spacing = 0;
@@ -62,33 +62,51 @@ namespace MP.Client.Relatorios.Patentes
 
             foreach (var processo in _processosPatentes)
             {
+                var tabela1 = new Table(1);
+                tabela1.Widths = new Single[] { 400 };
+                tabela1.Padding = 0;
+                tabela1.Spacing = 0;
+                tabela1.Width = 100;
+                tabela1.AutoFillEmptyCells = true;
+                tabela1.Border = 0;
+                tabela1.EndHeaders();
+
                 var labelNumeroProcesso = new Cell(new Phrase("Número do processo: ", _Fonte2));
                 labelNumeroProcesso.DisableBorderSide(0);
-                tabela.AddCell(labelNumeroProcesso);
+                tabela1.AddCell(labelNumeroProcesso);
 
                 var valorNumeroProcesso = new Cell(new Phrase(processo.Processo.ToString(), _Fonte1));
                 valorNumeroProcesso.DisableBorderSide(0);
-                tabela.AddCell(valorNumeroProcesso);
+                tabela1.AddCell(valorNumeroProcesso);
 
                 var labelDataDoCadastro = new Cell(new Phrase("Data do cadastro: ", _Fonte2));
                 labelDataDoCadastro.DisableBorderSide(0);
-                tabela.AddCell(labelDataDoCadastro);
+                tabela1.AddCell(labelDataDoCadastro);
 
                 var valorDataDoCadastro = new Cell(new Phrase(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1));
                 valorDataDoCadastro.DisableBorderSide(0);
-                tabela.AddCell(valorDataDoCadastro);
+                tabela1.AddCell(valorDataDoCadastro);
 
                 var labelDespacho = new Cell(new Phrase("Despacho: ", _Fonte2));
                 labelDespacho.DisableBorderSide(0);
-                tabela.AddCell(labelDespacho);
+                tabela1.AddCell(labelDespacho);
 
                 var valorDespacho = processo.Despacho != null ? new Cell(new Phrase(processo.Despacho.Codigo, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
                 valorDespacho.DisableBorderSide(0);
-                tabela.AddCell(valorDespacho);
+                tabela1.AddCell(valorDespacho);
+
+                var tabela2 = new Table(4);
+                tabela2.Widths = new Single[] { 100, 100, 100, 100 };
+                tabela2.Padding = 0;
+                tabela2.Spacing = 0;
+                tabela2.Width = 100;
+                tabela2.AutoFillEmptyCells = true;
+                tabela2.Border = 0;
+                tabela2.EndHeaders();
 
                 var labelClassificacao = new Cell(new Phrase("Classificação: ", _Fonte2));
                 labelClassificacao.DisableBorderSide(0);
-                tabela.AddCell(labelClassificacao);
+                tabela2.AddCell(labelClassificacao);
 
                 string classificacoes = string.Empty;
 
@@ -102,20 +120,29 @@ namespace MP.Client.Relatorios.Patentes
 
                 Cell valorClassificacao = new Cell(new Phrase(classificacoes, _Fonte1));
                 valorClassificacao.DisableBorderSide(0);
-                tabela.AddCell(valorClassificacao);
+                tabela2.AddCell(valorClassificacao);
 
                 var labelNatureza = new Cell(new Phrase("Natureza: ", _Fonte2));
                 labelNatureza.DisableBorderSide(0);
-                tabela.AddCell(labelNatureza);
+                tabela2.AddCell(labelNatureza);
 
                 Cell valorNatureza = processo.Patente != null && processo.Patente.NaturezaPatente != null ?
                         new Cell(new Phrase(processo.Patente.NaturezaPatente.SiglaNatureza, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
                 valorNatureza.DisableBorderSide(0);
-                tabela.AddCell(valorNatureza);
+                tabela2.AddCell(valorNatureza);
+
+                var tabela3 = new Table(2);
+                tabela3.Widths = new Single[] { 100, 300 };
+                tabela3.Padding = 0;
+                tabela3.Spacing = 0;
+                tabela3.Width = 100;
+                tabela3.AutoFillEmptyCells = true;
+                tabela3.Border = 0;
+                tabela3.EndHeaders();
 
                 var labelCliente = new Cell(new Phrase("Cliente: ", _Fonte2));
                 labelCliente.DisableBorderSide(0);
-                tabela.AddCell(labelCliente);
+                tabela3.AddCell(labelCliente);
 
                 string clientes = string.Empty;
 
@@ -129,43 +156,30 @@ namespace MP.Client.Relatorios.Patentes
 
                 var valorCliente = new Cell(new Phrase(clientes, _Fonte1)) { Colspan = 5 };
                 valorCliente.DisableBorderSide(0);
-                tabela.AddCell(valorCliente);
+                tabela3.AddCell(valorCliente);
 
-                var labelMarca = new Cell(new Phrase("Marca: ", _Fonte2));
-                labelMarca.DisableBorderSide(0);
-                tabela.AddCell(labelMarca);
+                var labelPatente = new Cell(new Phrase("Patente: ", _Fonte2));
+                labelPatente.DisableBorderSide(0);
+                tabela3.AddCell(labelPatente);
 
-                Cell valorMarca = processo.Patente != null && !string.IsNullOrEmpty(processo.Patente.TituloPatente) ?
+                Cell valorPatente = processo.Patente != null && !string.IsNullOrEmpty(processo.Patente.TituloPatente) ?
                     new Cell(new Phrase(processo.Patente.TituloPatente, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
-
-                valorMarca.Colspan = 5;
-                valorMarca.DisableBorderSide(0);
-                tabela.AddCell(valorMarca);
-
-                var labelTextoDespacho = new Cell(new Phrase("Resumo: ", _Fonte2));
-                labelTextoDespacho.DisableBorderSide(0);
-                tabela.AddCell(labelTextoDespacho);
-
-                Cell valorTextoDespacho = !string.IsNullOrEmpty(processo.Patente.Resumo) ? new Cell(new Phrase(processo.Patente.Resumo, _Fonte1)) :
-                                                                                                        new Cell(new Phrase(string.Empty, _Fonte1));
-                valorTextoDespacho.Colspan = 5;
-                valorTextoDespacho.DisableBorderSide(0);
-                tabela.AddCell(valorTextoDespacho);
+                valorPatente.DisableBorderSide(0);
+                tabela3.AddCell(valorPatente);
 
                 var labelProcurador = new Cell(new Phrase("Procurador: ", _Fonte2));
                 labelProcurador.DisableBorderSide(0);
-                tabela.AddCell(labelProcurador);
+                tabela3.AddCell(labelProcurador);
 
                 Cell valorProcurador = processo.Procurador != null && processo.Procurador.Pessoa != null && !string.IsNullOrEmpty(processo.Procurador.Pessoa.Nome) ?
                     new Cell(new Phrase(processo.Procurador.Pessoa.Nome, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
-                valorProcurador.Colspan = 5;
+                valorProcurador.Colspan = 1;
                 valorProcurador.DisableBorderSide(0);
-                tabela.AddCell(valorProcurador);
+                tabela3.AddCell(valorProcurador);
 
-                var linhaVazia = new Cell(new Phrase("\n", _Fonte1));
-                linhaVazia.Colspan = 6;
-                linhaVazia.DisableBorderSide(1);
-                tabela.AddCell(linhaVazia);
+                tabela.AddCell(new Cell(tabela1));
+                tabela.AddCell(new Cell(tabela2));
+                tabela.AddCell(new Cell(tabela3));
             }
 
             _documento.Add(tabela);
@@ -243,6 +257,13 @@ namespace MP.Client.Relatorios.Patentes
             }
 
             _documento.Add(tabela);
+        }
+
+        private Cell ObtenhaCelulaVazia()
+        {
+            var celulaVazia = new Cell(new Phrase(string.Empty, _Fonte1));
+            celulaVazia.DisableBorderSide(0);
+            return celulaVazia;
         }
 
         private class Ouvinte : IPdfPageEvent
