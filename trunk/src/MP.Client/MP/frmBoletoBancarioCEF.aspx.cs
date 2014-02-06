@@ -153,13 +153,112 @@ namespace MP.Client.MP
 
             var cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value; // o final do nosso número é incrementado ao final
 
-            var cedenteCpfCnpj = "222.111.111-00"; // busca no banco
-            var cedenteNome = "ALTERNATIVA MARCAS E PATENTES"; // busca no banco
-            var cedenteAgencia = "1394"; // busca no banco
-            var cedenteConta = "302864"; // busca no banco
-            var cedenteDigitoConta = "4"; // busca no banco
 
-            var cedenteCodigo = "00100302864"; // operacao + conta - busca no banco
+            // obtendo a configuração do cedente
+            IConfiguracaoDeModulo configuracaoDoCedente;
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeConfiguracoesDoModulo>())
+            {
+                configuracaoDoCedente = servico.ObtenhaConfiguracao();
+            }
+
+            var cedenteCpfCnpj = string.Empty;
+            var cedenteNome = string.Empty;
+            var cedenteAgencia = string.Empty;
+            var cedenteConta = string.Empty;
+            var cedenteDigitoConta = string.Empty;
+            var cedenteOperacaoConta = string.Empty;
+            var cedenteCodigo = string.Empty;
+            var imagemDoRecibo = string.Empty;
+
+            if(configuracaoDoCedente != null && configuracaoDoCedente.ConfiguracaoDeBoletoBancario != null &&
+                configuracaoDoCedente.ConfiguracaoDeBoletoBancario.Cedente != null && 
+                configuracaoDoCedente.ConfiguracaoDeBoletoBancario.Cedente.Pessoa != null)
+            {
+                imagemDoRecibo = configuracaoDoCedente.ConfiguracaoDeBoletoBancario.ImagemDeCabecalhoDoReciboDoSacado;
+
+                var cedentePessoa = configuracaoDoCedente.ConfiguracaoDeBoletoBancario.Cedente.Pessoa;
+
+                cedenteNome = cedentePessoa.Nome;
+
+                if (cedentePessoa.DadoBancario != null)
+                {
+                    cedenteAgencia = cedentePessoa.DadoBancario.Agencia.Numero;
+                    cedenteConta = cedentePessoa.DadoBancario.Conta.Numero;
+                    cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.ToString();
+
+                    if(!string.IsNullOrEmpty(cedenteConta))
+                    {
+                        cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length -1, 1);
+                    }
+                }
+
+                if (cedentePessoa.Tipo == TipoDePessoa.Fisica)
+                {
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
+                    {
+                        var pessoaFisica = servico.ObtenhaPessoa(cedentePessoa.ID.Value);
+
+                        if (pessoaFisica != null)
+                        {
+                            var cpf = pessoaFisica.ObtenhaDocumento(TipoDeDocumento.CPF);
+
+                            if (cpf != null)
+                                cedenteCpfCnpj = cpf.ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
+                    {
+                        var pessoaJuridica = servico.ObtenhaPessoa(cedentePessoa.ID.Value);
+
+                        if (pessoaJuridica != null)
+                        {
+                            var cnpj = pessoaJuridica.ObtenhaDocumento(TipoDeDocumento.CNPJ);
+
+                            if (cnpj != null)
+                                cedenteCpfCnpj = cnpj.ToString();
+                        }
+                    }
+                }
+
+            }
+
+            // formata código do cedente
+            if(!string.IsNullOrEmpty(cedenteOperacaoConta) && !string.IsNullOrEmpty(cedenteConta))
+            {
+                string operacao;
+                switch (cedenteOperacaoConta.Length)
+                {
+                    case 1:
+                        operacao = "00" + cedenteOperacaoConta;
+                        break;
+                    case 2:
+                        operacao = "0" + cedenteOperacaoConta;
+                        break;
+                    default:
+                        operacao = cedenteOperacaoConta;
+                        break;
+                }
+
+                string conta;
+                var contaSemDigito = cedenteConta.Substring(0, cedenteConta.Length - 1);
+                switch (contaSemDigito.Length)
+                {
+                    case 6:
+                        conta = "00" + contaSemDigito;
+                        break;
+                    case 7:
+                        conta = "0" + contaSemDigito;
+                        break;
+                    default:
+                        conta = contaSemDigito;
+                        break;
+                }
+
+                cedenteCodigo = operacao + conta;
+            }
 
             var cedente = new Cedente(cedenteCpfCnpj, cedenteNome, cedenteAgencia, cedenteConta, cedenteDigitoConta) { Codigo = cedenteCodigo };
 
@@ -191,9 +290,9 @@ namespace MP.Client.MP
             boleto.DataProcessamento = DateTime.Now;
             boleto.DataDocumento = DateTime.Now;
 
-            var urlImagemLogo = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/Imagens/logoReciboBoleto.jpg";
-
-            var boletoBancario = new BoletoBancario(urlImagemLogo);
+            //var urlImagemLogo = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/Imagens/Marcas/logoReciboBoleto.jpg";
+            
+            var boletoBancario = new BoletoBancario(imagemDoRecibo);
             boletoBancario.CodigoBanco = codigoDoBanco;
             boletoBancario.Boleto = boleto;
             boletoBancario.MostrarCodigoCarteira = true;
