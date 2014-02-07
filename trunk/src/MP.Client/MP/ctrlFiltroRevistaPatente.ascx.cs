@@ -32,13 +32,13 @@ namespace MP.Client.MP
 
         private void CarregueCombo()
         {
-            foreach (EnumeradorFiltroPatente enumerador in EnumeradorFiltroPatente.ObtenhaTodos())
-            {
-                var item = new RadComboBoxItem(enumerador.Descricao, enumerador.Id.ToString());
-                item.Attributes.Add("Codigo", enumerador.Id.ToString());
-                cboFiltroPatente.Items.Add(item);
-                item.DataBind();
-            }
+            //foreach (EnumeradorFiltroPatente enumerador in EnumeradorFiltroPatente.ObtenhaTodos())
+            //{
+            //    var item = new RadComboBoxItem(enumerador.Descricao, enumerador.Id.ToString());
+            //    item.Attributes.Add("Codigo", enumerador.Id.ToString());
+            //    cboFiltroPatente.Items.Add(item);
+            //    item.DataBind();
+            //}
         }
 
         public string Codigo
