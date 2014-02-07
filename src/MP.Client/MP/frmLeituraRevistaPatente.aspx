@@ -2,10 +2,7 @@
     CodeBehind="frmLeituraRevistaPatente.aspx.cs" Inherits="MP.Client.MP.frmLeituraRevistaPatente" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="~/MP/ctrlProcurador.ascx" TagName="ctrlProcurador" TagPrefix="uc1" %>
-<%@ Register Src="~/MP/ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas"
-    TagPrefix="uc2" %>
-<%@ Register Src="~/ctrlUF.ascx" TagName="ctrlUF" TagPrefix="uc3" %>
+<%@ Register Src="ctrlFiltroRevistaPatente.ascx" TagName="ctrlFitroRevistaPatente" TagPrefix="uc3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
@@ -222,34 +219,18 @@
                                         </tr>
                                         <tr>
                                             <td class="th3">
-                                                <asp:Label ID="Label2" runat="server" Text="Processo:"></asp:Label>
+                                                <asp:Label ID="lblCampo" runat="server" Text="Campo:"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <asp:TextBox ID="txtProcesso" runat="server" />
+                                                <uc3:ctrlFitroRevistaPatente ID="ctrlFitroRevistaPatente1" runat="server" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="th3">
-                                                <asp:Label ID="lblDepositante" runat="server" Text="Depositante:"></asp:Label>
+                                                <asp:Label ID="lblValor" runat="server" Text="Valor:"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <asp:TextBox ID="txtDepositante" runat="server" Width="80%" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="th3">
-                                                <asp:Label ID="lblTitular" runat="server" Text="Titular:"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <asp:TextBox ID="txtTitular" runat="server" Width="80%" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="th3">
-                                                <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
+                                                <asp:TextBox ID="txtValor" runat="server" Width="80%" />
                                             </td>
                                         </tr>
                                         <tr>

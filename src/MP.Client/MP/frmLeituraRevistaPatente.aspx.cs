@@ -50,6 +50,9 @@ namespace MP.Client.MP
         {
             RadTabStrip1.Tabs[1].Enabled = habilite;
             RadTabStrip1.Tabs[2].Enabled = habilite;
+
+            if(habilite)
+                ctrlFitroRevistaPatente1.Inicializa();
         }
 
         private void CarregueRevistasAProcessar()
@@ -359,12 +362,11 @@ namespace MP.Client.MP
 
         protected void btnFiltrar_ButtonClick(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtProcesso.Text) && string.IsNullOrEmpty(txtDepositante.Text) &&
-                string.IsNullOrEmpty(txtTitular.Text) && ctrlProcurador.ProcuradorSelecionado == null)
+            if (string.IsNullOrEmpty(txtValor.Text))
             {
                 // Nenhum filtro informado
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Informe um filtro para consultar as informações."),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Informe o valor do filtro a ser pesquisado."),
                                                          false);
             }
             else
@@ -373,10 +375,8 @@ namespace MP.Client.MP
                 var revistaSelecionada = (IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA];
                 var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
 
-                filtro.NumeroDoProcesso = txtProcesso.Text;
-                filtro.Depositante = txtDepositante.Text;
-                filtro.Titular = txtTitular.Text;
-                filtro.Procurador = ctrlProcurador.ProcuradorSelecionado;
+                filtro.EnumeradorFiltro = EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo));
+                filtro.ValorFiltro = txtValor.Text;
 
                 // leitura .xml
                 var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
@@ -408,10 +408,8 @@ namespace MP.Client.MP
 
         protected void btnLimpar_ButtonClick(object sender, EventArgs e)
         {
-            txtProcesso.Text = string.Empty;
-            txtDepositante.Text = string.Empty;
-            txtTitular.Text = string.Empty;
-            ctrlProcurador.Inicializa();
+            ctrlFitroRevistaPatente1.Inicializa();
+            txtValor.Text = string.Empty;
         }
 
         protected override string ObtenhaIdFuncao()

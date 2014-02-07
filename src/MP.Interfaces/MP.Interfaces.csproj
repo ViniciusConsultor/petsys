@@ -74,6 +74,7 @@
     <Compile Include="Mapeadores\IMapeadorDeTitular.cs" />
     <Compile Include="Negocio\Apresentacao.cs" />
     <Compile Include="Negocio\DTOLayoutLeituraRevistaPatente.cs" />
+    <Compile Include="Negocio\EnumeradorFiltroPatente.cs" />
     <Compile Include="Negocio\Execucao\ISobrestator.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroLeituraDeRevistaDeMarcas.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorApresentacao.cs" />
