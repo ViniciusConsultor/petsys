@@ -170,9 +170,7 @@ namespace MP.Client.MP
             var cedenteCodigo = string.Empty;
             var imagemDoRecibo = string.Empty;
 
-            if(configuracaoDoCedente != null && configuracaoDoCedente.ConfiguracaoDeBoletoBancario != null &&
-                configuracaoDoCedente.ConfiguracaoDeBoletoBancario.Cedente != null && 
-                configuracaoDoCedente.ConfiguracaoDeBoletoBancario.Cedente.Pessoa != null)
+            if (configuracaoDoCedente != null && configuracaoDoCedente.ConfiguracaoDeBoletoBancario != null)
             {
                 imagemDoRecibo = configuracaoDoCedente.ConfiguracaoDeBoletoBancario.ImagemDeCabecalhoDoReciboDoSacado;
 
@@ -186,9 +184,9 @@ namespace MP.Client.MP
                     cedenteConta = cedentePessoa.DadoBancario.Conta.Numero;
                     cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.Value.ToString("000");
 
-                    if(!string.IsNullOrEmpty(cedenteConta))
+                    if (!string.IsNullOrEmpty(cedenteConta))
                     {
-                        cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length -1, 1);
+                        cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length - 1, 1);
                     }
                 }
 
@@ -222,9 +220,16 @@ namespace MP.Client.MP
                         }
                     }
                 }
-
             }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInformacao("Configurações do cedente ou boleto bancário inválidas, favor verificar."),
+                                                    false);
 
+                return;
+            }
+            
             // formata código do cedente
             if(!string.IsNullOrEmpty(cedenteOperacaoConta) && !string.IsNullOrEmpty(cedenteConta))
             {
