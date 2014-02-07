@@ -176,6 +176,13 @@
     <Compile Include="MP\ctrlDespachoDePatentes.ascx.designer.cs">
       <DependentUpon>ctrlDespachoDePatentes.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlFiltroRevistaPatente.ascx.cs">
+      <DependentUpon>ctrlFiltroRevistaPatente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlFiltroRevistaPatente.ascx.designer.cs">
+      <DependentUpon>ctrlFiltroRevistaPatente.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlInventor.ascx.cs">
       <DependentUpon>ctrlInventor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -380,6 +387,7 @@
     <Content Include="MP\ctrlApresentacao.ascx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlDespachoDePatentes.ascx" />
+    <Content Include="MP\ctrlFiltroRevistaPatente.ascx" />
     <Content Include="MP\ctrlInventor.ascx" />
     <Content Include="MP\ctrlMarcas.ascx" />
     <Content Include="MP\ctrlMes.ascx" />

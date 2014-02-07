@@ -204,7 +204,20 @@ namespace MP.Servicos.Local
         {
             try
             {
-                return xmlNode.Attributes.GetNamedItem(tagDoNo) != null ? Convert.ToDateTime(xmlNode.Attributes.GetNamedItem(tagDoNo).Value) : (DateTime?)DateTime.MinValue;
+                if(xmlNode.Attributes.GetNamedItem(tagDoNo) == null)
+                    return DateTime.MinValue;
+
+                string valorTag = xmlNode.Attributes.GetNamedItem(tagDoNo).Value;
+                DateTime dataDaTag;
+
+                DateTime.TryParse(xmlNode.Attributes.GetNamedItem(tagDoNo).Value, out dataDaTag);
+
+                if (dataDaTag != DateTime.MinValue)
+                    return dataDaTag;
+
+                DateTime.TryParse(xmlNode.Attributes.GetNamedItem(tagDoNo).Value.Substring(0, 10), out dataDaTag);
+
+                return dataDaTag;
             }
             catch (Exception)
             {
@@ -568,16 +581,92 @@ namespace MP.Servicos.Local
             {
                 bool deveAdicionarProcesso = false;
 
-                if (!string.IsNullOrEmpty(filtro.NumeroDoProcesso) && processo.NumeroDoProcesso.Contains(filtro.NumeroDoProcesso))
+                //if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.CodigoDoRegistro && processo.DataDaCriacao.HasValue
+                //    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDaCriacao.Value.ToString().ToUpper()))
+                //    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDaPatente && !string.IsNullOrEmpty(processo.NumeroProcessoDaPatente)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.NumeroProcessoDaPatente.ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (!string.IsNullOrEmpty(filtro.Depositante) && filtro.Depositante.Equals(processo.Depositante))
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDoPedido && !string.IsNullOrEmpty(processo.NumeroDoPedido)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.NumeroDoPedido.ToString().ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (!string.IsNullOrEmpty(filtro.Titular) && filtro.Titular.Equals(processo.Titular))
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDoDeposito && processo.DataDeDeposito.HasValue
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDeDeposito.Value.ToString().ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.Procurador != null && filtro.Procurador.Pessoa.Nome.Equals(processo.Procurador))
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PrioridadeUnionista && !string.IsNullOrEmpty(processo.PrioridadeUnionista)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.PrioridadeUnionista.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDaPublicacao && processo.DataPublicacao.HasValue
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataPublicacao.Value.ToString().ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeConcenssao && processo.DataDeConcessao.HasValue
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDeConcessao.Value.ToString().ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.ClassificacaoInternacional && !string.IsNullOrEmpty(processo.ClassificacaoInternacional)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.ClassificacaoInternacional.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Titulo && !string.IsNullOrEmpty(processo.Titulo)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.Titulo.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Resumo && !string.IsNullOrEmpty(processo.Resumo)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.Resumo.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                //if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PatentePrincipalAdicao && processo.DataDaCriacao != null
+                //    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDaCriacao.ToString().ToUpper()))
+                //    deveAdicionarProcesso = true;
+
+                //if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PatentePrincipalDivisao && processo.DataDaCriacao != null
+                //    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDaCriacao.ToString().ToUpper()))
+                //    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PrioridadeInterna && !string.IsNullOrEmpty(processo.PrioridadeInterna)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.PrioridadeInterna.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoDepositante && !string.IsNullOrEmpty(processo.Depositante)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.Depositante.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoInventor && !string.IsNullOrEmpty(processo.Inventor)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.Inventor.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoTitular && !string.IsNullOrEmpty(processo.Titular)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.Titular.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoProcurador && !string.IsNullOrEmpty(processo.Procurador)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.Procurador.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PaisesDesignados && !string.IsNullOrEmpty(processo.PaisesDesignados)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.PaisesDesignados.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeInicioFaseNacional && processo.DataInicioFaseNacional.HasValue
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataInicioFaseNacional.Value.ToString().ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional && !string.IsNullOrEmpty(processo.DadosDepositoInternacional)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DadosDepositoInternacional.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroIdiomaDataPublicacaoInternacional && !string.IsNullOrEmpty(processo.DadosPublicacaoInternacional)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DadosPublicacaoInternacional.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Rp && !string.IsNullOrEmpty(processo.ResponsavelPagamentoImpostoDeRenda)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.ResponsavelPagamentoImpostoDeRenda.ToUpper()))
                     deveAdicionarProcesso = true;
 
                  if(deveAdicionarProcesso)

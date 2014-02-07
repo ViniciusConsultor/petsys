@@ -10,9 +10,7 @@ namespace MP.Negocio.Filtros.Patentes
     [Serializable]
     public class FiltroLeituraDeRevistaDePatentes : IFiltroLeituraDeRevistaDePatentes
     {
-        public string NumeroDoProcesso { get; set; }
-        public string Depositante { get; set; }
-        public string Titular { get; set; }
-        public IProcurador Procurador { get; set; }
+        public EnumeradorFiltroPatente EnumeradorFiltro { get; set; }
+        public string ValorFiltro { get; set; }
     }
 }

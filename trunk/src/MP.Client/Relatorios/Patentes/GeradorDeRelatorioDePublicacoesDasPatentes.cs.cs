@@ -49,9 +49,9 @@ namespace MP.Client.Relatorios.Patentes
 
         private void EscrevaProcessosNoDocumentoAnalitico()
         {
-            var tabela = new Table(6);
+            var tabela = new Table(1);
 
-            tabela.Widths = new Single[] { 100, 250, 90, 65, 40, 20 };
+            tabela.Widths = new Single[] { 218 };
 
             tabela.Padding = 0;
             tabela.Spacing = 0;
@@ -62,8 +62,8 @@ namespace MP.Client.Relatorios.Patentes
 
             foreach (var processo in _processosPatentes)
             {
-                var tabela1 = new Table(1);
-                tabela1.Widths = new Single[] { 400 };
+                var tabela1 = new Table(6);
+                tabela1.Widths = new Single[] { 29, 50, 24, 50, 15, 50 };
                 tabela1.Padding = 0;
                 tabela1.Spacing = 0;
                 tabela1.Width = 100;
@@ -96,7 +96,7 @@ namespace MP.Client.Relatorios.Patentes
                 tabela1.AddCell(valorDespacho);
 
                 var tabela2 = new Table(4);
-                tabela2.Widths = new Single[] { 100, 100, 100, 100 };
+                tabela2.Widths = new Single[] { 5, 19, 4, 31 };
                 tabela2.Padding = 0;
                 tabela2.Spacing = 0;
                 tabela2.Width = 100;
@@ -132,7 +132,7 @@ namespace MP.Client.Relatorios.Patentes
                 tabela2.AddCell(valorNatureza);
 
                 var tabela3 = new Table(2);
-                tabela3.Widths = new Single[] { 100, 300 };
+                tabela3.Widths = new Single[] { 30, 330 };
                 tabela3.Padding = 0;
                 tabela3.Spacing = 0;
                 tabela3.Width = 100;
@@ -150,11 +150,12 @@ namespace MP.Client.Relatorios.Patentes
                 {
                     clientes = processo.Patente.Clientes.Aggregate(clientes, (current, cliente) => current + (cliente.Pessoa.Nome + " - "));
 
-                    if (!string.IsNullOrEmpty(clientes))
+                    if (!string
+                        .IsNullOrEmpty(clientes))
                         clientes = clientes.Substring(0, clientes.Length - 3);
                 }
 
-                var valorCliente = new Cell(new Phrase(clientes, _Fonte1)) { Colspan = 5 };
+                var valorCliente = new Cell(new Phrase(clientes, _Fonte1));
                 valorCliente.DisableBorderSide(0);
                 tabela3.AddCell(valorCliente);
 
@@ -176,6 +177,9 @@ namespace MP.Client.Relatorios.Patentes
                 valorProcurador.Colspan = 1;
                 valorProcurador.DisableBorderSide(0);
                 tabela3.AddCell(valorProcurador);
+
+                tabela3.AddCell(ObtenhaCelulaVazia());
+                tabela3.AddCell(ObtenhaCelulaVazia());
 
                 tabela.AddCell(new Cell(tabela1));
                 tabela.AddCell(new Cell(tabela2));
@@ -261,7 +265,8 @@ namespace MP.Client.Relatorios.Patentes
 
         private Cell ObtenhaCelulaVazia()
         {
-            var celulaVazia = new Cell(new Phrase(string.Empty, _Fonte1));
+            var celulaVazia = new Cell(new Phrase("\n", _Fonte1));
+            celulaVazia.Colspan = 2;
             celulaVazia.DisableBorderSide(0);
             return celulaVazia;
         }
