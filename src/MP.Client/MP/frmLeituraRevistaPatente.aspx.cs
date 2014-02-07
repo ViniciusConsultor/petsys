@@ -375,7 +375,7 @@ namespace MP.Client.MP
                 var revistaSelecionada = (IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA];
                 var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
 
-                filtro.EnumeradorFiltro = EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo));
+                //filtro.EnumeradorFiltro = EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo));
                 filtro.ValorFiltro = txtValor.Text;
 
                 // leitura .xml
