@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -362,7 +363,14 @@ namespace MP.Client.MP
 
         protected void btnFiltrar_ButtonClick(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtValor.Text))
+            if (string.IsNullOrEmpty(ctrlFitroRevistaPatente1.Codigo))
+            {
+                // Nenhum filtro informado
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Selecionado o campo que deseja filtrar."),
+                                                         false);
+            }
+            else if (string.IsNullOrEmpty(txtValor.Text))
             {
                 // Nenhum filtro informado
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -375,7 +383,7 @@ namespace MP.Client.MP
                 var revistaSelecionada = (IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA];
                 var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
 
-                //filtro.EnumeradorFiltro = EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo));
+                filtro.EnumeradorFiltro = EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo));
                 filtro.ValorFiltro = txtValor.Text;
 
                 // leitura .xml
@@ -392,6 +400,7 @@ namespace MP.Client.MP
                 }
                 else
                 {
+                    CarregaGridFiltros(new List<IRevistaDePatente>());
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe resultados para o filtro informado."),
                                                          false);
