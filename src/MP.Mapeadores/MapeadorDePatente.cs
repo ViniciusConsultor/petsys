@@ -25,7 +25,7 @@ namespace MP.Mapeadores
             patente.Identificador = GeradorDeID.getInstancia().getProximoID();
 
             comandoSQL.Append("INSERT INTO MP_PATENTE(IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO,");
-            comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO, IMAGEM, PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES) VALUES(");
+            comandoSQL.Append("RESUMO_PATENTE, QTDEREINVINDICACAO, IMAGEM, PAGAMANUTENCAO, DATAPRIMEIRAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES) VALUES(");
             comandoSQL.Append(patente.Identificador + ", ");
             comandoSQL.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(patente.TituloPatente) + "', ");
             comandoSQL.Append(patente.NaturezaPatente.IdNaturezaPatente + ", ");
@@ -40,11 +40,14 @@ namespace MP.Mapeadores
                                   : string.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(patente.Imagem), "', "));
 
             if (patente.Manutencao == null)
-                comandoSQL.Append("'0', NULL, NULL, NULL, NULL)");
+                comandoSQL.Append("'0', NULL, NULL, NULL, NULL, NULL)");
 
             else
             {
                 comandoSQL.Append("'1', ");
+                comandoSQL.Append(patente.Manutencao.DataDaPrimeiraManutencao.HasValue
+                               ? String.Concat(patente.Manutencao.DataDaPrimeiraManutencao.Value.ToString("yyyyMMdd"), ", ")
+                               : "NULL, ");
                 comandoSQL.Append(String.Concat("'", patente.Manutencao.Periodo.Codigo, "', "));
                 comandoSQL.Append(String.Concat("'", patente.Manutencao.FormaDeCobranca.Codigo, "', "));
                 comandoSQL.Append(String.Concat(UtilidadesDePersistencia.TPVd(patente.Manutencao.ValorDeCobranca), ", "));
@@ -107,6 +110,7 @@ namespace MP.Mapeadores
             if (patente.Manutencao == null)
             {
                 comandoSQL.Append("PAGAMANUTENCAO = '0', ");
+                comandoSQL.Append("DATAPRIMEIRAMANUTENCAO = NULL, ");
                 comandoSQL.Append("PERIODO = NULL, ");
                 comandoSQL.Append("FORMADECOBRANCA = NULL, ");
                 comandoSQL.Append("VALORDECOBRANCA = NULL, ");
@@ -115,6 +119,9 @@ namespace MP.Mapeadores
             else
             {
                 comandoSQL.Append("PAGAMANUTENCAO = '1', ");
+                comandoSQL.Append(patente.Manutencao.DataDaPrimeiraManutencao.HasValue
+                               ? String.Concat("DATAPRIMEIRAMANUTENCAO = ", patente.Manutencao.DataDaPrimeiraManutencao.Value.ToString("yyyyMMdd"), ", ")
+                               : "NULL, ");
                 comandoSQL.Append(String.Concat("PERIODO = '", patente.Manutencao.Periodo.Codigo, "', "));
                 comandoSQL.Append(String.Concat("FORMADECOBRANCA = '", patente.Manutencao.FormaDeCobranca.Codigo, "', "));
                 comandoSQL.Append(string.Concat("VALORDECOBRANCA = ", UtilidadesDePersistencia.TPVd(patente.Manutencao.ValorDeCobranca), ", "));
@@ -270,7 +277,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
-            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES, IMAGEM FROM MP_PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, DATAPRIMEIRAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES, IMAGEM FROM MP_PATENTE ");
             comandoSQL.Append("WHERE IDPATENTE = " + id);
 
             using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
@@ -287,7 +294,7 @@ namespace MP.Mapeadores
             IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
 
             comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
-            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES, IMAGEM FROM MP_PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, DATAPRIMEIRAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, MES, IMAGEM FROM MP_PATENTE ");
 
             if (!string.IsNullOrEmpty(titulo))
                 comandoSQL.Append("WHERE TITULOPATENTE like '%" + titulo + "%'");
@@ -307,7 +314,7 @@ namespace MP.Mapeadores
 
             comandoSQL.Append("SELECT PATENTE.IDPATENTE, PATENTE.TITULOPATENTE, PATENTE.IDNATUREZAPATENTE, PATENTE.OBRIGACAOGERADA, ");
             comandoSQL.Append("PATENTE.DATACADASTRO, PATENTE.OBSERVACAO, PATENTE.RESUMO_PATENTE, PATENTE.QTDEREINVINDICACAO, ");
-            comandoSQL.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES, IMAGEM FROM MP_PATENTE PATENTE ");
+            comandoSQL.Append("PAGAMANUTENCAO, DATAPRIMEIRAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES, IMAGEM FROM MP_PATENTE PATENTE ");
             comandoSQL.Append("INNER JOIN MP_PATENTECLIENTE CLIPATENTE ON CLIPATENTE.IDPATENTE = PATENTE.IDPATENTE ");
             comandoSQL.Append("WHERE CLIPATENTE.IDCLIENTE = " + idCliente);
 
@@ -625,6 +632,10 @@ namespace MP.Mapeadores
             if (UtilidadesDePersistencia.GetValorBooleano(reader, "PagaManutencao"))
             {
                 var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
+
+                if (!UtilidadesDePersistencia.EhNulo(reader, "DATAPRIMEIRAMANUTENCAO"))
+                    manutencao.DataDaPrimeiraManutencao = UtilidadesDePersistencia.getValorDate(reader,
+                                                                                                "DATAPRIMEIRAMANUTENCAO");
 
                 manutencao.Periodo = Periodo.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(reader, "Periodo"));
                 manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(reader, "FormaDeCobranca"));

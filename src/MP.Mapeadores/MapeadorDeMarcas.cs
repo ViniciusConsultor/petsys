@@ -86,6 +86,10 @@ namespace MP.Mapeadores
                     {
                         var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
 
+                        if (!UtilidadesDePersistencia.EhNulo(leitor, "DataDaPrimeiraManutencao"))
+                            manutencao.DataDaPrimeiraManutencao = UtilidadesDePersistencia.getValorDate(leitor,
+                                                                                                        "DataDaPrimeiraManutencao");
+
                         manutencao.Periodo = Periodo.ObtenhaPorCodigo(UtilidadesDePersistencia.getValorInteger(leitor, "Periodo"));
                         manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(UtilidadesDePersistencia.GetValorString(leitor, "FormaDeCobranca"));
                         manutencao.ValorDeCobranca =  UtilidadesDePersistencia.getValorDouble(leitor, "ValorDeCobranca");
@@ -110,7 +114,7 @@ namespace MP.Mapeadores
             sql.Append("SELECT IDMARCA IdMarca, CODIGONCL NCL, CODIGOAPRESENTACAO Apresentacao, IDCLIENTE Cliente, CODIGONATUREZA Natureza, ");
             sql.Append("DESCRICAO_MARCA DescricaoDaMarca, ESPECIFICACAO_PROD_SERV EspecificacaoDeProdutosEServicos, IMAGEM_MARCA ImagemDaMarca, OBSERVACAO_MARCA ObservacaoDaMarca, CODIGOCLASSE CodigoDaClasse, ");
             sql.Append("CODIGOCLASSE_SUBCLASSE1 CodigoDaSubClasse1, CODIGOCLASSE_SUBCLASSE2 CodigoDaSubClasse2, CODIGOCLASSE_SUBCLASSE3 CodigoDaSubClasse3, ");
-            sql.Append("PAGAMANUTENCAO PagaManutencao, PERIODO Periodo, FORMADECOBRANCA FormaDeCobranca, VALORDECOBRANCA ValorDeCobranca, MES Mes ");
+            sql.Append("PAGAMANUTENCAO PagaManutencao, DATAPRIMEIRAMANUTENCAO DataDaPrimeiraManutencao, PERIODO Periodo, FORMADECOBRANCA FormaDeCobranca, VALORDECOBRANCA ValorDeCobranca, MES Mes ");
             sql.Append("FROM MP_MARCAS ");
 
             return sql;
@@ -144,7 +148,7 @@ namespace MP.Mapeadores
             sql.Append("INSERT INTO MP_MARCAS (");
             sql.Append("IDMARCA, CODIGONCL, CODIGOAPRESENTACAO, IDCLIENTE, CODIGONATUREZA, DESCRICAO_MARCA, ESPECIFICACAO_PROD_SERV, ");
             sql.Append("IMAGEM_MARCA, OBSERVACAO_MARCA, CODIGOCLASSE, CODIGOCLASSE_SUBCLASSE1, CODIGOCLASSE_SUBCLASSE2, CODIGOCLASSE_SUBCLASSE3, ");
-            sql.Append("PAGAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES) ");
+            sql.Append("PAGAMANUTENCAO, DATAPRIMEIRAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, MES) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(marca.IdMarca.Value.ToString(), ", "));
             sql.Append(String.Concat("'", marca.NCL.Codigo, "', "));
@@ -164,11 +168,14 @@ namespace MP.Mapeadores
 
             if (marca.Manutencao == null)
             {
-                sql.Append("'0', NULL, NULL, NULL, NULL)");
+                sql.Append("'0', NULL, NULL, NULL, NULL, NULL)");
             }
             else
             {
                 sql.Append("'1', ");
+                sql.Append(marca.Manutencao.DataDaPrimeiraManutencao.HasValue
+                               ? String.Concat(marca.Manutencao.DataDaPrimeiraManutencao.Value.ToString("yyyyMMdd"),", ")
+                               : "NULL, ");
                 sql.Append(String.Concat("'", marca.Manutencao.Periodo.Codigo, "', "));
                 sql.Append(String.Concat("'", marca.Manutencao.FormaDeCobranca.Codigo, "', "));
                 sql.Append(String.Concat(UtilidadesDePersistencia.TPVd(marca.Manutencao.ValorDeCobranca), ", "));
@@ -221,6 +228,7 @@ namespace MP.Mapeadores
             if (marca.Manutencao == null)
             {
                 sql.Append("PAGAMANUTENCAO = '0', ") ;
+                sql.Append("DATAPRIMEIRAMANUTENCAO = NULL, ");
                 sql.Append("PERIODO = NULL, ");
                 sql.Append("FORMADECOBRANCA = NULL, ");
                 sql.Append("VALORDECOBRANCA = NULL, ");
@@ -229,6 +237,11 @@ namespace MP.Mapeadores
             else
             {
                 sql.Append("PAGAMANUTENCAO = '1', ");
+
+                sql.Append(marca.Manutencao.DataDaPrimeiraManutencao.HasValue
+                               ? String.Concat("DATAPRIMEIRAMANUTENCAO = ", marca.Manutencao.DataDaPrimeiraManutencao.Value.ToString("yyyyMMdd"), ", ")
+                               : "NULL, ");
+
                 sql.Append(String.Concat("PERIODO = '", marca.Manutencao.Periodo.Codigo, "', "));
                 sql.Append(String.Concat("FORMADECOBRANCA = '", marca.Manutencao.FormaDeCobranca.Codigo, "', "));
                 sql.Append(string.Concat("VALORDECOBRANCA = ", UtilidadesDePersistencia.TPVd(marca.Manutencao.ValorDeCobranca), ", "));

@@ -15,7 +15,10 @@ namespace MP.Negocio
         public FormaCobrancaManutencao FormaDeCobranca { get; set; }
         public double ValorDeCobranca { get; set; }
         public Mes MesQueIniciaCobranca { get; set; }
-        
+
+        public DateTime? DataDaPrimeiraManutencao
+        { get; set; }
+
         public double ObtenhaValorRealEmEspecie()
         {
             if (FormaDeCobranca.Equals(FormaCobrancaManutencao.ValorFixo)) return ValorDeCobranca;

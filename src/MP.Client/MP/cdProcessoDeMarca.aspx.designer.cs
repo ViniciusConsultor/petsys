@@ -760,6 +760,24 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Panel pnlDadosDaManutencao;
         
         /// <summary>
+        /// Label32 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label32;
+        
+        /// <summary>
+        /// txtDataDaPrimeiraManutencao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtDataDaPrimeiraManutencao;
+        
+        /// <summary>
         /// Label30 control.
         /// </summary>
         /// <remarks>

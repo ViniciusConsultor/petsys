@@ -11,5 +11,6 @@ namespace MP.Interfaces.Negocio
         FormaCobrancaManutencao FormaDeCobranca { get; set; }
         double ValorDeCobranca { get; set; }
         Mes MesQueIniciaCobranca { get; set; }
+        DateTime? DataDaPrimeiraManutencao { get; set; }
     }
 }

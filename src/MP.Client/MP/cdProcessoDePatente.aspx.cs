@@ -285,6 +285,7 @@ namespace MP.Client.MP
 
             rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
             pnlMesInicioCobranca.Visible = false;
+            txtDataDaPrimeiraManutencao.Clear();
             ctrlPaisProcesso.LimparControle();
 
             //Tab da imagem do desenho industrial
@@ -355,6 +356,9 @@ namespace MP.Client.MP
 
             if (rblPagaManutencao.SelectedValue == "1")
             {
+                if (!txtDataDaPrimeiraManutencao.SelectedDate.HasValue)
+                    inconsitencias.Add("É necessário informar a data da primeira manutenção.");
+
                 if (string.IsNullOrEmpty(rblFormaDeCobranca.SelectedValue))
                     inconsitencias.Add("É necessário informar a forma de cobrança.");
 
@@ -643,6 +647,7 @@ namespace MP.Client.MP
             if (patente.Manutencao != null)
             {
                 pnlDadosDaManutencao.Visible = true;
+                txtDataDaPrimeiraManutencao.SelectedDate = patente.Manutencao.DataDaPrimeiraManutencao;
                 ctrlPeriodo.Codigo = patente.Manutencao.Periodo.Codigo.ToString();
                 ctrlPeriodo.PeriodoSelecionado = patente.Manutencao.Periodo;
 
@@ -1025,6 +1030,9 @@ namespace MP.Client.MP
             if (rblPagaManutencao.SelectedValue.Equals("1"))
             {
                 var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
+
+                manutencao.DataDaPrimeiraManutencao = txtDataDaPrimeiraManutencao.SelectedDate;
+
                 manutencao.Periodo = ctrlPeriodo.PeriodoSelecionado;
 
                 if (!string.IsNullOrEmpty(ctrlMes.Codigo))
@@ -1208,6 +1216,7 @@ namespace MP.Client.MP
                 txtValor.Text = null;
                 ctrlPeriodo.Inicializa();
                 ctrlMes.Inicializa();
+                txtDataDaPrimeiraManutencao.Clear();
             }
         }
 
