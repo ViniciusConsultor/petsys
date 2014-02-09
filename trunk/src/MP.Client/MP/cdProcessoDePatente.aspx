@@ -14,19 +14,19 @@
 <%@ Register Src="ctrlPeriodo.ascx" TagName="ctrlPeriodo" TagPrefix="uc10" %>
 <%@ Register Src="ctrlMes.ascx" TagName="ctrlMes" TagPrefix="uc11" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:radtoolbar id="rtbToolBar" runat="server" skin="Vista" style="width: 100%;"
-        onbuttonclick="rtbToolBar_ButtonClick">
-        <items>
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
+        OnButtonClick="rtbToolBar_ButtonClick">
+        <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/save.gif" Text="Salvar"
                 CommandName="btnSalvar" CausesValidation="True" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
-        </items>
-    </telerik:radtoolbar>
-    <telerik:raddocklayout id="RadDockLayout1" runat="server" skin="Vista">
-        <telerik:raddockzone id="RadDockZone1" runat="server" skin="Vista">
-            <telerik:raddock id="RadDock2" runat="server" title="Dados do processo de patente"
-                defaultcommands="ExpandCollapse" enableanimation="True" skin="Vista" dockmode="Docked">
-                <contenttemplate>
+        </Items>
+    </telerik:RadToolBar>
+    <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
+        <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
+            <telerik:RadDock ID="RadDock2" runat="server" Title="Dados do processo de patente"
+                DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
+                <ContentTemplate>
                     <telerik:RadTabStrip ID="tabPatente" runat="server" SelectedIndex="0" Skin="Vista"
                         MultiPageID="RadMultiPage1" CausesValidation="False">
                         <Tabs>
@@ -57,7 +57,8 @@
                                             <asp:Label ID="Label1" runat="server" Text="Processo"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64" Type="Number" Width="20%" MaxLength="20">
+                                            <telerik:RadNumericTextBox ID="txtProcesso" runat="server" DataType="System.Int64"
+                                                Type="Number" Width="20%" MaxLength="20">
                                                 <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
                                                 </NumberFormat>
                                             </telerik:RadNumericTextBox>
@@ -812,15 +813,15 @@
                                 </table>
                             </asp:Panel>
                         </telerik:RadPageView>
-                         <telerik:RadPageView ID="RadPageView4" runat="server" SkinID="Vista">
+                        <telerik:RadPageView ID="RadPageView4" runat="server" SkinID="Vista">
                             <asp:Panel ID="pnlDesenho" runat="server">
                                 <table class="tabela">
                                     <tr>
-                                      <td class="th3">
-                                                <asp:Label ID="Label253" runat="server" Text="Imagem do desenho"></asp:Label>
-                                            </td>
-                                            <td class="td" rowspan="5">
-                                                <asp:Image ID="imgImagem" runat="server" />
+                                        <td class="th3">
+                                            <asp:Label ID="Label253" runat="server" Text="Imagem do desenho"></asp:Label>
+                                        </td>
+                                        <td class="td" rowspan="5">
+                                            <asp:Image ID="imgImagem" runat="server" />
                                             <telerik:RadScriptBlock ID="RadScriptBlock2" runat="server">
                                                 <script type="text/javascript">
                                 //<![CDATA[
@@ -843,8 +844,8 @@
                                                 Localization-Select="Procurar" OnFileUploaded="uplImagem_OnFileUploaded" />
                                             <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateImagem(); return false;"
                                                 CausesValidation="False" CssClass="RadUploadSubmit" />
-                                           </td>
-                                        </tr>
+                                        </td>
+                                    </tr>
                                 </table>
                             </asp:Panel>
                         </telerik:RadPageView>
@@ -864,6 +865,15 @@
                                 </table>
                                 <asp:Panel ID="pnlDadosDaManutencao" runat="server">
                                     <table class="tabela">
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label32" runat="server" Text="Data da primeira manutenção:"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadDatePicker ID="txtDataDaPrimeiraManutencao" runat="server">
+                                                </telerik:RadDatePicker>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td class="th3">
                                                 <asp:Label ID="Label30" runat="server" Text="Período"></asp:Label>
@@ -905,8 +915,8 @@
                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
-                </contenttemplate>
-            </telerik:raddock>
-        </telerik:raddockzone>
-    </telerik:raddocklayout>
+                </ContentTemplate>
+            </telerik:RadDock>
+        </telerik:RadDockZone>
+    </telerik:RadDockLayout>
 </asp:Content>

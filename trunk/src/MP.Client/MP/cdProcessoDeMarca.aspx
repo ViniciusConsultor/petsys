@@ -50,7 +50,7 @@
                                         <td class="td" colspan="3">
                                             <telerik:RadTextBox ID="txtNomeDaMarca" runat="server" MaxLength="255" Width="450px">
                                             </telerik:RadTextBox>
-                                        </td>                                        
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="th3">
@@ -61,7 +61,7 @@
                                                 <NumberFormat GroupSeparator="" DecimalDigits="0" AllowRounding="true" KeepNotRoundedValue="false">
                                                 </NumberFormat>
                                             </telerik:RadNumericTextBox>
-                                        </td>                                        
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="th3">
@@ -86,20 +86,20 @@
                                         <td class="td" colspan="3">
                                             <uc6:ctrlNaturezaDeMarca ID="ctrlNatureza" runat="server" />
                                         </td>
-                                    </tr>                                       
+                                    </tr>
                                     <tr>
-                                            <td class="th3">                                             
+                                        <td class="th3">
                                             <asp:Label ID="Label12" runat="server" Text="Está ativo?"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <asp:RadioButtonList ID="rblEstaAtivo" runat="server" RepeatDirection="Horizontal">
-                                                </asp:RadioButtonList>
-                                            </td>
-                                            <td class="th3" rowspan="5">
-                                                <asp:Label ID="Label253" runat="server" Text="Imagem da marca"></asp:Label>
-                                            </td>
-                                            <td class="td" rowspan="5">
-                                                <asp:Image ID="imgImagemMarca" runat="server"  CssClass="imagemUpLoad"/>
+                                        </td>
+                                        <td class="td">
+                                            <asp:RadioButtonList ID="rblEstaAtivo" runat="server" RepeatDirection="Horizontal">
+                                            </asp:RadioButtonList>
+                                        </td>
+                                        <td class="th3" rowspan="5">
+                                            <asp:Label ID="Label253" runat="server" Text="Imagem da marca"></asp:Label>
+                                        </td>
+                                        <td class="td" rowspan="5">
+                                            <asp:Image ID="imgImagemMarca" runat="server" CssClass="imagemUpLoad" />
                                             <telerik:RadScriptBlock ID="RadScriptBlock2" runat="server">
                                                 <script type="text/javascript">
                                 //<![CDATA[
@@ -122,45 +122,45 @@
                                                 Localization-Select="Procurar" OnFileUploaded="uplImagem_OnFileUploaded" />
                                             <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateImagemMarca(); return false;"
                                                 CausesValidation="False" CssClass="RadUploadSubmit" />
-                                           </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="th3">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
                                             <asp:Label ID="Label2" runat="server" Text="Data de cadastro"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadDatePicker ID="txtDataDeCadastro" runat="server">
                                             </telerik:RadDatePicker>
                                         </td>
-                                        </tr>
-                                        <tr>
-                                             <td class="th3">
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
                                             <asp:Label ID="Label6" runat="server" Text="Data do depósito"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadDatePicker ID="txtDataDeDeposito" runat="server">
                                             </telerik:RadDatePicker>
                                         </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="th3">
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
                                             <asp:Label ID="Label3" runat="server" Text="Data de concessão"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadDatePicker ID="txtDataDeConcessao" runat="server">
                                             </telerik:RadDatePicker>
                                         </td>
-                                        </tr>
-                                        <tr>
-                                           <td class="th3">
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
                                             <asp:Label ID="Label7" runat="server" Text="Data de vigência"></asp:Label>
                                         </td>
                                         <td class="td">
                                             <telerik:RadDatePicker ID="txtDataDeVigencia" runat="server">
                                             </telerik:RadDatePicker>
                                         </td>
-                                        </tr>                                        
-                                    </table>
+                                    </tr>
+                                </table>
                             </asp:Panel>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="RadPageView2" runat="server" SkinID="Vista">
@@ -427,62 +427,71 @@
                         <telerik:RadPageView ID="RadPageView3" runat="server" SkinID="Vista">
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
-                                 <asp:Panel ID="pnlManutencao" runat="server">
-                                <table class="tabela">
-                                    <tr>
-                                        <td class="th3">
-                                            <asp:Label ID="Label29" runat="server" Text="Pagamento de manutenção?"></asp:Label>
-                                        </td>
-                                        <td class="td">
-                                            <asp:RadioButtonList ID="rblPagaManutencao" runat="server" AutoPostBack="true" RepeatDirection="Horizontal"
-                                                OnSelectedIndexChanged="rblPagaManutencao_OnSelectedIndexChanged">
-                                            </asp:RadioButtonList>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <asp:Panel ID="pnlDadosDaManutencao" runat="server">
-                                    <table class="tabela">
-                                        <tr>
-                                            <td class="th3">
-                                                <asp:Label ID="Label30" runat="server" Text="Período"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <uc8:ctrlPeriodo ID="ctrlPeriodo" runat="server" />
-                                            </td>
-                                        </tr>
-                                        <tr runat="server" id="pnlMesDeCobrança">
-                                            <td class="th3">
-                                                <asp:Label ID="lblMes" runat="server" Text="Mês da cobrança"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <uc9:ctrlMes ID="ctrlMes" runat="server" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="th3">
-                                                <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="False" RepeatDirection="Horizontal">
-                                                </asp:RadioButtonList>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="th3">
-                                                <asp:Label ID="lblValor" runat="server" Text="Valor"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
-                                                    DataType="System.Double">
-                                                </telerik:RadNumericTextBox>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </asp:Panel>
-                            </asp:Panel>
+                                    <asp:Panel ID="pnlManutencao" runat="server">
+                                        <table class="tabela">
+                                            <tr>
+                                                <td class="th3">
+                                                    <asp:Label ID="Label29" runat="server" Text="Pagamento de manutenção?"></asp:Label>
+                                                </td>
+                                                <td class="td">
+                                                    <asp:RadioButtonList ID="rblPagaManutencao" runat="server" AutoPostBack="true" RepeatDirection="Horizontal"
+                                                        OnSelectedIndexChanged="rblPagaManutencao_OnSelectedIndexChanged">
+                                                    </asp:RadioButtonList>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <asp:Panel ID="pnlDadosDaManutencao" runat="server">
+                                            <table class="tabela">
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="Label32" runat="server" Text="Data da primeira manutenção:"></asp:Label>
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadDatePicker ID="txtDataDaPrimeiraManutencao" runat="server">
+                                                        </telerik:RadDatePicker>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="Label30" runat="server" Text="Período"></asp:Label>
+                                                    </td>
+                                                    <td class="td">
+                                                        <uc8:ctrlPeriodo ID="ctrlPeriodo" runat="server" />
+                                                    </td>
+                                                </tr>
+                                                <tr runat="server" id="pnlMesDeCobrança">
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblMes" runat="server" Text="Mês da cobrança"></asp:Label>
+                                                    </td>
+                                                    <td class="td">
+                                                        <uc9:ctrlMes ID="ctrlMes" runat="server" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
+                                                    </td>
+                                                    <td class="td">
+                                                        <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="False"
+                                                            RepeatDirection="Horizontal">
+                                                        </asp:RadioButtonList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="th3">
+                                                        <asp:Label ID="lblValor" runat="server" Text="Valor"></asp:Label>
+                                                    </td>
+                                                    <td class="td">
+                                                        <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
+                                                            DataType="System.Double">
+                                                        </telerik:RadNumericTextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </asp:Panel>
+                                    </asp:Panel>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
-                           
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
                 </ContentTemplate>
