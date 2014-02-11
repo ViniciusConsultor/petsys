@@ -355,6 +355,8 @@ namespace MP.Migrador
 
                         var processoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDePatente>();
 
+                        processoDePatente.Pais = paises["BR"];
+
                         processoDePatente.Ativo = !UtilidadesDePersistencia.GetValorBooleano(linha, "Processo_Desativo");
 
                         processoDePatente.DataDoCadastro = ObtenhaData(UtilidadesDePersistencia.GetValor(linha, "data_cadastro"));
@@ -565,6 +567,13 @@ namespace MP.Migrador
             }
 
 
+            if (pessoa.Telefones == null || pessoa.Telefones.Count == 0)
+            {
+                pessoa.AdicioneTelefones(MonteTelefones(linha));
+                temQAtualizar = true;
+            }
+                
+
             if (temQAtualizar) 
                 if (pessoa.Tipo == TipoDePessoa.Fisica)
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
@@ -749,6 +758,90 @@ namespace MP.Migrador
 
         }
 
+
+        private ITelefone CrieTelefone(DataRow linha, string nomeColuna)
+        {
+            var telefone = FabricaGenerica.GetInstancia().CrieObjeto<ITelefone>();
+
+            var numero = ObtenhaApenasNumeros(UtilidadesDePersistencia.GetValor(linha, nomeColuna));
+
+            short DDD = 0;
+            long Numero;
+
+             if (numero.Length ==9)
+                 numero = numero.Substring(0, 2) + "3" + numero.Substring(2);
+        
+            if (numero.Length == 10)
+            {
+                DDD = Convert.ToInt16((Strings.Mid(numero, 1, 2)));
+                Numero = Convert.ToInt64((Strings.Mid(numero, 3)));
+            }
+
+            else
+            {
+               
+                Numero = Convert.ToInt64(numero);
+            }
+
+            telefone.DDD = DDD;
+            telefone.Numero = Numero;
+
+            if (Numero.ToString().StartsWith("9"))
+                telefone.Tipo = TipoDeTelefone.Celular;
+            else
+                telefone.Tipo = TipoDeTelefone.Comercial;
+
+            return telefone;
+        }
+
+        private IList<ITelefone> MonteTelefones(DataRow linha)
+        {
+            var telefones = new List<ITelefone>();
+           
+            if (!Information.IsDBNull(linha["Telefone1"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Telefone1")))
+            {
+                var telefone = CrieTelefone(linha, "Telefone1");
+                telefones.Add(telefone);
+            }
+                
+
+            if (!Information.IsDBNull(linha["Telefone2"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Telefone2")))
+            {
+                var telefone = CrieTelefone(linha, "Telefone2");
+
+                if (!telefones.Contains(telefone))
+                    telefones.Add(CrieTelefone(linha, "Telefone2"));
+            }
+                
+
+            if (!Information.IsDBNull(linha["Telefone3"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Telefone3")))
+            {
+                var telefone = CrieTelefone(linha, "Telefone3");
+
+                if (!telefones.Contains(telefone))
+                    telefones.Add(CrieTelefone(linha, "Telefone3"));
+            }
+                
+
+            if (!Information.IsDBNull(linha["Telefone4"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Telefone4")))
+            {
+                var telefone = CrieTelefone(linha, "Telefone4");
+
+                if (!telefones.Contains(telefone))
+                    telefones.Add(CrieTelefone(linha, "Telefone4"));
+            }
+
+            if (!Information.IsDBNull(linha["Telefone5"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "Telefone5")))
+            {
+                var telefone = CrieTelefone(linha, "Telefone5");
+
+                if (!telefones.Contains(telefone))
+                    telefones.Add(CrieTelefone(linha, "Telefone5"));
+            }
+            
+            return telefones;
+        }
+
         private IList<IEndereco> MonteEndereco(DataRow linha)
         {
             var enderecos = new List<IEndereco>();
@@ -832,10 +925,15 @@ namespace MP.Migrador
             pessoa.Nome = UtilidadesDePersistencia.GetValor(linha, "Nome_Cliente").Trim();
 
             var endereco = MonteEndereco(linha);
-
+            
             if (endereco != null)
                 pessoa.AdicioneEnderecos(endereco);
 
+            var telefones = MonteTelefones(linha);
+            
+            if (telefones != null)
+                pessoa.AdicioneTelefones(telefones);
+            
             var contatos = ObtenhaContatosDaPessoa(linha);
 
             if (contatos.Count > 0) pessoa.AdicioneContatos(contatos);
@@ -883,6 +981,11 @@ namespace MP.Migrador
 
             if (endereco != null)
                 pessoa.AdicioneEnderecos(endereco);
+
+            var telefones = MonteTelefones(linha);
+
+            if (telefones != null)
+                pessoa.AdicioneTelefones(telefones);
 
             var contatos = ObtenhaContatosDaPessoa(linha);
 
@@ -1421,8 +1524,10 @@ namespace MP.Migrador
                 if (!Information.IsDBNull(linha["especificacao_prod_serv"]))
                     marca.EspecificacaoDeProdutosEServicos = UtilidadesDePersistencia.GetValor(linha, "especificacao_prod_serv").Trim();
 
-                if (!Information.IsDBNull(linha["imagem_marca"]))
-                    marca.ImagemDaMarca = UtilidadesDePersistencia.GetValor(linha, "imagem_marca");
+                if (!Information.IsDBNull(linha["imagem_marca"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "imagem_marca")))
+                    marca.ImagemDaMarca = "~/LOADS/IMAGENS/MARCAS/" + UtilidadesDePersistencia.GetValor(linha, "imagem_marca");
+                else
+                    marca.ImagemDaMarca = "~/LOADS/IMAGENS/MARCAS/sem_foto_g.gif";
 
                 var codigoNcl = UtilidadesDePersistencia.GetValor(linha, "codigo_ncl");
 
