@@ -233,7 +233,7 @@ namespace MP.Interfaces.Utilidades
                 return;
             }
 
-            if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCD.IdentificadorCampo, ultimaTagPreenchida))
+            if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.LayoutCD.IdentificadorCampo, ultimaTagPreenchida) && !linha.StartsWith("(DI)"))
             {
                 dtoLayoutLeituraRevistaPatente.CodigoDoDespacho += valorDaLinha.TrimStart().TrimEnd();
                 ultimaTagPreenchida = LayoutRevistaPatente.LayoutCD.IdentificadorCampo;

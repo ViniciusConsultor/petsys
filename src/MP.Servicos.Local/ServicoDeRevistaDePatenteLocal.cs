@@ -594,11 +594,11 @@ namespace MP.Servicos.Local
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDoPedido && !string.IsNullOrEmpty(processo.NumeroDoPedido)
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.NumeroDoPedido.ToString().ToUpper()))
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.NumeroDoPedido.ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDoDeposito && processo.DataDeDeposito.HasValue
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDeDeposito.Value.ToString().ToUpper()))
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDeDeposito.Value.ToString("dd/MM/yyyy").ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PrioridadeUnionista && !string.IsNullOrEmpty(processo.PrioridadeUnionista)
@@ -606,11 +606,11 @@ namespace MP.Servicos.Local
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDaPublicacao && processo.DataPublicacao.HasValue
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataPublicacao.Value.ToString().ToUpper()))
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataPublicacao.Value.ToString("dd/MM/yyyy").ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeConcenssao && processo.DataDeConcessao.HasValue
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDeConcessao.Value.ToString().ToUpper()))
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataDeConcessao.Value.ToString("dd/MM/yyyy").ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.ClassificacaoInternacional && !string.IsNullOrEmpty(processo.ClassificacaoInternacional)
@@ -658,7 +658,7 @@ namespace MP.Servicos.Local
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeInicioFaseNacional && processo.DataInicioFaseNacional.HasValue
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataInicioFaseNacional.Value.ToString().ToUpper()))
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.DataInicioFaseNacional.Value.ToString("dd/MM/yyyy").ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional && !string.IsNullOrEmpty(processo.DadosDepositoInternacional)
