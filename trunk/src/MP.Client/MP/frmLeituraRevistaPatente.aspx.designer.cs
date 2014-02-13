@@ -328,6 +328,51 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadPageView RadPageView3;
         
         /// <summary>
+        /// pnlRelatoriosRadical control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlRelatoriosRadical;
+        
+        /// <summary>
+        /// lblGerarRelatorioPorColidencia control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGerarRelatorioPorColidencia;
+        
+        /// <summary>
+        /// btnGerarRelatorioPorColidencia control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnGerarRelatorioPorColidencia;
+        
+        /// <summary>
+        /// lblRelatorioPorClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRelatorioPorClassificacao;
+        
+        /// <summary>
+        /// btnRelatorioPorClassificacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnRelatorioPorClassificacao;
+        
+        /// <summary>
         /// pnlRadicais control.
         /// </summary>
         /// <remarks>

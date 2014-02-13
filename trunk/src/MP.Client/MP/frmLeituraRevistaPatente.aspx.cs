@@ -715,6 +715,7 @@ namespace MP.Client.MP
 
                 if (listaDeProcessosDePatentesComRadicalCadastrado.Count > 0)
                 {
+                    pnlRelatoriosRadical.Visible = true;
                     foreach (var processoDaRevista in listaDeTodosProcessosDaRevistaXML.Where(processoDaRevista => !string.IsNullOrEmpty(processoDaRevista.Titulo)))
                         listaDeProcessosDaRevistaComPatenteExistente.Add(processoDaRevista);
 
@@ -729,7 +730,7 @@ namespace MP.Client.MP
                     {
                         // não existe patentes colidentes
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe revista com títulos das patentes."),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe patentes colidentes."),
                                                          false);
 
                         LimpaRadicais();
@@ -929,6 +930,14 @@ namespace MP.Client.MP
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
             }
+        }
+
+        protected void btnRelatorioPorClassificacao_OnClick(object sender, ImageClickEventArgs e)
+        {
+        }
+
+        protected void btnGerarRelatorioPorColidencia_OnClick(object sender, ImageClickEventArgs e)
+        {
         }
     }
 }
