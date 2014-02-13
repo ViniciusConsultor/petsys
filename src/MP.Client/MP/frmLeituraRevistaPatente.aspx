@@ -291,6 +291,26 @@
                                 </table>
                             </telerik:RadPageView>
                             <telerik:RadPageView ID="RadPageView3" runat="server" SkinID="Vista">
+                                <asp:Panel ID="pnlRelatoriosRadical" Visible="false" runat="server" Width="80%">
+                                    <table class="tabela">
+                                        <tr>
+                                            <td class="th3" style="width: 40%;">
+                                                <asp:Label ID="lblGerarRelatorioPorColidencia" runat="server" Text="Gerar relatório por colidência:"></asp:Label>
+                                            </td>
+                                            <td class="td" style="width: 10%;">
+                                                <asp:ImageButton ID="btnGerarRelatorioPorColidencia" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                                    ToolTip="Gerar relatório por colidência" OnClick="btnGerarRelatorioPorColidencia_OnClick" />
+                                            </td>
+                                            <td class="th3" style="width: 40%;">
+                                                <asp:Label ID="lblRelatorioPorClassificacao" runat="server" Text="Gerar relatório por classificação:"></asp:Label>
+                                            </td>
+                                            <td class="td" style="width: 10%;">
+                                                <asp:ImageButton ID="btnRelatorioPorClassificacao" runat="server" ImageUrl="~/imagens/imprimir.png"
+                                                    ToolTip="Gerar relatório por classificação" OnClick="btnRelatorioPorClassificacao_OnClick" />
+                                            </td>
+                                        </tr>                                                                
+                                    </table>
+                                </asp:Panel>                                              
                                 <asp:Panel ID="pnlRadicais" runat="server">
                                     <table class="tabela">
                                         <tr>
@@ -358,7 +378,7 @@
                                             <td colspan="2">
                                                 <fieldset class="field">
                                                     <legend class="fieldlegend">
-                                                        <asp:Label ID="Label7" runat="server" Text="Marcas de clientes:"></asp:Label>
+                                                        <asp:Label ID="Label7" runat="server" Text="Patentes de clientes:"></asp:Label>
                                                     </legend>
                                                     <table class="tabela">
                                                         <tr>
