@@ -109,7 +109,7 @@ Public Class FabricaDeMenu
             _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
             _JsMenu.AppendLine("width:800,")
             _JsMenu.AppendLine("height:550,")
-            _JsMenu.AppendLine(String.Concat("html:'" & CrieHTML(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & Funcao.URL) & "',"))
+            _JsMenu.AppendLine(String.Concat("html:'" & UtilidadesWeb.CrieDIVHTMLParaJanela(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & Funcao.URL) & "',"))
             _JsMenu.AppendLine(String.Concat("iconCls:'", Funcao.Imagem, "',"))
             _JsMenu.AppendLine("shim:false,")
             _JsMenu.AppendLine("animCollapse:true,")
@@ -166,21 +166,6 @@ Public Class FabricaDeMenu
         _JsMenu.AppendLine("});")
     End Sub
 
-    Private Function CrieHTML(ByVal URL As String) As String
-        Dim HTML As New StringBuilder
-        Dim IDDiv As String = Guid.NewGuid.ToString
-
-        IDDiv = IDDiv.Replace("-", "_")
-        IDDiv = String.Concat("div_", IDDiv)
-
-        HTML.Append("<div id=""" & IDDiv & """ style=""position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"">")
-        HTML.Append("<div style=""position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"">")
-        HTML.Append("<img src=""imagens/carregandopagina.gif"" alt="""">")
-        HTML.Append("</div>")
-        HTML.Append("</div>")
-        HTML.Append("<iframe src=""" & URL & """ & frameborder=""0""  onload=""hideLoading(" & IDDiv & ")""  style=""width: 100%; height: 100%; background-color: white;""/>")
-
-        Return HTML.ToString
-    End Function
+    
 
 End Class

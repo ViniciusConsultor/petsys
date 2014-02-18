@@ -124,7 +124,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Pastas", 800, 550),
+                                                UtilidadesWeb.ExibeJanela(URL, "Pastas", 800, 550,"cdpastas_aspx"),
                                                 false);
         }
 

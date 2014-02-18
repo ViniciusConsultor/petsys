@@ -163,7 +163,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Cadastro de marcas", 800, 550),
+                                                UtilidadesWeb.ExibeJanela(URL, "Cadastro de marcas", 800, 550, "cdMarcas_aspx"),
                                                 false);
         }
 
@@ -179,7 +179,7 @@ namespace MP.Client.MP
             var url = ObtenhaURL();
             url = String.Concat(url, "?Id=", MarcaSelecionada.IdMarca.Value.ToString());
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.ExibeJanela(url, "Cadastro de marcas", 800, 550),
+                                                    UtilidadesWeb.ExibeJanela(url, "Cadastro de marcas", 800, 550, "cdMarcas_aspx"),
                                                     false);
         }
     }

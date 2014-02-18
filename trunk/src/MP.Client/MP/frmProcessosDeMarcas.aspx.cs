@@ -360,7 +360,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURLDeCadastroDeMarca();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Novo processo de marca", 800, 550), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Novo processo de marca", 800, 550, "cdProcessoDeMarca_aspx"), false);
         }
 
         private string ObtenhaURLDeCadastroDeMarca()
@@ -377,7 +377,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURLLeituraDeRevistaDeMarca();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Leitura da revista de marca", 800, 550), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Leitura da revista de marca", 800, 550, "frmLeituraRevistaMarca_aspx"), false);
         }
         
         private void Recarregue()
@@ -453,7 +453,7 @@ namespace MP.Client.MP
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar processo de marca",
-                                                                                       800, 550), false);
+                                                                                       800, 550, "cdProcessoDeMarca_aspx"), false);
                     break;
 
                 case "Email" :
@@ -462,7 +462,7 @@ namespace MP.Client.MP
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url2,
                                                                                        "Enviar e-mail",
-                                                                                       800, 550), false);
+                                                                                       800, 550, "frmEnviaEmail_aspx"), false);
                     break;
             }
         }
