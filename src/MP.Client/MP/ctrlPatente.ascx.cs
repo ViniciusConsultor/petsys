@@ -142,7 +142,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Cadastro de patente", 800, 550),
+                                                UtilidadesWeb.ExibeJanela(URL, "Cadastro de patente", 800, 550, "cdPatente_aspx"),
                                                 false);
         }
 
@@ -169,8 +169,7 @@ namespace MP.Client.MP
             var url = ObtenhaURL();
             url = String.Concat(url, "?Id=", PatenteSelecionada.Identificador.ToString());
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.ExibeJanela(url, "Cadastro de patente", 800, 550),
-                                                    false);
+                                                    UtilidadesWeb.ExibeJanela(url, "Cadastro de patente", 800, 550, "cdpatente_aspx"), false);
         }
     }
 }

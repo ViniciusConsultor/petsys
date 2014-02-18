@@ -135,24 +135,46 @@ Public Class UtilidadesWeb
         Return Js.ToString
     End Function
 
+    Public Shared Function CrieDIVHTMLParaJanela(ByVal URL As String) As String
+        Dim HTML As New StringBuilder
+        Dim IDDiv As String = Guid.NewGuid.ToString
+
+        IDDiv = IDDiv.Replace("-", "_")
+        IDDiv = String.Concat("div_", IDDiv)
+
+        HTML.Append("<div id=""" & IDDiv & """ style=""position: absolute; width: 100%; height: 100%; background-color: white; padding: 0pt;"">")
+        HTML.Append("<div style=""position: absolute; text-align: center; width: 100%; height: 70px; top: 40%;"">")
+        HTML.Append("<img src=""imagens/carregandopagina.gif"" alt="""">")
+        HTML.Append("</div>")
+        HTML.Append("</div>")
+        HTML.Append("<iframe src=""" & URL & """ & frameborder=""0""  onload=""hideLoading(" & IDDiv & ")""  style=""width: 100%; height: 100%; background-color: white;""/>")
+
+        Return HTML.ToString
+    End Function
+
     Public Shared Function ExibeJanela(ByVal URL As String, _
                                        ByVal TituloDaJanela As String, _
                                        ByVal Width As Integer, _
-                                       ByVal Height As Integer) As String
+                                       ByVal Height As Integer, _
+                                       ByVal IDJanela As String) As String
         Dim Js As New StringBuilder
 
         Js.AppendLine("<script language='javascript' type='text/javascript'>")
         Js.AppendLine("var desktop = this.parent.MyDesktop.desktop;")
-        Js.AppendLine("var win; ")
+        Js.AppendLine(String.Concat("var win = desktop.getWindow('win", IDJanela, "')"))
+        Js.AppendLine("if (!win) { ")
         Js.AppendLine(" win = desktop.createWindow({ ")
-        Js.AppendLine(String.Concat(" id: '", Guid.NewGuid.ToString, "',"))
-        Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
+        Js.AppendLine(String.Concat(" id: 'win", IDJanela, "',"))
+        ' Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
         Js.AppendLine("layout:  'fit',")
         Js.AppendLine("modal: false,")
         Js.AppendLine(String.Concat("width : ", Width.ToString, ","))
         Js.AppendLine(String.Concat("height : ", Height.ToString, ","))
-        Js.AppendLine(String.Concat("html:'<iframe src =""", URL, """ width=""100%"" height=""100%""></iframe>',"))
         Js.AppendLine("});")
+        Js.AppendLine("}")
+
+        Js.AppendLine(String.Concat("win.body.update('", CrieDIVHTMLParaJanela(URL), "');"))
+        Js.AppendLine(String.Concat("win.setTitle('", TituloDaJanela, "');"))
         Js.AppendLine("win.show();")
         Js.AppendLine("</script>")
 

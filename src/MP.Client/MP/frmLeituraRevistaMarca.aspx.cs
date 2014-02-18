@@ -640,7 +640,7 @@ namespace MP.Client.MP
                 ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.ExibeJanela(url,
                                                                                    "Modificar processo de marca",
-                                                                                   800, 550), false);
+                                                                                   800, 550, "cdProcessoDeMarca_aspx"), false);
             }
         }
 
@@ -692,7 +692,7 @@ namespace MP.Client.MP
                 ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.ExibeJanela(url,
                                                                                    "Detalhes do processo da revista marcas",
-                                                                                   800, 550), false);
+                                                                                   800, 550, "frmDetalhesLeituraDaRevista_aspx"), false);
             }
         }
 

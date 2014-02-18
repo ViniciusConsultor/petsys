@@ -295,7 +295,7 @@ namespace MP.Client.MP
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanela(url,
                                                                                "Visualizar boleto gerado",
-                                                                               800, 550), false);
+                                                                               800, 550, "frmVisualizarBoletoGerado_aspx"), false);
 
             // Salvar dados do Boleto gerado
 

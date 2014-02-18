@@ -87,7 +87,7 @@ namespace MP.Client.MP
 
         protected void btnNovo_OnClick(object sender, ImageClickEventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.ExibeJanela(ObtenhaURL(), "Cadastro de titular", 800, 550), 
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.ExibeJanela(ObtenhaURL(), "Cadastro de titular", 800, 550, "cdTitular_aspx"), 
                 false);
         }
 

@@ -38,7 +38,7 @@ Public Class ctrlCedente
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de cedentes", 800, 550), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de cedentes", 800, 550, "cdcedente_aspx"), False)
     End Sub
 
     Private Function ObtenhaURL() As String
