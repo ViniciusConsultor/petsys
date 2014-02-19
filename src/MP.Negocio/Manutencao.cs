@@ -14,10 +14,24 @@ namespace MP.Negocio
         public Periodo Periodo { get; set; }
         public FormaCobrancaManutencao FormaDeCobranca { get; set; }
         public double ValorDeCobranca { get; set; }
-        public Mes MesQueIniciaCobranca { get; set; }
-
-        public DateTime? DataDaPrimeiraManutencao
+        
+        public DateTime? DataDaProximaManutencao
         { get; set; }
+
+        public bool ManutencaoEstaVencida()
+        {
+            if (!DataDaProximaManutencao.HasValue) return false;
+
+            return Convert.ToInt32(DataDaProximaManutencao.Value.ToString("yyyyMMdd")) <
+                   Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd"));
+        }
+
+        public bool ManutencaoVenceNoMes(Mes mes)
+        {
+            if (!DataDaProximaManutencao.HasValue) return false;
+
+            return DataDaProximaManutencao.Value.Month == mes.Codigo;
+        }
 
         public double ObtenhaValorRealEmEspecie()
         {

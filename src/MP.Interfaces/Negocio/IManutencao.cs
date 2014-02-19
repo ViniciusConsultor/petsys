@@ -10,7 +10,8 @@ namespace MP.Interfaces.Negocio
         Periodo Periodo { get; set; }
         FormaCobrancaManutencao FormaDeCobranca { get; set; }
         double ValorDeCobranca { get; set; }
-        Mes MesQueIniciaCobranca { get; set; }
-        DateTime? DataDaPrimeiraManutencao { get; set; }
+        DateTime? DataDaProximaManutencao { get; set; }
+        bool ManutencaoEstaVencida();
+        bool ManutencaoVenceNoMes(Mes mes);
     }
 }
