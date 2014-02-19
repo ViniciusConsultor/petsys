@@ -85,7 +85,6 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ctrlPeriodo.PeriodoFoiSelecionado += ctrlPeriodo_PeriodoFoiSelecionado;
             ctrlNaturezaPatente.NaturezaPatenteFoiSelecionada += VerificaSeNaturezaEhDeDesenhoIndustrial;
 
             if (IsPostBack) return;
@@ -270,8 +269,7 @@ namespace MP.Client.MP
             btnGerarTodas.Visible = false;
 
             ctrlPeriodo.Inicializa();
-            ctrlMes.Inicializa();
-
+            
             rblPagaManutencao.Items.Clear();
             rblPagaManutencao.Items.Add(new ListItem("  Sim  ", "1"));
             rblPagaManutencao.Items.Add(new ListItem("  Não", "0"));
@@ -284,13 +282,14 @@ namespace MP.Client.MP
                 rblFormaDeCobranca.Items.Add(new ListItem(formaCobrança.Descricao  ,formaCobrança.Codigo));
 
             rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
-            pnlMesInicioCobranca.Visible = false;
             txtDataDaPrimeiraManutencao.Clear();
             ctrlPaisProcesso.LimparControle();
 
             //Tab da imagem do desenho industrial
             ExibaTabDeImagemDeDesenhoIndustrial(false);
             imgImagem.ImageUrl = Util.URL_IMAGEM_SEM_FOTO_PATENTE;
+
+            LimpeCamposClassificacaoDePatentes();
         }
 
         private void MostraPCT(bool mostra)
@@ -368,9 +367,6 @@ namespace MP.Client.MP
                 if (string.IsNullOrEmpty(txtValor.Text))
                     inconsitencias.Add("É necessário informar o valor de cobrança.");
 
-                if (Periodo.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
-                    if (string.IsNullOrEmpty(ctrlMes.Codigo))
-                        inconsitencias.Add("É necessário informar o mês de início de cobrança.");
             }
 
             return inconsitencias;
@@ -647,15 +643,9 @@ namespace MP.Client.MP
             if (patente.Manutencao != null)
             {
                 pnlDadosDaManutencao.Visible = true;
-                txtDataDaPrimeiraManutencao.SelectedDate = patente.Manutencao.DataDaPrimeiraManutencao;
+                txtDataDaPrimeiraManutencao.SelectedDate = patente.Manutencao.DataDaProximaManutencao;
                 ctrlPeriodo.Codigo = patente.Manutencao.Periodo.Codigo.ToString();
                 ctrlPeriodo.PeriodoSelecionado = patente.Manutencao.Periodo;
-
-                if (patente.Manutencao.MesQueIniciaCobranca != null)
-                {
-                    pnlMesInicioCobranca.Visible = true;
-                    ctrlMes.Codigo = patente.Manutencao.MesQueIniciaCobranca.Codigo.ToString();
-                }
 
                 rblFormaDeCobranca.SelectedValue = patente.Manutencao.FormaDeCobranca.Codigo;
                 txtValor.Value = patente.Manutencao.ValorDeCobranca;
@@ -863,25 +853,6 @@ namespace MP.Client.MP
             CarregueComboTipoDeClassificacao();
         }
 
-        private bool PodeAdicionarAnuidadeDaPatente()
-        {
-            if (string.IsNullOrEmpty(txtDescricaoDaAnuidade.Text))
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a descrição da anuidade."), false);
-                return false;
-            }
-
-            if (txtInicioPrazoPagamento.SelectedDate == null)
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                       UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a data de início."), false);
-                return false;
-            }
-
-            return true;
-        }
-
         private void MostrarListaDeAnuidadeDaPatente()
         {
             grdAnuidades.MasterTableView.DataSource = ListaDeAnuidadeDaPatente;
@@ -1031,13 +1002,9 @@ namespace MP.Client.MP
             {
                 var manutencao = FabricaGenerica.GetInstancia().CrieObjeto<IManutencao>();
 
-                manutencao.DataDaPrimeiraManutencao = txtDataDaPrimeiraManutencao.SelectedDate;
+                manutencao.DataDaProximaManutencao = txtDataDaPrimeiraManutencao.SelectedDate;
 
                 manutencao.Periodo = ctrlPeriodo.PeriodoSelecionado;
-
-                if (!string.IsNullOrEmpty(ctrlMes.Codigo))
-                    manutencao.MesQueIniciaCobranca = Mes.ObtenhaPorCodigo(Convert.ToInt32(ctrlMes.Codigo));
-
                 manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(rblFormaDeCobranca.SelectedValue);
                 manutencao.ValorDeCobranca = txtValor.Value.Value;
                 patente.Manutencao = manutencao;
@@ -1215,20 +1182,7 @@ namespace MP.Client.MP
                 rblFormaDeCobranca.ClearSelection();
                 txtValor.Text = null;
                 ctrlPeriodo.Inicializa();
-                ctrlMes.Inicializa();
                 txtDataDaPrimeiraManutencao.Clear();
-            }
-        }
-
-        
-        private void ctrlPeriodo_PeriodoFoiSelecionado(Periodo periodo)
-        {
-            if (Periodo.PeriodoEhTrimestreSemestreOuAnual(ctrlPeriodo.PeriodoSelecionado))
-                pnlMesInicioCobranca.Visible = true;
-            else
-            {
-                pnlMesInicioCobranca.Visible = false;
-                ctrlMes.Inicializa();
             }
         }
 
