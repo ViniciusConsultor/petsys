@@ -287,7 +287,7 @@ namespace FN.Client.FN
 
             Session.Add(chaveDoBoleto, boletoBancario);
 
-            var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmVisualizarBoletoGerado.aspx",
+            var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmVisualizarBoletoGerado.aspx",
                                             "?Id=", chaveDoBoleto);
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanela(url,
