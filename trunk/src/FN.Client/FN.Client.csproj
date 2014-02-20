@@ -88,6 +88,13 @@
     <Compile Include="FN\frmBoletoAvulso.aspx.designer.cs">
       <DependentUpon>frmBoletoAvulso.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FN\frmConfiguracaoDeIndicesFinaceiros.aspx.cs">
+      <DependentUpon>frmConfiguracaoDeIndicesFinaceiros.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\frmConfiguracaoDeIndicesFinaceiros.aspx.designer.cs">
+      <DependentUpon>frmConfiguracaoDeIndicesFinaceiros.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FN\frmConfiguracaoDoBoleto.aspx.cs">
       <DependentUpon>frmConfiguracaoDoBoleto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -115,11 +122,14 @@
   <ItemGroup>
     <None Include="FN.Client.snk" />
     <Content Include="FN\frmBoletoAvulso.aspx" />
+    <Content Include="FN\frmConfiguracaoDeIndicesFinaceiros.aspx" />
     <Content Include="FN\frmConfiguracaoDoBoleto.aspx" />
     <Content Include="FN\frmVisualizarBoletoGerado.aspx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />
-    <Content Include="FN\Web.config" />
+    <Content Include="FN\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

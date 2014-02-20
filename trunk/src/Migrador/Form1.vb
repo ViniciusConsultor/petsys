@@ -192,28 +192,28 @@ Public Class Form1
                     Pessoa.DataDeNascimento = CDate(Linha("DTNASC"))
                 End If
 
-                If Not IsDBNull(Linha("ENDERECO")) Then
-                    Dim Endereco As IEndereco
+                'If Not IsDBNull(Linha("ENDERECO")) Then
+                '    Dim Endereco As IEndereco
 
-                    Endereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IEndereco)()
-                    Endereco.Logradouro = UtilidadesDePersistencia.GetValor(Linha, "ENDERECO")
+                '    Endereco = FabricaGenerica.GetInstancia.CrieObjeto(Of IEndereco)()
+                '    Endereco.Logradouro = UtilidadesDePersistencia.GetValor(Linha, "ENDERECO")
 
-                    If Not IsDBNull(Linha("BAIRRO")) Then
-                        Endereco.Bairro = UtilidadesDePersistencia.GetValor(Linha, "BAIRRO")
-                    End If
+                '    If Not IsDBNull(Linha("BAIRRO")) Then
+                '        Endereco.Bairro = UtilidadesDePersistencia.GetValor(Linha, "BAIRRO")
+                '    End If
 
-                    If Not IsDBNull(Linha("CIDADE")) Then
-                        Try
-                            Endereco.Municipio = ObtenhaMunicipioCorrespondente(Linha)
-                            Endereco.CEP = Endereco.Municipio.CEP
+                '    If Not IsDBNull(Linha("CIDADE")) Then
+                '        Try
+                '            Endereco.Municipio = ObtenhaMunicipioCorrespondente(Linha)
+                '            Endereco.CEP = Endereco.Municipio.CEP
 
-                        Catch ex As Exception
-                            Pessoa.Endereco = Nothing
-                        End Try
-                    End If
+                '        Catch ex As Exception
+                '            Pessoa.Endereco = Nothing
+                '        End Try
+                '    End If
 
-                    Pessoa.Endereco = Endereco
-                End If
+                '    Pessoa.Endereco = Endereco
+                'End If
 
                 If Not IsDBNull(Linha("FONE")) AndAlso Not String.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(Linha, "FONE")) Then
                     Dim TelefonesStr As IList(Of String)
