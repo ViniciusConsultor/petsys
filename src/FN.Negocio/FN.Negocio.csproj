@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoletoGerados.cs" />
+    <Compile Include="BoletosGerados.cs" />
     <Compile Include="BoletosGeradosAux.cs" />
     <Compile Include="ConfiguracaoDeBoletoBancario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
