@@ -8,7 +8,7 @@ using FN.Interfaces.Negocio;
 namespace FN.Negocio
 {
     [Serializable]
-    public class BoletoGerados : IBoletosGerados
+    public class BoletosGerados : IBoletosGerados
     {
         public long? ID { get; set; }
 
