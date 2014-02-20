@@ -1,5 +1,5 @@
 ﻿<gatilhos>
-  <gatilho type="Core.Servicos.Local.ServicoDeAgendaLocal">
+  <!--<gatilho type="Core.Servicos.Local.ServicoDeAgendaLocal">
     <metodo nome="RemovaCompromisso">
       <Antes>
         <interessados>
@@ -21,6 +21,29 @@
         </interessados>
       </Antes>
     </metodo>
-  </gatilho>
+  </gatilho>-->
+  <!--<gatilho type="MP.Servicos.Local.ServicoDeProcessoDeMarcaLocal">
+    <metodo nome="Inserir">
+      <Depois>
+        <interessados>
+          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoACompromisso"></interessado>
+        </interessados>
+      </Depois>
+    </metodo>
+    <metodo nome="Modificar">
+      <Depois>
+        <interessados>
+          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoATarefa"></interessado>
+        </interessados>
+      </Depois>
+    </metodo>
+    <metodo nome="Excluir">
+      <Antes>
+        <interessados>
+          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoALembrete"></interessado>
+        </interessados>
+      </Antes>
+    </metodo>
+  </gatilho>-->
 </gatilhos>
 

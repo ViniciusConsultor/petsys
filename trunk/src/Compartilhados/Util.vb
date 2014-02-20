@@ -102,6 +102,10 @@ Public Class Util
         Return HttpRuntime.AppDomainAppPath & Path.DirectorySeparatorChar & "LOG" & Path.DirectorySeparatorChar
     End Function
 
+    Public Shared Function GetDiretorioLoads() As String
+        Return HttpRuntime.AppDomainAppPath & Path.DirectorySeparatorChar & "LOADS" & Path.DirectorySeparatorChar
+    End Function
+
     Public Shared Function ObtenhaSkinPadrao() As String
         Dim Configuracao As KeyValueConfigurationElement
         Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()

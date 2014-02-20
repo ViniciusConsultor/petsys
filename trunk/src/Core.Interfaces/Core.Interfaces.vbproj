@@ -130,6 +130,7 @@
     <Compile Include="Negocio\IOperacao.vb" />
     <Compile Include="Negocio\ISenha.vb" />
     <Compile Include="Negocio\Schedules\IScheduleLimpaLogs.vb" />
+    <Compile Include="Negocio\Schedules\IScheduleLimpaPdfs.vb" />
     <Compile Include="Servicos\IServicoDeAutenticacao.vb" />
     <Compile Include="Servicos\IServicoDeAutorizacao.vb" />
     <Compile Include="Servicos\IServicoDeConexao.vb" />
