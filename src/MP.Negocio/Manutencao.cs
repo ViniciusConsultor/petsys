@@ -37,18 +37,18 @@ namespace MP.Negocio
         {
             if (FormaDeCobranca.Equals(FormaCobrancaManutencao.ValorFixo)) return ValorDeCobranca;
             
-            IConfiguracaoDeModulo configuracaoDeModulo;
+            //IConfiguracaoDeModulo configuracaoDeModulo;
 
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeConfiguracoesDoModulo>())
-                configuracaoDeModulo = servico.ObtenhaConfiguracao();
+            //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeConfiguracoesDoModulo>())
+            //    configuracaoDeModulo = servico.ObtenhaConfiguracao();
 
-            if (configuracaoDeModulo != null && configuracaoDeModulo.ConfiguracaoDeIndicesFinanceiros !=null) 
-            {
-                var valorSalarioMinimoVigente = configuracaoDeModulo.ConfiguracaoDeIndicesFinanceiros.ValorDoSalarioMinimo ;
+            //if (configuracaoDeModulo != null && configuracaoDeModulo.ConfiguracaoDeIndicesFinanceiros !=null) 
+            //{
+            //    var valorSalarioMinimoVigente = configuracaoDeModulo.ConfiguracaoDeIndicesFinanceiros.ValorDoSalarioMinimo ;
              
-                if (valorSalarioMinimoVigente.HasValue)
-                    return ValorDeCobranca * valorSalarioMinimoVigente.Value;
-            }
+            //    if (valorSalarioMinimoVigente.HasValue)
+            //        return ValorDeCobranca * valorSalarioMinimoVigente.Value;
+            //}
             return 0;
         }
     }

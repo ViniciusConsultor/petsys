@@ -17,9 +17,5 @@ namespace MP.Client
         public const string URL_REVISTA_PATENTE = "~/Loads/Revistas/Patentes/";
         public const string URL_IMAGEM_SEM_FOTO_PATENTE = "~/Loads/Imagens/Patentes/sem_foto_g.gif";
 
-        public const string URL_IMAGEM_CABECALHO_BOLETO = "~/Loads/Imagens/Boleto/";
-
-
-        
     }
 }

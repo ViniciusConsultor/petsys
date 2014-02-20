@@ -54,9 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mapeadores\IMapeadorDeBoletosGerados.cs" />
-    <Compile Include="Mapeadores\IMapeadorDeBoletosGeradosAux.cs" />
-    <Compile Include="Mapeadores\IMapeadorDeConfiguracoesDoModulo.cs" />
     <Compile Include="Mapeadores\IMapeadorDeDespachoDeMarcas.cs" />
     <Compile Include="Mapeadores\IMapeadorDeDespachoDePatentes.cs" />
     <Compile Include="Mapeadores\IMapeadorDeInventor.cs" />
@@ -97,13 +94,8 @@
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatenteSemFiltro.cs" />
     <Compile Include="Negocio\FormaCobrancaManutencao.cs" />
-    <Compile Include="Negocio\IBoletosGerados.cs" />
-    <Compile Include="Negocio\IBoletosGeradosAux.cs" />
     <Compile Include="Negocio\IClasseNacional.cs" />
     <Compile Include="Negocio\IClasseViena.cs" />
-    <Compile Include="Negocio\IConfiguracaoDeBoletoBancario.cs" />
-    <Compile Include="Negocio\IConfiguracaoDeIndicesFinanceiros.cs" />
-    <Compile Include="Negocio\IConfiguracaoDeModulo.cs" />
     <Compile Include="Negocio\IDespachoDeMarcas.cs" />
     <Compile Include="Negocio\IDespachoDePatentes.cs" />
     <Compile Include="Negocio\IInventor.cs" />
@@ -145,9 +137,6 @@
     <Compile Include="Negocio\Periodo.cs" />
     <Compile Include="Negocio\TipoClassificacaoPatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Servicos\IServicoDeBoletosGerados.cs" />
-    <Compile Include="Servicos\IServicoDeBoletosGeradosAux.cs" />
-    <Compile Include="Servicos\IServicoDeConfiguracoesDoModulo.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDePatentes.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />

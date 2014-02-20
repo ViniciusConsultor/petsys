@@ -275,20 +275,6 @@
       <DependentUpon>ctrlTitular.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\DTOProcessoDeMarca.cs" />
-    <Compile Include="MP\frmBoletoBancarioCEF.aspx.cs">
-      <DependentUpon>frmBoletoBancarioCEF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\frmBoletoBancarioCEF.aspx.designer.cs">
-      <DependentUpon>frmBoletoBancarioCEF.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MP\frmConfiguracaoDoModulo.aspx.cs">
-      <DependentUpon>frmConfiguracaoDoModulo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\frmConfiguracaoDoModulo.aspx.designer.cs">
-      <DependentUpon>frmConfiguracaoDoModulo.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.cs">
       <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -352,13 +338,6 @@
     <Compile Include="MP\frmRelatorioGeralPatentes.aspx.designer.cs">
       <DependentUpon>frmRelatorioGeralPatentes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MP\frmVisualizarBoletoGerado.aspx.cs">
-      <DependentUpon>frmVisualizarBoletoGerado.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\frmVisualizarBoletoGerado.aspx.designer.cs">
-      <DependentUpon>frmVisualizarBoletoGerado.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcas.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
@@ -401,8 +380,6 @@
     <Content Include="MP\ctrlTemplateDeEmail.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\ctrlTitular.ascx" />
-    <Content Include="MP\frmBoletoBancarioCEF.aspx" />
-    <Content Include="MP\frmConfiguracaoDoModulo.aspx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
     <Content Include="MP\frmEnviaEmail.aspx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />
@@ -412,7 +389,6 @@
     <Content Include="MP\frmRelatorioDeProcessosDeMarcas.aspx" />
     <Content Include="MP\frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx" />
     <Content Include="MP\frmRelatorioGeralPatentes.aspx" />
-    <Content Include="MP\frmVisualizarBoletoGerado.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
