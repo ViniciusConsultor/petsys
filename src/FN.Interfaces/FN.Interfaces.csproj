@@ -54,15 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
+    <Compile Include="Negocio\IBoletosGerados.cs" />
+    <Compile Include="Negocio\IBoletosGeradosAux.cs" />
+    <Compile Include="Negocio\IConfiguracaoDeBoletoBancario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servicos\IServicoDeBoleto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FN.Interfaces.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mapeadores\" />
-    <Folder Include="Negocio\" />
-    <Folder Include="Servicos\" />
     <Folder Include="Utilidades\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
