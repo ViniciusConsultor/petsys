@@ -152,6 +152,7 @@
     <Compile Include="Repositorios\RepositorioDePais.vb" />
     <Compile Include="Repositorios\RepositorioDePessoa.vb" />
     <Compile Include="Schedules\ScheduleLimpaLogs.vb" />
+    <Compile Include="Schedules\ScheduleLimpaPdfs.vb" />
     <Compile Include="Senha.vb" />
     <Compile Include="Tarefa.vb" />
     <Compile Include="Telefone\Telefone.vb" />

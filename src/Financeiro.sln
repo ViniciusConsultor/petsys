@@ -22,6 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", 
 		..\doc\Banco de dados\FN\SQL Server\DropTodasTabelasFN.sql = ..\doc\Banco de dados\FN\SQL Server\DropTodasTabelasFN.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gatilhos", "Gatilhos", "{4552E22E-C3AD-40DB-BB68-FBE8BEDD4ABB}"
+	ProjectSection(SolutionItems) = preProject
+		Compartilhados\gatilhos.xml = Compartilhados\gatilhos.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
