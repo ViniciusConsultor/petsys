@@ -8,7 +8,7 @@
         OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/save.gif" Text="Salvar"
-                CommandName="btnSalvar" CausesValidation="True" CommandArgument="OPE.MP.018.0001" />
+                CommandName="btnSalvar" CausesValidation="True" CommandArgument="OPE.FN.003.0001" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>

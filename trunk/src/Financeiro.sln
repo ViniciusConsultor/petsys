@@ -12,8 +12,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FN.Client", "FN.Client\FN.Client.csproj", "{6EAE5C50-1302-42EB-9C85-8DF46F0D5ACF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{4A5D6F85-7C65-4E9D-B491-1FEF94D0FEF3}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\FN\INSERT_MP.sql = ..\doc\Banco de dados\FN\INSERT_MP.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{A9654ADD-52EE-4659-BC98-EF55D30DA0B3}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\FN\SQL Server\CREATE_FN_SQLServer.sql = ..\doc\Banco de dados\FN\SQL Server\CREATE_FN_SQLServer.sql
+		..\doc\Banco de dados\FN\SQL Server\DropTodasTabelasFN.sql = ..\doc\Banco de dados\FN\SQL Server\DropTodasTabelasFN.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

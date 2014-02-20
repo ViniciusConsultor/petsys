@@ -255,7 +255,7 @@ namespace FN.Mapeadores
 
             if (configuracao == null) return;
 
-            sql.Append("INSERT INTO MP_CNFBOLETO (");
+            sql.Append("INSERT INTO FN_CNFBOLETO (");
             sql.Append("IMAGEMBOLETO, IDCEDENTE, TIPOPESSOA)");
             sql.Append("VALUES (");
 
