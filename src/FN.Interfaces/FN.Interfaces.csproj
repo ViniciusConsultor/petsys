@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapeadores\IMapeadorConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
     <Compile Include="Negocio\IBoletosGerados.cs" />
     <Compile Include="Negocio\IBoletosGeradosAux.cs" />
