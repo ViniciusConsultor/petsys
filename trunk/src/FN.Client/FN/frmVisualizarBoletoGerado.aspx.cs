@@ -13,6 +13,8 @@ namespace FN.Client.FN
         {
             if (IsPostBack) return;
 
+            btnImprimir.Attributes.Add("onClick", "javascript:window.print();");
+
             string Id = null;
 
             if (!String.IsNullOrEmpty(Request.QueryString["Id"]))
@@ -27,13 +29,13 @@ namespace FN.Client.FN
 
         private void ExibaTelaSemArquivoGerado()
         {
-            btnExportar.Visible = false;
+            btnImprimir.Visible = false;
 
         }
 
         private void ExibaBoleto(string id)
         {
-            btnExportar.Visible = true;
+            btnImprimir.Visible = true;
 
             var boleto = Session[id] as Control;
 
