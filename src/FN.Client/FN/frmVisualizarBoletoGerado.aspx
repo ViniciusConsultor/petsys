@@ -47,7 +47,7 @@
     </asp:ScriptManager>
     <div id="pnlBoletoGerado" runat="server">
     </div>
-    <telerik:RadButton ID="btnExportar" runat="server" Text="Exportar" Skin="Vista">
+    <telerik:RadButton ID="btnImprimir" runat="server" Text="Imprimir" Skin="Vista">
     </telerik:RadButton>
     </form>
 </body>
