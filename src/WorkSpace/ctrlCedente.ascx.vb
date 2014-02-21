@@ -99,6 +99,7 @@ Public Class ctrlCedente
 
         If String.IsNullOrEmpty(DirectCast(sender, RadComboBox).SelectedValue) Then
             CedenteSelecionado = Nothing
+            RaiseEvent CedenteFoiSelecionado(CedenteSelecionado)
             Exit Sub
         End If
 

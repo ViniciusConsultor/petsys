@@ -10,10 +10,7 @@ namespace FN.Negocio
     public class BoletosGeradosAux : IBoletosGeradosAux
     {
         public long? ID { get; set; }
-
-        public long? ProximoNumeroBoleto
-        { get; set; }
-
+        
         public long? ProximoNossoNumero
         { get; set; }
     }

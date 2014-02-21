@@ -44,7 +44,7 @@ namespace FN.Mapeadores
                     var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
 
                     boletoGerado.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-                    boletoGerado.NumeroBoleto = UtilidadesDePersistencia.GetValorLong(leitor, "NUMEROBOLETO");
+                    boletoGerado.NumeroBoleto = !string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO") : null;
                     boletoGerado.NossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "NOSSONUMERO");
 
                     var cliente =
@@ -76,10 +76,10 @@ namespace FN.Mapeadores
             return sql;
         }
 
-        public IBoletosGerados obtenhaBoletoPeloNumero(long numero)
+        public IBoletosGerados obtenhaBoletoPeloNossoNumero(long numero)
         {
             var sql = retornaSQLSelecionaTodos();
-            sql.Append("WHERE NUMEROBOLETO = " + numero);
+            sql.Append("WHERE NOSSONUMERO = " + numero);
 
             IBoletosGerados boletoGerado = null;
 
@@ -105,7 +105,7 @@ namespace FN.Mapeadores
             sql.Append("OBSERVACAO)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(boletoGerado.ID.Value, ", "));
-            sql.Append(String.Concat(boletoGerado.NumeroBoleto.Value, ", "));
+            sql.Append(!string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ") : "NULL, ");
             sql.Append(String.Concat(boletoGerado.NossoNumero.Value, ", "));
             sql.Append(String.Concat(boletoGerado.Cliente.Pessoa.ID.Value, ", "));
 
@@ -141,7 +141,7 @@ namespace FN.Mapeadores
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT ID, PROXNOSSONUMERO, PROXNUMEROBOLETO ");
+            sql.Append("SELECT ID, PROXNOSSONUMERO ");
             sql.Append("FROM FN_BOLETOS_GERADOS_AUX ");
 
             var dadosAuxiliares = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
@@ -154,7 +154,6 @@ namespace FN.Mapeadores
                 {
                     dadosAuxiliares.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
                     dadosAuxiliares.ProximoNossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "PROXNOSSONUMERO");
-                    dadosAuxiliares.ProximoNumeroBoleto = UtilidadesDePersistencia.GetValorLong(leitor, "PROXNUMEROBOLETO");
                 }
             }
 
@@ -168,8 +167,7 @@ namespace FN.Mapeadores
             var dbHelper = ServerUtils.getDBHelper();
 
             sql.Append("UPDATE FN_BOLETOS_GERADOS_AUX ");
-            sql.Append("SET PROXNOSSONUMERO = " + dadosAuxBoleto.ProximoNossoNumero.Value + ", ");
-            sql.Append("PROXNUMEROBOLETO = " + dadosAuxBoleto.ProximoNumeroBoleto.Value + " ");
+            sql.Append("SET PROXNOSSONUMERO = " + dadosAuxBoleto.ProximoNossoNumero.Value + " ");
             sql.Append(" WHERE ID = " + dadosAuxBoleto.ID.Value);
 
             dbHelper.ExecuteNonQuery(sql.ToString());
@@ -181,11 +179,10 @@ namespace FN.Mapeadores
 
             var dbHelper = ServerUtils.getDBHelper();
 
-            sql.Append("INSERT INTO FN_BOLETOS_GERADOS_AUX(ID, PROXNOSSONUMERO, PROXNUMEROBOLETO) ");
+            sql.Append("INSERT INTO FN_BOLETOS_GERADOS_AUX(ID, PROXNOSSONUMERO) ");
             sql.Append("VALUES( ");
             sql.Append(String.Concat(dadosAuxBoleto.ID.Value, ", "));
-            sql.Append(String.Concat(dadosAuxBoleto.ProximoNossoNumero.Value, ", "));
-            sql.Append(String.Concat(dadosAuxBoleto.ProximoNumeroBoleto.Value, ") "));
+            sql.Append(String.Concat(dadosAuxBoleto.ProximoNossoNumero.Value, ") "));
 
             dbHelper.ExecuteNonQuery(sql.ToString());
         }

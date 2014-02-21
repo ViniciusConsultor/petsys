@@ -9,7 +9,7 @@ namespace FN.Interfaces.Mapeadores
     public interface IMapeadorDeBoleto
     {
         IBoletosGerados obtenhaBoletoPeloId(long idBoleto);
-        IBoletosGerados obtenhaBoletoPeloNumero(long numero);
+        IBoletosGerados obtenhaBoletoPeloNossoNumero(long numero);
 
         void Inserir(IBoletosGerados boletoGerado);
         void Excluir(long idBoleto);
