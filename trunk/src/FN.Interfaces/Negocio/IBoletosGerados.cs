@@ -9,7 +9,7 @@ namespace FN.Interfaces.Negocio
     public interface IBoletosGerados
     {
         long? ID { get; set; }
-        long? NumeroBoleto { get; set; }
+        string NumeroBoleto { get; set; }
         long? NossoNumero { get; set; }
         ICliente Cliente { get; set; }
         double Valor { get; set; }

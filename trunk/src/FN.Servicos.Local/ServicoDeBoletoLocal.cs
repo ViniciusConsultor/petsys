@@ -94,7 +94,7 @@ namespace FN.Servicos.Local
             }
         }
 
-        public IBoletosGerados obtenhaBoletoPeloNumero(long numero)
+        public IBoletosGerados obtenhaBoletoPeloNossoNumero(long numero)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -102,7 +102,7 @@ namespace FN.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaBoletoPeloNumero(numero);
+                return mapeador.obtenhaBoletoPeloNossoNumero(numero);
             }
             finally
             {

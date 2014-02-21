@@ -12,7 +12,7 @@ namespace FN.Negocio
     {
         public long? ID { get; set; }
 
-        public long? NumeroBoleto { get; set; }
+        public string NumeroBoleto { get; set; }
 
         public long? NossoNumero { get; set; }
 
