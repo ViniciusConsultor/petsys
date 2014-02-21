@@ -57,7 +57,6 @@
     <Compile Include="Mapeadores\IMapeadorDeDespachoDeMarcas.cs" />
     <Compile Include="Mapeadores\IMapeadorDeDespachoDePatentes.cs" />
     <Compile Include="Mapeadores\IMapeadorDeInventor.cs" />
-    <Compile Include="Mapeadores\IMapeadorDeManutencao.cs" />
     <Compile Include="Mapeadores\IMapeadorDeMarcas.cs" />
     <Compile Include="Mapeadores\IMapeadorDeNaturezaPatente.cs" />
     <Compile Include="Mapeadores\IMapeadorDePasta.cs" />
@@ -141,7 +140,6 @@
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDePatentes.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />
-    <Compile Include="Servicos\IServicoDeManutencao.cs" />
     <Compile Include="Servicos\IServicoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeNaturezaPatente.cs" />
     <Compile Include="Servicos\IServicoDePasta.cs" />
