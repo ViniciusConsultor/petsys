@@ -203,6 +203,11 @@ namespace FN.Client.FN
                     // pegar imagem do cedente para o boleto
                     //imagemDoRecibo = configuracaoDoBoleto.ImagemDeCabecalhoDoReciboDoSacado; 
 
+                    if(!string.IsNullOrEmpty(cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado))
+                    {
+                        imagemDoRecibo = cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado; 
+                    }
+
                     var cedentePessoa = cedenteSelecionado.Pessoa;
 
                     cedenteNome = cedentePessoa.Nome;

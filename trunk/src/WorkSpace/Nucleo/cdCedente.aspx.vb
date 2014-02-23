@@ -3,6 +3,7 @@ Imports Compartilhados.Componentes.Web
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Servicos
+Imports System.IO
 Imports Telerik.Web.UI
 
 Public Class cdCedente
@@ -45,6 +46,7 @@ Public Class cdCedente
         ctrlPessoa1.BotaoDetalharEhVisivel = False
         ctrlPessoa1.BotaoNovoEhVisivel = True
         ViewState(CHAVE_ESTADO) = Estado.Inicial
+        imgImagem.ImageUrl = String.Empty
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -104,6 +106,13 @@ Public Class cdCedente
 
         Pessoa = ctrlPessoa1.PessoaSelecionada
         Cedente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICedente)((New Object() {Pessoa}))
+
+        If Not String.IsNullOrEmpty(imgImagem.ImageUrl) Then
+
+            Cedente.ImagemDeCabecalhoDoReciboDoSacado = imgImagem.ImageUrl
+
+        End If
+
         Return Cedente
     End Function
 
@@ -195,6 +204,30 @@ Public Class cdCedente
     End Sub
 
     Private Sub MostreCedente(ByVal Cedente As ICedente)
+
+        If Not String.IsNullOrEmpty(Cedente.ImagemDeCabecalhoDoReciboDoSacado) Then
+
+            imgImagem.ImageUrl = Cedente.ImagemDeCabecalhoDoReciboDoSacado
+
+        End If
+
     End Sub
 
+    Protected Sub uplImagem_OnFileUploaded(ByVal sender As Object, ByVal e As FileUploadedEventArgs)
+        Try
+            If uplImagem.UploadedFiles.Count > 0 Then
+                Dim arquivo = uplImagem.UploadedFiles(0)
+                Dim pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_IMAGEM_CABECALHO_BOLETO)
+
+                UtilidadesWeb.CrieDiretorio(pastaDeDestino)
+
+                Dim caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension())
+
+                arquivo.SaveAs(caminhoArquivo)
+                imgImagem.ImageUrl = String.Concat(UtilidadesWeb.URL_IMAGEM_CABECALHO_BOLETO, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension())
+            End If
+        Catch ex As Exception
+            Logger.GetInstancia().Erro("Erro ao carregar imagem, exceção: ", ex)
+        End Try
+    End Sub
 End Class
