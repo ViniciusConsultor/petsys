@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master" CodeBehind="cdCedente.aspx.vb" Inherits="WorkSpace.cdCedente" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
+    CodeBehind="cdCedente.aspx.vb" Inherits="WorkSpace.cdCedente" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -27,10 +29,40 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
-                    
+                    <table class="tabela">
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label10" runat="server" Text="Imagem cabeçalho recibo"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Image ID="imgImagem" runat="server" CssClass="imagemUpLoad" />
+                                <telerik:RadScriptBlock ID="RadScriptBlock2" runat="server">
+                                    <script type="text/javascript">
+                                //<![CDATA[
+
+                                        function updateImagem() {
+                                            var upload = $find("<%=uplImagem.ClientID %>");
+
+                                            if (upload.getUploadedFiles().length > 0) {
+                                                __doPostBack('ButtonSubmit', 'RadButton1Args');
+                                            }
+                                            else {
+                                                Ext.MessageBox.show({ title: 'Informação', msg: 'Selecione uma imagem', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
+                                            }
+                                        }
+                          //]]>
+                                    </script>
+                                </telerik:RadScriptBlock>
+                                <telerik:RadAsyncUpload runat="server" ID="uplImagem" MaxFileInputsCount="1" AllowedFileExtensions=".jpg,.jpeg,.bmp,.png"
+                                    PostbackTriggers="ButtonSubmit" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
+                                    Localization-Select="Procurar" OnFileUploaded="uplImagem_OnFileUploaded" />
+                                <asp:Button ID="ButtonSubmit" runat="server" Text="Enviar para o servidor" OnClientClick="updateImagem(); return false;"
+                                    CausesValidation="False" CssClass="RadUploadSubmit" />
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
 </asp:Content>
-

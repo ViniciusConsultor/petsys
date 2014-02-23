@@ -29,6 +29,17 @@ Namespace LazyLoad
             End Using
         End Sub
 
+        Public Property ImagemDeCabecalhoDoReciboDoSacado() As String Implements ICedente.ImagemDeCabecalhoDoReciboDoSacado
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.ImagemDeCabecalhoDoReciboDoSacado
+            End Get
+            Set(ByVal value As String)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.ImagemDeCabecalhoDoReciboDoSacado = value
+            End Set
+        End Property
+
     End Class
 
 End Namespace

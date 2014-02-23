@@ -9,4 +9,13 @@ Public Class Cedente
         MyBase.New(Pessoa)
     End Sub
 
+    Private _imagemDeCabecalhoDoReciboDoSacado As String
+    Public Property ImagemDeCabecalhoDoReciboDoSacado() As String Implements ICedente.ImagemDeCabecalhoDoReciboDoSacado
+        Get
+            Return _imagemDeCabecalhoDoReciboDoSacado
+        End Get
+        Set (ByVal value As String)
+            _imagemDeCabecalhoDoReciboDoSacado = value
+        End Set
+    End Property
 End Class
