@@ -17,5 +17,6 @@ namespace MP.Interfaces.Servicos
         IList<IRevistaDePatente> ObtenhaTodosOsProcessosDaRevistaXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDePatentes filtro);
         IList<IRevistaDePatente> CarregueDadosDeTodaRevistaXML(XmlDocument revistaXml);
         void Excluir(int numeroDaRevistaDePatente);
+        IList<IRevistaDePatente> ObtenhaRevistasProcessadas(int numeroDaRevistaDePatente);
     }
 }

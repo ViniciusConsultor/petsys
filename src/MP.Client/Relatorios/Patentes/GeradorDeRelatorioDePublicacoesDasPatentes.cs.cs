@@ -25,10 +25,12 @@ namespace MP.Client.Relatorios.Patentes
         private Font _Fonte4;
         private IEmpresa empresa;
         private string _NumeroDaRevistaSelecionada;
+        private IList<IRevistaDePatente> _revistasPatentes;
 
-        public GeradorDeRelatorioDePublicacoesDasPatentes(IList<IProcessoDePatente> processosPatentes)
+        public GeradorDeRelatorioDePublicacoesDasPatentes(IList<IProcessoDePatente> processosPatentes, IList<IRevistaDePatente> revistasPatentes)
         {
             _processosPatentes = processosPatentes;
+            _revistasPatentes = revistasPatentes;
             _Fonte1 = new Font(Font.TIMES_ROMAN, 10);
             _Fonte2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
             _Fonte3 = new Font(Font.TIMES_ROMAN, 14, Font.BOLDITALIC);
@@ -47,6 +49,148 @@ namespace MP.Client.Relatorios.Patentes
             return nomeDoArquivoDeSaida;
         }
 
+        //private void EscrevaProcessosNoDocumentoAnalitico()
+        //{
+        //    var tabela = new Table(1);
+
+        //    tabela.Widths = new Single[] { 218 };
+
+        //    tabela.Padding = 0;
+        //    tabela.Spacing = 0;
+        //    tabela.Width = 100;
+        //    tabela.AutoFillEmptyCells = true;
+
+        //    tabela.EndHeaders();
+
+        //    foreach (var processo in _processosPatentes)
+        //    {
+        //        var tabela1 = new Table(6);
+        //        tabela1.Widths = new Single[] { 29, 50, 24, 50, 15, 50 };
+        //        tabela1.Padding = 0;
+        //        tabela1.Spacing = 0;
+        //        tabela1.Width = 100;
+        //        tabela1.AutoFillEmptyCells = true;
+        //        tabela1.Border = 0;
+        //        tabela1.EndHeaders();
+
+        //        var labelNumeroProcesso = new Cell(new Phrase("Número do processo: ", _Fonte2));
+        //        labelNumeroProcesso.DisableBorderSide(0);
+        //        tabela1.AddCell(labelNumeroProcesso);
+
+        //        var valorNumeroProcesso = new Cell(new Phrase(processo.Processo.ToString(), _Fonte1));
+        //        valorNumeroProcesso.DisableBorderSide(0);
+        //        tabela1.AddCell(valorNumeroProcesso);
+
+        //        var labelDataDoCadastro = new Cell(new Phrase("Data do cadastro: ", _Fonte2));
+        //        labelDataDoCadastro.DisableBorderSide(0);
+        //        tabela1.AddCell(labelDataDoCadastro);
+
+        //        var valorDataDoCadastro = new Cell(new Phrase(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1));
+        //        valorDataDoCadastro.DisableBorderSide(0);
+        //        tabela1.AddCell(valorDataDoCadastro);
+
+        //        var labelDespacho = new Cell(new Phrase("Despacho: ", _Fonte2));
+        //        labelDespacho.DisableBorderSide(0);
+        //        tabela1.AddCell(labelDespacho);
+
+        //        var valorDespacho = processo.Despacho != null ? new Cell(new Phrase(processo.Despacho.Codigo, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
+        //        valorDespacho.DisableBorderSide(0);
+        //        tabela1.AddCell(valorDespacho);
+
+        //        var tabela2 = new Table(4);
+        //        tabela2.Widths = new Single[] { 5, 19, 4, 31 };
+        //        tabela2.Padding = 0;
+        //        tabela2.Spacing = 0;
+        //        tabela2.Width = 100;
+        //        tabela2.AutoFillEmptyCells = true;
+        //        tabela2.Border = 0;
+        //        tabela2.EndHeaders();
+
+        //        var labelClassificacao = new Cell(new Phrase("Classificação: ", _Fonte2));
+        //        labelClassificacao.DisableBorderSide(0);
+        //        tabela2.AddCell(labelClassificacao);
+
+        //        string classificacoes = string.Empty;
+
+        //        if (processo.Patente != null)
+        //        {
+        //            classificacoes = processo.Patente.Classificacoes.Aggregate(classificacoes, (current, classificacao) => current + (classificacao.Classificacao + " - "));
+
+        //            if (!string.IsNullOrEmpty(classificacoes))
+        //                classificacoes = classificacoes.Substring(0, classificacoes.Length - 3);
+        //        }
+
+        //        Cell valorClassificacao = new Cell(new Phrase(classificacoes, _Fonte1));
+        //        valorClassificacao.DisableBorderSide(0);
+        //        tabela2.AddCell(valorClassificacao);
+
+        //        var labelNatureza = new Cell(new Phrase("Natureza: ", _Fonte2));
+        //        labelNatureza.DisableBorderSide(0);
+        //        tabela2.AddCell(labelNatureza);
+
+        //        Cell valorNatureza = processo.Patente != null && processo.Patente.NaturezaPatente != null ?
+        //                new Cell(new Phrase(processo.Patente.NaturezaPatente.SiglaNatureza, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
+        //        valorNatureza.DisableBorderSide(0);
+        //        tabela2.AddCell(valorNatureza);
+
+        //        var tabela3 = new Table(2);
+        //        tabela3.Widths = new Single[] { 30, 330 };
+        //        tabela3.Padding = 0;
+        //        tabela3.Spacing = 0;
+        //        tabela3.Width = 100;
+        //        tabela3.AutoFillEmptyCells = true;
+        //        tabela3.Border = 0;
+        //        tabela3.EndHeaders();
+
+        //        var labelCliente = new Cell(new Phrase("Cliente: ", _Fonte2));
+        //        labelCliente.DisableBorderSide(0);
+        //        tabela3.AddCell(labelCliente);
+
+        //        string clientes = string.Empty;
+
+        //        if (processo.Patente != null)
+        //        {
+        //            clientes = processo.Patente.Clientes.Aggregate(clientes, (current, cliente) => current + (cliente.Pessoa.Nome + " - "));
+
+        //            if (!string
+        //                .IsNullOrEmpty(clientes))
+        //                clientes = clientes.Substring(0, clientes.Length - 3);
+        //        }
+
+        //        var valorCliente = new Cell(new Phrase(clientes, _Fonte1));
+        //        valorCliente.DisableBorderSide(0);
+        //        tabela3.AddCell(valorCliente);
+
+        //        var labelPatente = new Cell(new Phrase("Patente: ", _Fonte2));
+        //        labelPatente.DisableBorderSide(0);
+        //        tabela3.AddCell(labelPatente);
+
+        //        Cell valorPatente = processo.Patente != null && !string.IsNullOrEmpty(processo.Patente.TituloPatente) ?
+        //            new Cell(new Phrase(processo.Patente.TituloPatente, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
+        //        valorPatente.DisableBorderSide(0);
+        //        tabela3.AddCell(valorPatente);
+
+        //        var labelProcurador = new Cell(new Phrase("Procurador: ", _Fonte2));
+        //        labelProcurador.DisableBorderSide(0);
+        //        tabela3.AddCell(labelProcurador);
+
+        //        Cell valorProcurador = processo.Procurador != null && processo.Procurador.Pessoa != null && !string.IsNullOrEmpty(processo.Procurador.Pessoa.Nome) ?
+        //            new Cell(new Phrase(processo.Procurador.Pessoa.Nome, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
+        //        valorProcurador.Colspan = 1;
+        //        valorProcurador.DisableBorderSide(0);
+        //        tabela3.AddCell(valorProcurador);
+
+        //        tabela3.AddCell(ObtenhaCelulaVazia());
+        //        tabela3.AddCell(ObtenhaCelulaVazia());
+
+        //        tabela.AddCell(new Cell(tabela1));
+        //        tabela.AddCell(new Cell(tabela2));
+        //        tabela.AddCell(new Cell(tabela3));
+        //    }
+
+        //    _documento.Add(tabela);
+        //}
+
         private void EscrevaProcessosNoDocumentoAnalitico()
         {
             var tabela = new Table(1);
@@ -60,10 +204,10 @@ namespace MP.Client.Relatorios.Patentes
 
             tabela.EndHeaders();
 
-            foreach (var processo in _processosPatentes)
+            foreach (var revistaDePatente in _revistasPatentes)
             {
-                var tabela1 = new Table(6);
-                tabela1.Widths = new Single[] { 29, 50, 24, 50, 15, 50 };
+                var tabela1 = new Table(1);
+                tabela1.Widths = new Single[] { 100 };
                 tabela1.Padding = 0;
                 tabela1.Spacing = 0;
                 tabela1.Width = 100;
@@ -71,119 +215,10 @@ namespace MP.Client.Relatorios.Patentes
                 tabela1.Border = 0;
                 tabela1.EndHeaders();
 
-                var labelNumeroProcesso = new Cell(new Phrase("Número do processo: ", _Fonte2));
-                labelNumeroProcesso.DisableBorderSide(0);
-                tabela1.AddCell(labelNumeroProcesso);
-
-                var valorNumeroProcesso = new Cell(new Phrase(processo.Processo.ToString(), _Fonte1));
-                valorNumeroProcesso.DisableBorderSide(0);
-                tabela1.AddCell(valorNumeroProcesso);
-
-                var labelDataDoCadastro = new Cell(new Phrase("Data do cadastro: ", _Fonte2));
-                labelDataDoCadastro.DisableBorderSide(0);
-                tabela1.AddCell(labelDataDoCadastro);
-
-                var valorDataDoCadastro = new Cell(new Phrase(processo.DataDoCadastro.ToString("dd/MM/yyyy"), _Fonte1));
-                valorDataDoCadastro.DisableBorderSide(0);
-                tabela1.AddCell(valorDataDoCadastro);
-
-                var labelDespacho = new Cell(new Phrase("Despacho: ", _Fonte2));
-                labelDespacho.DisableBorderSide(0);
-                tabela1.AddCell(labelDespacho);
-
-                var valorDespacho = processo.Despacho != null ? new Cell(new Phrase(processo.Despacho.Codigo, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
-                valorDespacho.DisableBorderSide(0);
-                tabela1.AddCell(valorDespacho);
-
-                var tabela2 = new Table(4);
-                tabela2.Widths = new Single[] { 5, 19, 4, 31 };
-                tabela2.Padding = 0;
-                tabela2.Spacing = 0;
-                tabela2.Width = 100;
-                tabela2.AutoFillEmptyCells = true;
-                tabela2.Border = 0;
-                tabela2.EndHeaders();
-
-                var labelClassificacao = new Cell(new Phrase("Classificação: ", _Fonte2));
-                labelClassificacao.DisableBorderSide(0);
-                tabela2.AddCell(labelClassificacao);
-
-                string classificacoes = string.Empty;
-
-                if (processo.Patente != null)
-                {
-                    classificacoes = processo.Patente.Classificacoes.Aggregate(classificacoes, (current, classificacao) => current + (classificacao.Classificacao + " - "));
-
-                    if (!string.IsNullOrEmpty(classificacoes))
-                        classificacoes = classificacoes.Substring(0, classificacoes.Length - 3);
-                }
-
-                Cell valorClassificacao = new Cell(new Phrase(classificacoes, _Fonte1));
-                valorClassificacao.DisableBorderSide(0);
-                tabela2.AddCell(valorClassificacao);
-
-                var labelNatureza = new Cell(new Phrase("Natureza: ", _Fonte2));
-                labelNatureza.DisableBorderSide(0);
-                tabela2.AddCell(labelNatureza);
-
-                Cell valorNatureza = processo.Patente != null && processo.Patente.NaturezaPatente != null ?
-                        new Cell(new Phrase(processo.Patente.NaturezaPatente.SiglaNatureza, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
-                valorNatureza.DisableBorderSide(0);
-                tabela2.AddCell(valorNatureza);
-
-                var tabela3 = new Table(2);
-                tabela3.Widths = new Single[] { 30, 330 };
-                tabela3.Padding = 0;
-                tabela3.Spacing = 0;
-                tabela3.Width = 100;
-                tabela3.AutoFillEmptyCells = true;
-                tabela3.Border = 0;
-                tabela3.EndHeaders();
-
-                var labelCliente = new Cell(new Phrase("Cliente: ", _Fonte2));
-                labelCliente.DisableBorderSide(0);
-                tabela3.AddCell(labelCliente);
-
-                string clientes = string.Empty;
-
-                if (processo.Patente != null)
-                {
-                    clientes = processo.Patente.Clientes.Aggregate(clientes, (current, cliente) => current + (cliente.Pessoa.Nome + " - "));
-
-                    if (!string
-                        .IsNullOrEmpty(clientes))
-                        clientes = clientes.Substring(0, clientes.Length - 3);
-                }
-
-                var valorCliente = new Cell(new Phrase(clientes, _Fonte1));
-                valorCliente.DisableBorderSide(0);
-                tabela3.AddCell(valorCliente);
-
-                var labelPatente = new Cell(new Phrase("Patente: ", _Fonte2));
-                labelPatente.DisableBorderSide(0);
-                tabela3.AddCell(labelPatente);
-
-                Cell valorPatente = processo.Patente != null && !string.IsNullOrEmpty(processo.Patente.TituloPatente) ?
-                    new Cell(new Phrase(processo.Patente.TituloPatente, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
-                valorPatente.DisableBorderSide(0);
-                tabela3.AddCell(valorPatente);
-
-                var labelProcurador = new Cell(new Phrase("Procurador: ", _Fonte2));
-                labelProcurador.DisableBorderSide(0);
-                tabela3.AddCell(labelProcurador);
-
-                Cell valorProcurador = processo.Procurador != null && processo.Procurador.Pessoa != null && !string.IsNullOrEmpty(processo.Procurador.Pessoa.Nome) ?
-                    new Cell(new Phrase(processo.Procurador.Pessoa.Nome, _Fonte1)) : new Cell(new Phrase(string.Empty, _Fonte1));
-                valorProcurador.Colspan = 1;
-                valorProcurador.DisableBorderSide(0);
-                tabela3.AddCell(valorProcurador);
-
-                tabela3.AddCell(ObtenhaCelulaVazia());
-                tabela3.AddCell(ObtenhaCelulaVazia());
+                var tabelaRevistas = new Cell(ObtenhaTabelaInformacoesRevista(revistaDePatente));
+                tabela1.AddCell(tabelaRevistas);
 
                 tabela.AddCell(new Cell(tabela1));
-                tabela.AddCell(new Cell(tabela2));
-                tabela.AddCell(new Cell(tabela3));
             }
 
             _documento.Add(tabela);
@@ -269,6 +304,203 @@ namespace MP.Client.Relatorios.Patentes
             celulaVazia.Colspan = 2;
             celulaVazia.DisableBorderSide(0);
             return celulaVazia;
+        }
+
+        private Table ObtenhaTabelaInformacoesRevista(IRevistaDePatente revista)
+        {
+            var tabela = new Table(1);
+            tabela.Widths = new Single[] { 100 };
+            tabela.Padding = 0;
+            tabela.Spacing = 0;
+            tabela.Width = 100;
+            tabela.AutoFillEmptyCells = true;
+            tabela.Border = 0;
+            tabela.EndHeaders();
+
+            if(revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataDeDeposito.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout22.IdentificadorCampo + " " + revista.DataDeDeposito.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (string.IsNullOrEmpty(revista.NumeroProcessoDaPatente))
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout11.IdentificadorCampo + " " + revista.NumeroProcessoDaPatente, _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (string.IsNullOrEmpty(revista.NumeroDoPedido))
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout21.IdentificadorCampo + " " + revista.NumeroDoPedido, _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataDaPublicacaoDoPedido.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataDaPublicacaoDoPedido.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataDeConcessao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout45.IdentificadorCampo + " " + revista.DataDeConcessao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (string.IsNullOrEmpty(revista.PrioridadeUnionista))
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+            if (revista.DataPublicacao.HasValue)
+            {
+                var celula = new Cell(new Phrase(LayoutRevistaPatente.Layout43.IdentificadorCampo + " " + revista.DataPublicacao.Value.ToString("dd/MM/yyyy"), _Fonte2));
+                celula.DisableBorderSide(0);
+                tabela.AddCell(celula);
+            }
+
+
+            return tabela;
         }
 
         private class Ouvinte : IPdfPageEvent

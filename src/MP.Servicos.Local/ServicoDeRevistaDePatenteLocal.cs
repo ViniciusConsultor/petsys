@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -153,6 +154,72 @@ namespace MP.Servicos.Local
                                                                                     ? null : processoDePatenteExistente.Despacho.Codigo;
 
                                     AtualizeDespachoNoProcesso(processo.CodigoDoDespacho, processoDePatenteExistente);
+                                }
+
+                                if (string.IsNullOrEmpty(processo.Titulo) && processoDePatenteExistente.Patente != null)
+                                {
+                                    processoDePatenteExistente.Patente.TituloPatente = processo.Titulo;
+                                    revistaASerSalva.Titulo = processo.Titulo;
+                                }
+
+                                if(!string.IsNullOrEmpty(processo.Classificacao))
+                                {
+                                    bool jaExisteGravacao = processoDePatenteExistente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processo.Classificacao));
+
+                                    if(!jaExisteGravacao)
+                                    {
+                                        if(processoDePatenteExistente.Patente.Classificacoes == null)
+                                        processoDePatenteExistente.Patente.Classificacoes = new List<IClassificacaoPatente>();
+
+                                        var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
+                                        classificacao.Classificacao = processo.Classificacao;
+                                        classificacao.TipoClassificacao = TipoClassificacaoPatente.Nacional;
+                                        processoDePatenteExistente.Patente.Classificacoes.Add(classificacao);
+                                    }
+                                }
+
+                                if (!string.IsNullOrEmpty(processo.ClassificacaoNacional))
+                                {
+                                    bool jaExisteGravacao = processoDePatenteExistente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processo.ClassificacaoNacional));
+
+                                    if(!jaExisteGravacao)
+                                    {
+                                        if (processoDePatenteExistente.Patente.Classificacoes == null)
+                                        processoDePatenteExistente.Patente.Classificacoes = new List<IClassificacaoPatente>();
+
+                                        var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
+                                        classificacao.Classificacao = processo.ClassificacaoNacional;
+                                        classificacao.TipoClassificacao = TipoClassificacaoPatente.Nacional;
+                                        processoDePatenteExistente.Patente.Classificacoes.Add(classificacao);
+                                    }
+                                }
+
+                                if (!string.IsNullOrEmpty(processo.ClassificacaoInternacional))
+                                {
+                                    bool jaExisteGravacao = processoDePatenteExistente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processo.ClassificacaoInternacional));
+
+                                    if(!jaExisteGravacao)
+                                    {
+                                        if (processoDePatenteExistente.Patente.Classificacoes == null)
+                                        processoDePatenteExistente.Patente.Classificacoes = new List<IClassificacaoPatente>();
+
+                                        var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
+                                        classificacao.Classificacao = processo.ClassificacaoInternacional;
+                                        classificacao.TipoClassificacao = TipoClassificacaoPatente.Internacional;
+                                        processoDePatenteExistente.Patente.Classificacoes.Add(classificacao);
+                                    }
+                                }
+
+                                if(!string.IsNullOrEmpty(processo.Observacao))
+                                {
+                                    processoDePatenteExistente.Patente.Observacao += processo.Observacao;
+                                    revistaASerSalva.Observacao = processo.Observacao;
+                                }
+
+                                if(!string.IsNullOrEmpty(processo.Observacao))
+                                {
+                                    processoDePatenteExistente.Patente.Resumo += processo.Resumo;
+                                    revistaASerSalva.Resumo = processo.Resumo;
                                 }
 
                                 if (!string.IsNullOrEmpty(processo.ClassificacaoInternacional))
@@ -700,6 +767,22 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+
+        public IList<IRevistaDePatente> ObtenhaRevistasProcessadas(int numeroDaRevistaDePatente)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorDeRevistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                return mapeadorDeRevistaDePatente.ObtenhaRevistasProcessadas(numeroDaRevistaDePatente);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }            
         }
     }
 }
