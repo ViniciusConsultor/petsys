@@ -715,7 +715,7 @@ namespace MP.Client.MP
 
                 if (listaDeProcessosDePatentesComRadicalCadastrado.Count > 0)
                 {
-                    pnlRelatoriosRadical.Visible = true;
+                    //pnlRelatoriosRadical.Visible = true;
                     foreach (var processoDaRevista in listaDeTodosProcessosDaRevistaXML.Where(processoDaRevista => !string.IsNullOrEmpty(processoDaRevista.Titulo)))
                         listaDeProcessosDaRevistaComPatenteExistente.Add(processoDaRevista);
 
@@ -904,12 +904,15 @@ namespace MP.Client.MP
             if (ViewState[CHAVE_PROCESSOS_DA_REVISTA] != null)
             {
                 IList<IProcessoDePatente> listaDeProcessos = new List<IProcessoDePatente>();
-
+                IList<IRevistaDePatente> revistaDePatentes = new List<IRevistaDePatente>();
                 var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
 
                 listaDeProcessos = ((IList<IProcessoDePatente>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
 
-                var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos);
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                    revistaDePatentes = servico.ObtenhaRevistasProcessadas(int.Parse(numeroDaRevistaSelecionada));
+
+                var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos, revistaDePatentes);
                 var nomeDoArquivo = gerador.GereRelatorioAnalitico(numeroDaRevistaSelecionada);
 
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
@@ -923,9 +926,14 @@ namespace MP.Client.MP
             {
                 IList<IProcessoDePatente> listaDeProcessos = new List<IProcessoDePatente>();
                 listaDeProcessos = ((IList<IProcessoDePatente>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
+                IList<IRevistaDePatente> revistaDePatentes = new List<IRevistaDePatente>();
 
                 var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
-                var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos);
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                    revistaDePatentes = servico.ObtenhaRevistasProcessadas(int.Parse(numeroDaRevistaSelecionada));
+
+                var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos, revistaDePatentes);
                 var nomeDoArquivo = gerador.GereRelatorioSintetico(numeroDaRevistaSelecionada);
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);

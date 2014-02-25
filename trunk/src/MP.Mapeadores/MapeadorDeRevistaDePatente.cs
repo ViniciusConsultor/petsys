@@ -309,5 +309,108 @@ namespace MP.Mapeadores
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
+
+
+        public IList<IRevistaDePatente> ObtenhaRevistasProcessadas(int numeroDaRevistaDePatente)
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT ");
+            sql.Append("	IDREVISTAPATENTE, NUMEROREVISTAPATENTE, DATAPUBLICACAO, DATAPROCESSAMENTO, PROCESSADA, EXTENSAOARQUIVO, DATADODEPOSITO, NUMEROPROCESSOPATENTE,");
+            sql.Append("	NUMERODOPEDIDO, DATAPUBLICPEDIDO, DATACONCESSAO, PRIORIDADEUNIONISTA, CLASSIFICACAOINTER, TITULO, RESUMO, DADOSPEDIDOPATENTE, DADOSPATENTEORIGINAL,");
+            sql.Append("	PRIORIDADEINTERNA, DEPOSITANTE, INVENTOR, TITULAR, UFTITULAR, PAISTITULAR, PROCURADOR, PAISESDESIGNADOS, DATAINICIOFASENAC, DADOSDEPOSINTER,");
+            sql.Append("	DADOSPUBLICINTER, CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, RESPPGTOIMPRENDA, COMPLEMENTO, DECISAO, RECORRENTE, NUMERODOPROCESSO, CEDENTE,");
+            sql.Append("	CESSIONARIA, OBSERVACAO, ULTIMAINFORMACAO, CERTIFAVERBACAO, PAISCEDENTE, PAISCESSIONARIA, SETOR, ENDERECOCESSIONARIA ,NATUREZADOCUMENTO,");
+            sql.Append("	MOEDADEPAGAMENTO, VALOR, PAGAMENTO, PRAZO, SERVISENTOSDEAVERBACAO, CRIADOR, LINGUAGEM ,CAMPOAPLICACAO, TIPODEPROGRAMA ,DATADACRIACAO ,REGIMEDEGUARDA,");
+            sql.Append("	REQUERENTE ,REDACAO ,DATAPRORROGACAO ,CLASSIFICACAONACIONAL ");
+            sql.Append("FROM MP_REVISTA_PATENTE ");
+            sql.Append("WHERE PROCESSADA = 1 AND NUMEROREVISTAPATENTE = " + numeroDaRevistaDePatente);
+
+            IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                try
+                {
+                    while (leitor.Read())
+                        revistas.Add(MapeieRevistaPatente(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return revistas;
+        }
+
+        private IRevistaDePatente MapeieRevistaPatente(IDataReader leitor)
+        {
+            var revistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
+
+            revistaDePatente.IdRevistaPatente = UtilidadesDePersistencia.getValorInteger(leitor, "IDREVISTAPATENTE");
+            revistaDePatente.NumeroRevistaPatente = UtilidadesDePersistencia.getValorInteger(leitor, "NUMEROREVISTAPATENTE");
+            revistaDePatente.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAO");
+            revistaDePatente.DataProcessamento = UtilidadesDePersistencia.getValorDate(leitor, "DATAPROCESSAMENTO");
+            revistaDePatente.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSADA");
+            revistaDePatente.ExtensaoArquivo = UtilidadesDePersistencia.GetValorString(leitor, "EXTENSAOARQUIVO");
+            revistaDePatente.DataDeDeposito = UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO");
+            revistaDePatente.NumeroProcessoDaPatente = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROPROCESSOPATENTE");
+            revistaDePatente.NumeroDoPedido = UtilidadesDePersistencia.GetValorString(leitor, "NUMERODOPEDIDO");
+            revistaDePatente.DataDaPublicacaoDoPedido = UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICPEDIDO");
+            revistaDePatente.DataDeConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO");
+            revistaDePatente.PrioridadeUnionista = UtilidadesDePersistencia.GetValorString(leitor, "PRIORIDADEUNIONISTA");
+            revistaDePatente.ClassificacaoInternacional = UtilidadesDePersistencia.GetValorString(leitor, "CLASSIFICACAOINTER");
+            revistaDePatente.Titulo = UtilidadesDePersistencia.GetValorString(leitor, "TITULO");
+            revistaDePatente.Resumo = UtilidadesDePersistencia.GetValorString(leitor, "RESUMO");
+            revistaDePatente.DadosDoPedidoDaPatente = UtilidadesDePersistencia.GetValorString(leitor, "DADOSPEDIDOPATENTE");
+            revistaDePatente.DadosDoPedidoOriginal = UtilidadesDePersistencia.GetValorString(leitor, "DADOSPATENTEORIGINAL");
+            revistaDePatente.PrioridadeInterna = UtilidadesDePersistencia.GetValorString(leitor, "PRIORIDADEINTERNA");
+            revistaDePatente.Depositante = UtilidadesDePersistencia.GetValorString(leitor, "DEPOSITANTE");
+            revistaDePatente.Inventor = UtilidadesDePersistencia.GetValorString(leitor, "INVENTOR");
+            revistaDePatente.Titular = UtilidadesDePersistencia.GetValorString(leitor, "TITULAR");
+            revistaDePatente.UFTitular = UtilidadesDePersistencia.GetValorString(leitor, "UFTITULAR");
+            revistaDePatente.PaisTitular = UtilidadesDePersistencia.GetValorString(leitor, "PAISTITULAR");
+            revistaDePatente.Procurador = UtilidadesDePersistencia.GetValorString(leitor, "PROCURADOR");
+            revistaDePatente.PaisesDesignados = UtilidadesDePersistencia.GetValorString(leitor, "PAISESDESIGNADOS");
+            revistaDePatente.DataInicioFaseNacional = UtilidadesDePersistencia.getValorDate(leitor, "DATAINICIOFASENAC");
+            revistaDePatente.DadosDepositoInternacional = UtilidadesDePersistencia.GetValorString(leitor, "DADOSDEPOSINTER");
+            revistaDePatente.DadosPublicacaoInternacional = UtilidadesDePersistencia.GetValorString(leitor, "DADOSPUBLICINTER");
+            revistaDePatente.CodigoDoDespachoAnterior = UtilidadesDePersistencia.GetValorString(leitor, "CODIGODESPACHOANTERIOR");
+            revistaDePatente.CodigoDoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CODIGODESPACHOATUAL");
+            revistaDePatente.ResponsavelPagamentoImpostoDeRenda = UtilidadesDePersistencia.GetValorString(leitor, "RESPPGTOIMPRENDA");
+            revistaDePatente.Complemento = UtilidadesDePersistencia.GetValorString(leitor, "COMPLEMENTO");
+            revistaDePatente.Decisao = UtilidadesDePersistencia.GetValorString(leitor, "DECISAO");
+            revistaDePatente.Recorrente = UtilidadesDePersistencia.GetValorString(leitor, "RECORRENTE");
+            revistaDePatente.NumeroDoProcesso = UtilidadesDePersistencia.GetValorString(leitor, "NUMERODOPROCESSO");
+            revistaDePatente.Cedente = UtilidadesDePersistencia.GetValorString(leitor, "CEDENTE");
+            revistaDePatente.Cessionaria = UtilidadesDePersistencia.GetValorString(leitor, "CESSIONARIA");
+            revistaDePatente.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
+            revistaDePatente.UltimaInformacao = UtilidadesDePersistencia.GetValorString(leitor, "ULTIMAINFORMACAO");
+            revistaDePatente.CertificadoDeAverbacao = UtilidadesDePersistencia.GetValorString(leitor, "CERTIFAVERBACAO");
+            revistaDePatente.PaisCedente = UtilidadesDePersistencia.GetValorString(leitor, "PAISCEDENTE");
+            revistaDePatente.PaisDaCessionaria = UtilidadesDePersistencia.GetValorString(leitor, "PAISCESSIONARIA");
+            revistaDePatente.Setor = UtilidadesDePersistencia.GetValorString(leitor, "SETOR");
+            revistaDePatente.EnderecoDaCessionaria = UtilidadesDePersistencia.GetValorString(leitor, "ENDERECOCESSIONARIA");
+            revistaDePatente.NaturezaDoDocumento = UtilidadesDePersistencia.GetValorString(leitor, "NATUREZADOCUMENTO");
+            revistaDePatente.MoedaDePagamento = UtilidadesDePersistencia.GetValorString(leitor, "MOEDADEPAGAMENTO");
+            revistaDePatente.Valor = UtilidadesDePersistencia.GetValorString(leitor, "VALOR");
+            revistaDePatente.Pagamento = UtilidadesDePersistencia.GetValorString(leitor, "PAGAMENTO");
+            revistaDePatente.Prazo = UtilidadesDePersistencia.GetValorString(leitor, "PRAZO");
+            revistaDePatente.ServicosIsentosDeAverbacao = UtilidadesDePersistencia.GetValorString(leitor, "SERVISENTOSDEAVERBACAO");
+            revistaDePatente.Criador = UtilidadesDePersistencia.GetValorString(leitor, "CRIADOR");
+            revistaDePatente.Linguagem = UtilidadesDePersistencia.GetValorString(leitor, "LINGUAGEM");
+            revistaDePatente.CampoDeAplicacao = UtilidadesDePersistencia.GetValorString(leitor, "CAMPOAPLICACAO");
+            revistaDePatente.TipoDePrograma = UtilidadesDePersistencia.GetValorString(leitor, "TIPODEPROGRAMA");
+            revistaDePatente.DataDaCriacao = UtilidadesDePersistencia.getValorDate(leitor, "DATADACRIACAO");
+            revistaDePatente.Requerente = UtilidadesDePersistencia.GetValorString(leitor, "REQUERENTE");
+            revistaDePatente.Redacao = UtilidadesDePersistencia.GetValorString(leitor, "REDACAO");
+            revistaDePatente.DataDaProrrogacao = UtilidadesDePersistencia.getValorDate(leitor, "DATAPRORROGACAO");
+            revistaDePatente. ClassificacaoNacional = UtilidadesDePersistencia.GetValorString(leitor, "CLASSIFICACAONACIONAL");
+
+            return revistaDePatente;
+        }
     }
 }
