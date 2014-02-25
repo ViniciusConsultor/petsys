@@ -15,5 +15,6 @@ namespace BoletoNet
         int Codigo { get; set; }
         string Descricao { get; set; }
         int QuantidadeDias { get; set; }
+        string DescricaoReciboDoSacado { get; set; }
     }
 }

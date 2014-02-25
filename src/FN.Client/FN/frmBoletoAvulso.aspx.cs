@@ -357,7 +357,7 @@ namespace FN.Client.FN
                 boleto.Sacado.Endereco.UF = txtEstado.Text;
 
                 var instrucaoCaixa = new Instrucao_Caixa { Descricao = txtInstrucoes.Text };
-
+                instrucaoCaixa.DescricaoReciboDoSacado = sacadoObservacao;
                 boleto.Instrucoes.Add(instrucaoCaixa);
 
                 var especificacao = new EspecieDocumento_Caixa();
