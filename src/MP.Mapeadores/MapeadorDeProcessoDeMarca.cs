@@ -48,10 +48,10 @@ namespace MP.Mapeadores
                            ? String.Concat(processoDeMarca.Despacho.IdDespacho, ", ")
                            : "NULL, ");
             sql.Append(!String.IsNullOrEmpty(processoDeMarca.TextoComplementarDoDespacho)
-                          ? String.Concat("'", processoDeMarca.TextoComplementarDoDespacho, "', ")
+                          ? String.Concat("'",UtilidadesDePersistencia.FiltraApostrofe(processoDeMarca.TextoComplementarDoDespacho), "', ")
                           : "NULL, ");
             sql.Append(!String.IsNullOrEmpty(processoDeMarca.Apostila)
-                         ? String.Concat("'", processoDeMarca.Apostila, "', ")
+                         ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(processoDeMarca.Apostila), "', ")
                          : "NULL, ");
 
             sql.Append(processoDeMarca.Ativo ? "'1', " : "'0', ");
@@ -85,10 +85,10 @@ namespace MP.Mapeadores
                            : "IDDESPACHO = NULL, ");
 
             sql.Append(!String.IsNullOrEmpty(processoDeMarca.TextoComplementarDoDespacho)
-                           ? String.Concat("TXTCOMPLDESPACHO = '", processoDeMarca.TextoComplementarDoDespacho, "', ")
+                           ? String.Concat("TXTCOMPLDESPACHO = '", UtilidadesDePersistencia.FiltraApostrofe(processoDeMarca.TextoComplementarDoDespacho), "', ")
                            : "TXTCOMPLDESPACHO = NULL, ");
             sql.Append(!String.IsNullOrEmpty(processoDeMarca.Apostila)
-                         ? String.Concat("APOSTILA = '", processoDeMarca.Apostila, "', ")
+                         ? String.Concat("APOSTILA = '", UtilidadesDePersistencia.FiltraApostrofe(processoDeMarca.Apostila), "', ")
                          : "APOSTILA = NULL, ");
 
             sql.Append(processoDeMarca.Ativo ? "ATIVO = '1', " : "ATIVO = '0', ");

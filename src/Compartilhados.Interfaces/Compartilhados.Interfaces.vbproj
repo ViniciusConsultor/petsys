@@ -161,6 +161,8 @@
     <Compile Include="Core\Negocio\SimENao.vb" />
     <Compile Include="Core\Servicos\IServicoDeTipoDeEndereco.vb" />
     <Compile Include="FN\Negocio\IConfiguracaoDeIndicesFinanceiros.vb" />
+    <Compile Include="FN\Negocio\IItemLancamentoFinanceiro.vb" />
+    <Compile Include="FN\Negocio\TipoLacamentoFinanceiro.vb" />
     <Compile Include="FN\Servicos\IServicoDeConfiguracaoDeIndicesFinanceiros.vb" />
     <Compile Include="GeradorDeID.vb" />
     <Compile Include="GerenciadorDeEmail.vb" />

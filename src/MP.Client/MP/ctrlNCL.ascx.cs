@@ -18,10 +18,25 @@ namespace MP.Client.MP
 
         }
 
+        public bool EnableLoadOnDemand
+        {
+            set { cboNCL.EnableLoadOnDemand = value; }
+        }
+
+        public bool AutoPostBack
+        {
+            set { cboNCL.AutoPostBack = value; }
+        }
+
+        public bool ShowDropDownOnTextboxClick
+        {
+            set { cboNCL.ShowDropDownOnTextboxClick = value; }
+        }
+
         public void Inicializa()
         {
+            AutoPostBack = true;
             LimparControle();
-            CarregueCombo();
         }
 
         private void LimparControle()
@@ -31,37 +46,51 @@ namespace MP.Client.MP
             cboNCL.ClearSelection();
         }
 
-
+        
         public string Codigo
         {
-            get { return cboNCL.SelectedValue; }
-            set
+            get { return cboNCL.Text; }
+            set {cboNCL.Text = value;}
+        }
+
+        public NCL NCLSelecionado
+        {
+            get { return (NCL)ViewState[ClientID]; }
+            set { ViewState.Add(this.ClientID, value); }
+        }
+
+        protected void cboNCL_OnItemsRequested(object sender, RadComboBoxItemsRequestedEventArgs e)
+        {
+            var ncls = NCL.ObtenhaPorCodigoComoFiltro(e.Text);
+
+            if (ncls.Count > 0)
             {
-                var ncl = NCL.ObtenhaPorCodigo(value);
-
-                if (ncl !=null)
+                foreach (var ncl in ncls)
                 {
-                    cboNCL.SelectedValue = value;
-                    cboNCL.Text = value;
-                }
+                    var item = new RadComboBoxItem(ncl.Codigo, ncl.Codigo);
 
-                
+                    item.Attributes.Add("Descricao", ncl.Descricao);
+                    item.Attributes.Add("Natureza", ncl.NaturezaDeMarca.Nome);
+
+                    cboNCL.Items.Add(item);
+                    item.DataBind();
+                }
             }
         }
 
-
-        private void CarregueCombo()
+        protected void cboNCL_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            foreach (var ncl in NCL.ObtenhaTodas())
+            if (!cboNCL.AutoPostBack) return;
+
+            if (string.IsNullOrEmpty(((RadComboBox)sender).SelectedValue))
             {
-                var item = new RadComboBoxItem(ncl.Codigo, ncl.Codigo);
-
-                item.Attributes.Add("Descricao", ncl.Descricao);
-                item.Attributes.Add("Natureza", ncl.NaturezaDeMarca.Nome);
-
-                cboNCL.Items.Add(item);
-                item.DataBind();
+                LimparControle();
+                return;
             }
+
+            var ncl = NCL.ObtenhaPorCodigo(((RadComboBox) sender).SelectedValue);
+
+            NCLSelecionado = ncl;
         }
     }
 }

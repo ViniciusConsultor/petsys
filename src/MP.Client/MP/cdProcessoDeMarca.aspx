@@ -444,7 +444,7 @@
                                             <table class="tabela">
                                                 <tr>
                                                     <td class="th3">
-                                                        <asp:Label ID="Label32" runat="server" Text="Data da primeira manutenção:"></asp:Label>
+                                                        <asp:Label ID="Label32" runat="server" Text="Data da próxima manutenção"></asp:Label>
                                                     </td>
                                                     <td class="td">
                                                         <telerik:RadDatePicker ID="txtDataDaPrimeiraManutencao" runat="server">

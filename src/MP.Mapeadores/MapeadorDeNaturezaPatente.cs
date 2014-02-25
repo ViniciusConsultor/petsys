@@ -93,8 +93,8 @@ namespace MP.Mapeadores
             comandoSQL.Append("TEMPO_ENTRE_PAGTO_INTERMED, DESCRICAO_PAGTO, DESCRICAO_PAGTO_INTERMED, TEM_PED_EXAME) ");
             comandoSQL.Append("VALUES (");
             comandoSQL.Append(String.Concat(naturezaPatente.IdNaturezaPatente.Value.ToString(), ", "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.DescricaoNaturezaPatente, "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.SiglaNatureza.ToString(), "', "));
+            comandoSQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoNaturezaPatente), "', "));
+            comandoSQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.SiglaNatureza), "', "));
             comandoSQL.Append(String.Concat(naturezaPatente.TempoInicioAnos, ", "));
             comandoSQL.Append(String.Concat(naturezaPatente.QuantidadePagamento, ", "));
             comandoSQL.Append(String.Concat(naturezaPatente.TempoEntrePagamento, ", "));
@@ -103,8 +103,8 @@ namespace MP.Mapeadores
             comandoSQL.Append(String.Concat(naturezaPatente.InicioIntermediarioSequencia, ", "));
             comandoSQL.Append(String.Concat(naturezaPatente.QuantidadePagamentoIntermediario, ", "));
             comandoSQL.Append(String.Concat(naturezaPatente.TempoEntrePagamentoIntermediario, ", "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.DescricaoPagamento, "', "));
-            comandoSQL.Append(String.Concat("'", naturezaPatente.DescricaoPagamentoIntermediario, "', "));
+            comandoSQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoPagamento), "', "));
+            comandoSQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoPagamentoIntermediario), "', "));
             comandoSQL.Append(naturezaPatente.TemPedidoDeExame ? String.Concat("'", 1, "') ") : String.Concat("'", 0, "') "));
 
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
@@ -119,7 +119,7 @@ namespace MP.Mapeadores
 
             comandoSQL.Append("UPDATE MP_NATUREZA_PATENTE SET ");
             comandoSQL.Append(String.Concat("DESCRICAO_NATUREZA_PATENTE = '", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoNaturezaPatente), "', "));
-            comandoSQL.Append(String.Concat("SIGLA_NATUREZA = '", naturezaPatente.SiglaNatureza.ToString(), "', "));
+            comandoSQL.Append(String.Concat("SIGLA_NATUREZA = '", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.SiglaNatureza), "', "));
             comandoSQL.Append(String.Concat("TEMPO_INICIO_ANOS = ", naturezaPatente.TempoInicioAnos, ", "));
             comandoSQL.Append(String.Concat("QUANTIDADE_PAGTO = ", naturezaPatente.QuantidadePagamento, ", "));
             comandoSQL.Append(String.Concat("TEMPO_ENTRE_PAGTO = ", naturezaPatente.TempoEntrePagamento, ", "));
@@ -129,8 +129,8 @@ namespace MP.Mapeadores
             comandoSQL.Append(String.Concat("INICIO_INTERMED_SEQUENCIA = ", naturezaPatente.InicioIntermediarioSequencia, ", "));
             comandoSQL.Append(String.Concat("QUANTIDADE_PAGTO_INTERMED = ", naturezaPatente.QuantidadePagamentoIntermediario, ", "));
             comandoSQL.Append(String.Concat("TEMPO_ENTRE_PAGTO_INTERMED = ", naturezaPatente.TempoEntrePagamentoIntermediario, ", "));
-            comandoSQL.Append(String.Concat("DESCRICAO_PAGTO = '", naturezaPatente.DescricaoPagamento, "', "));
-            comandoSQL.Append(String.Concat("DESCRICAO_PAGTO_INTERMED = '", naturezaPatente.DescricaoPagamentoIntermediario, "', "));
+            comandoSQL.Append(String.Concat("DESCRICAO_PAGTO = '", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoPagamento), "', "));
+            comandoSQL.Append(String.Concat("DESCRICAO_PAGTO_INTERMED = '", UtilidadesDePersistencia.FiltraApostrofe(naturezaPatente.DescricaoPagamentoIntermediario), "', "));
             comandoSQL.Append(naturezaPatente.TemPedidoDeExame ? String.Concat("TEM_PED_EXAME = '", 1, "' ") :
                                                                  String.Concat("TEM_PED_EXAME = '", 0, "' "));
             comandoSQL.Append(String.Concat("WHERE IDNATUREZA_PATENTE = ", naturezaPatente.IdNaturezaPatente.Value.ToString()));

@@ -68,7 +68,7 @@ namespace MP.Client.MP
             else
                 marca.ImagemDaMarca = Util.URL_IMAGEM_SEM_FOTO_MARCA;
 
-            marca.NCL = NCL.ObtenhaPorCodigo(ctrlNCL.Codigo);
+            marca.NCL = ctrlNCL.NCLSelecionado;
             marca.Natureza = NaturezaDeMarca.ObtenhaPorCodigo(Convert.ToInt32(ctrlNatureza.Codigo));
 
             marca.EspecificacaoDeProdutosEServicos = txtEspecificacao.Text;
@@ -136,7 +136,8 @@ namespace MP.Client.MP
 
             ctrlApresentacao.Codigo = marca.Apresentacao.Codigo.ToString();
             ctrlCliente.ClienteSelecionado = marca.Cliente;
-            ctrlNCL.Codigo = marca.NCL.Codigo.ToString();
+            ctrlNCL.Codigo = marca.NCL.Codigo;
+            ctrlNCL.NCLSelecionado = marca.NCL;
             ctrlNatureza.Codigo = marca.Natureza.Codigo.ToString();
             txtNomeDaMarca.Text = marca.DescricaoDaMarca;
 
@@ -318,7 +319,7 @@ namespace MP.Client.MP
 
             if (string.IsNullOrEmpty(txtNomeDaMarca.Text)) inconsitencias.Add("É necessário informar o nome da marca.");
 
-            if (string.IsNullOrEmpty(ctrlNCL.Codigo)) inconsitencias.Add("É necessário informar a classificação.");
+            if (ctrlNCL.NCLSelecionado == null) inconsitencias.Add("É necessário informar a classificação.");
 
             if (string.IsNullOrEmpty(ctrlNatureza.Codigo)) inconsitencias.Add("É necessário informar a natureza.");
 
@@ -453,8 +454,8 @@ namespace MP.Client.MP
 
                 radical.DescricaoRadical = txtRadical.Text;
 
-                if (ctrlNCLRadical != null && !string.IsNullOrEmpty(ctrlNCLRadical.Codigo))
-                    radical.NCL = NCL.ObtenhaPorCodigo(ctrlNCLRadical.Codigo);
+                if (ctrlNCLRadical.NCLSelecionado != null)
+                    radical.NCL = ctrlNCLRadical.NCLSelecionado;
 
                 if (listaDeRadicais.Count > 0)
                 {

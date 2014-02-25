@@ -308,7 +308,7 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (string.IsNullOrEmpty(ctrlNCL1.Codigo))
+            if (ctrlNCL1.NCLSelecionado == null )
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma NCL."), false);
@@ -318,7 +318,7 @@ namespace MP.Client.MP
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorNCL>();
             filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-            filtro.ValorDoFiltro = ctrlNCL1.Codigo;
+            filtro.ValorDoFiltro = ctrlNCL1.NCLSelecionado.Codigo;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }

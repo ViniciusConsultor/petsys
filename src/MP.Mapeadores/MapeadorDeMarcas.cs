@@ -216,7 +216,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("IMAGEM_MARCA = '", marca.ImagemDaMarca, "' , "));
             sql.Append(String.Concat("CODIGONCL = '", marca.NCL.Codigo, "' , "));
             sql.Append(String.Concat("CODIGONATUREZA = ", marca.Natureza.Codigo, " , "));
-            sql.Append(String.Concat("OBSERVACAO_MARCA = '", marca.ObservacaoDaMarca, "', "));
+            sql.Append(String.Concat("OBSERVACAO_MARCA = '",UtilidadesDePersistencia.FiltraApostrofe(marca.ObservacaoDaMarca), "', "));
 
             if (marca.Manutencao == null)
             {
