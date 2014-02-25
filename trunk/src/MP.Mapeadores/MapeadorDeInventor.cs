@@ -33,7 +33,7 @@ namespace MP.Mapeadores
             if (string.IsNullOrEmpty(inventor.InformacoesAdicionais))
                 sql.Append("NULL)");
             else
-                sql.Append(String.Concat("'", inventor.InformacoesAdicionais, "')"));
+                sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(inventor.InformacoesAdicionais), "')"));
             
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -67,7 +67,7 @@ namespace MP.Mapeadores
             }
             else
             {
-                sql.Append(String.Concat("'", inventor.InformacoesAdicionais, "'"));
+                sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(inventor.InformacoesAdicionais), "'"));
             }
 
             DBHelper.ExecuteNonQuery(sql.ToString());

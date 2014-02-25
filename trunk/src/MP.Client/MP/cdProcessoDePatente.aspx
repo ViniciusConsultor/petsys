@@ -2,7 +2,6 @@
     CodeBehind="cdProcessoDePatente.aspx.cs" Inherits="MP.Client.MP.cdProcessoDePatente" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="ctrlPatente.ascx" TagName="ctrlPatente" TagPrefix="uc1" %>
 <%@ Register Src="ctrlProcurador.ascx" TagName="ctrlProcurador" TagPrefix="uc2" %>
 <%@ Register Src="ctrlDespachoDePatentes.ascx" TagName="ctrlDespachoDePatentes" TagPrefix="uc3" %>
 <%@ Register Src="ctrlPasta.ascx" TagName="ctrlPasta" TagPrefix="uc4" %>
@@ -866,7 +865,7 @@
                                     <table class="tabela">
                                         <tr>
                                             <td class="th3">
-                                                <asp:Label ID="Label32" runat="server" Text="Data da primeira manutenção:"></asp:Label>
+                                                <asp:Label ID="Label32" runat="server" Text="Data da próxima manutenção:"></asp:Label>
                                             </td>
                                             <td class="td">
                                                 <telerik:RadDatePicker ID="txtDataDaPrimeiraManutencao" runat="server">

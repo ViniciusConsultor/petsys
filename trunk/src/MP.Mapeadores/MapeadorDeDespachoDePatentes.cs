@@ -116,7 +116,7 @@ namespace MP.Mapeadores
             sql.Append("IDDESPACHOPATENTE, CODIGO, DESCRICAO, TITULO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(despachoDePatentes.IdDespachoDePatente.Value.ToString(), ", "));
-            sql.Append(String.Concat("'", despachoDePatentes.Codigo, "', "));
+            sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(despachoDePatentes.Codigo), "', "));
 
             sql.Append(string.IsNullOrEmpty(despachoDePatentes.Descricao)
                            ? "NULL, "

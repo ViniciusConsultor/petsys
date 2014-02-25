@@ -28,7 +28,7 @@ namespace MP.Mapeadores
             sql.Append(String.Concat(titular.Pessoa.ID.Value, ", "));
             sql.Append(String.Concat(titular.Pessoa.Tipo.ID, ", "));
             sql.Append(String.Concat(titular.DataDoCadastro.Value.ToString("yyyyMMdd"), ", "));
-            sql.Append(string.IsNullOrEmpty(titular.InformacoesAdicionais) ? "NULL)" : String.Concat("'", titular.InformacoesAdicionais, "')"));
+            sql.Append(string.IsNullOrEmpty(titular.InformacoesAdicionais) ? "NULL)" : String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(titular.InformacoesAdicionais), "')"));
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
 
@@ -53,7 +53,7 @@ namespace MP.Mapeadores
 
             sql.Append("UPDATE MP_TITULAR SET ");
             sql.Append("INFOADICIONAL = ");
-            sql.Append(string.IsNullOrEmpty(titular.InformacoesAdicionais) ? "NULL)" : String.Concat("'", titular.InformacoesAdicionais, "'"));
+            sql.Append(string.IsNullOrEmpty(titular.InformacoesAdicionais) ? "NULL)" : String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(titular.InformacoesAdicionais), "'"));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }

@@ -167,6 +167,15 @@ namespace MP.Interfaces.Negocio
             return ObtenhaTodas().FirstOrDefault(ncl => ncl.Codigo.Equals(codigo));
         }
 
+        public static IList<NCL> ObtenhaPorCodigoComoFiltro( string filtro)
+        {
+            var todos = ObtenhaTodas();
+
+            if (String.IsNullOrEmpty(filtro)) return todos;
+
+            return todos.Where(ncl => ncl.Codigo.Contains(filtro)).ToList();
+        }
+
         public override bool Equals(object obj)
         {
             var objeto = obj as NCL;

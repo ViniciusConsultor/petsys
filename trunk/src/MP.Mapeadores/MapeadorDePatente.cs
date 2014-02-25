@@ -94,8 +94,8 @@ namespace MP.Mapeadores
             comandoSQL.Append("TITULOPATENTE = '" + UtilidadesDePersistencia.FiltraApostrofe(patente.TituloPatente) + "', ");
             comandoSQL.Append("IDNATUREZAPATENTE = " + patente.NaturezaPatente.IdNaturezaPatente + ", ");
             comandoSQL.Append("DATACADASTRO = " + (patente.DataCadastro.HasValue ? patente.DataCadastro.Value.ToString("yyyyMMdd") + ", " : "NULL, "));
-            comandoSQL.Append("OBSERVACAO = '" + patente.Observacao + "', ");
-            comandoSQL.Append("RESUMO_PATENTE = '" + patente.Resumo + "', ");
+            comandoSQL.Append("OBSERVACAO = '" + UtilidadesDePersistencia.FiltraApostrofe(patente.Observacao) + "', ");
+            comandoSQL.Append("RESUMO_PATENTE = '" + UtilidadesDePersistencia.FiltraApostrofe(patente.Resumo) + "', ");
             comandoSQL.Append("QTDEREINVINDICACAO = " + patente.QuantidadeReivindicacao + ", ");
 
             comandoSQL.Append(string.IsNullOrEmpty(patente.Imagem)
