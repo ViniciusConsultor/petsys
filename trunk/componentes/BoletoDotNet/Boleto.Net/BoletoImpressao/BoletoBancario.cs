@@ -36,6 +36,8 @@ namespace BoletoNet
         private string _instrucoesHtml = string.Empty;
         private bool _mostrarCodigoCarteira = false;
         private bool _formatoCarne = false;
+        private string _instrucoesReciboSacadoHtml = string.Empty;
+        private List<IInstrucao> _instrucoesReciboSacado = new List<IInstrucao>();
         #endregion Variaveis
 
         #region Propriedades
@@ -198,6 +200,19 @@ namespace BoletoNet
             }
         }
 
+        //public List<IInstrucao> InstrucoesReciboSacado
+        //{
+        //    get
+        //    {
+        //        return _instrucoesReciboSacado;
+        //    }
+
+        //    set
+        //    {
+        //        _instrucoesReciboSacado = value;
+        //    }
+        //}
+
 
         #endregion Propriedades
 
@@ -324,9 +339,9 @@ namespace BoletoNet
                 if (Instrucoes.Count == 0)
                     html.Append(Html.ReciboSacadoParte8);
 
-                MontaInstrucoes();
+                MontaInstrucoesReciboDoSacado();
 
-                return html.ToString().Replace("@INSTRUCOES", _instrucoesHtml);
+                return html.ToString().Replace("@INSTRUCOESRECIBOSACADO", _instrucoesReciboSacadoHtml);
             }
             catch (Exception ex)
             {
@@ -416,6 +431,21 @@ namespace BoletoNet
                         _instrucoesHtml += string.Format("{0}<br />", instrucao.Descricao);
 
                     _instrucoesHtml = Strings.Left(_instrucoesHtml, _instrucoesHtml.Length - 6);
+                }
+        }
+
+        private void MontaInstrucoesReciboDoSacado()
+        {
+            if (string.IsNullOrEmpty(_instrucoesReciboSacadoHtml))
+                if (Boleto.Instrucoes.Count > 0)
+                {
+                    _instrucoesReciboSacadoHtml = string.Empty;
+                    //Flavio(fhlviana@hotmail.com) - retirei a tag <span> de cada instrução por não ser mais necessáras desde que dentro
+                    //da div que contem as instruções a classe cpN se aplica, que é a mesma, em conteudo, da classe cp
+                    foreach (IInstrucao instrucao in Boleto.Instrucoes)
+                        _instrucoesReciboSacadoHtml += string.Format("{0}<br />", instrucao.DescricaoReciboDoSacado);
+
+                    _instrucoesReciboSacadoHtml = Strings.Left(_instrucoesReciboSacadoHtml, _instrucoesReciboSacadoHtml.Length - 6);
                 }
         }
 

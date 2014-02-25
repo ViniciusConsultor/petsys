@@ -42,6 +42,8 @@ namespace BoletoNet
             set { _quantidadeDias = value; }
         }
 
+        public virtual string DescricaoReciboDoSacado { get; set; }
+
         # endregion
 
         # region Metodos
