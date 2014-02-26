@@ -440,10 +440,19 @@ namespace BoletoNet
                 if (Boleto.Instrucoes.Count > 0)
                 {
                     _instrucoesReciboSacadoHtml = string.Empty;
-                    //Flavio(fhlviana@hotmail.com) - retirei a tag <span> de cada instrução por não ser mais necessáras desde que dentro
-                    //da div que contem as instruções a classe cpN se aplica, que é a mesma, em conteudo, da classe cp
+
                     foreach (IInstrucao instrucao in Boleto.Instrucoes)
-                        _instrucoesReciboSacadoHtml += string.Format("{0}<br />", instrucao.DescricaoReciboDoSacado);
+                    {
+                        var descricaoDoReciboDoSacado = instrucao.DescricaoReciboDoSacado;
+
+                        if (instrucao.DescricaoReciboDoSacado.Contains("\n"))
+                        {
+                            descricaoDoReciboDoSacado = instrucao.DescricaoReciboDoSacado.Replace("\n", "<br>");
+                        }
+
+                        _instrucoesReciboSacadoHtml += string.Format("{0}<br />", descricaoDoReciboDoSacado);
+                    }
+                        
 
                     _instrucoesReciboSacadoHtml = Strings.Left(_instrucoesReciboSacadoHtml, _instrucoesReciboSacadoHtml.Length - 6);
                 }
