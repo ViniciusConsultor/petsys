@@ -272,14 +272,21 @@ namespace MP.Mapeadores
             sql.AppendLine(" LEFT JOIN NCL_GRUPO_DE_ATIVIDADE ON NCL_GRUPO_DE_ATIVIDADE.ID = NCL_CLIENTE.IDGRPATIVIDADE");
             
             if (IDCliente.HasValue)
-                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE "  +  " MP_MARCAS.IDCLIENTE = " + IDCliente.Value +  " ");
+                sql.AppendLine( " WHERE "  +  " MP_MARCAS.IDCLIENTE = " + IDCliente.Value +  " ");
 
             if (IDsDosDespachos != null && IDsDosDespachos.Count > 0)
-                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE " + UtilidadesDePersistencia.MontaFiltro<string>("MP_PROCESSOMARCA.IDDESPACHO", IDsDosDespachos, "OR",
-                                                                    false) +  " ");
+            {
+                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE " );
+                sql.AppendLine(
+                    UtilidadesDePersistencia.MontaFiltro<string>("MP_PROCESSOMARCA.IDDESPACHO", IDsDosDespachos, "OR",
+                                                                 false) + " ");
+            }
 
             if (IDGrupoDeAtividade.HasValue)
-                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE " + " NCL_GRUPO_DE_ATIVIDADE.ID = " + IDGrupoDeAtividade.Value + " ");
+            {
+                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE ");
+                sql.AppendLine(" NCL_GRUPO_DE_ATIVIDADE.ID = " + IDGrupoDeAtividade.Value + " ");
+            }
             
             sql.AppendLine(" ORDER BY DATADECADASTRO, PROCESSO");
 
