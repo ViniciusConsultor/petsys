@@ -445,7 +445,7 @@ namespace BoletoNet
                     {
                         var descricaoDoReciboDoSacado = instrucao.DescricaoReciboDoSacado;
 
-                        if (instrucao.DescricaoReciboDoSacado.Contains("\n"))
+                        if (!string.IsNullOrEmpty(instrucao.DescricaoReciboDoSacado) && instrucao.DescricaoReciboDoSacado.Contains("\n"))
                         {
                             descricaoDoReciboDoSacado = instrucao.DescricaoReciboDoSacado.Replace("\n", "<br>");
                         }
