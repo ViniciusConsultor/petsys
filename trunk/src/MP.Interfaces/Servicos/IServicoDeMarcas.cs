@@ -11,5 +11,6 @@ namespace MP.Interfaces.Servicos
     {
         IMarcas obtenhaMarcasPeloId(long idMarca);
         IList<IMarcas> obtenhaMarcasPelaDescricaoComoFiltro(string descricaoDaMarca, int quantidadeMaximaDeRegistros);
+        IList<IMarcas> obtenhaMarcasComDataDeManutencaoAVencer();
     }
 }

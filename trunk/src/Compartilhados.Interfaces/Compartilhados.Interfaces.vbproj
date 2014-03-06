@@ -162,8 +162,12 @@
     <Compile Include="Core\Servicos\IServicoDeTipoDeEndereco.vb" />
     <Compile Include="FN\Negocio\IConfiguracaoDeIndicesFinanceiros.vb" />
     <Compile Include="FN\Negocio\IItemLancamentoFinanceiro.vb" />
+    <Compile Include="FN\Negocio\IItemLancamentoFinanceiroRecebimento.vb" />
+    <Compile Include="FN\Negocio\Situacao.vb" />
     <Compile Include="FN\Negocio\TipoLacamentoFinanceiro.vb" />
+    <Compile Include="FN\Negocio\TipoLacamentoFinanceiroRecebimento.vb" />
     <Compile Include="FN\Servicos\IServicoDeConfiguracaoDeIndicesFinanceiros.vb" />
+    <Compile Include="FN\Servicos\IServicoDeItensFinanceirosDeRecebimento.vb" />
     <Compile Include="GeradorDeID.vb" />
     <Compile Include="GerenciadorDeEmail.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

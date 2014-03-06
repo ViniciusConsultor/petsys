@@ -1,4 +1,5 @@
 ﻿<schedules>
   <schedule fullname="Core.Interfaces.Negocio.Schedules" type="IScheduleLimpaLogs" segundos ="1200" />
   <schedule fullname="Core.Interfaces.Negocio.Schedules" type="IScheduleLimpaPdfs" segundos ="600" />
+  <schedule fullname="MP.Interfaces.Negocio.Schedules" type="IScheduleManutencaoDeMarcas" segundos ="60" />
 </schedules>

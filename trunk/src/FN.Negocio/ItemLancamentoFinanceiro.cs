@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.FN.Negocio;
+
+namespace FN.Negocio
+{
+    [Serializable]
+    public abstract class ItemLancamentoFinanceiro : IItemLancamentoFinanceiro
+    {
+        public abstract TipoLacamentoFinanceiro Tipo();
+        public long? ID { get; set; }
+        public ICliente Cliente { get; set; }
+        public double Valor { get; set; }
+        public string Observacao { get; set; }
+        public DateTime DataDoLancamento { get; set; }
+        
+        public Situacao Situacao { get; set; }
+    }
+}
