@@ -120,6 +120,7 @@
     <Compile Include="Repositorios\RepositorioPrioridadeUnionistaPatente.cs" />
     <Compile Include="RevistaDeMarcas.cs" />
     <Compile Include="RevistaDePatente.cs" />
+    <Compile Include="Schedules\ScheduleManutencaoDeMarcas.cs" />
     <Compile Include="TemplateDeEmail.cs" />
     <Compile Include="TipoDeProcedimentoInterno.cs" />
     <Compile Include="Titular.cs" />

@@ -45,6 +45,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Compartilhados.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Core.Negocio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fd092420b966ccff, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,6 +59,9 @@
     <Compile Include="BoletosGeradosAux.cs" />
     <Compile Include="ConfiguracaoDeBoletoBancario.cs" />
     <Compile Include="ConfiguracaoDeIndicesFinanceiros.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberSemFiltro.cs" />
+    <Compile Include="ItemLancamentoFinanceiro.cs" />
+    <Compile Include="ItemLancamentoFinanceiroRecebimento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +73,7 @@
       <Name>FN.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

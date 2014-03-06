@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.FN.Negocio;
+using Compartilhados.Interfaces.FN.Servicos;
 using FN.Interfaces.Mapeadores;
 using FN.Interfaces.Negocio;
 using FN.Interfaces.Servicos;
@@ -113,13 +115,25 @@ namespace FN.Servicos.Local
         public void Inserir(IBoletosGerados boletoGerado)
         {
             ServerUtils.setCredencial(_Credencial);
-
+          
             var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
+            var mapeadorItemFinanceiroRecebimento =
+                FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
+
+            var itemLacamentoFinanceiro =
+                FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
+            itemLacamentoFinanceiro.Cliente = boletoGerado.Cliente;
+            itemLacamentoFinanceiro.DataDoLancamento = boletoGerado.DataVencimento.Value;
+            itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
+            itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.BoletoAvulso;
+            itemLacamentoFinanceiro.Valor = boletoGerado.Valor;
+            
 
             try
             {
                 ServerUtils.BeginTransaction();
                 mapeador.Inserir(boletoGerado);
+                mapeadorItemFinanceiroRecebimento.Insira(itemLacamentoFinanceiro);
                 ServerUtils.CommitTransaction();
             }
             catch

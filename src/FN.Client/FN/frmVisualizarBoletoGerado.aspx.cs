@@ -13,30 +13,22 @@ namespace FN.Client.FN
         {
             if (IsPostBack) return;
 
-            btnImprimir.Attributes.Add("onClick", "javascript:window.print();");
-
             string Id = null;
 
             if (!String.IsNullOrEmpty(Request.QueryString["Id"]))
                 Id = Request.QueryString["Id"];
 
             if (Id == null)
-                ExibaTelaSemArquivoGerado();
-            else
-                ExibaBoleto(Id);
+                return;
+            
+            ExibaBoleto(Id);
         }
 
 
-        private void ExibaTelaSemArquivoGerado()
-        {
-            btnImprimir.Visible = false;
-
-        }
+       
 
         private void ExibaBoleto(string id)
         {
-            btnImprimir.Visible = true;
-
             var boleto = Session[id] as Control;
 
             pnlBoletoGerado.Controls.Add(boleto);

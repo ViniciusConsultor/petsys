@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeItensFinanceirosDeRecebimento.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberSemFiltro.cs" />
     <Compile Include="Negocio\IBoletosGerados.cs" />
     <Compile Include="Negocio\IBoletosGeradosAux.cs" />
     <Compile Include="Negocio\IConfiguracaoDeBoletoBancario.cs" />

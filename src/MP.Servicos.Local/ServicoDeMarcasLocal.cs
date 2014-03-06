@@ -49,5 +49,9 @@ namespace MP.Servicos.Local
             }
         }
 
+        public IList<IMarcas> obtenhaMarcasComDataDeManutencaoAVencer()
+        {
+            return null;
+        }
     }
 }
