@@ -121,6 +121,9 @@ namespace FN.Client.FN
             catch (Exception ex)
             {
                 Logger.GetInstancia().Erro("Erro ao carregar informações do cliente selecionado, exceção: ", ex);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                        "Erro ao carregar informações do cliente selecionado, exceção: " + ex.Message), false);
             }
         }
 
@@ -179,13 +182,7 @@ namespace FN.Client.FN
 
 
                 // obtendo a configuração do cedente
-                //IConfiguracaoDeBoletoBancario configuracaoDoBoleto;
-
-                //using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-                //{
-                //    configuracaoDoBoleto = servico.ObtenhaConfiguracao();
-                //}
-
+                
                 var cedenteSelecionado = (ICedente)Session["CHAVE_CEDENTE_SELECIONADO"];
 
                 var cedenteCpfCnpj = string.Empty;
@@ -264,67 +261,6 @@ namespace FN.Client.FN
 
                     return;
                 }
-
-                //if (configuracaoDoBoleto != null)
-                //{
-                //    imagemDoRecibo = configuracaoDoBoleto.ImagemDeCabecalhoDoReciboDoSacado;
-
-                //    var cedentePessoa = configuracaoDoBoleto.Cedente.Pessoa;
-
-                //    cedenteNome = cedentePessoa.Nome;
-
-                //    if (cedentePessoa.DadoBancario != null)
-                //    {
-                //        codigoDoBanco = cedentePessoa.DadoBancario.Agencia.Banco.Numero;
-                //        cedenteAgencia = cedentePessoa.DadoBancario.Agencia.Numero;
-                //        cedenteConta = cedentePessoa.DadoBancario.Conta.Numero;
-                //        cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.Value.ToString("000");
-
-                //        if (!string.IsNullOrEmpty(cedenteConta))
-                //        {
-                //            cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length - 1, 1);
-                //        }
-                //    }
-
-                //    if (cedentePessoa.Tipo == TipoDePessoa.Fisica)
-                //    {
-                //        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
-                //        {
-                //            var pessoaFisica = servico.ObtenhaPessoa(cedentePessoa.ID.Value);
-
-                //            if (pessoaFisica != null)
-                //            {
-                //                var cpf = pessoaFisica.ObtenhaDocumento(TipoDeDocumento.CPF);
-
-                //                if (cpf != null)
-                //                    cedenteCpfCnpj = cpf.ToString();
-                //            }
-                //        }
-                //    }
-                //    else
-                //    {
-                //        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
-                //        {
-                //            var pessoaJuridica = servico.ObtenhaPessoa(cedentePessoa.ID.Value);
-
-                //            if (pessoaJuridica != null)
-                //            {
-                //                var cnpj = pessoaJuridica.ObtenhaDocumento(TipoDeDocumento.CNPJ);
-
-                //                if (cnpj != null)
-                //                    cedenteCpfCnpj = cnpj.ToString();
-                //            }
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                //                                        UtilidadesWeb.MostraMensagemDeInformacao("Configurações do cedente ou boleto bancário inválidas, favor verificar."),
-                //                                        false);
-
-                //    return;
-                //}
 
                 // formata código do cedente
                 if (!string.IsNullOrEmpty(cedenteOperacaoConta) && !string.IsNullOrEmpty(cedenteConta))
@@ -426,6 +362,8 @@ namespace FN.Client.FN
             catch (Exception ex)
             {
                 Logger.GetInstancia().Erro("Erro ao gerar boleto, exceção: ", ex);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia("Erro ao gerar boleto, exceção: " + ex.Message), false);
             }
         }
 
