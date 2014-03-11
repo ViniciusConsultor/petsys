@@ -205,7 +205,7 @@ namespace MP.Client.MP
             LimpaTela();
 
             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                             UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                             UtilidadesWeb.MostraMensagemDeInformacao(
                                                                  "E-mail enviado com sucesso."),
                                                              false);
 
