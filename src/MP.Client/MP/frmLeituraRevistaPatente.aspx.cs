@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -715,7 +716,7 @@ namespace MP.Client.MP
 
                 if (listaDeProcessosDePatentesComRadicalCadastrado.Count > 0)
                 {
-                    //pnlRelatoriosRadical.Visible = true;
+                    pnlRelatoriosRadical.Visible = true;
                     foreach (var processoDaRevista in listaDeTodosProcessosDaRevistaXML.Where(processoDaRevista => !string.IsNullOrEmpty(processoDaRevista.Titulo)))
                         listaDeProcessosDaRevistaComPatenteExistente.Add(processoDaRevista);
 
@@ -942,10 +943,36 @@ namespace MP.Client.MP
 
         protected void btnRelatorioPorClassificacao_OnClick(object sender, ImageClickEventArgs e)
         {
+            if (ViewState[CHAVE_RADICAIS_CLIENTES] != null && ViewState[CHAVE_PATENTES_COLIDENTES] != null)
+            {
+                var dicionarioDeRevistaColidentes = (IDictionary<long, IList<IRevistaDePatente>>) ViewState[CHAVE_PATENTES_COLIDENTES];
+                var radicais = ((IList<IRadicalPatente>)ViewState[CHAVE_RADICAIS_CLIENTES]);
+                var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
+                string dataDaPublicacao = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.HasValue ?
+                    ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.Value.ToString("dd/MM/yyyy") : string.Empty;
+
+                var gerador = new GeradorDeRelatorioPorClassificacao(dicionarioDeRevistaColidentes, radicais);
+                var nomeDoArquivo = gerador.GereRelatorio(numeroDaRevistaSelecionada, dataDaPublicacao);
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
         }
 
         protected void btnGerarRelatorioPorColidencia_OnClick(object sender, ImageClickEventArgs e)
         {
+            if (ViewState[CHAVE_RADICAIS_CLIENTES] != null && ViewState[CHAVE_PATENTES_COLIDENTES] != null)
+            {
+                var dicionarioDeRevistaColidentes = (IDictionary<long, IList<IRevistaDePatente>>) ViewState[CHAVE_PATENTES_COLIDENTES];
+                var radicais = ((IList<IRadicalPatente>)ViewState[CHAVE_RADICAIS_CLIENTES]);
+                var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
+                string dataDaPublicacao = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.HasValue ?
+                    ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.Value.ToString("dd/MM/yyyy") : string.Empty;
+
+                var gerador = new GeradorDeRelatorioPorColidencia(dicionarioDeRevistaColidentes, radicais);
+                var nomeDoArquivo = gerador.GereRelatorio(numeroDaRevistaSelecionada, dataDaPublicacao);
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
         }
     }
 }

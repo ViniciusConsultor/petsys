@@ -343,6 +343,8 @@
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioDePublicacoesDasPatentes.cs.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioGeralDePatentes.cs" />
+    <Compile Include="Relatorios\Patentes\GeradorDeRelatorioPorClassificacao.cs" />
+    <Compile Include="Relatorios\Patentes\GeradorDeRelatorioPorColidencia.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
