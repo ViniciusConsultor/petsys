@@ -8,8 +8,8 @@ Namespace FN.Servicos
 
         Sub Insira(ByVal Item As IItemLancamentoFinanceiroRecebimento)
         Sub Modifique(ByVal Item As IItemLancamentoFinanceiroRecebimento)
-        Function ObtenhaQuantidadeDeProcessosCadastrados(ByVal filtro As IFiltro) As Integer
-        Function ObtenhaProcessosDeMarcas(ByVal filtro As IFiltro, ByVal quantidadeDeRegistros As Integer, ByVal offSet As Integer) As IList(Of IItemLancamentoFinanceiroRecebimento)
+        Function ObtenhaQuantidadeDeItensFinanceiros(ByVal filtro As IFiltro) As Integer
+        Function ObtenhaItensFinanceiros(ByVal filtro As IFiltro, ByVal quantidadeDeRegistros As Integer, ByVal offSet As Integer) As IList(Of IItemLancamentoFinanceiroRecebimento)
 
     End Interface
 

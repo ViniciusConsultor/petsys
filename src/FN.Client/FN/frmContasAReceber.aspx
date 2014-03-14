@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
+<%@ Register Src="ctrlSituacao.ascx" TagName="ctrlSituacao" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
@@ -47,6 +48,30 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorCliente_OnClick_" />
                                 </td>
                             </tr>
+                            <tr runat="server" id="pnlPeriodoDeVencimento">
+                                <td class="th3">
+                                    <asp:Label ID="Label3" runat="server" Text="Período"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadDatePicker ID="txtPeriodo1" runat="server">
+                                    </telerik:RadDatePicker>
+                                    <asp:Label ID="Label4" runat="server" Text="  à  "></asp:Label>
+                                    <telerik:RadDatePicker ID="txtPeriodo2" runat="server">
+                                    </telerik:RadDatePicker>
+                                    <asp:ImageButton ID="btnPesquisarPorPeriodoDeVencimento" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorPeriodoDeVencimento_OnClick_" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlSituacao">
+                                <td class="th3">
+                                    <asp:Label ID="Label5" runat="server" Text="Situação"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc1:ctrlSituacao ID="ctrlSituacao"  runat="server" />
+                                    <asp:ImageButton ID="btnPesquisarPorSituacao" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorSituacao_OnClick_" />
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>
@@ -82,25 +107,27 @@
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
-                                             <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53">
+                                            <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column5">
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDoLancamento" HeaderText="Data do vencimento" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="DataDoLancamento" HeaderText="Data do vencimento"
+                                                UniqueName="column3">
                                                 <ItemStyle Width="20%"></ItemStyle>
-                                            </telerik:GridBoundColumn>  
-                                            <telerik:GridBoundColumn DataField="DataDoRecebimento" HeaderText="Data do pagamento" UniqueName="column83">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="DataDoRecebimento" HeaderText="Data do pagamento"
+                                                UniqueName="column83">
                                                 <ItemStyle Width="20%"></ItemStyle>
-                                            </telerik:GridBoundColumn>  
+                                            </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Situacao.Descricao" HeaderText="Situação" UniqueName="column63">
                                                 <ItemStyle Width="20%"></ItemStyle>
-                                            </telerik:GridBoundColumn>  
-                                            <telerik:GridBoundColumn DataField="TipoLacamento.Descricao" HeaderText="Tipo do lançamento" UniqueName="column73">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TipoLacamento.Descricao" HeaderText="Tipo do lançamento"
+                                                UniqueName="column73">
                                                 <ItemStyle Width="20%"></ItemStyle>
-                                            </telerik:GridBoundColumn>  
-                                           
+                                            </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

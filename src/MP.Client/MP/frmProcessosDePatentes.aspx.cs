@@ -86,6 +86,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (string.IsNullOrEmpty(txtTituloPatente.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -94,7 +103,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorTituloDaPatente>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = txtTituloPatente.Text;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -108,6 +117,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (ctrlNaturezaPatente1.NaturezaPatenteSelecionada == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -116,7 +134,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorNatureza>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlNaturezaPatente1.NaturezaPatenteSelecionada.IdNaturezaPatente.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -185,6 +203,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (!txtDataDeCadastro.SelectedDate.HasValue)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -193,7 +220,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorDataDeCadastro>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = txtDataDeCadastro.SelectedDate.Value.ToString("yyyyMMdd");
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -208,6 +235,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (string.IsNullOrEmpty(txtProcesso.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -216,7 +252,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorProcesso>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = txtProcesso.Text;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -302,7 +338,6 @@ namespace MP.Client.MP
             
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
                id = Convert.ToInt64((e.Item.Cells[5].Text));
-                //id = Convert.ToInt64((e.Item.Cells[4].Text));
 
             switch (e.CommandName)
             {
@@ -356,6 +391,17 @@ namespace MP.Client.MP
                 return;
             }
 
+
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
+
             if (ctrlCliente1.ClienteSelecionado == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -364,7 +410,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorCliente>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlCliente1.ClienteSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -377,6 +423,15 @@ namespace MP.Client.MP
                 ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
                 return;
             }
+            
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
 
             if (ctrlTitular.TitularSelecionado == null)
             {
@@ -386,7 +441,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorTitular>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlTitular.TitularSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -400,6 +455,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (ctrlInventor.InventorSelecionado == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -408,7 +472,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorInventor>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlInventor.InventorSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);

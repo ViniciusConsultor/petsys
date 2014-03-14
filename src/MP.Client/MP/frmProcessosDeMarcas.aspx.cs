@@ -196,6 +196,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (String.IsNullOrEmpty(ctrlApresentacao1.Codigo))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -204,7 +213,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorApresentacao>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlApresentacao1.Codigo;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -219,6 +228,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (ctrlCliente1.ClienteSelecionado == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -227,7 +245,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorCliente>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlCliente1.ClienteSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -242,6 +260,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+            
             if (!txtDataDeCadastro.SelectedDate.HasValue)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -250,7 +277,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorDataDeCadastro>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = txtDataDeCadastro.SelectedDate.Value.ToString("yyyyMMdd");
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -264,6 +291,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (ctrlMarcas1.MarcaSelecionada == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -272,7 +308,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorMarca>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlMarcas1.MarcaSelecionada.IdMarca.Value.ToString();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -286,6 +322,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (string.IsNullOrEmpty(ctrlNatureza1.Codigo))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -294,7 +339,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorNatureza>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlNatureza1.Codigo;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -308,6 +353,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (ctrlNCL1.NCLSelecionado == null )
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -317,7 +371,7 @@ namespace MP.Client.MP
 
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorNCL>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlNCL1.NCLSelecionado.Codigo;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -331,6 +385,15 @@ namespace MP.Client.MP
                 return;
             }
 
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
             if (!txtProcesso.Value.HasValue)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -339,7 +402,7 @@ namespace MP.Client.MP
             }
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorProcesso>();
-            filtro.Operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+            filtro.Operacao = operacao;
             filtro.ValorDoFiltro = txtProcesso.Text;
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
@@ -421,7 +484,6 @@ namespace MP.Client.MP
             
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
                 id = Convert.ToInt64((e.Item.Cells[5].Text));
-               // id = Convert.ToInt64((e.Item.Cells[4].Text));
 
             switch (e.CommandName)
             {

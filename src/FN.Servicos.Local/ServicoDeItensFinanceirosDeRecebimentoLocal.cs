@@ -13,7 +13,8 @@ namespace FN.Servicos.Local
 {
     public class ServicoDeItensFinanceirosDeRecebimentoLocal : Servico, IServicoDeItensFinanceirosDeRecebimento
     {
-        public ServicoDeItensFinanceirosDeRecebimentoLocal(ICredencial Credencial) : base(Credencial)
+        public ServicoDeItensFinanceirosDeRecebimentoLocal(ICredencial Credencial)
+            : base(Credencial)
         {
         }
 
@@ -63,7 +64,7 @@ namespace FN.Servicos.Local
             }
         }
 
-        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
+        public int ObtenhaQuantidadeDeItensFinanceiros(IFiltro filtro)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -71,7 +72,7 @@ namespace FN.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
+                return mapeador.ObtenhaQuantidadeDeItensFinanceiros(filtro);
             }
             finally
             {
@@ -79,7 +80,7 @@ namespace FN.Servicos.Local
             }
         }
 
-        public IList<IItemLancamentoFinanceiroRecebimento> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        public IList<IItemLancamentoFinanceiroRecebimento> ObtenhaItensFinanceiros(IFiltro filtro, int quantidadeDeRegistros, int offSet)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -87,12 +88,14 @@ namespace FN.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaProcessosDeMarcas(filtro, quantidadeDeRegistros, offSet);
+                return mapeador.ObtenhaItensFinanceiros(filtro, quantidadeDeRegistros, offSet);
             }
             finally
             {
                 ServerUtils.libereRecursos();
             }
         }
+
+
     }
 }

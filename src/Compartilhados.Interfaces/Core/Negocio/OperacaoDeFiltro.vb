@@ -13,6 +13,7 @@
         Public Shared MaiorQue As OperacaoDeFiltro = New OperacaoDeFiltro(5, "Maior que")
         Public Shared MenorIgualA As OperacaoDeFiltro = New OperacaoDeFiltro(6, "Menor igual a")
         Public Shared MenorQue As OperacaoDeFiltro = New OperacaoDeFiltro(7, "Menor que")
+        Public Shared Intervalo As OperacaoDeFiltro = New OperacaoDeFiltro(8, "Intervalo")
 
         Private Shared Lista As OperacaoDeFiltro() = {ComecaCom, _
                                                       EmQualquerParte, _
@@ -20,7 +21,8 @@
                                                       MaiorIgualA, _
                                                       MaiorQue, _
                                                       MenorIgualA, _
-                                                      MenorQue}
+                                                      MenorQue,
+                                                      Intervalo}
         Private Sub New(ByVal ID As Byte, _
                         ByVal Descricao As String)
             _ID = ID
