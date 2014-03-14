@@ -45,6 +45,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Compartilhados.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Core.Negocio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fd092420b966ccff, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,6 +58,9 @@
     <Compile Include="Mapeadores\IMapeadorConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
     <Compile Include="Mapeadores\IMapeadorDeItensFinanceirosDeRecebimento.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorCliente.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorIntervaloDeDataDeVencimento.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorSituacao.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberSemFiltro.cs" />
     <Compile Include="Negocio\IBoletosGerados.cs" />
     <Compile Include="Negocio\IBoletosGeradosAux.cs" />

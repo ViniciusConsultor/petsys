@@ -10,7 +10,7 @@
 namespace FN.Client.FN {
     
     
-    public partial class frmContasAReceber {
+    public partial class cdContaAReceber {
         
         /// <summary>
         /// rtbToolBar control.
@@ -40,22 +40,58 @@ namespace FN.Client.FN {
         protected global::Telerik.Web.UI.RadDockZone RadDockZone1;
         
         /// <summary>
-        /// RadDock3 control.
+        /// RadDock1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDock RadDock3;
+        protected global::Telerik.Web.UI.RadDock RadDock1;
         
         /// <summary>
-        /// pnlFiltro control.
+        /// pnlDadosDaConta control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFiltro;
+        protected global::System.Web.UI.WebControls.Panel pnlDadosDaConta;
+        
+        /// <summary>
+        /// lblCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCliente;
+        
+        /// <summary>
+        /// ctrlCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WorkSpace.ctrlCliente ctrlCliente;
+        
+        /// <summary>
+        /// Label6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label6;
+        
+        /// <summary>
+        /// txtDataDoLancamento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtDataDoLancamento;
         
         /// <summary>
         /// Label2 control.
@@ -67,130 +103,13 @@ namespace FN.Client.FN {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// cboTipoDeFiltro control.
+        /// txtValor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cboTipoDeFiltro;
-        
-        /// <summary>
-        /// Label10 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
-        
-        /// <summary>
-        /// ctrlOperacaoFiltro1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WorkSpace.ctrlOperacaoFiltro ctrlOperacaoFiltro1;
-        
-        /// <summary>
-        /// pnlCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlCliente;
-        
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// ctrlCliente1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WorkSpace.ctrlCliente ctrlCliente1;
-        
-        /// <summary>
-        /// btnPesquisarPorCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorCliente;
-        
-        /// <summary>
-        /// pnlPeriodoDeVencimento control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlPeriodoDeVencimento;
-        
-        /// <summary>
-        /// Label3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
-        
-        /// <summary>
-        /// txtPeriodo1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtPeriodo1;
-        
-        /// <summary>
-        /// Label4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
-        
-        /// <summary>
-        /// txtPeriodo2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtPeriodo2;
-        
-        /// <summary>
-        /// btnPesquisarPorPeriodoDeVencimento control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorPeriodoDeVencimento;
-        
-        /// <summary>
-        /// pnlSituacao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlSituacao;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtValor;
         
         /// <summary>
         /// Label5 control.
@@ -202,6 +121,42 @@ namespace FN.Client.FN {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
+        /// ctrlTipoLacamentoFinanceiroRecebimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FN.Client.FN.ctrlTipoLacamentoFinanceiroRecebimento ctrlTipoLacamentoFinanceiroRecebimento;
+        
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// txtDataDoRecebimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtDataDoRecebimento;
+        
+        /// <summary>
+        /// Label4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label4;
+        
+        /// <summary>
         /// ctrlSituacao control.
         /// </summary>
         /// <remarks>
@@ -211,30 +166,21 @@ namespace FN.Client.FN {
         protected global::FN.Client.FN.ctrlSituacao ctrlSituacao;
         
         /// <summary>
-        /// btnPesquisarPorSituacao control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorSituacao;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// rdkProcessosDeMarcas control.
+        /// txtObservacao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDock rdkProcessosDeMarcas;
-        
-        /// <summary>
-        /// grdItensDeContasAReceber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid grdItensDeContasAReceber;
+        protected global::Telerik.Web.UI.RadTextBox txtObservacao;
     }
 }

@@ -38,17 +38,33 @@ namespace FN.Mapeadores
             sql.Append(Item.DataDoLancamento.ToString("yyyyMMdd") + ", ");
             sql.Append(Item.Situacao.ID + ", ");
             sql.Append(Item.TipoLacamento.ID + ")");
-
             DBHelper.ExecuteNonQuery(sql.ToString());
 
         }
 
         public void Modifique(IItemLancamentoFinanceiroRecebimento Item)
         {
+            var sql = new StringBuilder();
+            IDBHelper DBHelper;
 
+            DBHelper = ServerUtils.getDBHelper();
+
+            sql.Append("UPATE FN_ITEMFINANREC SET ");
+            sql.Append("VALOR = " + UtilidadesDePersistencia.TPVd(Item.Valor) + ", ");
+            sql.Append(string.IsNullOrEmpty(Item.Observacao)
+                           ? "OBSERVACAO = NULL, "
+                           : "OBSERVACAO = '" + UtilidadesDePersistencia.FiltraApostrofe(Item.Observacao) + "', ");
+            sql.Append("DATALACAMENTO = " + Item.DataDoLancamento.ToString("yyyyMMdd") + ", ");
+            sql.Append(!Item.DataDoRecebimento.HasValue
+                           ? "DATARECEBIMENTO = NULL, "
+                           : "DATARECEBIMENTO = " + Item.DataDoRecebimento.Value.ToString("yyyyMMdd") + ", ");
+            
+            sql.Append("SITUACAO = " +Item.Situacao.ID);
+            sql.Append(" WHERE ID = " + Item.ID.Value);
+            DBHelper.ExecuteNonQuery(sql.ToString());
         }
 
-        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
+        public int ObtenhaQuantidadeDeItensFinanceiros(IFiltro filtro)
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
@@ -69,29 +85,7 @@ namespace FN.Mapeadores
             return 0;
         }
 
-        private IItemLancamentoFinanceiroRecebimento MontaItemDeRecebimento(IDataReader leitor)
-        {
-            var item = FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
-
-            item.Cliente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDCLIENTE"));
-            item.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-            item.DataDoLancamento = UtilidadesDePersistencia.getValorDate(leitor, "DATALACAMENTO").Value;
-            item.Situacao = Situacao.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "SITUACAO"));
-            item.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
-
-            item.TipoLacamento =
-                TipoLacamentoFinanceiroRecebimento.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPOLANCAMENTO"));
-
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "OBSERVACAO"))
-                item.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
-
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "DATARECEBIMENTO"))
-                item.DataDoRecebimento = UtilidadesDePersistencia.getValorDate(leitor, "DATARECEBIMENTO");
-
-            return item;
-        }
-
-        public IList<IItemLancamentoFinanceiroRecebimento> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        public IList<IItemLancamentoFinanceiroRecebimento> ObtenhaItensFinanceiros(IFiltro filtro, int quantidadeDeRegistros, int offSet)
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
@@ -117,5 +111,29 @@ namespace FN.Mapeadores
 
             return itens;
         }
+
+        private IItemLancamentoFinanceiroRecebimento MontaItemDeRecebimento(IDataReader leitor)
+        {
+            var item = FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
+
+            item.Cliente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDCLIENTE"));
+            item.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
+            item.DataDoLancamento = UtilidadesDePersistencia.getValorDate(leitor, "DATALACAMENTO").Value;
+            item.Situacao = Situacao.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "SITUACAO"));
+            item.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
+
+            item.TipoLacamento =
+                TipoLacamentoFinanceiroRecebimento.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "TIPOLANCAMENTO"));
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "OBSERVACAO"))
+                item.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "DATARECEBIMENTO"))
+                item.DataDoRecebimento = UtilidadesDePersistencia.getValorDate(leitor, "DATARECEBIMENTO");
+
+            return item;
+        }
+
+
     }
 }

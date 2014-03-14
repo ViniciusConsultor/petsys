@@ -81,6 +81,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FN\cdContaAReceber.aspx.cs">
+      <DependentUpon>cdContaAReceber.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\cdContaAReceber.aspx.designer.cs">
+      <DependentUpon>cdContaAReceber.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FN\ctrlSituacao.ascx.cs">
+      <DependentUpon>ctrlSituacao.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\ctrlSituacao.ascx.designer.cs">
+      <DependentUpon>ctrlSituacao.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FN\ctrlTipoLacamentoFinanceiroRecebimento.ascx.cs">
+      <DependentUpon>ctrlTipoLacamentoFinanceiroRecebimento.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\ctrlTipoLacamentoFinanceiroRecebimento.ascx.designer.cs">
+      <DependentUpon>ctrlTipoLacamentoFinanceiroRecebimento.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FN\frmBoletoAvulso.aspx.cs">
       <DependentUpon>frmBoletoAvulso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -128,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FN.Client.snk" />
+    <Content Include="FN\cdContaAReceber.aspx" />
+    <Content Include="FN\ctrlSituacao.ascx" />
+    <Content Include="FN\ctrlTipoLacamentoFinanceiroRecebimento.ascx" />
     <Content Include="FN\frmBoletoAvulso.aspx" />
     <Content Include="FN\frmConfiguracaoDeIndicesFinaceiros.aspx" />
     <Content Include="FN\frmConfiguracaoDoBoleto.aspx" />

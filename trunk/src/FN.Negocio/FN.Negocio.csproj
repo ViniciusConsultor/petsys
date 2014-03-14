@@ -59,6 +59,9 @@
     <Compile Include="BoletosGeradosAux.cs" />
     <Compile Include="ConfiguracaoDeBoletoBancario.cs" />
     <Compile Include="ConfiguracaoDeIndicesFinanceiros.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorCliente.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorIntervaloDeDataDeVencimento.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorSituacao.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberSemFiltro.cs" />
     <Compile Include="ItemLancamentoFinanceiro.cs" />
     <Compile Include="ItemLancamentoFinanceiroRecebimento.cs" />

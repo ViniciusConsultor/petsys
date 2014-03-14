@@ -12,10 +12,9 @@ namespace FN.Interfaces.Mapeadores
         void Insira(IItemLancamentoFinanceiroRecebimento Item);
         void Modifique(IItemLancamentoFinanceiroRecebimento Item);
 
-        int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
+        int ObtenhaQuantidadeDeItensFinanceiros(IFiltro filtro);
 
-        IList<IItemLancamentoFinanceiroRecebimento> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros,
-                                                                             int offSet);
+        IList<IItemLancamentoFinanceiroRecebimento> ObtenhaItensFinanceiros(IFiltro filtro, int quantidadeDeRegistros, int offSet);
 
     }
 }

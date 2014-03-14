@@ -1,4 +1,5 @@
-﻿Imports Compartilhados.Interfaces.Core.Negocio
+﻿Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio
 Imports System.Text
 
 <Serializable()> _
@@ -27,6 +28,13 @@ Public MustInherit Class Filtro
         End Set
     End Property
 
+    Private _valorDoFiltro1 As String
+    Private _ValorDoFiltro2 As String
+    Public Sub AdicioneValoresDoFiltroParaEntre(ByVal valorDoFiltro1 As String, ByVal valorDoFiltro2 As String) Implements IFiltro.AdicioneValoresDoFiltroParaEntre
+        _valorDoFiltro1 = valorDoFiltro1
+        _ValorDoFiltro2 = valorDoFiltro2
+    End Sub
+
     Public Function ObtenhaFiltroMontado(ByVal campo As String, ByVal colocaAspas As Boolean) As String Implements IFiltro.ObtenhaFiltroMontado
         Dim caracter As String = ""
 
@@ -46,6 +54,10 @@ Public MustInherit Class Filtro
             Return campo & " <= " & caracter & ValorDoFiltro & caracter & " "
         ElseIf Operacao.Equals(OperacaoDeFiltro.MenorQue) Then
             Return campo & " < " & caracter & ValorDoFiltro & caracter & " "
+        ElseIf Operacao.Equals(OperacaoDeFiltro.Intervalo) Then
+            If String.IsNullOrEmpty(_valorDoFiltro1) OrElse String.IsNullOrEmpty(_ValorDoFiltro2) Then Throw New BussinesException("A operação de filtro Intervalo requer que seja passado 2 valores para a comparação.")
+
+            Return campo & " <= " & caracter & _valorDoFiltro1 & caracter & " AND " & campo & " >= " & caracter & _ValorDoFiltro2 & caracter & " "
         End If
         Return ""
     End Function

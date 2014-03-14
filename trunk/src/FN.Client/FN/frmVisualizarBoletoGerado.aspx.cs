@@ -24,9 +24,6 @@ namespace FN.Client.FN
             ExibaBoleto(Id);
         }
 
-
-       
-
         private void ExibaBoleto(string id)
         {
             var boleto = Session[id] as Control;
