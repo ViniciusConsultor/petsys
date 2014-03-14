@@ -224,7 +224,8 @@ namespace MP.Client.MP
             {
                 UploadedFileCollection arquivos = uplAnexos.UploadedFiles;
 
-                Anexos = new ConcurrentDictionary<string, Stream>();
+                if (Anexos == null)
+                    Anexos = new ConcurrentDictionary<string, Stream>();
 
                 foreach (UploadedFile arquivo in arquivos)
                     Anexos.Add(arquivo.GetName(), arquivo.InputStream);
