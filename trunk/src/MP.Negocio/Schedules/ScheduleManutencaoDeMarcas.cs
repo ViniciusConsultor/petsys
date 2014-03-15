@@ -5,7 +5,9 @@ using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
 using Compartilhados.Schedule;
+using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Schedules;
+using MP.Interfaces.Servicos;
 
 namespace MP.Negocio.Schedules
 {
@@ -19,7 +21,16 @@ namespace MP.Negocio.Schedules
 
         protected override void ExecuteTarefa()
         {
-           
+            try
+            {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInterfaceComModuloFinanceiro>())
+                    servico.ProcureEAgendeItemDeRecebimentoDeMarcasVencidasNoMes();
+            }
+            catch (Exception ex)
+            {
+                Logger.GetInstancia().Erro("Ocorreu um erro ao tentar ProcureEAgendeItemDeRecebimentoDeMarcasVencidasNoMes", ex);
+                
+            }
             
         }
 

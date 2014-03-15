@@ -13,5 +13,7 @@ namespace MP.Interfaces.Negocio
         DateTime? DataDaProximaManutencao { get; set; }
         bool ManutencaoEstaVencida();
         bool ManutencaoVenceNoMes(Mes mes);
+        double ObtenhaValorRealEmEspecie();
+        DateTime ObtenhaProximaDataDeManutencao();
     }
 }

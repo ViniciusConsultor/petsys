@@ -1,49 +1,12 @@
 ﻿<gatilhos>
-  <!--<gatilho type="Core.Servicos.Local.ServicoDeAgendaLocal">
-    <metodo nome="RemovaCompromisso">
-      <Antes>
-        <interessados>
-          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoACompromisso"></interessado>
-        </interessados>
-      </Antes>
-    </metodo>
-    <metodo nome="RemovaTarefa">
-      <Antes>
-        <interessados>
-          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoATarefa"></interessado>
-        </interessados>
-      </Antes>
-    </metodo>
-    <metodo nome="RemovaLembrete">
-      <Antes>
-        <interessados>
-          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoALembrete"></interessado>
-        </interessados>
-      </Antes>
-    </metodo>
-  </gatilho>-->
-  <!--<gatilho type="MP.Servicos.Local.ServicoDeProcessoDeMarcaLocal">
-    <metodo nome="Inserir">
+  <gatilho type="FN.Servicos.Local.ServicoDeItensFinanceirosDeRecebimentoLocal">
+    <metodo nome="Modifique">
       <Depois>
         <interessados>
-          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoACompromisso"></interessado>
+          <interessado fullname="MP.Interfaces.Mapeadores" type="IMapeadorDeInterfaceComModuloFinanceiro" metodo="ItemDeRecebimentoFoiModificado"></interessado>
         </interessados>
       </Depois>
     </metodo>
-    <metodo nome="Modificar">
-      <Depois>
-        <interessados>
-          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoATarefa"></interessado>
-        </interessados>
-      </Depois>
-    </metodo>
-    <metodo nome="Excluir">
-      <Antes>
-        <interessados>
-          <interessado fullname="Diary.Interfaces.Mapeadores" type="IMapeadorDeDespacho" metodo="RemovaDespachoAssociadoALembrete"></interessado>
-        </interessados>
-      </Antes>
-    </metodo>
-  </gatilho>-->
+  </gatilho>
 </gatilhos>
 

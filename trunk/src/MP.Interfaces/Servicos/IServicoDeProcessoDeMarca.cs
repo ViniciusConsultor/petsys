@@ -28,5 +28,7 @@ namespace MP.Interfaces.Servicos
 
         IList<IProcessoDeMarca> ObtenhaProcessosDeMarcasComRegistroConcedido(DateTime? dataInicial, DateTime? dataFinal,
                                                                              IList<string> IDsDosDespachos);
+
+     
     }
 }

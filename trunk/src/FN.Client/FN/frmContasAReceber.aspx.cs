@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
 using FN.Interfaces.Negocio.Filtros.ContasAReceber;
 using Telerik.Web.UI;
@@ -79,9 +81,34 @@ namespace FN.Client.FN
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
         }
 
+        private string ObtenhaURLDeContaAReceber()
+        {
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/cdContaAReceber.aspx");
+        }
+
+        protected void btnNovo_Click()
+        {
+            var URL = ObtenhaURLDeContaAReceber();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanela(URL, "Nova conta a receber", 800, 550, "cdContaAReceber_aspx"), false);
+        }
+
+        private void Recarregue()
+        {
+            MostraItens(FiltroAplicado, grdItensDeContasAReceber.PageSize, 0);
+        }
+
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
         {
-            
+            switch (((RadToolBarButton)e.Item).CommandName)
+            {
+                case "btnNovo":
+                    btnNovo_Click();
+                    break;
+                case "btnRecarregar":
+                    Recarregue();
+                    break;
+            }
         }
 
         protected void cboTipoDeFiltro_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -134,7 +161,7 @@ namespace FN.Client.FN
             if (ctrlCliente1.ClienteSelecionado == null)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma cliente."), false);
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione um cliente."), false);
                 return;
             }
 
@@ -162,7 +189,45 @@ namespace FN.Client.FN
 
         protected void grdItensDeContasAReceber_OnItemCommand(object sender, GridCommandEventArgs e)
         {
-            throw new NotImplementedException();
+            long id = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                id = Convert.ToInt64((e.Item.Cells[4].Text));
+
+            switch (e.CommandName)
+            {
+                case "Cancelar":
+
+                    try
+                    {
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                        {
+                            var itemLancamento = servico.Obtenha(id);
+                            itemLancamento.Situacao = Situacao.Cancelada;
+                            servico.Modifique(itemLancamento);
+                        }
+
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                UtilidadesWeb.MostraMensagemDeInformacao(
+                                                                    "Item de lançcamento de conta a receber cancelado com sucesso."), false);
+                        ExibaTelaInicial();
+                    }
+                    catch (BussinesException ex)
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                    }
+
+                    break;
+                case "Modificar":
+                    var url = String.Concat(ObtenhaURLDeContaAReceber(),
+                                            "?Id=", id);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url,
+                                                                                       "Modificar conta a receber",
+                                                                                       800, 550, "cdContaAReceber_aspx"), false);
+                    break;
+            }
         }
 
         protected override string ObtenhaIdFuncao()

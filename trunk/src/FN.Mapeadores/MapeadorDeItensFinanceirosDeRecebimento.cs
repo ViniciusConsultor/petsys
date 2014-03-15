@@ -9,8 +9,9 @@ using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
 using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.Core.Negocio.LazyLoad;
+using Compartilhados.Interfaces.FN.Mapeadores;
 using Compartilhados.Interfaces.FN.Negocio;
-using FN.Interfaces.Mapeadores;
+using FN.Interfaces.Negocio.Filtros.ContasAReceber;
 
 namespace FN.Mapeadores
 {
@@ -26,7 +27,7 @@ namespace FN.Mapeadores
             Item.ID = GeradorDeID.ProximoID();
 
             sql.Append("INSERT INTO FN_ITEMFINANREC (");
-            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, SITUACAO, TIPOLANCAMENTO) ");
+            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, DATARECEBIMENTO, SITUACAO, TIPOLANCAMENTO) ");
             sql.Append("VALUES (");
 
             sql.Append(Item.ID.Value + ", ");
@@ -36,6 +37,10 @@ namespace FN.Mapeadores
                            ? "NULL, "
                            : "'" + UtilidadesDePersistencia.FiltraApostrofe(Item.Observacao) + "', ");
             sql.Append(Item.DataDoLancamento.ToString("yyyyMMdd") + ", ");
+            sql.Append(Item.DataDoVencimento.ToString("yyyyMMdd") + ", ");
+            sql.Append(!Item.DataDoRecebimento.HasValue
+                         ? "NULL, "
+                         : Item.DataDoRecebimento.Value.ToString("yyyyMMdd") + ", ");
             sql.Append(Item.Situacao.ID + ", ");
             sql.Append(Item.TipoLacamento.ID + ")");
             DBHelper.ExecuteNonQuery(sql.ToString());
@@ -49,12 +54,13 @@ namespace FN.Mapeadores
 
             DBHelper = ServerUtils.getDBHelper();
 
-            sql.Append("UPATE FN_ITEMFINANREC SET ");
+            sql.Append("UPDATE FN_ITEMFINANREC SET ");
             sql.Append("VALOR = " + UtilidadesDePersistencia.TPVd(Item.Valor) + ", ");
             sql.Append(string.IsNullOrEmpty(Item.Observacao)
                            ? "OBSERVACAO = NULL, "
                            : "OBSERVACAO = '" + UtilidadesDePersistencia.FiltraApostrofe(Item.Observacao) + "', ");
             sql.Append("DATALACAMENTO = " + Item.DataDoLancamento.ToString("yyyyMMdd") + ", ");
+            sql.Append("DATAVENCIMENTO = " + Item.DataDoVencimento.ToString("yyyyMMdd") + ", ");
             sql.Append(!Item.DataDoRecebimento.HasValue
                            ? "DATARECEBIMENTO = NULL, "
                            : "DATARECEBIMENTO = " + Item.DataDoRecebimento.Value.ToString("yyyyMMdd") + ", ");
@@ -112,6 +118,30 @@ namespace FN.Mapeadores
             return itens;
         }
 
+        public IItemLancamentoFinanceiroRecebimento Obtenha(long ID)
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorID>();
+            filtro.Operacao = OperacaoDeFiltro.IgualA;
+            filtro.ValorDoFiltro = ID.ToString();
+            
+            using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQuery()))
+                try
+                {
+                    if (leitor.Read())
+                        return MontaItemDeRecebimento(leitor);
+
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            return null;
+        }
+
         private IItemLancamentoFinanceiroRecebimento MontaItemDeRecebimento(IDataReader leitor)
         {
             var item = FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
@@ -119,6 +149,7 @@ namespace FN.Mapeadores
             item.Cliente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDCLIENTE"));
             item.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
             item.DataDoLancamento = UtilidadesDePersistencia.getValorDate(leitor, "DATALACAMENTO").Value;
+            item.DataDoVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO").Value;  
             item.Situacao = Situacao.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "SITUACAO"));
             item.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
 

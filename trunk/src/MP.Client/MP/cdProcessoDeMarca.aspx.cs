@@ -81,7 +81,7 @@ namespace MP.Client.MP
                 manutencao.DataDaProximaManutencao = txtDataDaPrimeiraManutencao.SelectedDate;
                 manutencao.FormaDeCobranca = FormaCobrancaManutencao.ObtenhaPorCodigo(rblFormaDeCobranca.SelectedValue);
                 manutencao.Periodo = ctrlPeriodo.PeriodoSelecionado;
-                manutencao.ValorDeCobranca = Convert.ToDouble(txtValor.Text);
+                manutencao.ValorDeCobranca = txtValor.Value.Value;
                 marca.Manutencao = manutencao;
             }
 
@@ -377,7 +377,7 @@ namespace MP.Client.MP
                     else
                     {
                         servico.Modificar(processoDeMarca);
-                        mensagem = "Processo de marca modificada com sucesso.";
+                        mensagem = "Processo de marca modificado com sucesso.";
                     }
                 }
 
@@ -535,5 +535,12 @@ namespace MP.Client.MP
             }
         }
 
+        protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (rblFormaDeCobranca.SelectedValue == "S")
+                txtValor.NumberFormat.DecimalDigits = 1;
+            else
+                txtValor.NumberFormat.DecimalDigits = 2;
+        }   
     }
 }

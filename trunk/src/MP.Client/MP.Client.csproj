@@ -425,6 +425,7 @@ xcopy $(SolutionDir)WorkSpace\imagens $(ProjectDir)imagens /S /I /F
 xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
 xcopy $(SolutionDir)WorkSpace\Nucleo $(ProjectDir)Nucleo /S /I /F
 xcopy $(SolutionDir)WorkSpace\RadEditor $(ProjectDir)RadEditor /S /I /F
+xcopy $(SolutionDir)FN.Client\FN $(ProjectDir)FN /S /I /F
 copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.asax $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.ascx $(ProjectDir)

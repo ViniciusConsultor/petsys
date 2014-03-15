@@ -62,5 +62,17 @@ namespace MP.Negocio
             }
             return 0;
         }
+
+        public DateTime ObtenhaProximaDataDeManutencao()
+        {
+            if (this.Periodo.Equals(Periodo.Anual)) return DataDaProximaManutencao.Value.AddYears(1);
+            if (this.Periodo.Equals(Periodo.Diario)) return DataDaProximaManutencao.Value.AddDays(1);
+            if (this.Periodo.Equals(Periodo.Mensal)) return DataDaProximaManutencao.Value.AddMonths(1);
+            if (this.Periodo.Equals(Periodo.Semanal)) return DataDaProximaManutencao.Value.AddDays(7);
+            if (this.Periodo.Equals(Periodo.Semestral)) return DataDaProximaManutencao.Value.AddMonths(6);
+         
+            //é trimestral
+            return DataDaProximaManutencao.Value.AddMonths(3);
+        }
     }
 }

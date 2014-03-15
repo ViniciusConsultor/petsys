@@ -37,6 +37,15 @@
                                     </telerik:RadDatePicker>
                                 </td>
                             </tr>
+                              <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label7" runat="server" Text="Data do vencimento"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadDatePicker ID="txtDataDoVencimento" runat="server">
+                                    </telerik:RadDatePicker>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label2" runat="server" Text="Valor"></asp:Label>

@@ -5,9 +5,9 @@ using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.FN.Mapeadores;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
-using FN.Interfaces.Mapeadores;
 
 namespace FN.Servicos.Local
 {
@@ -51,6 +51,7 @@ namespace FN.Servicos.Local
             {
                 ServerUtils.BeginTransaction();
                 mapeador.Modifique(Item);
+                GerenciadorDeGatilhos.GetInstancia().DispareGatilhoDepois(GetType().FullName, "Modifique", new object[] { Item }); 
                 ServerUtils.CommitTransaction();
             }
             catch
@@ -96,6 +97,20 @@ namespace FN.Servicos.Local
             }
         }
 
+        public IItemLancamentoFinanceiroRecebimento Obtenha(long ID)
+        {
+            ServerUtils.setCredencial(_Credencial);
 
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
+
+            try
+            {
+                return mapeador.Obtenha(ID);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

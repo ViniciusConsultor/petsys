@@ -16,7 +16,7 @@ namespace FN.Negocio
         public double Valor { get; set; }
         public string Observacao { get; set; }
         public DateTime DataDoLancamento { get; set; }
-        
+        public DateTime DataDoVencimento { get; set;}
         public Situacao Situacao { get; set; }
     }
 }
