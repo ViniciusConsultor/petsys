@@ -57,7 +57,7 @@ Public MustInherit Class Filtro
         ElseIf Operacao.Equals(OperacaoDeFiltro.Intervalo) Then
             If String.IsNullOrEmpty(_valorDoFiltro1) OrElse String.IsNullOrEmpty(_ValorDoFiltro2) Then Throw New BussinesException("A operação de filtro Intervalo requer que seja passado 2 valores para a comparação.")
 
-            Return campo & " <= " & caracter & _valorDoFiltro1 & caracter & " AND " & campo & " >= " & caracter & _ValorDoFiltro2 & caracter & " "
+            Return campo & " <= " & caracter & _ValorDoFiltro2 & caracter & " AND " & campo & " >= " & caracter & _valorDoFiltro1 & caracter & " "
         End If
         Return ""
     End Function

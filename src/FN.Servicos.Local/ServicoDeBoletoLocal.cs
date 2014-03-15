@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.FN.Mapeadores;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
 using FN.Interfaces.Mapeadores;
@@ -123,7 +124,8 @@ namespace FN.Servicos.Local
             var itemLacamentoFinanceiro =
                 FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
             itemLacamentoFinanceiro.Cliente = boletoGerado.Cliente;
-            itemLacamentoFinanceiro.DataDoLancamento = boletoGerado.DataVencimento.Value;
+            itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
+            itemLacamentoFinanceiro.DataDoVencimento =  boletoGerado.DataVencimento.Value;
             itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.BoletoAvulso;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;

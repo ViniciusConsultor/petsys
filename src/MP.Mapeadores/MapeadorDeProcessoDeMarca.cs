@@ -172,8 +172,6 @@ namespace MP.Mapeadores
             filtro.Operacao = OperacaoDeFiltro.IgualA;
             filtro.ValorDoFiltro = ID.ToString();
 
-            var processos = new List<IProcessoDeMarca>();
-
             using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQuery()))
                 try
                 {
@@ -459,6 +457,11 @@ namespace MP.Mapeadores
                 }
 
             return processos;
+        }
+
+        public IList<IMarcas> ObtenhaMarcasComManutencaoAVencerNoMes()
+        {
+            throw new NotImplementedException();
         }
     }
 }

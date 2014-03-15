@@ -284,6 +284,24 @@ namespace MP.Mapeadores
 
         }
 
+        public IList<IMarcas> ObtenhaMarcasComManutencaoVencendoEsteMes()
+        {
+           var sql = new StringBuilder();
+            var dataProximoMes = DateTime.Now.AddMonths(1);
+
+            sql.Append("SELECT IDMARCA IdMarca, CODIGONCL NCL, CODIGOAPRESENTACAO Apresentacao, IDCLIENTE Cliente, CODIGONATUREZA Natureza, ");
+            sql.Append("DESCRICAO_MARCA DescricaoDaMarca, ESPECIFICACAO_PROD_SERV EspecificacaoDeProdutosEServicos, IMAGEM_MARCA ImagemDaMarca, OBSERVACAO_MARCA ObservacaoDaMarca, CODIGOCLASSE CodigoDaClasse, ");
+            sql.Append("CODIGOCLASSE_SUBCLASSE1 CodigoDaSubClasse1, CODIGOCLASSE_SUBCLASSE2 CodigoDaSubClasse2, CODIGOCLASSE_SUBCLASSE3 CodigoDaSubClasse3, ");
+            sql.Append("PAGAMANUTENCAO PagaManutencao, DATAPROXIMAMANUTENCAO DataDaProximaManutencao, PERIODO Periodo, FORMADECOBRANCA FormaDeCobranca, VALORDECOBRANCA ValorDeCobranca ");
+            sql.Append("FROM MP_MARCAS ");
+            sql.Append(" WHERE PAGAMANUTENCAO = 1 AND DATAPROXIMAMANUTENCAO BETWEEN ");
+            sql.Append(string.Concat(DateTime.Now.ToString("yyyyMMdd"), " AND ", dataProximoMes.ToString("yyyyMMdd")));
+            sql.Append(
+                " AND IDMARCA NOT IN (select idconceito from MP_INTERFACEFN where CONCEITO = 'MARCA' AND IDCONCEITO = IDMARCA AND DATAVENCIMENTO = DATAPROXIMAMANUTENCAO  )");
+
+            return obtenhaMarca(sql, int.MaxValue);
+        }
+
         private void InserirRadicalMarcas(IMarcas marca)
         {
             foreach (var radical in marca.RadicalMarcas)

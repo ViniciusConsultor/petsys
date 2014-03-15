@@ -11,6 +11,8 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.001.0001" />
+            <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
+                CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -67,7 +69,7 @@
                                     <asp:Label ID="Label5" runat="server" Text="Situação"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <uc1:ctrlSituacao ID="ctrlSituacao"  runat="server" />
+                                    <uc1:ctrlSituacao ID="ctrlSituacao" runat="server" />
                                     <asp:ImageButton ID="btnPesquisarPorSituacao" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorSituacao_OnClick_" />
                                 </td>
@@ -110,15 +112,19 @@
                                             <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column5">
+                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column5" DataFormatString="{0:C}" >
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDoLancamento" HeaderText="Data do vencimento"
-                                                UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="DataDoLancamento" HeaderText="Data do lançamento"
+                                                UniqueName="column3" DataFormatString="{0:dd/MM/yyyy}">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataDoRecebimento" HeaderText="Data do pagamento"
-                                                UniqueName="column83">
+                                            <telerik:GridBoundColumn DataField="DataDoVencimento" HeaderText="Data do vencimento"
+                                                UniqueName="column23" DataFormatString="{0:dd/MM/yyyy}">
+                                                <ItemStyle Width="20%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="DataDoRecebimento" HeaderText="Data do recebimento"
+                                                UniqueName="column83" DataFormatString="{0:dd/MM/yyyy}">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Situacao.Descricao" HeaderText="Situação" UniqueName="column63">

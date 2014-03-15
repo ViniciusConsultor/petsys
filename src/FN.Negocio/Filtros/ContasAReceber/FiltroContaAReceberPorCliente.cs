@@ -7,6 +7,7 @@ using FN.Interfaces.Negocio.Filtros.ContasAReceber;
 
 namespace FN.Negocio.Filtros.ContasAReceber
 {
+    [Serializable]
     public class FiltroContaAReceberPorCliente : Filtro, IFiltroContaAReceberPorCliente
     {
         public override string ObtenhaQuery()
@@ -14,7 +15,7 @@ namespace FN.Negocio.Filtros.ContasAReceber
             var sql = new StringBuilder();
 
             sql.Append(
-                "SELECT ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, SITUACAO, DATARECEBIMENTO, TIPOLANCAMENTO ");
+                "SELECT ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, SITUACAO, DATARECEBIMENTO, TIPOLANCAMENTO ");
             sql.Append("FROM FN_ITEMFINANREC ");
             sql.Append(" WHERE " + ObtenhaFiltroMontado("FN_ITEMFINANREC.IDCLIENTE", false));
 

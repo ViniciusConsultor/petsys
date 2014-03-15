@@ -12,11 +12,12 @@ namespace MP.Servicos.Local
 {
     public class ServicoDeMarcasLocal : Servico, IServicoDeMarcas
     {
-        public ServicoDeMarcasLocal(ICredencial Credencial) : base(Credencial)
+        public ServicoDeMarcasLocal(ICredencial Credencial)
+            : base(Credencial)
         {
         }
 
-     
+
         public IMarcas obtenhaMarcasPeloId(long idMarca)
         {
             ServerUtils.setCredencial(_Credencial);
@@ -33,7 +34,8 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IMarcas> obtenhaMarcasPelaDescricaoComoFiltro(string descricaoDaMarca, int quantidadeMaximaDeRegistros)
+        public IList<IMarcas> obtenhaMarcasPelaDescricaoComoFiltro(string descricaoDaMarca,
+                                                                   int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -48,10 +50,7 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
-
-        public IList<IMarcas> obtenhaMarcasComDataDeManutencaoAVencer()
-        {
-            return null;
-        }
+     
     }
+
 }

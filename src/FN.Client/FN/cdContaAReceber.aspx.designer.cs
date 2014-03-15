@@ -94,6 +94,24 @@ namespace FN.Client.FN {
         protected global::Telerik.Web.UI.RadDatePicker txtDataDoLancamento;
         
         /// <summary>
+        /// Label7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label7;
+        
+        /// <summary>
+        /// txtDataDoVencimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtDataDoVencimento;
+        
+        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>

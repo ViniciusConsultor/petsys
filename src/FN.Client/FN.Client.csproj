@@ -188,6 +188,7 @@
 xcopy $(SolutionDir)WorkSpace\imagens $(ProjectDir)imagens /S /I /F
 xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
 xcopy $(SolutionDir)WorkSpace\Nucleo $(ProjectDir)Nucleo /S /I /F
+xcopy $(SolutionDir)MP.Client\MP $(ProjectDir)MP/S /I /F
 xcopy $(SolutionDir)WorkSpace\RadEditor $(ProjectDir)RadEditor /S /I /F
 copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
 copy  $(SolutionDir)WorkSpace\*.asax $(ProjectDir)

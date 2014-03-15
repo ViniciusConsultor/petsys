@@ -244,6 +244,23 @@ namespace MP.Servicos.Local
             }
         }
 
+        public IList<IMarcas> ObtenhaMarcasComManutencaoAVencerNoMes()
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.ObtenhaMarcasComManutencaoAVencerNoMes();
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
 
         public IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
         {

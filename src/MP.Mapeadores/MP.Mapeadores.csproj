@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapeadorDeInterfaceComModuloFinanceiro.cs" />
     <Compile Include="MapeadorDeNaturezaPatente.cs" />
     <Compile Include="MapeadorDePasta.cs" />
     <Compile Include="MapeadorDePatente.cs" />
