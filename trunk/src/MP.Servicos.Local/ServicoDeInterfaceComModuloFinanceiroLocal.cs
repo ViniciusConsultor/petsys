@@ -33,6 +33,20 @@ namespace MP.Servicos.Local
             return itemLacamentoFinanceiro;
         }
 
+        private IItemLancamentoFinanceiroRecebimento CrieItemLancamento(IPatente patente)
+        {
+            var itemLacamentoFinanceiro =
+               FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
+            itemLacamentoFinanceiro.Cliente = patente.Clientes[0];
+            itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
+            itemLacamentoFinanceiro.DataDoVencimento = patente.Manutencao.DataDaProximaManutencao.Value;
+            itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
+            itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeAnuidade;
+            itemLacamentoFinanceiro.Valor = patente.Manutencao.ObtenhaValorRealEmEspecie();
+
+            return itemLacamentoFinanceiro;
+        }
+
         public void ProcureEAgendeItemDeRecebimentoDeMarcasVencidasNoMes()
         {
             ServerUtils.setCredencial(_Credencial);
@@ -43,7 +57,7 @@ namespace MP.Servicos.Local
                 FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
 
             var marcasComManutencaoVencida = mapeadorDeMarcas.ObtenhaMarcasComManutencaoVencendoEsteMes();
-            
+
             try
             {
                 foreach (var marcaVencida in marcasComManutencaoVencida)
@@ -51,10 +65,10 @@ namespace MP.Servicos.Local
                     ServerUtils.BeginTransaction();
                     var itemDeLancamento = CrieItemLancamento(marcaVencida);
                     mapeadorItemDeLancamento.Insira(itemDeLancamento);
-                    mapeador.Insira(itemDeLancamento.ID.Value,"MARCA",marcaVencida.IdMarca.Value,itemDeLancamento.DataDoVencimento);
+                    mapeador.Insira(itemDeLancamento.ID.Value, "MARCA", marcaVencida.IdMarca.Value, itemDeLancamento.DataDoVencimento);
                     ServerUtils.CommitTransaction();
                 }
-                
+
             }
             catch
             {
@@ -65,6 +79,41 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+        public void ProcureEAgendeItemDeRecebimentoDePatentesVencidasNoMes()
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeInterfaceComModuloFinanceiro>();
+            var mapeadorDePatentes = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+            var mapeadorItemDeLancamento =
+                FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
+
+            var patentesVencidas = mapeadorDePatentes.ObtenhaPatentesComManutencaoVencendoEsteMes();
+
+            try
+            {
+                foreach (var patenteVencida in patentesVencidas)
+                {
+                    ServerUtils.BeginTransaction();
+                    var itemDeLancamento = CrieItemLancamento(patenteVencida);
+                    mapeadorItemDeLancamento.Insira(itemDeLancamento);
+                    mapeador.Insira(itemDeLancamento.ID.Value, "PATENTE", patenteVencida.Identificador, itemDeLancamento.DataDoVencimento);
+                    ServerUtils.CommitTransaction();
+                }
+
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+
         }
     }
 }

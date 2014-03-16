@@ -137,6 +137,7 @@
     <Compile Include="Negocio\NCL.cs" />
     <Compile Include="Negocio\Periodo.cs" />
     <Compile Include="Negocio\Schedules\IScheduleManutencaoDeMarcas.cs" />
+    <Compile Include="Negocio\Schedules\IScheduleManutencaoDePatentes.cs" />
     <Compile Include="Negocio\TipoClassificacaoPatente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />

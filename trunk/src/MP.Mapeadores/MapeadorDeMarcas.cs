@@ -286,7 +286,7 @@ namespace MP.Mapeadores
 
         public IList<IMarcas> ObtenhaMarcasComManutencaoVencendoEsteMes()
         {
-           var sql = new StringBuilder();
+            var sql = new StringBuilder();
             var dataProximoMes = DateTime.Now.AddMonths(1);
 
             sql.Append("SELECT IDMARCA IdMarca, CODIGONCL NCL, CODIGOAPRESENTACAO Apresentacao, IDCLIENTE Cliente, CODIGONATUREZA Natureza, ");
