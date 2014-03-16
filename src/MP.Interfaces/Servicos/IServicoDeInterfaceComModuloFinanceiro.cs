@@ -10,5 +10,6 @@ namespace MP.Interfaces.Servicos
     public interface IServicoDeInterfaceComModuloFinanceiro: IServico
     {
         void ProcureEAgendeItemDeRecebimentoDeMarcasVencidasNoMes();
+        void ProcureEAgendeItemDeRecebimentoDePatentesVencidasNoMes();
     }
 }
