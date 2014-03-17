@@ -12,6 +12,7 @@ Namespace FN.Negocio
         Property DataDoVencimento As Date
         Function Tipo() As TipoLacamentoFinanceiro
         Property Situacao As Situacao
+        Property Descricao As String
 
     End Interface
 

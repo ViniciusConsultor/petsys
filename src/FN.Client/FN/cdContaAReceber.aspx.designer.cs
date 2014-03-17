@@ -58,6 +58,24 @@ namespace FN.Client.FN {
         protected global::System.Web.UI.WebControls.Panel pnlDadosDaConta;
         
         /// <summary>
+        /// Label9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label9;
+        
+        /// <summary>
+        /// txtDescricao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtDescricao;
+        
+        /// <summary>
         /// lblCliente control.
         /// </summary>
         /// <remarks>
@@ -164,6 +182,24 @@ namespace FN.Client.FN {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker txtDataDoRecebimento;
+        
+        /// <summary>
+        /// Label8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label8;
+        
+        /// <summary>
+        /// ctrlFormaRecebimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FN.Client.FN.ctrlFormaRecebimento ctrlFormaRecebimento;
         
         /// <summary>
         /// Label4 control.

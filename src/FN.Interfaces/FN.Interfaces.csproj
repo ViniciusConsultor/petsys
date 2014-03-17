@@ -58,6 +58,8 @@
     <Compile Include="Mapeadores\IMapeadorConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorCliente.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorDescricao.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorFormaDeRecebimento.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorID.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorIntervaloDeDataDeVencimento.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorSituacao.cs" />

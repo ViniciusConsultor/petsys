@@ -7,9 +7,10 @@
         Private _Descricao As String
 
         Public Shared BoletoAvulso As TipoLacamentoFinanceiroRecebimento = New TipoLacamentoFinanceiroRecebimento(1S, "Boleto avulso")
-        Public Shared RecebimentoDeAnuidade As TipoLacamentoFinanceiroRecebimento = New TipoLacamentoFinanceiroRecebimento(2S, "Recebimento anuidade")
+        Public Shared RecebimentoDeManutencao As TipoLacamentoFinanceiroRecebimento = New TipoLacamentoFinanceiroRecebimento(2S, "Recebimento de manuteção")
+        Public Shared Outros As TipoLacamentoFinanceiroRecebimento = New TipoLacamentoFinanceiroRecebimento(3S, "Outros")
 
-        Private Shared Lista As TipoLacamentoFinanceiroRecebimento() = {BoletoAvulso, RecebimentoDeAnuidade}
+        Private Shared Lista As TipoLacamentoFinanceiroRecebimento() = {BoletoAvulso, RecebimentoDeManutencao, Outros}
 
         Private Sub New(ByVal ID As Short, _
                         ByVal Descricao As String)

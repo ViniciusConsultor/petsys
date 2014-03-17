@@ -18,5 +18,7 @@ namespace FN.Negocio
         public DateTime DataDoLancamento { get; set; }
         public DateTime DataDoVencimento { get; set;}
         public Situacao Situacao { get; set; }
+        public string Descricao  { get; set; }
+        
     }
 }

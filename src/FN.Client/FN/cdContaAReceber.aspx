@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="uc1" TagName="ctrlCliente" Src="~/ctrlCliente.ascx" %>
 <%@ Register Src="ctrlSituacao.ascx" TagName="ctrlSituacao" TagPrefix="uc2" %>
 <%@ Register Src="ctrlTipoLacamentoFinanceiroRecebimento.ascx" TagName="ctrlTipoLacamentoFinanceiroRecebimento" TagPrefix="uc3" %>
+<%@ Register Src="ctrlFormaRecebimento.ascx" TagName="ctrlFormaRecebimento" TagPrefix="uc4" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Width="100%" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
@@ -20,6 +21,16 @@
                 <ContentTemplate>
                     <asp:Panel ID="pnlDadosDaConta" runat="server">
                         <table class="tabela">
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label9" runat="server" Text="Descrição"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" MaxLength="255" Width="450px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="lblCliente" runat="server" Text="Cliente"></asp:Label>
@@ -70,6 +81,14 @@
                                 <td class="td">
                                     <telerik:RadDatePicker ID="txtDataDoRecebimento" runat="server">
                                     </telerik:RadDatePicker>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="Forma do recebimento"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc4:ctrlFormaRecebimento ID="ctrlFormaRecebimento" runat="server" />
                                 </td>
                             </tr>
                             <tr>
