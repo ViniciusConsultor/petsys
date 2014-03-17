@@ -130,7 +130,6 @@ namespace FN.Servicos.Local
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.BoletoAvulso;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;
             
-
             try
             {
                 ServerUtils.BeginTransaction();

@@ -25,9 +25,9 @@ namespace FN.Mapeadores
             DBHelper = ServerUtils.getDBHelper();
 
             Item.ID = GeradorDeID.ProximoID();
-
+            
             sql.Append("INSERT INTO FN_ITEMFINANREC (");
-            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, DATARECEBIMENTO, SITUACAO, TIPOLANCAMENTO) ");
+            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, DESCRICAO, FORMARECEBIMENTO, DATARECEBIMENTO, SITUACAO, TIPOLANCAMENTO) ");
             sql.Append("VALUES (");
 
             sql.Append(Item.ID.Value + ", ");
@@ -38,10 +38,21 @@ namespace FN.Mapeadores
                            : "'" + UtilidadesDePersistencia.FiltraApostrofe(Item.Observacao) + "', ");
             sql.Append(Item.DataDoLancamento.ToString("yyyyMMdd") + ", ");
             sql.Append(Item.DataDoVencimento.ToString("yyyyMMdd") + ", ");
+            
+            sql.Append(string.IsNullOrEmpty(Item.Descricao)
+                         ? "NULL, "
+                         : "'" + UtilidadesDePersistencia.FiltraApostrofe(Item.Descricao) + "', ");
+
+            sql.Append(Item.FormaDeRecebimento == null
+                         ? "NULL, "
+                         : Item.FormaDeRecebimento.ID  + ", ");
+
             sql.Append(!Item.DataDoRecebimento.HasValue
                          ? "NULL, "
                          : Item.DataDoRecebimento.Value.ToString("yyyyMMdd") + ", ");
+
             sql.Append(Item.Situacao.ID + ", ");
+            
             sql.Append(Item.TipoLacamento.ID + ")");
             DBHelper.ExecuteNonQuery(sql.ToString());
 
@@ -56,17 +67,30 @@ namespace FN.Mapeadores
 
             sql.Append("UPDATE FN_ITEMFINANREC SET ");
             sql.Append("VALOR = " + UtilidadesDePersistencia.TPVd(Item.Valor) + ", ");
+
             sql.Append(string.IsNullOrEmpty(Item.Observacao)
                            ? "OBSERVACAO = NULL, "
                            : "OBSERVACAO = '" + UtilidadesDePersistencia.FiltraApostrofe(Item.Observacao) + "', ");
+
             sql.Append("DATALACAMENTO = " + Item.DataDoLancamento.ToString("yyyyMMdd") + ", ");
             sql.Append("DATAVENCIMENTO = " + Item.DataDoVencimento.ToString("yyyyMMdd") + ", ");
+
             sql.Append(!Item.DataDoRecebimento.HasValue
                            ? "DATARECEBIMENTO = NULL, "
                            : "DATARECEBIMENTO = " + Item.DataDoRecebimento.Value.ToString("yyyyMMdd") + ", ");
             
+            sql.Append(string.IsNullOrEmpty(Item.Descricao)
+                           ? "DESCRICAO = NULL, "
+                           : "DESCRICAO = '" + UtilidadesDePersistencia.FiltraApostrofe(Item.Descricao) + "', ");
+
+            sql.Append(Item.FormaDeRecebimento == null
+                           ? "FORMARECEBIMENTO = NULL, "
+                           : "FORMARECEBIMENTO = " + Item.FormaDeRecebimento.ID + ", ");
+
             sql.Append("SITUACAO = " +Item.Situacao.ID);
+
             sql.Append(" WHERE ID = " + Item.ID.Value);
+
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
 
@@ -161,6 +185,12 @@ namespace FN.Mapeadores
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "DATARECEBIMENTO"))
                 item.DataDoRecebimento = UtilidadesDePersistencia.getValorDate(leitor, "DATARECEBIMENTO");
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "FORMARECEBIMENTO"))
+                item.FormaDeRecebimento = FormaDeRecebimento.Obtenha(UtilidadesDePersistencia.getValorShort(leitor, "FORMARECEBIMENTO"));
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "DESCRICAO"))
+                item.Descricao = UtilidadesDePersistencia.GetValorString(leitor, "DESCRICAO");
 
             return item;
         }

@@ -54,6 +54,14 @@ namespace FN.Client.FN
             txtDataDoRecebimento.SelectedDate = itemDeLacamento.DataDoRecebimento;
             txtObservacao.Text = itemDeLacamento.Observacao;
             txtValor.Value = itemDeLacamento.Valor;
+
+            if (itemDeLacamento.FormaDeRecebimento != null)
+            {
+                ctrlFormaRecebimento.FormaDeRecebimentoSelecionada = itemDeLacamento.FormaDeRecebimento;
+                ctrlFormaRecebimento.Codigo = itemDeLacamento.FormaDeRecebimento.ID.ToString();
+            }
+
+            txtDescricao.Text = itemDeLacamento.Descricao;
         }
 
         private void ExibaTelaDetalhes(long id)
@@ -86,6 +94,7 @@ namespace FN.Client.FN
             ctrlCliente.Inicializa();
             ctrlTipoLacamentoFinanceiroRecebimento.Inicializa();
             ctrlSituacao.Inicializa();
+            ctrlFormaRecebimento.Inicializa();
         }
 
         private IList<string> VerifiqueCamposObrigatorios()
@@ -117,7 +126,9 @@ namespace FN.Client.FN
             itemDeLacamento.DataDoRecebimento = txtDataDoRecebimento.SelectedDate;
             itemDeLacamento.Observacao = txtObservacao.Text;
             itemDeLacamento.Valor = txtValor.Value.Value;
-
+            itemDeLacamento.FormaDeRecebimento = ctrlFormaRecebimento.FormaDeRecebimentoSelecionada;
+            itemDeLacamento.Descricao = txtDescricao.Text;
+            
             return itemDeLacamento;
         }
 

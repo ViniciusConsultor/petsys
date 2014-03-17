@@ -88,6 +88,13 @@
     <Compile Include="FN\cdContaAReceber.aspx.designer.cs">
       <DependentUpon>cdContaAReceber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FN\ctrlFormaRecebimento.ascx.cs">
+      <DependentUpon>ctrlFormaRecebimento.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\ctrlFormaRecebimento.ascx.designer.cs">
+      <DependentUpon>ctrlFormaRecebimento.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FN\ctrlSituacao.ascx.cs">
       <DependentUpon>ctrlSituacao.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -150,6 +157,7 @@
   <ItemGroup>
     <None Include="FN.Client.snk" />
     <Content Include="FN\cdContaAReceber.aspx" />
+    <Content Include="FN\ctrlFormaRecebimento.ascx" />
     <Content Include="FN\ctrlSituacao.ascx" />
     <Content Include="FN\ctrlTipoLacamentoFinanceiroRecebimento.ascx" />
     <Content Include="FN\frmBoletoAvulso.aspx" />

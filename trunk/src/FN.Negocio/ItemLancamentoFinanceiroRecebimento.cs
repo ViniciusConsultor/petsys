@@ -10,7 +10,9 @@ namespace FN.Negocio
     {
         public DateTime? DataDoRecebimento { get; set; }
         public TipoLacamentoFinanceiroRecebimento TipoLacamento { get; set; }
-        
+
+        public FormaDeRecebimento FormaDeRecebimento { get; set; }
+
         public override TipoLacamentoFinanceiro Tipo()
         {
             return TipoLacamentoFinanceiro.Recebimento;

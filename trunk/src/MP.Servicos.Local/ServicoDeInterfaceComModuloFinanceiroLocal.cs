@@ -27,8 +27,9 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento = marca.Manutencao.DataDaProximaManutencao.Value;
             itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
-            itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeAnuidade;
+            itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao;
             itemLacamentoFinanceiro.Valor = marca.Manutencao.ObtenhaValorRealEmEspecie();
+            itemLacamentoFinanceiro.Descricao = marca.DescricaoDaMarca;
 
             return itemLacamentoFinanceiro;
         }
@@ -41,8 +42,9 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento = patente.Manutencao.DataDaProximaManutencao.Value;
             itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
-            itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeAnuidade;
+            itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao;
             itemLacamentoFinanceiro.Valor = patente.Manutencao.ObtenhaValorRealEmEspecie();
+            //itemLacamentoFinanceiro.Descricao = patente.
 
             return itemLacamentoFinanceiro;
         }

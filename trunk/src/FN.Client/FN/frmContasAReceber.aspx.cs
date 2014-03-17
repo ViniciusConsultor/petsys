@@ -47,6 +47,8 @@ namespace FN.Client.FN
             pnlCliente.Visible = false;
             pnlPeriodoDeVencimento.Visible = false;
             pnlSituacao.Visible = false;
+            pnlDescricao.Visible = false;
+            pnlFormaDeRecebimento.Visible = false;
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -55,6 +57,8 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Situacao", "1"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente", "2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Período de vencimento", "3"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Descrição", "4"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Forma de recebimento", "5"));
         }
 
         private void ExibaTelaInicial()
@@ -73,7 +77,8 @@ namespace FN.Client.FN
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
             ctrlSituacao.Inicializa();
-
+            ctrlFormaRecebimento.Inicializa();
+            
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberSemFiltro>();
@@ -125,6 +130,12 @@ namespace FN.Client.FN
                     break;
                 case "3":
                     pnlPeriodoDeVencimento.Visible = true;
+                    break;
+                case "4":
+                    pnlDescricao.Visible = true;
+                    break;
+                case "5":
+                    pnlFormaDeRecebimento.Visible = true;
                     break;
                 
             }
@@ -309,6 +320,69 @@ namespace FN.Client.FN
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorSituacao>();
             filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlSituacao.Codigo;
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+        }
+
+        protected void btnPesquisarPorFormaDeRecebimento_OnClick_(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
+            if (ctrlFormaRecebimento.FormaDeRecebimentoSelecionada == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma forma de recebimento."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorFormaDeRecebimento>();
+            filtro.Operacao = operacao;
+            filtro.ValorDoFiltro = ctrlFormaRecebimento.Codigo;
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+        }
+
+      
+        protected void btnPesquisarPorDescricao_OnClick_(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtDescricao.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe uma descrição."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorDescricao>();
+            filtro.Operacao = operacao;
+            filtro.ValorDoFiltro = txtDescricao.Text;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
         }

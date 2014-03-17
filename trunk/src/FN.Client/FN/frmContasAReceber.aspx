@@ -5,6 +5,7 @@
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc4" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
 <%@ Register Src="ctrlSituacao.ascx" TagName="ctrlSituacao" TagPrefix="uc1" %>
+<%@ Register Src="ctrlFormaRecebimento.ascx" TagName="ctrlFormaRecebimento" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
@@ -74,6 +75,27 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorSituacao_OnClick_" />
                                 </td>
                             </tr>
+                            <tr runat="server" id="pnlFormaDeRecebimento">
+                                <td class="th3">
+                                    <asp:Label ID="Label6" runat="server" Text="Forma de recebimento"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc2:ctrlFormaRecebimento ID="ctrlFormaRecebimento" runat="server" />
+                                    <asp:ImageButton ID="btnPesquisarPorFormaDeRecebimento" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorFormaDeRecebimento_OnClick_" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlDescricao">
+                                <td class="th3">
+                                    <asp:Label ID="Label7" runat="server" Text="Descrição"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtDescricao" runat="server" Width="450px" MaxLength="255">
+                                    </telerik:RadTextBox>
+                                    <asp:ImageButton ID="btnPesquisarPorDescricao" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorDescricao_OnClick_" />
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>
@@ -109,10 +131,14 @@
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column353">
+                                                <ItemStyle Width="20%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column5" DataFormatString="{0:C}" >
+                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column5"
+                                                DataFormatString="{0:C}">
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataDoLancamento" HeaderText="Data do lançamento"
@@ -125,6 +151,10 @@
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataDoRecebimento" HeaderText="Data do recebimento"
                                                 UniqueName="column83" DataFormatString="{0:dd/MM/yyyy}">
+                                                <ItemStyle Width="20%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="FormaDeRecebimento.Descricao" HeaderText="Forma de recebimento"
+                                                UniqueName="column563">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Situacao.Descricao" HeaderText="Situação" UniqueName="column63">
