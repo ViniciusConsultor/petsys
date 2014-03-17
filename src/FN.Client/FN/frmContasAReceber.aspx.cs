@@ -202,8 +202,8 @@ namespace FN.Client.FN
         {
             long id = 0;
 
-            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                id = Convert.ToInt64((e.Item.Cells[4].Text));
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize" && e.CommandName != "ExpandCollapse")
+                id = Convert.ToInt64((e.Item.Cells[6].Text));
 
             switch (e.CommandName)
             {
@@ -385,6 +385,33 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = txtDescricao.Text;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+        }
+
+        protected void ToggleRowSelection(object sender, EventArgs e)
+        {
+            ((sender as CheckBox).NamingContainer as GridItem).Selected = (sender as CheckBox).Checked;
+            bool checkHeader = true;
+
+            foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
+            {
+                if (!(dataItem.FindControl("CheckBox1") as CheckBox).Checked)
+                {
+                    checkHeader = false;
+                    break;
+                }
+            }
+            GridHeaderItem headerItem = grdItensDeContasAReceber.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
+            (headerItem.FindControl("headerChkbox") as CheckBox).Checked = checkHeader;
+        }
+
+        protected void ToggleSelectedState(object sender, EventArgs e)
+        {
+            var headerCheckBox = (sender as CheckBox);
+            foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
+            {
+                (dataItem.FindControl("CheckBox1") as CheckBox).Checked = headerCheckBox.Checked;
+                dataItem.Selected = headerCheckBox.Checked;
+            }
         }
     }
 }

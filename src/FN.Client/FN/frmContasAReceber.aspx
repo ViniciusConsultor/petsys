@@ -112,6 +112,17 @@
                                     OnItemCommand="grdItensDeContasAReceber_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
+                                        <GroupByExpressions>
+                                            <telerik:GridGroupByExpression>
+                                                <SelectFields>
+                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" HeaderText="Cliente" />
+                                                   <%-- <telerik:GridGroupByField FieldName="Valor" HeaderText="TOTAL"  Aggregate="Sum" />--%>
+                                                </SelectFields>
+                                                <GroupByFields>
+                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" SortOrder="Descending" />
+                                                </GroupByFields>
+                                            </telerik:GridGroupByExpression>
+                                        </GroupByExpressions>
                                         <RowIndicatorColumn>
                                             <HeaderStyle Width="20px" />
                                         </RowIndicatorColumn>
@@ -119,6 +130,16 @@
                                             <HeaderStyle Width="20px" />
                                         </ExpandCollapseColumn>
                                         <Columns>
+                                            <telerik:GridTemplateColumn UniqueName="CheckBoxTemplateColumn">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="CheckBox1" runat="server" OnCheckedChanged="ToggleRowSelection"
+                                                        AutoPostBack="True" />
+                                                </ItemTemplate>
+                                                <HeaderTemplate>
+                                                    <asp:CheckBox ID="headerChkbox" runat="server" OnCheckedChanged="ToggleSelectedState"
+                                                        AutoPostBack="True" />
+                                                </HeaderTemplate>
+                                            </telerik:GridTemplateColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                 <ItemStyle Width="2%"></ItemStyle>
@@ -134,7 +155,7 @@
                                             <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column353">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53">
+                                            <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53" Display="false">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column5"
