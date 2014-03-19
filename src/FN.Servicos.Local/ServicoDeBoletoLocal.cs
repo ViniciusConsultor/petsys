@@ -209,5 +209,21 @@ namespace FN.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
+
+            try
+            {
+                return mapeador.obtenhaBoletosGerados(quantidadeDeRegistros, offSet);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

@@ -109,12 +109,20 @@
     <Compile Include="FN\ctrlTipoLacamentoFinanceiroRecebimento.ascx.designer.cs">
       <DependentUpon>ctrlTipoLacamentoFinanceiroRecebimento.ascx</DependentUpon>
     </Compile>
+    <Compile Include="FN\DTOBoletosGerados.cs" />
     <Compile Include="FN\frmBoletoAvulso.aspx.cs">
       <DependentUpon>frmBoletoAvulso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FN\frmBoletoAvulso.aspx.designer.cs">
       <DependentUpon>frmBoletoAvulso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FN\frmBoletosGerados.aspx.cs">
+      <DependentUpon>frmBoletosGerados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\frmBoletosGerados.aspx.designer.cs">
+      <DependentUpon>frmBoletosGerados.aspx</DependentUpon>
     </Compile>
     <Compile Include="FN\frmConfiguracaoDeIndicesFinaceiros.aspx.cs">
       <DependentUpon>frmConfiguracaoDeIndicesFinaceiros.aspx</DependentUpon>
@@ -161,6 +169,7 @@
     <Content Include="FN\ctrlSituacao.ascx" />
     <Content Include="FN\ctrlTipoLacamentoFinanceiroRecebimento.ascx" />
     <Content Include="FN\frmBoletoAvulso.aspx" />
+    <Content Include="FN\frmBoletosGerados.aspx" />
     <Content Include="FN\frmConfiguracaoDeIndicesFinaceiros.aspx" />
     <Content Include="FN\frmConfiguracaoDoBoleto.aspx" />
     <Content Include="FN\frmContasAReceber.aspx" />

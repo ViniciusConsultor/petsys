@@ -65,6 +65,40 @@ namespace FN.Mapeadores
             return listaDeBoletos;
         }
 
+        private IList<IBoletosGerados> obtenhaBoleto(StringBuilder sql, int quantidadeMaximaRegistros, int offSet)
+        {
+            var DBHelper = ServerUtils.criarNovoDbHelper();
+
+            IList<IBoletosGerados> listaDeBoletos = new List<IBoletosGerados>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros, offSet))
+            {
+                while (leitor.Read())
+                {
+                    var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
+
+                    boletoGerado.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
+                    boletoGerado.NumeroBoleto = !string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO") : null;
+                    boletoGerado.NossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "NOSSONUMERO");
+
+                    var cliente =
+                        FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(
+                            UtilidadesDePersistencia.GetValorLong(leitor, "IDCLIENTE"));
+
+                    boletoGerado.Cliente = cliente;
+
+                    boletoGerado.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
+                    boletoGerado.DataGeracao = UtilidadesDePersistencia.getValorDate(leitor, "DATAGERACAO");
+                    boletoGerado.DataVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO");
+                    boletoGerado.Observacao = !string.IsNullOrEmpty(boletoGerado.Observacao) ? UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO") : null;
+
+                    listaDeBoletos.Add(boletoGerado);
+                }
+            }
+
+            return listaDeBoletos;
+        }
+
         private StringBuilder retornaSQLSelecionaTodos()
         {
             var sql = new StringBuilder();
@@ -269,6 +303,17 @@ namespace FN.Mapeadores
 
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+        }
+
+        public IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet)
+        {
+            var sql = retornaSQLSelecionaTodos();
+
+            IList<IBoletosGerados> listaDeBoletos = new List<IBoletosGerados>();
+
+            listaDeBoletos = obtenhaBoleto(sql, quantidadeDeRegistros, offSet);
+
+            return listaDeBoletos;
         }
     }
 }
