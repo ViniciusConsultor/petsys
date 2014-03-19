@@ -119,7 +119,17 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                 processoDePatente = servico.Obtenha(id);
 
-            if (processoDePatente != null) MostreProcessoDePatente(processoDePatente);
+            if (processoDePatente != null)
+            {
+                if (processoDePatente.Patente != null && processoDePatente.Patente.Manutencao != null)
+                {
+                    if (processoDePatente.Patente.Manutencao.ManutencaoEstaVencida())
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInformacao("Processo possui manutenção vencida."), false);
+                }
+
+                MostreProcessoDePatente(processoDePatente);
+            }
         }
 
         private void ExibaTelaModificar()

@@ -205,7 +205,17 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                 processoDeMarca = servico.Obtenha(id);
 
-            if (processoDeMarca != null) MostreProcessoDeMarca(processoDeMarca);
+            if (processoDeMarca != null)
+            {
+                if (processoDeMarca.Marca != null && processoDeMarca.Marca.Manutencao != null)
+                {
+                    if(processoDeMarca.Marca.Manutencao.ManutencaoEstaVencida())
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                       UtilidadesWeb.MostraMensagemDeInformacao("Processo possui manutenção vencida."), false);
+                }
+
+                MostreProcessoDeMarca(processoDeMarca);
+            }
         }
 
         private void ExibaTelaModificar()
