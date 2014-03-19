@@ -19,5 +19,7 @@ namespace FN.Interfaces.Servicos
 
         IConfiguracaoDeBoletoBancario ObtenhaConfiguracao();
         void SalveConfiguracao(IConfiguracaoDeBoletoBancario configuracao);
+
+        IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet);
     }
 }
