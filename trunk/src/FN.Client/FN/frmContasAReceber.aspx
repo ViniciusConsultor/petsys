@@ -111,7 +111,7 @@
                                     AllowFilteringByColumn="false" OnPageIndexChanged="grdItensDeContasAReceber_OnPageIndexChanged"
                                     OnItemCommand="grdItensDeContasAReceber_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                    <MasterTableView GridLines="Both">
+                                    <MasterTableView  Width="100%">
                                         <GroupByExpressions>
                                             <telerik:GridGroupByExpression>
                                                 <SelectFields>
