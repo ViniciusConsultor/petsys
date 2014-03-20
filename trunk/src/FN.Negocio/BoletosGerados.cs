@@ -24,7 +24,7 @@ namespace FN.Negocio
 
         public DateTime? DataVencimento { get; set; }
 
-        public long? NumeroProcesso { get; set; }
+        public string NumeroProcesso { get; set; }
 
         public string Observacao { get; set; }
     }
