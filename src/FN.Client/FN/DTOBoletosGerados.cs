@@ -16,5 +16,6 @@ namespace FN.Client.FN
         public string DataGeracao { get; set; }
         public string DataVencimento { get; set; }
         public string Observacao { get; set; }
+        public string NumeroProcesso { get; set; }
     }
 }

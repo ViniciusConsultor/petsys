@@ -44,7 +44,7 @@ namespace FN.Mapeadores
                     var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
 
                     boletoGerado.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-                    boletoGerado.NumeroBoleto = !string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO") : null;
+                    boletoGerado.NumeroBoleto = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO");
                     boletoGerado.NossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "NOSSONUMERO");
 
                     var cliente =
@@ -56,7 +56,9 @@ namespace FN.Mapeadores
                     boletoGerado.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
                     boletoGerado.DataGeracao = UtilidadesDePersistencia.getValorDate(leitor, "DATAGERACAO");
                     boletoGerado.DataVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO");
-                    boletoGerado.Observacao = !string.IsNullOrEmpty(boletoGerado.Observacao) ? UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO") : null;
+                    boletoGerado.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
+
+                    boletoGerado.NumeroProcesso = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROPROCESSO");
 
                     listaDeBoletos.Add(boletoGerado);
                 }
@@ -78,7 +80,7 @@ namespace FN.Mapeadores
                     var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
 
                     boletoGerado.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-                    boletoGerado.NumeroBoleto = !string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO") : null;
+                    boletoGerado.NumeroBoleto = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO");
                     boletoGerado.NossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "NOSSONUMERO");
 
                     var cliente =
@@ -90,8 +92,10 @@ namespace FN.Mapeadores
                     boletoGerado.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
                     boletoGerado.DataGeracao = UtilidadesDePersistencia.getValorDate(leitor, "DATAGERACAO");
                     boletoGerado.DataVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO");
-                    boletoGerado.Observacao = !string.IsNullOrEmpty(boletoGerado.Observacao) ? UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO") : null;
+                    boletoGerado.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
 
+                    boletoGerado.NumeroProcesso = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROPROCESSO");
+                    
                     listaDeBoletos.Add(boletoGerado);
                 }
             }
@@ -104,7 +108,7 @@ namespace FN.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, ");
-            sql.Append("DATAVENCIMENTO, OBSERVACAO ");
+            sql.Append("DATAVENCIMENTO, OBSERVACAO, NUMEROPROCESSO ");
             sql.Append("FROM FN_BOLETOS_GERADOS ");
 
             return sql;
@@ -136,7 +140,7 @@ namespace FN.Mapeadores
 
             sql.Append("INSERT INTO FN_BOLETOS_GERADOS (");
             sql.Append("ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, DATAVENCIMENTO, ");
-            sql.Append("OBSERVACAO)");
+            sql.Append("OBSERVACAO, NUMEROPROCESSO)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(boletoGerado.ID.Value, ", "));
             sql.Append(!string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ") : "NULL, ");
@@ -155,7 +159,9 @@ namespace FN.Mapeadores
                            ? String.Concat(boletoGerado.DataVencimento.Value.ToString("yyyyMMdd"), ", ")
                            : "NULL, ");
 
-            sql.Append(!string.IsNullOrEmpty(boletoGerado.Observacao) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Observacao), "') ") : "NULL) ");
+            sql.Append(!string.IsNullOrEmpty(boletoGerado.Observacao) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Observacao), "', ") : "NULL, ");
+
+            sql.Append(!string.IsNullOrEmpty(boletoGerado.NumeroProcesso) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroProcesso), "') ") : "NULL) ");
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -308,6 +314,7 @@ namespace FN.Mapeadores
         public IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet)
         {
             var sql = retornaSQLSelecionaTodos();
+            sql.Append("ORDER BY NOSSONUMERO DESC");
 
             IList<IBoletosGerados> listaDeBoletos = new List<IBoletosGerados>();
 
