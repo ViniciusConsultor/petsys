@@ -225,5 +225,28 @@ namespace FN.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public void AtualizarBoletoGerado(IBoletosGerados boletoGerado)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeador.AtualizarBoletoGerado(boletoGerado);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

@@ -69,9 +69,12 @@ namespace FN.Client.FN
                 if (boletosGerado.Cliente != null && boletosGerado.Cliente.Pessoa != null)
                     dto.Cliente = boletosGerado.Cliente.Pessoa.Nome;
 
-                dto.NumeroProcesso = !string.IsNullOrEmpty(boletosGerado.NumeroProcesso) ? boletosGerado.NumeroProcesso : null;
-
                 dto.Observacao = !string.IsNullOrEmpty(boletosGerado.Observacao) ? boletosGerado.Observacao : null;
+
+                dto.Cedente = boletosGerado.Cedente != null && boletosGerado.Cedente.Pessoa != null ? 
+                    boletosGerado.Cedente.Pessoa.Nome : null;
+
+                dto.Instrucoes = !string.IsNullOrEmpty(boletosGerado.Instrucoes) ? boletosGerado.Instrucoes : null;
 
                 listaDeBoletos.Add(dto);
             }
