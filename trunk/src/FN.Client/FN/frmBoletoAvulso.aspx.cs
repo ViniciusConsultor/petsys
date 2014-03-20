@@ -25,16 +25,67 @@ namespace FN.Client.FN
         public const string CHAVE_CLIENTE_SELECIONADO = "CHAVE_CLIENTE_SELECIONADO";
         public const string CHAVE_CEDENTE_SELECIONADO = "CHAVE_CEDENTE_SELECIONADO";
 
+        public IBoletosGerados BoletoGerado { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlCedente.CedenteFoiSelecionado += ctrlCedente_CedenteFoiSelecionado;
             ctrlCliente.ClienteFoiSelecionado += ctrlCliente_ClienteFoiSelecionado;
 
             if (!IsPostBack)
-                ExibaTelaInicial();
+            {
+                long? id = null;
+
+                if (!String.IsNullOrEmpty(Request.QueryString["Id"]))
+                    id = Convert.ToInt64(Request.QueryString["Id"]);
+
+                if (id == null)
+                    ExibaTelaInicial();
+                else
+                    ExibaTelaBoletoGerado(id.Value);
+            }
+        }
+
+        private void ExibaTelaBoletoGerado(long idBoleto)
+        {
+            ExibaTelaInicial();
+
+            try
+            {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                {
+                    var boleto = servico.obtenhaBoletoPeloId(idBoleto);
+
+                    if(boleto != null)
+                    {
+                        BoletoGerado = boleto;
+
+                        if (boleto.Cedente != null)
+                        {
+                            this.ctrlCedente.CedenteSelecionado = boleto.Cedente;
+                            PreenchaDadosDoCedente(boleto.Cedente);
+                        }
+
+                        this.ctrlCliente.ClienteSelecionado = boleto.Cliente;
+                        PreenchaDadosDoClienteSelecionado(boleto.Cliente);
+
+                        PreenchaInformacoesDoBoleto(boleto);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
         }
 
         private void ctrlCedente_CedenteFoiSelecionado(ICedente cliente)
+        {
+            PreenchaDadosDoCedente(cliente);
+        }
+
+        private void PreenchaDadosDoCedente(ICedente cliente)
         {
             if (cliente == null)
             {
@@ -50,6 +101,11 @@ namespace FN.Client.FN
         }
 
         private void ctrlCliente_ClienteFoiSelecionado(ICliente cliente)
+        {
+            PreenchaDadosDoClienteSelecionado(cliente);
+        }
+
+        private void PreenchaDadosDoClienteSelecionado(ICliente cliente)
         {
             try
             {
@@ -123,7 +179,8 @@ namespace FN.Client.FN
                 Logger.GetInstancia().Erro("Erro ao carregar informações do cliente selecionado, exceção: ", ex);
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia(
-                                                        "Erro ao carregar informações do cliente selecionado, exceção: " + ex.Message), false);
+                                                            "Erro ao carregar informações do cliente selecionado, exceção: " +
+                                                            ex.Message), false);
             }
         }
 
@@ -135,6 +192,15 @@ namespace FN.Client.FN
             pnlDados.Visible = false;
             ctrlCliente.Visible = false;
             lblCliente.Visible = false;
+        }
+
+        private void PreenchaInformacoesDoBoleto(IBoletosGerados boleto)
+        {
+            txtVencimento.SelectedDate = boleto.DataVencimento;
+            txtValor.Text = boleto.Valor.ToString();
+            txtNumeroDoBoleto.Text = boleto.NumeroBoleto;
+            txtFinalidadeBoleto.Text = boleto.Observacao;
+            txtInstrucoes.Text = boleto.Instrucoes;
         }
 
         protected void btnGerarBoleto_ButtonClick(object sender, EventArgs e)
@@ -151,35 +217,51 @@ namespace FN.Client.FN
                 var vencimento = txtVencimento.SelectedDate.Value.ToString("dd/MM/yyyy");
                 var valorBoleto = txtValor.Text;
 
-                IBoletosGeradosAux dadosAuxiliares;
+                IBoletosGeradosAux dadosAuxiliares = null;
 
                 // Busca dados auxiliares no banco, se for a primeira vez, efetua o insert
 
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                long cedenteNossoNumeroBoleto;
+
+                if (BoletoGerado != null)
                 {
-                    dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                    // Numero do documento - numero de controle interno, não afeta o calculo da linha digitavel e nem o codigo de barras
+                    // mais pode ser útil, exemplo: quando o cliente ligar, vc pode consultar por este número e ver 
+                    // se já foi efetuado o pagamento
 
-                    if (!dadosAuxiliares.ID.HasValue)
-                    {
-                        var boletosGeradosAux = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
+                    // cedente
 
-                        boletosGeradosAux.ID = GeradorDeID.getInstancia().getProximoID();
-                        boletosGeradosAux.ProximoNossoNumero = 8210001001;
+                    cedenteNossoNumeroBoleto = BoletoGerado.NossoNumero.Value; // o final do nosso número é incrementado ao final
 
-                        servico.InserirPrimeiraVez(boletosGeradosAux);
-
-                        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
-                    }
                 }
+                else
+                {
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                    {
+                        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
 
-                // Numero do documento - numero de controle interno, não afeta o calculo da linha digitavel e nem o codigo de barras
-                // mais pode ser útil, exemplo: quando o cliente ligar, vc pode consultar por este número e ver 
-                // se já foi efetuado o pagamento
+                        if (!dadosAuxiliares.ID.HasValue)
+                        {
+                            var boletosGeradosAux = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
 
-                // cedente
+                            boletosGeradosAux.ID = GeradorDeID.getInstancia().getProximoID();
+                            boletosGeradosAux.ProximoNossoNumero = 8210001001;
 
-                var cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value; // o final do nosso número é incrementado ao final
+                            servico.InserirPrimeiraVez(boletosGeradosAux);
 
+                            dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                        }
+                    }
+
+                    // Numero do documento - numero de controle interno, não afeta o calculo da linha digitavel e nem o codigo de barras
+                    // mais pode ser útil, exemplo: quando o cliente ligar, vc pode consultar por este número e ver 
+                    // se já foi efetuado o pagamento
+
+                    // cedente
+
+                    cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value; // o final do nosso número é incrementado ao final
+
+                }
 
                 // obtendo a configuração do cedente
                 
@@ -333,6 +415,11 @@ namespace FN.Client.FN
 
                 var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
 
+                if (Session["CHAVE_CEDENTE_SELECIONADO"] != null)
+                {
+                    boletoGerado.Cedente = (ICedente)Session["CHAVE_CEDENTE_SELECIONADO"];
+                }
+
                 if (Session["CHAVE_CLIENTE_SELECIONADO"] != null)
                 {
                     boletoGerado.Cliente = (ICliente)Session["CHAVE_CLIENTE_SELECIONADO"];
@@ -344,19 +431,30 @@ namespace FN.Client.FN
                 boletoGerado.NumeroBoleto = txtNumeroDoBoleto.Text;
                 boletoGerado.Observacao = sacadoObservacao;
                 boletoGerado.Valor = Convert.ToDouble(valorBoleto);
+                boletoGerado.Instrucoes = txtInstrucoes.Text;
 
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                if(BoletoGerado != null)
                 {
-                    servico.Inserir(boletoGerado);
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                    {
+                        servico.AtualizarBoletoGerado(boletoGerado);
+                    }
                 }
-
-                // incrementar o nosso numero e o numero do documento e atualizar no banco.
-
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                else
                 {
-                    dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                    {
+                        servico.Inserir(boletoGerado);
+                    }
 
-                    servico.AtualizarProximasInformacoes(dadosAuxiliares);
+                    // incrementar o nosso numero e o numero do documento e atualizar no banco.
+
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                    {
+                        dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
+
+                        servico.AtualizarProximasInformacoes(dadosAuxiliares);
+                    }
                 }
             }
             catch (Exception ex)

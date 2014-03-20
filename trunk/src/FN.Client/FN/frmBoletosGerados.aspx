@@ -26,39 +26,39 @@ CodeBehind="frmBoletosGerados.aspx.cs" Inherits="FN.Client.FN.frmBoletosGerados"
                                         </ExpandCollapseColumn>
                                         <Columns>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
-                                                HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
+                                                HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column11">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
+                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column12"
                                                 ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo excluir o boleto gerado?"
                                                 ConfirmTitle="Apagar boleto gerado">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1"  Display="false">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="NumeroBoleto" HeaderText="Número do boleto" UniqueName="column5">
-                                                <ItemStyle Width="5%"></ItemStyle>
-                                            </telerik:GridBoundColumn>
-                                             <telerik:GridBoundColumn DataField="NossoNumero" HeaderText="Nosso número" UniqueName="column10">
-                                                <ItemStyle Width="5%"></ItemStyle>
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Cliente" HeaderText="Cliente"  UniqueName="column2">
+                                            <telerik:GridBoundColumn DataField="Cedente" HeaderText="Cedente"  UniqueName="column2">
                                             <ItemStyle Width="30%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column13">
-                                                <ItemStyle Width="10%"></ItemStyle>
+                                            <telerik:GridBoundColumn DataField="Cliente" HeaderText="Cliente"  UniqueName="column3">
+                                            <ItemStyle Width="30%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataGeracao" HeaderText="Data da geração" UniqueName="column11">
+                                            <telerik:GridBoundColumn DataField="NumeroBoleto" HeaderText="Num. Boleto" UniqueName="column4">
+                                                <ItemStyle Width="8%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                             <telerik:GridBoundColumn DataField="NossoNumero" HeaderText="Nosso Número" UniqueName="column5">
+                                                <ItemStyle Width="8%"></ItemStyle>
+                                            </telerik:GridBoundColumn>                                            
+                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column6">
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DataVencimento" HeaderText="Data de vencimento" UniqueName="column11">
+                                            <telerik:GridBoundColumn DataField="DataGeracao" HeaderText="Data Geração" UniqueName="column7">
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="NumeroProcesso" HeaderText="Número do processo" UniqueName="column5">
+                                            <telerik:GridBoundColumn DataField="DataVencimento" HeaderText="Data Vencimento" UniqueName="column8">
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Observacao" HeaderText="Observação" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Observacao" HeaderText="Observação" UniqueName="column10">
                                                 <ItemStyle Width="30%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
                                         </Columns>

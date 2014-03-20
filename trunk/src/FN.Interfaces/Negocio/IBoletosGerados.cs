@@ -16,6 +16,7 @@ namespace FN.Interfaces.Negocio
         DateTime? DataGeracao { get; set; }
         DateTime? DataVencimento { get; set; }
         string Observacao { get; set; }
-        string NumeroProcesso { get; set; }
+        ICedente Cedente { get; set; }
+        string Instrucoes { get; set; }
     }
 }

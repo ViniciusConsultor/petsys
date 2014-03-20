@@ -21,5 +21,7 @@ namespace FN.Interfaces.Servicos
         void SalveConfiguracao(IConfiguracaoDeBoletoBancario configuracao);
 
         IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet);
+
+        void AtualizarBoletoGerado(IBoletosGerados boletoGerado);
     }
 }

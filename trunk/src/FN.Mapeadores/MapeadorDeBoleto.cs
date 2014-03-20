@@ -58,7 +58,12 @@ namespace FN.Mapeadores
                     boletoGerado.DataVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO");
                     boletoGerado.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
 
-                    boletoGerado.NumeroProcesso = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROPROCESSO");
+                    var cedente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ICedenteLazyLoad>(
+                            UtilidadesDePersistencia.GetValorLong(leitor, "IDCEDENTE"));
+
+                    boletoGerado.Cedente = cedente;
+
+                    boletoGerado.Instrucoes = UtilidadesDePersistencia.GetValorString(leitor, "INSTRUCOES");
 
                     listaDeBoletos.Add(boletoGerado);
                 }
@@ -94,7 +99,12 @@ namespace FN.Mapeadores
                     boletoGerado.DataVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO");
                     boletoGerado.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
 
-                    boletoGerado.NumeroProcesso = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROPROCESSO");
+                    var cedente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ICedenteLazyLoad>(
+                            UtilidadesDePersistencia.GetValorLong(leitor, "IDCEDENTE"));
+
+                    boletoGerado.Cedente = cedente;
+
+                    boletoGerado.Instrucoes = UtilidadesDePersistencia.GetValorString(leitor, "INSTRUCOES");
                     
                     listaDeBoletos.Add(boletoGerado);
                 }
@@ -108,7 +118,7 @@ namespace FN.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, ");
-            sql.Append("DATAVENCIMENTO, OBSERVACAO, NUMEROPROCESSO ");
+            sql.Append("DATAVENCIMENTO, OBSERVACAO, IDCEDENTE, INSTRUCOES ");
             sql.Append("FROM FN_BOLETOS_GERADOS ");
 
             return sql;
@@ -140,7 +150,7 @@ namespace FN.Mapeadores
 
             sql.Append("INSERT INTO FN_BOLETOS_GERADOS (");
             sql.Append("ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, DATAVENCIMENTO, ");
-            sql.Append("OBSERVACAO, NUMEROPROCESSO)");
+            sql.Append("OBSERVACAO, IDCEDENTE, INSTRUCOES)");
             sql.Append("VALUES (");
             sql.Append(String.Concat(boletoGerado.ID.Value, ", "));
             sql.Append(!string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ") : "NULL, ");
@@ -161,7 +171,12 @@ namespace FN.Mapeadores
 
             sql.Append(!string.IsNullOrEmpty(boletoGerado.Observacao) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Observacao), "', ") : "NULL, ");
 
-            sql.Append(!string.IsNullOrEmpty(boletoGerado.NumeroProcesso) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroProcesso), "') ") : "NULL) ");
+            if (boletoGerado.Cedente != null && boletoGerado.Cedente.Pessoa.ID.HasValue)
+                sql.Append(String.Concat(boletoGerado.Cedente.Pessoa.ID.Value, ", "));
+            else
+            sql.Append("NULL, ");
+
+            sql.Append(!string.IsNullOrEmpty(boletoGerado.Instrucoes) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Instrucoes), "') ") : "NULL) ");
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -321,6 +336,48 @@ namespace FN.Mapeadores
             listaDeBoletos = obtenhaBoleto(sql, quantidadeDeRegistros, offSet);
 
             return listaDeBoletos;
+        }
+
+        public void AtualizarBoletoGerado(IBoletosGerados boletoGerado)
+        {
+            var sql = new StringBuilder();
+
+            var dbHelper = ServerUtils.getDBHelper();
+            
+            sql.Append("UPDATE FN_BOLETOS_GERADOS ");
+
+            sql.Append("SET NOSSONUMERO = " + boletoGerado.NossoNumero.Value + ", ");
+
+            sql.Append(!String.IsNullOrEmpty(boletoGerado.NumeroBoleto)
+                         ? String.Concat("NUMEROBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ")
+                         : "NUMEROBOLETO = NULL, ");
+
+            sql.Append(String.Concat("IDCLIENTE = ", boletoGerado.Cliente.Pessoa.ID.Value, ", "));
+
+            sql.Append(String.Concat("VALOR = ", boletoGerado.Valor, ", "));
+
+            sql.Append(boletoGerado.DataGeracao.HasValue
+                           ? String.Concat("DATAGERACAO = ", boletoGerado.DataGeracao.Value.ToString("yyyyMMdd"), ", ")
+                           : "DATAGERACAO = NULL, ");
+
+            sql.Append(boletoGerado.DataVencimento.HasValue
+                           ? String.Concat("DATAVENCIMENTO = ", boletoGerado.DataGeracao.Value.ToString("yyyyMMdd"), ", ")
+                           : "DATAVENCIMENTO = NULL, ");
+
+            sql.Append(!String.IsNullOrEmpty(boletoGerado.Observacao)
+                         ? String.Concat("OBSERVACAO = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Observacao), "', ")
+                         : "OBSERVACAO = NULL, ");
+
+            sql.Append(String.Concat("IDCEDENTE = ", boletoGerado.Cedente.Pessoa.ID.Value, ", "));
+
+            sql.Append(!String.IsNullOrEmpty(boletoGerado.Instrucoes)
+                         ? String.Concat("INSTRUCOES = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Instrucoes), "' ")
+                         : "INSTRUCOES = NULL ");
+
+            sql.Append(" WHERE ID = " + boletoGerado.ID.Value);
+
+            dbHelper.ExecuteNonQuery(sql.ToString());
+
         }
     }
 }
