@@ -24,6 +24,7 @@ namespace FN.Client.FN
 
         public const string CHAVE_CLIENTE_SELECIONADO = "CHAVE_CLIENTE_SELECIONADO";
         public const string CHAVE_CEDENTE_SELECIONADO = "CHAVE_CEDENTE_SELECIONADO";
+        public const string CHAVE_CEDENTE_BOLETOGERADO = "CHAVE_CEDENTE_BOLETOGERADO";
 
         public IBoletosGerados BoletoGerado { get; set; }
 
@@ -58,7 +59,8 @@ namespace FN.Client.FN
 
                     if(boleto != null)
                     {
-                        BoletoGerado = boleto;
+                        ViewState.Add(CHAVE_CEDENTE_BOLETOGERADO, boleto);
+                        //BoletoGerado = boleto;
 
                         if (boleto.Cedente != null)
                         {
@@ -223,13 +225,15 @@ namespace FN.Client.FN
 
                 long cedenteNossoNumeroBoleto;
 
-                if (BoletoGerado != null)
+                if (ViewState["CHAVE_CEDENTE_BOLETOGERADO"] != null)
                 {
                     // Numero do documento - numero de controle interno, não afeta o calculo da linha digitavel e nem o codigo de barras
                     // mais pode ser útil, exemplo: quando o cliente ligar, vc pode consultar por este número e ver 
                     // se já foi efetuado o pagamento
 
                     // cedente
+
+                    BoletoGerado = (IBoletosGerados) ViewState["CHAVE_CEDENTE_BOLETOGERADO"];
 
                     cedenteNossoNumeroBoleto = BoletoGerado.NossoNumero.Value; // o final do nosso número é incrementado ao final
 
@@ -437,6 +441,7 @@ namespace FN.Client.FN
                 {
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
                     {
+                        boletoGerado.ID = BoletoGerado.ID.Value;
                         servico.AtualizarBoletoGerado(boletoGerado);
                     }
                 }
