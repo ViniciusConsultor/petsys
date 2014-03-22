@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -64,7 +65,7 @@ namespace FN.Client.FN
 
                 dto.NumeroBoleto = boletosGerado.NumeroBoleto;
 
-                dto.Valor = boletosGerado.Valor > 0 ? boletosGerado.Valor.ToString() : "0";
+                dto.Valor = boletosGerado.Valor > 0 ? boletosGerado.Valor.ToString("N", CultureInfo.CreateSpecificCulture("es-ES")) : "0";
 
                 if (boletosGerado.Cliente != null && boletosGerado.Cliente.Pessoa != null)
                     dto.Cliente = boletosGerado.Cliente.Pessoa.Nome;

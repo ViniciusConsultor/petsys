@@ -38,18 +38,18 @@ CodeBehind="frmBoletosGerados.aspx.cs" Inherits="FN.Client.FN.frmBoletosGerados"
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1"  Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Cedente" HeaderText="Cedente"  UniqueName="column2">
-                                            <ItemStyle Width="30%"></ItemStyle> 
+                                            <ItemStyle Width="20%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Cliente" HeaderText="Cliente"  UniqueName="column3">
-                                            <ItemStyle Width="30%"></ItemStyle> 
+                                            <ItemStyle Width="20%"></ItemStyle> 
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="NumeroBoleto" HeaderText="Num. Boleto" UniqueName="column4">
-                                                <ItemStyle Width="8%"></ItemStyle>
+                                                <ItemStyle Width="6%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                              <telerik:GridBoundColumn DataField="NossoNumero" HeaderText="Nosso Número" UniqueName="column5">
-                                                <ItemStyle Width="8%"></ItemStyle>
+                                                <ItemStyle Width="7%"></ItemStyle>
                                             </telerik:GridBoundColumn>                                            
-                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column6">
+                                            <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor R$" UniqueName="column6">
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataGeracao" HeaderText="Data Geração" UniqueName="column7">
