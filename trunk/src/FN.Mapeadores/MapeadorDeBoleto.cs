@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using Compartilhados;
@@ -336,6 +337,64 @@ namespace FN.Mapeadores
             listaDeBoletos = obtenhaBoleto(sql, quantidadeDeRegistros, offSet);
 
             return listaDeBoletos;
+        }
+
+        public IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        {
+            var DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append(filtro.ObtenhaQuery());
+
+            sql.Append("ORDER BY NOSSONUMERO DESC");
+
+            IList<IBoletosGerados> listaDeBoletos = new List<IBoletosGerados>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, offSet))
+                try
+                {
+                    while (leitor.Read())
+                        listaDeBoletos.Add(obtenhaBoletoComFiltro(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            //listaDeBoletos = obtenhaBoleto(sql, quantidadeDeRegistros, offSet);
+
+            return listaDeBoletos;
+        }
+
+        private IBoletosGerados obtenhaBoletoComFiltro(IDataReader leitor)
+        {
+            var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
+
+            boletoGerado.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
+            boletoGerado.NumeroBoleto = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO");
+            boletoGerado.NossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "NOSSONUMERO");
+
+            var cliente =
+                FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(
+                    UtilidadesDePersistencia.GetValorLong(leitor, "IDCLIENTE"));
+
+            boletoGerado.Cliente = cliente;
+
+            boletoGerado.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
+            boletoGerado.DataGeracao = UtilidadesDePersistencia.getValorDate(leitor, "DATAGERACAO");
+            boletoGerado.DataVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO");
+            boletoGerado.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
+
+            var cedente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ICedenteLazyLoad>(
+                    UtilidadesDePersistencia.GetValorLong(leitor, "IDCEDENTE"));
+
+            boletoGerado.Cedente = cedente;
+
+            boletoGerado.Instrucoes = UtilidadesDePersistencia.GetValorString(leitor, "INSTRUCOES");
+
+
+            return boletoGerado;
         }
 
         public void AtualizarBoletoGerado(IBoletosGerados boletoGerado)

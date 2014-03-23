@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.FN.Mapeadores;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
@@ -219,6 +220,22 @@ namespace FN.Servicos.Local
             try
             {
                 return mapeador.obtenhaBoletosGerados(quantidadeDeRegistros, offSet);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
+        public IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
+
+            try
+            {
+                return mapeador.obtenhaBoletosGerados(filtro, quantidadeDeRegistros, offSet);
             }
             finally
             {

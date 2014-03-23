@@ -57,6 +57,12 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPoNossoNumero.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorCedente.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorCliente.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorIntervaloDeDataDeGeracao.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorIntervaloDeDataDeVencimento.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosSemFiltro.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorCliente.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorDescricao.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorFormaDeRecebimento.cs" />
