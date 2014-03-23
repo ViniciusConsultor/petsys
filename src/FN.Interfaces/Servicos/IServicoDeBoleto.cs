@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Compartilhados;
+using Compartilhados.Interfaces.Core.Negocio;
 using FN.Interfaces.Negocio;
 
 namespace FN.Interfaces.Servicos
@@ -23,5 +24,7 @@ namespace FN.Interfaces.Servicos
         IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet);
 
         void AtualizarBoletoGerado(IBoletosGerados boletoGerado);
+
+        IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet);
     }
 }
