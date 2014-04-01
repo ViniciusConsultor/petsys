@@ -114,7 +114,7 @@ namespace FN.Servicos.Local
             }
         }
 
-        public void Inserir(IBoletosGerados boletoGerado)
+        public void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro)
         {
             ServerUtils.setCredencial(_Credencial);
           
@@ -135,7 +135,8 @@ namespace FN.Servicos.Local
             {
                 ServerUtils.BeginTransaction();
                 mapeador.Inserir(boletoGerado);
-                mapeadorItemFinanceiroRecebimento.Insira(itemLacamentoFinanceiro);
+                if (gerarItemFinanceiro)
+                    mapeadorItemFinanceiroRecebimento.Insira(itemLacamentoFinanceiro);
                 ServerUtils.CommitTransaction();
             }
             catch

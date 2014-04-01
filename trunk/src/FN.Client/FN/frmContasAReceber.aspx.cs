@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,6 +19,8 @@ namespace FN.Client.FN
     public partial class frmContasAReceber : SuperPagina
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_CONTAS_A_RECEBER";
+        private const int NUMERO_CELULA_ID_CLIENTE = 9;
+        private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 7;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -78,12 +81,14 @@ namespace FN.Client.FN
             ctrlCliente1.Inicializa();
             ctrlSituacao.Inicializa();
             ctrlFormaRecebimento.Inicializa();
-            
+
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberSemFiltro>();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
         }
 
         private string ObtenhaURLDeContaAReceber()
@@ -113,7 +118,34 @@ namespace FN.Client.FN
                 case "btnRecarregar":
                     Recarregue();
                     break;
+                case "btnGerarBoletoColetivo":
+                    PreparaEmissaoDeBoletoColetivamente();
+                    break;
             }
+        }
+
+        private void PreparaEmissaoDeBoletoColetivamente()
+        {
+            var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmBoletoAvulso.aspx",
+                                           "?ItensFinanceiros=", obtenhaIdsDosItensSelecionados());
+            ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.ExibeJanela(url,
+                                                                               "Gerar boleto coletivamente",
+                                                                               800, 550, "frmBoletoAvulso_aspx"), false);
+        }
+
+        private string obtenhaIdsDosItensSelecionados()
+        {
+            var ids = new StringBuilder();
+
+            foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
+            {
+                if ((dataItem.FindControl("CheckBox1") as CheckBox).Checked)
+                    ids.Append(dataItem.Cells[NUMERO_CELULA_ID_ITEM_FINANCEIRO].Text + "|");
+
+            }
+
+            return ids.ToString().Remove(ids.ToString().LastIndexOf("|"));
         }
 
         protected void cboTipoDeFiltro_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -137,7 +169,7 @@ namespace FN.Client.FN
                 case "5":
                     pnlFormaDeRecebimento.Visible = true;
                     break;
-                
+
             }
         }
 
@@ -203,7 +235,7 @@ namespace FN.Client.FN
             long id = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize" && e.CommandName != "ExpandCollapse")
-                id = Convert.ToInt64((e.Item.Cells[6].Text));
+                id = Convert.ToInt64((e.Item.Cells[NUMERO_CELULA_ID_ITEM_FINANCEIRO].Text));
 
             switch (e.CommandName)
             {
@@ -237,6 +269,16 @@ namespace FN.Client.FN
                                                         UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar conta a receber",
                                                                                        800, 550, "cdContaAReceber_aspx"), false);
+                    break;
+                case "GerarBoleto":
+
+                    var url2 = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmBoletoAvulso.aspx",
+                                           "?ItensFinanceiros=", id);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url2,
+                                                                                       "Gerar boleto",
+                                                                                       800, 550, "frmBoletoAvulso_aspx"), false);
+
                     break;
             }
         }
@@ -290,7 +332,7 @@ namespace FN.Client.FN
                                                     txtPeriodo2.SelectedDate.Value.ToString("yyyyMMdd"));
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
-        
+
         }
 
         protected void btnPesquisarPorSituacao_OnClick_(object sender, ImageClickEventArgs e)
@@ -355,7 +397,7 @@ namespace FN.Client.FN
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
         }
 
-      
+
         protected void btnPesquisarPorDescricao_OnClick_(object sender, ImageClickEventArgs e)
         {
             if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
@@ -391,15 +433,26 @@ namespace FN.Client.FN
         {
             ((sender as CheckBox).NamingContainer as GridItem).Selected = (sender as CheckBox).Checked;
             bool checkHeader = true;
+            var idsDeCliente = new Dictionary<string, int>();
 
             foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
             {
                 if (!(dataItem.FindControl("CheckBox1") as CheckBox).Checked)
                 {
                     checkHeader = false;
-                    break;
+                }
+
+                if ((dataItem.FindControl("CheckBox1") as CheckBox).Checked)
+                {
+                    if (!idsDeCliente.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                        idsDeCliente.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
+
+                    idsDeCliente[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
                 }
             }
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
+                idsDeCliente.Count() == 1 && idsDeCliente.ElementAt(0).Value > 1;
             GridHeaderItem headerItem = grdItensDeContasAReceber.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
             (headerItem.FindControl("headerChkbox") as CheckBox).Checked = checkHeader;
         }
@@ -407,11 +460,22 @@ namespace FN.Client.FN
         protected void ToggleSelectedState(object sender, EventArgs e)
         {
             var headerCheckBox = (sender as CheckBox);
+            var mostrarBotaoBoletoColetivo = true;
+            string idDoClienteDaPrimeiraLinha = null;
             foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
             {
                 (dataItem.FindControl("CheckBox1") as CheckBox).Checked = headerCheckBox.Checked;
                 dataItem.Selected = headerCheckBox.Checked;
+
+                if (idDoClienteDaPrimeiraLinha == null)
+                    idDoClienteDaPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text;
+
+                if (idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                    mostrarBotaoBoletoColetivo = false;
+
             }
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = mostrarBotaoBoletoColetivo;
         }
     }
 }
