@@ -15,7 +15,7 @@ namespace FN.Interfaces.Servicos
         void InserirPrimeiraVez(IBoletosGeradosAux dadosAuxBoleto);
         IBoletosGerados obtenhaBoletoPeloId(long idBoleto);
         IBoletosGerados obtenhaBoletoPeloNossoNumero(long numero);
-        void Inserir(IBoletosGerados boletoGerado);
+        void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro);
         void Excluir(long idBoleto);
 
         IConfiguracaoDeBoletoBancario ObtenhaConfiguracao();

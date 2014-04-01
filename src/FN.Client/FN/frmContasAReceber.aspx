@@ -12,6 +12,8 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.001.0001" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar boleto coletivamente" ImageUrl="~/imagens/boleto.png"
+                CommandName="btnGerarBoletoColetivo" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
@@ -111,12 +113,12 @@
                                     AllowFilteringByColumn="false" OnPageIndexChanged="grdItensDeContasAReceber_OnPageIndexChanged"
                                     OnItemCommand="grdItensDeContasAReceber_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                    <MasterTableView  Width="100%">
+                                    <MasterTableView Width="100%">
                                         <GroupByExpressions>
                                             <telerik:GridGroupByExpression>
                                                 <SelectFields>
                                                     <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" HeaderText="Cliente" />
-                                                   <%-- <telerik:GridGroupByField FieldName="Valor" HeaderText="TOTAL"  Aggregate="Sum" />--%>
+                                                    <%-- <telerik:GridGroupByField FieldName="Valor" HeaderText="TOTAL"  Aggregate="Sum" />--%>
                                                 </SelectFields>
                                                 <GroupByFields>
                                                     <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" SortOrder="Descending" />
@@ -144,6 +146,10 @@
                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="GerarBoleto" FilterImageToolTip="Gerar boleto"
+                                                HeaderTooltip="Gerar boleto" ImageUrl="~/imagens/boletopequeno.png" UniqueName="column108">
+                                                <ItemStyle Width="2%"></ItemStyle>
+                                            </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"
                                                 HeaderTooltip="Cancelar" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
                                                 ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo cancelar a conta a receber?"
@@ -155,7 +161,11 @@
                                             <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column353">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53" Display="false">
+                                            <telerik:GridBoundColumn DataField="Cliente.Pessoa.ID" HeaderText="ID do cliente"
+                                                UniqueName="column991" Display="false">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Cliente.Pessoa.Nome" HeaderText="Cliente" UniqueName="column53"
+                                                Display="false">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" UniqueName="column5"

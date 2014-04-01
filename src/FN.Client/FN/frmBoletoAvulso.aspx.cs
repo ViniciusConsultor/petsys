@@ -40,46 +40,65 @@ namespace FN.Client.FN
                 if (!String.IsNullOrEmpty(Request.QueryString["Id"]))
                     id = Convert.ToInt64(Request.QueryString["Id"]);
 
-                if (id == null)
+                string itensFinanceiros = null;
+
+                if (!String.IsNullOrEmpty(Request.QueryString["ItensFinanceiros"]))
+                    itensFinanceiros = Request.QueryString["ItensFinanceiros"];
+
+                if (id == null && itensFinanceiros == null)
                     ExibaTelaInicial();
                 else
-                    ExibaTelaBoletoGerado(id.Value);
+                    if (itensFinanceiros == null)
+                        ExibaTelaBoletoGerado(id.Value);
+                    else
+                        ExibaItensFinanceiros(itensFinanceiros);
+
             }
+        }
+
+        private bool BoletoGeraItemFinanceiroDeRecebimento
+        {
+            get { return (bool) ViewState["GERAITENFINANCEIRORECEBIMENTO"]; }
+            set { ViewState["GERAITENFINANCEIRORECEBIMENTO"] = value; }
+        }
+
+        private void ExibaItensFinanceiros(string itens)
+        {
+            BoletoGeraItemFinanceiroDeRecebimento = false;
+            var ids = new List<string>(itens.Split('|'));
+
+            //Aqui para cada id invoca o servico para obter o item financeiro de recebimento
+            //depois pegar os dados e formar um boleto
+            //OBS: no momento da geracao do boleto passar false como o parametro se é para gerar um item de recebimento.
         }
 
         private void ExibaTelaBoletoGerado(long idBoleto)
         {
             ExibaTelaInicial();
 
-            try
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                var boleto = servico.obtenhaBoletoPeloId(idBoleto);
+
+                if (boleto != null)
                 {
-                    var boleto = servico.obtenhaBoletoPeloId(idBoleto);
+                    ViewState.Add(CHAVE_CEDENTE_BOLETOGERADO, boleto);
+                    //BoletoGerado = boleto;
 
-                    if(boleto != null)
+                    if (boleto.Cedente != null)
                     {
-                        ViewState.Add(CHAVE_CEDENTE_BOLETOGERADO, boleto);
-                        //BoletoGerado = boleto;
-
-                        if (boleto.Cedente != null)
-                        {
-                            this.ctrlCedente.CedenteSelecionado = boleto.Cedente;
-                            PreenchaDadosDoCedente(boleto.Cedente);
-                        }
-
-                        this.ctrlCliente.ClienteSelecionado = boleto.Cliente;
-                        PreenchaDadosDoClienteSelecionado(boleto.Cliente);
-
-                        PreenchaInformacoesDoBoleto(boleto);
+                        this.ctrlCedente.CedenteSelecionado = boleto.Cedente;
+                        PreenchaDadosDoCedente(boleto.Cedente);
                     }
+
+                    this.ctrlCliente.ClienteSelecionado = boleto.Cliente;
+                    PreenchaDadosDoClienteSelecionado(boleto.Cliente);
+
+                    PreenchaInformacoesDoBoleto(boleto);
                 }
             }
-            catch (Exception ex)
-            {
-                
-                throw ex;
-            }
+
+
         }
 
         private void ctrlCedente_CedenteFoiSelecionado(ICedente cliente)
@@ -188,6 +207,7 @@ namespace FN.Client.FN
 
         private void ExibaTelaInicial()
         {
+            BoletoGeraItemFinanceiroDeRecebimento = true;
             ctrlCedente.Inicializa();
             ctrlCliente.Inicializa();
             //ctrlCliente.BotaoNovoEhVisivel = true;
@@ -233,7 +253,7 @@ namespace FN.Client.FN
 
                     // cedente
 
-                    BoletoGerado = (IBoletosGerados) ViewState["CHAVE_CEDENTE_BOLETOGERADO"];
+                    BoletoGerado = (IBoletosGerados)ViewState["CHAVE_CEDENTE_BOLETOGERADO"];
 
                     cedenteNossoNumeroBoleto = BoletoGerado.NossoNumero.Value; // o final do nosso número é incrementado ao final
 
@@ -268,7 +288,7 @@ namespace FN.Client.FN
                 }
 
                 // obtendo a configuração do cedente
-                
+
                 var cedenteSelecionado = (ICedente)Session["CHAVE_CEDENTE_SELECIONADO"];
 
                 var cedenteCpfCnpj = string.Empty;
@@ -286,9 +306,9 @@ namespace FN.Client.FN
                     // pegar imagem do cedente para o boleto
                     //imagemDoRecibo = configuracaoDoBoleto.ImagemDeCabecalhoDoReciboDoSacado; 
 
-                    if(!string.IsNullOrEmpty(cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado))
+                    if (!string.IsNullOrEmpty(cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado))
                     {
-                        imagemDoRecibo = cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado; 
+                        imagemDoRecibo = cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado;
                     }
 
                     var cedentePessoa = cedenteSelecionado.Pessoa;
@@ -437,27 +457,20 @@ namespace FN.Client.FN
                 boletoGerado.Valor = Convert.ToDouble(valorBoleto);
                 boletoGerado.Instrucoes = txtInstrucoes.Text;
 
-                if(BoletoGerado != null)
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
                 {
-                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+
+                    if (BoletoGerado != null)
                     {
                         boletoGerado.ID = BoletoGerado.ID.Value;
                         servico.AtualizarBoletoGerado(boletoGerado);
-                    }
-                }
-                else
-                {
-                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-                    {
-                        servico.Inserir(boletoGerado);
-                    }
 
-                    // incrementar o nosso numero e o numero do documento e atualizar no banco.
-
-                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                    }
+                    else
                     {
+                        servico.Inserir(boletoGerado, BoletoGeraItemFinanceiroDeRecebimento);
+                        // incrementar o nosso numero e o numero do documento e atualizar no banco.
                         dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
-
                         servico.AtualizarProximasInformacoes(dadosAuxiliares);
                     }
                 }
