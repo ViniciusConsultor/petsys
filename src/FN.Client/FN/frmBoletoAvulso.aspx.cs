@@ -11,6 +11,8 @@ using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
 using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.Core.Servicos;
+using Compartilhados.Interfaces.FN.Negocio;
+using Compartilhados.Interfaces.FN.Servicos;
 using FN.Interfaces.Negocio;
 using FN.Interfaces.Servicos;
 using Telerik.Web.UI;
@@ -25,6 +27,7 @@ namespace FN.Client.FN
         public const string CHAVE_CLIENTE_SELECIONADO = "CHAVE_CLIENTE_SELECIONADO";
         public const string CHAVE_CEDENTE_SELECIONADO = "CHAVE_CEDENTE_SELECIONADO";
         public const string CHAVE_CEDENTE_BOLETOGERADO = "CHAVE_CEDENTE_BOLETOGERADO";
+        public const string CHAVE_ITEM_FINANCEIRO_SELECIONADO = "CHAVE_ITEM_FINANCEIRO_SELECIONADO";
 
         public IBoletosGerados BoletoGerado { get; set; }
 
@@ -64,8 +67,38 @@ namespace FN.Client.FN
 
         private void ExibaItensFinanceiros(string itens)
         {
+            ExibaTelaInicial();
+
             BoletoGeraItemFinanceiroDeRecebimento = false;
             var ids = new List<string>(itens.Split('|'));
+
+            IList<IItemLancamentoFinanceiroRecebimento> listaDeItensFinanceiros =
+                new List<IItemLancamentoFinanceiroRecebimento>();
+
+            foreach (var idItemFinanceiro in ids)
+            {
+                IItemLancamentoFinanceiroRecebimento itemLancamento;
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                    itemLancamento = servico.Obtenha(Convert.ToInt64(idItemFinanceiro));
+
+                if (itemLancamento != null)
+                    listaDeItensFinanceiros.Add(itemLancamento);
+            }
+
+            if(listaDeItensFinanceiros.Count > 0)
+            {
+                double valor = 0;
+
+                valor = listaDeItensFinanceiros.Count > 1 ? listaDeItensFinanceiros.Aggregate(valor, (current, itemLancamentoFinanceiroRecebimento) => current + itemLancamentoFinanceiroRecebimento.Valor) : listaDeItensFinanceiros[0].Valor;
+
+                var itemLancamentoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
+
+                itemLancamentoFinanceiro.Cliente = listaDeItensFinanceiros[0].Cliente;
+                itemLancamentoFinanceiro.Valor = valor;
+
+                Session.Add("CHAVE_ITEM_FINANCEIRO_SELECIONADO", itemLancamentoFinanceiro);
+            }
 
             //Aqui para cada id invoca o servico para obter o item financeiro de recebimento
             //depois pegar os dados e formar um boleto
@@ -101,24 +134,37 @@ namespace FN.Client.FN
 
         }
 
-        private void ctrlCedente_CedenteFoiSelecionado(ICedente cliente)
+        private void ctrlCedente_CedenteFoiSelecionado(ICedente cedente)
         {
-            PreenchaDadosDoCedente(cliente);
+            PreenchaDadosDoCedente(cedente);
         }
 
-        private void PreenchaDadosDoCedente(ICedente cliente)
+        private void PreenchaDadosDoCedente(ICedente cedente)
         {
-            if (cliente == null)
+            if (cedente == null)
             {
                 ExibaTelaInicial();
                 Session["CHAVE_CEDENTE_SELECIONADO"] = null;
                 return;
             }
 
-            Session.Add("CHAVE_CEDENTE_SELECIONADO", cliente);
+            Session.Add("CHAVE_CEDENTE_SELECIONADO", cedente);
             ctrlCliente.Visible = true;
             ctrlCliente.BotaoNovoEhVisivel = true;
             lblCliente.Visible = true;
+
+            if (Session["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] != null)
+                PreenchaDadosDosItensFinanceiros(
+                    (IItemLancamentoFinanceiroRecebimento) Session["CHAVE_ITEM_FINANCEIRO_SELECIONADO"]);
+        }
+
+        private void PreenchaDadosDosItensFinanceiros(IItemLancamentoFinanceiroRecebimento itemLancamentoFinanceiroRecebimento)
+        {
+            this.ctrlCliente.ClienteSelecionado = itemLancamentoFinanceiroRecebimento.Cliente;
+            PreenchaDadosDoClienteSelecionado(itemLancamentoFinanceiroRecebimento.Cliente);
+            txtValor.Text = itemLancamentoFinanceiroRecebimento.Valor.ToString();
+
+            Session["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = null;
         }
 
         private void ctrlCliente_ClienteFoiSelecionado(ICliente cliente)
