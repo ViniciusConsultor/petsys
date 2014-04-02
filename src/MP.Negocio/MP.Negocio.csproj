@@ -79,6 +79,7 @@
     <Compile Include="Filtros\Patentes\FiltroPatentePorTitular.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatenteSemFiltro.cs" />
+    <Compile Include="Filtros\Patentes\FiltroRelatorioGeralPatente.cs" />
     <Compile Include="Inventor.cs" />
     <Compile Include="LazyLoad\AnuidadePatenteLazyLoad.cs" />
     <Compile Include="LazyLoad\ClassificacaoPatenteLazyLoad.cs" />
