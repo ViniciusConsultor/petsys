@@ -94,6 +94,7 @@
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTitular.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatenteSemFiltro.cs" />
+    <Compile Include="Negocio\Filtros\Patentes\IFiltroRelatorioGeralPatente.cs" />
     <Compile Include="Negocio\FormaCobrancaManutencao.cs" />
     <Compile Include="Negocio\IClasseNacional.cs" />
     <Compile Include="Negocio\IClasseViena.cs" />

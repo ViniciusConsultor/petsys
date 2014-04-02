@@ -590,9 +590,9 @@ namespace MP.Client.MP
 
             if (e.CommandName == "Baixar")
             {
-                IndiceBaixaAnuidade = IndiceSelecionado;
-                BaixarAnuidade(ListaDeAnuidadeDaPatente[IndiceSelecionado]);
-                ListaDeAnuidadeDaPatente.RemoveAt(IndiceSelecionado);
+                var grid = (RadGrid) sender;
+                IndiceBaixaAnuidade = (grid.CurrentPageIndex * 10) + IndiceSelecionado;
+                BaixarAnuidade(ListaDeAnuidadeDaPatente[IndiceBaixaAnuidade]);
                 grdAnuidades.MasterTableView.DataSource = ListaDeAnuidadeDaPatente;
                 grdAnuidades.DataBind();
             }
@@ -921,6 +921,7 @@ namespace MP.Client.MP
             if (ListaDeAnuidadeDaPatente == null)
                 ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
 
+            ListaDeAnuidadeDaPatente.RemoveAt(IndiceBaixaAnuidade);
             ListaDeAnuidadeDaPatente.Insert(IndiceBaixaAnuidade, anuidadeDaPatente);
             MostrarListaDeAnuidadeDaPatente();
             VisibilidadeBaixar(true);
@@ -1212,7 +1213,6 @@ namespace MP.Client.MP
             if (ListaDeAnuidadeDaPatente == null)
                 ListaDeAnuidadeDaPatente = new List<IAnuidadePatente>();
 
-            ListaDeAnuidadeDaPatente.Insert(IndiceBaixaAnuidade, anuidadeDaPatente);
             MostrarListaDeAnuidadeDaPatente();
             VisibilidadeBaixar(true);
         }

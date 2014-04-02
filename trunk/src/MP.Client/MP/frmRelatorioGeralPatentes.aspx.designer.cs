@@ -130,31 +130,31 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.RadioButtonList rdlStatusDoProcesso;
         
         /// <summary>
-        /// rdbCliente control.
+        /// lblCliete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdbCliente;
+        protected global::System.Web.UI.WebControls.Label lblCliete;
         
         /// <summary>
-        /// crtlCliente1 control.
+        /// ctrlCliente1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WorkSpace.ctrlCliente crtlCliente1;
+        protected global::WorkSpace.ctrlCliente ctrlCliente1;
         
         /// <summary>
-        /// rdbTitular control.
+        /// lblTitular control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdbTitular;
+        protected global::System.Web.UI.WebControls.Label lblTitular;
         
         /// <summary>
         /// ctrlTitular1 control.
@@ -166,21 +166,21 @@ namespace MP.Client.MP {
         protected global::MP.Client.MP.ctrlTitular ctrlTitular1;
         
         /// <summary>
-        /// rdbEmpresa control.
+        /// lblInventor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdbEmpresa;
+        protected global::System.Web.UI.WebControls.Label lblInventor;
         
         /// <summary>
-        /// ctrlEmpresa1 control.
+        /// ctrlInventor1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WorkSpace.ctrlEmpresa ctrlEmpresa1;
+        protected global::MP.Client.MP.ctrlInventor ctrlInventor1;
     }
 }
