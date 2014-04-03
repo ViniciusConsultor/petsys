@@ -67,6 +67,13 @@ namespace FN.Client.FN
                     grdBoletosGerados.DataSource = ConvertaBoletosGeradosParaDTO(listaDeBoletosGerados);
                     grdBoletosGerados.DataBind();
                 }
+                else
+                {
+                    var controleGrid = grdBoletosGerados as Control;
+                    UtilidadesWeb.LimparComponente(ref controleGrid);
+                    grdBoletosGerados.DataSource = new List<DTOBoletosGerados>();
+                    grdBoletosGerados.DataBind();
+                }
 
             }
         }
@@ -421,6 +428,25 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = ctrlCedente1.CedenteSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
 
+            CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, 0);
+        }
+
+        protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
+        {
+            switch (((RadToolBarButton)e.Item).CommandName)
+            {
+                case "btnRecarregar":
+                    Recarregue();
+                    break;
+
+                case "btnLimpar":
+                    ExibaTelaInicial();
+                    break;
+            }
+        }
+
+        private void Recarregue()
+        {
             CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, 0);
         }
     }
