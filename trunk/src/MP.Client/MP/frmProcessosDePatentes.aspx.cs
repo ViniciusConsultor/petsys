@@ -314,6 +314,9 @@ namespace MP.Client.MP
                 case "btnLerRevista":
                     AbraLeituraDeRevista();
                     break;
+                case "btnLimpar":
+                    ExibaTelaInicial();
+                    break;
 
             }
         }

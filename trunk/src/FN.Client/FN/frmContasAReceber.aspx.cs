@@ -121,6 +121,9 @@ namespace FN.Client.FN
                 case "btnGerarBoletoColetivo":
                     PreparaEmissaoDeBoletoColetivamente();
                     break;
+                case "btnLimpar":
+                    ExibaTelaInicial();
+                    break;
             }
         }
 

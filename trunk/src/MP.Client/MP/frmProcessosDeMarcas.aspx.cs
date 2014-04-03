@@ -461,6 +461,9 @@ namespace MP.Client.MP
                 case "btnLerRevista":
                     AbraTelaDeLeituraDaRevista();
                     break;
+                case "btnLimpar":
+                    ExibaTelaInicial();
+                    break;
             }
         }
 

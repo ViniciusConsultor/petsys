@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;z
+using System.Web;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
@@ -45,7 +45,7 @@ namespace MP.Client.Relatorios.Patentes
             var nomeDoArquivoDeSaida = GereInformacoesUteisParaOArquivoDeSaidaDoRelatorio();
 
             _documento.Open();
-            MonteDocumentoDoRelatorio();
+            //MonteDocumentoDoRelatorio();
             _documento.Close();
             return nomeDoArquivoDeSaida;
         }

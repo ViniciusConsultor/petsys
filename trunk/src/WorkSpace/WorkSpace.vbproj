@@ -711,6 +711,7 @@
     <Content Include="imagens\left-right.gif" />
     <Content Include="imagens\left-right.png" />
     <Content Include="imagens\light-hd.gif" />
+    <Content Include="imagens\limpar.gif" />
     <Content Include="imagens\loading-balls.gif" />
     <Content Include="imagens\loading.gif" />
     <Content Include="imagens\logout.gif" />
