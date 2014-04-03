@@ -470,7 +470,7 @@ namespace FN.Client.FN
                 if (idDoClienteDaPrimeiraLinha == null)
                     idDoClienteDaPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text;
 
-                if (idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                if (!idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
                     mostrarBotaoBoletoColetivo = false;
 
             }

@@ -54,6 +54,14 @@
         Public Shared Function ObtenhaTodos() As IList(Of OperacaoDeFiltro)
             Return New List(Of OperacaoDeFiltro)(Lista)
         End Function
+        
+         Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            Return CType(obj, OperacaoDeFiltro).ID = Me.ID
+        End Function
+        
+         Public Overrides Function GetHashCode() As Integer
+            Return ID.GetHashCode
+        End Function
 
     End Class
 
