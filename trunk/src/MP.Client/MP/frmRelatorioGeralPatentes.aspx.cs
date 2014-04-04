@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
+using MP.Client.Relatorios.Patentes;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Patentes;
 using MP.Interfaces.Servicos;
@@ -36,6 +38,19 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
                 var processosDePatentes = servico.ObtenhaProcessosDePatentes(ObtenhaFiltroRelatorio(), int.MaxValue, 0);
+
+                if(processosDePatentes == null || processosDePatentes.Count == 0)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não foi encontrado nehuma dados com os parâmetros informados."),
+                                                         false);
+                    return;
+                }
+
+                var geradorDeRelatorioGeral = new GeradorDeRelatorioGeralDePatentes(processosDePatentes);
+                var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio(ObtenhaOrdenacao());
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
             }
         }
 
@@ -85,6 +100,12 @@ namespace MP.Client.MP
                 return "ATIVOS";
 
             return "INATIVOS";
+        }
+
+        private OrdenacaoRelatorioGeralPatente ObtenhaOrdenacao()
+        {
+            return rdlOrdenacao.SelectedValue.ToUpper().Equals("CLIENTE") ? OrdenacaoRelatorioGeralPatente.Cliente :
+            OrdenacaoRelatorioGeralPatente.Patente;
         }
     }
 }

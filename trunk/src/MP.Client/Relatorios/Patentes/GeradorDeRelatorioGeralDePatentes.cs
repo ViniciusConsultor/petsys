@@ -40,12 +40,11 @@ namespace MP.Client.Relatorios.Patentes
             _Fonte4 = new Font(Font.TIMES_ROMAN, 10, Font.BOLDITALIC);
         }
 
-        public string GereRelatorio(string numeroDaRevistaSelecionada, string dataPublicacao)
+        public string GereRelatorio(OrdenacaoRelatorioGeralPatente ordenacaoRelatorio)
         {
             var nomeDoArquivoDeSaida = GereInformacoesUteisParaOArquivoDeSaidaDoRelatorio();
-
             _documento.Open();
-            //MonteDocumentoDoRelatorio();
+            MonteDocumentoDoRelatorio(ordenacaoRelatorio);
             _documento.Close();
             return nomeDoArquivoDeSaida;
         }
@@ -68,20 +67,255 @@ namespace MP.Client.Relatorios.Patentes
 
         private void MonteDocumentoDoRelatorio(OrdenacaoRelatorioGeralPatente ordenacaoRelatorio)
         {
-            var corBackgroudHeader = new Color(211, 211, 211);
+            var corBackgroudHeader = Color.GRAY;
             var tabela = new PdfPTable(1);
 
             tabela.WidthPercentage = 100;
+            tabela.DefaultCell.Border = Rectangle.NO_BORDER;
 
-            _processosDePatentes = ordenacaoRelatorio.Equals(OrdenacaoRelatorioGeralPatente.Cliente) ? _processosDePatentes.OrderBy(processo => processo.Patente.Clientes[0].Pessoa.Nome).ToList() : 
-                _processosDePatentes.OrderBy(processo => processo.Processo).ToList();
+            _processosDePatentes = ordenacaoRelatorio.Equals(OrdenacaoRelatorioGeralPatente.Cliente) ? 
+                                   _processosDePatentes.OrderBy(processo => processo.Patente.Clientes[0].Pessoa.Nome).ToList() : 
+                                   _processosDePatentes.OrderBy(processo => processo.Processo).ToList();
 
-            foreach (IProcessoDePatente processo in _processosDePatentes)
+            if (ordenacaoRelatorio.Equals(OrdenacaoRelatorioGeralPatente.Cliente))
             {
-                
+                var dicionarioDeClientesEPatentes = new Dictionary<long, List<IProcessoDePatente>>();
+
+
+                foreach (IProcessoDePatente processo in _processosDePatentes)
+                {
+                    var cliente = processo.Patente.Clientes[0];
+
+                    if(cliente.Pessoa != null && cliente.Pessoa.ID.HasValue && !dicionarioDeClientesEPatentes.ContainsKey(cliente.Pessoa.ID.Value))
+                        dicionarioDeClientesEPatentes.Add(cliente.Pessoa.ID.Value, new List<IProcessoDePatente>());
+                    
+                    if(cliente.Pessoa != null && cliente.Pessoa.ID.HasValue)
+                        dicionarioDeClientesEPatentes[cliente.Pessoa.ID.Value].Add(processo);
+
+                }
+
+                foreach (long chave in dicionarioDeClientesEPatentes.Keys)
+                {
+                    string nomeDoCliente = dicionarioDeClientesEPatentes[chave][0].Patente.Clientes[0].Pessoa.Nome;
+                    var tabela1 = new PdfPTable(1);
+                    tabela1.DefaultCell.Border = Rectangle.NO_BORDER;
+                    
+                    var celulaCliente = new PdfPCell(new Phrase(nomeDoCliente, _Fonte3));
+                    celulaCliente.HorizontalAlignment = Cell.ALIGN_LEFT;
+                    celulaCliente.Border = 0;
+                    celulaCliente.BackgroundColor = corBackgroudHeader;
+                    tabela1.AddCell(celulaCliente);
+                    tabela.AddCell(tabela1);
+                    tabela.AddCell(ObtenhaTabelaTituloColuna());
+
+                    foreach (IProcessoDePatente processoDePatente in dicionarioDeClientesEPatentes[chave])
+                        tabela.AddCell(ObtenhaTabelaDadosDoCliente(processoDePatente)); 
+                }
+            }
+            else
+            {
+                tabela.AddCell(ObtenhaTabelaTituloPatente());
+                foreach (IProcessoDePatente processo in _processosDePatentes)
+                    tabela.AddCell(ObtenhaTabelaDadosDaPatente(processo));
             }
 
             _documento.Add(tabela);
+        }
+
+        private PdfPTable ObtenhaTabelaTituloColuna()
+        {
+            var corCelula = Color.LIGHT_GRAY;
+            var tabelaTitulo = new PdfPTable(8);
+            tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
+
+            var celulaTipo = new PdfPCell(new Phrase("Tipo", _Fonte2));
+            celulaTipo.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaTipo.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaTipo.Border = 0;
+            celulaTipo.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaTipo);
+
+            var celulaPropriOuTerceiro = new PdfPCell(new Phrase("Própria/Terceiro", _Fonte2));
+            celulaPropriOuTerceiro.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaPropriOuTerceiro.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaPropriOuTerceiro.Border = 0;
+            celulaPropriOuTerceiro.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaPropriOuTerceiro);
+
+            var celulaProcesso = new PdfPCell(new Phrase("Processo", _Fonte2));
+            celulaProcesso.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaProcesso.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaProcesso.Border = 0;
+            celulaProcesso.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaProcesso);
+
+            var celulaDeposito = new PdfPCell(new Phrase("Depósito", _Fonte2));
+            celulaDeposito.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.Border = 0;
+            celulaDeposito.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaDeposito);
+
+            var celulaConcessao = new PdfPCell(new Phrase("Concessão", _Fonte2));
+            celulaConcessao.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaConcessao.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaConcessao.Border = 0;
+            celulaConcessao.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaConcessao);
+
+            var celulaVigencia = new PdfPCell(new Phrase("Vigência", _Fonte2));
+            celulaVigencia.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaVigencia.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaVigencia.Border = 0;
+            celulaVigencia.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaVigencia);
+
+            var celulaPublicacao = new PdfPCell(new Phrase("Publicação", _Fonte2));
+            celulaPublicacao.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaPublicacao.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaPublicacao.Border = 0;
+            celulaPublicacao.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaPublicacao);
+
+            var celulaExame = new PdfPCell(new Phrase("Exame", _Fonte2));
+            celulaExame.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaExame.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaExame.Border = 0;
+            celulaExame.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaExame);
+
+            return tabelaTitulo;
+        }
+
+        private PdfPTable ObtenhaTabelaDadosDoCliente(IProcessoDePatente processoDePatente)
+        {
+            var tabelaCliente = new PdfPTable(8);
+            tabelaCliente.DefaultCell.Border = Rectangle.NO_BORDER;
+
+            var celulaTipo = new PdfPCell(new Phrase(processoDePatente.DataDaConcessao.HasValue && !processoDePatente.DataDaConcessao.Value.Equals(DateTime.MinValue) ? 
+                                                     "PATENTE" : "PEDIDO", _Fonte1));
+            celulaTipo.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaTipo.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaTipo.Border = 0;
+            tabelaCliente.AddCell(celulaTipo);
+
+            var celulaPropriOuTerceiro = new PdfPCell(new Phrase(processoDePatente.ProcessoEhDeTerceiro ? "Terceiro" : "Própria", _Fonte1));
+            celulaPropriOuTerceiro.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaPropriOuTerceiro.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaPropriOuTerceiro.Border = 0;
+            tabelaCliente.AddCell(celulaPropriOuTerceiro);
+
+            var celulaProcesso = new PdfPCell(new Phrase(processoDePatente.ObtenhaNumeroDoProcessoFormatado(), _Fonte1));
+            celulaProcesso.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaProcesso.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaProcesso.Border = 0;
+            tabelaCliente.AddCell(celulaProcesso);
+
+            var celulaDeposito = new PdfPCell(new Phrase(processoDePatente.DataDoDeposito.HasValue && !processoDePatente.DataDoDeposito.Value.Equals(DateTime.MinValue) ? 
+                                                         processoDePatente.DataDoDeposito.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
+            celulaDeposito.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaDeposito.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.Border = 0;
+            tabelaCliente.AddCell(celulaDeposito);
+
+            var celulaConcessao = new PdfPCell(new Phrase(processoDePatente.DataDaConcessao.HasValue && !processoDePatente.DataDaConcessao.Value.Equals(DateTime.MinValue) ? 
+                                                          processoDePatente.DataDaConcessao.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
+            celulaConcessao.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaConcessao.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaConcessao.Border = 0;
+            tabelaCliente.AddCell(celulaConcessao);
+
+            var celulaVigencia = new PdfPCell(new Phrase(processoDePatente.DataDaVigencia.HasValue && !processoDePatente.DataDaVigencia.Value.Equals(DateTime.MinValue) ? 
+                                                         processoDePatente.DataDaVigencia.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
+            celulaVigencia.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaVigencia.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaVigencia.Border = 0;
+            tabelaCliente.AddCell(celulaVigencia);
+
+            var celulaPublicacao = new PdfPCell(new Phrase(processoDePatente.DataDaPublicacao.HasValue && !processoDePatente.DataDaPublicacao.Value.Equals(DateTime.MinValue) ? 
+                                                           processoDePatente.DataDaPublicacao.Value.ToString("dd/MM/yyyy") : "",  _Fonte1));
+            celulaPublicacao.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaPublicacao.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaPublicacao.Border = 0;
+            tabelaCliente.AddCell(celulaPublicacao);
+
+            var celulaExame = new PdfPCell(new Phrase(processoDePatente.DataDoExame.HasValue && !processoDePatente.DataDoExame.Value.Equals(DateTime.MinValue) ? 
+                                                      processoDePatente.DataDoExame.Value.ToString("dd/MM/yyyy") : "",  _Fonte1));
+            celulaExame.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaExame.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaExame.Border = 0;
+            tabelaCliente.AddCell(celulaExame);
+
+            return tabelaCliente;
+        }
+
+        private PdfPTable ObtenhaTabelaTituloPatente()
+        {
+            var corCelula = Color.LIGHT_GRAY;
+            var tabelaTitulo = new PdfPTable(4);
+            tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
+
+            var celulaPatente = new PdfPCell(new Phrase("Patente", _Fonte2));
+            celulaPatente.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaPatente.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaPatente.Border = 0;
+            celulaPatente.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaPatente);
+
+            var celulaCliente = new PdfPCell(new Phrase("Cliente", _Fonte2));
+            celulaCliente.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.Border = 0;
+            celulaCliente.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaCliente);
+
+            var celulaPropriOuTerceiro = new PdfPCell(new Phrase("Própria/Terceiro", _Fonte2));
+            celulaPropriOuTerceiro.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaPropriOuTerceiro.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaPropriOuTerceiro.Border = 0;
+            celulaPropriOuTerceiro.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaPropriOuTerceiro);
+
+            var celulaAtivo = new PdfPCell(new Phrase("Ativo", _Fonte2));
+            celulaAtivo.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaAtivo.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaAtivo.Border = 0;
+            celulaAtivo.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaAtivo);
+
+            return tabelaTitulo;
+        }
+
+        private PdfPTable ObtenhaTabelaDadosDaPatente(IProcessoDePatente processoDePatente)
+        {
+            var tabelaCliente = new PdfPTable(4);
+            tabelaCliente.DefaultCell.Border = Rectangle.NO_BORDER;
+
+            var celulaTipo = new PdfPCell(new Phrase(processoDePatente.ObtenhaNumeroDoProcessoFormatado(), _Fonte1));
+            celulaTipo.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaTipo.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaTipo.Border = 0;
+            tabelaCliente.AddCell(celulaTipo);
+
+            var celulaCliente = new PdfPCell(new Phrase(processoDePatente.Patente.Clientes[0].Pessoa.Nome, _Fonte1));
+            celulaCliente.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaCliente.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.Border = 0;
+            tabelaCliente.AddCell(celulaCliente);
+
+            var celulaPropriOuTerceiro = new PdfPCell(new Phrase(processoDePatente.ProcessoEhDeTerceiro ? "Terceiro" : "Própria", _Fonte1));
+            celulaPropriOuTerceiro.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaPropriOuTerceiro.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaPropriOuTerceiro.Border = 0;
+            tabelaCliente.AddCell(celulaPropriOuTerceiro);
+
+            var celulaAtivo = new PdfPCell(new Phrase(processoDePatente.Ativo ? "Ativo" : "Desativo", _Fonte1));
+            celulaAtivo.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaAtivo.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaAtivo.Border = 0;
+            tabelaCliente.AddCell(celulaAtivo);
+
+            return tabelaCliente;
         }
 
         private class Ouvinte : IPdfPageEvent

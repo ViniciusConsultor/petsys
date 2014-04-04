@@ -76,6 +76,19 @@
                             </tr>
                             <tr>
                                 <td class="th3">
+                                    <asp:Label ID="Label1" runat="server" Text="Ordenação:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rdlOrdenacao" runat="server" RepeatDirection="Horizontal" CellSpacing="10">
+                                        <Items>
+                                            <asp:ListItem Selected="true" runat="server" Value="Cliente" />
+                                            <asp:ListItem runat="server" Value="Patente" />
+                                        </Items>
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
                                     <asp:Label ID="lblCliete" runat="server" Text="Cliente:" />
                                 </td>
                                 <td class="td">
