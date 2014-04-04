@@ -27,5 +27,19 @@ namespace MP.Negocio
         public IDespachoDePatentes Despacho { get; set; }
         public IPasta Pasta { get; set; }
         public IPais Pais { get; set; }
+
+        public string ObtenhaNumeroDoProcessoFormatado()
+        {
+            string numeroDoProcessoFormatado = string.Empty;
+
+            if(Processo.Length == 11)
+                numeroDoProcessoFormatado = Pais.Sigla + " " + Patente.NaturezaPatente.SiglaNatureza + " " +
+                                            Processo.Substring(0, 4) + " " + Processo.Substring(3, 6) + "-"
+                                            + " " + Processo.Substring(9, 1);
+            else if (Processo.Length == 8)
+                numeroDoProcessoFormatado = Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 7) + "-" + " " + Processo.Substring(7, 1);
+
+            return numeroDoProcessoFormatado;
+        }
     }
 }

@@ -51,13 +51,13 @@ namespace MP.Negocio.Filtros.Patentes
                 sql.AppendLine(" AND " + ObtenhaCondicaoStatusDoProcesso());
 
             if(Cliente != null && Cliente.Pessoa != null)
-                sql.AppendLine(" AND NCL_CLIENTE.IDCLIENTE = " + Cliente.Pessoa.ID);
+                sql.AppendLine(" AND NCL_CLIENTE.IDPESSOA = " + Cliente.Pessoa.ID);
 
             if (Titular != null && Titular.Pessoa != null)
-                sql.AppendLine(" AND MP_PATENTETITULAR.IDTITULAR = " + Titular.Pessoa.ID);
+                sql.AppendLine(" AND MP_TITULAR.IDPESSOA = " + Titular.Pessoa.ID);
 
             if (Inventor != null && Inventor.Pessoa != null)
-                sql.AppendLine(" AND MP_PATENTEINVENTOR.IDINVENTOR = " + Inventor.Pessoa.ID);
+                sql.AppendLine(" AND MP_INVENTOR.IDPESSOA = " + Inventor.Pessoa.ID);
 
             return sql.ToString();
         }
@@ -88,7 +88,7 @@ namespace MP.Negocio.Filtros.Patentes
 
         public string ObtenhaCondicaoStatusDoProcesso()
         {
-            if (TipoDeOrigem.Equals("ATIVO"))
+            if (StatusDoProcesso.Equals("ATIVOS"))
                 return " MP_PROCESSOPATENTE.ATIVO = 1 ";
 
             return " MP_PROCESSOPATENTE.ATIVO = 0 ";
