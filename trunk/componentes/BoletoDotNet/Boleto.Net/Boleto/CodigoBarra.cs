@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Globalization;
+using Compartilhados;
 using Microsoft.VisualBasic;
 
 namespace BoletoNet
@@ -83,7 +84,7 @@ namespace BoletoNet
             }
             catch
             {
-                throw new Exception("Código de barras inválido");
+                throw new BussinesException("Código de barras inválido");
             }
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Compartilhados;
 
 namespace BoletoNet
 {
@@ -120,7 +121,7 @@ namespace BoletoNet
             {
                 string o = value.Replace(".", "").Replace("-", "").Replace("/", "");
                 if (o == null || (o.Length != 11 && o.Length != 14))
-                    throw new ArgumentException("O CPF/CNPJ inválido. Utilize 11 dígitos para CPF ou 14 para CPNJ.");
+                    throw new BussinesException("O CPF/CNPJ inválido. Utilize 11 dígitos para CPF ou 14 para CPNJ.");
 
                 _cpfcnpj = value;
             }

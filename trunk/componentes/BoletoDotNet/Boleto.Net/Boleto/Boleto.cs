@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Compartilhados;
 
 namespace BoletoNet
 {
@@ -501,7 +502,7 @@ namespace BoletoNet
         {
             //Validações básicas, caso ainda tenha implementada na classe do banco.ValidaBoleto()
             if (this.Cedente == null)
-                throw new Exception("Cedente não cadastrado.");
+                throw new BussinesException("Cedente não cadastrado.");
 
             //Atribui o nome do banco ao local de pagamento
             //Comentada por duplicidade no nome do banco

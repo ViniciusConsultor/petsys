@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using Compartilhados;
 
 namespace BoletoNet
 {
@@ -80,7 +81,7 @@ namespace BoletoNet
             {
                 if (value == null)
                 {
-                    throw new ArgumentException("Erro. O CPF/CNPJ do cliente não pode ser nulo.");
+                    throw new BussinesException("Erro. O CPF/CNPJ do cliente não pode ser nulo.");
                 }
                 string o = value.Trim().Replace(".", "").Replace("-", "").Replace("/", "");
                 
@@ -89,7 +90,7 @@ namespace BoletoNet
                 if (o == null || o == string.Empty)//Flavio(fhlviana@hotmail.com) - em razao da adiçao da possibilidade do boleto nao apresentar CPF ou CNPJ na renderização
                     _cpfcnpj = string.Empty;
                 else if (o.Length != 11 && o.Length != 14)
-                    throw new ArgumentException("O CPF/CNPJ inválido. Utilize 11 dígitos para CPF ou 14 para CPNJ.");
+                    throw new BussinesException("O CPF/CNPJ inválido. Utilize 11 dígitos para CPF ou 14 para CPNJ.");
 
                 //this._cpfcnpj = value;
                 _cpfcnpj = o;//Flavio(fhlviana@hotmail.com) - se existe um conjunto de funções na classe "Utils" para gerar o CPF

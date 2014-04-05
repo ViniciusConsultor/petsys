@@ -6,6 +6,7 @@ using Compartilhados.Interfaces.FN.Negocio;
 
 namespace FN.Negocio
 {
+    [Serializable]
     public class ItemLancamentoFinanceiroRecebimento : ItemLancamentoFinanceiro, IItemLancamentoFinanceiroRecebimento
     {
         public DateTime? DataDoRecebimento { get; set; }

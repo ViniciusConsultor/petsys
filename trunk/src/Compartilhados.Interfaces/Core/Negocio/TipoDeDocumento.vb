@@ -50,6 +50,10 @@
             Return CType(obj, TipoDeDocumento).ID = Me.ID
         End Function
 
+        Public Overrides Function GetHashCode() As Integer
+            Return ID.GetHashCode
+        End Function
+
     End Class
 
 End Namespace

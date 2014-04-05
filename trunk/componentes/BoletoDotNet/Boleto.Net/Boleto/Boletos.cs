@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Compartilhados;
 
 namespace BoletoNet
 {
@@ -40,13 +41,13 @@ namespace BoletoNet
         private new void Add(Boleto item)
         {
             if (item.Banco == null)
-                throw new Exception("Boleto não possui Banco.");
+                throw new BussinesException("Boleto não possui Banco.");
 
             if (item.ContaBancaria == null)
-                throw new Exception("Boleto não possui conta bancária.");
+                throw new BussinesException("Boleto não possui conta bancária.");
 
             if (item.Cedente == null)
-                throw new Exception("Boleto não possui cedente.");
+                throw new BussinesException("Boleto não possui cedente.");
 
             item.Valida();
             this.Add(item);
