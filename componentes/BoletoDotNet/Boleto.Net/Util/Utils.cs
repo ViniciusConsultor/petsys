@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using Compartilhados;
 using Microsoft.VisualBasic;
 using System.Drawing;
 using System.ComponentModel;
@@ -252,7 +253,7 @@ namespace BoletoNet
             else if (value.Trim().Length == 14)
                 return FormataCNPJ(value);
 
-            throw new Exception(string.Format("O CPF ou CNPJ: {0} é inválido.", value));
+            throw new BussinesException(string.Format("O CPF ou CNPJ: {0} é inválido.", value));
         }
 
         /// <summary>

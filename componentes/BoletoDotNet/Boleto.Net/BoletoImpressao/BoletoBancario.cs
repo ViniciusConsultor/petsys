@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Web.UI;
+using Compartilhados;
 using Microsoft.VisualBasic;
 //Envio por email
 using System.IO;
@@ -489,7 +490,7 @@ namespace BoletoNet
                     if (MostrarEnderecoCedente)
                     {
                         if (Cedente.Endereco == null)
-                            throw new ArgumentNullException("Endereço do Cedente");
+                            throw new BussinesException("Endereço do Cedente");
 
                         enderecoCedente = string.Concat(Cedente.Endereco.End, " , ");
 
@@ -699,7 +700,7 @@ namespace BoletoNet
 
                 if (string.IsNullOrEmpty(descricaoCarteira))
                 {
-                    throw new Exception("O código da carteira não foi implementado.");
+                    throw new BussinesException("O código da carteira não foi implementado.");
                 }
 
                 return string.Format("{0} - {1}", Boleto.Carteira,
@@ -1000,7 +1001,7 @@ namespace BoletoNet
             if (url == null)
             {
                 //Obriga o usuário a especificar uma url válida
-                throw new ArgumentException("Você precisa informar uma pasta padrão.");
+                throw new BussinesException("Você precisa informar uma pasta padrão.");
             }
             else
             {

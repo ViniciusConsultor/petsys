@@ -23,12 +23,8 @@ namespace FN.Client.FN
     {
         //Todo verificar carregamento do tipo de carteira
         public const string carteira = "SR";
-
-        public const string CHAVE_CLIENTE_SELECIONADO = "CHAVE_CLIENTE_SELECIONADO";
-        public const string CHAVE_CEDENTE_SELECIONADO = "CHAVE_CEDENTE_SELECIONADO";
         public const string CHAVE_CEDENTE_BOLETOGERADO = "CHAVE_CEDENTE_BOLETOGERADO";
-        public const string CHAVE_ITEM_FINANCEIRO_SELECIONADO = "CHAVE_ITEM_FINANCEIRO_SELECIONADO";
-
+       
         public IBoletosGerados BoletoGerado { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -61,7 +57,7 @@ namespace FN.Client.FN
 
         private bool BoletoGeraItemFinanceiroDeRecebimento
         {
-            get { return (bool) ViewState["GERAITENFINANCEIRORECEBIMENTO"]; }
+            get { return (bool)ViewState["GERAITENFINANCEIRORECEBIMENTO"]; }
             set { ViewState["GERAITENFINANCEIRORECEBIMENTO"] = value; }
         }
 
@@ -86,7 +82,7 @@ namespace FN.Client.FN
                     listaDeItensFinanceiros.Add(itemLancamento);
             }
 
-            if(listaDeItensFinanceiros.Count > 0)
+            if (listaDeItensFinanceiros.Count > 0)
             {
                 double valor = 0;
 
@@ -97,7 +93,7 @@ namespace FN.Client.FN
                 itemLancamentoFinanceiro.Cliente = listaDeItensFinanceiros[0].Cliente;
                 itemLancamentoFinanceiro.Valor = valor;
 
-                Session.Add("CHAVE_ITEM_FINANCEIRO_SELECIONADO", itemLancamentoFinanceiro);
+                ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = itemLancamentoFinanceiro;
             }
 
             //Aqui para cada id invoca o servico para obter o item financeiro de recebimento
@@ -144,27 +140,25 @@ namespace FN.Client.FN
             if (cedente == null)
             {
                 ExibaTelaInicial();
-                Session["CHAVE_CEDENTE_SELECIONADO"] = null;
                 return;
             }
 
-            Session.Add("CHAVE_CEDENTE_SELECIONADO", cedente);
             ctrlCliente.Visible = true;
             ctrlCliente.BotaoNovoEhVisivel = true;
             lblCliente.Visible = true;
 
-            if (Session["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] != null)
+            if (ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] != null)
                 PreenchaDadosDosItensFinanceiros(
-                    (IItemLancamentoFinanceiroRecebimento) Session["CHAVE_ITEM_FINANCEIRO_SELECIONADO"]);
+                    (IItemLancamentoFinanceiroRecebimento)ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"]);
         }
 
         private void PreenchaDadosDosItensFinanceiros(IItemLancamentoFinanceiroRecebimento itemLancamentoFinanceiroRecebimento)
         {
-            this.ctrlCliente.ClienteSelecionado = itemLancamentoFinanceiroRecebimento.Cliente;
+            ctrlCliente.ClienteSelecionado = itemLancamentoFinanceiroRecebimento.Cliente;
             PreenchaDadosDoClienteSelecionado(itemLancamentoFinanceiroRecebimento.Cliente);
             txtValor.Text = itemLancamentoFinanceiroRecebimento.Valor.ToString();
 
-            Session["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = null;
+            ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = null;
         }
 
         private void ctrlCliente_ClienteFoiSelecionado(ICliente cliente)
@@ -172,76 +166,50 @@ namespace FN.Client.FN
             PreenchaDadosDoClienteSelecionado(cliente);
         }
 
+        private string OtenhaNumeroCPFOuCNPJ(IPessoa pessoa)
+        {
+            if (pessoa.Tipo.Equals(TipoDePessoa.Fisica))
+            {
+                var cpf = pessoa.ObtenhaDocumento(TipoDeDocumento.CPF);
+
+                return cpf != null ? cpf.ToString() : "";
+            }
+
+            var cnpj = pessoa.ObtenhaDocumento(TipoDeDocumento.CNPJ);
+
+            return cnpj != null ? cnpj.ToString() : "";
+        }
+
         private void PreenchaDadosDoClienteSelecionado(ICliente cliente)
         {
             try
             {
-                Session.Add("CHAVE_CLIENTE_SELECIONADO", cliente);
-
-                pnlDados.Visible = true;
+               pnlDados.Visible = true;
 
                 if (cliente.Pessoa != null)
                 {
                     txtNome.Text = cliente.Pessoa.Nome;
+                    txtCNPJCPF.Text = OtenhaNumeroCPFOuCNPJ(cliente.Pessoa);
 
-                    IPessoa pessoa = null;
-
-                    if (cliente.Pessoa.Tipo == TipoDePessoa.Fisica)
+                    if (cliente.Pessoa.Enderecos != null && cliente.Pessoa.Enderecos.Count > 0)
                     {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
+                        txtEndereco.Text = cliente.Pessoa.Enderecos[0].Logradouro;
+                        txtBairro.Text = cliente.Pessoa.Enderecos[0].Bairro;
+
+                        if (cliente.Pessoa.Enderecos[0].Municipio != null)
                         {
-                            var pessoaFisica = servico.ObtenhaPessoa(cliente.Pessoa.ID.Value);
+                            txtCidade.Text = cliente.Pessoa.Enderecos[0].Municipio.Nome;
 
-                            if (pessoaFisica != null)
-                            {
-                                var cpf = pessoaFisica.ObtenhaDocumento(TipoDeDocumento.CPF);
-
-                                if (cpf != null)
-                                    txtCNPJCPF.Text = cpf.ToString();
-
-                                pessoa = pessoaFisica;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
-                        {
-                            var pessoaJuridica = servico.ObtenhaPessoa(cliente.Pessoa.ID.Value);
-
-                            if (pessoaJuridica != null)
-                            {
-                                var cnpj = pessoaJuridica.ObtenhaDocumento(TipoDeDocumento.CNPJ);
-
-                                if (cnpj != null)
-                                    txtCNPJCPF.Text = cnpj.ToString();
-
-                                pessoa = pessoaJuridica;
-                            }
-                        }
-                    }
-
-                    if (pessoa != null && pessoa.Enderecos != null && pessoa.Enderecos.Count > 0)
-                    {
-                        txtEndereco.Text = pessoa.Enderecos[0].Logradouro;
-                        txtBairro.Text = pessoa.Enderecos[0].Bairro;
-
-                        if (pessoa.Enderecos[0].Municipio != null)
-                        {
-                            txtCidade.Text = pessoa.Enderecos[0].Municipio.Nome;
-
-                            if (pessoa.Enderecos[0].Municipio.UF != null)
-                                txtEstado.Text = pessoa.Enderecos[0].Municipio.UF.Sigla;
+                            if (cliente.Pessoa.Enderecos[0].Municipio.UF != null)
+                                txtEstado.Text = cliente.Pessoa.Enderecos[0].Municipio.UF.Sigla;
                         }
 
-                        if (pessoa.Enderecos[0].CEP != null && pessoa.Enderecos[0].CEP.Numero.HasValue)
-                        {
-                            txtCep.Text = pessoa.Enderecos[0].CEP.Numero.Value.ToString();
-                        }
+                        if (cliente.Pessoa.Enderecos[0].CEP != null && cliente.Pessoa.Enderecos[0].CEP.Numero.HasValue)
+                            txtCep.Text = cliente.Pessoa.Enderecos[0].CEP.Numero.Value.ToString();
                     }
                 }
             }
-            catch (Exception ex)
+            catch (BussinesException ex)
             {
                 Logger.GetInstancia().Erro("Erro ao carregar informações do cliente selecionado, exceção: ", ex);
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -256,7 +224,8 @@ namespace FN.Client.FN
             BoletoGeraItemFinanceiroDeRecebimento = true;
             ctrlCedente.Inicializa();
             ctrlCliente.Inicializa();
-            //ctrlCliente.BotaoNovoEhVisivel = true;
+            ctrlCliente.BotaoNovoEhVisivel = true;
+            ctrlCedente.BotaoNovoEhVisivel = true;
             pnlDados.Visible = false;
             ctrlCliente.Visible = false;
             lblCliente.Visible = false;
@@ -335,7 +304,7 @@ namespace FN.Client.FN
 
                 // obtendo a configuração do cedente
 
-                var cedenteSelecionado = (ICedente)Session["CHAVE_CEDENTE_SELECIONADO"];
+                var cedenteSelecionado = ctrlCedente.CedenteSelecionado;
 
                 var cedenteCpfCnpj = string.Empty;
                 var cedenteNome = string.Empty;
@@ -353,9 +322,7 @@ namespace FN.Client.FN
                     //imagemDoRecibo = configuracaoDoBoleto.ImagemDeCabecalhoDoReciboDoSacado; 
 
                     if (!string.IsNullOrEmpty(cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado))
-                    {
                         imagemDoRecibo = cedenteSelecionado.ImagemDeCabecalhoDoReciboDoSacado;
-                    }
 
                     var cedentePessoa = cedenteSelecionado.Pessoa;
 
@@ -369,41 +336,11 @@ namespace FN.Client.FN
                         cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.Value.ToString("000");
 
                         if (!string.IsNullOrEmpty(cedenteConta))
-                        {
                             cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length - 1, 1);
-                        }
                     }
 
-                    if (cedentePessoa.Tipo == TipoDePessoa.Fisica)
-                    {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaFisica>())
-                        {
-                            var pessoaFisica = servico.ObtenhaPessoa(cedentePessoa.ID.Value);
+                    cedenteCpfCnpj = OtenhaNumeroCPFOuCNPJ(cedentePessoa);
 
-                            if (pessoaFisica != null)
-                            {
-                                var cpf = pessoaFisica.ObtenhaDocumento(TipoDeDocumento.CPF);
-
-                                if (cpf != null)
-                                    cedenteCpfCnpj = cpf.ToString();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePessoaJuridica>())
-                        {
-                            var pessoaJuridica = servico.ObtenhaPessoa(cedentePessoa.ID.Value);
-
-                            if (pessoaJuridica != null)
-                            {
-                                var cnpj = pessoaJuridica.ObtenhaDocumento(TipoDeDocumento.CNPJ);
-
-                                if (cnpj != null)
-                                    cedenteCpfCnpj = cnpj.ToString();
-                            }
-                        }
-                    }
                 }
                 else
                 {
@@ -484,16 +421,9 @@ namespace FN.Client.FN
                 // Salvar dados do Boleto gerado
 
                 var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
+                boletoGerado.Cedente = ctrlCedente.CedenteSelecionado;
 
-                if (Session["CHAVE_CEDENTE_SELECIONADO"] != null)
-                {
-                    boletoGerado.Cedente = (ICedente)Session["CHAVE_CEDENTE_SELECIONADO"];
-                }
-
-                if (Session["CHAVE_CLIENTE_SELECIONADO"] != null)
-                {
-                    boletoGerado.Cliente = (ICliente)Session["CHAVE_CLIENTE_SELECIONADO"];
-                }
+                boletoGerado.Cliente = ctrlCliente.ClienteSelecionado;
 
                 boletoGerado.DataGeracao = boleto.DataProcessamento;
                 boletoGerado.DataVencimento = txtVencimento.SelectedDate.Value;
@@ -521,7 +451,7 @@ namespace FN.Client.FN
                     }
                 }
             }
-            catch (Exception ex)
+            catch (BussinesException ex)
             {
                 Logger.GetInstancia().Erro("Erro ao gerar boleto, exceção: ", ex);
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -531,6 +461,14 @@ namespace FN.Client.FN
 
         private bool ExisteErroDePreenchimento()
         {
+
+            if (ctrlCedente.CedenteSelecionado.Pessoa.DadoBancario == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("O cedente informado não possui um banco e uma agência cadastrado."),
+                                                   false);
+                return true;
+            }
             if (!txtVencimento.SelectedDate.HasValue)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),

@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Web.UI;
 using BoletoNet;
+using Compartilhados;
 using Microsoft.VisualBasic;
 using BoletoNet.EDI.Banco;
 
@@ -435,19 +436,19 @@ namespace BoletoNet
             {
                 if ((boleto.NossoNumero.Length != 10) && (boleto.NossoNumero.Length != 14) && (boleto.NossoNumero.Length != 17))
                 {
-                    throw new Exception("Nosso Número inválido, Para Caixa Econômica - Carteira SR o Nosso Número deve conter 10, 14 ou 17 posições.");
+                    throw new BussinesException("Nosso Número inválido, Para Caixa Econômica - Carteira SR o Nosso Número deve conter 10, 14 ou 17 posições.");
                 }
             }
             else if (boleto.Carteira.Equals("CR"))
             {
                 if (boleto.NossoNumero.Length != 17)
-                    throw new Exception("Nosso Número inválido, Para Caixa Econômica - SIGCB carteira registrada, o Nosso Número deve conter 17 caracteres.");
+                    throw new BussinesException("Nosso Número inválido, Para Caixa Econômica - SIGCB carteira registrada, o Nosso Número deve conter 17 caracteres.");
             }
             else
             {
                 if (boleto.NossoNumero.Length != 10)
                 {
-                    throw new Exception(
+                    throw new BussinesException(
                         "Nosso Número inválido, Para Caixa Econômica carteira indefinida, o Nosso Número deve conter 10 caracteres.");
                 }
 
@@ -461,7 +462,7 @@ namespace BoletoNet
                 }
                 else
                 {
-                    throw new Exception("Informe o código do cedente.");
+                    throw new BussinesException("Informe o código do cedente.");
                 }
             }
 
@@ -498,7 +499,7 @@ namespace BoletoNet
                     vRetorno = ValidarRemessaCNAB400(numeroConvenio, banco, cedente, boletos, numeroArquivoRemessa, out vMsg);
                     break;
                 case TipoArquivo.Outro:
-                    throw new Exception("Tipo de arquivo inexistente.");
+                    throw new BussinesException("Tipo de arquivo inexistente.");
             }
             //
             mensagem = vMsg;
@@ -531,7 +532,7 @@ namespace BoletoNet
                         _header = GerarHeaderRemessaCNAB400(0, cedente, numeroArquivoRemessa);
                         break;
                     case TipoArquivo.Outro:
-                        throw new Exception("Tipo de arquivo inexistente.");
+                        throw new BussinesException("Tipo de arquivo inexistente.");
                 }
 
                 return _header;
