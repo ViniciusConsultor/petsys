@@ -8,6 +8,8 @@ using Compartilhados.Interfaces.FN.Mapeadores;
 using Compartilhados.Interfaces.FN.Negocio;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Marcas;
+using MP.Interfaces.Negocio.Filtros.Patentes;
 using MP.Interfaces.Servicos;
 
 namespace MP.Servicos.Local
@@ -19,8 +21,10 @@ namespace MP.Servicos.Local
         {
         }
 
-        private IItemLancamentoFinanceiroRecebimento CrieItemLancamento(IMarcas marca)
+        private IItemLancamentoFinanceiroRecebimento CrieItemLancamento(IProcessoDeMarca processoDemarca)
         {
+            var marca = processoDemarca.Marca;
+
             var itemLacamentoFinanceiro =
                FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
             itemLacamentoFinanceiro.Cliente = marca.Cliente;
@@ -34,8 +38,10 @@ namespace MP.Servicos.Local
             return itemLacamentoFinanceiro;
         }
 
-        private IItemLancamentoFinanceiroRecebimento CrieItemLancamento(IPatente patente)
+        private IItemLancamentoFinanceiroRecebimento CrieItemLancamento(IProcessoDePatente processoDePatente)
         {
+            var patente = processoDePatente.Patente;
+
             var itemLacamentoFinanceiro =
                FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
             itemLacamentoFinanceiro.Cliente = patente.Clientes[0];
@@ -44,7 +50,7 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao;
             itemLacamentoFinanceiro.Valor = patente.Manutencao.ObtenhaValorRealEmEspecie();
-            //itemLacamentoFinanceiro.Descricao = patente.
+            itemLacamentoFinanceiro.Descricao = "Patente " + processoDePatente.ObtenhaNumeroDoProcessoFormatado();
 
             return itemLacamentoFinanceiro;
         }
@@ -54,20 +60,21 @@ namespace MP.Servicos.Local
             ServerUtils.setCredencial(_Credencial);
 
             var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeInterfaceComModuloFinanceiro>();
-            var mapeadorDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
             var mapeadorItemDeLancamento =
                 FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
+            var mapeadorDeProcessoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
 
-            var marcasComManutencaoVencida = mapeadorDeMarcas.ObtenhaMarcasComManutencaoVencendoEsteMes();
-
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaVencidaNoMes>();
+            var marcasVencidas = mapeadorDeProcessoDeMarca.ObtenhaProcessosDeMarcas(filtro, int.MaxValue, 0);
+            
             try
             {
-                foreach (var marcaVencida in marcasComManutencaoVencida)
+                foreach (var marcaVencida in marcasVencidas)
                 {
                     ServerUtils.BeginTransaction();
                     var itemDeLancamento = CrieItemLancamento(marcaVencida);
                     mapeadorItemDeLancamento.Insira(itemDeLancamento);
-                    mapeador.Insira(itemDeLancamento.ID.Value, "MARCA", marcaVencida.IdMarca.Value, itemDeLancamento.DataDoVencimento);
+                    mapeador.Insira(itemDeLancamento.ID.Value, "MARCA", marcaVencida.IdProcessoDeMarca.Value, itemDeLancamento.DataDoVencimento);
                     ServerUtils.CommitTransaction();
                 }
 
@@ -88,11 +95,11 @@ namespace MP.Servicos.Local
             ServerUtils.setCredencial(_Credencial);
 
             var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeInterfaceComModuloFinanceiro>();
-            var mapeadorDePatentes = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
-            var mapeadorItemDeLancamento =
-                FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
-
-            var patentesVencidas = mapeadorDePatentes.ObtenhaPatentesComManutencaoVencendoEsteMes();
+            var mapeadorItemDeLancamento = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
+            var mapeadorDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+            
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatenteVencidaNoMes>();
+            var patentesVencidas = mapeadorDeProcessoDePatente.ObtenhaProcessosDePatentes(filtro, int.MaxValue, 0);
 
             try
             {
@@ -101,7 +108,7 @@ namespace MP.Servicos.Local
                     ServerUtils.BeginTransaction();
                     var itemDeLancamento = CrieItemLancamento(patenteVencida);
                     mapeadorItemDeLancamento.Insira(itemDeLancamento);
-                    mapeador.Insira(itemDeLancamento.ID.Value, "PATENTE", patenteVencida.Identificador, itemDeLancamento.DataDoVencimento);
+                    mapeador.Insira(itemDeLancamento.ID.Value, "PATENTE", patenteVencida.IdProcessoDePatente.Value, itemDeLancamento.DataDoVencimento);
                     ServerUtils.CommitTransaction();
                 }
 
