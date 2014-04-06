@@ -261,29 +261,6 @@ namespace MP.Mapeadores
             return titular;
         }
 
-        public IList<IPatente> ObtenhaPatentesComManutencaoVencendoEsteMes()
-        {
-            IList<IPatente> patentes = new List<IPatente>();
-            var comandoSQL = new StringBuilder();
-            IDBHelper DBHelper = ServerUtils.criarNovoDbHelper();
-
-            var dataProximoMes = DateTime.Now.AddMonths(1);
-
-            comandoSQL.Append("SELECT IDPATENTE, TITULOPATENTE, IDNATUREZAPATENTE, OBRIGACAOGERADA, DATACADASTRO, OBSERVACAO, RESUMO_PATENTE,");
-            comandoSQL.Append("PAGAMANUTENCAO, DATAPROXIMAMANUTENCAO, PERIODO, FORMADECOBRANCA, VALORDECOBRANCA, QTDEREINVINDICACAO, IMAGEM FROM MP_PATENTE ");
-            comandoSQL.Append(" WHERE PAGAMANUTENCAO = 1 AND DATAPROXIMAMANUTENCAO BETWEEN ");
-            comandoSQL.Append(string.Concat(DateTime.Now.ToString("yyyyMMdd"), " AND ", dataProximoMes.ToString("yyyyMMdd")));
-            comandoSQL.Append(
-                " AND IDPATENTE NOT IN (select idconceito from MP_INTERFACEFN where CONCEITO = 'PATENTE' AND IDCONCEITO = IDPATENTE AND DATAVENCIMENTO = DATAPROXIMAMANUTENCAO  )");
-           
-
-            using (var reader = DBHelper.obtenhaReader(comandoSQL.ToString()))
-                while (reader.Read())
-                    patentes.Add(MapeieObjetoPatente(reader));
-
-            return patentes;
-        }
-
         public IPatente ObtenhaPatente(long id)
         {
             IPatente patente = null;

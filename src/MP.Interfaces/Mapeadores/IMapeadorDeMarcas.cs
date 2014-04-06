@@ -13,6 +13,5 @@ namespace MP.Interfaces.Mapeadores
         void Inserir(IMarcas marca);
         void Modificar(IMarcas marca);
         void Excluir(long idMarca);
-        IList<IMarcas> ObtenhaMarcasComManutencaoVencendoEsteMes();
     }
 }

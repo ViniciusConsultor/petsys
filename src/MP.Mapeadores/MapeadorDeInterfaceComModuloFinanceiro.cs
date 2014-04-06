@@ -6,9 +6,11 @@ using Compartilhados;
 using Compartilhados.DBHelper;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces;
+using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.FN.Negocio;
 using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
+using MP.Interfaces.Negocio.Filtros.Patentes;
 
 namespace MP.Mapeadores
 {
@@ -41,27 +43,52 @@ namespace MP.Mapeadores
                 {
                     if (conceito.Equals("MARCA", StringComparison.InvariantCultureIgnoreCase))
                         TrateNovaManutencaoParaMarca(idDoConceito.Value);
-
+                    else
+                        TrateNovaManutencaoParaProcessoDePatente(idDoConceito.Value);
 
                     Exclua(itemLancamentoFinanceiro.ID.Value);
                 }
             }
         }
 
-        private void TrateNovaManutencaoParaMarca(long idMarca)
+        private void TrateNovaManutencaoParaMarca(long idProcessoDeMarca)
         {
-            IMarcas marca = null;
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
+            var processoDeMarca = mapeador.Obtenha(idProcessoDeMarca);
 
-            marca = mapeador.obtenhaMarcasPeloId(idMarca);
-
-            if (marca.Manutencao != null)
+            if (processoDeMarca != null)
             {
-                marca.Manutencao.DataDaProximaManutencao = marca.Manutencao.ObtenhaProximaDataDeManutencao();
-                mapeador.Modificar(marca);
+                var marca = processoDeMarca.Marca;
+
+                if (marca.Manutencao != null)
+                {
+                    marca.Manutencao.DataDaProximaManutencao = marca.Manutencao.ObtenhaProximaDataDeManutencao();
+
+                    var mapeadorDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeMarcas>();
+                    mapeadorDeMarca.Modificar(marca);
+                }
             }
 
+        }
+
+        private void TrateNovaManutencaoParaProcessoDePatente(long idProcessoDePatente)
+        {
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
+            var processoDePatente = mapeador.Obtenha(idProcessoDePatente);
+
+            if (processoDePatente != null)
+            {
+                var patente = processoDePatente.Patente;
+
+                if (patente.Manutencao != null)
+                {
+                    patente.Manutencao.DataDaProximaManutencao = patente.Manutencao.ObtenhaProximaDataDeManutencao();
+                    var mapeadorDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDePatente>();
+
+                    mapeadorDePatente.Modificar(patente);    
+                }
+            }
         }
 
         private void Exclua(long idItemRecebimento)

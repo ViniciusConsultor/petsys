@@ -69,6 +69,7 @@
     <Compile Include="Filtros\Marcas\FiltroMarcaPorNCL.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorProcesso.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaSemFiltro.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaVencidaNoMes.cs" />
     <Compile Include="Filtros\Patentes\FiltroLeituraDeRevistaDePatentes.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorCliente.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeCadastro.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Filtros\Patentes\FiltroPatentePorTitular.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Filtros\Patentes\FiltroPatenteSemFiltro.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatenteVencidaNoMes.cs" />
     <Compile Include="Filtros\Patentes\FiltroRelatorioGeralPatente.cs" />
     <Compile Include="Inventor.cs" />
     <Compile Include="LazyLoad\AnuidadePatenteLazyLoad.cs" />
