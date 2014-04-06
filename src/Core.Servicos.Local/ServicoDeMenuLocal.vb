@@ -1,10 +1,8 @@
 ﻿Imports Core.Interfaces.Servicos
-Imports Compartilhados.Interfaces.Core.Negocio
 Imports Core.Interfaces.Negocio
 Imports Compartilhados.Fabricas
 Imports Core.Interfaces.Mapeadores
 Imports Compartilhados
-Imports Compartilhados.Interfaces
 
 Public Class ServicoDeMenuLocal
     Inherits Servico
@@ -22,6 +20,19 @@ Public Class ServicoDeMenuLocal
 
         Try
             Return Mapeador.ObtenhaMenu()
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Function ObtenhaFuncoesComCaminhoDoMenu(ByVal NomeDaFuncao As String) As HashSet(Of DTOAjudanteDePesquisaDeMenu) Implements IServicoDeMenu.ObtenhaFuncoesComCaminhoDoMenu
+        Dim Mapeador As IMapeadorDeMenu
+
+        ServerUtils.setCredencial(_Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeMenu)()
+
+        Try
+            Return Mapeador.ObtenhaFuncoesComCaminhoDoMenu(NomeDaFuncao)
         Finally
             ServerUtils.libereRecursos()
         End Try

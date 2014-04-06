@@ -1,7 +1,4 @@
-﻿Imports Compartilhados.Interfaces.Core.Negocio
-Imports Compartilhados.Interfaces.Core.Servicos
-Imports Compartilhados.Fabricas
-Imports Core.Interfaces.Negocio
+﻿Imports Core.Interfaces.Negocio
 
 <Serializable()> _
 Public Class Funcao

@@ -8,6 +8,7 @@ Namespace Servicos
         Inherits IServico
 
         Function ObtenhaMenu() As IMenuComposto
+        Function ObtenhaFuncoesComCaminhoDoMenu(ByVal NomeDaFuncao As String) As HashSet(Of DTOAjudanteDePesquisaDeMenu)
 
     End Interface
 
