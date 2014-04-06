@@ -166,7 +166,7 @@ Public Class UtilidadesWeb
         Js.AppendLine("if (!win) { ")
         Js.AppendLine(" win = desktop.createWindow({ ")
         Js.AppendLine(String.Concat(" id: 'win", IDJanela, "',"))
-        ' Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
+        Js.AppendLine(String.Concat(" title: '", TituloDaJanela, "',"))
         Js.AppendLine("layout:  'fit',")
         Js.AppendLine("modal: false,")
         Js.AppendLine(String.Concat("width : ", Width.ToString, ","))

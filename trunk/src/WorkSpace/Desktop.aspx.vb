@@ -1,6 +1,10 @@
 ﻿Imports Compartilhados
 Imports Compartilhados.Componentes.Web
 Imports Compartilhados.Visual
+Imports Core.Interfaces.Servicos
+Imports Compartilhados.Fabricas
+Imports Telerik.Web.UI
+Imports Core.Interfaces.Negocio
 
 Partial Public Class Desktop
     Inherits PaginaDesktop
@@ -84,6 +88,36 @@ Partial Public Class Desktop
 
     Private Sub ExibaNotifacoes()
 
+    End Sub
+
+    Protected Sub cboPesquisa_OnItemsRequested(ByVal sender As Object, ByVal e As RadComboBoxItemsRequestedEventArgs)
+        cboPesquisa.Items.Clear()
+        Dim ajudanteDePesquisa As HashSet(Of DTOAjudanteDePesquisaDeMenu)
+
+        Using Servico As IServicoDeMenu = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeMenu)()
+            ajudanteDePesquisa = Servico.ObtenhaFuncoesComCaminhoDoMenu(e.Text)
+        End Using
+
+        If ajudanteDePesquisa.Count() = 0 Then Exit Sub
+        
+        For Each dtoAjudanteDePesquisaDeMenu As DTOAjudanteDePesquisaDeMenu In From dtoAjudanteDePesquisaDeMenu1 In ajudanteDePesquisa Where FabricaDeContexto.GetInstancia().GetContextoAtual().EstaAutorizado(dtoAjudanteDePesquisaDeMenu1.IDDaFuncao)
+            cboPesquisa.Items.Add(New RadComboBoxItem(dtoAjudanteDePesquisaDeMenu.NomeDaFuncao, dtoAjudanteDePesquisaDeMenu.CaminhoMenu))
+        Next
+    End Sub
+
+    Protected Sub cboPesquisa_OnSelectedIndexChanged(ByVal sender As Object, ByVal e As RadComboBoxSelectedIndexChangedEventArgs)
+        If String.IsNullOrEmpty(DirectCast(sender, RadComboBox).SelectedValue) Then
+            cboPesquisa.ClearSelection()
+            cboPesquisa.Text = ""
+            Exit Sub
+        End If
+
+        Dim URL As String = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & DirectCast(sender, RadComboBox).SelectedValue
+        
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, DirectCast(sender, RadComboBox).Text, 800, 550, DirectCast(sender, RadComboBox).SelectedValue.Replace(".", "_")), False)
+
+        cboPesquisa.ClearSelection()
+        cboPesquisa.Text = ""
     End Sub
 
 End Class

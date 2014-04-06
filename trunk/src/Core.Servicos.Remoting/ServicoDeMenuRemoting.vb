@@ -17,4 +17,7 @@ Public Class ServicoDeMenuRemoting
         Return _ServicoLocal.ObtenhaMenu
     End Function
 
+    Public Function ObtenhaFuncoesComCaminhoDoMenu(ByVal NomeDaFuncao As String) As HashSet(Of DTOAjudanteDePesquisaDeMenu) Implements IServicoDeMenu.ObtenhaFuncoesComCaminhoDoMenu
+        Return _ServicoLocal.ObtenhaFuncoesComCaminhoDoMenu(NomeDaFuncao)
+    End Function
 End Class

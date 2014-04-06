@@ -109,6 +109,7 @@ Public Class Global_asax
             Dim Usuario As Usuario = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
 
             Mensagem.AppendLine("Nome do operador      : " & Usuario.Nome)
+            Mensagem.AppendLine("Empresa               : " & FabricaDeContexto.GetInstancia.GetContextoAtual.EmpresaLogada.Nome)
         End If
 
 

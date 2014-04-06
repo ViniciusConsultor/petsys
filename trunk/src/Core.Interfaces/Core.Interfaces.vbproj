@@ -115,6 +115,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Negocio\DTOAjudanteDePesquisaDeMenu.vb" />
     <Compile Include="Negocio\IConexaoMySQL.vb" />
     <Compile Include="Negocio\IConexaoODBC.vb" />
     <Compile Include="Negocio\IConexaoOLEDB.vb" />

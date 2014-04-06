@@ -74,4 +74,36 @@ Public Class MapeadorDeMenu
         Return Menu
     End Function
 
+    Public Function ObtenhaFuncoesComCaminhoDoMenu(ByVal NomeDaFuncao As String) As HashSet(Of DTOAjudanteDePesquisaDeMenu) Implements IMapeadorDeMenu.ObtenhaFuncoesComCaminhoDoMenu
+        Dim SQL As New StringBuilder
+        Dim FuncoesComCaminhoDoMenu As HashSet(Of DTOAjudanteDePesquisaDeMenu) = New HashSet(Of DTOAjudanteDePesquisaDeMenu)()
+        Dim DBHelper As IDBHelper
+
+        SQL.AppendLine("SELECT NCL_MENUFUNCAO.IDFUNCAO ID_FUNCAO, NCL_FUNCAO.NOME NOME_FUNCAO, NCL_MENUFUNCAO.URL")
+        SQL.AppendLine(" FROM  NCL_FUNCAO, NCL_MENUFUNCAO")
+        SQL.AppendLine(" WHERE NCL_MENUFUNCAO.IDFUNCAO = NCL_FUNCAO.IDFUNCAO")
+
+        If Not String.IsNullOrEmpty(NomeDaFuncao) Then SQL.AppendLine(" AND NCL_FUNCAO.NOME LIKE '%" & UtilidadesDePersistencia.FiltraApostrofe(NomeDaFuncao) & "%'")
+        
+        SQL.AppendLine(" ORDER BY NCL_FUNCAO.NOME")
+        
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
+            Try
+                While Leitor.Read
+                    Dim ajudante As DTOAjudanteDePesquisaDeMenu = New DTOAjudanteDePesquisaDeMenu(UtilidadesDePersistencia.GetValorString(Leitor, "ID_FUNCAO"),
+                                       UtilidadesDePersistencia.GetValorString(Leitor, "NOME_FUNCAO"), UtilidadesDePersistencia.GetValorString(Leitor, "URL"))
+
+                    FuncoesComCaminhoDoMenu.Add(ajudante)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+
+        End Using
+
+        Return FuncoesComCaminhoDoMenu
+    End Function
+
 End Class
