@@ -28,9 +28,44 @@
             <telerik:RadDock ID="RadDock1" runat="server" Title="Banco" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
                     <asp:Panel ID="pnlDadosDoBanco" runat="server">
                         <table class="tabela">
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label3" runat="server" Text="Nome do banco"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadComboBox ID="cboBanco" runat="server" EmptyMessage="Selecione uma banco"
+                                        EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
+                                        ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
+                                        Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
+                                        <HeaderTemplate>
+                                            <table width="96%">
+                                                <tr>
+                                                    <td width="80%">
+                                                        Nome
+                                                    </td>
+                                                    <td width="20%">
+                                                        Número
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="80%">
+                                                        <%# DataBinder.Eval(Container, "Text")%>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <%#DataBinder.Eval(Container, "Attributes['Numero']")%>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </ItemTemplate>
+                                    </telerik:RadComboBox>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label1" runat="server" Text="Número do banco"></asp:Label>

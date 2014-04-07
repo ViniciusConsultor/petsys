@@ -7,7 +7,7 @@ Namespace Mapeadores
         Sub InsiraBanco(ByVal Banco As IBanco)
         Sub RemovaBanco(ByVal ID As Long)
         Sub ModifiqueBanco(ByVal Banco As IBanco)
-        Function ObtenhaBanco(ByVal Pessoa As IPessoa) As IBanco
+        Function ObtenhaBanco(ByVal ID As Long) As IBanco
         Function ObtenhaBancosPorNomeComoFiltro(ByVal Nome As String, ByVal Quantidade As Integer) As IList(Of IBanco)
 
         Sub InsiraAgencia(ByVal Agencia As IAgencia)
