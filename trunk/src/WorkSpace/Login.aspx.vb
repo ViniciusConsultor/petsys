@@ -4,6 +4,7 @@ Imports Core.Interfaces.Servicos
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Core.Interfaces.Negocio
 Imports Compartilhados.Componentes.Web
+Imports Compartilhados.Schedule
 
 Partial Public Class Login
     Inherits Page
@@ -13,6 +14,8 @@ Partial Public Class Login
             FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario = Nothing
             Using Servico As IServicoDeConexao = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConexao)()
                 FabricaDeContexto.GetInstancia.GetContextoAtual.Conexao = Servico.ObtenhaConexao
+
+
             End Using
             txtLogin.Focus()
         End If
@@ -51,6 +54,9 @@ Partial Public Class Login
 
         Usuario = New Usuario(Operador.Pessoa.ID.Value, Operador.Pessoa.Nome, IDsDiretivas, CType(Operador.Pessoa, IPessoaFisica).Sexo.ID, EmpresasVisiveis)
         FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario = Usuario
+
+
+
         Response.Redirect("frmEscolhaDaEmpresa.aspx")
     End Sub
 

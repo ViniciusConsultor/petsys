@@ -13,11 +13,11 @@ Public Class MapeadorDePessoaJuridica
     Private Function ObtenhaQueryBasica() As String
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
-        Sql.Append("NOMEFANTASIA, CNPJ, IE, IM, SITE, NCL_PESSOA.IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, NCL_BANCO.NUMERO  NUMEROBANCO, NCL_AGENCIABANCO.NUMERO  NUMEROAGENCIA , LOGOMARCA ")
+        Sql.Append("SELECT NCL_PESSOA.NOME NOMEPESSOA, TIPO, ENDEMAIL, NCL_PESSOAJURIDICA.IDPESSOA, ")
+        Sql.Append("NOMEFANTASIA, CNPJ, IE, IM, SITE, NCL_PESSOA.IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, NCL_BANCO.NUMERO  NUMEROBANCO, NCL_BANCO.NOME NOMEDOBANCO, NCL_AGENCIABANCO.NUMERO  NUMEROAGENCIA , LOGOMARCA ")
         Sql.Append("FROM NCL_PESSOA ")
         Sql.Append("INNER JOIN NCL_PESSOAJURIDICA ON ID = NCL_PESSOAJURIDICA.IDPESSOA ")
-        Sql.Append("LEFT JOIN NCL_BANCO ON NCL_BANCO.IDPESSOA = NCL_PESSOA.IDBANCO ")
+        Sql.Append("LEFT JOIN NCL_BANCO ON NCL_BANCO.ID = NCL_PESSOA.IDBANCO ")
         Sql.Append("LEFT JOIN NCL_AGENCIABANCO ON  NCL_AGENCIABANCO.IDBANCO =  NCL_PESSOA.IDBANCO AND NCL_AGENCIABANCO.IDPESSOA = NCL_PESSOA.IDAGENCIA ")
 
         Return Sql.ToString()
@@ -74,7 +74,7 @@ Public Class MapeadorDePessoaJuridica
         Dim Sql As New StringBuilder
 
         Sql.Append(ObtenhaQueryBasica())
-        Sql.Append(String.Concat(" WHERE ID = ", Id.ToString))
+        Sql.Append(String.Concat(" WHERE NCL_PESSOA.ID = ", Id.ToString))
 
         Return ObtenhaPessoa(Sql.ToString)
     End Function
@@ -100,10 +100,10 @@ Public Class MapeadorDePessoaJuridica
         Sql.Append(ObtenhaQueryBasica())
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql.Append(String.Concat(" WHERE NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
+            Sql.Append(String.Concat(" WHERE NCL_PESSOA.NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'"))
         End If
 
-        Sql.AppendLine(" ORDER BY NOME")
+        Sql.AppendLine(" ORDER BY NCL_PESSOA.NOME")
 
         Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros, NivelDeRetardo)
     End Function

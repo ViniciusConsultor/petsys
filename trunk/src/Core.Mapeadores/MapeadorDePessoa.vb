@@ -43,7 +43,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If Not Pessoa.DadoBancario Is Nothing Then
-            SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.Banco.Pessoa.ID.Value.ToString, ", "))
+            SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.Banco.ID.Value.ToString, ", "))
             SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.Pessoa.ID.Value.ToString, ", "))
 
             If String.IsNullOrEmpty(Pessoa.DadoBancario.Conta.Numero) Then
@@ -203,7 +203,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If Not Pessoa.DadoBancario Is Nothing Then
-            SQL.Append(String.Concat("IDBANCO  = ", Pessoa.DadoBancario.Agencia.Banco.Pessoa.ID.Value.ToString, ", "))
+            SQL.Append(String.Concat("IDBANCO  = ", Pessoa.DadoBancario.Agencia.Banco.ID.Value.ToString, ", "))
             SQL.Append(String.Concat("IDAGENCIA = ", Pessoa.DadoBancario.Agencia.Pessoa.ID.Value.ToString, ", "))
 
             If String.IsNullOrEmpty(Pessoa.DadoBancario.Conta.Numero) Then
@@ -244,8 +244,8 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
     End Function
 
     Protected Sub PreencheDados(ByRef Pessoa As T, ByVal Leitor As IDataReader, NivelDeRetardo As Integer)
-        Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "ID")
-        Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOME")
+        Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA")
+        Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPESSOA")
 
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "ENDEMAIL") Then
             Pessoa.EnderecoDeEmail = UtilidadesDePersistencia.GetValorString(Leitor, "ENDEMAIL")
@@ -256,14 +256,14 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
         
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDAGENCIA") Then
-            Dim PessoaBanco As IPessoa
             Dim Banco As IBanco
             Dim Agencia As IAgencia
             Dim PessoaAgencia As IPessoa
 
-            PessoaBanco = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDBANCO"))
-            Banco = FabricaGenerica.GetInstancia.CrieObjeto(Of IBanco)(New Object() {PessoaBanco})
+            Banco = FabricaGenerica.GetInstancia.CrieObjeto(Of IBanco)()
+            Banco.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDBANCO")
             Banco.Numero = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMEROBANCO")
+            Banco.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEDOBANCO")
 
             PessoaAgencia = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDAGENCIA"))
             Agencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgencia)(New Object() {PessoaAgencia})

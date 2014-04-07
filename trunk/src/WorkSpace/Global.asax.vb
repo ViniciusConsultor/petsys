@@ -16,11 +16,15 @@ Public Class Global_asax
 
     Sub Application_Start(ByVal sender As Object, ByVal e As EventArgs)
         ' Fires when the application is started
-        GerenciadorDeSchedules.GetInstancia().InicializeSchedules()
-        End Sub
+
+        If (Not Application.AllKeys.Contains("GerenciadorDeSchedules")) Then
+            Application.Add("GerenciadorDeSchedules", GerenciadorDeSchedules.GetInstancia())
+            CType(Application.Item("GerenciadorDeSchedules"), GerenciadorDeSchedules).InicializeSchedules()
+        End If
+    End Sub
 
     Sub Session_Start(ByVal sender As Object, ByVal e As EventArgs)
-
+       
     End Sub
 
     Sub Application_BeginRequest(ByVal sender As Object, ByVal e As EventArgs)

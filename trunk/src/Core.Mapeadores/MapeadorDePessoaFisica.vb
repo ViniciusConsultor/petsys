@@ -13,14 +13,14 @@ Public Class MapeadorDePessoaFisica
     Private Function ObtenhaQueryBasica() As String
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT ID, NOME, TIPO, ENDEMAIL, ")
+        Sql.Append("SELECT NCL_PESSOA.NOME NOMEPESSOA, TIPO, ENDEMAIL, ")
         Sql.Append("NCL_PESSOAFISICA.IDPESSOA, DATANASCIMENTO, ESTADOCIVIL, ")
         Sql.Append("NACIONALIDADE, RACA, SEXO, NOMEMAE, ")
         Sql.Append("NOMEPAI, NUMERORG, ORGEXPEDITOR, DATAEXP, ")
-        Sql.Append("UFEXP, CPF, NATURALIDADE, FOTO, SITE, NCL_PESSOA.IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, NCL_BANCO.NUMERO  NUMEROBANCO, NCL_AGENCIABANCO.NUMERO  NUMEROAGENCIA ")
+        Sql.Append("UFEXP, CPF, NATURALIDADE, FOTO, SITE, NCL_PESSOA.IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE, NCL_BANCO.NUMERO  NUMEROBANCO, NCL_BANCO.NOME NOMEDOBANCO, NCL_AGENCIABANCO.NUMERO  NUMEROAGENCIA ")
         Sql.Append("FROM NCL_PESSOA ")
-        Sql.Append("INNER JOIN NCL_PESSOAFISICA ON ID = NCL_PESSOAFISICA.IDPESSOA ")
-        Sql.Append("LEFT JOIN NCL_BANCO ON NCL_BANCO.IDPESSOA = NCL_PESSOA.IDBANCO ")
+        Sql.Append("INNER JOIN NCL_PESSOAFISICA ON NCL_PESSOA.ID = NCL_PESSOAFISICA.IDPESSOA ")
+        Sql.Append("LEFT JOIN NCL_BANCO ON NCL_BANCO.ID = NCL_PESSOA.IDBANCO ")
         Sql.Append("LEFT JOIN NCL_AGENCIABANCO ON  NCL_AGENCIABANCO.IDBANCO =  NCL_PESSOA.IDBANCO AND NCL_AGENCIABANCO.IDPESSOA = NCL_PESSOA.IDAGENCIA ")
 
         Return Sql.ToString
@@ -107,7 +107,7 @@ Public Class MapeadorDePessoaFisica
         Dim Sql As String
 
         Sql = Me.ObtenhaQueryBasica
-        Sql &= String.Concat(" WHERE ID = ", Id.ToString)
+        Sql &= String.Concat(" WHERE NCL_PESSOA.ID = ", Id.ToString)
 
         Return ObtenhaPessoa(Sql.ToString)
     End Function
@@ -133,10 +133,10 @@ Public Class MapeadorDePessoaFisica
         Sql = Me.ObtenhaQueryBasica
 
         If Not String.IsNullOrEmpty(Nome) Then
-            Sql &= String.Concat(" WHERE NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'")
+            Sql &= String.Concat(" WHERE NCL_PESSOA.NOME LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(Nome), "%'")
         End If
 
-        Sql &= " ORDER BY NOME"
+        Sql &= " ORDER BY NCL_PESSOA.NOME"
 
         Return ObtenhaPessoas(Sql.ToString, QuantidadeMaximaDeRegistros, NivelDeRetardo)
     End Function

@@ -102,20 +102,7 @@ Public Class ServicoDeBancosEAgenciasLocal
         End Try
     End Function
 
-    Public Function ObtenhaBanco(ByVal Pessoa As IPessoa) As IBanco Implements IServicoDeBancosEAgencias.ObtenhaBanco
-        Dim Mapeador As IMapeadorDeBancosEAgencias
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeBancosEAgencias)()
-
-        Try
-            Return Mapeador.ObtenhaBanco(Pessoa)
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Function
-
-    Public Sub RemovaAgencia(ByVal ID As Long) Implements IServicoDeBancosEAgencias.RemovaAgencia
+   Public Sub RemovaAgencia(ByVal ID As Long) Implements IServicoDeBancosEAgencias.RemovaAgencia
         Dim Mapeador As IMapeadorDeBancosEAgencias
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -182,9 +169,16 @@ Public Class ServicoDeBancosEAgenciasLocal
     End Function
 
     Public Function ObtenhaBanco(ByVal ID As Long) As IBanco Implements IServicoDeBancosEAgencias.ObtenhaBanco
-        Dim Pessoa As IPessoa = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(ID)
+        Dim Mapeador As IMapeadorDeBancosEAgencias
 
-        Return Me.ObtenhaBanco(Pessoa)
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeBancosEAgencias)()
+
+        Try
+            Return Mapeador.ObtenhaBanco(ID)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
     End Function
 
     Public Function ObtenhaAgenciasPorNomeComoFiltro(ByVal Banco As IBanco, _

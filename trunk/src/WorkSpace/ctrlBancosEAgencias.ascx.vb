@@ -19,7 +19,7 @@ Partial Public Class ctrlBancosEAgencias
 
         If Not Bancos Is Nothing Then
             For Each Banco As IBanco In Bancos
-                Dim Item As New RadComboBoxItem(Banco.Pessoa.Nome, Banco.Pessoa.ID.ToString)
+                Dim Item As New RadComboBoxItem(Banco.Nome, Banco.ID.Value.ToString)
 
                 Item.Attributes.Add("Numero", Banco.Numero.ToString)
                 cboBancos.Items.Add(Item)
@@ -34,7 +34,7 @@ Partial Public Class ctrlBancosEAgencias
         End Get
         Set(ByVal value As IBanco)
             ViewState.Add(Me.ClientID & "_BANCO_", value)
-            cboBancos.Text = value.Pessoa.Nome
+            cboBancos.Text = value.Nome
         End Set
     End Property
 
@@ -114,7 +114,7 @@ Partial Public Class ctrlBancosEAgencias
         End If
 
         Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-            Agencia = Servico.ObtenhaAgencia(BancoSelecionado.Pessoa.ID.Value, CLng(Valor))
+            Agencia = Servico.ObtenhaAgencia(BancoSelecionado.ID.Value, CLng(Valor))
         End Using
 
         AgenciaSelecionada = Agencia

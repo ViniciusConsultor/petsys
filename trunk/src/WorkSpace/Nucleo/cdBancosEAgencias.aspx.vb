@@ -10,9 +10,9 @@ Partial Public Class cdBancosEAgencias
 
     Private CHAVE_ESTADO_CD_BANCO As String = "CHAVE_ESTADO_CD_BANCO"
     Private CHAVE_ESTADO_CD_AGENCIA As String = "CHAVE_ESTADO_CD_AGENCIA"
+    Private CHAVE_ID_BANCO As String = "CHAVE_ID_BANCO"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        AddHandler ctrlPessoa1.PessoaFoiSelecionada, AddressOf ObtenhaBanco
         AddHandler ctrlPessoa2.PessoaFoiSelecionada, AddressOf ObtenhaAgencia
 
         If Not IsPostBack Then
@@ -36,7 +36,7 @@ Partial Public Class cdBancosEAgencias
     End Enum
 
     Private Sub ExibaTelaInicialBanco()
-        CType(rtbToolBarBancos.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = False
+        CType(rtbToolBarBancos.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
         CType(rtbToolBarBancos.FindButtonByCommandName("btnModificar"), RadToolBarButton).Visible = False
         CType(rtbToolBarBancos.FindButtonByCommandName("btnExcluir"), RadToolBarButton).Visible = False
         CType(rtbToolBarBancos.FindButtonByCommandName("btnSalvar"), RadToolBarButton).Visible = False
@@ -45,13 +45,7 @@ Partial Public Class cdBancosEAgencias
         CType(rtbToolBarBancos.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoBanco, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoBanco, Control), False)
-        ctrlPessoa1.Inicializa()
-        ctrlPessoa1.BotaoDetalharEhVisivel = False
-        ctrlPessoa1.BotaoNovoEhVisivel = True
-        'Com isso garantimos que banco será apenas pessoa juridica
-        ctrlPessoa1.OpcaoTipoDaPessoaEhVisivel = False
-        ctrlPessoa1.SetaTipoDePessoaPadrao(TipoDePessoa.Juridica)
-
+        
         pnlAgencias.Visible = False
         ViewState(CHAVE_ESTADO_CD_BANCO) = Estado.Inicial
     End Sub
@@ -187,11 +181,14 @@ Partial Public Class cdBancosEAgencias
 
     Private Function MontaObjetoBanco() As IBanco
         Dim Banco As IBanco
-        Dim Pessoa As IPessoa
-
-        Pessoa = ctrlPessoa1.PessoaSelecionada
-        Banco = FabricaGenerica.GetInstancia.CrieObjeto(Of IBanco)((New Object() {Pessoa}))
+        
+        Banco = FabricaGenerica.GetInstancia.CrieObjeto(Of IBanco)()
         Banco.Numero = CInt(txtNumeroDoBanco.Value)
+        Banco.Nome = cboBanco.Text
+
+        If ViewState(CHAVE_ESTADO_CD_BANCO).Equals(Estado.Modifica) Then
+            Banco.ID = CType(ViewState(CHAVE_ID_BANCO), Long?)
+        End If
 
         Return Banco
     End Function
@@ -313,7 +310,7 @@ Partial Public Class cdBancosEAgencias
     Private Sub btnSim_Click()
         Try
             Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-                Servico.RemovaBanco(ctrlPessoa1.PessoaSelecionada.ID.Value)
+                Servico.RemovaBanco(CType(cboBanco.SelectedValue, Long))
             End Using
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Banco excluido com sucesso."), False)
@@ -358,30 +355,14 @@ Partial Public Class cdBancosEAgencias
     End Sub
 
     Private Sub ObtenhaBanco(ByVal Pessoa As IPessoa)
-        Dim Banco As IBanco
-
-        ctrlPessoa1.BotaoDetalharEhVisivel = True
-
-        Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-            Banco = Servico.ObtenhaBanco(Pessoa)
-        End Using
-
-        If Banco Is Nothing Then
-            CType(rtbToolBarBancos.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
-            Exit Sub
-        End If
-
-        MostreBanco(Banco)
-        ExibaTelaConsultarBanco()
+        
     End Sub
 
     Private Sub ObtenhaAgencia(ByVal Pessoa As IPessoa)
         Dim Agencia As IAgencia
 
-        ctrlPessoa1.BotaoDetalharEhVisivel = True
-
         Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-            Agencia = Servico.ObtenhaAgencia(ctrlPessoa1.PessoaSelecionada.ID.Value, Pessoa.ID.Value)
+            Agencia = Servico.ObtenhaAgencia(CLng(cboBanco.SelectedValue), Pessoa.ID.Value)
         End Using
 
         If Agencia Is Nothing Then
@@ -418,6 +399,41 @@ Partial Public Class cdBancosEAgencias
             Case "btnNao"
                 Call btnNaoAgencia_Click()
         End Select
+    End Sub
+
+    Private Sub cboBanco_ItemsRequested(sender As Object, e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboBanco.ItemsRequested
+        Dim bancos As IList(Of IBanco)
+
+        cboBanco.Items.Clear()
+
+        Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeBancosEAgencias)()
+            bancos = Servico.ObtenhaBancosPorNomeComoFiltro(e.Text, 10)
+        End Using
+        
+        For Each banco As IBanco In bancos
+            Dim Item As New RadComboBoxItem(banco.Nome, banco.ID.ToString)
+
+            Item.Attributes.Add("Numero", banco.Numero.ToString())
+            cboBanco.Items.Add(Item)
+            Item.DataBind()
+        Next
+
+    End Sub
+
+    Private Sub cboBanco_SelectedIndexChanged(sender As Object, e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboBanco.SelectedIndexChanged
+        Dim Banco As IBanco
+
+        Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
+            Banco = Servico.ObtenhaBanco(CLng(cboBanco.SelectedValue))
+        End Using
+
+        If Banco Is Nothing Then
+            CType(rtbToolBarBancos.FindButtonByCommandName("btnNovo"), RadToolBarButton).Visible = True
+            Exit Sub
+        End If
+
+        MostreBanco(Banco)
+        ExibaTelaConsultarBanco()
     End Sub
 
 End Class

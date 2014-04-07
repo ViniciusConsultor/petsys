@@ -45,15 +45,19 @@ Namespace Fabricas
             Return InstanciaSolitaria
         End Function
 
+
+
         Private Sub CarregaAssembly(ByVal NomeDoAssembly As String)
-            If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
-                Dim Asse As Assembly
+            SyncLock DicionarioDeAssemblyTypes
+                If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
+                    Dim Asse As Assembly
 
-                Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
+                    Asse = Assembly.LoadWithPartialName(NomeDoAssembly)
 
-                If Asse Is Nothing Then Throw New DLLNaoEncontradaException("A DLL " & NomeDoAssembly & " não foi encontrada no diretório da aplicação.")
-                DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
-            End If
+                    If Asse Is Nothing Then Throw New DLLNaoEncontradaException("A DLL " & NomeDoAssembly & " não foi encontrada no diretório da aplicação.")
+                    DicionarioDeAssemblyTypes.Add(NomeDoAssembly, Asse.GetTypes)
+                End If
+            End SyncLock
         End Sub
 
         Public Function CrieObjeto(ByVal FullName As String, _

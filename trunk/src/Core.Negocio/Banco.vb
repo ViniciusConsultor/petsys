@@ -2,12 +2,7 @@
 
 <Serializable()> _
 Public Class Banco
-    Inherits PapelPessoa
     Implements IBanco
-
-    Public Sub New(ByVal Pessoa As IPessoa)
-        MyBase.New(Pessoa)
-    End Sub
 
     Public ReadOnly Property Agencias() As IList(Of IAgencia) Implements IBanco.Agencias
         Get
@@ -22,6 +17,26 @@ Public Class Banco
         End Get
         Set(ByVal value As Integer)
             _Numero = value
+        End Set
+    End Property
+
+    Private _ID As Long?
+    Public Property ID As Long? Implements IBanco.ID
+        Get
+            Return _ID
+        End Get
+        Set(value As Long?)
+            _ID = value
+        End Set
+    End Property
+
+    Private _Nome As String
+    Public Property Nome As String Implements IBanco.Nome
+        Get
+            Return _Nome
+        End Get
+        Set(value As String)
+            _Nome = value
         End Set
     End Property
 
