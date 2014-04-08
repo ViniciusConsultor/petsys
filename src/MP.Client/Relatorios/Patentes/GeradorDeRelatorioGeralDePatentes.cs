@@ -205,7 +205,7 @@ namespace MP.Client.Relatorios.Patentes
             celulaPropriOuTerceiro.Border = 0;
             tabelaCliente.AddCell(celulaPropriOuTerceiro);
 
-            var celulaProcesso = new PdfPCell(new Phrase(processoDePatente.ObtenhaNumeroDoProcessoFormatado(), _Fonte1));
+            var celulaProcesso = new PdfPCell(new Phrase(processoDePatente.NumeroDoProcessoFormatado, _Fonte1));
             celulaProcesso.HorizontalAlignment = Cell.ALIGN_LEFT;
             celulaProcesso.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaProcesso.Border = 0;
@@ -291,7 +291,7 @@ namespace MP.Client.Relatorios.Patentes
             var tabelaCliente = new PdfPTable(4);
             tabelaCliente.DefaultCell.Border = Rectangle.NO_BORDER;
 
-            var celulaTipo = new PdfPCell(new Phrase(processoDePatente.ObtenhaNumeroDoProcessoFormatado(), _Fonte1));
+            var celulaTipo = new PdfPCell(new Phrase(processoDePatente.NumeroDoProcessoFormatado, _Fonte1));
             celulaTipo.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaTipo.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaTipo.Border = 0;

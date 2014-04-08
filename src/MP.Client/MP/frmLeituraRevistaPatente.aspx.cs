@@ -950,6 +950,27 @@ namespace MP.Client.MP
                 var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
                 string dataDaPublicacao = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.HasValue ?
                     ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.Value.ToString("dd/MM/yyyy") : string.Empty;
+                bool verifiqueSeExisteClassificacoes = false;
+
+                foreach (KeyValuePair<long, IList<IRevistaDePatente>> item in dicionarioDeRevistaColidentes)
+                {
+                    var classificacoes = radicais.ToList().Find(itemLista => itemLista.IdRadicalPatente.Equals(item.Key));
+
+                    if (classificacoes != null && !string.IsNullOrEmpty(classificacoes.Classificacao))
+                    {
+                        verifiqueSeExisteClassificacoes = true;
+                        break;
+                    }
+
+                }
+
+                if (!verifiqueSeExisteClassificacoes)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe nenhuma classoificação encontrada."),
+                                                         false);
+                    return;
+                }
 
                 var gerador = new GeradorDeRelatorioPorClassificacao(dicionarioDeRevistaColidentes, radicais);
                 var nomeDoArquivo = gerador.GereRelatorio(numeroDaRevistaSelecionada, dataDaPublicacao);
@@ -967,6 +988,27 @@ namespace MP.Client.MP
                 var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
                 string dataDaPublicacao = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.HasValue ?
                     ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.Value.ToString("dd/MM/yyyy") : string.Empty;
+                bool verifiqueSeExisteColidencias = false;
+
+                foreach (KeyValuePair<long, IList<IRevistaDePatente>> item in dicionarioDeRevistaColidentes)
+                {
+                    var radical = radicais.ToList().Find(itemLista => itemLista.IdRadicalPatente.Equals(item.Key));
+
+                    if (radical != null && !string.IsNullOrEmpty(radical.Colidencia))
+                    {
+                        verifiqueSeExisteColidencias = true;
+                        break;
+                    }
+                    
+                }
+
+                if(!verifiqueSeExisteColidencias)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe nenhuma colidência encontrada."),
+                                                         false);
+                    return;
+                }
 
                 var gerador = new GeradorDeRelatorioPorColidencia(dicionarioDeRevistaColidentes, radicais);
                 var nomeDoArquivo = gerador.GereRelatorio(numeroDaRevistaSelecionada, dataDaPublicacao);

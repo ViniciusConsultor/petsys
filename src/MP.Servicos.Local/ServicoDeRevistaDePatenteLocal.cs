@@ -580,10 +580,13 @@ namespace MP.Servicos.Local
 
                 if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente) && revistaDePatente.NumeroProcessoDaPatente.Length > 10)
                 {
+                    revistaDePatente.NumeroDoProcessoFormatado = revistaDePatente.NumeroProcessoDaPatente;
+
                     if(revistaDePatente.NumeroProcessoDaPatente.StartsWith("BR"))
                     {
                         revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente.Replace("-", "").Replace(" ", "");
                         revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente.Replace("-", "").Replace(" ", "");
+                        
 
                         if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                             revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente.Substring(2, 2);
@@ -602,12 +605,15 @@ namespace MP.Servicos.Local
                 {
                     revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente;
                     revistaDePatente.NumeroProcessoDaPatente = revistaDePatente.NumeroProcessoDaPatente;
+                    revistaDePatente.NumeroDoProcessoFormatado = revistaDePatente.NumeroProcessoDaPatente;
 
                     if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                         revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente;
                 }
                 else if (!string.IsNullOrEmpty(revistaDePatente.NumeroDoPedido) && revistaDePatente.NumeroDoPedido.Length > 10)
                 {
+                    revistaDePatente.NumeroDoProcessoFormatado = revistaDePatente.NumeroDoPedido;
+
                     if (revistaDePatente.NumeroDoPedido.StartsWith("BR"))
                     {
                         revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido.Replace("-", "").Replace(" ", "");
@@ -629,6 +635,7 @@ namespace MP.Servicos.Local
                 {
                     revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido;
                     revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido;
+                    revistaDePatente.NumeroDoProcessoFormatado = revistaDePatente.NumeroDoPedido;
 
                     if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
                         revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido;

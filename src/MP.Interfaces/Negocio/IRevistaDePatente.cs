@@ -69,5 +69,6 @@ namespace MP.Interfaces.Negocio
         string ClassificacaoNacional { get; set; }
         long? IdDoProcessoDaRevista { get; set; }
         string Classificacao { get; }
+        string NumeroDoProcessoFormatado { get; set; }
     }
 }

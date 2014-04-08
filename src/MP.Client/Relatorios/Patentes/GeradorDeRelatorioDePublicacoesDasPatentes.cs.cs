@@ -60,6 +60,7 @@ namespace MP.Client.Relatorios.Patentes
             tabela.Spacing = 0;
             tabela.Width = 100;
             tabela.AutoFillEmptyCells = true;
+            tabela.DefaultCell.Border = Rectangle.NO_BORDER;
 
             tabela.EndHeaders();
 
@@ -73,6 +74,7 @@ namespace MP.Client.Relatorios.Patentes
                 tabela1.AutoFillEmptyCells = true;
                 tabela1.Border = 0;
                 tabela1.EndHeaders();
+                tabela1.DefaultCell.Border = Rectangle.NO_BORDER;
 
                 var tabelaProcesso = new Cell(ObtenhaTabelaCelulaProcesso(revistaDePatente));
                 tabela1.AddCell(tabelaProcesso);
@@ -127,19 +129,20 @@ namespace MP.Client.Relatorios.Patentes
             tabela.Spacing = 0;
             tabela.Width = 100;
             tabela.AutoFillEmptyCells = true;
+            tabela.DefaultCell.Border = Rectangle.NO_BORDER;
 
             var corBackgroudHeader = new Color(211, 211, 211);
 
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Patente", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte2, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
-            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte2, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Número do processo", _Fonte3, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Patente", _Fonte3, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Despacho", _Fonte3, Cell.ALIGN_CENTER, 0, corBackgroudHeader, true));
+            tabela.AddCell(iTextSharpUtilidades.CrieCelula("Cliente", _Fonte3, Cell.ALIGN_LEFT, 0, corBackgroudHeader, true));
 
             tabela.EndHeaders();
 
             foreach (var processo in _processosPatentes)
             {
-                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Processo.ToString(), _Fonte1, Cell.ALIGN_CENTER, 0, false));
+                tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.NumeroDoProcessoFormatado.ToString(), _Fonte1, Cell.ALIGN_CENTER, 0, false));
 
                 if (processo.Patente != null && !string.IsNullOrEmpty(processo.Patente.TituloPatente))
                     tabela.AddCell(iTextSharpUtilidades.CrieCelula(processo.Patente.TituloPatente, _Fonte1, Cell.ALIGN_LEFT, 0, false));
@@ -205,7 +208,7 @@ namespace MP.Client.Relatorios.Patentes
 
             if (!string.IsNullOrEmpty(revista.NumeroDoPedido))
             {
-                var celula = new Cell(new Phrase(" " + LayoutRevistaPatente.Layout21.IdentificadorCampo + " " + revista.NumeroDoPedido, _Fonte1));
+                var celula = new Cell(new Phrase(" " + LayoutRevistaPatente.Layout21.IdentificadorCampo + " " + revista.NumeroDoProcessoFormatado, _Fonte1));
                 celula.DisableBorderSide(0);
                 tabela.AddCell(celula);
             }
@@ -374,7 +377,7 @@ namespace MP.Client.Relatorios.Patentes
 
             if (!string.IsNullOrEmpty(revista.NumeroDoProcesso))
             {
-                var celula = new Cell(new Phrase(" " + LayoutRevistaPatente.LayoutNP.IdentificadorCampo + " " + revista.NumeroDoProcesso, _Fonte1));
+                var celula = new Cell(new Phrase(" " + LayoutRevistaPatente.LayoutNP.IdentificadorCampo + " " + revista.NumeroDoProcessoFormatado, _Fonte1));
                 celula.DisableBorderSide(0);
                 tabela.AddCell(celula);
             }
@@ -560,6 +563,7 @@ namespace MP.Client.Relatorios.Patentes
         private Table ObtenhaTabelaCelulaProcesso(IRevistaDePatente revista)
         {
             var tabela = new Table(1);
+            var corBackgroudHeader = new Color(211, 211, 211);
             tabela.Widths = new Single[] { 100 };
             tabela.Padding = 0;
             tabela.Spacing = 0;
@@ -568,8 +572,9 @@ namespace MP.Client.Relatorios.Patentes
             tabela.Border = 0;
             tabela.EndHeaders();
 
-            var celula1 = new Cell(new Phrase("Processo  " + revista.NumeroDoProcesso, _Fonte2));
+            var celula1 = new Cell(new Phrase("Processo  " + revista.NumeroDoProcessoFormatado, _Fonte3));
             celula1.DisableBorderSide(0);
+            celula1.BackgroundColor = corBackgroudHeader;
             tabela.AddCell(celula1);
 
             return tabela;

@@ -25,6 +25,6 @@ namespace MP.Interfaces.Negocio
         IDespachoDePatentes Despacho { get; set; }
         IPasta Pasta { get; set; }
         IPais Pais { get; set; }
-        string ObtenhaNumeroDoProcessoFormatado();
+        string NumeroDoProcessoFormatado { get; }
     }
 }
