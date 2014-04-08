@@ -43,11 +43,19 @@ Partial Public Class cdBancosEAgencias
         CType(rtbToolBarBancos.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBarBancos.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBarBancos.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
+        UtilidadesWeb.LimparComponente(CType(pnlcboBanco, Control))
+        UtilidadesWeb.HabilitaComponentes(CType(pnlcboBanco, Control), True)
+
         UtilidadesWeb.LimparComponente(CType(pnlDadosDoBanco, Control))
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoBanco, Control), False)
-        
+
         pnlAgencias.Visible = False
         ViewState(CHAVE_ESTADO_CD_BANCO) = Estado.Inicial
+        cboBanco.AutoPostBack = True
+        cboBanco.EnableLoadOnDemand = True
+        cboBanco.ShowDropDownOnTextboxClick = True
+        cboBanco.EmptyMessage = "Selecione uma banco"
+        cboBanco.ClearSelection()
     End Sub
 
     Private Sub ExibaTelaInicialAgencia()
@@ -88,6 +96,10 @@ Partial Public Class cdBancosEAgencias
         CType(rtbToolBarBancos.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         ViewState(CHAVE_ESTADO_CD_BANCO) = Estado.Novo
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoBanco, Control), True)
+        cboBanco.AutoPostBack = False
+        cboBanco.EnableLoadOnDemand = False
+        cboBanco.ShowDropDownOnTextboxClick = False
+        cboBanco.EmptyMessage = ""
     End Sub
 
     Private Sub ExibaTelaNovaAgencia()
@@ -112,6 +124,10 @@ Partial Public Class cdBancosEAgencias
         CType(rtbToolBarBancos.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         ViewState(CHAVE_ESTADO_CD_BANCO) = Estado.Modifica
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoBanco, Control), True)
+        cboBanco.AutoPostBack = False
+        cboBanco.EnableLoadOnDemand = False
+        cboBanco.ShowDropDownOnTextboxClick = False
+        cboBanco.EmptyMessage = ""
     End Sub
 
     Private Sub ExibaTelaModificarAgencia()
@@ -134,6 +150,7 @@ Partial Public Class cdBancosEAgencias
         CType(rtbToolBarBancos.FindButtonByCommandName("btnCancelar"), RadToolBarButton).Visible = False
         CType(rtbToolBarBancos.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = True
         CType(rtbToolBarBancos.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = True
+        UtilidadesWeb.HabilitaComponentes(CType(pnlcboBanco, Control), False)
         ViewState(CHAVE_ESTADO_CD_BANCO) = Estado.Remove
     End Sub
 
@@ -157,6 +174,9 @@ Partial Public Class cdBancosEAgencias
         CType(rtbToolBarBancos.FindButtonByCommandName("btnSim"), RadToolBarButton).Visible = False
         CType(rtbToolBarBancos.FindButtonByCommandName("btnNao"), RadToolBarButton).Visible = False
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosDoBanco, Control), False)
+        cboBanco.AutoPostBack = True
+        cboBanco.EnableLoadOnDemand = True
+        cboBanco.ShowDropDownOnTextboxClick = True
         ExibaTelaInicialAgencia()
     End Sub
 
@@ -186,7 +206,7 @@ Partial Public Class cdBancosEAgencias
         Banco.Numero = CInt(txtNumeroDoBanco.Value)
         Banco.Nome = cboBanco.Text
 
-        If ViewState(CHAVE_ESTADO_CD_BANCO).Equals(Estado.Modifica) Then
+        If Not String.IsNullOrEmpty(CStr(ViewState(CHAVE_ESTADO_CD_BANCO))) Then
             Banco.ID = CType(ViewState(CHAVE_ID_BANCO), Long?)
         End If
 
@@ -208,7 +228,9 @@ Partial Public Class cdBancosEAgencias
     End Function
 
     Private Function ConsisteDadosDoBanco() As String
+        If String.IsNullOrEmpty(cboBanco.Text) Then Return "O nome do banco deve ser informado."
         If Not txtNumeroDoBanco.Value.HasValue Then Return "O número do banco deve ser informado."
+
         Return Nothing
     End Function
 
@@ -239,7 +261,7 @@ Partial Public Class cdBancosEAgencias
             End Using
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
-            ExibaTelaInicialBanco()
+            ExibaTelaConsultarBanco()
 
         Catch ex As BussinesException
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
@@ -310,7 +332,7 @@ Partial Public Class cdBancosEAgencias
     Private Sub btnSim_Click()
         Try
             Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-                Servico.RemovaBanco(CType(cboBanco.SelectedValue, Long))
+                Servico.RemovaBanco(CType(ViewState(CHAVE_ID_BANCO), Long))
             End Using
 
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Banco excluido com sucesso."), False)
@@ -354,15 +376,11 @@ Partial Public Class cdBancosEAgencias
         End Select
     End Sub
 
-    Private Sub ObtenhaBanco(ByVal Pessoa As IPessoa)
-        
-    End Sub
-
-    Private Sub ObtenhaAgencia(ByVal Pessoa As IPessoa)
+   Private Sub ObtenhaAgencia(ByVal Pessoa As IPessoa)
         Dim Agencia As IAgencia
 
         Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-            Agencia = Servico.ObtenhaAgencia(CLng(cboBanco.SelectedValue), Pessoa.ID.Value)
+            Agencia = Servico.ObtenhaAgencia(CLng(ViewState(CHAVE_ID_BANCO)), Pessoa.ID.Value)
         End Using
 
         If Agencia Is Nothing Then
@@ -375,6 +393,7 @@ Partial Public Class cdBancosEAgencias
     End Sub
 
     Private Sub MostreBanco(ByVal Banco As IBanco)
+        ViewState(CHAVE_ID_BANCO) = Banco.ID.Value
         txtNumeroDoBanco.Value = Banco.Numero
     End Sub
 
@@ -422,6 +441,8 @@ Partial Public Class cdBancosEAgencias
 
     Private Sub cboBanco_SelectedIndexChanged(sender As Object, e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboBanco.SelectedIndexChanged
         Dim Banco As IBanco
+
+        If String.IsNullOrEmpty(cboBanco.SelectedValue) Then Exit Sub
 
         Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
             Banco = Servico.ObtenhaBanco(CLng(cboBanco.SelectedValue))
