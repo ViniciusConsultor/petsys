@@ -50,13 +50,13 @@ Partial Public Class cdBancosEAgencias
     Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
-    '''pnlDadosDoBanco control.
+    '''pnlcboBanco control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlDadosDoBanco As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlcboBanco As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
     '''Label3 control.
@@ -75,6 +75,15 @@ Partial Public Class cdBancosEAgencias
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboBanco As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''pnlDadosDoBanco control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlDadosDoBanco As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''Label1 control.
