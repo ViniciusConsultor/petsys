@@ -10,11 +10,6 @@ Namespace Schedules
         Implements IScheduleLimpaPdfs
 
         Protected Overrides Sub ExecuteTarefa()
-            'Quando precisar de conexao na execução da tarefa é necessário pegar nova conexao
-            'Using Servico As IServicoDeConexao = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConexao)()
-            '    FabricaDeContexto.GetInstancia.GetContextoAtual.Conexao = Servico.ObtenhaConexao
-            'End Using
-
             Dim arquivos = Directory.GetFileSystemEntries(Util.GetDiretorioLoads())
 
             For Each arquivo In arquivos
@@ -28,7 +23,7 @@ Namespace Schedules
             Next
         End Sub
 
-        Protected Overrides Sub Inicialize()
+        Protected Overrides Sub Inicialize(Credencial As ICredencial)
 
         End Sub
 

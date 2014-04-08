@@ -14,16 +14,21 @@ namespace MP.Negocio.Schedules
     [Serializable]
     public class ScheduleManutencaoDeMarcas : Schedule, IScheduleManutencaoDeMarcas
     {
-        protected override void Inicialize()
+        private ICredencial _credencial;
+
+        protected override void Inicialize(ICredencial credencial)
         {
-         
+            _credencial = credencial;
         }
 
         protected override void ExecuteTarefa()
         {
             try
             {
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeInterfaceComModuloFinanceiro>())
+                var fabrica = FabricaGenerica.GetInstancia();
+                fabrica.InjeteCredencial(_credencial);
+
+                using (var servico = fabrica.CrieObjeto<IServicoDeInterfaceComModuloFinanceiro>())
                     servico.ProcureEAgendeItemDeRecebimentoDeMarcasVencidasNoMes();
             }
             catch (Exception ex)

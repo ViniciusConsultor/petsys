@@ -32,14 +32,19 @@ Public Class Logger
     End Function
 
     Private Function ObtenhaInfoUsuario() As String
-        If Not FabricaDeContexto.GetInstancia.GetContextoAtual Is Nothing AndAlso _
-           Not FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario Is Nothing Then
-            Dim usuarioLogado As Usuario = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
+        Try
+            If Not FabricaDeContexto.GetInstancia.GetContextoAtual Is Nothing AndAlso _
+             Not FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario Is Nothing Then
+                Dim usuarioLogado As Usuario = FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario
 
-            Return " [" & USUARIO & usuarioLogado.Nome + "] "
-        End If
+                Return " [" & USUARIO & usuarioLogado.Nome + "] "
+            End If
+        Catch ex As Exception
 
-        Return String.Empty
+        End Try
+      
+
+        Return "[AUTOMÁTICO]"
     End Function
 
     Private Function ObtenhaVersao() As String

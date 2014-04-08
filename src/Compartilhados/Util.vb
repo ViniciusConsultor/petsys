@@ -23,6 +23,13 @@ Public Class Util
         Return Credencial
     End Function
 
+    Public Shared Function ConstruaCredencial(conexao As IConexao) As Credencial
+        Dim Credencial As Credencial = New Credencial(conexao, _
+                                                     Nothing, Nothing)
+
+        Return Credencial
+    End Function
+
     Public Shared Function ObtenhaCaminhoDaPastaDoServidorDeAplicacao() As String
         Dim Caminho As String
 

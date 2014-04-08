@@ -29,8 +29,8 @@ Namespace Schedules
             Next
         End Sub
 
-        Protected Overrides Sub Inicialize()
-          
+        Protected Overrides Sub Inicialize(Credencial As ICredencial)
+
         End Sub
 
         Public Overrides ReadOnly Property Nome As String

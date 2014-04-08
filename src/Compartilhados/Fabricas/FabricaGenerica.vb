@@ -4,6 +4,7 @@ Imports System.Runtime.Remoting
 Imports System.Net.Sockets
 Imports System.Runtime.Remoting.Channels.Tcp
 Imports System.Runtime.Remoting.Channels
+Imports System.Runtime.Remoting.Messaging
 
 Namespace Fabricas
 
@@ -15,7 +16,7 @@ Namespace Fabricas
         Private Shared TipoDeDistribuicao As String
         Private Shared ServidorDeAplicacao As String
         Private Const PORTA_SRV_APP As String = "1235"
-
+        
         Private Sub New()
             If DicionarioDeAssemblyTypes Is Nothing Then
                 DicionarioDeAssemblyTypes = New Dictionary(Of String, Type())
@@ -45,7 +46,9 @@ Namespace Fabricas
             Return InstanciaSolitaria
         End Function
 
-
+        Public Sub InjeteCredencial(credencial As ICredencial)
+            CallContext.SetData("CREDENCIALINJETADA", credencial)
+        End Sub
 
         Private Sub CarregaAssembly(ByVal NomeDoAssembly As String)
             SyncLock DicionarioDeAssemblyTypes
@@ -121,23 +124,31 @@ Namespace Fabricas
             Dim Credencial As ICredencial
             Dim Instancia As Object = Nothing
 
-            Credencial = Util.ConstruaCredencial
-
-            If TipoDeDistribuicao.Equals("Remoting") Then
-                Dim NomeDoTipoConcretoOriginal As String
-
-                NomeDoTipoConcretoOriginal = "I" & NomeDoTipoConcreto
-                NomeDoTipoConcretoOriginal = NomeDoTipoConcretoOriginal.Remove(NomeDoTipoConcretoOriginal.IndexOf("Remoting"), 8)
-
-                Instancia = Activator.GetObject(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcretoOriginal), "tcp://" & ServidorDeAplicacao & ":" & PORTA_SRV_APP & "/" & NomeDoTipoConcreto)
-                CType(Instancia, IServicoRemoto).SetaCredencial(Credencial)
-            ElseIf TipoDeDistribuicao.Equals("Local") Then
-                Dim Parametro As Object() = New Object() {Credencial}
-
-                Instancia = Activator.CreateInstance(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcreto), Parametro)
+            If CallContext.GetData("CREDENCIALINJETADA") Is Nothing Then
+                Credencial = Util.ConstruaCredencial
             Else
-                Throw New ApplicationException("O Tipo de Distribuição configurado é desconhecido.")
+                Dim credencialInjetada As ICredencial = CType(CallContext.GetData("CREDENCIALINJETADA"), ICredencial)
+
+                Credencial = Util.ConstruaCredencial(credencialInjetada.Conexao)
             End If
+
+
+                If TipoDeDistribuicao.Equals("Remoting") Then
+                    Dim NomeDoTipoConcretoOriginal As String
+
+                    NomeDoTipoConcretoOriginal = "I" & NomeDoTipoConcreto
+                    NomeDoTipoConcretoOriginal = NomeDoTipoConcretoOriginal.Remove(NomeDoTipoConcretoOriginal.IndexOf("Remoting"), 8)
+
+                    Instancia = Activator.GetObject(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcretoOriginal), "tcp://" & ServidorDeAplicacao & ":" & PORTA_SRV_APP & "/" & NomeDoTipoConcreto)
+                    CType(Instancia, IServicoRemoto).SetaCredencial(Credencial)
+                ElseIf TipoDeDistribuicao.Equals("Local") Then
+                    Dim Parametro As Object() = New Object() {Credencial}
+
+                    Instancia = Activator.CreateInstance(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcreto), Parametro)
+                Else
+                    Throw New ApplicationException("O Tipo de Distribuição configurado é desconhecido.")
+                End If
+           
 
             Return Instancia
         End Function
