@@ -140,5 +140,7 @@ namespace MP.Negocio
                 return classificacao;
             }
         }
+
+        public string NumeroDoProcessoFormatado { get; set; }
     }
 }

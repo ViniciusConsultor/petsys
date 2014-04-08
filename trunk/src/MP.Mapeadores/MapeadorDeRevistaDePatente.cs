@@ -34,7 +34,7 @@ namespace MP.Mapeadores
                 sql.Append("NUMERODOPROCESSO, CEDENTE, CESSIONARIA, OBSERVACAO, ULTIMAINFORMACAO, CERTIFAVERBACAO, PAISCEDENTE, PAISCESSIONARIA, ");
                 sql.Append("SETOR, ENDERECOCESSIONARIA, NATUREZADOCUMENTO, MOEDADEPAGAMENTO, VALOR, PAGAMENTO, PRAZO, SERVISENTOSDEAVERBACAO, ");
                 sql.Append("CRIADOR, LINGUAGEM, CAMPOAPLICACAO, TIPODEPROGRAMA, DATADACRIACAO, REGIMEDEGUARDA, REQUERENTE, REDACAO, DATAPRORROGACAO, ");
-                sql.Append("CLASSIFICACAONACIONAL) ");
+                sql.Append("CLASSIFICACAONACIONAL, NUMPROCESSOFORMATADO) ");
                 sql.Append("VALUES (");
                 sql.Append(String.Concat(processoDaRevistaDePatente.IdRevistaPatente.Value.ToString(), ", "));
                 sql.Append(String.Concat(processoDaRevistaDePatente.NumeroRevistaPatente, ", "));
@@ -212,7 +212,10 @@ namespace MP.Mapeadores
                            ? String.Concat(processoDaRevistaDePatente.DataDaProrrogacao.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.ClassificacaoNacional)
-                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.ClassificacaoNacional), "')") : "NULL)");
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.ClassificacaoNacional), "',") : "NULL,");
+
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroDoProcessoFormatado)
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoProcessoFormatado), "')") : "NULL)");
 
                 DBHelper.ExecuteNonQuery(sql.ToString());
             }
@@ -324,7 +327,7 @@ namespace MP.Mapeadores
             sql.Append("	DADOSPUBLICINTER, CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, RESPPGTOIMPRENDA, COMPLEMENTO, DECISAO, RECORRENTE, NUMERODOPROCESSO, CEDENTE,");
             sql.Append("	CESSIONARIA, OBSERVACAO, ULTIMAINFORMACAO, CERTIFAVERBACAO, PAISCEDENTE, PAISCESSIONARIA, SETOR, ENDERECOCESSIONARIA ,NATUREZADOCUMENTO,");
             sql.Append("	MOEDADEPAGAMENTO, VALOR, PAGAMENTO, PRAZO, SERVISENTOSDEAVERBACAO, CRIADOR, LINGUAGEM ,CAMPOAPLICACAO, TIPODEPROGRAMA ,DATADACRIACAO ,REGIMEDEGUARDA,");
-            sql.Append("	REQUERENTE ,REDACAO ,DATAPRORROGACAO ,CLASSIFICACAONACIONAL ");
+            sql.Append("	REQUERENTE ,REDACAO ,DATAPRORROGACAO ,CLASSIFICACAONACIONAL, NUMPROCESSOFORMATADO ");
             sql.Append("FROM MP_REVISTA_PATENTE ");
             sql.Append("WHERE PROCESSADA = 1 AND NUMEROREVISTAPATENTE = " + numeroDaRevistaDePatente);
 
@@ -409,6 +412,7 @@ namespace MP.Mapeadores
             revistaDePatente.Redacao = UtilidadesDePersistencia.GetValorString(leitor, "REDACAO");
             revistaDePatente.DataDaProrrogacao = UtilidadesDePersistencia.getValorDate(leitor, "DATAPRORROGACAO");
             revistaDePatente. ClassificacaoNacional = UtilidadesDePersistencia.GetValorString(leitor, "CLASSIFICACAONACIONAL");
+            revistaDePatente.NumeroDoProcessoFormatado = UtilidadesDePersistencia.GetValorString(leitor, "NUMPROCESSOFORMATADO");
 
             return revistaDePatente;
         }

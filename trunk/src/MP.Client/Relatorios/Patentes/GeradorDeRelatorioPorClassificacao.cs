@@ -73,6 +73,7 @@ namespace MP.Client.Relatorios.Patentes
 
             var tabela = new PdfPTable(1);
             tabela.WidthPercentage = 100;
+            tabela.DefaultCell.Border = Rectangle.NO_BORDER;
 
             foreach (IRadicalPatente radical in _radicais)
             {
@@ -81,7 +82,7 @@ namespace MP.Client.Relatorios.Patentes
 
                 var tabela1 = new PdfPTable(1);
 
-                var celulaColidencia = new PdfPCell(new Phrase(radical.Classificacao, _Fonte2));
+                var celulaColidencia = new PdfPCell(new Phrase(radical.Classificacao, _Fonte3));
                 celulaColidencia.HorizontalAlignment = Cell.ALIGN_LEFT;
                 celulaColidencia.Border = 0;
                 celulaColidencia.BackgroundColor = corBackgroudHeader;
@@ -100,23 +101,23 @@ namespace MP.Client.Relatorios.Patentes
 
                             var tabela2 = new PdfPTable(3);
 
-                            var celulaProcesso = new PdfPCell(new Phrase("Processo: " + revistaDePatente.NumeroDoProcesso, _Fonte2));
+                            var celulaProcesso = new PdfPCell(new Phrase("Processo: " + revistaDePatente.NumeroDoProcessoFormatado, _Fonte1));
                             celulaProcesso.HorizontalAlignment = Cell.ALIGN_LEFT;
                             celulaProcesso.Border = 0;
                             tabela2.AddCell(celulaProcesso);
 
-                            var celulaDespacho = new PdfPCell(new Phrase("Despacho: " + despacho.Codigo + " - " + despacho.Titulo, _Fonte2));
+                            var celulaDespacho = new PdfPCell(new Phrase("Despacho: " + despacho.Codigo + " - " + despacho.Titulo, _Fonte1));
                             celulaDespacho.HorizontalAlignment = Cell.ALIGN_LEFT;
                             celulaDespacho.Border = 0;
                             tabela2.AddCell(celulaDespacho);
 
                             var celulaTitular = new PdfPCell(new Phrase("Titular: " + revistaDePatente.Titular + " " + revistaDePatente.PaisTitular + " " +
-                                                                            revistaDePatente.UFTitular, _Fonte2));
+                                                                            revistaDePatente.UFTitular, _Fonte1));
                             celulaTitular.HorizontalAlignment = Cell.ALIGN_LEFT;
                             celulaTitular.Border = 0;;
                             tabela2.AddCell(celulaTitular);
 
-                            var celulaTitulo = new PdfPCell(new Phrase("Título: " + revistaDePatente.Titulo, _Fonte2));
+                            var celulaTitulo = new PdfPCell(new Phrase("Título: " + revistaDePatente.Titulo, _Fonte1));
                             celulaTitulo.Colspan = 3;
                             celulaTitulo.HorizontalAlignment = Cell.ALIGN_LEFT;
                             celulaTitulo.Border = 0;

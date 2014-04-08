@@ -50,7 +50,7 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao;
             itemLacamentoFinanceiro.Valor = patente.Manutencao.ObtenhaValorRealEmEspecie();
-            itemLacamentoFinanceiro.Descricao = "Patente " + processoDePatente.ObtenhaNumeroDoProcessoFormatado();
+            itemLacamentoFinanceiro.Descricao = "Patente " + processoDePatente.NumeroDoProcessoFormatado;
 
             return itemLacamentoFinanceiro;
         }

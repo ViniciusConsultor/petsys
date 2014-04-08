@@ -184,7 +184,7 @@
                                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="Id Processo Patente"
                                                                 UniqueName="IdProcessoDePatente" Visible="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column5">
+                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo" UniqueName="column5">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Patente.NaturezaPatente.DescricaoNaturezaPatente"
                                                                 HeaderText="Natureza" UniqueName="column3">
@@ -271,7 +271,8 @@
                                                         <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Id Processo Patente"
                                                             UniqueName="IdProcessoDePatente" Visible="false">
                                                         </telerik:GridBoundColumn>
-                                                        <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column5">
+                                                        <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado
+                                                        " HeaderText="Processo" UniqueName="column5">
                                                         </telerik:GridBoundColumn>
                                                         <telerik:GridBoundColumn DataField="NaturezaDoDocumento" HeaderText="Natureza" UniqueName="column3">
                                                         </telerik:GridBoundColumn>
@@ -398,7 +399,7 @@
                                                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column6"
                                                                                 Display="false">
                                                                             </telerik:GridBoundColumn>
-                                                                            <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column3">
+                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo" UniqueName="column3">
                                                                             </telerik:GridBoundColumn>
                                                                             <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
                                                                             </telerik:GridBoundColumn>
@@ -438,7 +439,7 @@
                                                                             <telerik:GridBoundColumn DataField="IdRevistaPatente" HeaderText="ID" UniqueName="column6"
                                                                                 Display="false">
                                                                             </telerik:GridBoundColumn>
-                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcesso" HeaderText="Processo" UniqueName="column3">
+                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo" UniqueName="column3">
                                                                             </telerik:GridBoundColumn>
                                                                             <telerik:GridBoundColumn DataField="Titulo" HeaderText="Patente" UniqueName="column2">
                                                                             </telerik:GridBoundColumn>
