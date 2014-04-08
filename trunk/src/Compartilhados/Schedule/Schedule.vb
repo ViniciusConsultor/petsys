@@ -6,6 +6,7 @@ Namespace Schedule
 
         Protected agendador As ScheduleTimer
         Private _segundos As Double
+        Private _credencial As ICredencial
 
         Private m_Executando As Boolean
         Public Property Executando() As Boolean
@@ -17,7 +18,7 @@ Namespace Schedule
             End Set
         End Property
 
-        Protected MustOverride Sub Inicialize()
+        Protected MustOverride Sub Inicialize(Credencial As ICredencial)
 
         Private Sub ConfigureAgendador()
             Dim tarefaDoSubServico As [Delegate] = New MetodoSimplesHandler(AddressOf ExecuteTarefa)
@@ -45,8 +46,9 @@ Namespace Schedule
             Return executado
         End Function
 
-        Public Function Inicie(segundos As Nullable(Of Double)) As Boolean
+        Public Function Inicie(segundos As Nullable(Of Double), credencial As ICredencial) As Boolean
             _segundos = 300
+            _credencial = credencial
 
             If Not segundos Is Nothing Then
                 _segundos = segundos.Value
@@ -62,7 +64,7 @@ Namespace Schedule
         Protected Delegate Sub MetodoSimplesHandler()
 
         Protected Sub InicieServico()
-            Inicialize()
+            Inicialize(_credencial)
             agendador = New ScheduleTimer()
             ConfigureAgendador()
 

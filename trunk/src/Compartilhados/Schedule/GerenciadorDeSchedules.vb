@@ -10,7 +10,7 @@ Namespace Schedule
         Private Shared InstanciaSolitaria As GerenciadorDeSchedules
         Private Shared ReadOnly ObjetoLock As New Object
 
-        Public Sub InicializeSchedules()
+        Public Sub InicializeSchedules(Credencial As ICredencial)
             Dim noSchedules As XmlNode = _Schedules.ChildNodes.Item(0)
 
             For Each NoSchedule As XmlNode In noSchedules
@@ -27,7 +27,7 @@ Namespace Schedule
                         segundos = CDbl(NoSchedule.Attributes("segundos").Value)
                     End If
 
-                    mi.Invoke(Instancia, BindingFlags.InvokeMethod, Nothing, New Object() {segundos}, Nothing)
+                    mi.Invoke(Instancia, BindingFlags.InvokeMethod, Nothing, New Object() {segundos, Credencial}, Nothing)
                 Catch ex As DLLNaoEncontradaException
                     'Não faz nada
                 End Try

@@ -1,5 +1,4 @@
-﻿Imports Compartilhados.Interfaces.Core.Negocio.Repositorios
-Imports Compartilhados.Interfaces.Core.Negocio
+﻿Imports Compartilhados.Interfaces.Core.Negocio
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Remoting.Messaging
 Imports Compartilhados.Interfaces.Core.Servicos

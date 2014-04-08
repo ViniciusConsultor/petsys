@@ -55,8 +55,12 @@ Partial Public Class Login
         Usuario = New Usuario(Operador.Pessoa.ID.Value, Operador.Pessoa.Nome, IDsDiretivas, CType(Operador.Pessoa, IPessoaFisica).Sexo.ID, EmpresasVisiveis)
         FabricaDeContexto.GetInstancia.GetContextoAtual.Usuario = Usuario
 
+        If Not Application.AllKeys.Contains("GERENCIADORFOIINICIADO") Then
+            CType(Application.Get("GERENCIADORDESCHEDULES"), GerenciadorDeSchedules).InicializeSchedules(Util.ConstruaCredencial(FabricaDeContexto.GetInstancia.GetContextoAtual.Conexao))
 
-
+            Application.Add("GERENCIADORFOIINICIADO", True)
+        End If
+        
         Response.Redirect("frmEscolhaDaEmpresa.aspx")
     End Sub
 
