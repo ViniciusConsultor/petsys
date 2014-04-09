@@ -260,6 +260,7 @@ Partial Public Class cdBancosEAgencias
 
             End Using
 
+            MostreBanco(Banco)
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao(Mensagem), False)
             ExibaTelaConsultarBanco()
 
