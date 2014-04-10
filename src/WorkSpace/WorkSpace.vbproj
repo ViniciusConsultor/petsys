@@ -111,6 +111,7 @@
     <Content Include="ctrlCliente.ascx" />
     <Content Include="ctrlOperacaoFiltro.ascx" />
     <Content Include="ctrlPais.ascx" />
+    <Content Include="ctrlTipoDeCarteira.ascx" />
     <Content Include="ctrlTipoEndereco.ascx" />
     <Content Include="ctrlEmpresa.ascx" />
     <Content Include="ctrlGrupoDeAtividade.ascx" />
@@ -1133,6 +1134,13 @@
     </Compile>
     <Compile Include="ctrlPais.ascx.vb">
       <DependentUpon>ctrlPais.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ctrlTipoDeCarteira.ascx.designer.vb">
+      <DependentUpon>ctrlTipoDeCarteira.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlTipoDeCarteira.ascx.vb">
+      <DependentUpon>ctrlTipoDeCarteira.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ctrlTipoEndereco.ascx.designer.vb">

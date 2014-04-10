@@ -18,4 +18,25 @@ Public Class Cedente
             _imagemDeCabecalhoDoReciboDoSacado = value
         End Set
     End Property
+
+    Private _tipoDeCarteira As String
+    Public Property ICedente_TipoDeCarteira() As String Implements ICedente.TipoDeCarteira
+        Get
+            Return _tipoDeCarteira
+        End Get
+        Set (ByVal value As String)
+            _tipoDeCarteira = value
+        End Set
+    End Property
+
+    Private _inicioNossoNumero As Double
+    Public Property InicioNossoNumero() As Double Implements ICedente.InicioNossoNumero
+        Get
+            Return _inicioNossoNumero
+        End Get
+        Set (ByVal value As Double)
+            _inicioNossoNumero = value
+        End Set
+    End Property
+
 End Class

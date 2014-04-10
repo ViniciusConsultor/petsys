@@ -40,6 +40,27 @@ Namespace LazyLoad
             End Set
         End Property
 
+        Public Property TipoDeCarteira() As String Implements ICedente.TipoDeCarteira
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.TipoDeCarteira
+            End Get
+            Set(ByVal value As String)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.TipoDeCarteira = value
+            End Set
+        End Property
+
+        Public Property InicioNossoNumero() As Double Implements ICedente.InicioNossoNumero
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.InicioNossoNumero
+            End Get
+            Set(ByVal value As Double)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.InicioNossoNumero = value
+            End Set
+        End Property
     End Class
 
 End Namespace

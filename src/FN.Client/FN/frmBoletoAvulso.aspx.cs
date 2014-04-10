@@ -132,6 +132,7 @@ namespace FN.Client.FN
 
         private void ctrlCedente_CedenteFoiSelecionado(ICedente cedente)
         {
+            ctrlCedente.CedenteSelecionado = cedente;
             PreenchaDadosDoCedente(cedente);
         }
 
@@ -163,6 +164,7 @@ namespace FN.Client.FN
 
         private void ctrlCliente_ClienteFoiSelecionado(ICliente cliente)
         {
+            ctrlCliente.ClienteSelecionado = cliente;
             PreenchaDadosDoClienteSelecionado(cliente);
         }
 
