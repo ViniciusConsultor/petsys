@@ -11,6 +11,7 @@ using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
+using FN.Client.FN.Relatorios;
 using FN.Interfaces.Negocio.Filtros.ContasAReceber;
 using Telerik.Web.UI;
 
@@ -21,6 +22,7 @@ namespace FN.Client.FN
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_CONTAS_A_RECEBER";
         private const int NUMERO_CELULA_ID_CLIENTE = 9;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 7;
+        private const string CHAVE_ITENS_LANCAMENTO = "CHAVE_ITENS_LANCAMENTO";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,10 +41,10 @@ namespace FN.Client.FN
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
             {
                 grdItensDeContasAReceber.VirtualItemCount = servico.ObtenhaQuantidadeDeItensFinanceiros(filtro);
-                grdItensDeContasAReceber.DataSource = servico.ObtenhaItensFinanceiros(filtro, quantidadeDeProcessos, offSet);
+                ItensLancamento = servico.ObtenhaItensFinanceiros(filtro, quantidadeDeProcessos, offSet);
+                grdItensDeContasAReceber.DataSource = ItensLancamento;
                 grdItensDeContasAReceber.DataBind();
             }
-
         }
 
         private void EscondaTodosOsPanelsDeFiltro()
@@ -123,6 +125,9 @@ namespace FN.Client.FN
                     break;
                 case "btnLimpar":
                     ExibaTelaInicial();
+                    break;
+                case "btnRelatorio":
+                    GerarRelatorio();
                     break;
             }
         }
@@ -479,6 +484,26 @@ namespace FN.Client.FN
             }
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = mostrarBotaoBoletoColetivo;
+        }
+
+        private void GerarRelatorio()
+        {
+            var geradorDeRelatorioGeral = new GeradorDeRelatorioDeContasAReceber(ItensLancamento);
+            var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+        }
+
+        private IList<IItemLancamentoFinanceiroRecebimento> ItensLancamento
+        {
+            get
+            {
+                if(ViewState[CHAVE_ITENS_LANCAMENTO] == null)
+                    return new List<IItemLancamentoFinanceiroRecebimento>();
+
+                return (IList<IItemLancamentoFinanceiroRecebimento>) ViewState[CHAVE_ITENS_LANCAMENTO];
+            }
+            set { ViewState[CHAVE_ITENS_LANCAMENTO] = value; }
         }
     }
 }
