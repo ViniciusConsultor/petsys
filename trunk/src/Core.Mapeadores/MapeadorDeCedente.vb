@@ -16,7 +16,7 @@ Public Class MapeadorDeCedente
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("INSERT INTO NCL_CEDENTE (")
-        Sql.Append("IDPESSOA, TIPOPESSOA, IMAGEMBOLETO)")
+        Sql.Append("IDPESSOA, TIPOPESSOA, IMAGEMBOLETO, TIPODECARTEIRA, INICIONOSSONUMERO)")
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Cedente.Pessoa.ID.ToString, ", "))
         Sql.Append(String.Concat(Cedente.Pessoa.Tipo.ID, ", "))
@@ -26,6 +26,24 @@ Public Class MapeadorDeCedente
         Else
             Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "') "))
         End If
+
+        'If String.IsNullOrEmpty(Cedente.ImagemDeCabecalhoDoReciboDoSacado) Then
+        '    Sql.Append("NULL, ")
+        'Else
+        '    Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "', "))
+        'End If
+
+        'If String.IsNullOrEmpty(Cedente.TipoDeCarteira) Then
+        '    Sql.Append("NULL, ")
+        'Else
+        '    Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.TipoDeCarteira), "', "))
+        'End If
+
+        'If Cedente.InicioNossoNumero <= 0 Then
+        '    Sql.Append("10001001) ")
+        'Else
+        '    Sql.Append(String.Concat(Cedente.InicioNossoNumero, ") "))
+        'End If
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub

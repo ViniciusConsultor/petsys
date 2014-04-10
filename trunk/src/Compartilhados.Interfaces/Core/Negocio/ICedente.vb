@@ -4,6 +4,8 @@
         Inherits IPapelPessoa
 
         Property ImagemDeCabecalhoDoReciboDoSacado() As String
+        Property TipoDeCarteira() As String
+        Property InicioNossoNumero() As Double
 
     End Interface
 
