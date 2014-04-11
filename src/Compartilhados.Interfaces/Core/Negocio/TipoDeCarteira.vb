@@ -53,6 +53,10 @@
             Return CType(obj, TipoDeCarteira).ID = Me.ID
         End Function
 
+        Public Overrides Function GetHashCode() As Integer
+            Return ID.GetHashCode()
+        End Function
+
     End Class
 
 End Namespace

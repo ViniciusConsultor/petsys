@@ -5,7 +5,7 @@
 
         Property ImagemDeCabecalhoDoReciboDoSacado() As String
         Property TipoDeCarteira() As String
-        Property InicioNossoNumero() As Double
+        Property InicioNossoNumero() As Long
 
     End Interface
 

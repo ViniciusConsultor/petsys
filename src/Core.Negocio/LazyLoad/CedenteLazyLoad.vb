@@ -51,12 +51,12 @@ Namespace LazyLoad
             End Set
         End Property
 
-        Public Property InicioNossoNumero() As Double Implements ICedente.InicioNossoNumero
+        Public Property InicioNossoNumero() As Long Implements ICedente.InicioNossoNumero
             Get
                 If _CedenteReal Is Nothing Then CarregueObjetoReal()
                 Return _CedenteReal.InicioNossoNumero
             End Get
-            Set(ByVal value As Double)
+            Set(ByVal value As Long)
                 If _CedenteReal Is Nothing Then CarregueObjetoReal()
                 _CedenteReal.InicioNossoNumero = value
             End Set
