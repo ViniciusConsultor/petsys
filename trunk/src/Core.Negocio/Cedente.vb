@@ -29,12 +29,12 @@ Public Class Cedente
         End Set
     End Property
 
-    Private _inicioNossoNumero As Double
-    Public Property InicioNossoNumero() As Double Implements ICedente.InicioNossoNumero
+    Private _inicioNossoNumero As Long
+    Public Property InicioNossoNumero() As Long Implements ICedente.InicioNossoNumero
         Get
             Return _inicioNossoNumero
         End Get
-        Set (ByVal value As Double)
+        Set(ByVal value As Long)
             _inicioNossoNumero = value
         End Set
     End Property

@@ -20,30 +20,24 @@ Public Class MapeadorDeCedente
         Sql.Append(" VALUES (")
         Sql.Append(String.Concat(Cedente.Pessoa.ID.ToString, ", "))
         Sql.Append(String.Concat(Cedente.Pessoa.Tipo.ID, ", "))
-
+        
         If String.IsNullOrEmpty(Cedente.ImagemDeCabecalhoDoReciboDoSacado) Then
-            Sql.Append("NULL) ")
+            Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "') "))
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "', "))
         End If
 
-        'If String.IsNullOrEmpty(Cedente.ImagemDeCabecalhoDoReciboDoSacado) Then
-        '    Sql.Append("NULL, ")
-        'Else
-        '    Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "', "))
-        'End If
+        If String.IsNullOrEmpty(Cedente.TipoDeCarteira) Then
+            Sql.Append("NULL, ")
+        Else
+            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.TipoDeCarteira), "', "))
+        End If
 
-        'If String.IsNullOrEmpty(Cedente.TipoDeCarteira) Then
-        '    Sql.Append("NULL, ")
-        'Else
-        '    Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.TipoDeCarteira), "', "))
-        'End If
-
-        'If Cedente.InicioNossoNumero <= 0 Then
-        '    Sql.Append("10001001) ")
-        'Else
-        '    Sql.Append(String.Concat(Cedente.InicioNossoNumero, ") "))
-        'End If
+        If Cedente.InicioNossoNumero <= 0 Then
+            Sql.Append("10001001) ")
+        Else
+            Sql.Append(String.Concat(Cedente.InicioNossoNumero, ") "))
+        End If
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
     End Sub
@@ -56,7 +50,9 @@ Public Class MapeadorDeCedente
         DBHelper = ServerUtils.getDBHelper
 
         Sql.Append("UPDATE NCL_CEDENTE SET ")
-        Sql.Append(String.Concat(" IMAGEMBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "'"))
+        Sql.Append(String.Concat(" IMAGEMBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "', "))
+        Sql.Append(String.Concat(" TIPODECARTEIRA = '", UtilidadesDePersistencia.FiltraApostrofe(Cedente.TipoDeCarteira), "', "))
+        Sql.Append(String.Concat(" INICIONOSSONUMERO = ", Cedente.InicioNossoNumero, ""))
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Cedente.Pessoa.ID.Value.ToString))
 
         DBHelper.ExecuteNonQuery(Sql.ToString)
@@ -68,7 +64,7 @@ Public Class MapeadorDeCedente
         Dim DBHelper As IDBHelper
         Dim Cedente As ICedente = Nothing
 
-        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, IMAGEMBOLETO FROM NCL_CEDENTE ")
+        Sql.Append("SELECT IDPESSOA, TIPOPESSOA, IMAGEMBOLETO, TIPODECARTEIRA, INICIONOSSONUMERO FROM NCL_CEDENTE ")
         Sql.Append("WHERE ")
         Sql.Append(String.Concat("IDPESSOA = ", Pessoa.ID.Value.ToString, " AND "))
         Sql.Append(String.Concat("TIPOPESSOA = ", Pessoa.Tipo.ID.ToString))
@@ -94,6 +90,10 @@ Public Class MapeadorDeCedente
         Cedente = FabricaGenerica.GetInstancia.CrieObjeto(Of ICedente)(New Object() {Pessoa})
         
         Cedente.ImagemDeCabecalhoDoReciboDoSacado = UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEMBOLETO")
+
+        Cedente.TipoDeCarteira = UtilidadesDePersistencia.GetValorString(Leitor, "TIPODECARTEIRA")
+
+        Cedente.InicioNossoNumero = UtilidadesDePersistencia.GetValorLong(Leitor, "INICIONOSSONUMERO")
         
         Return Cedente
     End Function
@@ -106,7 +106,7 @@ Public Class MapeadorDeCedente
         Dim Pessoa As IPessoa = Nothing
 
         Sql.Append("SELECT NCL_PESSOA.ID IDDAPESSOA, NCL_PESSOA.NOME NOMEPESSOA, NCL_PESSOA.TIPO, ")
-        Sql.Append("NCL_CEDENTE.IDPESSOA, NCL_CEDENTE.TIPOPESSOA, NCL_CEDENTE.IMAGEMBOLETO ")
+        Sql.Append("NCL_CEDENTE.IDPESSOA, NCL_CEDENTE.TIPOPESSOA, NCL_CEDENTE.IMAGEMBOLETO, NCL_CEDENTE.TIPODECARTEIRA, NCL_CEDENTE.INICIONOSSONUMERO ")
         Sql.Append("FROM NCL_PESSOA, NCL_CEDENTE ")
         Sql.Append("WHERE NCL_CEDENTE.IDPESSOA = NCL_PESSOA.ID ")
         Sql.Append("AND NCL_CEDENTE.TIPOPESSOA = NCL_PESSOA.TIPO ")
@@ -144,7 +144,7 @@ Public Class MapeadorDeCedente
         Dim Cedentes As IList(Of ICedente) = New List(Of ICedente)
 
         Sql.Append("SELECT NCL_PESSOA.ID IDDAPESSOA, NCL_PESSOA.NOME NOMEPESSOA, NCL_PESSOA.TIPO,")
-        Sql.Append("NCL_CEDENTE.IDPESSOA, NCL_CEDENTE.TIPOPESSOA, NCL_CEDENTE.IMAGEMBOLETO ")
+        Sql.Append("NCL_CEDENTE.IDPESSOA, NCL_CEDENTE.TIPOPESSOA, NCL_CEDENTE.IMAGEMBOLETO, NCL_CEDENTE.TIPODECARTEIRA, NCL_CEDENTE.INICIONOSSONUMERO ")
         Sql.Append("FROM NCL_PESSOA, NCL_CEDENTE ")
         Sql.Append("WHERE NCL_CEDENTE.IDPESSOA = NCL_PESSOA.ID ")
         Sql.Append("AND NCL_CEDENTE.TIPOPESSOA = NCL_PESSOA.TIPO ")

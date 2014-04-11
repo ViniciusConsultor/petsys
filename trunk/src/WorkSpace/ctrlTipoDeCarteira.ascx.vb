@@ -5,6 +5,9 @@ Imports Telerik.Web.UI
 Public Class ctrlTipoDeCarteira
     Inherits UserControl
 
+    Public Event TipoDeCarteiraFoiSelecionada As TipoDeCarteiraFoiSelecionadaEventHandler
+    Public Delegate Sub TipoDeCarteiraFoiSelecionadaEventHandler(tipoDeCarteira As TipoDeCarteira)
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
 
     End Sub
@@ -48,6 +51,41 @@ Public Class ctrlTipoDeCarteira
             cboTipoDeCarteira.Items.Add(item)
             item.DataBind()
         Next
+    End Sub
+
+    Public WriteOnly Property AutoPostBack() As Boolean
+        Set(value As Boolean)
+            cboTipoDeCarteira.AutoPostBack = value
+        End Set
+    End Property
+
+    Public Property TipoDeCarteiraSelecionada() As TipoDeCarteira
+        Get
+            Return DirectCast(ViewState(ClientID), TipoDeCarteira)
+        End Get
+        Set(value As TipoDeCarteira)
+            ViewState.Add(Me.ClientID, value)
+            cboTipoDeCarteira.SelectedValue = value.ID.ToString()
+        End Set
+    End Property
+
+    Protected Sub cboTipoDeCarteira_SelectedIndexChanged(o As Object, e As RadComboBoxSelectedIndexChangedEventArgs)
+        If Not cboTipoDeCarteira.AutoPostBack Then
+            Return
+        End If
+
+        Dim carteira As TipoDeCarteira = Nothing
+
+        If String.IsNullOrEmpty(DirectCast(o, RadComboBox).SelectedValue) Then
+            LimparControle()
+            Return
+        End If
+
+        carteira = TipoDeCarteira.Obtenha(CType((DirectCast(o, RadComboBox).SelectedValue), Short))
+
+        TipoDeCarteiraSelecionada = carteira
+
+        RaiseEvent TipoDeCarteiraFoiSelecionada(carteira)
     End Sub
 
 End Class

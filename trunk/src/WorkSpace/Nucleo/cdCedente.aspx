@@ -3,6 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlPessoa.ascx" TagName="ctrlPessoa" TagPrefix="uc1" %>
+<%@ Register TagPrefix="uc2" TagName="ctrlTipoDeCarteira" Src="~/ctrlTipoDeCarteira.ascx" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;">
         <Items>
@@ -29,6 +30,28 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
+                     <table class="tabela">
+                        <tr>
+                             <td class="th3">
+                                <asp:Label ID="Label13" runat="server" Text="Tipo de carteira:"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc2:ctrlTipoDeCarteira ID="ctrlTipoDeCarteira1" runat="server"/>
+                            </td>
+                        </tr>
+                        <tr>
+                             <td class="th3">
+                                <asp:Label ID="Label1" runat="server" Text="Início do nosso número:"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtInicioNossoNumero" runat="server" Width="87px" MaxLength="8" Type="Number"
+                                        DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0" GroupSeparator=""></NumberFormat>
+                                    </telerik:RadNumericTextBox>
+                                    Ex.: (10001001)
+                            </td>
+                        </tr>
+                    </table>
                     <table class="tabela">
                         <tr>
                             <td class="th3">

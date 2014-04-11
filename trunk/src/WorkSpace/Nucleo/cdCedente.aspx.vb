@@ -47,6 +47,8 @@ Public Class cdCedente
         ctrlPessoa1.BotaoNovoEhVisivel = True
         ViewState(CHAVE_ESTADO) = Estado.Inicial
         imgImagem.ImageUrl = String.Empty
+        ctrlTipoDeCarteira1.Inicializa()
+        txtInicioNossoNumero.Text = String.Empty
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -111,6 +113,14 @@ Public Class cdCedente
 
             Cedente.ImagemDeCabecalhoDoReciboDoSacado = imgImagem.ImageUrl
 
+        End If
+
+        If Not ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada Is Nothing Then
+            Cedente.TipoDeCarteira = ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada.ID.ToString()
+        End If
+
+        If Not String.IsNullOrEmpty(txtInicioNossoNumero.Text) Then
+            Cedente.InicioNossoNumero = CType(txtInicioNossoNumero.Text, Long)
         End If
 
         Return Cedente
@@ -209,6 +219,17 @@ Public Class cdCedente
 
             imgImagem.ImageUrl = Cedente.ImagemDeCabecalhoDoReciboDoSacado
 
+        End If
+
+        If Not String.IsNullOrEmpty(Cedente.TipoDeCarteira) Then
+            Dim tipoDeCarteira = Interfaces.Core.Negocio.TipoDeCarteira.Obtenha(CType(Cedente.TipoDeCarteira, Short))
+
+            ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada = tipoDeCarteira
+
+        End If
+
+        If Cedente.InicioNossoNumero > 0 Then
+            txtInicioNossoNumero.Text = Cedente.InicioNossoNumero.ToString()
         End If
 
     End Sub
