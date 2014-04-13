@@ -9,6 +9,7 @@ using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using FN.Client.FN.Relatorios;
 using FN.Interfaces.Negocio;
 using FN.Interfaces.Negocio.Filtros.BoletosGerados;
 using FN.Interfaces.Servicos;
@@ -19,6 +20,7 @@ namespace FN.Client.FN
     public partial class frmBoletosGerados : SuperPagina
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_BOLETOS_GERADOS";
+        private const string CHAVE_BOLETOS_GERADOS = "CHAVE_BOLETOS_GERADOS";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -53,6 +55,7 @@ namespace FN.Client.FN
             FiltroAplicado = filtro;
 
             CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, 0);
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = BoletosGerados.Count > 0;
         }
 
         private void CarregaBoletosGerados(IFiltro filtro, int quantidadeDeBoletos, int offset)
@@ -60,6 +63,9 @@ namespace FN.Client.FN
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
             {
                 var listaDeBoletosGerados = servico.obtenhaBoletosGerados(filtro, quantidadeDeBoletos, offset);
+
+                BoletosGerados = listaDeBoletosGerados;
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = BoletosGerados.Count > 0;
 
                 if (listaDeBoletosGerados.Count > 0)
                 {
@@ -442,12 +448,37 @@ namespace FN.Client.FN
                 case "btnLimpar":
                     ExibaTelaInicial();
                     break;
+
+                case "btnRelatorio":
+                    GerarRelatorio();
+                    break;
             }
         }
 
         private void Recarregue()
         {
             CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, 0);
+        }
+
+        private void GerarRelatorio()
+        {
+            var geradorDeRelatorioGeral = new GeradorDeRelatorioDeBoletosGerados(BoletosGerados);
+            var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+        }
+
+        private IList<IBoletosGerados> BoletosGerados
+        {
+            get
+            {
+                if (ViewState[CHAVE_BOLETOS_GERADOS] == null)
+                    ViewState[CHAVE_BOLETOS_GERADOS] = new List<IBoletosGerados>();
+
+                return (IList<IBoletosGerados>) ViewState[CHAVE_BOLETOS_GERADOS];
+            }
+
+            set { ViewState[CHAVE_BOLETOS_GERADOS] = value; }
         }
     }
 }
