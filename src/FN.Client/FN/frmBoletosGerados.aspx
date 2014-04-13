@@ -14,6 +14,8 @@ CodeBehind="frmBoletosGerados.aspx.cs" Inherits="FN.Client.FN.frmBoletosGerados"
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
             CommandName="btnLimpar" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
+            CommandName="btnRelatorio" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>

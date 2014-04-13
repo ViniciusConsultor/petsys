@@ -44,6 +44,7 @@ namespace FN.Client.FN
                 ItensLancamento = servico.ObtenhaItensFinanceiros(filtro, quantidadeDeProcessos, offSet);
                 grdItensDeContasAReceber.DataSource = ItensLancamento;
                 grdItensDeContasAReceber.DataBind();
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = ItensLancamento.Count > 0;
             }
         }
 
@@ -91,6 +92,7 @@ namespace FN.Client.FN
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = ItensLancamento.Count > 0;
         }
 
         private string ObtenhaURLDeContaAReceber()
