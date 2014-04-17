@@ -116,7 +116,7 @@ Public Class cdCedente
         End If
 
         If Not ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada Is Nothing Then
-            Cedente.TipoDeCarteira = ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada.ID.ToString()
+            Cedente.TipoDeCarteira = ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada
         End If
 
         If Not String.IsNullOrEmpty(txtInicioNossoNumero.Text) Then
@@ -221,12 +221,7 @@ Public Class cdCedente
 
         End If
 
-        If Not String.IsNullOrEmpty(Cedente.TipoDeCarteira) Then
-            Dim tipoDeCarteira = Interfaces.Core.Negocio.TipoDeCarteira.Obtenha(CType(Cedente.TipoDeCarteira, Short))
-
-            ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada = tipoDeCarteira
-
-        End If
+        If Not Cedente.TipoDeCarteira Is Nothing Then ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada = Cedente.TipoDeCarteira
 
         If Cedente.InicioNossoNumero > 0 Then
             txtInicioNossoNumero.Text = Cedente.InicioNossoNumero.ToString()

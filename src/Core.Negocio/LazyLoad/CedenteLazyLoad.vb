@@ -40,12 +40,12 @@ Namespace LazyLoad
             End Set
         End Property
 
-        Public Property TipoDeCarteira() As String Implements ICedente.TipoDeCarteira
+        Public Property TipoDeCarteira() As TipoDeCarteira Implements ICedente.TipoDeCarteira
             Get
                 If _CedenteReal Is Nothing Then CarregueObjetoReal()
                 Return _CedenteReal.TipoDeCarteira
             End Get
-            Set(ByVal value As String)
+            Set(ByVal value As TipoDeCarteira)
                 If _CedenteReal Is Nothing Then CarregueObjetoReal()
                 _CedenteReal.TipoDeCarteira = value
             End Set
