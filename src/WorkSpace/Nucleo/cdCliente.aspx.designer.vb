@@ -41,13 +41,13 @@ Partial Public Class cdCliente
     Protected WithEvents RadDockZone1 As Global.Telerik.Web.UI.RadDockZone
 
     '''<summary>
-    '''RadDock1 control.
+    '''rdkPesquisaCliente control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+    Protected WithEvents rdkPesquisaCliente As Global.Telerik.Web.UI.RadDock
 
     '''<summary>
     '''ctrlPessoa1 control.
@@ -59,6 +59,15 @@ Partial Public Class cdCliente
     Protected WithEvents ctrlPessoa1 As Global.WorkSpace.ctrlPessoa
 
     '''<summary>
+    '''RadDock1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDock1 As Global.Telerik.Web.UI.RadDock
+
+    '''<summary>
     '''pnlDadosDoCliente control.
     '''</summary>
     '''<remarks>
@@ -66,6 +75,33 @@ Partial Public Class cdCliente
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlDadosDoCliente As Global.System.Web.UI.HtmlControls.HtmlTable
+
+    '''<summary>
+    '''pnlNomeDoCliente control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlNomeDoCliente As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''Label10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label10 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtNome control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtNome As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
     '''Label6 control.
@@ -237,4 +273,13 @@ Partial Public Class cdCliente
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtSaldoParaCompras As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''RadDock2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadDock2 As Global.Telerik.Web.UI.RadDock
 End Class
