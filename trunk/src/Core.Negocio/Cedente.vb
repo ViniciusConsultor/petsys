@@ -19,12 +19,12 @@ Public Class Cedente
         End Set
     End Property
 
-    Private _tipoDeCarteira As String
-    Public Property ICedente_TipoDeCarteira() As String Implements ICedente.TipoDeCarteira
+    Private _tipoDeCarteira As TipoDeCarteira
+    Public Property ICedente_TipoDeCarteira() As TipoDeCarteira Implements ICedente.TipoDeCarteira
         Get
             Return _tipoDeCarteira
         End Get
-        Set (ByVal value As String)
+        Set(ByVal value As TipoDeCarteira)
             _tipoDeCarteira = value
         End Set
     End Property

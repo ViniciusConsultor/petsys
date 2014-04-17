@@ -27,10 +27,10 @@ Public Class MapeadorDeCedente
             Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "', "))
         End If
 
-        If String.IsNullOrEmpty(Cedente.TipoDeCarteira) Then
+        If Cedente.TipoDeCarteira Is Nothing Then
             Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Cedente.TipoDeCarteira), "', "))
+            Sql.Append(String.Concat("'", Cedente.TipoDeCarteira.ID.ToString(), ", "))
         End If
 
         If Cedente.InicioNossoNumero <= 0 Then
@@ -51,7 +51,7 @@ Public Class MapeadorDeCedente
 
         Sql.Append("UPDATE NCL_CEDENTE SET ")
         Sql.Append(String.Concat(" IMAGEMBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(Cedente.ImagemDeCabecalhoDoReciboDoSacado), "', "))
-        Sql.Append(String.Concat(" TIPODECARTEIRA = '", UtilidadesDePersistencia.FiltraApostrofe(Cedente.TipoDeCarteira), "', "))
+        Sql.Append(String.Concat(" TIPODECARTEIRA = '", UtilidadesDePersistencia.FiltraApostrofe(Cedente.TipoDeCarteira.ID.ToString()), "', "))
         Sql.Append(String.Concat(" INICIONOSSONUMERO = ", Cedente.InicioNossoNumero, ""))
         Sql.Append(String.Concat(" WHERE IDPESSOA = ", Cedente.Pessoa.ID.Value.ToString))
 
@@ -91,7 +91,7 @@ Public Class MapeadorDeCedente
         
         Cedente.ImagemDeCabecalhoDoReciboDoSacado = UtilidadesDePersistencia.GetValorString(Leitor, "IMAGEMBOLETO")
 
-        Cedente.TipoDeCarteira = UtilidadesDePersistencia.GetValorString(Leitor, "TIPODECARTEIRA")
+        Cedente.TipoDeCarteira = TipoDeCarteira.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPODECARTEIRA"))
 
         Cedente.InicioNossoNumero = UtilidadesDePersistencia.GetValorLong(Leitor, "INICIONOSSONUMERO")
         
