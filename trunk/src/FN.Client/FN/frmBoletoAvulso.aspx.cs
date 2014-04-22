@@ -22,7 +22,7 @@ namespace FN.Client.FN
     public partial class frmBoletoAvulso : SuperPagina
     {
         //Todo verificar carregamento do tipo de carteira
-        public const string carteira = "SR";
+        //public const string carteira = "SR";
         public const string CHAVE_CEDENTE_BOLETOGERADO = "CHAVE_CEDENTE_BOLETOGERADO";
        
         public IBoletosGerados BoletoGerado { get; set; }
@@ -195,19 +195,48 @@ namespace FN.Client.FN
 
                     if (cliente.Pessoa.Enderecos != null && cliente.Pessoa.Enderecos.Count > 0)
                     {
-                        txtEndereco.Text = cliente.Pessoa.Enderecos[0].Logradouro;
-                        txtBairro.Text = cliente.Pessoa.Enderecos[0].Bairro;
-
-                        if (cliente.Pessoa.Enderecos[0].Municipio != null)
+                        foreach (var endereco in cliente.Pessoa.Enderecos)
                         {
-                            txtCidade.Text = cliente.Pessoa.Enderecos[0].Municipio.Nome;
+                            if(endereco.TipoDeEndereco != null)
+                            {
+                                if(endereco.TipoDeEndereco.Nome.ToUpper().Equals("COBRANÇA".ToUpper()) ||
+                                    endereco.TipoDeEndereco.Nome.ToUpper().Equals("COBRANCA".ToUpper()))
+                                {
+                                    txtEndereco.Text = endereco.Logradouro + " - " + endereco.Complemento;
+                                    txtBairro.Text = endereco.Bairro;
 
-                            if (cliente.Pessoa.Enderecos[0].Municipio.UF != null)
-                                txtEstado.Text = cliente.Pessoa.Enderecos[0].Municipio.UF.Sigla;
+                                    if (endereco.Municipio != null)
+                                    {
+                                        txtCidade.Text = endereco.Municipio.Nome;
+
+                                        if (endereco.Municipio.UF != null)
+                                            txtEstado.Text = endereco.Municipio.UF.Sigla;
+                                    }
+
+                                    if (endereco.CEP != null && endereco.CEP.Numero.HasValue)
+                                        txtCep.Text = endereco.CEP.Numero.Value.ToString();
+
+                                    break;
+                                }
+                            }
                         }
 
-                        if (cliente.Pessoa.Enderecos[0].CEP != null && cliente.Pessoa.Enderecos[0].CEP.Numero.HasValue)
-                            txtCep.Text = cliente.Pessoa.Enderecos[0].CEP.Numero.Value.ToString();
+                        if (string.IsNullOrEmpty(txtEndereco.Text))
+                        {
+                            txtEndereco.Text = cliente.Pessoa.Enderecos[0].Logradouro + " - " + cliente.Pessoa.Enderecos[0].Complemento;
+                            txtBairro.Text = cliente.Pessoa.Enderecos[0].Bairro;
+
+                            if (cliente.Pessoa.Enderecos[0].Municipio != null)
+                            {
+                                txtCidade.Text = cliente.Pessoa.Enderecos[0].Municipio.Nome;
+
+                                if (cliente.Pessoa.Enderecos[0].Municipio.UF != null)
+                                    txtEstado.Text = cliente.Pessoa.Enderecos[0].Municipio.UF.Sigla;
+                            }
+
+                            if (cliente.Pessoa.Enderecos[0].CEP != null && cliente.Pessoa.Enderecos[0].CEP.Numero.HasValue)
+                                txtCep.Text = cliente.Pessoa.Enderecos[0].CEP.Numero.Value.ToString();
+                        }
                     }
                 }
             }
@@ -286,7 +315,12 @@ namespace FN.Client.FN
                             var boletosGeradosAux = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
 
                             boletosGeradosAux.ID = GeradorDeID.getInstancia().getProximoID();
-                            boletosGeradosAux.ProximoNossoNumero = 8210001001;
+
+                            // verificar se o codigo do banco é da caixa e acrescentar o 82
+                            if(ctrlCedente.CedenteSelecionado != null)
+                            {
+                                boletosGeradosAux.ProximoNossoNumero = Convert.ToInt64("82" + ctrlCedente.CedenteSelecionado.InicioNossoNumero);
+                            }
 
                             servico.InserirPrimeiraVez(boletosGeradosAux);
 
@@ -317,6 +351,7 @@ namespace FN.Client.FN
                 var cedenteCodigo = string.Empty;
                 var imagemDoRecibo = string.Empty;
                 var codigoDoBanco = 0;
+                var carteira = string.Empty;
 
                 if (cedenteSelecionado != null)
                 {
@@ -342,7 +377,7 @@ namespace FN.Client.FN
                     }
 
                     cedenteCpfCnpj = OtenhaNumeroCPFOuCNPJ(cedentePessoa);
-
+                    carteira = cedenteSelecionado.TipoDeCarteira.Sigla;
                 }
                 else
                 {
@@ -463,6 +498,20 @@ namespace FN.Client.FN
 
         private bool ExisteErroDePreenchimento()
         {
+
+            if(!string.IsNullOrEmpty(txtFinalidadeBoleto.Text))
+            {
+                string[] linhasDaIntrucao = txtFinalidadeBoleto.Text.Split('\n');
+                IList<string> listaDeLinhas = linhasDaIntrucao.ToList();
+
+                if(listaDeLinhas.Count > 10)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("Quantidade de linhas das informações do recibo do sacado, excedeu o tamanho limite de 15 linhas."),
+                                                   false);
+                    return true;
+                }
+            }
 
             if (ctrlCedente.CedenteSelecionado.Pessoa.DadoBancario == null)
             {

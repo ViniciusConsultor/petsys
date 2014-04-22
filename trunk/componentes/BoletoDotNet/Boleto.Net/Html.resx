@@ -415,10 +415,7 @@
     &lt;/table&gt;</value>
   </data>
   <data name="ReciboSacadoPartePersonalizada1" xml:space="preserve">
-    <value>&lt;table class="w666"&gt;
-        &lt;tr&gt;
-            &lt;td class="ctN cut" /&gt;
-        &lt;/tr&gt;
+    <value>&lt;table class="w666"&gt;       
         &lt;tr&gt;
         &lt;td class="imgLogoPersonalizada"&gt;&lt;img src="@URLIMAGEMLOGOPERSONALIZADA" /&gt;&lt;/td&gt;
             &lt;td class="cpN Ar"&gt;Recibo do Pagador&lt;/td&gt;

@@ -467,8 +467,8 @@ namespace BoletoNet
             string enderecoCedente = "";
 
             //Oculta o cabeçalho das instruções do boleto
-            if (!OcultarInstrucoes)
-                html.Append(GeraHtmlInstrucoes());
+            //if (!OcultarInstrucoes)
+            //    html.Append(GeraHtmlInstrucoes());
 
             if (!FormatoCarne)
             {
