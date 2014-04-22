@@ -140,7 +140,7 @@
                                 </td>
                                 <td class="td">
                                     <telerik:RadTextBox ID="txtFinalidadeBoleto" runat="server" MaxLength="4000" TextMode="MultiLine"
-                                        Rows="5" Width="470px">
+                                        Rows="5" Width="470px" >
                                     </telerik:RadTextBox>
                                     <br/>
                                     (Informar qual parcela, ou se é anuidade e também referente a qual marca ou patente.)
