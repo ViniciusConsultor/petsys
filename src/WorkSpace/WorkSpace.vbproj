@@ -107,9 +107,6 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ctrlCdPessoa.ascx" />
-    <Content Include="ctrlCdPessoaFisica.ascx" />
-    <Content Include="ctrlCdPessoaJuridica.ascx" />
     <Content Include="ctrlCedente.ascx" />
     <Content Include="ctrlCliente.ascx" />
     <Content Include="ctrlOperacaoFiltro.ascx" />
@@ -1111,27 +1108,6 @@
     <Compile Include="AsyncUploadHandlerCustom.ashx.vb">
       <DependentUpon>AsyncUploadHandlerCustom.ashx</DependentUpon>
     </Compile>
-    <Compile Include="ctrlCdPessoa.ascx.designer.vb">
-      <DependentUpon>ctrlCdPessoa.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="ctrlCdPessoa.ascx.vb">
-      <DependentUpon>ctrlCdPessoa.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ctrlCdPessoaFisica.ascx.designer.vb">
-      <DependentUpon>ctrlCdPessoaFisica.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="ctrlCdPessoaFisica.ascx.vb">
-      <DependentUpon>ctrlCdPessoaFisica.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ctrlCdPessoaJuridica.ascx.designer.vb">
-      <DependentUpon>ctrlCdPessoaJuridica.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="ctrlCdPessoaJuridica.ascx.vb">
-      <DependentUpon>ctrlCdPessoaJuridica.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="ctrlCedente.ascx.designer.vb">
       <DependentUpon>ctrlCedente.ascx</DependentUpon>
     </Compile>
@@ -1471,7 +1447,6 @@
     </Compile>
     <Compile Include="Nucleo\ImpressorDeAgenda.vb" />
     <Compile Include="Utils\FabricaDeMenu.vb" />
-    <Compile Include="Utils\IUserControlCadastroDePessoa.vb" />
     <Compile Include="WorkSpace.Master.designer.vb">
       <DependentUpon>WorkSpace.Master</DependentUpon>
     </Compile>

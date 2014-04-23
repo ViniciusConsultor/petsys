@@ -26,23 +26,11 @@
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
-            <telerik:RadDock ID="rdkPesquisaCliente" runat="server" Title="Pesquisa" DefaultCommands="ExpandCollapse"
-                EnableAnimation="True" Skin="Vista" DockMode="Docked">
-                <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
-            </telerik:RadDock>
-            <telerik:RadDock ID="RadDock1" runat="server" Title="Dados do cliente" DefaultCommands="ExpandCollapse"
+            <telerik:RadDock ID="RadDock1" runat="server" Title="Cliente" DefaultCommands="ExpandCollapse"
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
+                    <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
                     <table class="tabela" runat="server" id="pnlDadosDoCliente">
-                        <tr id="pnlNomeDoCliente">
-                            <td class="th3">
-                                <asp:Label ID="Label10" runat="server" Text="Nome"></asp:Label>
-                            </td>
-                            <td class="td">
-                                <telerik:RadTextBox ID="txtNome" runat="server">
-                                </telerik:RadTextBox>
-                            </td>
-                        </tr>
                         <tr>
                             <td class="th3">
                                 <asp:Label ID="Label6" runat="server" Text="Data do cadastro"></asp:Label>
@@ -61,7 +49,7 @@
                                 </telerik:RadTextBox>
                             </td>
                         </tr>
-                        <tr>
+                         <tr>
                             <td class="th3">
                                 <asp:Label ID="Label8" runat="server" Text="Data do registro"></asp:Label>
                             </td>
@@ -70,23 +58,23 @@
                                 </telerik:RadDateInput>
                             </td>
                         </tr>
+
                         <tr>
                             <td class="th3">
                                 <asp:Label ID="Label9" runat="server" Text="Grupo de atividade"></asp:Label>
                             </td>
                             <td class="td">
-                                <uc1:ctrlGrupo ID="ctrlGrupo1" runat="server" />
-                                <asp:ImageButton ID="btnNovoGrupoDeAtividade" runat="server" ImageUrl="~/imagens/new.gif"
-                                    ToolTip="Novo" CausesValidation="False" CommandArgument="OPE.NCL.016.0001" />
+                                <uc1:ctrlGrupo ID="ctrlGrupo1" runat="server" /><asp:ImageButton ID="btnNovoGrupoDeAtividade" runat="server" ImageUrl="~/imagens/new.gif" ToolTip="Novo" CausesValidation="False"
+                    CommandArgument="OPE.NCL.016.0001" />
                             </td>
                         </tr>
+
                         <tr>
                             <td class="th3">
                                 <asp:Label ID="Label1" runat="server" Text="Informações adicionais"></asp:Label>
                             </td>
                             <td class="td">
-                                <telerik:RadTextBox ID="txtInformacoesAdicionais" runat="server" MaxLength="4000"
-                                    TextMode="MultiLine" Width="450px" Rows="5">
+                                <telerik:RadTextBox ID="txtInformacoesAdicionais" runat="server" MaxLength="4000" TextMode="MultiLine" Width="450px" Rows="5">
                                 </telerik:RadTextBox>
                             </td>
                         </tr>
@@ -126,13 +114,8 @@
                                 </telerik:RadNumericTextBox>
                             </td>
                         </tr>
+                        
                     </table>
-                </ContentTemplate>
-            </telerik:RadDock>
-            <telerik:RadDock ID="RadDock2" runat="server" Title="Dados gerais" DefaultCommands="ExpandCollapse"
-                EnableAnimation="True" Skin="Vista" DockMode="Docked">
-                <ContentTemplate>
-                    
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>
