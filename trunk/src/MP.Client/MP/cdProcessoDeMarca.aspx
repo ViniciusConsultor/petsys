@@ -464,8 +464,7 @@
                                                         <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
                                                     </td>
                                                     <td class="td">
-                                                        <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="True"
-                                                            RepeatDirection="Horizontal" OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
+                                                        <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" RepeatDirection="Horizontal"  AutoPostBack="True" OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged" >
                                                         </asp:RadioButtonList>
                                                     </td>
                                                 </tr>
@@ -474,9 +473,7 @@
                                                         <asp:Label ID="lblValor" runat="server" Text="Valor"></asp:Label>
                                                     </td>
                                                     <td class="td">
-                                                        <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
-                                                            DataType="System.Double">
-                                                            <NumberFormat DecimalDigits="2"></NumberFormat>
+                                                        <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Currency" >
                                                         </telerik:RadNumericTextBox>
                                                     </td>
                                                 </tr>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -126,7 +127,7 @@ namespace MP.Client.MP
                 rblFormaDeCobranca.Items.Add(new ListItem(formaDeCobranca.Descricao, formaDeCobranca.Codigo));
 
             rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
-            
+            FormataValorManutencao(FormaCobrancaManutencao.ValorFixo);
             txtDataDaPrimeiraManutencao.Clear();
         }
 
@@ -171,8 +172,8 @@ namespace MP.Client.MP
                 ctrlPeriodo.Codigo = marca.Manutencao.Periodo.Codigo.ToString();
                 ctrlPeriodo.PeriodoSelecionado = marca.Manutencao.Periodo;
                 rblFormaDeCobranca.SelectedValue = marca.Manutencao.FormaDeCobranca.Codigo;
-                txtValor.Text = marca.Manutencao.ValorDeCobranca.ToString();
-
+                txtValor.Value = marca.Manutencao.ValorDeCobranca;
+                FormataValorManutencao(marca.Manutencao.FormaDeCobranca);
             }
 
             IList<IRadicalMarcas> listaDeRadicalMarcas = new List<IRadicalMarcas>();
@@ -352,7 +353,7 @@ namespace MP.Client.MP
                 if (ctrlPeriodo.PeriodoSelecionado == null)
                     inconsitencias.Add("É necessário informar o período de cobrança.");
 
-                if (string.IsNullOrEmpty(txtValor.Text))
+                if (!txtValor.Value.HasValue)
                     inconsitencias.Add("É necessário informar o valor de cobrança.");
             }
 
@@ -539,7 +540,8 @@ namespace MP.Client.MP
             {
                 pnlDadosDaManutencao.Visible = false;
                 rblFormaDeCobranca.ClearSelection();
-                txtValor.Text = null;
+                txtValor.Text = "";
+                txtValor.Value = null;
                 ctrlPeriodo.Inicializa();
                 txtDataDaPrimeiraManutencao.Clear();
             }
@@ -547,10 +549,19 @@ namespace MP.Client.MP
 
         protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            if (rblFormaDeCobranca.SelectedValue == "S")
-                txtValor.NumberFormat.DecimalDigits = 1;
-            else
-                txtValor.NumberFormat.DecimalDigits = 2;
+            FormataValorManutencao(FormaCobrancaManutencao.ObtenhaPorCodigo(rblFormaDeCobranca.SelectedValue));
         }   
+
+        private void FormataValorManutencao(FormaCobrancaManutencao formaCobranca)
+        {
+            if (formaCobranca.Equals(FormaCobrancaManutencao.ValorFixo))
+            {
+                txtValor.Type = NumericType.Currency;
+                return;
+            }
+
+
+            txtValor.Type = NumericType.Percent;
+        }
     }
 }
