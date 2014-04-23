@@ -130,6 +130,7 @@ namespace FN.Servicos.Local
             itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.BoletoAvulso;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;
+            itemLacamentoFinanceiro.IDBOLETO = boletoGerado.ID.Value;
             
             try
             {

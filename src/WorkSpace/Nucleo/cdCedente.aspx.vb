@@ -128,6 +128,28 @@ Public Class cdCedente
 
     Private Sub btnSalva_Click()
         Dim Mensagem As String
+
+        Dim listaComErrosDePreenchimento As IList(Of String) = ListaErrosDePreenchimento()
+
+        If listaComErrosDePreenchimento.Count > 0 Then
+
+            Dim mensagemDePreenchimento As StringBuilder = New StringBuilder()
+
+            mensagemDePreenchimento.Append("Preencher o(s) campo(s): ")
+
+            For Each campo As String In listaComErrosDePreenchimento
+                mensagemDePreenchimento.Append(campo)
+                mensagemDePreenchimento.Append(" , ")
+            Next
+
+            'Mensagem = listaComErrosDePreenchimento.Aggregate("Preencher o(s) campo(s): ", Function(current, campo) current + campo)
+
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString,
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia(mensagemDePreenchimento.ToString().Remove(mensagemDePreenchimento.ToString().Count() - 1)), False)
+
+            Return
+        End If
+
         Dim Cedente As ICedente = MontaObjetoCedente()
 
         Try
@@ -149,6 +171,22 @@ Public Class cdCedente
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
         End Try
     End Sub
+
+    Private Function ListaErrosDePreenchimento() As IList(Of String)
+        Dim listaDeCampos As IList(Of String) = New List(Of String)()
+
+        If (ctrlPessoa1 Is Nothing Or ctrlPessoa1.PessoaSelecionada Is Nothing) Then
+            listaDeCampos.Add("Nome")
+        End If
+        If (ctrlTipoDeCarteira1 Is Nothing Or ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada Is Nothing) Then
+            listaDeCampos.Add("Tipo de carteira")
+        End If
+        If (String.IsNullOrEmpty(txtInicioNossoNumero.Text)) Then
+            listaDeCampos.Add("Inicio do nosso numero")
+        End If
+
+        Return listaDeCampos
+    End Function
 
     Private Sub btnModificar_Click()
         ExibaTelaModificar()

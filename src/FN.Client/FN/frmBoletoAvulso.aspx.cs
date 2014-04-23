@@ -124,10 +124,23 @@ namespace FN.Client.FN
                     PreenchaDadosDoClienteSelecionado(boleto.Cliente);
 
                     PreenchaInformacoesDoBoleto(boleto);
+
+                    DesabilitaCamposParaEdicao();
                 }
             }
+        }
 
-
+        private void DesabilitaCamposParaEdicao()
+        {
+            this.ctrlCliente.DesabilitaComboParaEdicao();
+            this.ctrlCedente.DesabilitaComboParaEdicao();
+            txtCNPJCPF.Enabled = false;
+            txtCep.Enabled = false;
+            txtCidade.Enabled = false;
+            txtEndereco.Enabled = false;
+            txtEstado.Enabled = false;
+            txtNome.Enabled = false;
+            txtBairro.Enabled = false;
         }
 
         private void ctrlCedente_CedenteFoiSelecionado(ICedente cedente)
@@ -319,7 +332,14 @@ namespace FN.Client.FN
                             // verificar se o codigo do banco é da caixa e acrescentar o 82
                             if(ctrlCedente.CedenteSelecionado != null)
                             {
-                                boletosGeradosAux.ProximoNossoNumero = Convert.ToInt64("82" + ctrlCedente.CedenteSelecionado.InicioNossoNumero);
+                                if (ctrlCedente.CedenteSelecionado.InicioNossoNumero > 0)
+                                {
+                                    boletosGeradosAux.ProximoNossoNumero = Convert.ToInt64("82" + ctrlCedente.CedenteSelecionado.InicioNossoNumero);
+                                }
+                                else
+                                {
+                                    boletosGeradosAux.ProximoNossoNumero = 8210001001;
+                                }
                             }
 
                             servico.InserirPrimeiraVez(boletosGeradosAux);

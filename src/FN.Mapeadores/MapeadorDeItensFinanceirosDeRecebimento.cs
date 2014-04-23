@@ -27,7 +27,7 @@ namespace FN.Mapeadores
             Item.ID = GeradorDeID.ProximoID();
             
             sql.Append("INSERT INTO FN_ITEMFINANREC (");
-            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, DESCRICAO, FORMARECEBIMENTO, DATARECEBIMENTO, SITUACAO, TIPOLANCAMENTO) ");
+            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, DESCRICAO, FORMARECEBIMENTO, DATARECEBIMENTO, SITUACAO, TIPOLANCAMENTO, IDBOLETO) ");
             sql.Append("VALUES (");
 
             sql.Append(Item.ID.Value + ", ");
@@ -53,7 +53,12 @@ namespace FN.Mapeadores
 
             sql.Append(Item.Situacao.ID + ", ");
             
-            sql.Append(Item.TipoLacamento.ID + ")");
+            sql.Append(Item.TipoLacamento.ID + ", ");
+
+            sql.Append(Item.IDBOLETO == null || Item.IDBOLETO  < 0
+                        ? "0) "
+                        : Item.IDBOLETO + ") ");
+
             DBHelper.ExecuteNonQuery(sql.ToString());
 
         }
@@ -191,6 +196,9 @@ namespace FN.Mapeadores
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "DESCRICAO"))
                 item.Descricao = UtilidadesDePersistencia.GetValorString(leitor, "DESCRICAO");
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "IDBOLETO"))
+            item.IDBOLETO = UtilidadesDePersistencia.GetValorLong(leitor, "IDBOLETO");
 
             return item;
         }
