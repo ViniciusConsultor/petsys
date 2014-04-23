@@ -52,8 +52,8 @@ namespace MP.Client.MP
 
             CarregaOpcoesDeFiltro();
             EscondaTodosOsPanelsDeFiltro();
-            pnlProcesso.Visible = true;
-            cboTipoDeFiltro.SelectedValue = "7";
+            pnlMarca.Visible = true;
+            cboTipoDeFiltro.SelectedValue = "4";
             
             ctrlApresentacao1.Inicializa();
             ctrlNCL1.Inicializa();
