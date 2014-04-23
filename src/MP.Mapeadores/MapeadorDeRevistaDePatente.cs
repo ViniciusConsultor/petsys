@@ -49,12 +49,12 @@ namespace MP.Mapeadores
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.ExtensaoArquivo)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.ExtensaoArquivo), "', ") : "NULL, ");
-                
-                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroProcessoDaPatente)
-                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroProcessoDaPatente), "', ") : "NULL, ");
-                
+
                 sql.Append(processoDaRevistaDePatente.DataDeDeposito.HasValue
                            ? String.Concat(processoDaRevistaDePatente.DataDeDeposito.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
+
+                sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroProcessoDaPatente)
+                           ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroProcessoDaPatente), "', ") : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroDoPedido)
                            ? String.Concat(UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoPedido.Length == 15 ?
