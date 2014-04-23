@@ -292,6 +292,7 @@ namespace MP.Client.MP
                 rblFormaDeCobranca.Items.Add(new ListItem(formaCobrança.Descricao  ,formaCobrança.Codigo));
 
             rblFormaDeCobranca.SelectedValue = FormaCobrancaManutencao.ValorFixo.Codigo;
+            FormataValorManutencao(FormaCobrancaManutencao.ValorFixo);
             txtDataDaPrimeiraManutencao.Clear();
             ctrlPaisProcesso.LimparControle();
 
@@ -374,7 +375,7 @@ namespace MP.Client.MP
                 if (ctrlPeriodo.PeriodoSelecionado == null)
                     inconsitencias.Add("É necessário informar o período de cobrança.");
 
-                if (string.IsNullOrEmpty(txtValor.Text))
+                if (!txtValor.Value.HasValue)
                     inconsitencias.Add("É necessário informar o valor de cobrança.");
 
             }
@@ -659,6 +660,7 @@ namespace MP.Client.MP
 
                 rblFormaDeCobranca.SelectedValue = patente.Manutencao.FormaDeCobranca.Codigo;
                 txtValor.Value = patente.Manutencao.ValorDeCobranca;
+                FormataValorManutencao(patente.Manutencao.FormaDeCobranca);
             }
 
             if (patente.PatenteEhDeDesenhoIndutrial())
@@ -1191,7 +1193,8 @@ namespace MP.Client.MP
             {
                 pnlDadosDaManutencao.Visible = false;
                 rblFormaDeCobranca.ClearSelection();
-                txtValor.Text = null;
+                txtValor.Text = "";
+                txtValor.Value = null;
                 ctrlPeriodo.Inicializa();
                 txtDataDaPrimeiraManutencao.Clear();
             }
@@ -1238,6 +1241,23 @@ namespace MP.Client.MP
             {
                 Logger.GetInstancia().Erro("Erro ao carregar imagem, exceção: ", ex);
             }
+        }
+
+        private void FormataValorManutencao(FormaCobrancaManutencao formaCobranca)
+        {
+            if (formaCobranca.Equals(FormaCobrancaManutencao.ValorFixo))
+            {
+                txtValor.Type = NumericType.Currency;
+                return;
+            }
+
+
+            txtValor.Type = NumericType.Percent;
+        }
+
+        protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            FormataValorManutencao(FormaCobrancaManutencao.ObtenhaPorCodigo(rblFormaDeCobranca.SelectedValue));
         }
     }
 }

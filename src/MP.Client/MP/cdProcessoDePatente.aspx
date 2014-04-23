@@ -885,8 +885,8 @@
                                                 <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="false"
-                                                    RepeatDirection="Horizontal">
+                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="True"
+                                                    RepeatDirection="Horizontal" OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
                                                 </asp:RadioButtonList>
                                             </td>
                                         </tr>
@@ -895,7 +895,7 @@
                                                 <asp:Label ID="lblValor" runat="server" Text="Valor"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
+                                                <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Currency"
                                                     DataType="System.Double">
                                                 </telerik:RadNumericTextBox>
                                             </td>
