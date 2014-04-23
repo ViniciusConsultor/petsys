@@ -111,4 +111,12 @@ Public Class ctrlCedente
         RaiseEvent CedenteFoiSelecionado(Cedente)
     End Sub
 
+    Public Sub DesabilitaComboParaEdicao()
+        Me.cboCedente.Enabled = False
+    End Sub
+
+    Public Sub HabilitaComboParaEdicao()
+        Me.cboCedente.Enabled = True
+    End Sub
+
 End Class

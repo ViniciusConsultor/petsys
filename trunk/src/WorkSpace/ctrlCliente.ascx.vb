@@ -110,4 +110,12 @@ Public Class ctrlCliente
         RaiseEvent ClienteFoiSelecionado(Cliente)
     End Sub
 
+    Public Sub DesabilitaComboParaEdicao()
+        Me.cboCliente.Enabled = False
+    End Sub
+
+    Public Sub HabilitaComboParaEdicao()
+        Me.cboCliente.Enabled = True
+    End Sub
+
 End Class
