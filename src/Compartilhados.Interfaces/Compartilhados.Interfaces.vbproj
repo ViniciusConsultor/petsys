@@ -101,6 +101,7 @@
     <Compile Include="Core\Negocio\IDadoBancario.vb" />
     <Compile Include="Core\Negocio\IEmpresa.vb" />
     <Compile Include="Core\Negocio\IEndereco.vb" />
+    <Compile Include="Core\Negocio\IEventoDeContato.vb" />
     <Compile Include="Core\Negocio\IFiltro.vb" />
     <Compile Include="Core\Negocio\IFornecedor.vb" />
     <Compile Include="Core\Negocio\IGrupo.vb" />

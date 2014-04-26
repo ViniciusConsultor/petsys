@@ -101,6 +101,21 @@ Namespace LazyLoad
             _Pessoa.AdicioneContatos(Contatos)
         End Sub
 
+        Public Function EventosDeContato() As IList(Of IEventoDeContato) Implements IPessoa.EventosDeContato
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            Return _Pessoa.EventosDeContato
+        End Function
+
+        Public Sub AdicioneEventoDeContato(ByVal Evento As IEventoDeContato) Implements IPessoa.AdicioneEventoDeContato
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            _Pessoa.AdicioneEventoDeContato(Evento)
+        End Sub
+
+        Public Sub AdicioneEventosDeContato(ByVal Eventos As IList(Of IEventoDeContato)) Implements IPessoa.AdicioneEventosDeContato
+            If _Pessoa Is Nothing Then CarregueObjetoReal()
+            _Pessoa.AdicioneEventosDeContato(Eventos)
+        End Sub
+
         Public ReadOnly Property Telefones() As IList(Of ITelefone) Implements IPessoa.Telefones
             Get
                 If _Pessoa Is Nothing Then CarregueObjetoReal()
