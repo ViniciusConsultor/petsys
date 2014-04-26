@@ -58,7 +58,7 @@ namespace MP.Negocio
                 var valorSalarioMinimoVigente = configuracao.ValorDoSalarioMinimo;
 
                 if (valorSalarioMinimoVigente.HasValue)
-                    return ValorDeCobranca * valorSalarioMinimoVigente.Value;
+                    return (ValorDeCobranca/100) * valorSalarioMinimoVigente.Value;
             }
             return 0;
         }
