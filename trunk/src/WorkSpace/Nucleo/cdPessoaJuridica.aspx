@@ -53,6 +53,8 @@
                             </telerik:RadTab>
                             <telerik:RadTab Text="Dados bancários">
                             </telerik:RadTab>
+                            <telerik:RadTab Text="Eventos">
+                            </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
                     <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0">
@@ -343,7 +345,7 @@
                                             <asp:Button ID="btnAdicionarContato" runat="server" CssClass="RadUploadSubmit" Text="Adicionar contato" />
                                         </td>
                                     </tr>
-                                     <tr>
+                                    <tr>
                                         <td colspan="2">
                                             <telerik:RadGrid ID="grdContatos" runat="server" AutoGenerateColumns="False" GridLines="None"
                                                 Skin="Vista">
@@ -358,7 +360,7 @@
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
                                                             ImageUrl="~/imagens/delete.gif">
                                                         </telerik:GridButtonColumn>
-                                                        <telerik:GridBoundColumn  UniqueName="column1" Visible="True" HeaderText="Nome">
+                                                        <telerik:GridBoundColumn UniqueName="column1" Visible="True" HeaderText="Nome">
                                                         </telerik:GridBoundColumn>
                                                     </Columns>
                                                 </MasterTableView>
@@ -371,6 +373,53 @@
                         <telerik:RadPageView ID="RadPageView5" runat="server" SkinID="Vista">
                             <asp:Panel ID="pnlDadosBancarios" runat="server">
                                 <uc3:ctrlBancosEAgencias ID="ctrlBancosEAgencias1" runat="server" />
+                            </asp:Panel>
+                        </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView6" runat="server" SkinID="Vista">
+                            <asp:Panel ID="pnlEventos" runat="server">
+                                <table>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label33" runat="server" Text="Data"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadDatePicker ID="txtDataDoEvento" runat="server">
+                                            </telerik:RadDatePicker>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="Label34" runat="server" Text="Descrição"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtDescricaoEvento" runat="server" MaxLength="4000" Skin="Vista"
+                                                TextMode="MultiLine" Width="400px" SelectionOnFocus="CaretToBeginning" Rows="5">
+                                            </telerik:RadTextBox>
+                                            <asp:Button ID="btnAdicionarEvento" runat="server" CssClass="RadUploadSubmit" Text="Adicionar evento" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <telerik:RadGrid ID="grdEventos" runat="server" AutoGenerateColumns="False" GridLines="None"
+                                    Skin="Vista">
+                                    <MasterTableView GridLines="Both">
+                                        <RowIndicatorColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </RowIndicatorColumn>
+                                        <ExpandCollapseColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
+                                                ImageUrl="~/imagens/delete.gif">
+                                            </telerik:GridButtonColumn>
+                                            <telerik:GridBoundColumn DataField="Data" UniqueName="column1" Visible="True" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Descricao" UniqueName="column2" Visible="True"
+                                                HeaderText="Descrição">
+                                            </telerik:GridBoundColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>

@@ -24,7 +24,10 @@ Namespace Core.Negocio
         Function ObtenhaDocumentos() As IList(Of IDocumento)
         Sub AdicioneContato(Contato As String)
         Function Contatos() As IList(Of String)
-        Sub AdicioneContatos(Contatos As IList(Of String))
+        Sub AdicioneContatos(ByVal Contatos As IList(Of String))
+        Function EventosDeContato() As IList(Of IEventoDeContato)
+        Sub AdicioneEventoDeContato(ByVal Evento As IEventoDeContato)
+        Sub AdicioneEventosDeContato(ByVal Eventos As IList(Of IEventoDeContato))
 
     End Interface
 

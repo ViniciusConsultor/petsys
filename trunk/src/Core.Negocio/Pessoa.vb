@@ -16,12 +16,14 @@ Public MustInherit Class Pessoa
     Private _Site As String
     Private _DadoBancario As IDadoBancario
     Private _Contatos As IList(Of String)
+    Private _EventosDeContato As IList(Of IEventoDeContato)
 
     Protected Sub New()
         _Documentos = New Dictionary(Of TipoDeDocumento, IDocumento)
         _Telefones = New List(Of ITelefone)
         _Enderecos = New List(Of IEndereco)
         _Contatos = New List(Of String)()
+        _EventosDeContato = New List(Of IEventoDeContato)()
     End Sub
 
     Public Property Nome() As String Implements IPessoa.Nome
@@ -119,6 +121,20 @@ Public MustInherit Class Pessoa
     Public Sub AdicioneContatos(ByVal Contatos As IList(Of String)) Implements IPessoa.AdicioneContatos
         If Not Contatos Is Nothing Then
             CType(_Contatos, List(Of String)).AddRange(Contatos)
+        End If
+    End Sub
+
+    Public Function EventosDeContato() As IList(Of IEventoDeContato) Implements IPessoa.EventosDeContato
+        Return _EventosDeContato
+    End Function
+
+    Public Sub AdicioneEventoDeContato(ByVal Evento As IEventoDeContato) Implements IPessoa.AdicioneEventoDeContato
+        _EventosDeContato.Add(Evento)
+    End Sub
+
+    Public Sub AdicioneEventosDeContato(ByVal Eventos As IList(Of IEventoDeContato)) Implements IPessoa.AdicioneEventosDeContato
+        If Not Eventos Is Nothing Then
+            CType(_EventosDeContato, List(Of IEventoDeContato)).AddRange(Eventos)
         End If
     End Sub
 

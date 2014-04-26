@@ -804,4 +804,76 @@ Partial Public Class cdPessoaFisica
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ctrlBancosEAgencias1 As Global.WorkSpace.ctrlBancosEAgencias
+
+    '''<summary>
+    '''RadPageView6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadPageView6 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''pnlEventos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlEventos As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label33 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label33 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDataDoEvento control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDataDoEvento As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''Label34 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label34 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDescricaoEvento control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDescricaoEvento As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
+    '''btnAdicionarEvento control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdicionarEvento As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''grdEventos control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdEventos As Global.Telerik.Web.UI.RadGrid
 End Class

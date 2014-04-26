@@ -22,6 +22,7 @@ Partial Public Class cdPessoaFisica
     Private CHAVE_TELEFONES As String = "CHAVE_TELEFONES_PESSOA_FISICA"
     Private CHAVE_ENDERECOS As String = "CHAVE_ENDERECOS_PESSOA_FISICA"
     Private CHAVE_CONTATOS As String = "CHAVE_CONTATOS_PESSOA_FISICA"
+    Private CHAVE_EVENTOS As String = "CHAVE_EVENTOS_PESSOA_FISICA"
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -73,6 +74,8 @@ Partial Public Class cdPessoaFisica
         ViewState(CHAVE_ID) = Nothing
         ViewState(CHAVE_TELEFONES) = Nothing
         ViewState(CHAVE_ENDERECOS) = Nothing
+        ViewState(CHAVE_CONTATOS) = Nothing
+        ViewState(CHAVE_EVENTOS) = Nothing
         imgFoto.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO
     End Sub
 
@@ -99,6 +102,7 @@ Partial Public Class cdPessoaFisica
         UtilidadesWeb.HabilitaComponentes(CType(pnlDocumentos, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlContatos, Control), False)
         UtilidadesWeb.HabilitaComponentes(CType(pnlDadosBancarios, Control), False)
+        UtilidadesWeb.HabilitaComponentes(CType(pnlEventos, Control), False)
         txtNome.Enabled = False
 
         CarregueComponentes()
@@ -119,6 +123,10 @@ Partial Public Class cdPessoaFisica
         CarregueUFs()
         CarregaNacionalidade()
         CarregaTiposDeTelefone()
+        ExibaTelefones(New List(Of ITelefone))
+        ExibaContatos(New List(Of String))
+        ExibaEnderecos(New List(Of IEndereco))
+        ExibaEventos(New List(Of IEventoDeContato))
     End Sub
 
     Private Sub CarregaTiposDeTelefone()
@@ -297,7 +305,7 @@ Partial Public Class cdPessoaFisica
         End If
 
         Pessoa.AdicioneContatos(CType(ViewState(CHAVE_CONTATOS), IList(Of String)))
-
+        Pessoa.AdicioneEventosDeContato(CType(ViewState(CHAVE_EVENTOS), IList(Of IEventoDeContato)))
         Return Pessoa
     End Function
 
@@ -363,17 +371,27 @@ Partial Public Class cdPessoaFisica
         ExibaTelefones(Pessoa.Telefones)
         ExibaEnderecos(Pessoa.Enderecos)
         ExibaContatos(Pessoa.Contatos())
+        ExibaEventos(Pessoa.EventosDeContato())
         imgFoto.ImageUrl = Pessoa.Foto
         ViewState(CHAVE_ID) = Pessoa.ID.Value
     End Sub
 
+    Private Sub ExibaEventos(ByVal Eventos As IList(Of IEventoDeContato))
+        If Eventos Is Nothing Then Eventos = New List(Of IEventoDeContato)()
+        grdEventos.DataSource = Eventos
+        grdEventos.DataBind()
+        ViewState(CHAVE_EVENTOS) = Eventos
+    End Sub
+
     Private Sub ExibaTelefones(ByVal Telefones As IList(Of ITelefone))
+        If Telefones Is Nothing Then Telefones = New List(Of ITelefone)()
         grdTelefones.DataSource = Telefones
         grdTelefones.DataBind()
         ViewState(CHAVE_TELEFONES) = Telefones
     End Sub
 
     Private Sub ExibaEnderecos(ByVal Enderecos As IList(Of IEndereco))
+        If Enderecos Is Nothing Then Enderecos = New List(Of IEndereco)()
         grdEnderecos.DataSource = Enderecos
         grdEnderecos.DataBind()
         ViewState(CHAVE_ENDERECOS) = Enderecos
@@ -625,7 +643,8 @@ Partial Public Class cdPessoaFisica
         txtNomeDoContato.Text = ""
     End Sub
 
-    Private Sub ExibaContatos(Contatos As IList(Of String))
+    Private Sub ExibaContatos(ByVal Contatos As IList(Of String))
+        If Contatos Is Nothing Then Contatos = New List(Of String)()
         grdContatos.DataSource = Contatos
         grdContatos.DataBind()
         ViewState(CHAVE_CONTATOS) = Contatos
@@ -644,6 +663,65 @@ Partial Public Class cdPessoaFisica
             Contatos.RemoveAt(IndiceSelecionado)
             ExibaContatos(Contatos)
         End If
+    End Sub
+
+    Private Sub btnAdicionarEvento_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionarEvento.Click
+        Dim Eventos As IList(Of IEventoDeContato)
+
+        If Not txtDataDoEvento.SelectedDate.HasValue Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data do evento deve ser informada."), False)
+            Exit Sub
+        End If
+
+        If String.IsNullOrEmpty(txtDescricaoEvento.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A descrição do evento deve ser informada."), False)
+            Exit Sub
+        End If
+
+        Eventos = CType(ViewState(CHAVE_EVENTOS), IList(Of IEventoDeContato))
+
+        If Eventos Is Nothing Then Eventos = New List(Of IEventoDeContato)
+
+        Dim Evento As IEventoDeContato = FabricaGenerica.GetInstancia().CrieObjeto(Of IEventoDeContato)()
+
+        Evento.Data = txtDataDoEvento.SelectedDate.Value
+        Evento.Descricao = txtDescricaoEvento.Text
+
+        Eventos.Add(Evento)
+        ExibaEventos(Eventos)
+        txtDescricaoEvento.Text = ""
+        txtDataDoEvento.SelectedDate = Nothing
+    End Sub
+
+    Private Sub grdEventos_ItemCommand(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdEventos.ItemCommand
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Dim Eventos As IList(Of IEventoDeContato)
+            Eventos = CType(ViewState(CHAVE_EVENTOS), IList(Of IEventoDeContato))
+            Eventos.RemoveAt(IndiceSelecionado)
+            ExibaEventos(Eventos)
+        End If
+    End Sub
+
+    Private Sub grdEventos_PageIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdEventos.PageIndexChanged
+        UtilidadesWeb.PaginacaoDataGrid(grdEventos, ViewState(CHAVE_EVENTOS), e)
+    End Sub
+
+    Private Sub grdContatos_PageIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdContatos.PageIndexChanged
+        UtilidadesWeb.PaginacaoDataGrid(grdContatos, ViewState(CHAVE_CONTATOS), e)
+    End Sub
+
+    Private Sub grdEnderecos_PageIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdEnderecos.PageIndexChanged
+        UtilidadesWeb.PaginacaoDataGrid(grdEnderecos, ViewState(CHAVE_ENDERECOS), e)
+    End Sub
+
+    Private Sub grdTelefones_PageIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdTelefones.PageIndexChanged
+        UtilidadesWeb.PaginacaoDataGrid(grdTelefones, ViewState(CHAVE_TELEFONES), e)
     End Sub
 
 End Class

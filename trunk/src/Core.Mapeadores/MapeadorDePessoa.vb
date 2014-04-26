@@ -66,11 +66,32 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         InsiraTelefones(Pessoa)
         InsiraEnderecos(Pessoa)
         InsiraContatos(Pessoa)
-        Me.Insira(Pessoa)
+        InsiraEventos(Pessoa)
+        Insira(Pessoa)
         Return Pessoa.ID.Value
     End Function
 
-    Private Sub InsiraContatos(Pessoa As IPessoa)
+    Private Sub InsiraEventos(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_PESSOAEVENTO WHERE IDPESSOA = " & Pessoa.ID.Value)
+
+        If Not Pessoa.EventosDeContato() Is Nothing AndAlso Not Pessoa.EventosDeContato().Count = 0 Then
+            For Each Evento As IEventoDeContato In Pessoa.EventosDeContato()
+                SQL = New StringBuilder
+                SQL.Append("INSERT INTO NCL_PESSOAEVENTO (IDPESSOA, DATA, DESCRICAO)")
+                SQL.Append(" VALUES ( ")
+                SQL.Append(String.Concat(Pessoa.ID, ", "))
+                SQL.Append(String.Concat(Evento.Data.ToString("yyyyMMdd"), ", "))
+                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Evento.Descricao), "') "))
+                DBHelper.ExecuteNonQuery(SQL.ToString)
+            Next
+        End If
+    End Sub
+
+
+    Private Sub InsiraContatos(ByVal Pessoa As IPessoa)
         Dim SQL As StringBuilder
         Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
 
@@ -78,13 +99,13 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         If Not Pessoa.Contatos() Is Nothing AndAlso Not Pessoa.Contatos().Count = 0 Then
             For Each Contato As String In Pessoa.Contatos()
-                Sql = New StringBuilder
+                SQL = New StringBuilder
                 SQL.Append("INSERT INTO NCL_PESSOACONTATO (IDPESSOA, NOMECONTATO, INDICE)")
-                Sql.Append(" VALUES ( ")
-                Sql.Append(String.Concat(Pessoa.ID, ", "))
+                SQL.Append(" VALUES ( ")
+                SQL.Append(String.Concat(Pessoa.ID, ", "))
                 SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Contato), "', "))
                 SQL.Append(String.Concat(Pessoa.Contatos.IndexOf(Contato), ") "))
-                DBHelper.ExecuteNonQuery(Sql.ToString)
+                DBHelper.ExecuteNonQuery(SQL.ToString)
             Next
         End If
 
@@ -181,10 +202,11 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         Dim SQL As New StringBuilder
         Dim DBHelper As IDBHelper
 
-        Me.InsiraTelefones(Pessoa)
-        Me.InsiraEnderecos(Pessoa)
+        InsiraTelefones(Pessoa)
+        InsiraEnderecos(Pessoa)
         InsiraContatos(Pessoa)
-        Me.Atualize(Pessoa)
+        InsiraEventos(Pessoa)
+        Atualize(Pessoa)
         DBHelper = ServerUtils.getDBHelper
         SQL.Append(String.Concat("UPDATE NCL_PESSOA SET NOME = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
 
@@ -238,12 +260,12 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
     Public Overloads Function ObtenhaPessoasPorNomeComoFiltro(ByVal Nome As String, _
                                                               ByVal QuantidadeMaximaDeRegistros As Integer,
-                                                              NivelDeRetardo As Integer) As IList(Of T) Implements IMapeadorDePessoa(Of T).ObtenhaPessoasPorNomeComoFiltro
+                                                              ByVal NivelDeRetardo As Integer) As IList(Of T) Implements IMapeadorDePessoa(Of T).ObtenhaPessoasPorNomeComoFiltro
         Return Me.CarreguePorNome(Nome, _
                                   QuantidadeMaximaDeRegistros, NivelDeRetardo)
     End Function
 
-    Protected Sub PreencheDados(ByRef Pessoa As T, ByVal Leitor As IDataReader, NivelDeRetardo As Integer)
+    Protected Sub PreencheDados(ByRef Pessoa As T, ByVal Leitor As IDataReader, ByVal NivelDeRetardo As Integer)
         Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA")
         Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPESSOA")
 
@@ -254,7 +276,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "SITE") Then
             Pessoa.Site = UtilidadesDePersistencia.GetValorString(Leitor, "SITE")
         End If
-        
+
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDAGENCIA") Then
             Dim Banco As IBanco
             Dim Agencia As IAgencia
@@ -291,7 +313,34 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             ObtenhaTelefones(Pessoa)
             ObtenhaEnderecos(Pessoa)
             ObtenhaContatos(Pessoa)
+            ObtenhaEventos(Pessoa)
         End If
+    End Sub
+
+    Private Sub ObtenhaEventos(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper
+
+        SQL = New StringBuilder
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        SQL.Append("SELECT IDPESSOA, DATA, DESCRICAO FROM NCL_PESSOAEVENTO")
+        SQL.Append(" WHERE IDPESSOA = " & Pessoa.ID.Value.ToString)
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
+            Try
+                While Leitor.Read
+                    Dim Evento As IEventoDeContato = FabricaGenerica.GetInstancia().CrieObjeto(Of IEventoDeContato)()
+                    Evento.Data = UtilidadesDePersistencia.getValorDate(Leitor, "DATA").Value
+                    Evento.Descricao = UtilidadesDePersistencia.GetValorString(Leitor, "DESCRICAO")
+                    Pessoa.AdicioneEventoDeContato(Evento)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+
+        End Using
     End Sub
 
     Private Sub ObtenhaContatos(ByVal Pessoa As IPessoa)
