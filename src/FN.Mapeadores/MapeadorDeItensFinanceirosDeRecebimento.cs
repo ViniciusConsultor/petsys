@@ -198,7 +198,7 @@ namespace FN.Mapeadores
                 item.Descricao = UtilidadesDePersistencia.GetValorString(leitor, "DESCRICAO");
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "IDBOLETO"))
-            item.IDBOLETO = UtilidadesDePersistencia.GetValorLong(leitor, "IDBOLETO");
+                item.IDBOLETO = UtilidadesDePersistencia.GetValorLong(leitor, "IDBOLETO");
 
             return item;
         }
