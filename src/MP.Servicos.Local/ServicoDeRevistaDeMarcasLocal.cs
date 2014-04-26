@@ -386,8 +386,14 @@ namespace MP.Servicos.Local
 
                     foreach (XmlNode sobrestador in sobrestadores)
                         if (sobrestador.Attributes != null)
-                            processoLidoDaRevistaDeMarca.DicionarioSobrestadores.Add(sobrestador.Attributes.GetNamedItem("processo").Value,
-                                sobrestador.Attributes.GetNamedItem("marca").Value);
+                        {
+                            processoLidoDaRevistaDeMarca.DicionarioSobrestadores.Add(sobrestador.Attributes.GetNamedItem("processo").Value, null);
+                            
+                            if (sobrestador.Attributes.GetNamedItem("marca") != null)
+                                processoLidoDaRevistaDeMarca.DicionarioSobrestadores[
+                                    sobrestador.Attributes.GetNamedItem("processo").Value] =
+                                    sobrestador.Attributes.GetNamedItem("marca").Value;
+                        }
                 }
 
                 listaDeProcessos.Add(processoLidoDaRevistaDeMarca);
