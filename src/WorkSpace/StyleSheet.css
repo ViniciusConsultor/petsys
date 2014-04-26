@@ -156,3 +156,11 @@
     display: inline-block;
     vertical-align: bottom;
 }
+
+.hidelink
+
+       {
+
+           text-decoration:none;
+
+       }

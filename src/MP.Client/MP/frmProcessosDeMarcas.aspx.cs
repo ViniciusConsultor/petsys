@@ -110,6 +110,7 @@ namespace MP.Client.MP
                     dto.Classe = processo.Marca.NCL.Codigo;
 
                 dto.Cliente = processo.Marca.Cliente.Pessoa.Nome;
+                dto.IdCliente = processo.Marca.Cliente.Pessoa.ID.Value.ToString();
 
                 if (processo.DataDoDeposito != null)
                     dto.DataDeposito = processo.DataDoDeposito.Value.ToString("dd/MM/yyyy");
@@ -436,6 +437,11 @@ namespace MP.Client.MP
             return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmLeituraRevistaMarca.aspx");
         }
 
+        private string ObtenhaURLDeCadastroDeCliente()
+        {
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "Nucleo/cdCliente.aspx");
+        }
+
         private void AbraTelaDeLeituraDaRevista()
         {
             var URL = ObtenhaURLLeituraDeRevistaDeMarca();
@@ -529,6 +535,13 @@ namespace MP.Client.MP
                                                                                        "Enviar e-mail",
                                                                                        800, 550, "frmEnviaEmail_aspx"), false);
                     break;
+                case "AbrirCliente" :
+                    var url3 = String.Concat(ObtenhaURLDeCadastroDeCliente(),"?Id=", e.CommandArgument );
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url3,
+                                                                                       "Cadastro de cliente",
+                                                                                       800, 550, "cdCliente_aspx"), false);
+                    break;
             }
         }
 
@@ -546,6 +559,19 @@ namespace MP.Client.MP
                 grdProcessosDeMarcas.Columns[2].Visible = principal.EstaAutorizado("OPE.MP.007.0005");
 
             base.OnPreRender(e);
+        }
+
+        protected void grdProcessosDeMarcas_OnItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+
+                var item = (GridDataItem)e.Item;
+
+                
+                ((System.Web.UI.WebControls.LinkButton) (item["cliente"].Controls[0])).CommandArgument = item["idCliente"].Text;
+                ((System.Web.UI.WebControls.LinkButton)(item["cliente"].Controls[0])).CssClass = "hidelink";
+            }
         }
     }
 }

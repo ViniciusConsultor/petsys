@@ -16,7 +16,28 @@ Partial Public Class cdCliente
 
         If Not IsPostBack Then
             ExibaTelaInicial()
+
+            Dim Id As Nullable(Of Long)
+
+            If Not String.IsNullOrEmpty(Request.QueryString("Id")) Then
+                Id = CLng(Request.QueryString("Id"))
+            End If
+
+            If Not Id Is Nothing Then
+                ExibaTelaDetalhes(Id.Value)
+            End If
         End If
+    End Sub
+
+    Private Sub ExibaTelaDetalhes(ByVal Id As Long)
+        Dim Cliente As ICliente
+
+        Using Servico As IServicoDeCliente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCliente)()
+            Cliente = Servico.Obtenha(Id)
+        End Using
+
+        MostreCliente(Cliente)
+        ExibaTelaConsultar()
     End Sub
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
@@ -228,7 +249,9 @@ Partial Public Class cdCliente
             ctrlGrupo1.GrupoSelecionado = Cliente.GrupoDeAtividade
             ctrlGrupo1.NomeDoGrupo = Cliente.GrupoDeAtividade.Nome
         End If
-        
+
+        ctrlPessoa1.PessoaSelecionada = Cliente.Pessoa
+        ctrlPessoa1.BotaoDetalharEhVisivel = True
     End Sub
 
     Private Sub btnNovoGrupoDeAtividade_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnNovoGrupoDeAtividade.Click
