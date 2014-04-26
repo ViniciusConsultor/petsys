@@ -16,8 +16,8 @@
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.007.0001" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
-                <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
-            CommandName="btnLimpar" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
+                CommandName="btnLimpar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/processarRevista.gif"
                 CommandName="btnLerRevista" CausesValidation="False" CommandArgument="FUN.MP.015" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
@@ -135,7 +135,7 @@
                                 <telerik:RadGrid ID="grdProcessosDeMarcas" runat="server" AutoGenerateColumns="False"
                                     AllowCustomPaging="true" AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista"
                                     AllowFilteringByColumn="false" OnPageIndexChanged="grdProcessosDeMarcas_OnPageIndexChanged"
-                                    OnItemCommand="grdProcessosDeMarcas_OnItemCommand">
+                                    OnItemCommand="grdProcessosDeMarcas_OnItemCommand" OnItemDataBound="grdProcessosDeMarcas_OnItemDataBound">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
@@ -159,13 +159,14 @@
                                                 HeaderTooltip="Enviar e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="IdProcesso" HeaderText="ID" UniqueName="column1"  Display="false">
+                                            <telerik:GridBoundColumn DataField="IdProcesso" HeaderText="ID" UniqueName="column1"
+                                                Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="NumeroProcesso" HeaderText="Processo" UniqueName="column5">
                                                 <ItemStyle Width="5%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DescricaoMarca" HeaderText="Marca" UniqueName="column3">
-                                                <ItemStyle Width="20%"></ItemStyle> 
+                                                <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Classe" HeaderText="Classe" UniqueName="column10">
                                                 <ItemStyle Width="5%"></ItemStyle>
@@ -179,13 +180,16 @@
                                             <telerik:GridBoundColumn DataField="Natureza" HeaderText="Natureza" UniqueName="column13">
                                                 <ItemStyle Width="7%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                          
-                                            <telerik:GridBoundColumn DataField="Cliente" HeaderText="Cliente"  UniqueName="column2">
-                                            <ItemStyle Width="30%"></ItemStyle> 
+                                            <telerik:GridBoundColumn DataField="IdCliente" HeaderText="IDCliente" UniqueName="idCliente"
+                                                Display="false">
                                             </telerik:GridBoundColumn>
-                                             <telerik:GridBoundColumn DataField="CPFCNPJ" HeaderText="CPF/CNPJ" UniqueName="column14">
-                                            <ItemStyle Width="12%"></ItemStyle>
-                                           </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn ButtonType="LinkButton" CommandName="AbrirCliente" DataTextField="Cliente"
+                                                HeaderText="Cliente" UniqueName="cliente">
+                                                <ItemStyle Width="30%" CssClass="hidelink"></ItemStyle>
+                                            </telerik:GridButtonColumn>
+                                            <telerik:GridBoundColumn DataField="CPFCNPJ" HeaderText="CPF/CNPJ" UniqueName="column14">
+                                                <ItemStyle Width="12%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

@@ -19,6 +19,7 @@ namespace MP.Client.MP
         public string CPFCNPJ { get; set; }
         public string Cliente { get; set; }
         public string DataDoCadastro { get; set; }
+        public string IdCliente { get; set; }
 
     }
 }
