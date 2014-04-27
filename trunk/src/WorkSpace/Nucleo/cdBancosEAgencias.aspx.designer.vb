@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class cdBancosEAgencias
 
     '''<summary>
-    '''rtbToolBarBancos control.
+    '''rtbToolBarAgencias control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rtbToolBarBancos As Global.Telerik.Web.UI.RadToolBar
+    Protected WithEvents rtbToolBarAgencias As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
     '''RadDockLayout1 control.
@@ -77,13 +77,13 @@ Partial Public Class cdBancosEAgencias
     Protected WithEvents cboBanco As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''pnlDadosDoBanco control.
+    '''pnlaAgencia control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pnlDadosDoBanco As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pnlaAgencia As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
     '''Label1 control.
@@ -95,40 +95,13 @@ Partial Public Class cdBancosEAgencias
     Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtNumeroDoBanco control.
+    '''cboAgencia control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtNumeroDoBanco As Global.Telerik.Web.UI.RadNumericTextBox
-
-    '''<summary>
-    '''pnlAgencias control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pnlAgencias As Global.Telerik.Web.UI.RadDock
-
-    '''<summary>
-    '''rtbToolBarAgencias control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rtbToolBarAgencias As Global.Telerik.Web.UI.RadToolBar
-
-    '''<summary>
-    '''ctrlPessoa2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ctrlPessoa2 As Global.WorkSpace.ctrlPessoa
+    Protected WithEvents cboAgencia As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''pnlDadosDoAgencia control.

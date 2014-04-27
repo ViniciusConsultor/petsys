@@ -11,28 +11,24 @@ Partial Public Class ctrlBancosEAgencias
     End Sub
 
     Private Sub cboBancos_ItemsRequested(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboBancos.ItemsRequested
-        Dim Bancos As IList(Of IBanco)
-
-        Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-            Bancos = Servico.ObtenhaBancosPorNomeComoFiltro(e.Text, 50)
-        End Using
-
+        Dim Bancos As IList(Of Banco) = Banco.ObtenhaTodos()
+        
         If Not Bancos Is Nothing Then
-            For Each Banco As IBanco In Bancos
-                Dim Item As New RadComboBoxItem(Banco.Nome, Banco.ID.Value.ToString)
+            For Each Banco As Banco In Bancos
+                Dim Item As New RadComboBoxItem(Banco.Nome, Banco.ID.ToString)
 
-                Item.Attributes.Add("Numero", Banco.Numero.ToString)
+                Item.Attributes.Add("Numero", Banco.ID.ToString)
                 cboBancos.Items.Add(Item)
                 Item.DataBind()
             Next
         End If
     End Sub
 
-    Public Property BancoSelecionado() As IBanco
+    Public Property BancoSelecionado() As Banco
         Get
-            Return CType(ViewState(Me.ClientID & "_BANCO_"), IBanco)
+            Return CType(ViewState(Me.ClientID & "_BANCO_"), Banco)
         End Get
-        Set(ByVal value As IBanco)
+        Set(ByVal value As Banco)
             ViewState.Add(Me.ClientID & "_BANCO_", value)
             cboBancos.Text = value.Nome
         End Set
@@ -44,12 +40,12 @@ Partial Public Class ctrlBancosEAgencias
         End Get
         Set(ByVal value As IAgencia)
             ViewState.Add(Me.ClientID & "_AGENCIA_", value)
-            cboAgencias.Text = value.Pessoa.Nome
+            cboAgencias.Text = value.Nome
         End Set
     End Property
 
     Private Sub cboBancos_SelectedIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboBancos.SelectedIndexChanged
-        Dim Banco As IBanco
+        Dim Banco As Banco
         Dim Valor As String
         
         Valor = DirectCast(sender, RadComboBox).SelectedValue
@@ -58,10 +54,7 @@ Partial Public Class ctrlBancosEAgencias
             Return
         End If
 
-        Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-            Banco = Servico.ObtenhaBanco(CLng(Valor))
-        End Using
-
+        Banco = Banco.Obtenha(Valor)
         BancoSelecionado = Banco
     End Sub
 
@@ -76,7 +69,7 @@ Partial Public Class ctrlBancosEAgencias
 
         If Not Agencias Is Nothing Then
             For Each Agencia As IAgencia In Agencias
-                Dim Item As New RadComboBoxItem(Agencia.Pessoa.Nome, Agencia.Pessoa.ID.ToString)
+                Dim Item As New RadComboBoxItem(Agencia.Nome, Agencia.ID.ToString)
 
                 Item.Attributes.Add("Numero", Agencia.Numero)
                 cboAgencias.Items.Add(Item)
@@ -114,7 +107,7 @@ Partial Public Class ctrlBancosEAgencias
         End If
 
         Using Servico As IServicoDeBancosEAgencias = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeBancosEAgencias)()
-            Agencia = Servico.ObtenhaAgencia(BancoSelecionado.ID.Value, CLng(Valor))
+            Agencia = Servico.ObtenhaAgencia(BancoSelecionado.ID, CLng(Valor))
         End Using
 
         AgenciaSelecionada = Agencia

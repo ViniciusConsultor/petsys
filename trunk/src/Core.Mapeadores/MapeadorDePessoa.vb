@@ -43,8 +43,8 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If Not Pessoa.DadoBancario Is Nothing Then
-            SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.Banco.ID.Value.ToString, ", "))
-            SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.Pessoa.ID.Value.ToString, ", "))
+            SQL.Append(String.Concat("'", Pessoa.DadoBancario.Agencia.Banco.ID, "', "))
+            SQL.Append(String.Concat(Pessoa.DadoBancario.Agencia.ID.Value.ToString, ", "))
 
             If String.IsNullOrEmpty(Pessoa.DadoBancario.Conta.Numero) Then
                 SQL.Append("NULL, ")
@@ -225,8 +225,8 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If Not Pessoa.DadoBancario Is Nothing Then
-            SQL.Append(String.Concat("IDBANCO  = ", Pessoa.DadoBancario.Agencia.Banco.ID.Value.ToString, ", "))
-            SQL.Append(String.Concat("IDAGENCIA = ", Pessoa.DadoBancario.Agencia.Pessoa.ID.Value.ToString, ", "))
+            SQL.Append(String.Concat("IDBANCO  = '", Pessoa.DadoBancario.Agencia.Banco.ID, "', "))
+            SQL.Append(String.Concat("IDAGENCIA = ", Pessoa.DadoBancario.Agencia.ID.Value.ToString, ", "))
 
             If String.IsNullOrEmpty(Pessoa.DadoBancario.Conta.Numero) Then
                 SQL.Append("CNTACORRENTE = NULL, ")
@@ -278,19 +278,16 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         End If
 
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "IDAGENCIA") Then
-            Dim Banco As IBanco
+            Dim Banco As Banco
             Dim Agencia As IAgencia
-            Dim PessoaAgencia As IPessoa
-
-            Banco = FabricaGenerica.GetInstancia.CrieObjeto(Of IBanco)()
-            Banco.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDBANCO")
-            Banco.Numero = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMEROBANCO")
-            Banco.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEDOBANCO")
-
-            PessoaAgencia = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad(Of IPessoaJuridicaLazyLoad)(UtilidadesDePersistencia.GetValorLong(Leitor, "IDAGENCIA"))
-            Agencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgencia)(New Object() {PessoaAgencia})
+            
+            Banco = Banco.Obtenha(UtilidadesDePersistencia.GetValorString(Leitor, "IDBANCO"))
+            
+            Agencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IAgencia)()
+            Agencia.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDAGENCIA")
             Agencia.Banco = Banco
             Agencia.Numero = UtilidadesDePersistencia.GetValorString(Leitor, "NUMEROAGENCIA")
+            Agencia.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEDAAGENCIA")
 
             Dim DadosBancarios = FabricaGenerica.GetInstancia.CrieObjeto(Of IDadoBancario)()
             DadosBancarios.Agencia = Agencia

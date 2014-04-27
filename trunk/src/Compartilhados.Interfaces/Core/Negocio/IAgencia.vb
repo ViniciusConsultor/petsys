@@ -1,10 +1,11 @@
 ﻿Namespace Core.Negocio
 
     Public Interface IAgencia
-        Inherits IPapelPessoa
-
+        
+        Property ID As Nullable(Of Long)
         Property Numero() As String
-        Property Banco() As IBanco
+        Property Banco() As Banco
+        Property Nome As String
 
     End Interface
 
