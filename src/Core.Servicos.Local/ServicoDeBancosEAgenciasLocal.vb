@@ -32,25 +32,6 @@ Public Class ServicoDeBancosEAgenciasLocal
         End Try
     End Sub
 
-    Public Sub InsiraBanco(ByVal Banco As IBanco) Implements IServicoDeBancosEAgencias.InsiraBanco
-        Dim Mapeador As IMapeadorDeBancosEAgencias
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeBancosEAgencias)()
-
-        ServerUtils.BeginTransaction()
-
-        Try
-            Mapeador.InsiraBanco(Banco)
-            ServerUtils.CommitTransaction()
-        Catch
-            ServerUtils.RollbackTransaction()
-            Throw
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Sub
-
     Public Sub ModifiqueAgencia(ByVal Agencia As IAgencia) Implements IServicoDeBancosEAgencias.ModifiqueAgencia
         Dim Mapeador As IMapeadorDeBancosEAgencias
 
@@ -70,26 +51,7 @@ Public Class ServicoDeBancosEAgenciasLocal
         End Try
     End Sub
 
-    Public Sub ModifiqueBanco(ByVal Banco As IBanco) Implements IServicoDeBancosEAgencias.ModifiqueBanco
-        Dim Mapeador As IMapeadorDeBancosEAgencias
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeBancosEAgencias)()
-
-        ServerUtils.BeginTransaction()
-
-        Try
-            Mapeador.ModifiqueBanco(Banco)
-            ServerUtils.CommitTransaction()
-        Catch
-            ServerUtils.RollbackTransaction()
-            Throw
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Sub
-
-    Public Function ObtenhaAgencias(ByVal IDBanco As Long) As IList(Of IAgencia) Implements IServicoDeBancosEAgencias.ObtenhaAgencias
+    Public Function ObtenhaAgencias(ByVal IDBanco As String) As IList(Of IAgencia) Implements IServicoDeBancosEAgencias.ObtenhaAgencias
         Dim Mapeador As IMapeadorDeBancosEAgencias
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -121,26 +83,7 @@ Public Class ServicoDeBancosEAgenciasLocal
         End Try
     End Sub
 
-    Public Sub RemovaBanco(ByVal ID As Long) Implements IServicoDeBancosEAgencias.RemovaBanco
-        Dim Mapeador As IMapeadorDeBancosEAgencias
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeBancosEAgencias)()
-
-        ServerUtils.BeginTransaction()
-
-        Try
-            Mapeador.RemovaBanco(ID)
-            ServerUtils.CommitTransaction()
-        Catch
-            ServerUtils.RollbackTransaction()
-            Throw
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Sub
-
-    Public Function ObtenhaAgencia(ByVal IDBanco As Long, ByVal IDAgencia As Long) As IAgencia Implements IServicoDeBancosEAgencias.ObtenhaAgencia
+    Public Function ObtenhaAgencia(ByVal IDBanco As String, ByVal IDAgencia As Long) As IAgencia Implements IServicoDeBancosEAgencias.ObtenhaAgencia
         Dim Mapeador As IMapeadorDeBancosEAgencias
 
         ServerUtils.setCredencial(MyBase._Credencial)
@@ -153,35 +96,7 @@ Public Class ServicoDeBancosEAgenciasLocal
         End Try
     End Function
 
-    Public Function ObtenhaBancosPorNomeComoFiltro(ByVal Nome As String, _
-                                                   ByVal Quantidade As Integer) As IList(Of IBanco) Implements IServicoDeBancosEAgencias.ObtenhaBancosPorNomeComoFiltro
-        Dim Mapeador As IMapeadorDeBancosEAgencias
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeBancosEAgencias)()
-
-        Try
-            Return Mapeador.ObtenhaBancosPorNomeComoFiltro(Nome, Quantidade)
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-
-    End Function
-
-    Public Function ObtenhaBanco(ByVal ID As Long) As IBanco Implements IServicoDeBancosEAgencias.ObtenhaBanco
-        Dim Mapeador As IMapeadorDeBancosEAgencias
-
-        ServerUtils.setCredencial(MyBase._Credencial)
-        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeBancosEAgencias)()
-
-        Try
-            Return Mapeador.ObtenhaBanco(ID)
-        Finally
-            ServerUtils.libereRecursos()
-        End Try
-    End Function
-
-    Public Function ObtenhaAgenciasPorNomeComoFiltro(ByVal Banco As IBanco, _
+    Public Function ObtenhaAgenciasPorNomeComoFiltro(ByVal Banco As Banco, _
                                                      ByVal NomeDaAgencia As String, _
                                                      ByVal Quantidade As Integer) As IList(Of IAgencia) Implements IServicoDeBancosEAgencias.ObtenhaAgenciasPorNomeComoFiltro
         Dim Mapeador As IMapeadorDeBancosEAgencias

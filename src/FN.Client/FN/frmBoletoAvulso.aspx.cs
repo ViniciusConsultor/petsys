@@ -387,7 +387,7 @@ namespace FN.Client.FN
 
                     if (cedentePessoa.DadoBancario != null)
                     {
-                        codigoDoBanco = cedentePessoa.DadoBancario.Agencia.Banco.Numero;
+                        codigoDoBanco = Convert.ToInt32(cedentePessoa.DadoBancario.Agencia.Banco.ID);
                         cedenteAgencia = cedentePessoa.DadoBancario.Agencia.Numero;
                         cedenteConta = cedentePessoa.DadoBancario.Conta.Numero;
                         cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.Value.ToString("000");
