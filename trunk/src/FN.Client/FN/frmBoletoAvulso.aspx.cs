@@ -52,6 +52,7 @@ namespace FN.Client.FN
                     else
                         ExibaItensFinanceiros(itensFinanceiros);
 
+                CarregueInstrucoesDoBoleto();
             }
         }
 
@@ -568,6 +569,19 @@ namespace FN.Client.FN
         protected override RadToolBar ObtenhaBarraDeFerramentas()
         {
             return null;
+        }
+
+        private void CarregueInstrucoesDoBoleto()
+        {
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeConfiguracaoGeralFinanceiro>())
+            {
+                var configuracaoGeral = servico.Obtenha();
+
+                if(configuracaoGeral == null || string.IsNullOrEmpty(configuracaoGeral.InstrucoesDoBoleto))
+                    return;
+
+                txtInstrucoes.Text = configuracaoGeral.InstrucoesDoBoleto;
+            }
         }
     }
 }

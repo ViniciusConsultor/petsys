@@ -59,6 +59,7 @@
     <Compile Include="BoletosGeradosAux.cs" />
     <Compile Include="ConfiguracaoDeBoletoBancario.cs" />
     <Compile Include="ConfiguracaoDeIndicesFinanceiros.cs" />
+    <Compile Include="ConfiguracaoGeralFinanceiro.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPoNossoNumero.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorCedente.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorCliente.cs" />

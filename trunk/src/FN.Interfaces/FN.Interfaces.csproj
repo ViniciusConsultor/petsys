@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeConfiguracaoGeralFinanceiro.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPoNossoNumero.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorCedente.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorCliente.cs" />
@@ -73,8 +74,10 @@
     <Compile Include="Negocio\IBoletosGerados.cs" />
     <Compile Include="Negocio\IBoletosGeradosAux.cs" />
     <Compile Include="Negocio\IConfiguracaoDeBoletoBancario.cs" />
+    <Compile Include="Negocio\IConfiguracaoGeralFinanceiro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeBoleto.cs" />
+    <Compile Include="Servicos\IServicoDeConfiguracaoGeralFinanceiro.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FN.Interfaces.snk" />
