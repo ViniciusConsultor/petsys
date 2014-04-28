@@ -967,7 +967,7 @@ namespace MP.Client.MP
                 if (!verifiqueSeExisteClassificacoes)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe nenhuma classoificação encontrada."),
+                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe nenhuma classificação encontrada."),
                                                          false);
                     return;
                 }

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapeadorConfiguracaoDeIndicesFinanceiros.cs" />
+    <Compile Include="MapeadordEConfiguracaoGeralFinanceiro.cs" />
     <Compile Include="MapeadorDeBoleto.cs" />
     <Compile Include="MapeadorDeItensFinanceirosDeRecebimento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
