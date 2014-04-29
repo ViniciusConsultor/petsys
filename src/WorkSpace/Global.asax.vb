@@ -64,7 +64,7 @@ Public Class Global_asax
                                               ConfiguracaoDeEmail.EmailRemetente, _
                                               destinario, _
                                               Nothing, _
-                                              mensagemDoErro, Nothing)
+                                              mensagemDoErro, Nothing, "ERRO_NO_SISTEMA", True)
                 Catch ex As Exception
 
                 End Try

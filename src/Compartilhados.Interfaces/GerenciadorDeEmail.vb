@@ -12,7 +12,9 @@ Public Class GerenciadorDeEmail
                                  ByVal DestinatariosEmCopia As IList(Of String), _
                                  ByVal DestinatariosEmCopiaOculta As IList(Of String), _
                                  ByVal Mensagem As String,
-                                 ByVal Anexos As IDictionary(Of String, Stream))
+                                 ByVal Anexos As IDictionary(Of String, Stream), _
+                                 ByVal Conexto As String, _
+                                 ByVal GravaHistorico As Boolean)
         Dim Configuracao As IConfiguracaoDoSistema
 
         Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
@@ -56,7 +58,7 @@ Public Class GerenciadorDeEmail
                         MensagemDeEmail.Attachments.Add(anexo)
                     Next
                 End If
-                
+
                 Try
                     Gerenciador.Send(MensagemDeEmail)
                 Catch ex As Exception

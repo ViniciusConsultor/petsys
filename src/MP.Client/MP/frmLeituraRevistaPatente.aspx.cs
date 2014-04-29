@@ -35,7 +35,7 @@ namespace MP.Client.MP
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
                 CarreguePaginaInicial();
         }
 
@@ -53,7 +53,7 @@ namespace MP.Client.MP
             RadTabStrip1.Tabs[1].Enabled = habilite;
             RadTabStrip1.Tabs[2].Enabled = habilite;
 
-            if(habilite)
+            if (habilite)
                 ctrlFitroRevistaPatente1.Inicializa();
         }
 
@@ -100,7 +100,7 @@ namespace MP.Client.MP
 
             if (e.CommandName == "ProcessarRevista")
             {
-                var revistasAProcessar = (IList<IRevistaDePatente>) ViewState[CHAVE_REVISTAS_A_PROCESSAR];
+                var revistasAProcessar = (IList<IRevistaDePatente>)ViewState[CHAVE_REVISTAS_A_PROCESSAR];
 
                 try
                 {
@@ -125,7 +125,7 @@ namespace MP.Client.MP
                         using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
                             servico.Inserir(listaDeProcessosExistentes);
 
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), 
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."), false);
 
                         CarreguePaginaInicial();
@@ -290,14 +290,29 @@ namespace MP.Client.MP
             long id = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                id = Convert.ToInt64((e.Item.Cells[3].Text));
+                id = Convert.ToInt64((e.Item.Cells[4].Text));
 
-            if (e.CommandName == "Modificar")
+            switch (e.CommandName)
             {
-                var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx",
+                case "Modificar":
+
+                    var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(),
+                                            "MP/cdProcessoDePatente.aspx",
                                             "?Id=", id);
-                ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.ExibeJanela(url, "Modificar processo de patente", 800, 550, "cdProcessoDePatente_aspx"), false);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url, "Modificar processo de patente",
+                                                                                  800, 550, "cdProcessoDePatente_aspx"),
+                                                        false);
+                    break;
+
+                case "Email":
+                    var url2 = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmEnviaEmail.aspx",
+                                             "?Id=", id, "&Tipo=P","&Despacho=1");
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url2,
+                                                                                  "Enviar e-mail",
+                                                                                  800, 550, "frmEnviaEmail_aspx"), false);
+                    break;
             }
         }
 
@@ -307,6 +322,7 @@ namespace MP.Client.MP
 
         protected void gridRevistaProcessos_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            
         }
 
         protected void grdFiltros_ItemCommand(object sender, GridCommandEventArgs e)
@@ -337,7 +353,7 @@ namespace MP.Client.MP
         {
             try
             {
-                if(uplRevistaPatente.UploadedFiles.Count > 0)
+                if (uplRevistaPatente.UploadedFiles.Count > 0)
                 {
                     var arquivo = uplRevistaPatente.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(Util.URL_REVISTA_PATENTE);
@@ -446,7 +462,7 @@ namespace MP.Client.MP
             UtilidadesWeb.CrieDiretorio(pastaDeDestino);
 
             var caminhoArquivoTxt = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
-            using(var arquivo = new StreamReader(caminhoArquivoTxt))
+            using (var arquivo = new StreamReader(caminhoArquivoTxt))
             {
                 TradutorDeRevistaPatenteTXTParaRevistaPatenteXML.TraduzaRevistaDePatente(DateTime.Now, revistaDePatente.NumeroRevistaPatente.ToString(), arquivo, pastaDeDestino);
                 arquivo.Close();
@@ -501,7 +517,7 @@ namespace MP.Client.MP
             {
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                     foreach (var processo in listaDeProcessosExistentes)
-                        listaDeProcessos.Add(processo.NumeroDoProcesso.Length == 15 ? servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso.Remove(0,4)) : 
+                        listaDeProcessos.Add(processo.NumeroDoProcesso.Length == 15 ? servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso.Remove(0, 4)) :
                                                                                       servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso));
                 MostraProcessosDaRevista(listaDeProcessos);
                 pnlRelatorios.Visible = true;
@@ -591,7 +607,7 @@ namespace MP.Client.MP
                 listRadical.DataSource = ViewState[CHAVE_RADICAIS_CLIENTES];
                 listRadical.DataBind();
 
-                if(listRadical.Items.Count > 0 && !((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.HasValue)
+                if (listRadical.Items.Count > 0 && !((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.HasValue)
                     return;
 
                 var radical = ((IRadicalPatente)listRadical.Items[0].DataItem).IdRadicalPatente.Value;
@@ -613,7 +629,7 @@ namespace MP.Client.MP
 
                 dicionarioDePatentesColidentes = (IDictionary<long, IList<IRevistaDePatente>>)ViewState[CHAVE_PATENTES_COLIDENTES];
 
-                if(dicionarioDePatentesColidentes.ContainsKey(radical))
+                if (dicionarioDePatentesColidentes.ContainsKey(radical))
                     listaDePatentesColidentes = dicionarioDePatentesColidentes[radical];
 
                 CarregaGridPatentesColidentes(listaDePatentesColidentes);
@@ -645,7 +661,7 @@ namespace MP.Client.MP
         {
             if ((e.Item is GridDataItem))
             {
-                var gridItem = (GridDataItem) e.Item;
+                var gridItem = (GridDataItem)e.Item;
 
                 foreach (GridColumn column in grdPatenteClientes.MasterTableView.RenderColumns)
                     if ((column is GridButtonColumn))
@@ -827,10 +843,10 @@ namespace MP.Client.MP
                 IList<IRevistaDePatente> listaDePatentesColidentes = new List<IRevistaDePatente>();
                 IList<IProcessoDePatente> listaDeProcessosDeClientes = new List<IProcessoDePatente>();
 
-                if(!string.IsNullOrEmpty(radical.Colidencia))
+                if (!string.IsNullOrEmpty(radical.Colidencia))
                 {
                     listaDePatentesColidentes = revistaDePatentes.ToList().FindAll(revista => revista.Titulo.Contains(radical.Colidencia));
-                    listaDeProcessosDeClientes = processoDePatentes.ToList().FindAll(processo => processo.Patente.Radicais != null && 
+                    listaDeProcessosDeClientes = processoDePatentes.ToList().FindAll(processo => processo.Patente.Radicais != null &&
                         processo.Patente.Radicais.Contains(radical));
 
                     if (radical.IdRadicalPatente.HasValue && listaDePatentesColidentes.Count > 0)
@@ -848,7 +864,7 @@ namespace MP.Client.MP
                 }
                 else if (!string.IsNullOrEmpty(radical.Classificacao))
                 {
-                    listaDePatentesColidentes = revistaDePatentes.ToList().FindAll(revista => 
+                    listaDePatentesColidentes = revistaDePatentes.ToList().FindAll(revista =>
                         (!string.IsNullOrEmpty(revista.ClassificacaoInternacional) && revista.ClassificacaoInternacional.Contains(radical.Classificacao)) ||
                         (!string.IsNullOrEmpty(revista.ClassificacaoNacional) && revista.ClassificacaoNacional.Contains(radical.Classificacao)));
 
@@ -937,7 +953,7 @@ namespace MP.Client.MP
                 var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos, revistaDePatentes);
                 var nomeDoArquivo = gerador.GereRelatorioSintetico(numeroDaRevistaSelecionada);
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
             }
         }
 
@@ -945,7 +961,7 @@ namespace MP.Client.MP
         {
             if (ViewState[CHAVE_RADICAIS_CLIENTES] != null && ViewState[CHAVE_PATENTES_COLIDENTES] != null)
             {
-                var dicionarioDeRevistaColidentes = (IDictionary<long, IList<IRevistaDePatente>>) ViewState[CHAVE_PATENTES_COLIDENTES];
+                var dicionarioDeRevistaColidentes = (IDictionary<long, IList<IRevistaDePatente>>)ViewState[CHAVE_PATENTES_COLIDENTES];
                 var radicais = ((IList<IRadicalPatente>)ViewState[CHAVE_RADICAIS_CLIENTES]);
                 var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
                 string dataDaPublicacao = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.HasValue ?
@@ -983,7 +999,7 @@ namespace MP.Client.MP
         {
             if (ViewState[CHAVE_RADICAIS_CLIENTES] != null && ViewState[CHAVE_PATENTES_COLIDENTES] != null)
             {
-                var dicionarioDeRevistaColidentes = (IDictionary<long, IList<IRevistaDePatente>>) ViewState[CHAVE_PATENTES_COLIDENTES];
+                var dicionarioDeRevistaColidentes = (IDictionary<long, IList<IRevistaDePatente>>)ViewState[CHAVE_PATENTES_COLIDENTES];
                 var radicais = ((IList<IRadicalPatente>)ViewState[CHAVE_RADICAIS_CLIENTES]);
                 var numeroDaRevistaSelecionada = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).NumeroRevistaPatente.ToString();
                 string dataDaPublicacao = ((IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA]).DataPublicacao.HasValue ?
@@ -999,10 +1015,10 @@ namespace MP.Client.MP
                         verifiqueSeExisteColidencias = true;
                         break;
                     }
-                    
+
                 }
 
-                if(!verifiqueSeExisteColidencias)
+                if (!verifiqueSeExisteColidencias)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe nenhuma colidência encontrada."),

@@ -28,6 +28,7 @@ namespace MP.Client.MP
 
                 Nullable<long> id = null;
                 string tipo = null;
+                bool processaTemplateDespacho = false;
 
                 if (!String.IsNullOrEmpty(Request.QueryString["Id"]))
                     id = Convert.ToInt64(Request.QueryString["Id"]);
@@ -35,13 +36,26 @@ namespace MP.Client.MP
                 if (!String.IsNullOrEmpty(Request.QueryString["Tipo"]))
                     tipo = Request.QueryString["Tipo"];
 
+                if (!String.IsNullOrEmpty(Request.QueryString["Despacho"]))
+                    processaTemplateDespacho = true;
+
                 if (id == null || tipo == null) return;
 
+                ViewState.Add("TIPO", tipo);
+
                 if (tipo == "P")
-                    MostraDadosDoEmailParaPatente(id.Value);
+                    MostraDadosDoEmailParaPatente(id.Value, processaTemplateDespacho);
                 else
-                    MostraDadosDoEmailParaMarca(id.Value);
+                    MostraDadosDoEmailParaMarca(id.Value, processaTemplateDespacho);
             }
+        }
+
+        private string ObtenhaContexto()
+        {
+            if (ViewState["TIPO"].Equals("P"))
+                return "PATENTE";
+
+            return "MARCA";
         }
 
         private IList<string> Destinarios
@@ -70,7 +84,7 @@ namespace MP.Client.MP
             set { ViewState["PATENTESELECIONADA"] = value; }
         }
 
-        private void MostraDadosDoEmailParaPatente(long id)
+        private void MostraDadosDoEmailParaPatente(long id , bool processaTemplateDespacho)
         {
             pnlEscolhaDeDestinariosDeMarca.Visible = false;
             pnlEscolhaDeDestinatoriosPatente.Visible = true;
@@ -89,27 +103,30 @@ namespace MP.Client.MP
 
                 ProcessoDePatente = processo;
 
-                if (processo.Despacho == null)
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
-                                                                "O processo de patente ainda não possui despacho cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
-                                                            false);
-                else
+                if (processaTemplateDespacho)
                 {
-                    if (processo.Despacho.TemplateDeEmail == null)
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(
-                                                            "O despacho do processo de patente não possui template de e-mail cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
-                                                        false);
-                    else
-                        ctrlTemplateDeEmail.TextoDoTemplate = processo.Despacho.TemplateDeEmail.Template;
-                }
 
+                    if (processo.Despacho == null)
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                    "O processo de patente ainda não possui despacho cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
+                                                                false);
+                    else
+                    {
+                        if (processo.Despacho.TemplateDeEmail == null)
+                            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                    UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                        "O despacho do processo de patente não possui template de e-mail cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
+                                                                    false);
+                        else
+                            ctrlTemplateDeEmail.TextoDoTemplate = processo.Despacho.TemplateDeEmail.Template;
+                    }
+                }
 
             }
         }
 
-        private void MostraDadosDoEmailParaMarca(long id)
+        private void MostraDadosDoEmailParaMarca(long id, bool processaTemplateDespacho)
         {
 
             pnlEscolhaDeDestinariosDeMarca.Visible = true;
@@ -129,20 +146,26 @@ namespace MP.Client.MP
 
                 ProcessoDeMarca = processo;
 
-                if (processo.Despacho == null)
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
-                                                                "O processo de marca ainda não possui despacho cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
-                                                            false);
-                else
+
+                if (processaTemplateDespacho)
                 {
-                    if (processo.Despacho.TemplateDeEmail == null)
+
+
+                    if (processo.Despacho == null)
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(
-                                                            "O despacho do processo de marca não possui template de e-mail cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
-                                                        false);
+                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                    "O processo de marca ainda não possui despacho cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
+                                                                false);
                     else
-                        ctrlTemplateDeEmail.TextoDoTemplate = processo.Despacho.TemplateDeEmail.Template;
+                    {
+                        if (processo.Despacho.TemplateDeEmail == null)
+                            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                    UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                        "O despacho do processo de marca não possui template de e-mail cadastrado. O corpo do e-mail não será preenchido automaticamente pelo template vinculado ao despacho."),
+                                                                    false);
+                        else
+                            ctrlTemplateDeEmail.TextoDoTemplate = processo.Despacho.TemplateDeEmail.Template;
+                    }
                 }
             }
         }
@@ -200,7 +223,7 @@ namespace MP.Client.MP
 
             GerenciadorDeEmail.EnviaEmail(txtAssunto.Text,
                                           configuracaoDeEmail.EmailRemetente,
-                                          Destinarios, DestinariosCo, ctrlTemplateDeEmail.TextoDoTemplate, Anexos);
+                                          Destinarios, DestinariosCo, ctrlTemplateDeEmail.TextoDoTemplate, Anexos, ObtenhaContexto(), true);
 
             LimpaTela();
 
