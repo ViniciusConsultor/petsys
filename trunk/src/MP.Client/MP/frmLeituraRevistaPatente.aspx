@@ -2,7 +2,8 @@
     CodeBehind="frmLeituraRevistaPatente.aspx.cs" Inherits="MP.Client.MP.frmLeituraRevistaPatente" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="ctrlFiltroRevistaPatente.ascx" TagName="ctrlFitroRevistaPatente" TagPrefix="uc3" %>
+<%@ Register Src="ctrlFiltroRevistaPatente.ascx" TagName="ctrlFitroRevistaPatente"
+    TagPrefix="uc3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
@@ -161,7 +162,7 @@
                                 <asp:Panel ID="pnlDadosDaRevistaProcesso" runat="server">
                                     <table class="tabela">
                                         <tr>
-                                            <td class="th3">
+                                            <td>
                                                 <telerik:RadGrid ID="gridRevistaProcessos" runat="server" AutoGenerateColumns="False"
                                                     AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="gridRevistaProcessos_ItemCommand"
                                                     OnItemCreated="gridRevistaProcessos_ItemCreated" OnPageIndexChanged="gridRevistaProcessos_PageIndexChanged">
@@ -178,13 +179,15 @@
                                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                                 <ItemStyle Width="2%"></ItemStyle>
                                                             </telerik:GridButtonColumn>
+                                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
+                                                                HeaderTooltip="Enviar e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
+                                                                <ItemStyle Width="2%"></ItemStyle>
+                                                            </telerik:GridButtonColumn>
                                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="Identificador"
                                                                 UniqueName="IdProcessoPatente" Display="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="Id Processo Patente"
-                                                                UniqueName="IdProcessoDePatente" Visible="false">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo" UniqueName="column5">
+                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo"
+                                                                UniqueName="column5">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Patente.NaturezaPatente.DescricaoNaturezaPatente"
                                                                 HeaderText="Natureza" UniqueName="column3">
@@ -248,7 +251,7 @@
                                 </asp:Panel>
                                 <table class="tabela">
                                     <tr>
-                                        <td class="th3">
+                                        <td>
                                             <telerik:RadGrid ID="grdFiltros" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                                                 PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdFiltros_ItemCommand"
                                                 OnItemCreated="grdFiltros_ItemCreated" OnPageIndexChanged="grdFiltros_PageIndexChanged">
@@ -309,9 +312,9 @@
                                                 <asp:ImageButton ID="btnRelatorioPorClassificacao" runat="server" ImageUrl="~/imagens/imprimir.png"
                                                     ToolTip="Gerar relatório por classificação" OnClick="btnRelatorioPorClassificacao_OnClick" />
                                             </td>
-                                        </tr>                                                                
+                                        </tr>
                                     </table>
-                                </asp:Panel>                                              
+                                </asp:Panel>
                                 <asp:Panel ID="pnlRadicais" runat="server">
                                     <table class="tabela">
                                         <tr>
@@ -399,7 +402,8 @@
                                                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column6"
                                                                                 Display="false">
                                                                             </telerik:GridBoundColumn>
-                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo" UniqueName="column3">
+                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo"
+                                                                                UniqueName="column3">
                                                                             </telerik:GridBoundColumn>
                                                                             <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
                                                                             </telerik:GridBoundColumn>
@@ -439,7 +443,8 @@
                                                                             <telerik:GridBoundColumn DataField="IdRevistaPatente" HeaderText="ID" UniqueName="column6"
                                                                                 Display="false">
                                                                             </telerik:GridBoundColumn>
-                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo" UniqueName="column3">
+                                                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo"
+                                                                                UniqueName="column3">
                                                                             </telerik:GridBoundColumn>
                                                                             <telerik:GridBoundColumn DataField="Titulo" HeaderText="Patente" UniqueName="column2">
                                                                             </telerik:GridBoundColumn>

@@ -169,7 +169,7 @@
                                 <asp:Panel ID="pnlDadosDaRevistaProcesso" runat="server">
                                     <table class="tabela">
                                         <tr>
-                                            <td class="th3">
+                                            <td>
                                                 <telerik:RadGrid ID="gridRevistaProcessos" runat="server" AutoGenerateColumns="False"
                                                     AllowPaging="True" PageSize="10" GridLines="None" Width="98%" OnItemCommand="gridRevistaProcessos_ItemCommand"
                                                     OnItemCreated="gridRevistaProcessos_ItemCreated" OnPageIndexChanged="gridRevistaProcessos_PageIndexChanged">
@@ -186,11 +186,12 @@
                                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                                 <ItemStyle Width="2%"></ItemStyle>
                                                             </telerik:GridButtonColumn>
+                                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Email" FilterImageToolTip="Enviar e-mail"
+                                                                HeaderTooltip="Enviar e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
+                                                                <ItemStyle Width="2%"></ItemStyle>
+                                                            </telerik:GridButtonColumn>
                                                             <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="ID" UniqueName="column6"
                                                                 Display="false">
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn DataField="IdProcessoDeMarca" HeaderText="IdProcessoDeMarca"
-                                                                UniqueName="column" Visible="false">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Processo" HeaderText="Processo" UniqueName="column1">
                                                             </telerik:GridBoundColumn>
@@ -276,7 +277,7 @@
                                 </asp:Panel>
                                 <table class="tabela">
                                     <tr>
-                                        <td class="th3">
+                                        <td >
                                             <telerik:RadGrid ID="grdFiltros" runat="server" AutoGenerateColumns="False" AllowPaging="True"
                                                 PageSize="10" GridLines="None" Width="98%" OnItemCommand="grdFiltros_ItemCommand"
                                                 OnItemCreated="grdFiltros_ItemCreated" OnPageIndexChanged="grdFiltros_PageIndexChanged">

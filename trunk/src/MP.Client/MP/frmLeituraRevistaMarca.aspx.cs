@@ -631,16 +631,31 @@ namespace MP.Client.MP
             long id = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                id = Convert.ToInt64((e.Item.Cells[3].Text));
+                id = Convert.ToInt64((e.Item.Cells[4].Text));
 
-            if (e.CommandName == "Modificar")
+            switch (e.CommandName)
             {
-                var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDeMarca.aspx",
+
+                case "Modificar":
+
+                    var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDeMarca.aspx",
                                             "?Id=", id);
-                ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.ExibeJanela(url,
-                                                                                   "Modificar processo de marca",
-                                                                                   800, 550, "cdProcessoDeMarca_aspx"), false);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url,
+                                                                                  "Modificar processo de marca",
+                                                                                  800, 550, "cdProcessoDeMarca_aspx"),
+                                                        false);
+                    break;
+
+                case "Email":
+                    var url2 = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmEnviaEmail.aspx",
+                                             "?Id=", id, "&Tipo=M", "&Despacho=1");
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url2,
+                                                                                  "Enviar e-mail",
+                                                                                  800, 550, "frmEnviaEmail_aspx"), false);
+                    break;
+
             }
         }
 

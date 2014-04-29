@@ -215,7 +215,7 @@ Partial Public Class frmPainelDeControle
                                               destinarios, _
                                               Nothing, _
                                               "Teste de envio de e-mail.", _
-                                              Nothing)
+                                              Nothing, "TESTE_ENVIO_EMAIL", True)
                     ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("E-mail enviado com sucesso."), False)
                 Catch ex As Exception
                     ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)

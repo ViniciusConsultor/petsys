@@ -135,7 +135,9 @@ Public Class ServicoDeSenhaLocal
                                               destinarios, _
                                               Nothing,
                                               CorpoDoEmail,
-                                              Nothing)
+                                              Nothing, _
+                                              "REDEFICAO_DE_SENHA", _
+                                              True)
             End If
         End If
     End Sub
