@@ -36,8 +36,8 @@ namespace MP.Negocio
 
                 if (Processo.Length == 11)
                     numeroDoProcessoFormatado = Pais.Sigla + " " + Patente.NaturezaPatente.SiglaNatureza + " " +
-                                                Processo.Substring(0, 4) + " " + Processo.Substring(3, 6) + "-"
-                                                + " " + Processo.Substring(9, 1);
+                                                Processo.Substring(0, 4) + " " + Processo.Substring(4, 6) + "-"
+                                                + " " + Processo.Substring(10, 1);
                 else if (Processo.Length == 8)
                     numeroDoProcessoFormatado = Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 7) + "-" + " " + Processo.Substring(7, 1);
 
