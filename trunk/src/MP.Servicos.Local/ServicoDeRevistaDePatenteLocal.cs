@@ -713,19 +713,19 @@ namespace MP.Servicos.Local
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoDepositante && !string.IsNullOrEmpty(processo.Depositante)
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.Depositante.ToUpper()))
+                    && processo.Depositante.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoInventor && !string.IsNullOrEmpty(processo.Inventor)
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.Inventor.ToUpper()))
+                    && processo.Inventor.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoTitular && !string.IsNullOrEmpty(processo.Titular)
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.Titular.ToUpper()))
+                    && processo.Titular.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoProcurador && !string.IsNullOrEmpty(processo.Procurador)
-                    && filtro.ValorFiltro.ToUpper().Equals(processo.Procurador.ToUpper()))
+                    && processo.Procurador.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
                     deveAdicionarProcesso = true;
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PaisesDesignados && !string.IsNullOrEmpty(processo.PaisesDesignados)

@@ -188,6 +188,7 @@ namespace MP.Client.MP
 
         protected void grdRevistasAProcessar_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdRevistasAProcessar, ViewState[CHAVE_REVISTAS_A_PROCESSAR], e);
         }
 
         protected void grdRevistasJaProcessadas_ItemCommand(object sender, GridCommandEventArgs e)
@@ -283,6 +284,7 @@ namespace MP.Client.MP
 
         protected void grdRevistasJaProcessadas_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdRevistasJaProcessadas, ViewState[CHAVE_REVISTAS_PROCESSADAS], e);
         }
 
         protected void gridRevistaProcessos_ItemCommand(object sender, GridCommandEventArgs e)
@@ -322,7 +324,7 @@ namespace MP.Client.MP
 
         protected void gridRevistaProcessos_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            
+            UtilidadesWeb.PaginacaoDataGrid(ref gridRevistaProcessos, ViewState[CHAVE_PROCESSOS_DA_REVISTA], e);
         }
 
         protected void grdFiltros_ItemCommand(object sender, GridCommandEventArgs e)
@@ -347,6 +349,7 @@ namespace MP.Client.MP
 
         protected void grdFiltros_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdFiltros, ViewState[CHAVE_PROCESSOS_REUSLTADO_FILTRO], e);
         }
 
         protected void uplRevistaPatente_OnFileUploaded(object sender, FileUploadedEventArgs e)
@@ -429,7 +432,7 @@ namespace MP.Client.MP
         {
             grdFiltros.MasterTableView.DataSource = listaDeProcessosDaRevista;
             grdFiltros.DataBind();
-            Session.Add(CHAVE_PROCESSOS_REUSLTADO_FILTRO, listaDeProcessosDaRevista);
+            ViewState.Add(CHAVE_PROCESSOS_REUSLTADO_FILTRO, listaDeProcessosDaRevista);
         }
 
         protected void btnLimpar_ButtonClick(object sender, EventArgs e)
