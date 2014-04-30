@@ -11,6 +11,7 @@ Namespace Mapeadores
         Sub Inserir(ByVal Cedente As ICedente)
         Sub Remover(ByVal ID As Long)
         Sub Modificar(ByVal Cedente As ICedente)
+        Function ObtenhaCedentePadrao() As Long
 
     End Interface
 

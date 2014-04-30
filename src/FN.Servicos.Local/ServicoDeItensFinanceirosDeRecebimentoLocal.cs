@@ -112,5 +112,28 @@ namespace FN.Servicos.Local
                 ServerUtils.libereRecursos();
             }
         }
+
+        public void Excluir(long IdItemLancamentoFinanceiroRecebimento)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeador.Excluir(IdItemLancamentoFinanceiroRecebimento);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

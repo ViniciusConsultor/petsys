@@ -403,9 +403,9 @@ namespace FN.Mapeadores
 
             var dbHelper = ServerUtils.getDBHelper();
             
-            sql.Append("UPDATE FN_BOLETOS_GERADOS ");
+            sql.Append("UPDATE FN_BOLETOS_GERADOS SET ");
 
-            sql.Append("SET NOSSONUMERO = " + boletoGerado.NossoNumero.Value + ", ");
+            //sql.Append("SET NOSSONUMERO = " + boletoGerado.NossoNumero.Value + ", ");
 
             sql.Append(!String.IsNullOrEmpty(boletoGerado.NumeroBoleto)
                          ? String.Concat("NUMEROBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ")

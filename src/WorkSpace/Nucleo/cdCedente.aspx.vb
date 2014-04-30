@@ -48,7 +48,13 @@ Public Class cdCedente
         ViewState(CHAVE_ESTADO) = Estado.Inicial
         imgImagem.ImageUrl = String.Empty
         ctrlTipoDeCarteira1.Inicializa()
-        txtInicioNossoNumero.Text = String.Empty
+        txtIniNossoNumero.Text = String.Empty
+        chkCedentePadrao.Checked = False
+        txtNumeroAgencia.Text = String.Empty
+        txtNumeroDaConta.Text = String.Empty
+        txtTipoConta.Text = String.Empty
+        cboBanco.ClearSelection()
+        cboBanco.Text = ""
     End Sub
 
     Protected Sub btnNovo_Click()
@@ -119,8 +125,26 @@ Public Class cdCedente
             Cedente.TipoDeCarteira = ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada
         End If
 
-        If Not String.IsNullOrEmpty(txtInicioNossoNumero.Text) Then
-            Cedente.InicioNossoNumero = CType(txtInicioNossoNumero.Text, Long)
+        If Not String.IsNullOrEmpty(txtIniNossoNumero.Text) Then
+            Cedente.InicioNossoNumero = CType(txtIniNossoNumero.Text, Long)
+        End If
+
+        If (Not String.IsNullOrEmpty(txtNumeroAgencia.Text)) Then
+            Cedente.NumeroDaAgencia = txtNumeroAgencia.Text
+        End If
+
+        If (Not String.IsNullOrEmpty(txtNumeroDaConta.Text)) Then
+            Cedente.NumeroDaConta = txtNumeroDaConta.Text
+        End If
+
+        If (Not String.IsNullOrEmpty(txtTipoConta.Text)) Then
+            Cedente.TipoDaConta = CType(txtTipoConta.Text, Integer)
+        End If
+
+        Cedente.Padrao = chkCedentePadrao.Checked
+        
+        If (Not String.IsNullOrEmpty(cboBanco.SelectedValue)) Then
+            Cedente.NumeroDoBanco = cboBanco.SelectedValue
         End If
 
         Return Cedente
@@ -181,8 +205,20 @@ Public Class cdCedente
         If (ctrlTipoDeCarteira1 Is Nothing Or ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada Is Nothing) Then
             listaDeCampos.Add("Tipo de carteira")
         End If
-        If (String.IsNullOrEmpty(txtInicioNossoNumero.Text)) Then
+        If (String.IsNullOrEmpty(txtIniNossoNumero.Text)) Then
             listaDeCampos.Add("Inicio do nosso numero")
+        End If
+        If (String.IsNullOrEmpty(txtNumeroAgencia.Text)) Then
+            listaDeCampos.Add("Numero da agencia")
+        End If
+        If (String.IsNullOrEmpty(txtNumeroDaConta.Text)) Then
+            listaDeCampos.Add("Numero da conta")
+        End If
+        If (String.IsNullOrEmpty(txtTipoConta.Text)) Then
+            listaDeCampos.Add("Tipo da conta")
+        End If
+        If (String.IsNullOrEmpty(cboBanco.SelectedValue)) Then
+            listaDeCampos.Add("Numero do banco")
         End If
 
         Return listaDeCampos
@@ -262,8 +298,45 @@ Public Class cdCedente
         If Not Cedente.TipoDeCarteira Is Nothing Then ctrlTipoDeCarteira1.TipoDeCarteiraSelecionada = Cedente.TipoDeCarteira
 
         If Cedente.InicioNossoNumero > 0 Then
-            txtInicioNossoNumero.Text = Cedente.InicioNossoNumero.ToString()
+            txtIniNossoNumero.Text = Cedente.InicioNossoNumero.ToString()
         End If
+
+        If Not String.IsNullOrEmpty(Cedente.NumeroDaAgencia) Then
+            txtNumeroAgencia.Text = Cedente.NumeroDaAgencia
+        End If
+
+        If Not String.IsNullOrEmpty(Cedente.NumeroDaConta) Then
+            txtNumeroDaConta.Text = Cedente.NumeroDaConta
+        End If
+
+
+        If Cedente.TipoDaConta > 0 Then
+            txtTipoConta.Text = Cedente.TipoDaConta.ToString()
+        Else
+            txtTipoConta.Text = String.Empty
+        End If
+
+        If Cedente.Padrao Then
+            chkCedentePadrao.Checked = True
+        Else
+            chkCedentePadrao.Checked = False
+        End If
+
+        If Not String.IsNullOrEmpty(Cedente.NumeroDoBanco) Then
+
+            Dim bancoSelecionado As Banco
+            bancoSelecionado = Banco.Obtenha(Cedente.NumeroDoBanco)
+
+            Dim Item As New RadComboBoxItem(bancoSelecionado.Nome, bancoSelecionado.ID.ToString)
+
+            Item.Attributes.Add("Numero", bancoSelecionado.ID)
+            cboBanco.Items.Add(Item)
+            Item.Selected = True
+            Item.DataBind()
+
+
+        End If
+
 
     End Sub
 
@@ -283,5 +356,24 @@ Public Class cdCedente
         Catch ex As Exception
             Logger.GetInstancia().Erro("Erro ao carregar imagem, exceção: ", ex)
         End Try
+    End Sub
+
+    Private Sub cboBanco_ItemsRequested(sender As Object, e As Telerik.Web.UI.RadComboBoxItemsRequestedEventArgs) Handles cboBanco.ItemsRequested
+        Dim bancos As IList(Of Banco) = Banco.ObtenhaTodos()
+
+        cboBanco.Items.Clear()
+
+        For Each banco As Banco In bancos
+            Dim Item As New RadComboBoxItem(banco.Nome, banco.ID.ToString)
+
+            Item.Attributes.Add("Numero", banco.ID)
+            cboBanco.Items.Add(Item)
+            Item.DataBind()
+        Next
+
+    End Sub
+
+    Private Sub cboBanco_SelectedIndexChanged(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles cboBanco.SelectedIndexChanged
+
     End Sub
 End Class
