@@ -612,17 +612,20 @@ namespace FN.Client.FN
 
                                     //TODO verificar se é melhor excluir ou atualizar o item para cancelado
                                     // remover item de contas a receber
-                                    using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
-                                    {
-                                        servicoFinanceiro.Excluir(itemLancamentoFinanceiroRecebimento.ID.Value);
-                                    }
-
-                                    //TODO caso seja melhor atualizar descomentar este trecho e comentar o acima
                                     //using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
                                     //{
-                                    //    itemLancamentoFinanceiroRecebimento.Situacao = Situacao.Cancelada;
-                                    //    servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
+                                    //    servicoFinanceiro.Excluir(itemLancamentoFinanceiroRecebimento.ID.Value);
                                     //}
+
+                                    //TODO caso seja melhor atualizar descomentar este trecho e comentar o acima
+                                    using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                                    {
+                                        itemLancamentoFinanceiroRecebimento.Situacao = Situacao.Cancelada;
+                                        itemLancamentoFinanceiroRecebimento.Observacao =
+                                            "Item de contas a receber foi cancelado, para a geração de um novo item.";
+
+                                        servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
+                                    }
                                 }
 
                                 servico.Inserir(boletoGerado, true);
