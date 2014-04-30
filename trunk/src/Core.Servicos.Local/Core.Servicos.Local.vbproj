@@ -102,6 +102,7 @@
     <Compile Include="ServicoDeConexaoLocal.vb" />
     <Compile Include="ServicoDeConfiguracoesDoSistemaLocal.vb" />
     <Compile Include="ServicoDeEmpresaLocal.vb" />
+    <Compile Include="ServicoDeEnvioDeEmailLocal.vb" />
     <Compile Include="ServicoDeFornecedorLocal.vb" />
     <Compile Include="ServicoDeGeracaoDeIDLocal.vb" />
     <Compile Include="ServicoDeGrupoDeAtividadeLocal.vb" />

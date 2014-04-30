@@ -87,6 +87,7 @@
     <Compile Include="Mapeadores\IMapeadorDeEmpresa.vb" />
     <Compile Include="Mapeadores\IMapeadorDeFornecedor.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGeracaoDeID.vb" />
+    <Compile Include="Mapeadores\IMapeadorDeHistoricoDeEmail.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGrupo.vb" />
     <Compile Include="Mapeadores\IMapeadorDeGrupoDeAtividade.vb" />
     <Compile Include="Mapeadores\IMapeadorDeMenu.vb" />
@@ -124,6 +125,7 @@
     <Compile Include="Negocio\IConexaoSQLServer.vb" />
     <Compile Include="Negocio\IDiretivaDeSeguranca.vb" />
     <Compile Include="Negocio\IFuncao.vb" />
+    <Compile Include="Negocio\IHistoricoDeEmail.vb" />
     <Compile Include="Negocio\IMenuComposto.vb" />
     <Compile Include="Negocio\IMenuAbstrato.vb" />
     <Compile Include="Negocio\IMenuFolha.vb" />
