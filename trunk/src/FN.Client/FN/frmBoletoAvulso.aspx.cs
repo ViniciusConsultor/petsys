@@ -24,6 +24,7 @@ namespace FN.Client.FN
         //Todo verificar carregamento do tipo de carteira
         //public const string carteira = "SR";
         public const string CHAVE_CEDENTE_BOLETOGERADO = "CHAVE_CEDENTE_BOLETOGERADO";
+        public const string CHAVE_LISTA_ITEM_FINANCEIRO = "CHAVE_LISTA_ITEM_FINANCEIRO";
        
         public IBoletosGerados BoletoGerado { get; set; }
 
@@ -45,7 +46,23 @@ namespace FN.Client.FN
                     itensFinanceiros = Request.QueryString["ItensFinanceiros"];
 
                 if (id == null && itensFinanceiros == null)
+                {
                     ExibaTelaInicial();
+
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeCedente>())
+                    {
+                        var idCedente = servico.ObtenhaCedentePadrao();
+
+                        if(idCedente > 0)
+                        {
+                            var cedentePadrao = servico.Obtenha(idCedente);
+
+                            ctrlCedente.CedenteSelecionado = cedentePadrao;
+                            PreenchaDadosDoCedente(cedentePadrao);
+                        }
+                    }
+                }
+                    
                 else
                     if (itensFinanceiros == null)
                         ExibaTelaBoletoGerado(id.Value);
@@ -93,13 +110,26 @@ namespace FN.Client.FN
 
                 itemLancamentoFinanceiro.Cliente = listaDeItensFinanceiros[0].Cliente;
                 itemLancamentoFinanceiro.Valor = valor;
+                itemLancamentoFinanceiro.DataDoVencimento = listaDeItensFinanceiros[0].DataDoVencimento;
 
                 ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = itemLancamentoFinanceiro;
+                ViewState["CHAVE_LISTA_ITEM_FINANCEIRO"] = listaDeItensFinanceiros;
             }
 
-            //Aqui para cada id invoca o servico para obter o item financeiro de recebimento
-            //depois pegar os dados e formar um boleto
-            //OBS: no momento da geracao do boleto passar false como o parametro se é para gerar um item de recebimento.
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeCedente>())
+            {
+                var idCedente = servico.ObtenhaCedentePadrao();
+
+                if (idCedente > 0)
+                {
+                    var cedentePadrao = servico.Obtenha(idCedente);
+
+                    ctrlCedente.CedenteSelecionado = cedentePadrao;
+                    PreenchaDadosDoCedente(cedentePadrao);
+                }
+            }
+
+            DesabilitaCamposParaEdicao();
         }
 
         private void ExibaTelaBoletoGerado(long idBoleto)
@@ -115,11 +145,26 @@ namespace FN.Client.FN
                     ViewState.Add(CHAVE_CEDENTE_BOLETOGERADO, boleto);
                     //BoletoGerado = boleto;
 
-                    if (boleto.Cedente != null)
+                    long idCedente = 0;
+
+                    using (var servicoCedente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeCedente>())
+                    {
+                         idCedente = servicoCedente.ObtenhaCedentePadrao();
+
+                        if (idCedente > 0)
+                        {
+                            var cedentePadrao = servicoCedente.Obtenha(idCedente);
+
+                            ctrlCedente.CedenteSelecionado = cedentePadrao;
+                            PreenchaDadosDoCedente(cedentePadrao);
+                        }
+                    }
+
+                    if (ctrlCedente.CedenteSelecionado == null && boleto.Cedente != null)
                     {
                         this.ctrlCedente.CedenteSelecionado = boleto.Cedente;
                         PreenchaDadosDoCedente(boleto.Cedente);
-                    }
+                    } 
 
                     this.ctrlCliente.ClienteSelecionado = boleto.Cliente;
                     PreenchaDadosDoClienteSelecionado(boleto.Cliente);
@@ -172,8 +217,9 @@ namespace FN.Client.FN
             ctrlCliente.ClienteSelecionado = itemLancamentoFinanceiroRecebimento.Cliente;
             PreenchaDadosDoClienteSelecionado(itemLancamentoFinanceiroRecebimento.Cliente);
             txtValor.Text = itemLancamentoFinanceiroRecebimento.Valor.ToString();
+            txtVencimento.SelectedDate = itemLancamentoFinanceiroRecebimento.DataDoVencimento;
 
-            ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = null;
+            //ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = null;
         }
 
         private void ctrlCliente_ClienteFoiSelecionado(ICliente cliente)
@@ -386,16 +432,24 @@ namespace FN.Client.FN
 
                     cedenteNome = cedentePessoa.Nome;
 
-                    if (cedentePessoa.DadoBancario != null)
-                    {
-                        codigoDoBanco = Convert.ToInt32(cedentePessoa.DadoBancario.Agencia.Banco.ID);
-                        cedenteAgencia = cedentePessoa.DadoBancario.Agencia.Numero;
-                        cedenteConta = cedentePessoa.DadoBancario.Conta.Numero;
-                        cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.Value.ToString("000");
+                    codigoDoBanco = Convert.ToInt32(cedenteSelecionado.NumeroDoBanco);
+                    cedenteAgencia = cedenteSelecionado.NumeroDaAgencia;
+                    cedenteConta = cedenteSelecionado.NumeroDaConta;
+                    cedenteOperacaoConta = cedenteSelecionado.TipoDaConta.ToString("000");
 
-                        if (!string.IsNullOrEmpty(cedenteConta))
-                            cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length - 1, 1);
-                    }
+                    if (!string.IsNullOrEmpty(cedenteConta))
+                        cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length - 1, 1);
+
+                    //if (cedentePessoa.DadoBancario != null)
+                    //{
+                    //    codigoDoBanco = cedentePessoa.DadoBancario.Agencia.Banco.Numero;
+                    //    cedenteAgencia = cedentePessoa.DadoBancario.Agencia.Numero;
+                    //    cedenteConta = cedentePessoa.DadoBancario.Conta.Numero;
+                    //    cedenteOperacaoConta = cedentePessoa.DadoBancario.Conta.Tipo.Value.ToString("000");
+
+                    //    if (!string.IsNullOrEmpty(cedenteConta))
+                    //        cedenteDigitoConta = cedenteConta.Substring(cedenteConta.Length - 1, 1);
+                    //}
 
                     cedenteCpfCnpj = OtenhaNumeroCPFOuCNPJ(cedentePessoa);
                     carteira = cedenteSelecionado.TipoDeCarteira.Sigla;
@@ -499,6 +553,141 @@ namespace FN.Client.FN
                         boletoGerado.ID = BoletoGerado.ID.Value;
                         servico.AtualizarBoletoGerado(boletoGerado);
 
+                        IItemLancamentoFinanceiroRecebimento itemLancamento;
+                        long idItemFinanceiroRecebido;
+
+                        using (var servicoDeItemFinanceiroRecebidoComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
+                        {
+                            idItemFinanceiroRecebido = servicoDeItemFinanceiroRecebidoComBoleto.ObtenhaItemFinanRecebimentoPorIdBoleto(boletoGerado.ID.Value);
+                        }
+
+                        if(idItemFinanceiroRecebido > 0)
+                        {
+                            using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                            {
+                                itemLancamento = servicoFinanceiro.Obtenha(idItemFinanceiroRecebido);
+
+                                if (itemLancamento != null)
+                                {
+                                    itemLancamento.Cliente = boletoGerado.Cliente;
+
+                                    if (boletoGerado.DataVencimento != null)
+                                        itemLancamento.DataDoVencimento = boletoGerado.DataVencimento.Value;
+
+                                    itemLancamento.Valor = boletoGerado.Valor;
+
+                                    servicoFinanceiro.Modifique(itemLancamento);
+                                }
+                            }
+                        }
+                    }
+                    else if (ViewState["CHAVE_LISTA_ITEM_FINANCEIRO"] != null)
+                    {
+                        var listaDeItensFinanceiros =
+                            (List<IItemLancamentoFinanceiroRecebimento>) ViewState["CHAVE_LISTA_ITEM_FINANCEIRO"];
+                        
+                        if (listaDeItensFinanceiros.Count > 0)
+                        {
+                            // mais de 1 item financeiro selecionado
+                            if(listaDeItensFinanceiros.Count > 1)
+                            {
+                                foreach (var itemLancamentoFinanceiroRecebimento in listaDeItensFinanceiros)
+                                {
+                                    // remover historico de boletos gerados
+                                    long idboleto = 0;
+
+                                    using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
+                                    {
+                                        idboleto =
+                                            servicoFinanceiroComBoleto.ObtenhaBoletoPorIdItemFinanRecebimento(
+                                                itemLancamentoFinanceiroRecebimento.ID.Value);
+
+                                        if (idboleto > 0)
+                                        {
+                                            servico.Excluir(idboleto);
+                                        }
+
+                                        servicoFinanceiroComBoleto.Excluir(itemLancamentoFinanceiroRecebimento.ID.Value);
+                                    }
+
+                                    //TODO verificar se é melhor excluir ou atualizar o item para cancelado
+                                    // remover item de contas a receber
+                                    using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                                    {
+                                        servicoFinanceiro.Excluir(itemLancamentoFinanceiroRecebimento.ID.Value);
+                                    }
+
+                                    //TODO caso seja melhor atualizar descomentar este trecho e comentar o acima
+                                    //using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                                    //{
+                                    //    itemLancamentoFinanceiroRecebimento.Situacao = Situacao.Cancelada;
+                                    //    servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
+                                    //}
+                                }
+
+                                servico.Inserir(boletoGerado, true);
+                                // incrementar o nosso numero e o numero do documento e atualizar no banco.
+                                dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
+                                servico.AtualizarProximasInformacoes(dadosAuxiliares);
+                            }
+                            else
+                            {
+                                foreach (var itemLancamentoFinanceiroRecebimento in listaDeItensFinanceiros)
+                                {
+                                    long idboleto;
+
+                                    using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
+                                    {
+                                        idboleto =
+                                            servicoFinanceiroComBoleto.ObtenhaBoletoPorIdItemFinanRecebimento(
+                                                itemLancamentoFinanceiroRecebimento.ID.Value);
+                                    }
+
+                                    if (idboleto > 0)
+                                    {
+                                        boletoGerado.ID = idboleto;
+                                        servico.AtualizarBoletoGerado(boletoGerado);
+
+                                        using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                                        {
+                                            itemLancamentoFinanceiroRecebimento.Cliente = boletoGerado.Cliente;
+
+                                            if (boletoGerado.DataVencimento != null)
+                                                itemLancamentoFinanceiroRecebimento.DataDoVencimento = boletoGerado.DataVencimento.Value;
+
+                                            itemLancamentoFinanceiroRecebimento.Valor = boletoGerado.Valor;
+
+                                            servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        servico.Inserir(boletoGerado, false);
+
+                                        // incrementar o nosso numero e o numero do documento e atualizar no banco.
+                                        dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
+                                        servico.AtualizarProximasInformacoes(dadosAuxiliares);
+
+                                        using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                                        {
+                                            itemLancamentoFinanceiroRecebimento.Cliente = boletoGerado.Cliente;
+
+                                            if (boletoGerado.DataVencimento != null)
+                                                itemLancamentoFinanceiroRecebimento.DataDoVencimento = boletoGerado.DataVencimento.Value;
+
+                                            itemLancamentoFinanceiroRecebimento.Valor = boletoGerado.Valor;
+
+                                            servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
+                                        }
+
+                                        using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
+                                        {
+                                            servicoFinanceiroComBoleto.Insira(itemLancamentoFinanceiroRecebimento.ID.Value, boletoGerado.ID.Value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -534,13 +723,30 @@ namespace FN.Client.FN
                 }
             }
 
-            if (ctrlCedente.CedenteSelecionado.Pessoa.DadoBancario == null)
+            if (string.IsNullOrEmpty(ctrlCedente.CedenteSelecionado.NumeroDaAgencia))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                   UtilidadesWeb.MostraMensagemDeInformacao("O cedente informado não possui um banco e uma agência cadastrado."),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("O cedente informado não possui uma agência cadastrada."),
                                                    false);
                 return true;
             }
+
+            if (string.IsNullOrEmpty(ctrlCedente.CedenteSelecionado.NumeroDaConta))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("O cedente informado não possui uma conta cadastrada."),
+                                                   false);
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(ctrlCedente.CedenteSelecionado.NumeroDoBanco))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("O cedente informado não possui um banco cadastrado."),
+                                                   false);
+                return true;
+            }
+
             if (!txtVencimento.SelectedDate.HasValue)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),

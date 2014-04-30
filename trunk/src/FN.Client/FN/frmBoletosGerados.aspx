@@ -157,10 +157,7 @@ CodeBehind="frmBoletosGerados.aspx.cs" Inherits="FN.Client.FN.frmBoletosGerados"
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataVencimento" HeaderText="Data Vencimento" UniqueName="column8">
                                                 <ItemStyle Width="5%"></ItemStyle>
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Observacao" HeaderText="Observação" UniqueName="column10">
-                                                <ItemStyle Width="30%"></ItemStyle> 
-                                            </telerik:GridBoundColumn>
+                                            </telerik:GridBoundColumn>                                            
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

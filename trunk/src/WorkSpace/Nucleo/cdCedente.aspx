@@ -30,25 +30,100 @@
                 EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <uc1:ctrlPessoa ID="ctrlPessoa1" runat="server" />
-                     <table class="tabela">
+                    <table class="tabela">
                         <tr>
-                             <td class="th3">
-                                <asp:Label ID="Label13" runat="server" Text="Tipo de carteira:"></asp:Label>
+                            <td class="th3">
+                                <asp:Label ID="Label7" runat="server" Text="Cedente Padrão"></asp:Label>
                             </td>
                             <td class="td">
-                                <uc2:ctrlTipoDeCarteira ID="ctrlTipoDeCarteira1" runat="server"/>
+                                <asp:CheckBox ID="chkCedentePadrao" runat="server" AutoPostBack="true" />
                             </td>
                         </tr>
                         <tr>
-                             <td class="th3">
+                            <td class="th3">
+                                <asp:Label ID="Label13" runat="server" Text="Tipo de carteira:"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <uc2:ctrlTipoDeCarteira ID="ctrlTipoDeCarteira1" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
                                 <asp:Label ID="Label1" runat="server" Text="Início do nosso número:"></asp:Label>
                             </td>
                             <td class="td">
-                                <telerik:RadNumericTextBox ID="txtInicioNossoNumero" runat="server" Width="87px" MaxLength="8" Type="Number"
-                                        DataType="System.Uint32">
-                                        <NumberFormat DecimalDigits="0" GroupSeparator=""></NumberFormat>
-                                    </telerik:RadNumericTextBox>
-                                    Ex.: (10001001)
+                                <telerik:RadTextBox ID="txtIniNossoNumero" runat="server" MaxLength="8" Skin="Vista"
+                                    Width="87px" SelectionOnFocus="CaretToBeginning">
+                                </telerik:RadTextBox>
+                                Ex.: (10001001)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label5" runat="server" Text="Banco"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadComboBox ID="cboBanco" runat="server" EmptyMessage="Selecione um banco"
+                                    EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
+                                    ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
+                                    Width="90%" Skin="Vista" CausesValidation="False" AutoPostBack="True">
+                                    <HeaderTemplate>
+                                        <table width="96%">
+                                            <tr>
+                                                <td width="80%">
+                                                    Nome
+                                                </td>
+                                                <td width="20%">
+                                                    Número
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="80%">
+                                                    <%# DataBinder.Eval(Container, "Text")%>
+                                                </td>
+                                                <td width="20%">
+                                                    <%#DataBinder.Eval(Container, "Attributes['Numero']")%>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ItemTemplate>
+                                </telerik:RadComboBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label4" runat="server" Text="Número da agência"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadTextBox ID="txtNumeroAgencia" runat="server" MaxLength="10" Skin="Vista"
+                                    Width="87px" SelectionOnFocus="CaretToBeginning">
+                                </telerik:RadTextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label2" runat="server" Text="Número da conta"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadTextBox ID="txtNumeroDaConta" runat="server" MaxLength="20" Skin="Vista"
+                                    Width="87px" SelectionOnFocus="CaretToBeginning">
+                                </telerik:RadTextBox>
+                                Ex.: (Informar somente números incluindo o dígito verificador caso o mesmo exista)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label3" runat="server" Text="Tipo da conta"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <telerik:RadNumericTextBox ID="txtTipoConta" runat="server" MaxLength="3" Width="65px">
+                                    <NumberFormat DecimalDigits="0" />
+                                </telerik:RadNumericTextBox>
+                                Ex.: (Informar somente números: 001 (para conta corrente da caixa econômica))
                             </td>
                         </tr>
                     </table>

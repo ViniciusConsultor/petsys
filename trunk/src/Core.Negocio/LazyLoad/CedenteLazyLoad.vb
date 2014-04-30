@@ -61,6 +61,61 @@ Namespace LazyLoad
                 _CedenteReal.InicioNossoNumero = value
             End Set
         End Property
+
+        Public Property NumeroDaAgencia() As String Implements ICedente.NumeroDaAgencia
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.NumeroDaAgencia
+            End Get
+            Set (ByVal value As String)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.NumeroDaAgencia = value
+            End Set
+        End Property
+
+        Public Property NumeroDaConta() As String Implements ICedente.NumeroDaConta
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.NumeroDaConta
+            End Get
+            Set(ByVal value As String)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.NumeroDaConta = value
+            End Set
+        End Property
+
+        Public Property TipoDaConta() As Integer Implements ICedente.TipoDaConta
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.TipoDaConta
+            End Get
+            Set (ByVal value As Integer)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.TipoDaConta = value
+            End Set
+        End Property
+
+        Public Property Padrao() As Boolean Implements ICedente.Padrao
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.Padrao
+            End Get
+            Set (ByVal value As Boolean)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.Padrao = value
+            End Set
+        End Property
+
+        Public Property NumeroDoBanco() As String Implements ICedente.NumeroDoBanco
+            Get
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                Return _CedenteReal.NumeroDoBanco
+            End Get
+            Set(ByVal value As String)
+                If _CedenteReal Is Nothing Then CarregueObjetoReal()
+                _CedenteReal.NumeroDoBanco = value
+            End Set
+        End Property
     End Class
 
 End Namespace

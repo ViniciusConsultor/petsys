@@ -122,6 +122,9 @@ namespace FN.Servicos.Local
             var mapeadorItemFinanceiroRecebimento =
                 FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
 
+            var mapeadorDeItemFinanceiroRecebimentoComBoleto =
+                    FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItemFinanceiroRecebidoComBoleto>();
+
             var itemLacamentoFinanceiro =
                 FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
             itemLacamentoFinanceiro.Cliente = boletoGerado.Cliente;
@@ -130,14 +133,21 @@ namespace FN.Servicos.Local
             itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.BoletoAvulso;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;
-            itemLacamentoFinanceiro.IDBOLETO = boletoGerado.ID.Value;
-            
+            //if (boletoGerado.ID != null) itemLacamentoFinanceiro.IDBOLETO = boletoGerado.ID.Value;
+
             try
             {
                 ServerUtils.BeginTransaction();
+
                 mapeador.Inserir(boletoGerado);
+
                 if (gerarItemFinanceiro)
+                {
                     mapeadorItemFinanceiroRecebimento.Insira(itemLacamentoFinanceiro);
+
+                    mapeadorDeItemFinanceiroRecebimentoComBoleto.Insira(itemLacamentoFinanceiro.ID.Value, boletoGerado.ID.Value);
+                }
+
                 ServerUtils.CommitTransaction();
             }
             catch

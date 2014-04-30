@@ -58,6 +58,7 @@
     <Compile Include="ServicoDeBoletoLocal.cs" />
     <Compile Include="ServicoDeConfiguracaoDeIndicesFinanceirosLocal.cs" />
     <Compile Include="ServicoDeConfiguracaoGeralFinanceiroLocal.cs" />
+    <Compile Include="ServicoDeItemFinanceiroRecebidoComBoletoLocal.cs" />
     <Compile Include="ServicoDeItensFinanceirosDeRecebimentoLocal.cs" />
   </ItemGroup>
   <ItemGroup>

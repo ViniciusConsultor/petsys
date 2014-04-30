@@ -108,4 +108,16 @@ Public Class ServicoDeCedenteLocal
         End Try
     End Sub
 
+    Public Function ObtenhaCedentePadrao() As Long Implements IServicoDeCedente.ObtenhaCedentePadrao
+        Dim Mapeador As IMapeadorDeCedente
+
+        ServerUtils.setCredencial(_Credencial)
+        Mapeador = FabricaGenerica.GetInstancia.CrieObjeto(Of IMapeadorDeCedente)()
+
+        Try
+            Return Mapeador.ObtenhaCedentePadrao()
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
 End Class

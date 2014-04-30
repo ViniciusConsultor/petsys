@@ -13,6 +13,7 @@ Namespace Core.Servicos
         Sub Inserir(ByVal Cedente As ICedente)
         Sub Modificar(ByVal Cedente As ICedente)
         Sub Remover(ByVal ID As Long)
+        Function ObtenhaCedentePadrao() As Long
 
     End Interface
 
