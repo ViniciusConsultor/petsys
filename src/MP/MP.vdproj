@@ -3585,6 +3585,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7AD3E0443A1E4ACAACABCFA13436859F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7AD862950F004CE8872F77C0DD3CD432"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -4749,6 +4755,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A2FA6F36D83C41BBAD304D8179E5CE7C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A2FE246413FB49CF86218DD20E1A3174"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -5003,6 +5015,12 @@
         {
         "MsmKey" = "8:_AA1EFAF995966063DD237C60022009E4"
         "OwnerKey" = "8:_A239EB4133CB4930B42A37688AA22E76"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AA1EFAF995966063DD237C60022009E4"
+        "OwnerKey" = "8:_A0D53469D11E431FAE33A843BFF6ABBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -20201,6 +20219,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7AD3E0443A1E4ACAACABCFA13436859F"
+            {
+            "SourcePath" = "8:..\\FN.Client\\FN\\frmConfiguracaoGeralFinaceiro.aspx"
+            "TargetName" = "8:frmConfiguracaoGeralFinaceiro.aspx"
+            "Tag" = "8:"
+            "Folder" = "8:_2421751C661146C597B1DBFB2E5F3B1B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7AD862950F004CE8872F77C0DD3CD432"
             {
             "SourcePath" = "8:..\\WorkSpace\\imagens\\yourtheme\\panel\\white-corners-sprite.gif"
@@ -24086,6 +24124,26 @@
             "TargetName" = "8:s-handle-dark.gif"
             "Tag" = "8:"
             "Folder" = "8:_7B2E20476B18439FB7E4BB9313FC71D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A2FA6F36D83C41BBAD304D8179E5CE7C"
+            {
+            "SourcePath" = "8:..\\WorkSpace\\ctrlTipoDeCarteira.ascx"
+            "TargetName" = "8:ctrlTipoDeCarteira.ascx"
+            "Tag" = "8:"
+            "Folder" = "8:_81995E611EC9450BA222D7D31289ECA5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
