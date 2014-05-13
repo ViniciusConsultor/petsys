@@ -45,7 +45,11 @@ Namespace DBHelper
         End Function
 
         Public Overrides Function SuporteAOffSet() As Boolean
-            Return False
+            Return True
+        End Function
+
+        Public Overrides Function ObtenhaQueryComLimiteEOffset(QueryOriginal As String, QuantidadeDeRegistros As Integer, OffSet As Integer) As String
+            Return QueryOriginal & " limit " & OffSet & ", " & QuantidadeDeRegistros
         End Function
 
     End Class
