@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapeadorDeCedente.vb" />
+    <Compile Include="MapeadorDeHistoricoDeEmail.vb" />
     <Compile Include="MapeadorDePais.vb" />
     <Compile Include="MapeadorDeTipoDeEndereco.vb" />
     <Compile Include="MapeadorDeAgenda.vb" />

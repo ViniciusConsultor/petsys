@@ -29,6 +29,10 @@ Namespace DBHelper
             Return Nothing
         End Function
 
+        Public Overrides Function ObtenhaCaracterDoComandoPreparado() As String
+            Return "?"
+        End Function
+
         Public Overrides Function SuporteAOffSet() As Boolean
             Return False
         End Function

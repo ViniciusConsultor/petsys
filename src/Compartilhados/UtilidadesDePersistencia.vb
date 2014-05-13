@@ -191,6 +191,22 @@ Public Class UtilidadesDePersistencia
         Return p_getValorChar(Linha.Item(nomeColuna))
     End Function
 
+    Public Shared Function ObtenhaStringMapeadaDeListaDeString(itens As IList(Of String), caracterSeparador As Char) As String
+        Dim strConvertida As New StringBuilder
+
+        For Each item As String In itens
+            strConvertida.Append(item & caracterSeparador)
+        Next
+
+        Return strConvertida.Remove(strConvertida.Length - 1, 1).ToString()
+    End Function
+
+    Public Shared Function MapeieStringParaListaDeString(str As String, caracterSeparador As Char) As IList(Of String)
+        Dim itens As String() = str.Split(caracterSeparador)
+
+        Return New List(Of String)(itens)
+    End Function
+
     Public Shared Function p_getValorChar(ByVal Valor As Object) As Char
         If IsDBNull(Valor) Then
             Return Nothing

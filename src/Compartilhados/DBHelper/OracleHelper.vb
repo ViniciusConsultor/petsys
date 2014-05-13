@@ -49,6 +49,10 @@ Namespace DBHelper
             Return Nothing
         End Function
 
+        Public Overrides Function ObtenhaCaracterDoComandoPreparado() As String
+            Return ":"
+        End Function
+
         Private Function ObtenhaFabricaProviderOracle() As DbProviderFactory
             Try
                 Return DbProviderFactories.GetFactory("Oracle.DataAccess.Client")

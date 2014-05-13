@@ -5,6 +5,8 @@ Imports Compartilhados.Interfaces.Core.Negocio
 Imports System.Net.Mail
 Imports Compartilhados.Fabricas
 Imports System.Net
+Imports Core.Interfaces.Negocio
+Imports Core.Interfaces.Mapeadores
 
 Public Class ServicoDeEnvioDeEmailLocal
     Inherits Servico
@@ -61,12 +63,51 @@ Public Class ServicoDeEnvioDeEmailLocal
 
                 Try
                     Gerenciador.Send(MensagemDeEmail)
+                    If GravaHistorico Then GraveHistorico(Assunto, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Anexos, Contexto)
                 Catch ex As Exception
                     Logger.GetInstancia().Erro("Ocorreu um erro ao tentar enviar um e-mail", ex)
                     Throw
                 End Try
-
             End With
         End If
     End Sub
+
+    Private Sub GraveHistorico(Assunto As String, Remetente As String,
+                               DestinatariosEmCopia As IList(Of String),
+                               DestinatariosEmCopiaOculta As IList(Of String),
+                               Mensagem As String, Anexos As IDictionary(Of String, Stream), Contexto As String)
+
+        Dim Historico As IHistoricoDeEmail = ObtenhaHistorico(Assunto, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Contexto)
+        Dim Mapeador As IMapeadorDeHistoricoDeEmail
+
+        Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
+
+        Try
+            Mapeador.Grave(Historico)
+            Mapeador.GravaAnexos(Historico.ID.Value, Anexos)
+
+        Catch ex As Exception
+            Logger.GetInstancia().Erro("Ocorreu um erro ao tentar gravar o histórico de envio de e-mail", ex)
+            Throw
+        End Try
+    End Sub
+
+    Private Function ObtenhaHistorico(Assunto As String, Remetente As String,
+                                     DestinatariosEmCopia As IList(Of String),
+                                     DestinatariosEmCopiaOculta As IList(Of String),
+                                     Mensagem As String, Contexto As String) As IHistoricoDeEmail
+        Dim Historico As IHistoricoDeEmail = FabricaGenerica.GetInstancia().CrieObjeto(Of IHistoricoDeEmail)()
+
+        With Historico
+            .Assunto = Assunto
+            .Contexto = Contexto
+            .DestinatariosEmCopia = DestinatariosEmCopia
+            .DestinatariosEmCopiaOculta = DestinatariosEmCopiaOculta
+            .Mensagem = Mensagem
+            .Remetente = Remetente
+        End With
+
+        Return Historico
+    End Function
+
 End Class

@@ -5,9 +5,10 @@ Namespace Mapeadores
 
     Public Interface IMapeadorDeHistoricoDeEmail
 
-        Sub Grave(Historio As IHistoricoDeEmail)
+        Sub Grave(Historico As IHistoricoDeEmail)
+        Sub GravaAnexos(IdHistorico As Long, Anexos As IDictionary(Of String, Stream))
         Sub Exclua(IdHistorico As Long)
-        Function ObtenhaAnexos(IdHistorico as long) As IDictionary(Of String, Stream)
+        Function ObtenhaAnexos(IdHistorico As Long) As IDictionary(Of String, Stream)
 
     End Interface
 

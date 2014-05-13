@@ -111,6 +111,7 @@
     <Compile Include="Funcao.vb" />
     <Compile Include="Grupo.vb" />
     <Compile Include="GrupoDeAtividade.vb" />
+    <Compile Include="HistoricoDeEmail.vb" />
     <Compile Include="LazyLoad\CedenteLazyLoad.vb" />
     <Compile Include="LazyLoad\ClienteLazyLoad.vb" />
     <Compile Include="LazyLoad\CompromissoLazyLoad.vb" />

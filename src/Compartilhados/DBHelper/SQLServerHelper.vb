@@ -96,6 +96,10 @@ Namespace DBHelper
             Return Nothing
         End Function
 
+        Public Overrides Function ObtenhaCaracterDoComandoPreparado() As String
+            Return "@"
+        End Function
+
         Public Overrides Function ObtenhaQueryComLimiteEOffset(QueryOriginal As String, QuantidadeDeRegistros As Integer, OffSet As Integer) As String
             Dim QueryComLimite As StringBuilder = New StringBuilder
 

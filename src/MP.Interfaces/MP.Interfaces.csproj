@@ -161,7 +161,6 @@
     <Compile Include="Servicos\IServicoDeTitular.cs" />
     <Compile Include="Utilidades\TradutorDeRevistaPatenteTXTParaRevistaPatenteXML.cs" />
     <Compile Include="Utilidades\TradutorDeRevistaTXTParaRevistaXML.cs" />
-    <Compile Include="Utilidades\UtilidadesDeStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MP.Interfaces.snk" />

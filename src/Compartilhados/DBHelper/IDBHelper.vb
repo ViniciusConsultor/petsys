@@ -30,6 +30,8 @@ Namespace DBHelper
         Function ObtenhaQueryComLimite(ByVal QueryOriginal As String, ByVal QuantidadeDeRegistros As Integer) As String
         Function ObtenhaQueryComLimiteEOffset(QueryOriginal As String, QuantidadeDeRegistros As Integer, OffSet As Integer) As String
         Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As Exception) As String
+        Function ObtenhaCaracterDoComandoPreparado() As String
+        Function ObtenhaConexaoPadrao() As IDbConnection
 
     End Interface
 

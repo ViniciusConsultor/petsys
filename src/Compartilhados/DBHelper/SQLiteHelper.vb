@@ -71,6 +71,10 @@ Namespace DBHelper
             Return Nothing
         End Function
 
+        Public Overrides Function ObtenhaCaracterDoComandoPreparado() As String
+            Throw New NotImplementedException()
+        End Function
+
         Public Overrides Function SuporteAOffSet() As Boolean
             Return False
         End Function
