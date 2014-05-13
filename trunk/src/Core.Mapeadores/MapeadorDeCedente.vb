@@ -30,7 +30,7 @@ Public Class MapeadorDeCedente
         If Cedente.TipoDeCarteira Is Nothing Then
             Sql.Append("NULL, ")
         Else
-            Sql.Append(String.Concat("'", Cedente.TipoDeCarteira.ID.ToString(), ", "))
+            Sql.Append(String.Concat("'", Cedente.TipoDeCarteira.ID.ToString(), "', "))
         End If
 
         If Cedente.InicioNossoNumero <= 0 Then
