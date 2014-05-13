@@ -112,6 +112,12 @@ Namespace DBHelper
 
         Public MustOverride Function ObtenhaMensagemDaExcecaoLancada(ByVal Ex As Exception) As String Implements IDBHelper.ObtenhaMensagemDaExcecaoLancada
 
+        Public MustOverride Function ObtenhaCaracterDoComandoPreparado() As String Implements IDBHelper.ObtenhaCaracterDoComandoPreparado
+            
+        Public Function ObtenhaConexaoPadrao() As IDbConnection Implements IDBHelper.ObtenhaConexaoPadrao
+            Return ConexaoPadrao
+        End Function
+
         Public Overridable Function ObtenhaQueryComLimiteEOffset(QueryOriginal As String, QuantidadeDeRegistros As Integer, OffSet As Integer) As String Implements IDBHelper.ObtenhaQueryComLimiteEOffset
             Return QueryOriginal
         End Function
