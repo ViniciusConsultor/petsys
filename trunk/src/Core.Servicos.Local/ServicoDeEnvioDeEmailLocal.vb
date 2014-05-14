@@ -84,7 +84,7 @@ Public Class ServicoDeEnvioDeEmailLocal
 
         Try
             Mapeador.Grave(Historico)
-            Mapeador.GravaAnexos(Historico.ID.Value, Anexos)
+            If Not Anexos Is Nothing Then Mapeador.GravaAnexos(Historico.ID.Value, Anexos)
 
         Catch ex As Exception
             Logger.GetInstancia().Erro("Ocorreu um erro ao tentar gravar o histórico de envio de e-mail", ex)

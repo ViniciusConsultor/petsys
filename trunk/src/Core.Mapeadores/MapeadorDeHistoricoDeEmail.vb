@@ -62,7 +62,7 @@ Public Class MapeadorDeHistoricoDeEmail
         DBHelper = ServerUtils.getDBHelper
         Historico.ID = GeradorDeID.ProximoID()
 
-        Sql.Append("INSERT INTO NCL_HISTORICOEMAIL (ID, ASSUNTO, REMETENTE, MENSAGEM, DESTINATARIOSC, DESTINATARIOSCCO, CONTEXTO) ")
+        Sql.Append("INSERT INTO NCL_HISTORICOEMAIL (ID, ASSUNTO, REMETENTE, MENSAGEM, DESTINATARIOSCC, DESTINATARIOSCCO, CONTEXTO) ")
         Sql.Append("VALUES (")
         Sql.Append(Historico.ID.Value.ToString() & ", ")
 
@@ -91,7 +91,7 @@ Public Class MapeadorDeHistoricoDeEmail
         If String.IsNullOrEmpty(Historico.Contexto) Then
             Sql.Append("NULL")
         Else
-            Sql.Append("'" & UtilidadesDePersistencia.FiltraApostrofe(Historico.Contexto) & "', ")
+            Sql.Append("'" & UtilidadesDePersistencia.FiltraApostrofe(Historico.Contexto) & "'")
         End If
 
         Sql.Append(")")
