@@ -367,7 +367,7 @@ namespace BoletoNet
                 html.Append(Html.ReciboCedenteParte9);
                 html.Append(Html.ReciboCedenteParte10);
                 html.Append(Html.ReciboCedenteParte11);
-                html.Append(Html.ReciboCedenteParte12);
+                //html.Append(Html.ReciboCedenteParte12);
 
                 //Para Banco Itaú, o texto "(Texto de responsabilidade do cedente)" deve ser
                 //"(Todas as informações deste bloqueto são de exclusiva responsabilidade do cedente)".
