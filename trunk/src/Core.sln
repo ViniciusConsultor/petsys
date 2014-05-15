@@ -11,11 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", 
 		..\doc\Banco de dados\Nucleo\SQL Server\CREATE_NCL_SQLServer.sql = ..\doc\Banco de dados\Nucleo\SQL Server\CREATE_NCL_SQLServer.sql
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{9255272A-ABC7-4C87-9BD5-0862B395B1FA}"
-	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\Nucleo\Oracle\CREATE_NCL_Oracle.sql = ..\doc\Banco de dados\Nucleo\Oracle\CREATE_NCL_Oracle.sql
-	EndProjectSection
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Compartilhados", "Compartilhados\Compartilhados.vbproj", "{06F3AE73-7806-44D1-9DAD-7C227869B4B8}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Compartilhados.Componentes.Web", "Compartilhados.Componentes.Web\Compartilhados.Componentes.Web.vbproj", "{B2935024-FBB7-4486-B3DE-2061BD3D03F0}"
@@ -43,6 +38,11 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Compartilhados.Conversores", "Compartilhados.Conversores\Compartilhados.Conversores.vbproj", "{7B00DBD4-EBEB-40AA-9ACF-96667E870E58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlteraPermissaoPastas", "AlteraPermissaoPastas\AlteraPermissaoPastas.csproj", "{869D4651-8EE5-4BD6-B45F-C7984B049202}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{7289935A-E20D-45D3-9797-13684F28B245}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\Nucleo\MySQL\CREATE_NCL_MySQL.sql = ..\doc\Banco de dados\Nucleo\MySQL\CREATE_NCL_MySQL.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -202,6 +202,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E2867623-7BBE-43EA-833F-7AFB15203909} = {B705C844-764A-4A51-8676-1ECF6EB28500}
-		{9255272A-ABC7-4C87-9BD5-0862B395B1FA} = {B705C844-764A-4A51-8676-1ECF6EB28500}
+		{7289935A-E20D-45D3-9797-13684F28B245} = {B705C844-764A-4A51-8676-1ECF6EB28500}
 	EndGlobalSection
 EndGlobal

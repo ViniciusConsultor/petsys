@@ -22,11 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", 
 		..\doc\Banco de dados\MP\SQL Server\DropTodasTabelasMP.sql = ..\doc\Banco de dados\MP\SQL Server\DropTodasTabelasMP.sql
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oracle", "Oracle", "{FD1D1018-784F-45DD-B111-C4EFE4D683B0}"
-	ProjectSection(SolutionItems) = preProject
-		..\doc\Banco de dados\MP\Oracle\CREATE_MP_Oracle.sql = ..\doc\Banco de dados\MP\Oracle\CREATE_MP_Oracle.sql
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InicializaBancoMP", "InicializaBancoMP\InicializaBancoMP.csproj", "{AB4AFC75-5A05-45AD-8109-FE5C5FB8F9D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP.Migrador", "MP.Migrador\MP.Migrador.csproj", "{BB06C075-9D40-4B43-83A0-57A88ADA65BA}"
@@ -44,6 +39,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Atualização", "Atualizaç
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.6.0_PARA_1.0.7.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.6.0_PARA_1.0.7.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.7.0_PARA_1.0.8.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.7.0_PARA_1.0.8.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.8.0_PARA_1.0.9.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.8.0_PARA_1.0.9.0.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{9BAC49D7-582C-4E22-9C1D-0A76E366E656}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\MP\MySQL\CREATE_MP_MySQL.sql = ..\doc\Banco de dados\MP\MySQL\CREATE_MP_MySQL.sql
 	EndProjectSection
 EndProject
 Global
@@ -142,7 +142,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2BD549CC-6EBE-470A-B8A0-25A7EA8B2E70} = {52355709-14DD-4BD1-9C00-CB96BE85E730}
-		{FD1D1018-784F-45DD-B111-C4EFE4D683B0} = {52355709-14DD-4BD1-9C00-CB96BE85E730}
+		{9BAC49D7-582C-4E22-9C1D-0A76E366E656} = {52355709-14DD-4BD1-9C00-CB96BE85E730}
 		{023BC458-DD80-4B4D-8989-E738512A083C} = {2BD549CC-6EBE-470A-B8A0-25A7EA8B2E70}
 	EndGlobalSection
 EndGlobal

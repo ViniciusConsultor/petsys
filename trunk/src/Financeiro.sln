@@ -27,6 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gatilhos", "Gatilhos", "{45
 		Compartilhados\gatilhos.xml = Compartilhados\gatilhos.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{5F6F9B77-DFB9-46D5-A669-C5FD9D416E0F}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\FN\MySQL\CREATE_FN_MySQL.sql = ..\doc\Banco de dados\FN\MySQL\CREATE_FN_MySQL.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,5 +98,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A9654ADD-52EE-4659-BC98-EF55D30DA0B3} = {4A5D6F85-7C65-4E9D-B491-1FEF94D0FEF3}
+		{5F6F9B77-DFB9-46D5-A669-C5FD9D416E0F} = {4A5D6F85-7C65-4E9D-B491-1FEF94D0FEF3}
 	EndGlobalSection
 EndGlobal
