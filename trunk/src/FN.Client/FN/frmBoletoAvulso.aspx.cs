@@ -717,10 +717,10 @@ namespace FN.Client.FN
                 string[] linhasDaIntrucao = txtFinalidadeBoleto.Text.Split('\n');
                 IList<string> listaDeLinhas = linhasDaIntrucao.ToList();
 
-                if(listaDeLinhas.Count > 10)
+                if(listaDeLinhas.Count > 20)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                   UtilidadesWeb.MostraMensagemDeInformacao("Quantidade de linhas das informações do recibo do sacado, excedeu o tamanho limite de 15 linhas."),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("Quantidade de linhas das informações do recibo do sacado, excedeu o tamanho limite de 20 linhas."),
                                                    false);
                     return true;
                 }
