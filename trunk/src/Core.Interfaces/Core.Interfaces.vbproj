@@ -117,6 +117,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Negocio\DTOAjudanteDePesquisaDeMenu.vb" />
+    <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailSemFiltro.vb" />
     <Compile Include="Negocio\IConexaoMySQL.vb" />
     <Compile Include="Negocio\IConexaoODBC.vb" />
     <Compile Include="Negocio\IConexaoOLEDB.vb" />
@@ -125,7 +126,6 @@
     <Compile Include="Negocio\IConexaoSQLServer.vb" />
     <Compile Include="Negocio\IDiretivaDeSeguranca.vb" />
     <Compile Include="Negocio\IFuncao.vb" />
-    <Compile Include="Negocio\IHistoricoDeEmail.vb" />
     <Compile Include="Negocio\IMenuComposto.vb" />
     <Compile Include="Negocio\IMenuAbstrato.vb" />
     <Compile Include="Negocio\IMenuFolha.vb" />

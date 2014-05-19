@@ -1098,6 +1098,7 @@
     <Content Include="Nucleo\cdGrupoDeAtividade.aspx" />
     <Content Include="Nucleo\cdPaises.aspx" />
     <Content Include="Nucleo\cdTipoDeEndereco.aspx" />
+    <Content Include="Nucleo\frmHistoricoDeEmails.aspx" />
     <Content Include="Nucleo\frmVisibilidadePorEmpresa.aspx" />
     <Content Include="StyleSheetResponsivo.css" />
     <Content Include="Web.config">
@@ -1295,6 +1296,13 @@
     </Compile>
     <Compile Include="Nucleo\frmConfiguracoesPessoais.aspx.vb">
       <DependentUpon>frmConfiguracoesPessoais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\frmHistoricoDeEmails.aspx.designer.vb">
+      <DependentUpon>frmHistoricoDeEmails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmHistoricoDeEmails.aspx.vb">
+      <DependentUpon>frmHistoricoDeEmails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmImpressaoAgenda.aspx.designer.vb">

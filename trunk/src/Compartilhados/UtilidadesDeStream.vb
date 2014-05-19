@@ -21,4 +21,11 @@ Public Class UtilidadesDeStream
         Return bytes
     End Function
 
+    Public Shared Function TransformeArrayBytesEmStream(ArrayBytes As Byte()) As StreamReader
+        Dim arquivoMemoria = New MemoryStream(ArrayBytes)
+
+        Return New StreamReader(arquivoMemoria)
+    End Function
+
+
 End Class

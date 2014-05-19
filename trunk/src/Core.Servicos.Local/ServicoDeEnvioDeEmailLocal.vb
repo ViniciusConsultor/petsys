@@ -11,7 +11,7 @@ Imports Core.Interfaces.Mapeadores
 Public Class ServicoDeEnvioDeEmailLocal
     Inherits Servico
     Implements IServicoDeEnvioDeEmail
-
+    
     Public Sub New(ByVal Credencial As ICredencial)
         MyBase.New(Credencial)
     End Sub
@@ -63,7 +63,7 @@ Public Class ServicoDeEnvioDeEmailLocal
 
                 Try
                     Gerenciador.Send(MensagemDeEmail)
-                    If GravaHistorico Then GraveHistorico(Assunto, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Anexos, Contexto)
+                    If GravaHistorico Then GraveHistorico(Assunto, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Anexos, Contexto, Now)
                 Catch ex As Exception
                     Logger.GetInstancia().Erro("Ocorreu um erro ao tentar enviar um e-mail", ex)
                     Throw
@@ -72,27 +72,41 @@ Public Class ServicoDeEnvioDeEmailLocal
         End If
     End Sub
 
+    Public Function ObtenhaHistoricos(ByVal Filtro As IFiltro, ByVal QuantidadeDeItens As Integer, ByVal OffSet As Integer) As IList(Of IHistoricoDeEmail) Implements IServicoDeEnvioDeEmail.ObtenhaHistoricos
+        Dim Mapeador As IMapeadorDeHistoricoDeEmail
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
+
+        Try
+            Return Mapeador.ObtenhaHistoricos(Filtro, QuantidadeDeItens, OffSet)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
     Private Sub GraveHistorico(Assunto As String, Remetente As String,
                                DestinatariosEmCopia As IList(Of String),
                                DestinatariosEmCopiaOculta As IList(Of String),
-                               Mensagem As String, Anexos As IDictionary(Of String, Stream), Contexto As String)
+                               Mensagem As String, Anexos As IDictionary(Of String, Stream), Contexto As String, Data As Date)
 
-        Dim Historico As IHistoricoDeEmail = ObtenhaHistorico(Assunto, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Contexto)
+        Dim Historico As IHistoricoDeEmail = ObtenhaHistorico(Assunto, Data, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Contexto)
         Dim Mapeador As IMapeadorDeHistoricoDeEmail
 
         Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
 
         Try
-            Mapeador.Grave(Historico)
-            If Not Anexos Is Nothing Then Mapeador.GravaAnexos(Historico.ID.Value, Anexos)
-
+            Mapeador.Grave(Historico, Anexos)
+            
         Catch ex As Exception
             Logger.GetInstancia().Erro("Ocorreu um erro ao tentar gravar o histórico de envio de e-mail", ex)
             Throw
+        Finally
+            ServerUtils.libereRecursos()
         End Try
     End Sub
 
-    Private Function ObtenhaHistorico(Assunto As String, Remetente As String,
+    Private Function ObtenhaHistorico(Assunto As String, Data As Date, Remetente As String,
                                      DestinatariosEmCopia As IList(Of String),
                                      DestinatariosEmCopiaOculta As IList(Of String),
                                      Mensagem As String, Contexto As String) As IHistoricoDeEmail
@@ -105,9 +119,27 @@ Public Class ServicoDeEnvioDeEmailLocal
             .DestinatariosEmCopiaOculta = DestinatariosEmCopiaOculta
             .Mensagem = Mensagem
             .Remetente = Remetente
+            .Data = Data
         End With
 
         Return Historico
     End Function
+
+    Public Function ObtenhaQuantidadeDeHistoricoDeEmails(Filtro As IFiltro) As Integer Implements IServicoDeEnvioDeEmail.ObtenhaQuantidadeDeHistoricoDeEmails
+        Dim Mapeador As IMapeadorDeHistoricoDeEmail
+
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
+
+        Try
+            Return Mapeador.ObtenhaQuantidadeDeHistoricoDeEmails(Filtro)
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
+    End Function
+
+    Public Sub ReenvieEmail(Configuracao As IConfiguracaoDoSistema, IdHistoricoDoEmail As Long) Implements IServicoDeEnvioDeEmail.ReenvieEmail
+
+    End Sub
 
 End Class

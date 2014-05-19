@@ -39,6 +39,11 @@ Public Class UtilidadesDePersistencia
         Return IsDBNull(Leitor.Item(NomeColuna))
     End Function
 
+    Public Shared Function GetValorArrayBytes(linha As IDataReader, NomeColuna As String) As Byte()
+        Return CType(linha(NomeColuna), Byte())
+    End Function
+
+
     Private Overloads Shared Function p_getValorBoolean(ByVal Valor As Object) As Boolean
         If IsDBNull(Valor) Then
             Return False
