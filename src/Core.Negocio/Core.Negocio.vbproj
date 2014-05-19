@@ -107,6 +107,7 @@
     <Compile Include="Endereco.vb" />
     <Compile Include="EventoDeContato.vb" />
     <Compile Include="Filtro.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailSemFiltro.vb" />
     <Compile Include="Fornecedor.vb" />
     <Compile Include="Funcao.vb" />
     <Compile Include="Grupo.vb" />

@@ -1,8 +1,18 @@
-﻿Imports Core.Interfaces.Negocio
+﻿Imports Compartilhados.Interfaces.Core.Negocio
 
 <Serializable()> _
 Public Class HistoricoDeEmail
     Implements IHistoricoDeEmail
+    
+    Private _Data As Date
+    Public Property Data() As Date Implements IHistoricoDeEmail.Data
+        Get
+            Return _Data
+        End Get
+        Set (ByVal value As Date)
+            _Data = value
+        End Set
+    End Property
 
     Private _Assunto As String
     Public Property Assunto As String Implements IHistoricoDeEmail.Assunto
@@ -21,6 +31,16 @@ Public Class HistoricoDeEmail
         End Get
         Set(value As String)
             _Contexto = value
+        End Set
+    End Property
+
+    Private _PossuiAnexo As Boolean
+    Public Property PossuiAnexo() As Boolean Implements IHistoricoDeEmail.PossuiAnexo
+        Get
+            Return _PossuiAnexo
+        End Get
+        Set (ByVal value As Boolean)
+            _PossuiAnexo = value
         End Set
     End Property
 
