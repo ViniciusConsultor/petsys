@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
     CodeBehind="frmHistoricoDeEmails.aspx.vb" Inherits="WorkSpace.frmHistoricoDeEmails" %>
+<%@ Import Namespace="Compartilhados.Interfaces.Core.Negocio" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc1" %>
@@ -7,7 +8,7 @@
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
-             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
+            <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
                 CommandName="btnLimpar" CausesValidation="False" />
@@ -106,7 +107,7 @@
                                 <telerik:RadGrid ID="grdHistoricoDeEmails" runat="server" AutoGenerateColumns="False"
                                     AllowCustomPaging="true" AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista"
                                     AllowFilteringByColumn="false" OnPageIndexChanged="grdHistoricoDeEmails_OnPageIndexChanged"
-                                    OnItemCommand="grdHistoricoDeEmails_OnItemCommand" OnItemDataBound="grdHistoricoDeEmails_OnItemDataBound">
+                                    OnItemCommand="grdHistoricoDeEmails_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
@@ -124,19 +125,26 @@
                                                 HeaderTooltip="Reenviar o e-mail" ImageUrl="~/imagens/email.gif" UniqueName="column9">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1"
-                                                Display="false">
+                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column5">
+                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column5" HorizontalAlign="Left" Wrap="True">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Data" HeaderText="Data" UniqueName="column3">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Contexto" HeaderText="Contexto" UniqueName="column10">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Mensagem" HeaderText="Mensagem" UniqueName="column11">
+                                            <telerik:GridBoundColumn DataField="Mensagem" HeaderText="Mensagem" UniqueName="column11" HorizontalAlign="Left" Wrap="True">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="DestinatariosEmCopia" HeaderText="Destinatários" UniqueName="column12">
-                                            </telerik:GridBoundColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Destinatários CC">
+                                                <ItemTemplate>
+                                                    <%#MontaListaDeDestinatarios(CType(Container.DataItem, IHistoricoDeEmail))%>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Destinatários CCo">
+                                                <ItemTemplate>
+                                                    <%#MontaListaDeDestinatariosCCo(CType(Container.DataItem, IHistoricoDeEmail))%>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
