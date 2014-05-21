@@ -122,7 +122,13 @@ Public Class frmHistoricoDeEmails
     End Sub
 
     Protected Sub grdHistoricoDeEmails_OnItemDataBound(ByVal sender As Object, ByVal e As GridItemEventArgs)
+        If e.Item.GetType().Equals(GetType(GridDataItem)) Then
 
+            Dim item As GridDataItem = CType(e.Item, GridDataItem)
+            item("column12").Text = ""
+
+
+        End If
     End Sub
 
     Protected Sub grdHistoricoDeEmails_OnItemCommand(ByVal sender As Object, ByVal e As GridCommandEventArgs)

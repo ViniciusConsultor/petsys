@@ -62,7 +62,7 @@ Public Class MapeadorDeHistoricoDeEmail
         Dim DBHelper As IDBHelper = Nothing
         Dim PossuiAnexo As Boolean = False
 
-        If Not Anexos Is Nothing OrElse Not Anexos.Count = 0 Then PossuiAnexo = True
+        If Not Anexos Is Nothing AndAlso Not Anexos.Count = 0 Then PossuiAnexo = True
 
         DBHelper = ServerUtils.getDBHelper
         Historico.ID = GeradorDeID.ProximoID()
@@ -70,7 +70,7 @@ Public Class MapeadorDeHistoricoDeEmail
         Sql.Append("INSERT INTO NCL_HISTORICOEMAIL (ID, DATA, POSSUIANEXO, ASSUNTO, REMETENTE, MENSAGEM, DESTINATARIOSCC, DESTINATARIOSCCO, CONTEXTO) ")
         Sql.Append("VALUES (")
         Sql.Append(Historico.ID.Value.ToString() & ", ")
-        Sql.Append(Historico.Data.ToString("yyyyMMddHHmmss") & ", ")
+        Sql.Append("'" & Historico.Data.ToString("yyyyMMddHHmmss") & "', ")
         Sql.Append("'" & IIf(PossuiAnexo, "S", "N").ToString() & "', ")
         
         If String.IsNullOrEmpty(Historico.Assunto) Then
