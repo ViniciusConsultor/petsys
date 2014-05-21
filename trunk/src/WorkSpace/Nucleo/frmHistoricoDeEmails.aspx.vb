@@ -94,10 +94,6 @@ Public Class frmHistoricoDeEmails
 
     End Sub
 
-    Protected Sub btnPesquisarPorDestinatario_OnClick(ByVal sender As Object, ByVal e As ImageClickEventArgs)
-
-    End Sub
-
     Protected Sub btnPesquisarPorDataDeEnvio_OnClick(ByVal sender As Object, ByVal e As ImageClickEventArgs)
 
     End Sub
@@ -121,16 +117,6 @@ Public Class frmHistoricoDeEmails
         End If
     End Sub
 
-    Protected Sub grdHistoricoDeEmails_OnItemDataBound(ByVal sender As Object, ByVal e As GridItemEventArgs)
-        If e.Item.GetType().Equals(GetType(GridDataItem)) Then
-
-            Dim item As GridDataItem = CType(e.Item, GridDataItem)
-            item("column12").Text = ""
-
-
-        End If
-    End Sub
-
     Protected Sub grdHistoricoDeEmails_OnItemCommand(ByVal sender As Object, ByVal e As GridCommandEventArgs)
 
     End Sub
@@ -141,6 +127,14 @@ Public Class frmHistoricoDeEmails
 
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar
         Return rtbToolBar
+    End Function
+
+    Protected Function MontaListaDeDestinatarios(ByVal Historico As IHistoricoDeEmail) As String
+        Return UtilidadesWeb.ObtenhaListaDeStringComQuebraDeLinhaWeb(Historico.DestinatariosEmCopia)
+    End Function
+
+    Protected Function MontaListaDeDestinatariosCCo(ByVal Historico As IHistoricoDeEmail) As String
+        Return UtilidadesWeb.ObtenhaListaDeStringComQuebraDeLinhaWeb(Historico.DestinatariosEmCopiaOculta)
     End Function
 
 End Class

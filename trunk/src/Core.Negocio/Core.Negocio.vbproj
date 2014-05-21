@@ -107,6 +107,12 @@
     <Compile Include="Endereco.vb" />
     <Compile Include="EventoDeContato.vb" />
     <Compile Include="Filtro.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorAssunto.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorContexto.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorDataDeEnvio.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorDestinatario.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorID.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorMensagem.vb" />
     <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailSemFiltro.vb" />
     <Compile Include="Fornecedor.vb" />
     <Compile Include="Funcao.vb" />

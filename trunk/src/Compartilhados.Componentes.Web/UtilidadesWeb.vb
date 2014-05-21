@@ -473,6 +473,8 @@ Public Class UtilidadesWeb
     Public Shared Function ObtenhaListaDeStringComQuebraDeLinhaWeb(ByVal Lista As IList(Of String)) As String
         Dim strWeb As String = ""
 
+        If Lista Is Nothing Then Return strWeb
+
         For Each item As String In Lista
             strWeb &= item & Environment.NewLine
         Next

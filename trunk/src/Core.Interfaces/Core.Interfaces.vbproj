@@ -117,6 +117,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Negocio\DTOAjudanteDePesquisaDeMenu.vb" />
+    <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailPorAssunto.vb" />
+    <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailPorContexto.vb" />
+    <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailPorDataDeEnvio.vb" />
+    <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailPorDestinatario.vb" />
+    <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailPorID.vb" />
+    <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailPorMensagem.vb" />
     <Compile Include="Negocio\Filtros\HistoricoDeEmail\IFiltroHistoricoDeEmailSemFiltro.vb" />
     <Compile Include="Negocio\IConexaoMySQL.vb" />
     <Compile Include="Negocio\IConexaoODBC.vb" />
