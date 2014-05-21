@@ -470,5 +470,16 @@ Public Class UtilidadesWeb
         End Using
     End Sub
 
+    Public Shared Function ObtenhaListaDeStringComQuebraDeLinhaWeb(ByVal Lista As IList(Of String)) As String
+        Dim strWeb As String = ""
+
+        For Each item As String In Lista
+            strWeb &= item & Environment.NewLine
+        Next
+
+        Return strWeb
+
+    End Function
+
 
 End Class
