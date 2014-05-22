@@ -139,7 +139,20 @@ Public Class ServicoDeEnvioDeEmailLocal
     End Function
 
     Public Sub ReenvieEmail(Configuracao As IConfiguracaoDoSistema, IdHistoricoDoEmail As Long) Implements IServicoDeEnvioDeEmail.ReenvieEmail
+        'Dim Mapeador As IMapeadorDeHistoricoDeEmail
 
+        'ServerUtils.setCredencial(MyBase._Credencial)
+        'Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
+        'Dim Historico As IHistoricoDeEmail
+        'Dim Anexos As IDictionary(Of String, Stream)
+
+        'Try
+        '    Historico = Mapeador.
+        'Finally
+        '    ServerUtils.libereRecursos()
+        'End Try
+
+        'EnviaEmail(Configuracao, )
     End Sub
 
 End Class
