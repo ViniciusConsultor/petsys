@@ -115,6 +115,17 @@ Namespace LazyLoad
             End Set
         End Property
 
+        Public Property PossuiCobranca As Boolean Implements ICliente.PossuiCobranca
+            Get
+                If _ClienteReal Is Nothing Then CarregueObjetoReal()
+                Return _ClienteReal.PossuiCobranca
+            End Get
+            Set(ByVal value As Boolean)
+                If _ClienteReal Is Nothing Then CarregueObjetoReal()
+                _ClienteReal.PossuiCobranca = value
+            End Set
+        End Property
+
         Public ReadOnly Property Pessoa As IPessoa Implements IPapelPessoa.Pessoa
             Get
                 If _ClienteReal Is Nothing Then CarregueObjetoReal()
