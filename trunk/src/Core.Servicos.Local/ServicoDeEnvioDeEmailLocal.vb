@@ -90,9 +90,11 @@ Public Class ServicoDeEnvioDeEmailLocal
                                DestinatariosEmCopiaOculta As IList(Of String),
                                Mensagem As String, Anexos As IDictionary(Of String, Stream), Contexto As String, Data As Date)
 
+        ServerUtils.setCredencial(MyBase._Credencial)
+
         Dim Historico As IHistoricoDeEmail = ObtenhaHistorico(Assunto, Data, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Contexto)
         Dim Mapeador As IMapeadorDeHistoricoDeEmail
-
+        
         Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
 
         Try
@@ -139,20 +141,21 @@ Public Class ServicoDeEnvioDeEmailLocal
     End Function
 
     Public Sub ReenvieEmail(Configuracao As IConfiguracaoDoSistema, IdHistoricoDoEmail As Long) Implements IServicoDeEnvioDeEmail.ReenvieEmail
-        'Dim Mapeador As IMapeadorDeHistoricoDeEmail
+        Dim Mapeador As IMapeadorDeHistoricoDeEmail
 
-        'ServerUtils.setCredencial(MyBase._Credencial)
-        'Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
-        'Dim Historico As IHistoricoDeEmail
-        'Dim Anexos As IDictionary(Of String, Stream)
+        ServerUtils.setCredencial(MyBase._Credencial)
+        Mapeador = FabricaGenerica.GetInstancia().CrieObjeto(Of IMapeadorDeHistoricoDeEmail)()
+        Dim Historico As IHistoricoDeEmail
+        Dim Anexos As IDictionary(Of String, Stream)
 
-        'Try
-        '    Historico = Mapeador.
-        'Finally
-        '    ServerUtils.libereRecursos()
-        'End Try
+        Try
+            Historico = Mapeador.ObtenhaHistorico(IdHistoricoDoEmail)
+            Anexos = CType(Mapeador.ObtenhaAnexos(IdHistoricoDoEmail), IDictionary(Of String, Stream))
+        Finally
+            ServerUtils.libereRecursos()
+        End Try
 
-        'EnviaEmail(Configuracao, )
+        EnviaEmail(Configuracao, Historico.Assunto, Historico.Remetente, Historico.DestinatariosEmCopia, Historico.DestinatariosEmCopiaOculta, Historico.Mensagem, Anexos, Historico.Contexto, True)
     End Sub
 
 End Class

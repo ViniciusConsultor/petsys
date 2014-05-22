@@ -7,6 +7,7 @@ Imports Compartilhados.Interfaces
 Imports System.IO
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Fabricas
+Imports Core.Interfaces.Negocio.Filtros.HistoricoDeEmail
 
 Public Class MapeadorDeHistoricoDeEmail
     Implements IMapeadorDeHistoricoDeEmail
@@ -173,6 +174,29 @@ Public Class MapeadorDeHistoricoDeEmail
         End Using
 
         Return 0
+    End Function
+
+    Public Function ObtenhaHistorico(ByVal IDHistorico As Long) As IHistoricoDeEmail Implements IMapeadorDeHistoricoDeEmail.ObtenhaHistorico
+        Dim DBHelper As IDBHelper
+
+        DBHelper = ServerUtils.criarNovoDbHelper()
+        Dim sql = New StringBuilder()
+
+        Dim Filtro As IFiltroHistoricoDeEmailPorID = FabricaGenerica.GetInstancia().CrieObjeto(Of IFiltroHistoricoDeEmailPorID)()
+        Filtro.Operacao = OperacaoDeFiltro.IgualA
+        Filtro.ValorDoFiltro = IDHistorico.ToString()
+
+        sql.Append(Filtro.ObtenhaQuery())
+        
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(sql.ToString())
+            Try
+                If Leitor.Read() Then Return (ObtenhaHistorico(Leitor))
+            Finally
+                Leitor.Close()
+            End Try
+        End Using
+
+        Return Nothing
     End Function
 
     Private Function ObtenhaHistorico(Leitor As IDataReader) As IHistoricoDeEmail
