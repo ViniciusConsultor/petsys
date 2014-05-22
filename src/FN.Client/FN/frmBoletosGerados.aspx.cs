@@ -62,7 +62,7 @@ namespace FN.Client.FN
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
             {
-                var listaDeBoletosGerados = servico.obtenhaBoletosGerados(filtro, quantidadeDeBoletos, offset);
+                var listaDeBoletosGerados = servico.obtenhaBoletosGerados(filtro, int.MaxValue, offset);
 
                 BoletosGerados = listaDeBoletosGerados;
                 ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = BoletosGerados.Count > 0;
@@ -462,10 +462,14 @@ namespace FN.Client.FN
 
         private void GerarRelatorio()
         {
-            var geradorDeRelatorioGeral = new GeradorDeRelatorioDeBoletosGerados(BoletosGerados);
-            var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
-            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+            {
+                var listaDeBoletosGerados = servico.obtenhaBoletosGerados(FiltroAplicado, int.MaxValue, 0);
+                var geradorDeRelatorioGeral = new GeradorDeRelatorioDeBoletosGerados(listaDeBoletosGerados);
+                var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
         }
 
         private IList<IBoletosGerados> BoletosGerados

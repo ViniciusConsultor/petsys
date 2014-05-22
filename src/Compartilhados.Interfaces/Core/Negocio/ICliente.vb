@@ -13,6 +13,7 @@
         Property PorcentagemDeDescontoAutomatico() As Nullable(Of Double)
         Property ValorMaximoParaCompras() As Nullable(Of Double)
         Property SaldoParaCompras() As Nullable(Of Double)
+        Property PossuiCobranca As Boolean
 
     End Interface
 

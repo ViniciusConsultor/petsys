@@ -104,7 +104,7 @@ namespace FN.Client.FN.Relatorios
         private PdfPTable ObtenhaTabelaTituloColuna()
         {
             var corCelula = Color.LIGHT_GRAY;
-            var tabelaTitulo = new PdfPTable(7);
+            var tabelaTitulo = new PdfPTable(6);
             tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
 
             var celulaCedente = new PdfPCell(new Phrase("Cedente", _Fonte2));
@@ -149,19 +149,12 @@ namespace FN.Client.FN.Relatorios
             celulaDataVencimento.BackgroundColor = corCelula;
             tabelaTitulo.AddCell(celulaDataVencimento);
 
-            var celulaObservacao = new PdfPCell(new Phrase("Observação", _Fonte2));
-            celulaObservacao.HorizontalAlignment = Cell.ALIGN_LEFT;
-            celulaObservacao.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaObservacao.Border = 0;
-            celulaObservacao.BackgroundColor = corCelula;
-            tabelaTitulo.AddCell(celulaObservacao);
-
             return tabelaTitulo;
         }
 
         private PdfPTable ObtenhaTabelaDadosDosLancamentos(IBoletosGerados boletoGerado)
         {
-            var tabelaBoleto = new PdfPTable(7);
+            var tabelaBoleto = new PdfPTable(6);
             tabelaBoleto.DefaultCell.Border = Rectangle.NO_BORDER;
 
             var celulaCedente = new PdfPCell(new Phrase(boletoGerado.Cedente.Pessoa.Nome, _Fonte1));
@@ -203,12 +196,6 @@ namespace FN.Client.FN.Relatorios
             celulaFormaDeRecebimento.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaFormaDeRecebimento.Border = 0;
             tabelaBoleto.AddCell(celulaFormaDeRecebimento);
-
-            var celulaObservacao = new PdfPCell(new Phrase(boletoGerado.Observacao,  _Fonte1));
-            celulaObservacao.HorizontalAlignment = Cell.ALIGN_LEFT;
-            celulaObservacao.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaObservacao.Border = 0;
-            tabelaBoleto.AddCell(celulaObservacao);
 
             return tabelaBoleto;
         }

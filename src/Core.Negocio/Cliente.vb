@@ -100,4 +100,14 @@ Public Class Cliente
         End Set
     End Property
 
+    Private _PossuiCobranca As Boolean
+    Public Property PossuiCobranca As Boolean Implements ICliente.PossuiCobranca
+        Get
+            Return _PossuiCobranca
+        End Get
+        Set(ByVal value As Boolean)
+            _PossuiCobranca = value
+        End Set
+    End Property
+
 End Class
