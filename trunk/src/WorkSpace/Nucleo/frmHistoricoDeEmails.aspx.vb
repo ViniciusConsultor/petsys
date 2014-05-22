@@ -1,4 +1,5 @@
-﻿Imports Compartilhados.Interfaces.Core.Negocio
+﻿Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Fabricas
 Imports Core.Interfaces.Negocio.Filtros.HistoricoDeEmail
 Imports Compartilhados.Interfaces.Core.Servicos
@@ -19,6 +20,7 @@ Public Class frmHistoricoDeEmails
     Private Sub ExibaTelaInicial()
         UtilidadesWeb.LimparComponente(CType(pnlFiltro, Control))
         UtilidadesWeb.LimparComponente(CType(rdkHistorico, Control))
+        ctrlOperacaoFiltro1.Inicializa()
         CarregaOpcoesDeFiltro()
         EscondaTodosOsPanelsDeFiltro()
         pnlData.Visible = True
@@ -86,24 +88,142 @@ Public Class frmHistoricoDeEmails
         End Select
     End Sub
 
-    Protected Sub btnPesquisarPorAssunto_OnClick(ByVal sender As Object, ByVal e As ImageClickEventArgs)
+    Private Function OpcaoDeOperacaodeFiltroEstaSelecionada() As Boolean
+        Return Not String.IsNullOrEmpty(ctrlOperacaoFiltro1.Codigo)
+    End Function
 
+    Private Sub ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro()
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(), _
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma opção de filtro."), False)
+    End Sub
+
+    Protected Sub btnPesquisarPorAssunto_OnClick(ByVal sender As Object, ByVal e As ImageClickEventArgs)
+        If Not OpcaoDeOperacaodeFiltroEstaSelecionada() Then 
+            ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro()
+            Exit Sub
+        End If
+
+        Dim operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo))
+
+        If operacao.Equals(OperacaoDeFiltro.Intervalo) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), False)
+            Exit Sub
+        End If
+
+        If String.IsNullOrEmpty(txtAssunto.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o assunto."), False)
+            Exit Sub
+        End If
+
+        Dim filtro = FabricaGenerica.GetInstancia().CrieObjeto(Of IFiltroHistoricoDeEmailPorAssunto)()
+        filtro.Operacao = operacao
+        filtro.ValorDoFiltro = txtAssunto.Text
+        FiltroAplicado = filtro
+        MostraHistorico(filtro, grdHistoricoDeEmails.PageSize, 0)
     End Sub
 
     Protected Sub btnPesquisarPorDestinatario_OnClick_(ByVal sender As Object, ByVal e As ImageClickEventArgs)
+        If Not OpcaoDeOperacaodeFiltroEstaSelecionada() Then
+            ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro()
+            Exit Sub
+        End If
 
+        Dim operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo))
+
+        If operacao.Equals(OperacaoDeFiltro.Intervalo) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), False)
+            Exit Sub
+        End If
+
+        If String.IsNullOrEmpty(txtAssunto.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o destinatário."), False)
+            Exit Sub
+        End If
+
+        Dim filtro = FabricaGenerica.GetInstancia().CrieObjeto(Of IFiltroHistoricoDeEmailPorDestinatario)()
+        filtro.Operacao = operacao
+        filtro.ValorDoFiltro = txtDestinario.Text
+        FiltroAplicado = filtro
+        MostraHistorico(filtro, grdHistoricoDeEmails.PageSize, 0)
     End Sub
 
     Protected Sub btnPesquisarPorDataDeEnvio_OnClick(ByVal sender As Object, ByVal e As ImageClickEventArgs)
+        If Not OpcaoDeOperacaodeFiltroEstaSelecionada() Then
+            ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro()
+            Exit Sub
+        End If
 
+        Dim operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo))
+
+        If String.IsNullOrEmpty(txtDestinario.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a data de envio."), False)
+            Exit Sub
+        End If
+
+        Dim filtro = FabricaGenerica.GetInstancia().CrieObjeto(Of IFiltroHistoricoDeEmailPorDataDeEnvio)()
+        filtro.Operacao = operacao
+        filtro.ValorDoFiltro = txtDataDeEnvio.SelectedDate.Value.ToString("yyyyMdd")
+        FiltroAplicado = filtro
+        MostraHistorico(filtro, grdHistoricoDeEmails.PageSize, 0)
     End Sub
 
     Protected Sub btnPesquisarPorContexto_OnClick(ByVal sender As Object, ByVal e As ImageClickEventArgs)
+        If Not OpcaoDeOperacaodeFiltroEstaSelecionada() Then
+            ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro()
+            Exit Sub
+        End If
 
+        Dim operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo))
+
+        If operacao.Equals(OperacaoDeFiltro.Intervalo) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), False)
+            Exit Sub
+        End If
+
+        If String.IsNullOrEmpty(txtContexto.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o contexto do envio do e-mail."), False)
+            Exit Sub
+        End If
+
+        Dim filtro = FabricaGenerica.GetInstancia().CrieObjeto(Of IFiltroHistoricoDeEmailPorContexto)()
+        filtro.Operacao = operacao
+        filtro.ValorDoFiltro = txtContexto.Text
+        FiltroAplicado = filtro
+        MostraHistorico(filtro, grdHistoricoDeEmails.PageSize, 0)
     End Sub
 
     Protected Sub btnPesquisarPorMensagem_OnClick(ByVal sender As Object, ByVal e As ImageClickEventArgs)
+        If Not OpcaoDeOperacaodeFiltroEstaSelecionada() Then
+            ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro()
+            Exit Sub
+        End If
 
+        Dim operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo))
+
+        If operacao.Equals(OperacaoDeFiltro.Intervalo) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), False)
+            Exit Sub
+        End If
+
+        If String.IsNullOrEmpty(txtMensagem.Text) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                UtilidadesWeb.MostraMensagemDeInconsitencia("Informe a menagem do e-mail."), False)
+            Exit Sub
+        End If
+
+        Dim filtro = FabricaGenerica.GetInstancia().CrieObjeto(Of IFiltroHistoricoDeEmailPorMensagem)()
+        filtro.Operacao = operacao
+        filtro.ValorDoFiltro = txtMensagem.Text
+        FiltroAplicado = filtro
+        MostraHistorico(filtro, grdHistoricoDeEmails.PageSize, 0)
     End Sub
 
     Protected Sub grdHistoricoDeEmails_OnPageIndexChanged(ByVal sender As Object, ByVal e As GridPageChangedEventArgs)
@@ -118,6 +238,29 @@ Public Class frmHistoricoDeEmails
     End Sub
 
     Protected Sub grdHistoricoDeEmails_OnItemCommand(ByVal sender As Object, ByVal e As GridCommandEventArgs)
+        Dim id As Long = 0
+
+        If e.CommandName <> "Page" AndAlso e.CommandName <> "ChangePageSize" Then id = Convert.ToInt64((e.Item.Cells(4).Text))
+
+        Select Case e.CommandName
+            Case "ReenviarEmail"
+
+                Try
+                    Using ServicoDeConfiguracao As IServicoDeConfiguracoesDoSistema = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeConfiguracoesDoSistema)()
+
+                        Dim Configuracao = ServicoDeConfiguracao.ObtenhaConfiguracaoDoSistema()
+
+                        Using ServicoDeEmail As IServicoDeEnvioDeEmail = FabricaGenerica.GetInstancia().CrieObjeto(Of IServicoDeEnvioDeEmail)()
+                            ServicoDeEmail.ReenvieEmail(Configuracao, id)
+                        End Using
+                    End Using
+
+                Catch ex As BussinesException
+                    ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+                End Try
+             
+        End Select
 
     End Sub
 

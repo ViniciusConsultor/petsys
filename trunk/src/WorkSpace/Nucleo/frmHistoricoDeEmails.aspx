@@ -58,7 +58,7 @@
                                     <telerik:RadTextBox ID="txtDestinario" runat="server" Skin="Vista" MaxLength="255">
                                     </telerik:RadTextBox>
                                     <asp:ImageButton ID="btnPesquisarPorDestinario" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorDestinatario_OnClick" />
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorDestinatario_OnClick_" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlData">
@@ -127,13 +127,11 @@
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column5" HorizontalAlign="Left" Wrap="True">
+                                             <telerik:GridBoundColumn DataField="Data" HeaderText="Data" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Data" HeaderText="Data" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column5" >
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Contexto" HeaderText="Contexto" UniqueName="column10">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Mensagem" HeaderText="Mensagem" UniqueName="column11" HorizontalAlign="Left" Wrap="True">
+                                            <telerik:GridBoundColumn DataField="Mensagem" HeaderText="Mensagem" UniqueName="column11">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridTemplateColumn HeaderText="Destinatários CC">
                                                 <ItemTemplate>
@@ -145,6 +143,8 @@
                                                     <%#MontaListaDeDestinatariosCCo(CType(Container.DataItem, IHistoricoDeEmail))%>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
+                                             <telerik:GridBoundColumn DataField="Contexto" HeaderText="Contexto" UniqueName="column10">
+                                            </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
