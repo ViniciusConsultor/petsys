@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{5F6F9B77
 		..\doc\Banco de dados\FN\MySQL\CREATE_FN_MySQL.sql = ..\doc\Banco de dados\FN\MySQL\CREATE_FN_MySQL.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FN.ImagePDF", "FN.ImagePDF\FN.ImagePDF.csproj", "{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,16 @@ Global
 		{6EAE5C50-1302-42EB-9C85-8DF46F0D5ACF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6EAE5C50-1302-42EB-9C85-8DF46F0D5ACF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6EAE5C50-1302-42EB-9C85-8DF46F0D5ACF}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
