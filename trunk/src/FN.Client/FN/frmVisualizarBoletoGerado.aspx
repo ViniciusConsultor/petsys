@@ -19,7 +19,8 @@
     </asp:ScriptManager>
     <div id="pnlBoletoGerado" runat="server">
     </div>    
-    <input id="btnImprimir" type="button" value="Imprimir" style="display: inline" onclick="imprimir()" /> 
+    <%--<input id="btnImprimir" type="button" value="Imprimir" style="display: inline" onclick="imprimir()" /> --%>
+    <asp:Button runat="server" ID="btnPdf" Text="Salvar PDF" OnClick="btnPdf_click"/>
     </form>
 </body>
 </html>

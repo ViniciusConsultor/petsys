@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using BoletoNet;
 using Compartilhados;
 using Compartilhados.Componentes.Web;
@@ -13,9 +14,14 @@ using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.Core.Servicos;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
+using FN.ImagePDF;
 using FN.Interfaces.Negocio;
 using FN.Interfaces.Servicos;
 using Telerik.Web.UI;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+using Image = System.Web.UI.WebControls.Image;
 
 namespace FN.Client.FN
 {
@@ -523,6 +529,8 @@ namespace FN.Client.FN
 
                 Session.Add(chaveDoBoleto, boletoBancario);
 
+                MostraBoleto(boletoBancario);
+
                 var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmVisualizarBoletoGerado.aspx",
                                                 "?Id=", chaveDoBoleto);
                 ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
@@ -708,6 +716,86 @@ namespace FN.Client.FN
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia("Erro ao gerar boleto, exceção: " + ex.Message), false);
             }
         }
+
+        private void MostraBoleto(BoletoBancario bb)
+        {
+            var html = new StringBuilder();
+
+            html.Append(bb.MontaHtml());
+
+            var html_st = html.ToString();
+
+            //var boletoPathHTML = Path.Combine(Path.GetTempPath(), "Boleto.html");
+            var boletoPathHTML = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO + "Boleto.html");
+
+            var f = new FileStream(boletoPathHTML, FileMode.Create);
+
+            using (var w = new StreamWriter(f, Encoding.Default))
+            {
+                w.Write(html_st);
+                w.Close();
+                f.Close();
+                //System.Diagnostics.Process.Start(boletoPathHTML); Exibe o boleto na página
+            }
+
+            //var boletoPathPDF = Path.Combine(Path.GetTempPath(), "Boleto.pdf");
+            var boletoPathPDF = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO + "Boleto.pdf");
+            var imagePath = GerarImagem(boletoPathHTML);
+            var doc2 = new Document(PageSize.A4, 46, 0, 40, 0);
+
+            PdfWriter.GetInstance(doc2, new FileStream(boletoPathPDF, FileMode.Create));
+            doc2.Open();
+
+            var gif = iTextSharp.text.Image.GetInstance(imagePath);
+            gif.ScaleAbsolute(494.0F, 785.0F);
+            doc2.Add(gif);
+            doc2.Close();
+
+            //System.Diagnostics.Process.Start(@"C:\Windows\Temp\Boleto.pdf");
+            AbraPdf(boletoPathPDF);
+        }
+
+        private void AbraPdf(string boletoPathPDF)
+        {
+            var pastaDeDestinoTemp = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO + "/temp/");
+
+            Directory.CreateDirectory(pastaDeDestinoTemp);
+
+            var caminhoArquivoNovo = Path.Combine(pastaDeDestinoTemp, "Boleto.pdf");
+
+            if (File.Exists(caminhoArquivoNovo))
+            {
+                File.Delete(caminhoArquivoNovo);
+            }
+
+            File.Move(boletoPathPDF, caminhoArquivoNovo);
+        }
+
+        private string GerarImagem(string _boletoPathHtml)
+        {
+            const int width = 680;
+            const int height = 1096;
+            const int webBrowserWidth = 680;
+            const int webBrowserHeight = 1096;
+            var bmp = WebsiteThumbnailImageGenerator.GetWebSiteThumbnail(_boletoPathHtml, webBrowserWidth, webBrowserHeight, width, height);
+            var boletoPathBMP = Path.Combine(Path.GetTempPath(), "Boleto.bmp");
+            bmp.Save(boletoPathBMP);
+            return boletoPathBMP;
+        }
+
+        //private string LerHtml(string _boletoPathHTML)
+        //{
+        //    bool fileExists = false;
+        //    fileExists = File.Exists(_boletoPathHTML);
+        //    string fileContents = " ";
+
+        //    if (fileExists)
+        //    {
+        //        fileContents = File.ReadAllText(_boletoPathHTML);
+        //    }
+
+        //    return fileContents;
+        //}
 
         private bool ExisteErroDePreenchimento()
         {
