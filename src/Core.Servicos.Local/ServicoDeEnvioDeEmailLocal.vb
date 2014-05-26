@@ -150,7 +150,7 @@ Public Class ServicoDeEnvioDeEmailLocal
 
         Try
             Historico = Mapeador.ObtenhaHistorico(IdHistoricoDoEmail)
-            Anexos = CType(Mapeador.ObtenhaAnexos(IdHistoricoDoEmail), IDictionary(Of String, Stream))
+            Anexos = Mapeador.ObtenhaAnexos(IdHistoricoDoEmail)
         Finally
             ServerUtils.libereRecursos()
         End Try

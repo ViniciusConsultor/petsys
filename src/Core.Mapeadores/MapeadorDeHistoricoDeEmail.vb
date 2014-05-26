@@ -109,7 +109,7 @@ Public Class MapeadorDeHistoricoDeEmail
         If PossuiAnexo Then GravaAnexos(Historico.ID.Value, Anexos)
     End Sub
 
-    Public Function ObtenhaAnexos(IdHistorico As Long) As IDictionary(Of String, StreamReader) Implements IMapeadorDeHistoricoDeEmail.ObtenhaAnexos
+    Public Function ObtenhaAnexos(ByVal IdHistorico As Long) As IDictionary(Of String, Stream) Implements IMapeadorDeHistoricoDeEmail.ObtenhaAnexos
         Dim DBHelper As IDBHelper
 
         DBHelper = ServerUtils.criarNovoDbHelper()
@@ -120,12 +120,12 @@ Public Class MapeadorDeHistoricoDeEmail
         sql.Append("WHERE IDHISTORICO = " & IdHistorico)
         sql.AppendLine(" ORDER BY INDICE")
 
-        Dim Anexos As IDictionary(Of String, StreamReader) = New Dictionary(Of String, StreamReader)()
+        Dim Anexos As IDictionary(Of String, Stream) = New Dictionary(Of String, Stream)()
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(sql.ToString())
             While Leitor.Read()
                 Anexos.Add(UtilidadesDePersistencia.GetValorString(Leitor, "NOMEANEXO"),
-                           UtilidadesDeStream.TransformeArrayBytesEmStream(UtilidadesDePersistencia.GetValorArrayBytes(Leitor, "BINARIOANEXO")))
+                           UtilidadesDeStream.TransformeArrayBytesEmMemoryStream(UtilidadesDePersistencia.GetValorArrayBytes(Leitor, "BINARIOANEXO")))
             End While
 
         End Using

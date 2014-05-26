@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/WorkSpace.Master"
     CodeBehind="frmHistoricoDeEmails.aspx.vb" Inherits="WorkSpace.frmHistoricoDeEmails" %>
-<%@ Import Namespace="Compartilhados.Interfaces.Core.Negocio" %>
 
+<%@ Import Namespace="Compartilhados.Interfaces.Core.Negocio" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlOperacaoFiltro.ascx" TagName="ctrlOperacaoFiltro" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -127,9 +127,9 @@
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
-                                             <telerik:GridBoundColumn DataField="Data" HeaderText="Data" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Data" HeaderText="Data" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column5" >
+                                            <telerik:GridBoundColumn DataField="Assunto" HeaderText="Assunto" UniqueName="column5">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Mensagem" HeaderText="Mensagem" UniqueName="column11">
                                             </telerik:GridBoundColumn>
@@ -143,7 +143,7 @@
                                                     <%#MontaListaDeDestinatariosCCo(CType(Container.DataItem, IHistoricoDeEmail))%>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
-                                             <telerik:GridBoundColumn DataField="Contexto" HeaderText="Contexto" UniqueName="column10">
+                                            <telerik:GridBoundColumn DataField="Contexto" HeaderText="Contexto" UniqueName="column10">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
