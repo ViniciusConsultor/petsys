@@ -8,7 +8,7 @@ Namespace Mapeadores
 
         Sub Grave(Historico As IHistoricoDeEmail, Anexos As IDictionary(Of String, Stream))
         Sub Exclua(IdHistorico As Long)
-        Function ObtenhaAnexos(IdHistorico As Long) As IDictionary(Of String, StreamReader)
+        Function ObtenhaAnexos(ByVal IdHistorico As Long) As IDictionary(Of String, Stream)
         Function ObtenhaHistoricos(Filtro As IFiltro, QuantidadeDeItens As Integer, OffSet As Integer) As IList(Of IHistoricoDeEmail)
         Function ObtenhaQuantidadeDeHistoricoDeEmails(Filtro As IFiltro) As Integer
         Function ObtenhaHistorico(IDHistorico As Long) As IHistoricoDeEmail
