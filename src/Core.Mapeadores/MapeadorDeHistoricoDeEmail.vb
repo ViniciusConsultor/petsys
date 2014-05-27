@@ -124,8 +124,9 @@ Public Class MapeadorDeHistoricoDeEmail
 
         Using Leitor As IDataReader = DBHelper.obtenhaReader(sql.ToString())
             While Leitor.Read()
-                Anexos.Add(UtilidadesDePersistencia.GetValorString(Leitor, "NOMEANEXO"),
-                           UtilidadesDeStream.TransformeArrayBytesEmMemoryStream(UtilidadesDePersistencia.GetValorArrayBytes(Leitor, "BINARIOANEXO")))
+                Dim NomeDoArquivo As String = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEANEXO")
+                Anexos.Add(NomeDoArquivo,
+                           UtilidadesDeStream.TransformeArrayBytesEmStream(UtilidadesDePersistencia.GetValorArrayBytes(Leitor, "BINARIOANEXO"), NomeDoArquivo))
             End While
 
         End Using

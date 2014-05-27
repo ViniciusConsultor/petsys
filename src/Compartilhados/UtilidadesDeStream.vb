@@ -11,18 +11,22 @@ Public Class UtilidadesDeStream
     End Function
 
     Public Shared Function TransformaStreamEmArrayDeBytes(arquivo As Stream) As Byte()
-        Dim bytes As Byte()
+        Dim streamLength As Integer = Convert.ToInt32(arquivo.Length)
+        Dim fileData(streamLength) As Byte
 
-        Using memstream = New MemoryStream()
-            arquivo.CopyTo(memstream)
-            bytes = memstream.ToArray()
-        End Using
+        arquivo.Read(fileData, 0, streamLength)
+        arquivo.Close()
 
-        Return bytes
+        Return fileData
     End Function
 
-    Public Shared Function TransformeArrayBytesEmMemoryStream(ByVal ArrayBytes As Byte()) As Stream
-        Return New MemoryStream(ArrayBytes)
+    Public Shared Function TransformeArrayBytesEmStream(ByVal ArrayBytes As Byte(), ByVal nomeDoArquivo As String) As Stream
+        Dim fs As FileStream = New FileStream(Path.Combine(Path.GetTempPath(), nomeDoArquivo), FileMode.Create)
+
+        fs.Write(ArrayBytes, 0, ArrayBytes.Length)
+        fs.Flush()
+        fs.Close()
+        Return fs
     End Function
 
 
