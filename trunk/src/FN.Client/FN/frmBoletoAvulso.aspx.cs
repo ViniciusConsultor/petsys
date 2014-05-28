@@ -759,6 +759,7 @@ namespace FN.Client.FN
         {
             var pastaDeDestinoTemp = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO + "/temp/");
 
+            if (!Directory.Exists(pastaDeDestinoTemp))
             Directory.CreateDirectory(pastaDeDestinoTemp);
 
             var caminhoArquivoNovo = Path.Combine(pastaDeDestinoTemp, "Boleto.pdf");
