@@ -47,7 +47,7 @@ namespace MP.Mapeadores
             sql.Append("SELECT ID, NOME, CODIGO FROM MP_PASTA ");
 
             if (!string.IsNullOrEmpty(codigo))
-                sql.Append("CODIGO LIKE '%" + UtilidadesDePersistencia.FiltraApostrofe(codigo) + "%'");
+                sql.Append("WHERE CODIGO LIKE '%" + UtilidadesDePersistencia.FiltraApostrofe(codigo) + "%'");
 
             sql.AppendLine(" ORDER BY CODIGO");
 
