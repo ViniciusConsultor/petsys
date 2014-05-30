@@ -317,6 +317,13 @@
     <Compile Include="MP\frmProcessosDePatentes.aspx.designer.cs">
       <DependentUpon>frmProcessosDePatentes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MP\frmRelatorioDeManutencoes.aspx.cs">
+      <DependentUpon>frmRelatorioDeManutencoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmRelatorioDeManutencoes.aspx.designer.cs">
+      <DependentUpon>frmRelatorioDeManutencoes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MP\frmRelatorioDeProcessosDeMarcas.aspx.cs">
       <DependentUpon>frmRelatorioDeProcessosDeMarcas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -339,6 +346,7 @@
       <DependentUpon>frmRelatorioGeralPatentes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relatorios\GeradorDeRelatorioDeManutencoes.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcas.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioDePublicacoesDasPatentes.cs.cs" />
@@ -388,6 +396,7 @@
     <Content Include="MP\frmLeituraRevistaPatente.aspx" />
     <Content Include="MP\frmProcessosDeMarcas.aspx" />
     <Content Include="MP\frmProcessosDePatentes.aspx" />
+    <Content Include="MP\frmRelatorioDeManutencoes.aspx" />
     <Content Include="MP\frmRelatorioDeProcessosDeMarcas.aspx" />
     <Content Include="MP\frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx" />
     <Content Include="MP\frmRelatorioGeralPatentes.aspx" />

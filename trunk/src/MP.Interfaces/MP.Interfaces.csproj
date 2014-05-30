@@ -85,6 +85,7 @@
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorProcesso.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaSemFiltro.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaVencidaNoMes.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroRelatorioDeManutencoesDaMarca.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroLeituraDeRevistaDePatentes.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorCliente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorDataDeCadastro.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorTituloDaPatente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatenteSemFiltro.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatenteVencidaNoMes.cs" />
+    <Compile Include="Negocio\Filtros\Patentes\IFiltroRelatorioDeManutencoesDaPatente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroRelatorioGeralPatente.cs" />
     <Compile Include="Negocio\FormaCobrancaManutencao.cs" />
     <Compile Include="Negocio\IClasseNacional.cs" />

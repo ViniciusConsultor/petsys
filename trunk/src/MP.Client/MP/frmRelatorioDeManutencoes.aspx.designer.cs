@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FN.Client.FN {
+namespace MP.Client.MP {
     
     
     public partial class frmRelatorioDeManutencoes {
