@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmRelatorioDeManutencoes.aspx.cs" Inherits="FN.Client.FN.frmRelatorioDeManutencoes" 
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmRelatorioDeManutencoes.aspx.cs" Inherits="MP.Client.MP.frmRelatorioDeManutencoes" 
 MasterPageFile="~/WorkSpace.Master"%>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
