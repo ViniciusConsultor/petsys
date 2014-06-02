@@ -328,8 +328,6 @@ namespace MP.Client.MP
         {
             var inconsitencias = new List<string>();
 
-            if (string.IsNullOrEmpty(txtNomeDaMarca.Text)) inconsitencias.Add("É necessário informar o nome da marca.");
-
             if (ctrlNCL.NCLSelecionado == null) inconsitencias.Add("É necessário informar a classificação.");
 
             if (string.IsNullOrEmpty(ctrlNatureza.Codigo)) inconsitencias.Add("É necessário informar a natureza.");
@@ -342,6 +340,16 @@ namespace MP.Client.MP
 
             if (rblProcessoEhDeTerceiro.SelectedValue == "1" && ctrlProcurador.ProcuradorSelecionado == null) inconsitencias.Add("É necessário informar um procurador.");
 
+            //Verifica se a apresentação é figurativa. Se for não é necessário validar se foi informado a descrição da marca
+            if (!string.IsNullOrEmpty(ctrlApresentacao.Codigo))
+            {
+                var apresentacao = Apresentacao.ObtenhaPorCodigo(Convert.ToInt32(ctrlApresentacao.Codigo));
+
+                if (!apresentacao.Equals(Apresentacao.Figurativa))
+                    if (string.IsNullOrEmpty(txtNomeDaMarca.Text)) inconsitencias.Add("É necessário informar o nome da marca.");
+            }
+
+           
             if (rblPagaManutencao.SelectedValue == "1")
             {
                 if (!txtDataDaPrimeiraManutencao.SelectedDate.HasValue)
