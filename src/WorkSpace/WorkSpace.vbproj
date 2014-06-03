@@ -304,6 +304,8 @@
     <Content Include="imagens\atendimento14.gif" />
     <Content Include="imagens\bg.gif" />
     <Content Include="imagens\bogus.png" />
+    <Content Include="imagens\boleto.png" />
+    <Content Include="imagens\boletopequeno.png" />
     <Content Include="imagens\btn-arrow-light.gif" />
     <Content Include="imagens\btn-arrow.gif" />
     <Content Include="imagens\btn-sprite.gif" />
@@ -536,6 +538,8 @@
     <Content Include="imagens\delete.gif" />
     <Content Include="imagens\desktop.gif" />
     <Content Include="imagens\desktop3.jpg" />
+    <Content Include="imagens\dinheiro.gif" />
+    <Content Include="imagens\dinheiroGrande.gif" />
     <Content Include="imagens\dirty.gif" />
     <Content Include="imagens\drop-add.gif" />
     <Content Include="imagens\drop-between.gif" />
