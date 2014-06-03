@@ -65,7 +65,7 @@ namespace FN.Client.FN
             Control controle1 = pnlFiltro;
             UtilidadesWeb.LimparComponente(ref controle1);
 
-            Control controle2 = rdkProcessosDeMarcas;
+            Control controle2 = rdkItensFinanceirosDeRecebimento;
             UtilidadesWeb.LimparComponente(ref controle2);
 
             CarregaOpcoesDeFiltro();
@@ -81,18 +81,20 @@ namespace FN.Client.FN
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoSemFiltro>();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = false;
         }
 
-        private string ObtenhaURLDeContaAReceber()
+        private string ObtenhaURLDeCadastroDeLancamentoFinanceiroDeRecebimento()
         {
-            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/cdContaAReceber.aspx");
+            return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/cdLancamentoFinanceiroRecebimento.aspx");
         }
 
         protected void btnNovo_Click()
         {
-            var URL = ObtenhaURLDeContaAReceber();
+            var URL = ObtenhaURLDeCadastroDeLancamentoFinanceiroDeRecebimento();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Nova conta a receber", 800, 550, "cdContaAReceber_aspx"), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Novo lançamento financeiro de recebimento", 800, 550, "cdLancamentoFinanceiroRecebimento_aspx"), false);
         }
 
         private void Recarregue()
@@ -254,7 +256,7 @@ namespace FN.Client.FN
 
                     break;
                 case "Modificar":
-                    var url = String.Concat(ObtenhaURLDeContaAReceber(),
+                    var url = String.Concat(ObtenhaURLDeCadastroDeLancamentoFinanceiroDeRecebimento(),
                                             "?Id=", id);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
@@ -380,8 +382,7 @@ namespace FN.Client.FN
                 }
             }
 
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
-                idsDeCliente.Count() == 1 && idsDeCliente.ElementAt(0).Value > 1;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = idsDeCliente.Count() == 1 && idsDeCliente.ElementAt(0).Value > 1;
             GridHeaderItem headerItem = grdItensFinanceiros.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
             (headerItem.FindControl("headerChkbox") as CheckBox).Checked = checkHeader;
         }
@@ -404,7 +405,7 @@ namespace FN.Client.FN
 
             }
 
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = mostrarBotaoBoletoColetivo;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = mostrarBotaoBoletoColetivo;
         }
 
         private void GerarRelatorio()

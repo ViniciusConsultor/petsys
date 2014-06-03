@@ -182,6 +182,19 @@ Public Class UtilidadesWeb
         Return Js.ToString
     End Function
 
+    Public Shared Function AtualizaJanela(URL As String, IDJanela As String) As String
+        Dim Js As New StringBuilder
+
+        Js.AppendLine("<script language='javascript' type='text/javascript'>")
+        Js.AppendLine("var desktop = this.parent.MyDesktop.desktop;")
+        Js.AppendLine(String.Concat("var win = desktop.getWindow('win", IDJanela, "')"))
+        Js.AppendLine(String.Concat("win.body.update('", CrieDIVHTMLParaJanela(URL), "');"))
+        Js.AppendLine("</script>")
+
+        Return Js.ToString
+    End Function
+
+
     Public Shared Function MostraMensagemDeInconsitencia(ByVal Mensagem As String) As String
         Dim Js As New StringBuilder
 
@@ -463,7 +476,7 @@ Public Class UtilidadesWeb
         Using zip1 As ZipFile = ZipFile.Read(nomeECaminhoArquivoZip)
 
             Dim e As ZipEntry
-            
+
             For Each e In zip1
                 e.Extract(CaminhoDestino, ExtractExistingFileAction.OverwriteSilently)
             Next

@@ -34,9 +34,5 @@ Public Class MenuAbstrato
             _Nome = value
         End Set
     End Property
-
-    Public Function IDSemFormatacao() As String Implements IMenuAbstrato.IDSemFormatacao
-        Return Me._ID.Replace("."c, "_"c)
-    End Function
-
+    
 End Class

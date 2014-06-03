@@ -70,7 +70,7 @@ namespace FN.Client.FN
             Control controle1 = pnlFiltro;
             UtilidadesWeb.LimparComponente(ref controle1);
 
-            Control controle2 = rdkProcessosDeMarcas;
+            Control controle2 = rdkContasAReceber;
             UtilidadesWeb.LimparComponente(ref controle2);
 
             CarregaOpcoesDeFiltro();
