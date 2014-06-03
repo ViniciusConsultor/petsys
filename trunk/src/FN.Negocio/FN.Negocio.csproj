@@ -73,6 +73,11 @@
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorIntervaloDeDataDeVencimento.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorSituacao.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberSemFiltro.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorCliente.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorDescricao.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorID.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorIntervaloDAtaDeVencimento.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoSemFiltro.cs" />
     <Compile Include="ItemLancamentoFinanceiro.cs" />
     <Compile Include="ItemLancamentoFinanceiroRecebimento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

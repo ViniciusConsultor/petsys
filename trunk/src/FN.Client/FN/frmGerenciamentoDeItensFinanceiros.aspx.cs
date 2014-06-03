@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Compartilhados;
@@ -12,14 +11,14 @@ using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
 using FN.Client.FN.Relatorios;
-using FN.Interfaces.Negocio.Filtros.ContasAReceber;
+using FN.Interfaces.Negocio.Filtros.GerenciamentoDeItensFinanceiros;
 using Telerik.Web.UI;
 
 namespace FN.Client.FN
 {
-    public partial class frmContasAReceber : SuperPagina
+    public partial class frmGerenciamentoDeItensFinanceiros : SuperPagina
     {
-        private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_CONTAS_A_RECEBER";
+        private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_GERENCIAMENTO_ITENS_FINANCEIROS";
         private const int NUMERO_CELULA_ID_CLIENTE = 9;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 7;
         
@@ -39,10 +38,10 @@ namespace FN.Client.FN
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
             {
-                grdItensDeContasAReceber.VirtualItemCount = servico.ObtenhaQuantidadeDeItensFinanceiros(filtro);
-                grdItensDeContasAReceber.DataSource = servico.ObtenhaItensFinanceiros(filtro, quantidadeDeProcessos, offSet);
-                grdItensDeContasAReceber.DataBind();
-                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = grdItensDeContasAReceber.VirtualItemCount > 0;
+                grdItensFinanceiros.VirtualItemCount = servico.ObtenhaQuantidadeDeItensFinanceiros(filtro);
+                grdItensFinanceiros.DataSource = servico.ObtenhaItensFinanceiros(filtro, quantidadeDeProcessos, offSet);
+                grdItensFinanceiros.DataBind();
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = grdItensFinanceiros.VirtualItemCount > 0;
             }
         }
 
@@ -50,19 +49,15 @@ namespace FN.Client.FN
         {
             pnlCliente.Visible = false;
             pnlPeriodoDeVencimento.Visible = false;
-            pnlSituacao.Visible = false;
             pnlDescricao.Visible = false;
-            pnlFormaDeRecebimento.Visible = false;
         }
 
         private void CarregaOpcoesDeFiltro()
         {
             cboTipoDeFiltro.Items.Clear();
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Situacao", "1"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente", "2"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Período de vencimento", "3"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Descrição", "4"));
-            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Forma de recebimento", "5"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente", "1"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Período de vencimento", "2"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Descrição", "3"));
         }
 
         private void ExibaTelaInicial()
@@ -76,20 +71,16 @@ namespace FN.Client.FN
             CarregaOpcoesDeFiltro();
             EscondaTodosOsPanelsDeFiltro();
             pnlCliente.Visible = true;
-            cboTipoDeFiltro.SelectedValue = "2";
+            cboTipoDeFiltro.SelectedValue = "1";
 
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
-            ctrlSituacao.Inicializa();
-            ctrlFormaRecebimento.Inicializa();
-
+            
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberSemFiltro>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoSemFiltro>();
             FiltroAplicado = filtro;
-            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
-
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
+            MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
         }
 
         private string ObtenhaURLDeContaAReceber()
@@ -106,7 +97,7 @@ namespace FN.Client.FN
 
         private void Recarregue()
         {
-            MostraItens(FiltroAplicado, grdItensDeContasAReceber.PageSize, 0);
+            MostraItens(FiltroAplicado, grdItensFinanceiros.PageSize, 0);
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -145,7 +136,7 @@ namespace FN.Client.FN
         {
             var ids = new StringBuilder();
 
-            foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
+            foreach (GridDataItem dataItem in grdItensFinanceiros.MasterTableView.Items)
             {
                 if ((dataItem.FindControl("CheckBox1") as CheckBox).Checked)
                     ids.Append(dataItem.Cells[NUMERO_CELULA_ID_ITEM_FINANCEIRO].Text + "|");
@@ -162,21 +153,14 @@ namespace FN.Client.FN
             switch (cboTipoDeFiltro.SelectedValue)
             {
                 case "1":
-                    pnlSituacao.Visible = true;
-                    break;
-                case "2":
                     pnlCliente.Visible = true;
                     break;
-                case "3":
+                case "2":
                     pnlPeriodoDeVencimento.Visible = true;
                     break;
-                case "4":
+                case "3":
                     pnlDescricao.Visible = true;
                     break;
-                case "5":
-                    pnlFormaDeRecebimento.Visible = true;
-                    break;
-
             }
         }
 
@@ -215,29 +199,29 @@ namespace FN.Client.FN
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorCliente>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoPorCliente>();
             filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlCliente1.ClienteSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
-            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
         }
 
-        protected void grdItensDeContasAReceber_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        protected void grdItensFinanceiros_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
             if (e.NewPageIndex >= 0)
             {
                 var offSet = 0;
 
                 if (e.NewPageIndex > 0)
-                    offSet = e.NewPageIndex * grdItensDeContasAReceber.PageSize;
+                    offSet = e.NewPageIndex * grdItensFinanceiros.PageSize;
 
-                MostraItens(FiltroAplicado, grdItensDeContasAReceber.PageSize, offSet);
+                MostraItens(FiltroAplicado, grdItensFinanceiros.PageSize, offSet);
 
             }
         }
 
 
-        protected void grdItensDeContasAReceber_OnItemCommand(object sender, GridCommandEventArgs e)
+        protected void grdItensFinanceiros_OnItemCommand(object sender, GridCommandEventArgs e)
         {
             long id = 0;
 
@@ -259,7 +243,7 @@ namespace FN.Client.FN
 
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                                 UtilidadesWeb.MostraMensagemDeInformacao(
-                                                                    "Item de lançamento de conta a receber cancelado com sucesso."), false);
+                                                                    "Item de lançamento financeiro cancelado com sucesso."), false);
                         ExibaTelaInicial();
                     }
                     catch (BussinesException ex)
@@ -292,7 +276,7 @@ namespace FN.Client.FN
 
         protected override string ObtenhaIdFuncao()
         {
-            return "FUN.FN.001";
+            return "FUN.FN.007";
         }
 
         protected override RadToolBar ObtenhaBarraDeFerramentas()
@@ -332,78 +316,15 @@ namespace FN.Client.FN
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorIntervaloDeDataDeVencimento>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoPorIntervaloDAtaDeVencimento>();
 
             filtro.Operacao = operacao;
             filtro.AdicioneValoresDoFiltroParaEntre(txtPeriodo1.SelectedDate.Value.ToString("yyyyMMdd"),
                                                     txtPeriodo2.SelectedDate.Value.ToString("yyyyMMdd"));
             FiltroAplicado = filtro;
-            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
 
         }
-
-        protected void btnPesquisarPorSituacao_OnClick_(object sender, ImageClickEventArgs e)
-        {
-            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
-            {
-                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
-                return;
-            }
-
-            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-
-            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
-                return;
-            }
-
-            if (ctrlSituacao.SituacaoSelecionada == null)
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma situação."), false);
-                return;
-            }
-
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorSituacao>();
-            filtro.Operacao = operacao;
-            filtro.ValorDoFiltro = ctrlSituacao.Codigo;
-            FiltroAplicado = filtro;
-            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
-        }
-
-        protected void btnPesquisarPorFormaDeRecebimento_OnClick_(object sender, ImageClickEventArgs e)
-        {
-            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
-            {
-                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
-                return;
-            }
-
-            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
-
-            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
-                return;
-            }
-
-            if (ctrlFormaRecebimento.FormaDeRecebimentoSelecionada == null)
-            {
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione uma forma de recebimento."), false);
-                return;
-            }
-
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorFormaDeRecebimento>();
-            filtro.Operacao = operacao;
-            filtro.ValorDoFiltro = ctrlFormaRecebimento.Codigo;
-            FiltroAplicado = filtro;
-            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
-        }
-
 
         protected void btnPesquisarPorDescricao_OnClick_(object sender, ImageClickEventArgs e)
         {
@@ -429,11 +350,11 @@ namespace FN.Client.FN
                 return;
             }
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorDescricao>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoPorDescricao>();
             filtro.Operacao = operacao;
             filtro.ValorDoFiltro = txtDescricao.Text;
             FiltroAplicado = filtro;
-            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
         }
 
         protected void ToggleRowSelection(object sender, EventArgs e)
@@ -442,7 +363,7 @@ namespace FN.Client.FN
             bool checkHeader = true;
             var idsDeCliente = new Dictionary<string, int>();
 
-            foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
+            foreach (GridDataItem dataItem in grdItensFinanceiros.MasterTableView.Items)
             {
                 if (!(dataItem.FindControl("CheckBox1") as CheckBox).Checked)
                 {
@@ -460,7 +381,7 @@ namespace FN.Client.FN
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
                 idsDeCliente.Count() == 1 && idsDeCliente.ElementAt(0).Value > 1;
-            GridHeaderItem headerItem = grdItensDeContasAReceber.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
+            GridHeaderItem headerItem = grdItensFinanceiros.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
             (headerItem.FindControl("headerChkbox") as CheckBox).Checked = checkHeader;
         }
 
@@ -469,7 +390,7 @@ namespace FN.Client.FN
             var headerCheckBox = (sender as CheckBox);
             var mostrarBotaoBoletoColetivo = true;
             string idDoClienteDaPrimeiraLinha = null;
-            foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
+            foreach (GridDataItem dataItem in grdItensFinanceiros.MasterTableView.Items)
             {
                 (dataItem.FindControl("CheckBox1") as CheckBox).Checked = headerCheckBox.Checked;
                 dataItem.Selected = headerCheckBox.Checked;
@@ -492,8 +413,8 @@ namespace FN.Client.FN
                 var itensDeLancamento = servico.ObtenhaItensFinanceiros(FiltroAplicado, int.MaxValue, 0);
                 var geradorDeRelatorioGeral = new GeradorDeRelatorioDeContasAReceber(itensDeLancamento);
                 var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
-                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +nomeDoArquivo;
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
             }
         }
     }

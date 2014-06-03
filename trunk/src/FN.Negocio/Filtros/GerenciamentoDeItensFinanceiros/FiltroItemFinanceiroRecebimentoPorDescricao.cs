@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Compartilhados.Interfaces.FN.Negocio;
 using Core.Negocio;
-using FN.Interfaces.Negocio.Filtros.ContasAReceber;
+using FN.Interfaces.Negocio.Filtros.GerenciamentoDeItensFinanceiros;
 
-namespace FN.Negocio.Filtros.ContasAReceber
+namespace FN.Negocio.Filtros.GerenciamentoDeItensFinanceiros
 {
     [Serializable]
-    public class FiltroContaAReceberSemFiltro : Filtro, IFiltroContaAReceberSemFiltro
+    public class FiltroItemFinanceiroRecebimentoPorDescricao : Filtro, IFiltroItemFinanceiroRecebimentoPorDescricao
     {
         public override string ObtenhaQuery()
         {
@@ -18,8 +17,8 @@ namespace FN.Negocio.Filtros.ContasAReceber
             sql.Append(
                 "SELECT ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, SITUACAO, DATARECEBIMENTO, TIPOLANCAMENTO, DESCRICAO, FORMARECEBIMENTO ");
             sql.Append("FROM FN_ITEMFINANREC ");
-            sql.Append(" WHERE SITUACAO <> '" + Situacao.AguardandoCobranca.ID + "'");
- 
+            sql.Append(" WHERE " + ObtenhaFiltroMontado("FN_ITEMFINANREC.DESCRICAO", true));
+
             return sql.ToString();
         }
     }

@@ -6,11 +6,12 @@
         Private _ID As Short
         Private _Descricao As String
 
-        Public Shared Aberta As Situacao = New Situacao(1S, "Aberta")
+        Public Shared CobrancaEmAberto As Situacao = New Situacao(1S, "Cobrança em aberto")
         Public Shared Paga As Situacao = New Situacao(2S, "Paga")
         Public Shared Cancelada As Situacao = New Situacao(3S, "Cancelada")
+        Public Shared AguardandoCobranca As Situacao = New Situacao(4S, "Aguardando cobrança")
 
-        Private Shared Lista As Situacao() = {Aberta, Paga, Cancelada}
+        Private Shared Lista As Situacao() = {CobrancaEmAberto, Paga, Cancelada, AguardandoCobranca}
 
         Private Sub New(ByVal ID As Short, _
                         ByVal Descricao As String)

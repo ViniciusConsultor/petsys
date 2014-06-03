@@ -130,7 +130,7 @@ namespace FN.Servicos.Local
             itemLacamentoFinanceiro.Cliente = boletoGerado.Cliente;
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento =  boletoGerado.DataVencimento.Value;
-            itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
+            itemLacamentoFinanceiro.Situacao = Situacao.CobrancaEmAberto;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.BoletoAvulso;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;
             //if (boletoGerado.ID != null) itemLacamentoFinanceiro.IDBOLETO = boletoGerado.ID.Value;

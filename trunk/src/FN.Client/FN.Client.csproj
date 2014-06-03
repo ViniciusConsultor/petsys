@@ -156,6 +156,13 @@
     <Compile Include="FN\frmContasAReceber.aspx.designer.cs">
       <DependentUpon>frmContasAReceber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FN\frmGerenciamentoDeItensFinanceiros.aspx.cs">
+      <DependentUpon>frmGerenciamentoDeItensFinanceiros.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\frmGerenciamentoDeItensFinanceiros.aspx.designer.cs">
+      <DependentUpon>frmGerenciamentoDeItensFinanceiros.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FN\frmVisualizarBoletoGerado.aspx.cs">
       <DependentUpon>frmVisualizarBoletoGerado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -191,6 +198,7 @@
     <Content Include="FN\frmConfiguracaoDoBoleto.aspx" />
     <Content Include="FN\frmConfiguracaoGeralFinaceiro.aspx" />
     <Content Include="FN\frmContasAReceber.aspx" />
+    <Content Include="FN\frmGerenciamentoDeItensFinanceiros.aspx" />
     <Content Include="FN\frmVisualizarBoletoGerado.aspx" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />

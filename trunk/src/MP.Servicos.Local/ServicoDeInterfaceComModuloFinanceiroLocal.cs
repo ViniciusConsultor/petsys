@@ -30,7 +30,7 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.Cliente = marca.Cliente;
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento = marca.Manutencao.DataDaProximaManutencao.Value;
-            itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
+            itemLacamentoFinanceiro.Situacao = Situacao.AguardandoCobranca;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao;
             itemLacamentoFinanceiro.Valor = marca.Manutencao.ObtenhaValorRealEmEspecie();
             itemLacamentoFinanceiro.Descricao = marca.DescricaoDaMarca;
@@ -47,7 +47,7 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.Cliente = patente.Clientes[0];
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento = patente.Manutencao.DataDaProximaManutencao.Value;
-            itemLacamentoFinanceiro.Situacao = Situacao.Aberta;
+            itemLacamentoFinanceiro.Situacao = Situacao.AguardandoCobranca;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao;
             itemLacamentoFinanceiro.Valor = patente.Manutencao.ObtenhaValorRealEmEspecie();
             itemLacamentoFinanceiro.Descricao = "Patente " + processoDePatente.NumeroDoProcessoFormatado;
