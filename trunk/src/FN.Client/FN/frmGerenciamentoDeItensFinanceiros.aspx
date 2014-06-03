@@ -84,7 +84,7 @@
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="rdkProcessosDeMarcas" runat="server" Title="Processos de Marcas"
+            <telerik:RadDock ID="rdkItensFinanceirosDeRecebimento" runat="server" Title="Lançamentos financeiros de recebimento"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <table class="tabela">

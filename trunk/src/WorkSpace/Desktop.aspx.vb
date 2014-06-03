@@ -62,7 +62,7 @@ Partial Public Class Desktop
 
             Dim dt As New HtmlGenericControl("dt")
 
-            Dim id As String = Item.ID.Replace(".", "_")
+            Dim id As String = Item.URL.Replace(".", "_")
 
             If Item.Tipo.Equals(TipoAtalho.Externo) Then
                 id = id & "externo"

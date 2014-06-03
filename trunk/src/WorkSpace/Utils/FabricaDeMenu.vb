@@ -48,7 +48,7 @@ Public Class FabricaDeMenu
         If _Menu.ObtenhaItens.Count <> 0 Then
             'Obtem os IDs dos modulos para criar as funções JS dinamicamente
             For Each MenuComposto As IMenuAbstrato In From MenuComposto1 In _Menu.ObtenhaItens Where _Principal.EstaAutorizado(MenuComposto1.ID)
-                NomeDosModulos.Append(String.Concat("new MyDesktop.", MenuComposto.IDSemFormatacao, "(),"))
+                NomeDosModulos.Append(String.Concat("new MyDesktop.", MenuComposto.ID.Replace(".", "_"), "(),"))
             Next
 
             If NomeDosModulos.Length > 0 Then
@@ -102,10 +102,10 @@ Public Class FabricaDeMenu
 
             _JsMenu.AppendLine("handler:  function() {")
             _JsMenu.AppendLine("var desktop = this.app.getDesktop();")
-            _JsMenu.AppendLine(String.Concat("var win = desktop.getWindow('win", Funcao.IDSemFormatacao, "');"))
+            _JsMenu.AppendLine(String.Concat("var win = desktop.getWindow('win", Funcao.URL.Replace(".", "_"), "');"))
             _JsMenu.AppendLine("if(!win){")
             _JsMenu.AppendLine("win = desktop.createWindow({")
-            _JsMenu.AppendLine(String.Concat("id:'win", Funcao.IDSemFormatacao, "',"))
+            _JsMenu.AppendLine(String.Concat("id:'win", Funcao.URL.Replace(".", "_"), "',"))
             _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
             _JsMenu.AppendLine("width:800,")
             _JsMenu.AppendLine("height:550,")
@@ -127,8 +127,8 @@ Public Class FabricaDeMenu
     End Sub
 
     Private Sub ObtenhaMenuModulo(ByVal MenuItemModulo As IMenuComposto)
-        _JsMenu.AppendLine(String.Concat("MyDesktop.", MenuItemModulo.IDSemFormatacao, " = Ext.extend(Ext.app.Module, {"))
-        _JsMenu.AppendLine(String.Concat("id:'", MenuItemModulo.IDSemFormatacao, "',"))
+        _JsMenu.AppendLine(String.Concat("MyDesktop.", MenuItemModulo.ID.Replace(".", "_"), " = Ext.extend(Ext.app.Module, {"))
+        _JsMenu.AppendLine(String.Concat("id:'", MenuItemModulo.ID.Replace(".", "_"), "',"))
         _JsMenu.AppendLine("init : function(){")
         _JsMenu.AppendLine("this.launcher = {")
         _JsMenu.AppendLine(String.Concat("text:'", MenuItemModulo.Nome, "',"))

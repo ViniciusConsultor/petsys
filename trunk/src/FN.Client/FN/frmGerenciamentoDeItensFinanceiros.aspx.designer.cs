@@ -220,13 +220,13 @@ namespace FN.Client.FN {
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorDescricao;
         
         /// <summary>
-        /// rdkProcessosDeMarcas control.
+        /// rdkItensFinanceirosDeRecebimento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDock rdkProcessosDeMarcas;
+        protected global::Telerik.Web.UI.RadDock rdkItensFinanceirosDeRecebimento;
         
         /// <summary>
         /// grdItensFinanceiros control.

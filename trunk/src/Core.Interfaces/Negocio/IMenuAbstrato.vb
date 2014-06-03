@@ -5,8 +5,7 @@
         Property ID() As String
         Property Nome() As String
         Property Imagem() As String
-        Function IDSemFormatacao() As String
-
+        
     End Interface
 
 End Namespace
