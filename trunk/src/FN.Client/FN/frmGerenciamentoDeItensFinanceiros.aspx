@@ -10,6 +10,8 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.007.0001" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar conta a receber coletivamente" ImageUrl="~/imagens/dinheiroGrande.gif"
+                CommandName="btnGerarContaAReceberColetivo" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
@@ -125,8 +127,8 @@
                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="GerarBoleto" FilterImageToolTip="Gerar boleto"
-                                                HeaderTooltip="Gerar boleto" ImageUrl="~/imagens/boletopequeno.png" UniqueName="column108">
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="GerarContaAReceber" FilterImageToolTip="Gerar conta a receber"
+                                                HeaderTooltip="Gerar boleto" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column108">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"

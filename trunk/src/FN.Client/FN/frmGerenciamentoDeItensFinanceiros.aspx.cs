@@ -110,8 +110,8 @@ namespace FN.Client.FN
                 case "btnRecarregar":
                     Recarregue();
                     break;
-                case "btnGerarBoletoColetivo":
-                    PreparaEmissaoDeBoletoColetivamente();
+                case "btnGerarContaAReceberColetivo":
+                    PreparaEmissaoDeContaAReceberColetivamente();
                     break;
                 case "btnLimpar":
                     ExibaTelaInicial();
@@ -122,7 +122,7 @@ namespace FN.Client.FN
             }
         }
 
-        private void PreparaEmissaoDeBoletoColetivamente()
+        private void PreparaEmissaoDeContaAReceberColetivamente()
         {
             var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmBoletoAvulso.aspx",
                                            "?ItensFinanceiros=", obtenhaIdsDosItensSelecionados());
@@ -261,14 +261,15 @@ namespace FN.Client.FN
                                                                                        "Modificar conta a receber",
                                                                                        800, 550, "cdContaAReceber_aspx"), false);
                     break;
-                case "GerarBoleto":
+                case "GerarContaAReceber":
 
-                    var url2 = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmBoletoAvulso.aspx",
+                    var url2 = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmGerarContaAReceber.aspx",
                                            "?ItensFinanceiros=", id);
+
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.ExibeJanela(url2,
-                                                                                       "Gerar boleto",
-                                                                                       800, 550, "frmBoletoAvulso_aspx"), false);
+                                                        UtilidadesWeb.ExibeJanelaModal(url2,
+                                                                                       "Gerar conta a receber",
+                                                                                       640, 480), false);
 
                     break;
             }
