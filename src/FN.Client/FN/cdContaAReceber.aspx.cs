@@ -15,7 +15,7 @@ namespace FN.Client.FN
 {
     public partial class cdContaAReceber : SuperPagina
     {
-        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_PROCESSO_DE_MARCA";
+        private const string CHAVE_ESTADO = "CHAVE_ESTADO_CD_CONTA_A_RECEBER";
         private const string CHAVE_ID_LANCAMENTO_RECEBIMENTO = "CHAVE_ID_LANCAMENTO_RECEBIMENTO";
         
         private enum Estado : byte
@@ -159,12 +159,12 @@ namespace FN.Client.FN
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
                         servico.Insira(itemDeLacamento); 
-                        mensagem = "Item de laçamento de conta a receber inserido com sucesso.";
+                        mensagem = "Item de lançamento de conta a receber inserido com sucesso.";
                     }
                     else
                     {
                         servico.Modifique(itemDeLacamento);
-                        mensagem = "Item de laçamento de conta a receber modificado com sucesso.";
+                        mensagem = "Item de lançamento de conta a receber modificado com sucesso.";
                     }
                 }
 
