@@ -105,7 +105,7 @@
                                 AppointmentContextMenuSettings-EnableEmbeddedSkins="False" TimeSlotContextMenuSettings-EnableEmbeddedBaseStylesheet="False"
                                 TimeSlotContextMenuSettings-EnableEmbeddedScripts="False" TimeSlotContextMenuSettings-EnableEmbeddedSkins="False"
                                 ShowNavigationPane="False" Skin="Vista" OverflowBehavior="Expand" 
-                                ToolTip="Compromissos">
+                                ToolTip="Compromissos" OnAppointmentCreated="schCompromissos_OnAppointmentCreated" >
                                 <TimelineView UserSelectable="false" />
                                 <WeekView UserSelectable="False" />
                                 <TimeSlotContextMenuSettings EnableEmbeddedBaseStylesheet="False" EnableEmbeddedScripts="False"

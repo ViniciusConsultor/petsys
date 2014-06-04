@@ -1,4 +1,5 @@
 ﻿Imports Compartilhados.Componentes.Web
+Imports System.Net
 Imports Telerik.Web.UI
 Imports Compartilhados.Interfaces.Core.Negocio
 Imports Compartilhados.Interfaces.Core.Servicos
@@ -191,7 +192,6 @@ Partial Public Class frmAgenda
         schCompromissos.DayEndTime = HoraFim.TimeOfDay
         schCompromissos.MinutesPerRow = IntervaloEntreCompromissos.Minute
         schCompromissos.SelectedDate = DataSelecionada
-
         ViewState(CHAVE_COMPROMISSOS) = Compromissos
         schCompromissos.DataSource = Compromissos
         schCompromissos.DataBind()
@@ -426,4 +426,7 @@ Partial Public Class frmAgenda
         CarregaAgenda()
     End Sub
 
+    Protected Sub schCompromissos_OnAppointmentCreated(ByVal sender As Object, ByVal e As AppointmentCreatedEventArgs)
+        e.Appointment.Subject = UtilidadesDeString.TransfomeHtmlParaTextoPuro(e.Appointment.Subject, True)
+    End Sub
 End Class
