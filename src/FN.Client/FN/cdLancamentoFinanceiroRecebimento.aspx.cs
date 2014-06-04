@@ -80,8 +80,11 @@ namespace FN.Client.FN
             var controle = pnlDadosDaConta as Control;
             UtilidadesWeb.LimparComponente(ref controle);
 
+            var tiposADesconsiderar = new List<TipoLacamentoFinanceiroRecebimento>();
+            tiposADesconsiderar.Add(TipoLacamentoFinanceiroRecebimento.BoletoAvulso);
+
             ctrlCliente.Inicializa();
-            ctrlTipoLacamentoFinanceiroRecebimento.Inicializa();
+            ctrlTipoLacamentoFinanceiroRecebimento.Inicializa(tiposADesconsiderar);
         }
 
         private IList<string> VerifiqueCamposObrigatorios()
