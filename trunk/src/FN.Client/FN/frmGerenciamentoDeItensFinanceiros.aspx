@@ -131,12 +131,12 @@
                                                 HeaderTooltip="Gerar boleto" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column108">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"
+                                           <%-- <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"
                                                 HeaderTooltip="Cancelar" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
                                                 ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo cancelar a conta a receber?"
                                                 ConfirmTitle="Cancelar">
                                                 <ItemStyle Width="2%"></ItemStyle>
-                                            </telerik:GridButtonColumn>
+                                            </telerik:GridButtonColumn>--%>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column353">
@@ -174,20 +174,6 @@
                             </td>
                         </tr>
                     </table>
-                    <telerik:RadWindow ID="jnlGerarCobranca" runat="server" Width="360px" Height="360px" Modal="true">
-                        <ContentTemplate>
-                            <div style="padding: 10px; text-align: center;">
-                                <telerik:RadButton ID="btnGerarCobranca" Text="Gerar cobrança"  AutoPostBack="true" runat="server" />
-                                <telerik:RadButton ID="btnCancelar" Text="Cancelar"  AutoPostBack="true" runat="server" />
-                            </div>
-                            <p style="text-align: center;">
-                                RadWindow is designed with keyboard support in mind - try tabbing before and after
-                                removing the modal background. While the popup is modal you cannot focus the textarea,
-                                once the modality is removed the textarea will be the first thing to receive focus
-                                because it has tabIndex=1.
-                            </p>
-                        </ContentTemplate>
-                    </telerik:RadWindow>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>

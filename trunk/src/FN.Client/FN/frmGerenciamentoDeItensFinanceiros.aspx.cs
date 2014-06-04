@@ -19,8 +19,8 @@ namespace FN.Client.FN
     public partial class frmGerenciamentoDeItensFinanceiros : SuperPagina
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_GERENCIAMENTO_ITENS_FINANCEIROS";
-        private const int NUMERO_CELULA_ID_CLIENTE = 9;
-        private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 7;
+        //private const int NUMERO_CELULA_ID_CLIENTE = 9;
+        private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 6;
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -126,12 +126,12 @@ namespace FN.Client.FN
 
         private void PreparaEmissaoDeContaAReceberColetivamente()
         {
-            var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmBoletoAvulso.aspx",
+            var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmGerarContaAReceber.aspx",
                                            "?ItensFinanceiros=", obtenhaIdsDosItensSelecionados());
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanela(url,
-                                                                               "Gerar boleto coletivamente",
-                                                                               800, 550, "frmBoletoAvulso_aspx"), false);
+                                                                               "Gerar conta a receber coletivamente",
+                                                                               800, 550, "frmGerarContaAReceber_aspx"), false);
         }
 
         private string obtenhaIdsDosItensSelecionados()
@@ -232,36 +232,36 @@ namespace FN.Client.FN
 
             switch (e.CommandName)
             {
-                case "Cancelar":
+                //case "Cancelar":
 
-                    try
-                    {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
-                        {
-                            var itemLancamento = servico.Obtenha(id);
-                            itemLancamento.Situacao = Situacao.Cancelada;
-                            servico.Modifique(itemLancamento);
-                        }
+                //    try
+                //    {
+                //        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                //        {
+                //            var itemLancamento = servico.Obtenha(id);
+                //            itemLancamento.Situacao = Situacao.Cancelada;
+                //            servico.Modifique(itemLancamento);
+                //        }
 
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                                UtilidadesWeb.MostraMensagemDeInformacao(
-                                                                    "Item de lançamento financeiro cancelado com sucesso."), false);
-                        ExibaTelaInicial();
-                    }
-                    catch (BussinesException ex)
-                    {
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
-                    }
+                //        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                //                                                UtilidadesWeb.MostraMensagemDeInformacao(
+                //                                                    "Item de lançamento financeiro cancelado com sucesso."), false);
+                //        ExibaTelaInicial();
+                //    }
+                //    catch (BussinesException ex)
+                //    {
+                //        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                //                                                UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                //    }
 
-                    break;
+                //    break;
                 case "Modificar":
                     var url = String.Concat(ObtenhaURLDeCadastroDeLancamentoFinanceiroDeRecebimento(),
                                             "?Id=", id);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
-                                                                                       "Modificar conta a receber",
-                                                                                       800, 550, "cdContaAReceber_aspx"), false);
+                                                                                       "Modificar lançamento financeiro de recebimento",
+                                                                                       800, 550, "cdLancamentoFinanceiroRecebimento_aspx"), false);
                     break;
                 case "GerarContaAReceber":
 
@@ -269,9 +269,9 @@ namespace FN.Client.FN
                                            "?ItensFinanceiros=", id);
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                        UtilidadesWeb.ExibeJanelaModal(url2,
+                                                        UtilidadesWeb.ExibeJanela(url2,
                                                                                        "Gerar conta a receber",
-                                                                                       640, 480), false);
+                                                                                       640, 480, "FN/frmGerarContaAReceber_aspx"), false);
 
                     break;
             }
@@ -364,25 +364,18 @@ namespace FN.Client.FN
         {
             ((sender as CheckBox).NamingContainer as GridItem).Selected = (sender as CheckBox).Checked;
             bool checkHeader = true;
-            var idsDeCliente = new Dictionary<string, int>();
+            var quantidadeDeItensSelecionado = 0;
 
             foreach (GridDataItem dataItem in grdItensFinanceiros.MasterTableView.Items)
             {
                 if (!(dataItem.FindControl("CheckBox1") as CheckBox).Checked)
-                {
                     checkHeader = false;
-                }
 
                 if ((dataItem.FindControl("CheckBox1") as CheckBox).Checked)
-                {
-                    if (!idsDeCliente.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
-                        idsDeCliente.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
-
-                    idsDeCliente[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
-                }
+                    quantidadeDeItensSelecionado += 1;
             }
 
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = idsDeCliente.Count() == 1 && idsDeCliente.ElementAt(0).Value > 1;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = quantidadeDeItensSelecionado > 0;
             GridHeaderItem headerItem = grdItensFinanceiros.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
             (headerItem.FindControl("headerChkbox") as CheckBox).Checked = checkHeader;
         }
@@ -390,20 +383,14 @@ namespace FN.Client.FN
         protected void ToggleSelectedState(object sender, EventArgs e)
         {
             var headerCheckBox = (sender as CheckBox);
-            var mostrarBotaoBoletoColetivo = true;
-            string idDoClienteDaPrimeiraLinha = null;
+            var mostrarBotaoBoletoColetivo = headerCheckBox.Checked;
+            
             foreach (GridDataItem dataItem in grdItensFinanceiros.MasterTableView.Items)
             {
                 (dataItem.FindControl("CheckBox1") as CheckBox).Checked = headerCheckBox.Checked;
                 dataItem.Selected = headerCheckBox.Checked;
 
-                if (idDoClienteDaPrimeiraLinha == null)
-                    idDoClienteDaPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text;
-
-                if (!idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
-                    mostrarBotaoBoletoColetivo = false;
-
-            }
+             }
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = mostrarBotaoBoletoColetivo;
         }
