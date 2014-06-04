@@ -20,20 +20,25 @@ namespace FN.Client.FN
 
         }
 
-        public void Inicializa()
+        public void Inicializa(IList<TipoLacamentoFinanceiroRecebimento> tiposADesconsiderar )
         {
             LimparControle();
-            CarregueCombo();
+            CarregueCombo(tiposADesconsiderar);
         }
 
-        private void CarregueCombo()
+        private void CarregueCombo(IList<TipoLacamentoFinanceiroRecebimento> tiposADesconsiderar)
         {
+            if (tiposADesconsiderar  == null) tiposADesconsiderar = new List<TipoLacamentoFinanceiroRecebimento>();
+
             foreach (var tipo in TipoLacamentoFinanceiroRecebimento.ObtenhaTodos())
             {
-                var item = new RadComboBoxItem(tipo.Descricao, tipo.ID.ToString());
+                if (!tiposADesconsiderar.Contains(tipo))
+                {
+                    var item = new RadComboBoxItem(tipo.Descricao, tipo.ID.ToString());
 
-                cboTipoLacamento.Items.Add(item);
-                item.DataBind();
+                    cboTipoLacamento.Items.Add(item);
+                    item.DataBind();
+                }
             }
         }
 

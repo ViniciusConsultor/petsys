@@ -92,8 +92,12 @@ namespace FN.Client.FN
             UtilidadesWeb.LimparComponente(ref controle);
             
             ctrlCliente.Inicializa();
-            ctrlTipoLacamentoFinanceiroRecebimento.Inicializa();
-            ctrlSituacao.Inicializa();
+            ctrlTipoLacamentoFinanceiroRecebimento.Inicializa(null);
+
+            var situacoesADesconsiderar = new List<Situacao>();
+
+            situacoesADesconsiderar.Add(Situacao.AguardandoCobranca);
+            ctrlSituacao.Inicializa(situacoesADesconsiderar);
             ctrlFormaRecebimento.Inicializa();
         }
 

@@ -375,7 +375,7 @@ namespace FN.Client.FN
                     quantidadeDeItensSelecionado += 1;
             }
 
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = quantidadeDeItensSelecionado > 0;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible = quantidadeDeItensSelecionado > 1;
             GridHeaderItem headerItem = grdItensFinanceiros.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
             (headerItem.FindControl("headerChkbox") as CheckBox).Checked = checkHeader;
         }

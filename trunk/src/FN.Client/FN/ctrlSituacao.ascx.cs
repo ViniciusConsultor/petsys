@@ -41,20 +41,25 @@ namespace FN.Client.FN
                 SituacaoFoiSelecionada(situacao);
         }
 
-        public void Inicializa()
+        public void Inicializa(IList<Situacao> situacoesADesconsiderar )
         {
             LimparControle();
-            CarregueCombo();
+            CarregueCombo(situacoesADesconsiderar);
         }
 
-        private void CarregueCombo()
+        private void CarregueCombo(IList<Situacao> situacoesADesconsiderar)
         {
+            if (situacoesADesconsiderar == null) situacoesADesconsiderar = new List<Situacao>();
+
             foreach (var situacao in Situacao.ObtenhaTodos())
             {
-                var item = new RadComboBoxItem(situacao.Descricao, situacao.ID.ToString());
-                
-                cboSituacao.Items.Add(item);
-                item.DataBind();
+                if (!situacoesADesconsiderar.Contains(situacao))
+                {
+                    var item = new RadComboBoxItem(situacao.Descricao, situacao.ID.ToString());
+                    
+                    cboSituacao.Items.Add(item);
+                    item.DataBind();
+                }
             }
         }
 

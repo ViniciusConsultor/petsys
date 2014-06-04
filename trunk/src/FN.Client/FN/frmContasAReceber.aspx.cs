@@ -80,7 +80,10 @@ namespace FN.Client.FN
 
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
-            ctrlSituacao.Inicializa();
+            var situacoesADesconsiderar = new List<Situacao>();
+
+            situacoesADesconsiderar.Add(Situacao.AguardandoCobranca);
+            ctrlSituacao.Inicializa(situacoesADesconsiderar);
             ctrlFormaRecebimento.Inicializa();
 
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
