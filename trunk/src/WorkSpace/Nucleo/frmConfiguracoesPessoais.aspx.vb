@@ -400,4 +400,12 @@ Partial Public Class frmConfiguracoesPessoais
         UtilidadesWeb.PaginacaoDataGrid(grdAtalhosExternos, ViewState(CHAVE_ATALHOS_EXTERNOS), e)
     End Sub
 
+    Private Sub btnRestaurarTema_Click(sender As Object, e As System.EventArgs) Handles btnRestaurarTema.Click
+        RadSkinManager1.Skin = Util.ObtenhaSkinPadrao()
+    End Sub
+
+    Private Sub btnRestaurarPapelDeParede_Click(sender As Object, e As System.EventArgs) Handles btnRestaurarPapelDeParede.Click
+        imgPapelDeParede.ImageUrl = String.Concat("~/", Util.ObtenhaImagemPadrao())
+    End Sub
+
 End Class

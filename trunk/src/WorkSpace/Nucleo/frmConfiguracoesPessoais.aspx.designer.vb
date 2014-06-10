@@ -221,6 +221,24 @@ Partial Public Class frmConfiguracoesPessoais
     Protected WithEvents RadSkinManager1 As Global.Telerik.Web.UI.RadSkinManager
 
     '''<summary>
+    '''Label8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''btnRestaurarTema control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnRestaurarTema As Global.Telerik.Web.UI.RadButton
+
+    '''<summary>
     '''rpvPapelDeParede control.
     '''</summary>
     '''<remarks>
@@ -273,6 +291,24 @@ Partial Public Class frmConfiguracoesPessoais
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSalvarPapelParede As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Label9 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''btnRestaurarPapelDeParede control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnRestaurarPapelDeParede As Global.Telerik.Web.UI.RadButton
 
     '''<summary>
     '''rpvAgenda control.

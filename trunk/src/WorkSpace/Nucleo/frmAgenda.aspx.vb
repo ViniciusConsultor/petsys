@@ -190,7 +190,7 @@ Partial Public Class frmAgenda
 
         schCompromissos.DayStartTime = HoraInicio.TimeOfDay
         schCompromissos.DayEndTime = HoraFim.TimeOfDay
-        schCompromissos.MinutesPerRow = IntervaloEntreCompromissos.Minute
+        schCompromissos.MinutesPerRow = UtilitarioDeData.ObtenhaMinutos(IntervaloEntreCompromissos)
         schCompromissos.SelectedDate = DataSelecionada
         ViewState(CHAVE_COMPROMISSOS) = Compromissos
         schCompromissos.DataSource = Compromissos
