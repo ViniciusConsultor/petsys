@@ -8,7 +8,6 @@ Namespace Core.Negocio
         Property ID() As Nullable(Of Long)
         Property Nome() As String
         ReadOnly Property Tipo() As TipoDePessoa
-        Property EnderecoDeEmail() As EnderecoDeEmail
         ReadOnly Property Telefones() As IList(Of ITelefone)
         ReadOnly Property Enderecos As IList(Of IEndereco)
         Function ObtenhaDocumento(ByVal TipoDocumento As TipoDeDocumento) As IDocumento
@@ -28,6 +27,7 @@ Namespace Core.Negocio
         Function EventosDeContato() As IList(Of IEventoDeContato)
         Sub AdicioneEventoDeContato(ByVal Evento As IEventoDeContato)
         Sub AdicioneEventosDeContato(ByVal Eventos As IList(Of IEventoDeContato))
+        Property EnderecosDeEmails() As IList(Of EnderecoDeEmail)
 
     End Interface
 

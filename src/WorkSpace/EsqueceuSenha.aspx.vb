@@ -31,7 +31,7 @@ Public Class EsqueceuSenha
                 Exit Sub
             End If
 
-            If operador.Pessoa.EnderecoDeEmail Is Nothing Then
+            If operador.Pessoa.EnderecosDeEmails Is Nothing Then
                 ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInformacao("Você não possui e-mail cadastrado. Peça para o adminitrador do sistema cadastrá-lo ou modificar a sua senha."), False)
                 Exit Sub
             End If

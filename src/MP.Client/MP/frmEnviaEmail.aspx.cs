@@ -282,7 +282,7 @@ namespace MP.Client.MP
             }
 
 
-            if (procurador.Pessoa.EnderecoDeEmail == null || string.IsNullOrEmpty(procurador.Pessoa.EnderecoDeEmail.ToString()))
+            if (procurador.Pessoa.EnderecosDeEmails == null || procurador.Pessoa.EnderecosDeEmails.Count == 0)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                             UtilidadesWeb.MostraMensagemDeInconsitencia(
@@ -291,14 +291,16 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (chkProcuradorMarca.Checked)
+            foreach (EnderecoDeEmail enderecoDeEmail in procurador.Pessoa.EnderecosDeEmails)
             {
-                if (VerificaSeEmailFoiAdicionadoNaLista(procurador.Pessoa.EnderecoDeEmail.ToString())) return;
-
-                Destinarios.Add(procurador.Pessoa.EnderecoDeEmail.ToString());
+                if (chkProcuradorMarca.Checked)
+                {
+                    if (VerificaSeEmailFoiAdicionadoNaLista(enderecoDeEmail.ToString())) return;
+                    Destinarios.Add(enderecoDeEmail.ToString());
+                }
+                else
+                    Destinarios.Remove(enderecoDeEmail.ToString());
             }
-            else
-                Destinarios.Remove(procurador.Pessoa.EnderecoDeEmail.ToString());
 
             ExibaDestinariosCC();
         }
@@ -351,7 +353,7 @@ namespace MP.Client.MP
             }
 
 
-            if (cliente.Pessoa.EnderecoDeEmail == null || string.IsNullOrEmpty(cliente.Pessoa.EnderecoDeEmail.ToString()))
+            if (cliente.Pessoa.EnderecosDeEmails == null || cliente.Pessoa.EnderecosDeEmails.Count == 0)
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                             UtilidadesWeb.MostraMensagemDeInconsitencia(
@@ -360,15 +362,16 @@ namespace MP.Client.MP
                 return;
             }
 
-
-            if (chkClienteMarca.Checked)
+            foreach (EnderecoDeEmail enderecoDeEmail in cliente.Pessoa.EnderecosDeEmails)
             {
-                if (VerificaSeEmailFoiAdicionadoNaLista(cliente.Pessoa.EnderecoDeEmail.ToString())) return;
-
-                Destinarios.Add(cliente.Pessoa.EnderecoDeEmail.ToString());
+                if (chkClienteMarca.Checked)
+                {
+                    if (VerificaSeEmailFoiAdicionadoNaLista(enderecoDeEmail.ToString())) return;
+                    Destinarios.Add(enderecoDeEmail.ToString());
+                }
+                else
+                    Destinarios.Remove(enderecoDeEmail.ToString());    
             }
-            else
-                Destinarios.Remove(cliente.Pessoa.EnderecoDeEmail.ToString());
 
             ExibaDestinariosCC();
 
@@ -388,7 +391,7 @@ namespace MP.Client.MP
             }
 
 
-            if (procurador.Pessoa.EnderecoDeEmail == null || string.IsNullOrEmpty(procurador.Pessoa.EnderecoDeEmail.ToString()))
+            if (procurador.Pessoa.EnderecosDeEmails == null || procurador.Pessoa.EnderecosDeEmails.Count == 0   )
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                             UtilidadesWeb.MostraMensagemDeInconsitencia(
@@ -397,14 +400,16 @@ namespace MP.Client.MP
                 return;
             }
 
-            if (chkProcuradorPatente.Checked)
+            foreach (EnderecoDeEmail enderecoDeEmail in procurador.Pessoa.EnderecosDeEmails)
             {
-                if (VerificaSeEmailFoiAdicionadoNaLista(procurador.Pessoa.EnderecoDeEmail.ToString())) return;
-
-                Destinarios.Add(procurador.Pessoa.EnderecoDeEmail.ToString());
+                if (chkProcuradorPatente.Checked)
+                {
+                    if (VerificaSeEmailFoiAdicionadoNaLista(enderecoDeEmail.ToString())) return;
+                    Destinarios.Add(enderecoDeEmail.ToString());
+                }
+                else
+                    Destinarios.Remove(enderecoDeEmail.ToString());    
             }
-            else
-                Destinarios.Remove(procurador.Pessoa.EnderecoDeEmail.ToString());
 
             ExibaDestinariosCC();
         }
@@ -425,8 +430,9 @@ namespace MP.Client.MP
             var listaDeEmails = new List<string>();
 
             foreach (var cliente in clientes)
-                if (cliente.Pessoa.EnderecoDeEmail != null && !string.IsNullOrEmpty(cliente.Pessoa.EnderecoDeEmail.ToString()))
-                    listaDeEmails.Add(cliente.Pessoa.EnderecoDeEmail.ToString());
+                if (cliente.Pessoa.EnderecosDeEmails != null && cliente.Pessoa.EnderecosDeEmails.Count > 0)
+                    listaDeEmails.AddRange(cliente.Pessoa.EnderecosDeEmails.Select(enderecoDeEmail => enderecoDeEmail.ToString()));
+
 
             if (listaDeEmails.Count == 0)
             {
@@ -468,8 +474,8 @@ namespace MP.Client.MP
             var listaDeEmails = new List<string>();
 
             foreach (var inventor in inventores)
-                if (inventor.Pessoa.EnderecoDeEmail != null && !string.IsNullOrEmpty(inventor.Pessoa.EnderecoDeEmail.ToString()))
-                    listaDeEmails.Add(inventor.Pessoa.EnderecoDeEmail.ToString());
+                if (inventor.Pessoa.EnderecosDeEmails != null && inventor.Pessoa.EnderecosDeEmails.Count > 0)
+                    listaDeEmails.AddRange(inventor.Pessoa.EnderecosDeEmails.Select(enderecoDeEmail => enderecoDeEmail.ToString()));
 
             if (listaDeEmails.Count == 0)
             {
@@ -511,8 +517,8 @@ namespace MP.Client.MP
             var listaDeEmails = new List<string>();
 
             foreach (var titular in titulares)
-                if (titular.Pessoa.EnderecoDeEmail != null && !string.IsNullOrEmpty(titular.Pessoa.EnderecoDeEmail.ToString()))
-                    listaDeEmails.Add(titular.Pessoa.EnderecoDeEmail.ToString());
+                if (titular.Pessoa.EnderecosDeEmails != null && titular.Pessoa.EnderecosDeEmails.Count > 0)
+                    listaDeEmails.AddRange(titular.Pessoa.EnderecosDeEmails.Select(enderecoDeEmail => enderecoDeEmail.ToString()));
 
             if (listaDeEmails.Count == 0)
             {

@@ -98,7 +98,7 @@ Public Class Form1
         Dim Sql As String
         Dim DbHelper As IDBHelper = ServerUtils.criarNovoDbHelper
 
-        Sql = "SELECT ID, NOME, ENDEMAIL, LOGRADOURO, COMPLEMENTO, BAIRRO, SITE FROM NCL_PESSOA"
+        Sql = "SELECT ID, NOME, LOGRADOURO, COMPLEMENTO, BAIRRO, SITE FROM NCL_PESSOA"
 
         Using Leitor As IDataReader = DbHelper.obtenhaReader(Sql)
             While Leitor.Read
@@ -110,12 +110,6 @@ Public Class Form1
                     Sql2.Append("NOME = '" & UtilidadesDeConversao.FormataTextoEmMaisculoMinusculoIntercaladoPorEspaco(UtilidadesDePersistencia.GetValorString(Leitor, "NOME"), rbLower.Checked) & "', ")
                 Else
                     Sql2.Append("NOME = NULL, ")
-                End If
-
-                If Not UtilidadesDePersistencia.EhNulo(Leitor, "ENDEMAIL") Then
-                    Sql2.Append("ENDEMAIL= '" & UtilidadesDeConversao.FormataTextoTudoMinusculo(UtilidadesDePersistencia.GetValorString(Leitor, "ENDEMAIL"), rbLower.Checked) & "', ")
-                Else
-                    Sql2.Append("ENDEMAIL= NULL, ")
                 End If
 
                 If Not UtilidadesDePersistencia.EhNulo(Leitor, "LOGRADOURO") Then

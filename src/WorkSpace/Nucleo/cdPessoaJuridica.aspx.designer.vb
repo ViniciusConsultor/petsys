@@ -455,6 +455,24 @@ Partial Public Class cdPessoaJuridica
     Protected WithEvents txtEmail As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
+    '''btnAdicionarEmail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdicionarEmail As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''grdEmails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grdEmails As Global.Telerik.Web.UI.RadGrid
+
+    '''<summary>
     '''Label25 control.
     '''</summary>
     '''<remarks>
@@ -534,6 +552,24 @@ Partial Public Class cdPessoaJuridica
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtNumeroTelefone As Global.Telerik.Web.UI.RadMaskedTextBox
+
+    '''<summary>
+    '''lblContatoTelefone control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblContatoTelefone As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtContatoTelefone control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtContatoTelefone As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
     '''btnAdicionarTelefone control.

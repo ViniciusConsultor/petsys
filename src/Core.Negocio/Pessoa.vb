@@ -9,7 +9,6 @@ Public MustInherit Class Pessoa
 
     Private _ID As Nullable(Of Long)
     Private _Nome As String
-    Private _EnderecoDeEmail As EnderecoDeEmail
     Private _Telefones As IList(Of ITelefone)
     Private _Documentos As IDictionary(Of TipoDeDocumento, IDocumento)
     Private _Enderecos As IList(Of IEndereco)
@@ -17,6 +16,7 @@ Public MustInherit Class Pessoa
     Private _DadoBancario As IDadoBancario
     Private _Contatos As IList(Of String)
     Private _EventosDeContato As IList(Of IEventoDeContato)
+    Private _EnderecosDeEmails As IList(Of EnderecoDeEmail)
 
     Protected Sub New()
         _Documentos = New Dictionary(Of TipoDeDocumento, IDocumento)
@@ -41,6 +41,15 @@ Public MustInherit Class Pessoa
         End Get
         Set(ByVal value As Long?)
             _ID = value
+        End Set
+    End Property
+
+    Public Property EnderecosDeEmails() As IList(Of EnderecoDeEmail) Implements IPessoa.EnderecosDeEmails
+        Get
+            Return _EnderecosDeEmails
+        End Get
+        Set(ByVal value As IList(Of EnderecoDeEmail))
+            _EnderecosDeEmails = value
         End Set
     End Property
 
@@ -76,15 +85,6 @@ Public MustInherit Class Pessoa
         Get
             Return _Telefones
         End Get
-    End Property
-
-    Public Property EnderecoDeEmail() As EnderecoDeEmail Implements IPessoa.EnderecoDeEmail
-        Get
-            Return _EnderecoDeEmail
-        End Get
-        Set(ByVal value As EnderecoDeEmail)
-            _EnderecoDeEmail = value
-        End Set
     End Property
 
     Public Property Site() As String Implements IPessoa.Site
