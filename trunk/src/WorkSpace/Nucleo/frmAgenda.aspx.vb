@@ -172,7 +172,7 @@ Partial Public Class frmAgenda
     End Sub
 
     Private Sub CarregaAgenda()
-        If Not Me.IDProprietario.HasValue Then Exit Sub
+        If Not Me.IDProprietario.HasValue OrElse IDProprietario.Value = 0 Then Exit Sub
 
         ViewState.Remove(CHAVE_COMPROMISSOS)
         ViewState.Remove(CHAVE_TAREFAS)
