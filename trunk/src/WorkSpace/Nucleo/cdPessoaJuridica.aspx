@@ -255,9 +255,33 @@
                                             <asp:Label ID="Label6" runat="server" Text="E-mail"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtEmail" runat="server" MaxLength="255" Skin="Vista" Width="300px"
-                                                SelectionOnFocus="CaretToBeginning">
+                                            <telerik:RadTextBox ID="txtEmail" runat="server" MaxLength="255" Skin="Vista" Width="300px" SelectionOnFocus="CaretToBeginning">
                                             </telerik:RadTextBox>
+                                            <asp:Button ID="btnAdicionarEmail" runat="server" CssClass="RadUploadSubmit" Text="Adicionar Email" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <telerik:RadGrid ID="grdEmails" runat="server" AutoGenerateColumns="False" GridLines="None" Skin="Vista">
+                                                <MasterTableView GridLines="Both">
+                                                    <RowIndicatorColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </RowIndicatorColumn>
+                                                    <ExpandCollapseColumn>
+                                                        <HeaderStyle Width="20px" />
+                                                    </ExpandCollapseColumn>
+                                                    <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Editar" UniqueName="colunaEditar"
+                                                            ImageUrl="~/imagens/edit.gif">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="colunaExcluir"
+                                                            ImageUrl="~/imagens/delete.gif">
+                                                        </telerik:GridButtonColumn>
+                                                        <telerik:GridBoundColumn UniqueName="colunaEmail" Visible="True" HeaderText="Email">
+                                                        </telerik:GridBoundColumn>
+                                                    </Columns>
+                                                </MasterTableView>
+                                            </telerik:RadGrid>
                                         </td>
                                     </tr>
                                     <tr>
@@ -300,6 +324,16 @@
                                         <td class="td">
                                             <telerik:RadMaskedTextBox ID="txtNumeroTelefone" runat="server" Mask="####-####">
                                             </telerik:RadMaskedTextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="campodependente">
+                                            <asp:Label ID="lblContatoTelefone" runat="server" Text="Contato"></asp:Label>
+                                        </td>
+                                        <td class="td">
+                                            <telerik:RadTextBox ID="txtContatoTelefone" runat="server" MaxLength="255" Skin="Vista"
+                                                Width="300px" SelectionOnFocus="CaretToBeginning">
+                                            </telerik:RadTextBox>
                                             <asp:Button ID="btnAdicionarTelefone" runat="server" CssClass="RadUploadSubmit" Text="Adicionar telefone" />
                                         </td>
                                     </tr>
@@ -315,6 +349,9 @@
                                                         <HeaderStyle Width="20px" />
                                                     </ExpandCollapseColumn>
                                                     <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Editar" UniqueName="colunaEditar"
+                                                            ImageUrl="~/imagens/edit.gif">
+                                                        </telerik:GridButtonColumn>
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
                                                             ImageUrl="~/imagens/delete.gif">
                                                         </telerik:GridButtonColumn>
@@ -323,6 +360,8 @@
                                                         <telerik:GridBoundColumn DataField="Numero" UniqueName="column2" Visible="True" HeaderText="Número">
                                                         </telerik:GridBoundColumn>
                                                         <telerik:GridBoundColumn DataField="Tipo.Descricao" UniqueName="column3" HeaderText="Tipo">
+                                                        </telerik:GridBoundColumn>
+                                                        <telerik:GridBoundColumn DataField="Contato" UniqueName="columnContato" HeaderText="Contato">
                                                         </telerik:GridBoundColumn>
                                                     </Columns>
                                                 </MasterTableView>

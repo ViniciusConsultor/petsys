@@ -23,6 +23,7 @@ Partial Public Class cdPessoaJuridica
     Private CHAVE_ENDERECOS As String = "CHAVE_ENDERECOS_PESSOA_JURIDICA"
     Private CHAVE_CONTATOS As String = "CHAVE_CONTATOS_PESSOA_JURIDICA"
     Private CHAVE_EVENTOS As String = "CHAVE_EVENTOS_PESSOA_JURIDICA"
+    Private CHAVE_EMAILS As String = "CHAVE_EMAILS_PESSOA_JURIDICA"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         AddHandler ctrlMunicipios2.MunicipioFoiSelecionado, AddressOf MunicipioDeEnderecoFoiSelecionado
@@ -199,8 +200,8 @@ Partial Public Class cdPessoaJuridica
 
         Pessoa.AdicioneEnderecos(CType(ViewState(CHAVE_ENDERECOS), IList(Of IEndereco)))
 
-        If Not String.IsNullOrEmpty(txtEmail.Text) Then
-            Pessoa.EnderecoDeEmail = txtEmail.Text
+        If Not CType(ViewState(CHAVE_EMAILS), IList(Of EnderecoDeEmail)) Is Nothing Then
+            Pessoa.EnderecosDeEmails = CType(ViewState(CHAVE_EMAILS), IList(Of EnderecoDeEmail))
         End If
 
         If Not String.IsNullOrEmpty(txtCNPJ.Text) Then
@@ -257,8 +258,8 @@ Partial Public Class cdPessoaJuridica
             txtCNPJ.Text = CNPJ.Numero
         End If
 
-        If Not Pessoa.EnderecoDeEmail Is Nothing Then
-            txtEmail.Text = Pessoa.EnderecoDeEmail.ToString
+        If Not Pessoa.EnderecosDeEmails Is Nothing Then
+            ViewState(CHAVE_EMAILS) = Pessoa.EnderecosDeEmails
         End If
 
         Dim InscricaoEstadual As IInscricaoEstadual
@@ -275,10 +276,6 @@ Partial Public Class cdPessoaJuridica
 
         If Not InscricaoMunicipal Is Nothing Then
             txtInstricaoMunicipal.Text = InscricaoMunicipal.Numero
-        End If
-
-        If Not Pessoa.EnderecoDeEmail Is Nothing Then
-            txtEmail.Text = Pessoa.EnderecoDeEmail.ToString
         End If
 
         If Not Pessoa.DadoBancario Is Nothing Then
@@ -298,6 +295,7 @@ Partial Public Class cdPessoaJuridica
         ExibaEnderecos(Pessoa.Enderecos)
         ExibaContatos(Pessoa.Contatos())
         ExibaEventos(Pessoa.EventosDeContato())
+        ExibaEmails(Pessoa.EnderecosDeEmails)
 
         ViewState(CHAVE_ID) = Pessoa.ID.Value
     End Sub
@@ -351,6 +349,7 @@ Partial Public Class cdPessoaJuridica
         cboTipoTelefone.SelectedValue = TipoDeTelefone.Residencial.ID.ToString
         txtDDDTelefone.Text = ""
         txtNumeroTelefone.Text = ""
+        txtContatoTelefone.Text = ""
     End Sub
 
     Private Function ObtenhaObjetoTelefone() As ITelefone
@@ -359,6 +358,7 @@ Partial Public Class cdPessoaJuridica
         Telefone.DDD = CShort(txtDDDTelefone.Text)
         Telefone.Numero = CLng(txtNumeroTelefone.Text)
         Telefone.Tipo = TipoDeTelefone.Obtenha(CShort(cboTipoTelefone.SelectedValue))
+        Telefone.Contato = txtContatoTelefone.Text
 
         Return Telefone
     End Function
@@ -375,6 +375,15 @@ Partial Public Class cdPessoaJuridica
 
         If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
             IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Editar" Then
+            Dim Telefones As IList(Of ITelefone)
+            Telefones = CType(ViewState(CHAVE_TELEFONES), IList(Of ITelefone))
+            Dim TelefoneASerEditado As ITelefone = Telefones(IndiceSelecionado)
+            CarregueTelefoneEmEdicao(TelefoneASerEditado)
+            Telefones.RemoveAt(IndiceSelecionado)
+            ExibaTelefones(Telefones)
         End If
 
         If e.CommandName = "Excluir" Then
@@ -502,7 +511,7 @@ Partial Public Class cdPessoaJuridica
         If (TypeOf e.Item Is GridDataItem) Then
             Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
 
-            For Each column As GridColumn In grdTelefones.MasterTableView.RenderColumns
+            For Each column As GridColumn In grdEnderecos.MasterTableView.RenderColumns
                 If (TypeOf column Is GridButtonColumn) Then
                     gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
                 End If
@@ -627,5 +636,93 @@ Partial Public Class cdPessoaJuridica
         grdEventos.DataBind()
         ViewState(CHAVE_EVENTOS) = Eventos
     End Sub
-    
+
+    Private Sub CarregueTelefoneEmEdicao(ByVal Telefone As ITelefone)
+        cboTipoTelefone.SelectedValue = Telefone.Tipo.ID.ToString()
+        txtDDDTelefone.Text = Telefone.DDD.ToString()
+        txtNumeroTelefone.Text = Telefone.Numero.ToString()
+        txtContatoTelefone.Text = Telefone.Contato
+    End Sub
+
+    Private Sub btnAdicionarEmail_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAdicionarEmail.Click
+        Dim Emails As IList(Of EnderecoDeEmail)
+
+        Emails = CType(ViewState(CHAVE_EMAILS), IList(Of EnderecoDeEmail))
+
+        If Emails Is Nothing Then
+            Emails = New List(Of EnderecoDeEmail)
+        End If
+
+        Dim Email As EnderecoDeEmail = txtEmail.Text
+
+        If Emails.Contains(Email) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString,
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("O e-mail informado já foi adicionado."), False)
+            Exit Sub
+        End If
+
+        If Not EmailValido(Email.ToString()) Then
+            ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString,
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("O e-mail informado é inválido."), False)
+
+            Exit Sub
+        End If
+
+        Emails.Add(Email)
+        ExibaEmails(Emails)
+        txtEmail.Text = String.Empty
+    End Sub
+
+    Private Sub ExibaEmails(ByVal Emails As IList(Of EnderecoDeEmail))
+        If Emails Is Nothing Then Emails = New List(Of EnderecoDeEmail)()
+        grdEmails.DataSource = Emails
+        grdEmails.DataBind()
+        ViewState(CHAVE_EMAILS) = Emails
+    End Sub
+
+    Private Sub grdEmails_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdEmails.ItemCommand
+        Dim IndiceSelecionado As Integer
+
+        If Not e.CommandName = "Page" AndAlso Not e.CommandName = "ChangePageSize" Then
+            IndiceSelecionado = e.Item().ItemIndex
+        End If
+
+        If e.CommandName = "Editar" Then
+            Dim enderecoDeEmails As IList(Of EnderecoDeEmail)
+            enderecoDeEmails = CType(ViewState(CHAVE_EMAILS), IList(Of EnderecoDeEmail))
+            Dim enderecoEmail As EnderecoDeEmail = enderecoDeEmails(IndiceSelecionado)
+            CarregueEmailEmEdicao(enderecoEmail)
+            enderecoDeEmails.RemoveAt(IndiceSelecionado)
+            ExibaEmails(enderecoDeEmails)
+        End If
+
+        If e.CommandName = "Excluir" Then
+            Dim enderecoDeEmails As IList(Of EnderecoDeEmail)
+            enderecoDeEmails = CType(ViewState(CHAVE_EMAILS), IList(Of EnderecoDeEmail))
+            enderecoDeEmails.RemoveAt(IndiceSelecionado)
+            ExibaEmails(enderecoDeEmails)
+        End If
+    End Sub
+
+    Private Sub grdEmails_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdEmails.ItemCreated
+        If (TypeOf e.Item Is GridDataItem) Then
+            Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
+
+            For Each column As GridColumn In grdEmails.MasterTableView.RenderColumns
+                If (TypeOf column Is GridButtonColumn) Then
+                    gridItem(column.UniqueName).ToolTip = column.HeaderTooltip
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub CarregueEmailEmEdicao(ByVal email As EnderecoDeEmail)
+        txtEmail.Text = email.ToString()
+    End Sub
+
+    Function EmailValido(ByVal email As String) As Boolean
+        Static emailExpression As New Regex("^[_a-z0-9-]+(.[a-z0-9-]+)@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")
+
+        Return emailExpression.IsMatch(email)
+    End Function
 End Class

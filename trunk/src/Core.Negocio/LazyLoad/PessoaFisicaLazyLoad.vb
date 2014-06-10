@@ -27,14 +27,14 @@ Namespace LazyLoad
             _Pessoa.AdicioneTelefone(Telefone)
         End Sub
 
-        Public Property EnderecoDeEmail() As EnderecoDeEmail Implements IPessoa.EnderecoDeEmail
+        Public Property EnderecosDeEmails() As IList(Of EnderecoDeEmail) Implements IPessoa.EnderecosDeEmails
             Get
                 If _Pessoa Is Nothing Then CarregueObjetoReal()
-                Return _Pessoa.EnderecoDeEmail
+                Return _Pessoa.EnderecosDeEmails
             End Get
-            Set(ByVal value As EnderecoDeEmail)
+            Set(ByVal value As IList(Of EnderecoDeEmail))
                 If _Pessoa Is Nothing Then CarregueObjetoReal()
-                _Pessoa.EnderecoDeEmail = value
+                _Pessoa.EnderecosDeEmails = value
             End Set
         End Property
 

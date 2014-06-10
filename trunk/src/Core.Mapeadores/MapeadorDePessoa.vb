@@ -23,18 +23,12 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         Pessoa.ID = GeradorDeID.getInstancia.getProximoID
 
-        SQL.Append("INSERT INTO NCL_PESSOA (ID, NOME, TIPO, ENDEMAIL,")
+        SQL.Append("INSERT INTO NCL_PESSOA (ID, NOME, TIPO, ")
         SQL.Append(" SITE, IDBANCO, IDAGENCIA, CNTACORRENTE, TIPOCNTACORRENTE)")
         SQL.Append(" VALUES ( ")
         SQL.Append(String.Concat(Pessoa.ID, ", "))
         SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
         SQL.Append(String.Concat("'", Pessoa.Tipo.ID.ToString, "', "))
-
-        If Not Pessoa.EnderecoDeEmail Is Nothing Then
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.EnderecoDeEmail.ToString), "', "))
-        Else
-            SQL.Append("NULL, ")
-        End If
 
         If Not String.IsNullOrEmpty(Pessoa.Site) Then
             SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "', "))
@@ -67,6 +61,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         InsiraEnderecos(Pessoa)
         InsiraContatos(Pessoa)
         InsiraEventos(Pessoa)
+        InsiraEmail(Pessoa)
         Insira(Pessoa)
         Return Pessoa.ID.Value
     End Function
@@ -176,13 +171,20 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         If Not Pessoa.Telefones Is Nothing AndAlso Not Pessoa.Telefones.Count = 0 Then
             For Each Telefone As ITelefone In Pessoa.Telefones
                 SQL = New StringBuilder
-                SQL.Append("INSERT INTO NCL_PESSOATELEFONE (IDPESSOA, DDD, NUMERO, TIPO, INDICE)")
+                SQL.Append("INSERT INTO NCL_PESSOATELEFONE (IDPESSOA, DDD, NUMERO, TIPO, INDICE, CONTATO)")
                 SQL.Append(" VALUES ( ")
                 SQL.Append(String.Concat(Pessoa.ID, ", "))
                 SQL.Append(String.Concat(Telefone.DDD, ", "))
                 SQL.Append(String.Concat(Telefone.Numero, ", "))
                 SQL.Append(String.Concat(Telefone.Tipo.ID, ", "))
-                SQL.Append(String.Concat(Pessoa.Telefones.IndexOf(Telefone), ") "))
+                SQL.Append(String.Concat(Pessoa.Telefones.IndexOf(Telefone), ", "))
+
+                If Telefone.Contato Is Nothing Then
+                    SQL.Append("NULL) ")
+                Else
+                    SQL.Append(String.Concat("'", Telefone.Contato, "') "))
+                End If
+
                 DBHelper.ExecuteNonQuery(SQL.ToString)
             Next
         End If
@@ -206,17 +208,10 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         InsiraEnderecos(Pessoa)
         InsiraContatos(Pessoa)
         InsiraEventos(Pessoa)
+        InsiraEmail(Pessoa)
         Atualize(Pessoa)
         DBHelper = ServerUtils.getDBHelper
         SQL.Append(String.Concat("UPDATE NCL_PESSOA SET NOME = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Nome), "', "))
-
-        SQL.Append(" ENDEMAIL = ")
-
-        If Not Pessoa.EnderecoDeEmail Is Nothing Then
-            SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.EnderecoDeEmail.ToString), "', "))
-        Else
-            SQL.Append("NULL, ")
-        End If
 
         If Not String.IsNullOrEmpty(Pessoa.Site) Then
             SQL.Append(String.Concat("SITE = '", UtilidadesDePersistencia.FiltraApostrofe(Pessoa.Site), "',"))
@@ -269,10 +264,6 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
         Pessoa.ID = UtilidadesDePersistencia.GetValorLong(Leitor, "IDPESSOA")
         Pessoa.Nome = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEPESSOA")
 
-        If Not UtilidadesDePersistencia.EhNulo(Leitor, "ENDEMAIL") Then
-            Pessoa.EnderecoDeEmail = UtilidadesDePersistencia.GetValorString(Leitor, "ENDEMAIL")
-        End If
-
         If Not UtilidadesDePersistencia.EhNulo(Leitor, "SITE") Then
             Pessoa.Site = UtilidadesDePersistencia.GetValorString(Leitor, "SITE")
         End If
@@ -311,6 +302,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
             ObtenhaEnderecos(Pessoa)
             ObtenhaContatos(Pessoa)
             ObtenhaEventos(Pessoa)
+            ObtenhaEmails(Pessoa)
         End If
     End Sub
 
@@ -431,7 +423,7 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
 
         DBHelper = ServerUtils.criarNovoDbHelper
 
-        SQL.Append("SELECT IDPESSOA, DDD, NUMERO, TIPO, INDICE FROM NCL_PESSOATELEFONE")
+        SQL.Append("SELECT IDPESSOA, DDD, NUMERO, TIPO, INDICE, CONTATO FROM NCL_PESSOATELEFONE")
         SQL.Append(" WHERE IDPESSOA = " & Pessoa.ID.Value.ToString)
         SQL.Append(" ORDER BY INDICE")
 
@@ -444,7 +436,52 @@ Public MustInherit Class MapeadorDePessoa(Of T As IPessoa)
                     Telefone.DDD = UtilidadesDePersistencia.getValorShort(Leitor, "DDD")
                     Telefone.Numero = UtilidadesDePersistencia.getValorInteger(Leitor, "NUMERO")
                     Telefone.Tipo = TipoDeTelefone.Obtenha(UtilidadesDePersistencia.getValorShort(Leitor, "TIPO"))
+                    Telefone.Contato = UtilidadesDePersistencia.GetValorString(Leitor, "CONTATO")
                     Pessoa.AdicioneTelefone(Telefone)
+                End While
+            Finally
+                Leitor.Close()
+            End Try
+
+        End Using
+    End Sub
+
+    Private Sub InsiraEmail(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper = ServerUtils.getDBHelper
+
+        DBHelper.ExecuteNonQuery("DELETE FROM NCL_PESSOAEMAIL WHERE IDPESSOA = " & Pessoa.ID.Value)
+
+        If Not Pessoa.EnderecosDeEmails Is Nothing AndAlso Not Pessoa.EnderecosDeEmails.Count = 0 Then
+            For Each enderecoDeEmail As EnderecoDeEmail In Pessoa.EnderecosDeEmails
+                SQL = New StringBuilder
+                SQL.Append("INSERT INTO NCL_PESSOAEMAIL(IDPESSOA, ENDEMAIL)")
+                SQL.Append(" VALUES ( ")
+                SQL.Append(String.Concat(Pessoa.ID, ", "))
+                SQL.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(enderecoDeEmail.ToString), "')"))
+                DBHelper.ExecuteNonQuery(SQL.ToString)
+            Next
+        End If
+    End Sub
+
+    Private Sub ObtenhaEmails(ByVal Pessoa As IPessoa)
+        Dim SQL As StringBuilder
+        Dim DBHelper As IDBHelper
+
+        SQL = New StringBuilder
+
+        DBHelper = ServerUtils.criarNovoDbHelper
+
+        SQL.Append("SELECT IDPESSOA, ENDEMAIL FROM NCL_PESSOAEMAIL")
+        SQL.Append(" WHERE IDPESSOA = " & Pessoa.ID.Value.ToString)
+        SQL.Append(" ORDER BY ENDEMAIL")
+
+        Pessoa.EnderecosDeEmails = New List(Of EnderecoDeEmail)()
+
+        Using Leitor As IDataReader = DBHelper.obtenhaReader(SQL.ToString)
+            Try
+                While Leitor.Read
+                    Pessoa.EnderecosDeEmails.Add(UtilidadesDePersistencia.GetValorString(Leitor, "ENDEMAIL"))
                 End While
             Finally
                 Leitor.Close()

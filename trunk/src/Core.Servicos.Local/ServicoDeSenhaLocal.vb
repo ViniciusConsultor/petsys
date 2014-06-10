@@ -128,7 +128,9 @@ Public Class ServicoDeSenhaLocal
 
                 Dim destinarios = New List(Of String)
 
-                destinarios.Add(Pessoa.EnderecoDeEmail.ToString)
+                For Each email As EnderecoDeEmail In Pessoa.EnderecosDeEmails
+                    destinarios.Add(email.ToString)
+                Next
 
                 GerenciadorDeEmail.EnviaEmail("Redefinição de senha.", _
                                               ConfiguracaoDeEmail.EmailRemetente, _

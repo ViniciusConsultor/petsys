@@ -962,7 +962,10 @@ namespace MP.Migrador
             }
 
             if (!Information.IsDBNull(linha["email1"]) && !string.IsNullOrEmpty(UtilidadesDePersistencia.GetValor(linha, "email1").Trim()))
-                pessoa.EnderecoDeEmail = UtilidadesDePersistencia.GetValor(linha, "email1").Trim();
+            {
+                pessoa.EnderecosDeEmails = new List<EnderecoDeEmail>();
+                pessoa.EnderecosDeEmails.Add(UtilidadesDePersistencia.GetValor(linha, "email1").Trim());
+            }
 
             pessoa.EstadoCivil = EstadoCivil.Ignorado;
             pessoa.Sexo = Sexo.Masculino;
@@ -1711,7 +1714,13 @@ namespace MP.Migrador
             pessoa.Nome = UtilidadesDePersistencia.GetValor(linha, "NOME_CONTATO").Trim();
 
             if (!Information.IsDBNull(linha["EMAIL"]))
-                pessoa.EnderecoDeEmail = UtilidadesDePersistencia.GetValor(linha, "EMAIL").Trim();
+            {
+                if(pessoa.EnderecosDeEmails == null)
+                    pessoa.EnderecosDeEmails = new List<EnderecoDeEmail>();
+
+                pessoa.EnderecosDeEmails.Add(UtilidadesDePersistencia.GetValor(linha, "EMAIL").Trim());
+            }
+            
 
             if (!Information.IsDBNull(linha["DOMINIO"]))
                 pessoa.Site = UtilidadesDePersistencia.GetValor(linha, "DOMINIO").Trim();

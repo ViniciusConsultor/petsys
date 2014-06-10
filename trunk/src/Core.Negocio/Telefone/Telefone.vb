@@ -9,6 +9,7 @@ Namespace Telefone
 
         Private _DDD As Short
         Private _Numero As Long
+        Private _Contato As String
 
         Public Property DDD() As Short Implements ITelefone.DDD
             Get
@@ -35,6 +36,15 @@ Namespace Telefone
             End Get
             Set(ByVal value As TipoDeTelefone)
                 _Tipo = value
+            End Set
+        End Property
+
+        Public Property Contato() As String Implements ITelefone.Contato
+            Get
+                Return _Contato
+            End Get
+            Set(ByVal value As String)
+                _Contato = value
             End Set
         End Property
 

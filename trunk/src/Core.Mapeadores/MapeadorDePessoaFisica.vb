@@ -13,7 +13,7 @@ Public Class MapeadorDePessoaFisica
     Private Function ObtenhaQueryBasica() As String
         Dim Sql As New StringBuilder
 
-        Sql.Append("SELECT NCL_PESSOA.NOME NOMEPESSOA, TIPO, ENDEMAIL, ")
+        Sql.Append("SELECT NCL_PESSOA.NOME NOMEPESSOA, TIPO, ")
         Sql.Append("NCL_PESSOAFISICA.IDPESSOA, DATANASCIMENTO, ESTADOCIVIL, ")
         Sql.Append("NACIONALIDADE, RACA, SEXO, NOMEMAE, ")
         Sql.Append("NOMEPAI, NUMERORG, ORGEXPEDITOR, DATAEXP, ")
