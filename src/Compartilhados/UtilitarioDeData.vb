@@ -4,6 +4,14 @@
         Return String.Concat(DiaDaSemanaPortugues.Obtenha(Data.DayOfWeek).Nome, ", ", Data.Day, " de ", MesEmPortugues.Obtenha(Data.Month).Nome, " de ", Data.Year)
     End Function
 
+    Public Shared Function ObtenhaMinutos(Data As Date) As Integer
+        Dim retorno As Integer = Data.Minute
+
+        If Data.Hour > 0 Then retorno += (Data.Hour * 60)
+
+        Return retorno
+    End Function
+
     Private Class DiaDaSemanaPortugues
 
         Public Shared Domingo As DiaDaSemanaPortugues = New DiaDaSemanaPortugues(DayOfWeek.Sunday, "Domingo")
@@ -39,6 +47,9 @@
 
             Return Nothing
         End Function
+
+       
+
     End Class
 
     Private Class MesEmPortugues

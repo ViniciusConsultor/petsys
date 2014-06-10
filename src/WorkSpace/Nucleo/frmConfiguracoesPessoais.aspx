@@ -84,7 +84,8 @@
                                         <telerik:RadAsyncUpload runat="server" ID="uplAtalho" MaxFileInputsCount="1" AllowedFileExtensions=".gif"
                                             PostbackTriggers="btnSalvarAtalho" Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx"
                                             Localization-Select="Procurar" />
-                                        <asp:Button runat="server" ID="btnSalvarAtalho" Text="Enviar para o servidor" OnClientClick="updateAtalhos(); return false;" CssClass="RadUploadSubmit" />
+                                        <asp:Button runat="server" ID="btnSalvarAtalho" Text="Enviar para o servidor" OnClientClick="updateAtalhos(); return false;"
+                                            CssClass="RadUploadSubmit" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -144,6 +145,15 @@
                         </telerik:RadSkinManager>
                     </td>
                 </tr>
+                <tr>
+                    <td class="th3">
+                        <asp:Label ID="Label8" runat="server" Text="Restaurar o tema padrão?"></asp:Label>
+                    </td>
+                    <td class="td">
+                        <telerik:RadButton runat="server" Text="Restaurar" ID="btnRestaurarTema">
+                        </telerik:RadButton>
+                    </td>
+                </tr>
             </table>
         </telerik:RadPageView>
         <!--Papel de parede-->
@@ -151,7 +161,7 @@
             <table class="tabela">
                 <tr>
                     <td class="th3">
-                        <asp:Label ID="Label6" runat="server" Text="Papel de parede:"></asp:Label>
+                        <asp:Label ID="Label6" runat="server" Text="Papel de parede"></asp:Label>
                     </td>
                     <td class="td">
                         <telerik:RadScriptBlock ID="RadScriptBlock1" runat="server">
@@ -176,7 +186,16 @@
                             AllowedFileExtensions=".jpg,.jpeg,.png,.bmp" PostbackTriggers="btnSalvarPapelParede"
                             Skin="Vista" HttpHandlerUrl="~/AsyncUploadHandlerCustom.ashx" Localization-Select="Procurar" />
                         <asp:Button runat="server" ID="btnSalvarPapelParede" Text="Enviar para o servidor"
-                            OnClientClick="updatePapelDeParede(); return false;" CssClass="RadUploadSubmit"  />
+                            OnClientClick="updatePapelDeParede(); return false;" CssClass="RadUploadSubmit" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="th3">
+                        <asp:Label ID="Label9" runat="server" Text="Restaurar para o papel de parede padrão?"></asp:Label>
+                    </td>
+                    <td class="td">
+                        <telerik:RadButton runat="server" Text="Restaurar" ID="btnRestaurarPapelDeParede">
+                        </telerik:RadButton>
                     </td>
                 </tr>
             </table>
