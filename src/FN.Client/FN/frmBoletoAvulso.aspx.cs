@@ -536,7 +536,7 @@ namespace FN.Client.FN
                 ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                     UtilidadesWeb.ExibeJanela(url,
                                                                                    "Visualizar boleto gerado",
-                                                                                   800, 600, "frmVisualizarBoletoGerado_aspx"), false);
+                                                                                   800, 600, "FN_frmVisualizarBoletoGerado_aspx"), false);
 
                 // Salvar dados do Boleto gerado
 

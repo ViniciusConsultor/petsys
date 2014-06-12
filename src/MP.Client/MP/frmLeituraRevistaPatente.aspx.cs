@@ -303,7 +303,7 @@ namespace MP.Client.MP
                                             "?Id=", id);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url, "Modificar processo de patente",
-                                                                                  800, 550, "cdProcessoDePatente_aspx"),
+                                                                                  800, 550, "MP_cdProcessoDePatente_aspx"),
                                                         false);
                     break;
 
@@ -313,7 +313,7 @@ namespace MP.Client.MP
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url2,
                                                                                   "Enviar e-mail",
-                                                                                  800, 550, "frmEnviaEmail_aspx"), false);
+                                                                                  800, 550, "MP_frmEnviaEmail_aspx"), false);
                     break;
             }
         }
@@ -339,7 +339,7 @@ namespace MP.Client.MP
                 var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx",
                                             "?Id=", IndiceSelecionado);
                 ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.ExibeJanela(url, "Detalhes do processo da revista patentes", 800, 550, "cdProcessoDePatente_aspx"), false);
+                                                    UtilidadesWeb.ExibeJanela(url, "Detalhes do processo da revista patentes", 800, 550, "MP_cdProcessoDePatente_aspx"), false);
             }
         }
 

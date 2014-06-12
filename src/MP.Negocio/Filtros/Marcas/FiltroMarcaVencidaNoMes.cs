@@ -24,8 +24,10 @@ namespace MP.Negocio.Filtros.Marcas
             sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA ");
             sql.Append(" AND MP_MARCAS.PAGAMANUTENCAO = 1 AND MP_MARCAS.DATAPROXIMAMANUTENCAO BETWEEN ");
             sql.Append(string.Concat(DateTime.Now.ToString("yyyyMMdd"), " AND ", dataProximoMes.ToString("yyyyMMdd")));
+			sql.Append(" AND MP_PROCESSOMARCA.ATIVO = 1");
             sql.Append(
                 " AND MP_PROCESSOMARCA.IDPROCESSO NOT IN (select idconceito from MP_INTERFACEFN where CONCEITO = 'MARCA' AND IDCONCEITO = IDPROCESSO AND DATAVENCIMENTO = DATAPROXIMAMANUTENCAO  )");
+			
 
             return sql.ToString();
         }

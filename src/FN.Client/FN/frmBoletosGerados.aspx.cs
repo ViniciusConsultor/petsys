@@ -200,7 +200,7 @@ namespace FN.Client.FN
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
                                                                                        "Reimprimir boleto",
-                                                                                       800, 550, "frmBoletoAvulso_aspx"), false);
+                                                                                       800, 550, "FN_frmBoletoAvulso_aspx"), false);
                     break;
             }
         }

@@ -115,7 +115,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Cadastro de inventor", 800, 550, "cdInventor_aspx"),
+                                                UtilidadesWeb.ExibeJanela(URL, "Cadastro de inventor", 800, 550, "MP_cdInventor_aspx"),
                                                 false);
         }
 

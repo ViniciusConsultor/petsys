@@ -102,10 +102,10 @@ Public Class FabricaDeMenu
 
             _JsMenu.AppendLine("handler:  function() {")
             _JsMenu.AppendLine("var desktop = this.app.getDesktop();")
-            _JsMenu.AppendLine(String.Concat("var win = desktop.getWindow('win", Funcao.URL.Replace(".", "_"), "');"))
+            _JsMenu.AppendLine(String.Concat("var win = desktop.getWindow('win", Funcao.URL.Replace(".", "_").Replace("/", "_"), "');"))
             _JsMenu.AppendLine("if(!win){")
             _JsMenu.AppendLine("win = desktop.createWindow({")
-            _JsMenu.AppendLine(String.Concat("id:'win", Funcao.URL.Replace(".", "_"), "',"))
+            _JsMenu.AppendLine(String.Concat("id:'win", Funcao.URL.Replace(".", "_").Replace("/", "_"), "',"))
             _JsMenu.AppendLine(String.Concat("title:'", Funcao.Nome, "',"))
             _JsMenu.AppendLine("width:800,")
             _JsMenu.AppendLine("height:550,")
