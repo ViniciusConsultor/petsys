@@ -185,6 +185,9 @@
                                                         <HeaderStyle Width="20px" />
                                                     </ExpandCollapseColumn>
                                                     <Columns>
+                                                        <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Editar" UniqueName="colunaEditar"
+                                                            ImageUrl="~/imagens/edit.gif">
+                                                        </telerik:GridButtonColumn>
                                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" UniqueName="column7"
                                                             ImageUrl="~/imagens/delete.gif">
                                                         </telerik:GridButtonColumn>
