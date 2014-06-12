@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Mapeadores;
+using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.FN.Mapeadores;
 using Compartilhados.Interfaces.FN.Negocio;
 using MP.Interfaces.Mapeadores;
@@ -49,7 +51,7 @@ namespace MP.Servicos.Local
 
             var itemLacamentoFinanceiro =
                FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
-            itemLacamentoFinanceiro.Cliente = patente.Clientes[0];
+            itemLacamentoFinanceiro.Cliente = ObtenhaClienteParaCobrancaDaManutencaoDePatente(patente);
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento = patente.Manutencao.DataDaProximaManutencao.Value;
             itemLacamentoFinanceiro.Situacao = Situacao.AguardandoCobranca;
@@ -58,6 +60,24 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.Descricao = "Patente " + processoDePatente.NumeroDoProcessoFormatado;
 
             return itemLacamentoFinanceiro;
+        }
+
+        private ICliente ObtenhaClienteParaCobrancaDaManutencaoDePatente(IPatente patente)
+        {
+            if (patente.Titulares[0].Pessoa.ID.Value == patente.Clientes[0].Pessoa.ID.Value)
+                return patente.Clientes[0];
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeCliente>();
+
+            ICliente cliente =  mapeador.Obtenha(patente.Titulares[0].Pessoa);
+
+            if (cliente != null) return cliente;
+
+            cliente = FabricaGenerica.GetInstancia().CrieObjeto<ICliente>(new object[] {patente.Titulares[0].Pessoa});
+            
+            mapeador.Inserir(cliente);
+
+            return cliente;
         }
 
         public void ProcureEAgendeItemDeRecebimentoDeMarcasVencidasNoMes()

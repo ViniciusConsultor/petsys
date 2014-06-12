@@ -1,6 +1,6 @@
 ﻿Imports Compartilhados.Interfaces.Core.Negocio
 
-Namespace Mapeadores
+Namespace Core.Mapeadores
 
     Public Interface IMapeadorDeCliente
 

@@ -78,6 +78,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Mapeadores\IMapeadorDeCliente.vb" />
     <Compile Include="Core\Negocio\Banco.vb" />
     <Compile Include="Core\Negocio\IAgencia.vb" />
     <Compile Include="Core\Negocio\IAgenda.vb" />

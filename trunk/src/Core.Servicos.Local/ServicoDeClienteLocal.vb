@@ -1,9 +1,8 @@
-﻿Imports Core.Interfaces.Servicos
-Imports Compartilhados
+﻿Imports Compartilhados
 Imports Compartilhados.Interfaces.Core.Negocio
-Imports Core.Interfaces.Mapeadores
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Servicos
+Imports Compartilhados.Interfaces.Core.Mapeadores
 
 Public Class ServicoDeClienteLocal
     Inherits Servico

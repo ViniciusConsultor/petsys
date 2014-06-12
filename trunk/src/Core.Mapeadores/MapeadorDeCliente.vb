@@ -1,10 +1,10 @@
-﻿Imports Core.Interfaces.Mapeadores
-Imports Compartilhados.Interfaces.Core.Negocio
+﻿Imports Compartilhados.Interfaces.Core.Negocio
 Imports System.Text
 Imports Compartilhados.DBHelper
 Imports Compartilhados
 Imports Compartilhados.Fabricas
 Imports Compartilhados.Interfaces.Core.Negocio.LazyLoad
+Imports Compartilhados.Interfaces.Core.Mapeadores
 
 Public Class MapeadorDeCliente
     Implements IMapeadorDeCliente
