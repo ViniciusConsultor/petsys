@@ -24,14 +24,16 @@ namespace FN.Client.FN.Relatorios
         private Font _Fonte4;
         private IEmpresa empresa;
         private IList<IItemLancamentoFinanceiroRecebimento> _lancamentosFinanceiros;
+        private bool _relatorioDeContasAReceber;
 
-        public GeradorDeRelatorioDeContasAReceber(IList<IItemLancamentoFinanceiroRecebimento> lancamentos)
+        public GeradorDeRelatorioDeContasAReceber(IList<IItemLancamentoFinanceiroRecebimento> lancamentos, bool relatorioDeContas)
         {
             _lancamentosFinanceiros = lancamentos;
             _Fonte1 = new Font(Font.TIMES_ROMAN, 10);
             _Fonte2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
             _Fonte3 = new Font(Font.TIMES_ROMAN, 14, Font.BOLDITALIC);
             _Fonte4 = new Font(Font.TIMES_ROMAN, 10, Font.BOLDITALIC);
+            _relatorioDeContasAReceber = relatorioDeContas;
         }
 
         public string GereRelatorio()
@@ -53,7 +55,7 @@ namespace FN.Client.FN.Relatorios
             _documento = new Document();
             _documento.SetPageSize(PageSize.A4.Rotate());
             var escritor = PdfWriter.GetInstance(_documento, new FileStream(Path.Combine(caminho, nomeDoArquivoDeSaida), FileMode.Create));
-            escritor.PageEvent = new Ouvinte(_Fonte1, _Fonte2, _Fonte3, _Fonte4, empresa);
+            escritor.PageEvent = new Ouvinte(_Fonte1, _Fonte2, _Fonte3, _Fonte4, empresa, _relatorioDeContasAReceber);
             escritor.AddViewerPreference(PdfName.PRINTSCALING, PdfName.NONE);
             escritor.AddViewerPreference(PdfName.PICKTRAYBYPDFSIZE, PdfName.NONE);
             return nomeDoArquivoDeSaida;
@@ -231,14 +233,16 @@ namespace FN.Client.FN.Relatorios
             private Font font3;
             private Font font4;
             private IEmpresa empresa;
+            private bool relatorioDeContasAReceber;
 
-            public Ouvinte(Font font1, Font font2, Font font3, Font font4, IEmpresa empresa)
+            public Ouvinte(Font font1, Font font2, Font font3, Font font4, IEmpresa empresa, bool contasAReceber)
             {
                 this.font1 = font1;
                 this.font2 = font2;
                 this.font3 = font3;
                 this.font4 = font4;
                 this.empresa = empresa;
+                this.relatorioDeContasAReceber = contasAReceber;
             }
 
             public void OnOpenDocument(PdfWriter writer, Document document) { }
@@ -295,7 +299,8 @@ namespace FN.Client.FN.Relatorios
                 tabelaTitulo.Border = 0;
                 tabelaTitulo.Width = 100;
 
-                var celulaTitulo = new Cell(new Phrase("Relatório de Contas a Receber " + DateTime.Now.ToString("dd/MM/yyyy") , font3));
+                var celulaTitulo = new Cell(new Phrase((relatorioDeContasAReceber ? "Relatório de Contas a Receber" : "Relatório de Gerenciamento de Itens Financeiros") +
+                                                        DateTime.Now.ToString("dd/MM/yyyy"), font3));
                 celulaTitulo.Border = 0;
                 celulaTitulo.Width = 70;
                 celulaTitulo.Colspan = 1;

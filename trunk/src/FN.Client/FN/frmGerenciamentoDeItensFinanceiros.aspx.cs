@@ -400,7 +400,7 @@ namespace FN.Client.FN
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
             {
                 var itensDeLancamento = servico.ObtenhaItensFinanceiros(FiltroAplicado, int.MaxValue, 0);
-                var geradorDeRelatorioGeral = new GeradorDeRelatorioDeContasAReceber(itensDeLancamento);
+                var geradorDeRelatorioGeral = new GeradorDeRelatorioDeContasAReceber(itensDeLancamento, false);
                 var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);

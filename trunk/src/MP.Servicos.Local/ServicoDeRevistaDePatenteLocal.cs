@@ -633,12 +633,25 @@ namespace MP.Servicos.Local
                 }
                 else
                 {
-                    revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido;
-                    revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido;
-                    revistaDePatente.NumeroDoProcessoFormatado = revistaDePatente.NumeroDoPedido;
+                    if (!string.IsNullOrEmpty(revistaDePatente.NumeroProcessoDaPatente))
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroProcessoDaPatente;
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroProcessoDaPatente;
+                        revistaDePatente.NumeroDoProcessoFormatado = revistaDePatente.NumeroProcessoDaPatente;
 
-                    if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
-                        revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido;
+                        if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroProcessoDaPatente;
+                    }
+                    else
+                    {
+                        revistaDePatente.NumeroDoProcesso = revistaDePatente.NumeroDoPedido;
+                        revistaDePatente.NumeroDoPedido = revistaDePatente.NumeroDoPedido;
+                        revistaDePatente.NumeroDoProcessoFormatado = revistaDePatente.NumeroDoPedido;
+
+                        if (string.IsNullOrEmpty(revistaDePatente.NaturezaDoDocumento))
+                            revistaDePatente.NaturezaDoDocumento = revistaDePatente.NumeroDoPedido;    
+                    }
+                    
                 }
 
                 listaDeRevistasDePatentes.Add(revistaDePatente);

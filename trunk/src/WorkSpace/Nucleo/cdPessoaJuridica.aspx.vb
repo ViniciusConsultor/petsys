@@ -499,6 +499,14 @@ Partial Public Class cdPessoaJuridica
             IndiceSelecionado = e.Item().ItemIndex
         End If
 
+        If e.CommandName = "Editar" Then
+            Dim Enderecos As IList(Of IEndereco)
+            Enderecos = CType(ViewState(CHAVE_ENDERECOS), IList(Of IEndereco))
+            CarregueEnderecoEmEdicao(Enderecos(IndiceSelecionado))
+            Enderecos.RemoveAt(IndiceSelecionado)
+            ExibaEnderecos(Enderecos)
+        End If
+
         If e.CommandName = "Excluir" Then
             Dim Enderecos As IList(Of IEndereco)
             Enderecos = CType(ViewState(CHAVE_ENDERECOS), IList(Of IEndereco))
@@ -725,4 +733,17 @@ Partial Public Class cdPessoaJuridica
 
         Return emailExpression.IsMatch(email)
     End Function
+
+    Private Sub CarregueEnderecoEmEdicao(ByVal endereco As IEndereco)
+        ctrlTipoEndereco1.TipoSelecionado = endereco.TipoDeEndereco
+        txtLogradouro.Text = endereco.Logradouro
+        txtComplemento.Text = endereco.Complemento
+        txtBairro.Text = endereco.Bairro
+        ctrlMunicipios2.MunicipioSelecionado = endereco.Municipio
+        ctrlMunicipios2.NomeDoMunicipio = endereco.Municipio.Nome
+
+        If Not endereco.CEP Is Nothing Then
+            txtCEPEndereco.Text = endereco.CEP.ToString()
+        End If
+    End Sub
 End Class
