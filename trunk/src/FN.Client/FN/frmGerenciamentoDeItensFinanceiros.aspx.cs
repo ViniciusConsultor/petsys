@@ -94,7 +94,7 @@ namespace FN.Client.FN
         {
             var URL = ObtenhaURLDeCadastroDeLancamentoFinanceiroDeRecebimento();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Novo lançamento financeiro de recebimento", 800, 550, "cdLancamentoFinanceiroRecebimento_aspx"), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Novo lançamento financeiro de recebimento", 800, 550, "FN_cdLancamentoFinanceiroRecebimento_aspx"), false);
         }
 
         private void Recarregue()
@@ -131,7 +131,7 @@ namespace FN.Client.FN
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanela(url,
                                                                                "Gerar conta a receber coletivamente",
-                                                                               800, 550, "frmGerarContaAReceber_aspx"), false);
+                                                                               800, 550, "FN_frmGerarContaAReceber_aspx"), false);
         }
 
         private string obtenhaIdsDosItensSelecionados()
@@ -261,7 +261,7 @@ namespace FN.Client.FN
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar lançamento financeiro de recebimento",
-                                                                                       800, 550, "cdLancamentoFinanceiroRecebimento_aspx"), false);
+                                                                                       800, 550, "FN_cdLancamentoFinanceiroRecebimento_aspx"), false);
                     break;
                 case "GerarContaAReceber":
 
@@ -271,7 +271,7 @@ namespace FN.Client.FN
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url2,
                                                                                        "Gerar conta a receber",
-                                                                                       640, 480, "FN/frmGerarContaAReceber_aspx"), false);
+                                                                                       640, 480, "FN_frmGerarContaAReceber_aspx"), false);
 
                     break;
             }

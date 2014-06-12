@@ -87,10 +87,10 @@ Partial Public Class ctrlPessoa
     Private Function ObtenhaIDJanela() As String
 
         If TipoDaPessoa.Equals(TipoDePessoa.Fisica) Then
-            Return "cdpessoafisica_aspx"
+            Return "Nucleo_cdpessoafisica_aspx"
         End If
 
-        Return "cdpessoajuridica_aspx"
+        Return "Nucleo_cdpessoajuridica_aspx"
     End Function
 
     Private Sub btnDetalhar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnDetalhar.Click

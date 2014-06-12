@@ -33,7 +33,12 @@ namespace MP.Servicos.Local
             itemLacamentoFinanceiro.Situacao = Situacao.AguardandoCobranca;
             itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao;
             itemLacamentoFinanceiro.Valor = marca.Manutencao.ObtenhaValorRealEmEspecie();
-            itemLacamentoFinanceiro.Descricao = marca.DescricaoDaMarca;
+
+            if (marca.Apresentacao.Equals(Apresentacao.Figurativa))
+                itemLacamentoFinanceiro.Descricao = "Marca " + processoDemarca.Processo.ToString();
+            else
+                itemLacamentoFinanceiro.Descricao = marca.DescricaoDaMarca;    
+            
 
             return itemLacamentoFinanceiro;
         }

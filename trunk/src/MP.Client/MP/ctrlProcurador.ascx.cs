@@ -124,7 +124,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Procuradores", 800, 550, "cdCadastroDeProcuradores_aspx"),
+                                                UtilidadesWeb.ExibeJanela(URL, "Procuradores", 800, 550, "MP_cdCadastroDeProcuradores_aspx"),
                                                 false);
         }
 

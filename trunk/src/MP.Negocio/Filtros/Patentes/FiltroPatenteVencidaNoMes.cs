@@ -28,6 +28,7 @@ namespace MP.Negocio.Filtros.Patentes
             sql.AppendLine(
                 " AND MP_PROCESSOPATENTE.IDPROCESSOPATENTE NOT IN (select idconceito from MP_INTERFACEFN where CONCEITO = 'PATENTE' AND IDCONCEITO = IDPROCESSOPATENTE AND DATAVENCIMENTO = DATAPROXIMAMANUTENCAO  )");
             sql.AppendLine(" LEFT JOIN MP_PASTA ON MP_PASTA.ID = MP_PROCESSOPATENTE.IDPASTA");
+            sql.AppendLine(" WHERE MP_PROCESSOPATENTE.ATIVO = 1");
 
             return sql.ToString();
         }

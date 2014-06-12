@@ -143,7 +143,7 @@ Partial Public Class frmAgenda
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
         URL = String.Concat(URL, "Nucleo/cdCompromisso.aspx")
         URL = String.Concat(URL, "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de compromissos", 800, 550, "cdcompromisso_aspx"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de compromissos", 800, 550, "Nucleo_cdcompromisso_aspx"), False)
     End Sub
 
     Private Sub btnNovaTarefa_Click()
@@ -152,7 +152,7 @@ Partial Public Class frmAgenda
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
         URL = String.Concat(URL, "Nucleo/cdTarefa.aspx")
         URL = String.Concat(URL, "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de tarefas", 800, 550, "cdtarefa_aspx"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de tarefas", 800, 550, "Nucleo_cdtarefa_aspx"), False)
     End Sub
 
     Private Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -262,7 +262,7 @@ Partial Public Class frmAgenda
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/cdTarefa.aspx", "?IdTarefa=", ID, "&IdProprietario=", IDProprietario.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastrar tarefa", 800, 550, "cdtarefa_aspx"), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastrar tarefa", 800, 550, "Nucleo_cdtarefa_aspx"), False)
         End If
     End Sub
 
@@ -350,7 +350,7 @@ Partial Public Class frmAgenda
         URL = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual
         URL = String.Concat(URL, "Nucleo/cdLembrete.aspx")
         URL = String.Concat(URL, "?IdProprietario=", IDProprietario.ToString)
-        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de lembretes", 800, 550, "cdlembrete_aspx"), False)
+        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastro de lembretes", 800, 550, "Nucleo_cdlembrete_aspx"), False)
     End Sub
 
     Private Sub grdLembretes_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdLembretes.ItemCommand
@@ -376,7 +376,7 @@ Partial Public Class frmAgenda
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Nucleo/cdLembrete.aspx", "?IdLembrete=", ID, "&IdProprietario=", IDProprietario.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastrar lembrete", 800, 550, "cdlembrete"), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastrar lembrete", 800, 550, "Nucleo_cdlembrete"), False)
         End If
     End Sub
 

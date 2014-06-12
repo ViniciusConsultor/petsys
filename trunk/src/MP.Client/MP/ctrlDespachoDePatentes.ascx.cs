@@ -137,7 +137,7 @@ namespace MP.Client.MP
         {
             var URL = ObtenhaURL();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Despacho de patentes", 800, 550, "cdDespachoDePatentes_aspx"), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Despacho de patentes", 800, 550, "MP_cdDespachoDePatentes_aspx"), false);
         }
 
         private string ObtenhaURL()

@@ -104,7 +104,7 @@ namespace FN.Client.FN
         {
             var URL = ObtenhaURLDeContaAReceber();
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                UtilidadesWeb.ExibeJanela(URL, "Nova conta a receber", 800, 550, "cdContaAReceber_aspx"), false);
+                                                UtilidadesWeb.ExibeJanela(URL, "Nova conta a receber", 800, 550, "FN_cdContaAReceber_aspx"), false);
         }
 
         private void Recarregue()
@@ -141,7 +141,7 @@ namespace FN.Client.FN
             ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.ExibeJanela(url,
                                                                                "Gerar boleto coletivamente",
-                                                                               800, 550, "frmBoletoAvulso_aspx"), false);
+                                                                               800, 550, "FN_frmBoletoAvulso_aspx"), false);
         }
 
         private string obtenhaIdsDosItensSelecionados()
@@ -278,7 +278,7 @@ namespace FN.Client.FN
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url,
                                                                                        "Modificar conta a receber",
-                                                                                       800, 550, "cdContaAReceber_aspx"), false);
+                                                                                       800, 550, "FN_cdContaAReceber_aspx"), false);
                     break;
                 case "GerarBoleto":
 
@@ -287,7 +287,7 @@ namespace FN.Client.FN
                     ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.ExibeJanela(url2,
                                                                                        "Gerar boleto",
-                                                                                       800, 550, "frmBoletoAvulso_aspx"), false);
+                                                                                       800, 550, "FN_frmBoletoAvulso_aspx"), false);
 
                     break;
             }
