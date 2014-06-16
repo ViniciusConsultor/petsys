@@ -57,8 +57,8 @@ namespace MP.Mapeadores
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroProcessoDaPatente), "', ") : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.NumeroDoPedido)
-                           ? String.Concat(UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoPedido.Length == 15 ?
-                           "'" + processoDaRevistaDePatente.NumeroDoPedido.Remove(0, 4) : "'" + processoDaRevistaDePatente.NumeroDoPedido), "', ") : "NULL, ");
+                           ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.NumeroDoPedido.Length >= 15 ?
+                           processoDaRevistaDePatente.NumeroDoPedido.Remove(0, 4) : processoDaRevistaDePatente.NumeroDoPedido), "', ") : "NULL, ");
 
                 sql.Append(processoDaRevistaDePatente.DataDaPublicacaoDoPedido.HasValue
                            ? String.Concat(processoDaRevistaDePatente.DataDaPublicacaoDoPedido.Value.ToString("yyyyMMdd"), ", ") : "NULL, ");
