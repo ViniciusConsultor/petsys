@@ -595,7 +595,6 @@ namespace MP.Servicos.Local
                         else
                         {
                             string numeroFiltrado = revistaDePatente.NumeroProcessoDaPatente.Substring(0, 19);
-                            revistaDePatente.NumeroDoProcessoFormatado = numeroFiltrado;
                             revistaDePatente.NumeroProcessoDaPatente = numeroFiltrado.Replace("-", "").Replace(" ", "");
 
                             revistaDePatente.NumeroDoProcesso = numeroFiltrado.Replace("-", "").Replace(" ", "");
@@ -641,7 +640,6 @@ namespace MP.Servicos.Local
                         else
                         {
                             string numeroFiltrado = revistaDePatente.NumeroDoPedido.Substring(0, 19);
-                            revistaDePatente.NumeroDoProcessoFormatado = numeroFiltrado;
 
                             revistaDePatente.NumeroDoProcesso = numeroFiltrado.Replace("-", "").Replace(" ", "");
                             revistaDePatente.NumeroProcessoDaPatente = numeroFiltrado.Replace("-", "").Replace(" ", "");

@@ -32,16 +32,14 @@ namespace MP.Negocio
         {
             get
             {
-                string numeroDoProcessoFormatado = string.Empty;
-
                 if (Processo.Length == 11)
-                    numeroDoProcessoFormatado = Pais.Sigla + " " + Patente.NaturezaPatente.SiglaNatureza + " " +
-                                                Processo.Substring(0, 4) + " " + Processo.Substring(4, 6) + "-"
-                                                + " " + Processo.Substring(10, 1);
-                else if (Processo.Length == 8)
-                    numeroDoProcessoFormatado = Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 7) + "-" + " " + Processo.Substring(7, 1);
+                    return Pais.Sigla + " " + Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 4) + " " + Processo.Substring(4, 6) + "-" + " " + 
+                           Processo.Substring(10, 1);
+                
+                if (Processo.Length == 8)
+                    return Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 7) + "-" + " " + Processo.Substring(7, 1);
 
-                return numeroDoProcessoFormatado;    
+                return Processo;    
             }
         }
     }
