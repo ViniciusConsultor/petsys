@@ -122,7 +122,8 @@ namespace MP.Servicos.Local
         {
             if (processo.Despacho == null) return;
 
-            processo.Ativo = !processo.Despacho.DesativaProcesso;
+            if (processo.Despacho.DesativaProcesso)
+                processo.Ativo = false;
         }
 
         public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)

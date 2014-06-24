@@ -42,6 +42,14 @@ namespace MP.Servicos.Local
             }
         }
 
+        private void VerifiqueSeDespachoDesativaProcesso(IProcessoDePatente processo)
+        {
+            if (processo.Despacho == null) return;
+
+            if (processo.Despacho.DesativaProcesso)
+                processo.Ativo = false;
+        }
+
         public void Modificar(IProcessoDePatente processoDePatente)
         {
             ServerUtils.setCredencial(_Credencial);
@@ -52,6 +60,7 @@ namespace MP.Servicos.Local
             try
             {
                 ServerUtils.BeginTransaction();
+                VerifiqueSeDespachoDesativaProcesso(processoDePatente);
                 mapeadorPatente.Modificar(processoDePatente.Patente);
                 mapeadorDeProcessoDePatente.Modificar(processoDePatente);
                 ServerUtils.CommitTransaction();
@@ -76,6 +85,7 @@ namespace MP.Servicos.Local
             try
             {
                 ServerUtils.BeginTransaction();
+                VerifiqueSeDespachoDesativaProcesso(processoDePatente);
                 mapeadorDeProcessoDePatente.Modificar(processoDePatente);
                 ServerUtils.CommitTransaction();
             }
