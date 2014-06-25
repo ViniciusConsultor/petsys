@@ -336,10 +336,11 @@ namespace MP.Client.MP
 
             if (e.CommandName == "DetalharProcesso")
             {
-                var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/cdProcessoDePatente.aspx",
-                                            "?Id=", IndiceSelecionado);
+                Session["CHAVE_REVISTA_DETALHADA"] = ((IList<IRevistaDePatente>) ViewState[CHAVE_PROCESSOS_REUSLTADO_FILTRO])[IndiceSelecionado];
+                var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "MP/frmDetalhesLeituraDaRevistaPatente.aspx");
                 ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                                                    UtilidadesWeb.ExibeJanela(url, "Detalhes do processo da revista patentes", 800, 550, "MP_cdProcessoDePatente_aspx"), false);
+                                                    UtilidadesWeb.ExibeJanela(url, "Detalhes do processo da revista patentes", 800, 550, 
+                                                    "MP_frmDetalhesLeituraDaRevistaPatente_aspx"), false);
             }
         }
 

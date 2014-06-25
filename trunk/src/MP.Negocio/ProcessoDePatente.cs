@@ -33,7 +33,7 @@ namespace MP.Negocio
             get
             {
                 if (Processo.Length == 11)
-                    return Pais.Sigla + " " + Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 4) + " " + Processo.Substring(4, 6) + "-" + " " + 
+                    return Pais.Sigla + " " + Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 4) + " " + Processo.Substring(4, 6) + "-" + 
                            Processo.Substring(10, 1);
                 
                 if (Processo.Length == 8)
