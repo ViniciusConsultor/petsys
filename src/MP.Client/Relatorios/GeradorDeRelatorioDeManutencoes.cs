@@ -235,32 +235,32 @@ namespace MP.Client.Relatorios
             
             var celulaTipo = new PdfPCell(new Phrase(processoDePatente.DataDaConcessao.HasValue && !processoDePatente.DataDaConcessao.Value.Equals(DateTime.MinValue) ? 
                                                      "PATENTE" : "PEDIDO", _Fonte1));
-            celulaTipo.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaTipo.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaTipo.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaTipo.Border = 0;
             tabelaCliente.AddCell(celulaTipo);
 
             var celulaProcesso = new PdfPCell(new Phrase(processoDePatente.NumeroDoProcessoFormatado, _Fonte1));
-            celulaProcesso.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaProcesso.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaProcesso.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaProcesso.Border = 0;
             tabelaCliente.AddCell(celulaProcesso);
 
             var celulaTituloPatente = new PdfPCell(new Phrase(processoDePatente.Patente.TituloPatente, _Fonte1));
-            celulaTituloPatente.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaTituloPatente.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaTituloPatente.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaTituloPatente.Border = 0;
             tabelaCliente.AddCell(celulaTituloPatente);
 
             var celulaDataDoVencimento = new PdfPCell(new Phrase(processoDePatente.Patente.Manutencao.DataDaProximaManutencao.HasValue ? 
                                                           processoDePatente.Patente.Manutencao.DataDaProximaManutencao.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
-            celulaDataDoVencimento.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaDataDoVencimento.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaDataDoVencimento.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaDataDoVencimento.Border = 0;
             tabelaCliente.AddCell(celulaDataDoVencimento);
 
             var celulaValor = new PdfPCell(new Phrase(processoDePatente.Patente.Manutencao.ObtenhaValorRealEmEspecie().ToString(), _Fonte1));
-            celulaValor.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaValor.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaValor.Border = 0;
             tabelaCliente.AddCell(celulaValor);
@@ -270,8 +270,8 @@ namespace MP.Client.Relatorios
 
         private PdfPTable ObtenhaTabelaTituloColunaDeMarca()
         {
-            var corCelula = Color.GRAY;
-            var tabelaTitulo = new PdfPTable(5);
+            var corCelula = Color.LIGHT_GRAY;
+            var tabelaTitulo = new PdfPTable(4);
             tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
 
             var celulaProcesso = new PdfPCell(new Phrase("Processo", _Fonte2));
@@ -311,26 +311,26 @@ namespace MP.Client.Relatorios
             tabelaCliente.DefaultCell.Border = Rectangle.NO_BORDER;
 
             var celulaProcesso = new PdfPCell(new Phrase(processoDeMarca.Processo.ToString(), _Fonte1));
-            celulaProcesso.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaProcesso.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaProcesso.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaProcesso.Border = 0;
             tabelaCliente.AddCell(celulaProcesso);
 
             var celulaDescricaoDaMarca = new PdfPCell(new Phrase(processoDeMarca.Marca.DescricaoDaMarca, _Fonte1));
-            celulaDescricaoDaMarca.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaDescricaoDaMarca.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaDescricaoDaMarca.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaDescricaoDaMarca.Border = 0;
             tabelaCliente.AddCell(celulaDescricaoDaMarca);
 
             var celulaDataDoVencimento = new PdfPCell(new Phrase(processoDeMarca.Marca.Manutencao.DataDaProximaManutencao.HasValue ?
                                                           processoDeMarca.Marca.Manutencao.DataDaProximaManutencao.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
-            celulaDataDoVencimento.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaDataDoVencimento.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaDataDoVencimento.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaDataDoVencimento.Border = 0;
             tabelaCliente.AddCell(celulaDataDoVencimento);
 
             var celulaValor = new PdfPCell(new Phrase(processoDeMarca.Marca.Manutencao.ObtenhaValorRealEmEspecie().ToString(), _Fonte1));
-            celulaValor.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaValor.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaValor.Border = 0;
             tabelaCliente.AddCell(celulaValor);
