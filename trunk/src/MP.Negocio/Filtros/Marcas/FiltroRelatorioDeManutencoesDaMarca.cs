@@ -24,20 +24,21 @@ namespace MP.Negocio.Filtros.Marcas
             sql.AppendLine("MP_PROCESSOMARCA.APOSTILA, MP_PROCESSOMARCA.ATIVO, ");
             sql.AppendLine("MP_MARCAS.IDMARCA, MP_MARCAS.CODIGONCL, MP_MARCAS.CODIGOAPRESENTACAO, MP_MARCAS.IDCLIENTE, MP_MARCAS.CODIGONATUREZA");
             sql.AppendLine(" FROM MP_PROCESSOMARCA, MP_MARCAS");
+
+            if (ClientesSelecionados != null && ClientesSelecionados.Count > 0)
+            {
+                string condicao = ClientesSelecionados.Aggregate(string.Empty, (current, cliente) => current + (cliente.Pessoa.ID + ","));
+
+                sql.AppendLine(" INNER JOIN NCL_CLIENTE ON NCL_CLIENTE.IDPESSOA = MP_MARCAS.IDCLIENTE ");
+                sql.AppendLine(" AND MP_MARCAS.IDCLIENTE IN(" + condicao.Remove(condicao.Length - 1) + ") ");
+            }
+
             sql.AppendLine(" WHERE MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA ");
             sql.AppendLine(" AND MP_MARCAS.PAGAMANUTENCAO = 1 ");
 
             if (DataDeInicio.HasValue && DataTermino.HasValue)
                 sql.AppendLine(" AND MP_MARCAS.DATAPROXIMAMANUTENCAO BETWEEN " + string.Concat(DataDeInicio.Value.ToString("yyyyMMdd"), " AND ",
                     DataTermino.Value.ToString("yyyyMMdd")));
-
-            if (ClientesSelecionados != null && ClientesSelecionados.Count > 0)
-            {
-                string condicao = ClientesSelecionados.Aggregate(string.Empty, (current, cliente) => current + (cliente.Pessoa.ID + ","));
-
-                sql.AppendLine(" INNER JOIN NCL_CLIENTE ON NCL_CLIENTE.IDPESSOA = MP_PROCESSOMARCA.IDCLIENTE ");
-                sql.AppendLine(" AND MP_PROCESSOMARCA.IDCLIENTE IN(" + condicao.Remove(condicao.Length - 1) + ") ");
-            }
 
             return sql.ToString();
         }

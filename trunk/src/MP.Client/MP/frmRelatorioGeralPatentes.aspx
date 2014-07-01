@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WorkSpace.Master" AutoEventWireup="true" CodeBehind="frmRelatorioGeralPatentes.aspx.cs" Inherits="MP.Client.MP.frmRelatorioGeralPatentes" %>
-<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI, Version=2013.3.1015.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc1" %>
 <%@ Register Src="~/MP/ctrlInventor.ascx" TagName="ctrlInventor" TagPrefix="uc2" %>
 <%@ Register Src="~/MP/ctrlTitular.ascx" TagName="ctrlTitular" TagPrefix="uc3" %>
