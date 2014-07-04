@@ -39,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Atualização", "Atualizaç
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.6.0_PARA_1.0.7.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.6.0_PARA_1.0.7.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.7.0_PARA_1.0.8.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.7.0_PARA_1.0.8.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.8.0_PARA_1.0.9.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.8.0_PARA_1.0.9.0.sql
+		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.9.0_PARA_1.0.10.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.9.0_PARA_1.0.10.0.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySQL", "MySQL", "{9BAC49D7-582C-4E22-9C1D-0A76E366E656}"
