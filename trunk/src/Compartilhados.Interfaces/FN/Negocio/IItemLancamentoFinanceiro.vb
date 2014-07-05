@@ -13,6 +13,7 @@ Namespace FN.Negocio
         Function Tipo() As TipoLacamentoFinanceiro
         Property Situacao As Situacao
         Property Descricao As String
+        Property NumeroBoletoGerado As String
 
     End Interface
 

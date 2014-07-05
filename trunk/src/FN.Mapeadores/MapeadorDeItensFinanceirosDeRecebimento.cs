@@ -88,6 +88,13 @@ namespace FN.Mapeadores
                            ? "FORMARECEBIMENTO = NULL, "
                            : "FORMARECEBIMENTO = " + Item.FormaDeRecebimento.ID + ", ");
 
+            //if(Item.NumeroBoletoGerado > 0)
+            //{
+            //    sql.Append("NUMEROBOLETOGERADO = " + Item.NumeroBoletoGerado + ", ");
+            //}
+
+            sql.Append("NUMEROBOLETOGERADO = " + Item.NumeroBoletoGerado + ", ");
+
             sql.Append("SITUACAO = " + Item.Situacao.ID + " ");
 
             sql.Append(" WHERE ID = " + Item.ID.Value);
@@ -206,6 +213,9 @@ namespace FN.Mapeadores
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "DESCRICAO"))
                 item.Descricao = UtilidadesDePersistencia.GetValorString(leitor, "DESCRICAO");
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "NUMEROBOLETOGERADO"))
+                item.NumeroBoletoGerado = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETOGERADO");
 
             return item;
         }
