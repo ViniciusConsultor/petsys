@@ -192,12 +192,16 @@
                                             <telerik:GridBoundColumn DataField="FormaDeRecebimento.Descricao" HeaderText="Forma de recebimento"
                                                 UniqueName="column563">
                                                 <ItemStyle Width="20%"></ItemStyle>
-                                            </telerik:GridBoundColumn>
+                                            </telerik:GridBoundColumn>                                           
                                             <telerik:GridBoundColumn DataField="Situacao.Descricao" HeaderText="Situação" UniqueName="column63">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="TipoLacamento.Descricao" HeaderText="Tipo do lançamento"
                                                 UniqueName="column73">
+                                                <ItemStyle Width="20%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                             <telerik:GridBoundColumn DataField="NumeroBoletoGerado" HeaderText="Boleto gerado"
+                                                UniqueName="column567">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                         </Columns>

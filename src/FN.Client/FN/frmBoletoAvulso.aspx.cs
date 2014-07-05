@@ -583,6 +583,8 @@ namespace FN.Client.FN
                                         itemLancamento.DataDoVencimento = boletoGerado.DataVencimento.Value;
 
                                     itemLancamento.Valor = boletoGerado.Valor;
+                                    if (boletoGerado.NossoNumero != null)
+                                        itemLancamento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
                                     servicoFinanceiro.Modifique(itemLancamento);
                                 }
@@ -668,6 +670,9 @@ namespace FN.Client.FN
 
                                             itemLancamentoFinanceiroRecebimento.Valor = boletoGerado.Valor;
 
+                                            if (boletoGerado.NossoNumero != null)
+                                                itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
+
                                             servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                         }
                                     }
@@ -687,6 +692,9 @@ namespace FN.Client.FN
                                                 itemLancamentoFinanceiroRecebimento.DataDoVencimento = boletoGerado.DataVencimento.Value;
 
                                             itemLancamentoFinanceiroRecebimento.Valor = boletoGerado.Valor;
+
+                                            if (boletoGerado.NossoNumero != null)
+                                                itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
                                             servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                         }
@@ -806,10 +814,28 @@ namespace FN.Client.FN
                 string[] linhasDaIntrucao = txtFinalidadeBoleto.Text.Split('\n');
                 IList<string> listaDeLinhas = linhasDaIntrucao.ToList();
 
-                if(listaDeLinhas.Count > 20)
+                const int quantidadeMaxDeLinhas = 30;
+
+                if (listaDeLinhas.Count > quantidadeMaxDeLinhas)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                   UtilidadesWeb.MostraMensagemDeInformacao("Quantidade de linhas das informações do recibo do sacado, excedeu o tamanho limite de 20 linhas."),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("Quantidade de linhas das informações do recibo do sacado, excedeu o tamanho limite de " + quantidadeMaxDeLinhas + " linhas."),
+                                                   false);
+                    return true;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(txtInstrucoes.Text))
+            {
+                string[] linhasDaIntrucao = txtInstrucoes.Text.Split('\n');
+                IList<string> listaDeLinhas = linhasDaIntrucao.ToList();
+
+                const int quantidadeMaxDeLinhas = 10;
+
+                if (listaDeLinhas.Count > quantidadeMaxDeLinhas)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("Quantidade de linhas das instruções do agente financeiro, excedeu o tamanho limite de " + quantidadeMaxDeLinhas + " linhas."),
                                                    false);
                     return true;
                 }
