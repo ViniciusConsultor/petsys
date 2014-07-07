@@ -75,8 +75,8 @@ namespace FN.Client.FN
 
             CarregaOpcoesDeFiltro();
             EscondaTodosOsPanelsDeFiltro();
-            pnlCliente.Visible = true;
-            cboTipoDeFiltro.SelectedValue = "2";
+            pnlSituacao.Visible = true;
+            cboTipoDeFiltro.SelectedValue = "1";
 
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
@@ -84,11 +84,15 @@ namespace FN.Client.FN
 
             situacoesADesconsiderar.Add(Situacao.AguardandoCobranca);
             ctrlSituacao.Inicializa(situacoesADesconsiderar);
+          
             ctrlFormaRecebimento.Inicializa();
+            ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.IgualA.ID.ToString();
 
-            ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
+            ctrlSituacao.Codigo = Situacao.CobrancaEmAberto.ID.ToString();
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberSemFiltro>();
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorSituacao>();
+            filtro.Operacao = OperacaoDeFiltro.IgualA;
+            filtro.ValorDoFiltro = ctrlSituacao.Codigo;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
 
