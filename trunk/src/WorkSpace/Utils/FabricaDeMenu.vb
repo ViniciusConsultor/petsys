@@ -23,7 +23,7 @@ Public Class FabricaDeMenu
             _Menu = Servico.ObtenhaMenu
         End Using
 
-        _JsMenu.AppendLine("<script language='javascript' type='text/javascript'>")
+        _JsMenu.AppendLine("<script async language='javascript' type='text/javascript'>")
         _JsMenu.AppendLine(ObtenhaMenuIniciar())
 
         For Each MenuModulo As IMenuComposto In From MenuModulo1 In _Menu.ObtenhaItens Where _Principal.EstaAutorizado(MenuModulo1.ID)

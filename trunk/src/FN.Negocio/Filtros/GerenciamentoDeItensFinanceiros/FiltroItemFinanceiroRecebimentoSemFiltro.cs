@@ -16,7 +16,7 @@ namespace FN.Negocio.Filtros.GerenciamentoDeItensFinanceiros
             var sql = new StringBuilder();
 
             sql.Append(
-                "SELECT ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, SITUACAO, DATARECEBIMENTO, TIPOLANCAMENTO, DESCRICAO, FORMARECEBIMENTO ");
+                "SELECT ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, SITUACAO, DATARECEBIMENTO, TIPOLANCAMENTO, DESCRICAO, FORMARECEBIMENTO, NUMEROBOLETOGERADO ");
             sql.Append("FROM FN_ITEMFINANREC ");
             sql.Append(" WHERE SITUACAO = '" + Situacao.AguardandoCobranca.ID + "'");
 
