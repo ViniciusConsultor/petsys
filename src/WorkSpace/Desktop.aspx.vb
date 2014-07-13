@@ -114,7 +114,7 @@ Partial Public Class Desktop
 
         Dim URL As String = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual & DirectCast(sender, RadComboBox).SelectedValue
         
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, DirectCast(sender, RadComboBox).Text, 800, 550, DirectCast(sender, RadComboBox).SelectedValue.Replace(".", "_")), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, DirectCast(sender, RadComboBox).Text, 800, 550, DirectCast(sender, RadComboBox).SelectedValue.Replace(".", "_").Replace("/", "_")), False)
 
         cboPesquisa.ClearSelection()
         cboPesquisa.Text = ""
