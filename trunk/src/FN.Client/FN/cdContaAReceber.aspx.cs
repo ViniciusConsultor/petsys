@@ -175,7 +175,7 @@ namespace FN.Client.FN
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
 
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmContasAReceber.aspx"), "FN/frmContasAReceber_aspx"), false);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmContasAReceber.aspx"), "FN_frmContasAReceber_aspx"), false);
 
                 ExibaTelaModificar();
 

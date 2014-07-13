@@ -87,7 +87,7 @@ namespace FN.Client.FN
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao("Itens financeiros de recebimento agora são itens de conta a receber."), false);
 
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmGerenciamentoDeItensFinanceiros.aspx"), "FN/frmGerenciamentoDeItensFinanceiros_aspx"), false);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmGerenciamentoDeItensFinanceiros.aspx"), "FN_frmGerenciamentoDeItensFinanceiros_aspx"), false);
                 
             }
             catch (BussinesException ex)

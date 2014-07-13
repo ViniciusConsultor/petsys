@@ -158,7 +158,7 @@ namespace FN.Client.FN
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInformacao(mensagem), false);
 
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmGerenciamentoDeItensFinanceiros.aspx"), "FN/frmGerenciamentoDeItensFinanceiros_aspx"), false);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmGerenciamentoDeItensFinanceiros.aspx"), "FN_frmGerenciamentoDeItensFinanceiros_aspx"), false);
 
                 ExibaTelaModificar();
 
