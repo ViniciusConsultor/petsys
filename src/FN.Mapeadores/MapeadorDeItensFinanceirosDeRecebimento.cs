@@ -27,7 +27,7 @@ namespace FN.Mapeadores
             Item.ID = GeradorDeID.ProximoID();
             
             sql.Append("INSERT INTO FN_ITEMFINANREC (");
-            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, DESCRICAO, FORMARECEBIMENTO, DATARECEBIMENTO, SITUACAO, TIPOLANCAMENTO ) ");
+            sql.Append("ID, IDCLIENTE, VALOR, OBSERVACAO, DATALACAMENTO, DATAVENCIMENTO, DESCRICAO, FORMARECEBIMENTO, DATARECEBIMENTO, SITUACAO, NUMEROBOLETOGERADO, TIPOLANCAMENTO) ");
             sql.Append("VALUES (");
 
             sql.Append(Item.ID.Value + ", ");
@@ -52,6 +52,11 @@ namespace FN.Mapeadores
                          : Item.DataDoRecebimento.Value.ToString("yyyyMMdd") + ", ");
 
             sql.Append(Item.Situacao.ID + ", ");
+
+            if (string.IsNullOrEmpty(Item.NumeroBoletoGerado))
+                sql.Append("NULL, ");
+            else
+                sql.Append("'" + UtilidadesDePersistencia.FiltraApostrofe(Item.NumeroBoletoGerado) + "', ");
             
             sql.Append(Item.TipoLacamento.ID + ") ");
 
@@ -88,12 +93,10 @@ namespace FN.Mapeadores
                            ? "FORMARECEBIMENTO = NULL, "
                            : "FORMARECEBIMENTO = " + Item.FormaDeRecebimento.ID + ", ");
 
-            //if(Item.NumeroBoletoGerado > 0)
-            //{
-            //    sql.Append("NUMEROBOLETOGERADO = " + Item.NumeroBoletoGerado + ", ");
-            //}
-
-            sql.Append("NUMEROBOLETOGERADO = " + Item.NumeroBoletoGerado + ", ");
+            if (!string.IsNullOrEmpty(Item.NumeroBoletoGerado))
+                sql.Append("NUMEROBOLETOGERADO = '" + UtilidadesDePersistencia.FiltraApostrofe(Item.NumeroBoletoGerado) + "', ");
+            else
+                sql.Append("NUMEROBOLETOGERADO = NULL, ");
 
             sql.Append("SITUACAO = " + Item.Situacao.ID + " ");
 
