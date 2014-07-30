@@ -16,6 +16,7 @@ using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
 using FN.ImagePDF;
 using FN.Interfaces.Negocio;
+using FN.Interfaces.Negocio.Filtros.BoletosGerados;
 using FN.Interfaces.Servicos;
 using Telerik.Web.UI;
 using iTextSharp.text;

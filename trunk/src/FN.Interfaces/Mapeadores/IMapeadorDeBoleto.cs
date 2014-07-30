@@ -24,10 +24,9 @@ namespace FN.Interfaces.Mapeadores
         IConfiguracaoDeBoletoBancario ObtenhaConfiguracao();
         void SalveConfiguracao(IConfiguracaoDeBoletoBancario configuracao);
 
-        IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet);
-
         void AtualizarBoletoGerado(IBoletosGerados boletoGerado);
 
+        int ObtenhaQuantidadeDeBoletos(IFiltro filtro);
         IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet);
     }
 }
