@@ -223,22 +223,6 @@ namespace FN.Servicos.Local
             }
         }
 
-        public IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet)
-        {
-            ServerUtils.setCredencial(_Credencial);
-
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
-
-            try
-            {
-                return mapeador.obtenhaBoletosGerados(quantidadeDeRegistros, offSet);
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
-
         public IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet)
         {
             ServerUtils.setCredencial(_Credencial);
@@ -248,6 +232,22 @@ namespace FN.Servicos.Local
             try
             {
                 return mapeador.obtenhaBoletosGerados(filtro, quantidadeDeRegistros, offSet);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
+        public int ObtenhaQuantidadeDeBoletos(IFiltro filtro)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
+
+            try
+            {
+                return mapeador.ObtenhaQuantidadeDeBoletos(filtro);
             }
             finally
             {

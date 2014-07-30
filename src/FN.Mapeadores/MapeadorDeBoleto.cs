@@ -19,12 +19,12 @@ namespace FN.Mapeadores
 
         public IBoletosGerados obtenhaBoletoPeloId(long idBoleto)
         {
-            var sql = retornaSQLSelecionaTodos();
+            var sql = retornaSQLSeleciona();
             sql.Append("WHERE ID = " + idBoleto);
 
             IBoletosGerados boletoGerado = null;
 
-            var listaDeBoleto = obtenhaBoleto(sql, int.MaxValue);
+            var listaDeBoleto = obtenhaBoleto(sql);
 
             if (listaDeBoleto.Count > 0)
                 boletoGerado = listaDeBoleto[0];
@@ -32,13 +32,13 @@ namespace FN.Mapeadores
             return boletoGerado;
         }
 
-        private IList<IBoletosGerados> obtenhaBoleto(StringBuilder sql, int quantidadeMaximaRegistros)
+        private IList<IBoletosGerados> obtenhaBoleto(StringBuilder sql)
         {
             var DBHelper = ServerUtils.criarNovoDbHelper();
 
             IList<IBoletosGerados> listaDeBoletos = new List<IBoletosGerados>();
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
                 while (leitor.Read())
                 {
@@ -114,7 +114,7 @@ namespace FN.Mapeadores
             return listaDeBoletos;
         }
 
-        private StringBuilder retornaSQLSelecionaTodos()
+        private StringBuilder retornaSQLSeleciona()
         {
             var sql = new StringBuilder();
 
@@ -127,12 +127,12 @@ namespace FN.Mapeadores
 
         public IBoletosGerados obtenhaBoletoPeloNossoNumero(long numero)
         {
-            var sql = retornaSQLSelecionaTodos();
+            var sql = retornaSQLSeleciona();
             sql.Append("WHERE NOSSONUMERO = " + numero);
 
             IBoletosGerados boletoGerado = null;
 
-            var listaDeBoleto = obtenhaBoleto(sql, int.MaxValue);
+            var listaDeBoleto = obtenhaBoleto(sql);
 
             if (listaDeBoleto.Count > 0)
                 boletoGerado = listaDeBoleto[0];
@@ -327,16 +327,25 @@ namespace FN.Mapeadores
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
 
-        public IList<IBoletosGerados> obtenhaBoletosGerados(int quantidadeDeRegistros, int offSet)
+        public int ObtenhaQuantidadeDeBoletos(IFiltro filtro)
         {
-            var sql = retornaSQLSelecionaTodos();
-            sql.Append("ORDER BY NOSSONUMERO DESC");
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
 
-            IList<IBoletosGerados> listaDeBoletos = new List<IBoletosGerados>();
+            using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQueryParaQuantidade()))
+            {
+                try
+                {
+                    if (leitor.Read())
+                        return UtilidadesDePersistencia.getValorInteger(leitor, "QUANTIDADE");
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
 
-            listaDeBoletos = obtenhaBoleto(sql, quantidadeDeRegistros, offSet);
-
-            return listaDeBoletos;
+            return 0;
         }
 
         public IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet)

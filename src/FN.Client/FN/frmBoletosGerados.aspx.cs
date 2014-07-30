@@ -62,25 +62,23 @@ namespace FN.Client.FN
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
             {
-                var listaDeBoletosGerados = servico.obtenhaBoletosGerados(filtro, int.MaxValue, offset);
+                var listaDeBoletosGerados = servico.obtenhaBoletosGerados(filtro, quantidadeDeBoletos, offset);
 
                 BoletosGerados = listaDeBoletosGerados;
                 ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible = BoletosGerados.Count > 0;
 
                 if (listaDeBoletosGerados.Count > 0)
                 {
-                    grdBoletosGerados.VirtualItemCount = listaDeBoletosGerados.Count;
+                    grdBoletosGerados.VirtualItemCount = servico.ObtenhaQuantidadeDeBoletos(filtro);
                     grdBoletosGerados.DataSource = ConvertaBoletosGeradosParaDTO(listaDeBoletosGerados);
                     grdBoletosGerados.DataBind();
-                }
-                else
-                {
-                    var controleGrid = grdBoletosGerados as Control;
-                    UtilidadesWeb.LimparComponente(ref controleGrid);
-                    grdBoletosGerados.DataSource = new List<DTOBoletosGerados>();
-                    grdBoletosGerados.DataBind();
+                    return;
                 }
 
+                var controleGrid = grdBoletosGerados as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                grdBoletosGerados.DataSource = new List<DTOBoletosGerados>();
+                grdBoletosGerados.DataBind();
             }
         }
 
@@ -94,22 +92,6 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cedente", "5"));
         }
 
-        private void CarregaBoletosGerados(int quantidadeDeBoletos, int offset)
-        {
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-            {
-                var listaDeBoletosGerados = servico.obtenhaBoletosGerados(quantidadeDeBoletos, offset);
-
-                if (listaDeBoletosGerados.Count > 0)
-                {
-                    grdBoletosGerados.VirtualItemCount = listaDeBoletosGerados.Count;
-                    grdBoletosGerados.DataSource = ConvertaBoletosGeradosParaDTO(listaDeBoletosGerados);
-                    grdBoletosGerados.DataBind();
-                }
-
-            }
-        }
-
         private IList<DTOBoletosGerados> ConvertaBoletosGeradosParaDTO(IList<IBoletosGerados> listaDeBoletosGerados)
         {
             var listaDeBoletos = new List<DTOBoletosGerados>();
@@ -119,15 +101,15 @@ namespace FN.Client.FN
                 var dto = new DTOBoletosGerados();
 
                 if (boletosGerado.DataGeracao.HasValue)
-                dto.DataGeracao = boletosGerado.DataGeracao.Value.ToString("dd/MM/yyyy");
+                    dto.DataGeracao = boletosGerado.DataGeracao.Value.ToString("dd/MM/yyyy");
 
-                if(boletosGerado.DataVencimento.HasValue)
+                if (boletosGerado.DataVencimento.HasValue)
                     dto.DataVencimento = boletosGerado.DataVencimento.Value.ToString("dd/MM/yyyy");
 
-                if (boletosGerado.ID.HasValue) 
+                if (boletosGerado.ID.HasValue)
                     dto.ID = boletosGerado.ID.Value.ToString();
 
-                if(boletosGerado.NossoNumero.HasValue)
+                if (boletosGerado.NossoNumero.HasValue)
                     dto.NossoNumero = boletosGerado.NossoNumero.Value.ToString();
 
                 dto.NumeroBoleto = boletosGerado.NumeroBoleto;
@@ -139,7 +121,7 @@ namespace FN.Client.FN
 
                 dto.Observacao = !string.IsNullOrEmpty(boletosGerado.Observacao) ? boletosGerado.Observacao : null;
 
-                dto.Cedente = boletosGerado.Cedente != null && boletosGerado.Cedente.Pessoa != null ? 
+                dto.Cedente = boletosGerado.Cedente != null && boletosGerado.Cedente.Pessoa != null ?
                     boletosGerado.Cedente.Pessoa.Nome : null;
 
                 dto.Instrucoes = !string.IsNullOrEmpty(boletosGerado.Instrucoes) ? boletosGerado.Instrucoes : null;
@@ -159,7 +141,7 @@ namespace FN.Client.FN
                 if (e.NewPageIndex > 0)
                     offSet = e.NewPageIndex * grdBoletosGerados.PageSize;
 
-                CarregaBoletosGerados(grdBoletosGerados.PageSize, offSet);
+                CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, offSet);
 
             }
         }
@@ -346,7 +328,7 @@ namespace FN.Client.FN
                 return;
             }
 
-            if(string.IsNullOrEmpty(txtNossoNumero.Text))
+            if (string.IsNullOrEmpty(txtNossoNumero.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o nosso número."), false);
@@ -479,7 +461,7 @@ namespace FN.Client.FN
                 if (ViewState[CHAVE_BOLETOS_GERADOS] == null)
                     ViewState[CHAVE_BOLETOS_GERADOS] = new List<IBoletosGerados>();
 
-                return (IList<IBoletosGerados>) ViewState[CHAVE_BOLETOS_GERADOS];
+                return (IList<IBoletosGerados>)ViewState[CHAVE_BOLETOS_GERADOS];
             }
 
             set { ViewState[CHAVE_BOLETOS_GERADOS] = value; }
