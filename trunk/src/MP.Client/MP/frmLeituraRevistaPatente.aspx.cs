@@ -196,7 +196,7 @@ namespace MP.Client.MP
             int indiceSelecionado = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                indiceSelecionado = e.Item.ItemIndex;
+                indiceSelecionado = e.Item.DataSetIndex;
 
             if (e.CommandName == "ReprocessarRevista")
             {
@@ -204,13 +204,6 @@ namespace MP.Client.MP
 
                 try
                 {
-                    // Caso o arquivo tenha extensão .txt
-                    if (revistasProcessadas[indiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
-                    {
-                        MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(revistasProcessadas[indiceSelecionado]);
-                        revistasProcessadas[indiceSelecionado].ExtensaoArquivo = ".xml";
-                    }
-
                     var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistasProcessadas[indiceSelecionado]);
                     revistasProcessadas[indiceSelecionado].Processada = true;
 

@@ -217,10 +217,28 @@ namespace MP.Client.MP
             {
                 var caminhoArquivoAntigo = Path.Combine(pastaDeDestinoTemp, arquivoDaPasta.Name);
 
-                if (arquivoDaPasta.Name.Equals("rm" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension))
+                if (arquivoDaPasta.Name.ToLower().Equals("rm" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension.ToLower()))
                 {
-                    var arquivoNovo = arquivoDaPasta.Name.Replace("rm" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension,
-                                                revistaDeMarcas.NumeroRevistaMarcas.ToString() + arquivoDaPasta.Extension);
+                    var arquivoNovo = arquivoDaPasta.Name.ToLower().Replace("rm" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension.ToLower(),
+                                                revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension);
+
+                    var caminhoArquivoNovo = Path.Combine(pastaDeDestino, arquivoNovo);
+
+                    File.Delete(caminhoArquivoNovo);
+                    File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                    File.Delete(caminhoArquivoAntigo);
+
+                    revistaDeMarcas.ExtensaoArquivo = arquivoDaPasta.Extension;
+                    listaRevistasAProcessar.Add(revistaDeMarcas);
+
+                    MostraListaRevistasAProcessar(listaRevistasAProcessar);
+                    return;
+                }
+
+                if (arquivoDaPasta.Name.ToLower().Equals("rm_" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension.ToLower()))
+                {
+                    var arquivoNovo = arquivoDaPasta.Name.ToLower().Replace("rm_" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension.ToLower(),
+                                                revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension);
 
                     var caminhoArquivoNovo = Path.Combine(pastaDeDestino, arquivoNovo);
 
@@ -472,7 +490,7 @@ namespace MP.Client.MP
                 var IndiceSelecionado = 0;
 
                 if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                    IndiceSelecionado = e.Item.ItemIndex;
+                    IndiceSelecionado = e.Item.DataSetIndex;
 
                 if (e.CommandName == "Excluir")
                 {
@@ -496,14 +514,6 @@ namespace MP.Client.MP
                 if (e.CommandName == "ReprocessarRevista")
                 {
                     var listaRevistasProcessadas = (IList<IRevistaDeMarcas>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
-
-
-                    if (listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo.ToUpper().Equals(".TXT"))
-                    {
-                        // para arquivo .txt
-                        MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(listaRevistasProcessadas[IndiceSelecionado]);
-                        listaRevistasProcessadas[IndiceSelecionado].ExtensaoArquivo = ".xml";
-                    }
 
                     // leitura .xml
                     var xmlRevista = MontaXmlParaProcessamentoDaRevista(listaRevistasProcessadas[IndiceSelecionado]);
