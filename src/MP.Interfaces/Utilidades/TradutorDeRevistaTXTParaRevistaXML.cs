@@ -15,6 +15,8 @@ namespace MP.Interfaces.Utilidades
         {
             DtoDadosDaRevistaDeMarca dadosDaRevista = null;
             var revista = new List<DtoDadosDaRevistaDeMarca>();
+            var primeiraLinhaNaoEVazia = true;
+
             using (var arquivoTxtConvertido = UtilidadesDeStream.ConvertaArquivoAnsiParaUtf8(arquivoTxt.BaseStream))
             {
                 while (!arquivoTxtConvertido.EndOfStream)
@@ -23,12 +25,17 @@ namespace MP.Interfaces.Utilidades
 
                     if (string.IsNullOrEmpty(linha))
                     {
-                        if (dadosDaRevista != null && !string.IsNullOrEmpty(dadosDaRevista.NumeroProcesso) &&
-                            !revista.Contains(dadosDaRevista))
+                        if (dadosDaRevista != null && !string.IsNullOrEmpty(dadosDaRevista.NumeroProcesso) && !revista.Contains(dadosDaRevista))
                             revista.Add(dadosDaRevista);
                         dadosDaRevista = new DtoDadosDaRevistaDeMarca();
-
+                        primeiraLinhaNaoEVazia = false;
                         continue;
+                    }
+
+                    if (primeiraLinhaNaoEVazia)
+                    {
+                        dadosDaRevista = new DtoDadosDaRevistaDeMarca();
+                        primeiraLinhaNaoEVazia = false;
                     }
 
                     if (linha.StartsWith("No.")) CarregueOsDadosDaLinhaDeNo(linha, dadosDaRevista);
@@ -355,5 +362,5 @@ namespace MP.Interfaces.Utilidades
         public IList<string> CodigosDasSubClassesNacionais { get; set; }
         public string EspecificacaoClasseNacional { get; set; }
 
-    }
+ }
 }
