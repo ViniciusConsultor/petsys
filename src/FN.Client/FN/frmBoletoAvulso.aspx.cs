@@ -356,7 +356,7 @@ namespace FN.Client.FN
 
                 // Busca dados auxiliares no banco, se for a primeira vez, efetua o insert
 
-                long cedenteNossoNumeroBoleto;
+                long cedenteNossoNumeroBoleto = 0;
 
                 if (ViewState["CHAVE_CEDENTE_BOLETOGERADO"] != null)
                 {
@@ -370,6 +370,43 @@ namespace FN.Client.FN
 
                     cedenteNossoNumeroBoleto = BoletoGerado.NossoNumero.Value; // o final do nosso número é incrementado ao final
 
+                }
+                else if (ViewState["CHAVE_LISTA_ITEM_FINANCEIRO"] != null)
+                {
+                    var listaDeItensFinanceiros =
+                                            (List<IItemLancamentoFinanceiroRecebimento>)ViewState["CHAVE_LISTA_ITEM_FINANCEIRO"];
+
+                    if (listaDeItensFinanceiros.Count == 1)
+                    {
+                        foreach (var itemLancamentoFinanceiroRecebimento in listaDeItensFinanceiros)
+                        {
+                            long idboleto;
+
+                            using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
+                            {
+                                idboleto =
+                                    servicoFinanceiroComBoleto.ObtenhaBoletoPorIdItemFinanRecebimento(
+                                        itemLancamentoFinanceiroRecebimento.ID.Value);
+                            }
+
+                            if (idboleto > 0)
+                            {
+                                IBoletosGerados boletoGeradoParaItemFinanceiro;
+
+                                using (var servicoBoletoGeradoParaItemFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                                {
+                                    boletoGeradoParaItemFinanceiro =
+                                        servicoBoletoGeradoParaItemFinanceiro.obtenhaBoletoPeloId(
+                                            idboleto);
+                                }
+
+                                if (boletoGeradoParaItemFinanceiro != null)
+                                {
+                                    cedenteNossoNumeroBoleto = boletoGeradoParaItemFinanceiro.NossoNumero.Value;
+                                }
+                            }
+                        }
+                    }
                 }
                 else
                 {
