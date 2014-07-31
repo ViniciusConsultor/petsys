@@ -73,47 +73,6 @@ namespace FN.Mapeadores
             return listaDeBoletos;
         }
 
-        private IList<IBoletosGerados> obtenhaBoleto(StringBuilder sql, int quantidadeMaximaRegistros, int offSet)
-        {
-            var DBHelper = ServerUtils.criarNovoDbHelper();
-
-            IList<IBoletosGerados> listaDeBoletos = new List<IBoletosGerados>();
-
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeMaximaRegistros, offSet))
-            {
-                while (leitor.Read())
-                {
-                    var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();
-
-                    boletoGerado.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
-                    boletoGerado.NumeroBoleto = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROBOLETO");
-                    boletoGerado.NossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "NOSSONUMERO");
-
-                    var cliente =
-                        FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IClienteLazyLoad>(
-                            UtilidadesDePersistencia.GetValorLong(leitor, "IDCLIENTE"));
-
-                    boletoGerado.Cliente = cliente;
-
-                    boletoGerado.Valor = UtilidadesDePersistencia.getValorDouble(leitor, "VALOR");
-                    boletoGerado.DataGeracao = UtilidadesDePersistencia.getValorDate(leitor, "DATAGERACAO");
-                    boletoGerado.DataVencimento = UtilidadesDePersistencia.getValorDate(leitor, "DATAVENCIMENTO");
-                    boletoGerado.Observacao = UtilidadesDePersistencia.GetValorString(leitor, "OBSERVACAO");
-
-                    var cedente = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<ICedenteLazyLoad>(
-                            UtilidadesDePersistencia.GetValorLong(leitor, "IDCEDENTE"));
-
-                    boletoGerado.Cedente = cedente;
-
-                    boletoGerado.Instrucoes = UtilidadesDePersistencia.GetValorString(leitor, "INSTRUCOES");
-                    
-                    listaDeBoletos.Add(boletoGerado);
-                }
-            }
-
-            return listaDeBoletos;
-        }
-
         private StringBuilder retornaSQLSeleciona()
         {
             var sql = new StringBuilder();
@@ -256,7 +215,7 @@ namespace FN.Mapeadores
             sql.Append("LEFT JOIN NCL_PESSOA ON FN_CNFBOLETO.IDCEDENTE = NCL_PESSOA.ID ");
             sql.Append("AND FN_CNFBOLETO.TIPOPESSOA = NCL_PESSOA.TIPO ");
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), int.MaxValue))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
                 try
                 {
@@ -371,8 +330,6 @@ namespace FN.Mapeadores
                     leitor.Close();
                 }
 
-            //listaDeBoletos = obtenhaBoleto(sql, quantidadeDeRegistros, offSet);
-
             return listaDeBoletos;
         }
 
@@ -413,8 +370,6 @@ namespace FN.Mapeadores
             var dbHelper = ServerUtils.getDBHelper();
             
             sql.Append("UPDATE FN_BOLETOS_GERADOS SET ");
-
-            //sql.Append("SET NOSSONUMERO = " + boletoGerado.NossoNumero.Value + ", ");
 
             sql.Append(!String.IsNullOrEmpty(boletoGerado.NumeroBoleto)
                          ? String.Concat("NUMEROBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ")

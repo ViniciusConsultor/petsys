@@ -132,7 +132,7 @@ namespace MP.Mapeadores
             sql.Append("AND MP_INVENTOR.TIPOPESSOA = NCL_PESSOA.TIPO ");
             sql.Append(String.Concat("AND IDPESSOA = ", ID.ToString()));
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), int.MaxValue))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
                 try
                 {
@@ -168,7 +168,7 @@ namespace MP.Mapeadores
             sql.Append("SELECT IDPESSOA, TIPOPESSOA, DTCADASTRO, INFOADICIONAL FROM MP_INVENTOR WHERE ");
             sql.Append(String.Concat("IDPESSOA = ", pessoa.ID.Value));
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), int.MaxValue))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
                 try
                 {

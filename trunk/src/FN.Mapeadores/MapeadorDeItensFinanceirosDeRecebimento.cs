@@ -135,7 +135,7 @@ namespace FN.Mapeadores
 
             sql.Append(filtro.ObtenhaQuery());
 
-            sql.AppendLine(" ORDER BY DATALACAMENTO DESC");
+            sql.AppendLine(" ORDER BY NOME");
 
             var itens = new List<IItemLancamentoFinanceiroRecebimento>();
 
