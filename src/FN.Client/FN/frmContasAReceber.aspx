@@ -114,7 +114,7 @@
                         <tr>
                             <td colspan="2">
                                 <telerik:RadGrid ID="grdItensDeContasAReceber" runat="server" AutoGenerateColumns="False"
-                                    AllowCustomPaging="true" AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista"
+                                    AllowCustomPaging="true" AllowPaging="True" PageSize="50" GridLines="None" Skin="Vista"
                                     AllowFilteringByColumn="false" OnPageIndexChanged="grdItensDeContasAReceber_OnPageIndexChanged"
                                     OnItemCommand="grdItensDeContasAReceber_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
@@ -126,7 +126,7 @@
                                                     <%-- <telerik:GridGroupByField FieldName="Valor" HeaderText="TOTAL"  Aggregate="Sum" />--%>
                                                 </SelectFields>
                                                 <GroupByFields>
-                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" SortOrder="Descending" />
+                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome"  />
                                                 </GroupByFields>
                                             </telerik:GridGroupByExpression>
                                         </GroupByExpressions>

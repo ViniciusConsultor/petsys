@@ -39,7 +39,7 @@ namespace FN.Mapeadores
             sql.Append("SELECT INSTRUCOESDOBOLETO ");
             sql.Append("FROM FN_CONFIGGERAL ");
 
-            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), int.MaxValue))
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
                 try
                 {
