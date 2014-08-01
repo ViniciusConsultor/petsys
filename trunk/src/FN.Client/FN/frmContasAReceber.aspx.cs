@@ -146,6 +146,10 @@ namespace FN.Client.FN
                                                 UtilidadesWeb.ExibeJanela(url,
                                                                                "Gerar boleto coletivamente",
                                                                                800, 550, "FN_frmBoletoAvulso_aspx"), false);
+
+            //Esta parte garante que os itens serão recarregados desmarcando os itens selecionados e não exibindo o botão coletivo.
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
+
         }
 
         private string obtenhaIdsDosItensSelecionados()

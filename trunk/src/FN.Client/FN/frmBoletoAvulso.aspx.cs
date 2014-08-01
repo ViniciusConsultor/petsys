@@ -768,6 +768,7 @@ namespace FN.Client.FN
                         servico.AtualizarProximasInformacoes(dadosAuxiliares);
                     }
                 }
+
             }
             catch (BussinesException ex)
             {
@@ -775,6 +776,13 @@ namespace FN.Client.FN
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                         UtilidadesWeb.MostraMensagemDeInconsitencia("Erro ao gerar boleto, exceção: " + ex.Message), false);
             }
+
+            //Garante que a tela de contas a receber será atualizada.
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmContasAReceber.aspx"), "FN_frmContasAReceber_aspx"), false);
+
+            //Garante que a tela de historico de boletos seja atualizada
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.AtualizaJanela(String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmBoletosGerados.aspx"), "FN_frmBoletosGerados_aspx"), false);
+
         }
 
         private void MostraBoleto(BoletoBancario bb)
