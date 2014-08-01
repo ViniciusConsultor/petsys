@@ -102,7 +102,7 @@
                                                     <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" HeaderText="Cliente" />
                                                 </SelectFields>
                                                 <GroupByFields>
-                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" SortOrder="Descending" />
+                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" />
                                                 </GroupByFields>
                                             </telerik:GridGroupByExpression>
                                         </GroupByExpressions>

@@ -188,7 +188,9 @@ Public Class UtilidadesWeb
         Js.AppendLine("<script language='javascript' type='text/javascript'>")
         Js.AppendLine("var desktop = this.parent.MyDesktop.desktop;")
         Js.AppendLine(String.Concat("var win = desktop.getWindow('win", IDJanela, "')"))
+        Js.AppendLine("if (win) { ")
         Js.AppendLine(String.Concat("win.body.update('", CrieDIVHTMLParaJanela(URL), "');"))
+        Js.AppendLine("}")
         Js.AppendLine("</script>")
 
         Return Js.ToString
