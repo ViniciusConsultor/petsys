@@ -91,7 +91,7 @@
                         <tr>
                             <td colspan="2">
                                 <telerik:RadGrid ID="grdItensFinanceiros" runat="server" AutoGenerateColumns="False"
-                                    AllowCustomPaging="true" AllowPaging="True" PageSize="20" GridLines="None" Skin="Vista"
+                                    AllowCustomPaging="true" AllowPaging="True" PageSize="50" GridLines="None" Skin="Vista"
                                     AllowFilteringByColumn="false" OnPageIndexChanged="grdItensFinanceiros_OnPageIndexChanged"
                                     OnItemCommand="grdItensFinanceiros_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
