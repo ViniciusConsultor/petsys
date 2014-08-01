@@ -405,7 +405,21 @@ namespace FN.Client.FN
                                     cedenteNossoNumeroBoleto = boletoGeradoParaItemFinanceiro.NossoNumero.Value;
                                 }
                             }
+                            else
+                            {
+                                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                                     dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+
+                                 cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
+                            }
                         }
+                    }
+                    else
+                    {
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                            dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+
+                        cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
                     }
                 }
                 else
@@ -676,7 +690,7 @@ namespace FN.Client.FN
                                     }
                                 }
 
-                                servico.Inserir(boletoGerado, true);
+                                servico.Inserir(boletoGerado, true, TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao);
                                 // incrementar o nosso numero e o numero do documento e atualizar no banco.
                                 dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
                                 servico.AtualizarProximasInformacoes(dadosAuxiliares);
@@ -716,7 +730,7 @@ namespace FN.Client.FN
                                     }
                                     else
                                     {
-                                        servico.Inserir(boletoGerado, false);
+                                        servico.Inserir(boletoGerado, false, TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao);
 
                                         // incrementar o nosso numero e o numero do documento e atualizar no banco.
                                         dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
@@ -748,7 +762,7 @@ namespace FN.Client.FN
                     }
                     else
                     {
-                        servico.Inserir(boletoGerado, BoletoGeraItemFinanceiroDeRecebimento);
+                        servico.Inserir(boletoGerado, BoletoGeraItemFinanceiroDeRecebimento, TipoLacamentoFinanceiroRecebimento.BoletoAvulso);
                         // incrementar o nosso numero e o numero do documento e atualizar no banco.
                         dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
                         servico.AtualizarProximasInformacoes(dadosAuxiliares);

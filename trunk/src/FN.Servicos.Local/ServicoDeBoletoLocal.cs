@@ -114,7 +114,7 @@ namespace FN.Servicos.Local
             }
         }
 
-        public void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro)
+        public void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro, TipoLacamentoFinanceiroRecebimento tipoLacamento)
         {
             ServerUtils.setCredencial(_Credencial);
           
@@ -131,8 +131,9 @@ namespace FN.Servicos.Local
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento =  boletoGerado.DataVencimento.Value;
             itemLacamentoFinanceiro.Situacao = Situacao.CobrancaEmAberto;
-            itemLacamentoFinanceiro.TipoLacamento = TipoLacamentoFinanceiroRecebimento.BoletoAvulso;
+            itemLacamentoFinanceiro.TipoLacamento = tipoLacamento;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;
+            itemLacamentoFinanceiro.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
             //if (boletoGerado.ID != null) itemLacamentoFinanceiro.IDBOLETO = boletoGerado.ID.Value;
 
             try

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Compartilhados;
 using Compartilhados.Interfaces.Core.Negocio;
+using Compartilhados.Interfaces.FN.Negocio;
 using FN.Interfaces.Negocio;
 
 namespace FN.Interfaces.Servicos
@@ -12,7 +13,7 @@ namespace FN.Interfaces.Servicos
         void InserirPrimeiraVez(IBoletosGeradosAux dadosAuxBoleto);
         IBoletosGerados obtenhaBoletoPeloId(long idBoleto);
         IBoletosGerados obtenhaBoletoPeloNossoNumero(long numero);
-        void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro);
+        void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro, TipoLacamentoFinanceiroRecebimento tipoLacamento);
         void Excluir(long idBoleto);
 
         IConfiguracaoDeBoletoBancario ObtenhaConfiguracao();
