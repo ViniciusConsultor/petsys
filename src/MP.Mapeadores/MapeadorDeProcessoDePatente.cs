@@ -387,7 +387,7 @@ namespace MP.Mapeadores
             return processoDePatente;
         }
 
-        public IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado()
+        public IList<IProcessoDePatente> obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado()
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
@@ -403,6 +403,7 @@ namespace MP.Mapeadores
             sql.AppendLine(" FROM MP_PROCESSOPATENTE");
             sql.AppendLine(" INNER JOIN MP_PATENTE ON MP_PATENTE.IDPATENTE = MP_PROCESSOPATENTE.IDPATENTE");
             sql.AppendLine(" LEFT JOIN MP_PASTA ON MP_PASTA.ID = MP_PROCESSOPATENTE.IDPASTA");
+            sql.AppendLine(" WHERE MP_PROCESSOPATENTE.ATIVO = 1");
 
             using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
@@ -421,7 +422,7 @@ namespace MP.Mapeadores
                 (processoDePatente.Patente.Classificacoes != null && processoDePatente.Patente.Classificacoes.Count > 0))).ToList();
         }
 
-        public IList<IProcessoDePatente> ObtenhaTodosProcessosCadastrados()
+        public IList<IProcessoDePatente> ObtenhaTodosProcessosAtivos()
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
@@ -437,6 +438,7 @@ namespace MP.Mapeadores
             sql.AppendLine(" FROM MP_PROCESSOPATENTE");
             sql.AppendLine(" INNER JOIN MP_PATENTE ON MP_PATENTE.IDPATENTE = MP_PROCESSOPATENTE.IDPATENTE");
             sql.AppendLine(" LEFT JOIN MP_PASTA ON MP_PASTA.ID = MP_PROCESSOPATENTE.IDPASTA");
+            sql.AppendLine(" WHERE MP_PROCESSOPATENTE.ATIVO = 1");
 
             using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {

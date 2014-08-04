@@ -194,7 +194,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<long> ObtenhaTodosNumerosDeProcessosCadastrados()
+        public IList<long> ObtenhaTodosNumerosDeProcessosAtivosCadastrados()
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -202,7 +202,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaTodosNumerosDeProcessosCadastrados();
+                return mapeador.ObtenhaTodosNumerosDeProcessosAtivosCadastrados();
             }
 
             finally

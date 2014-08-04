@@ -18,7 +18,7 @@ namespace MP.Interfaces.Mapeadores
         IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
         DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente);
         IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
-        IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado();
-        IList<IProcessoDePatente> ObtenhaTodosProcessosCadastrados();
+        IList<IProcessoDePatente> obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado();
+        IList<IProcessoDePatente> ObtenhaTodosProcessosAtivos();
     }
 }

@@ -96,7 +96,7 @@ namespace MP.Client.MP
             int indiceSelecionado = 0;
 
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
-                indiceSelecionado = e.Item.ItemIndex;
+                indiceSelecionado = e.Item.DataSetIndex;
 
             if (e.CommandName == "ProcessarRevista")
             {
@@ -724,7 +724,7 @@ namespace MP.Client.MP
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                 {
                     Logger.GetInstancia().Debug("Buscando todos os processos com patentes que contem radical cadastrado");
-                    listaDeProcessosDePatentesComRadicalCadastrado = servico.obtenhaProcessosComPatenteQueContemRadicalCadastrado();
+                    listaDeProcessosDePatentesComRadicalCadastrado = servico.obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado();
                 }
 
                 if (listaDeProcessosDePatentesComRadicalCadastrado.Count > 0)

@@ -234,14 +234,14 @@ namespace MP.Mapeadores
             return null;
         }
 
-        public IList<long> ObtenhaTodosNumerosDeProcessosCadastrados()
+        public IList<long> ObtenhaTodosNumerosDeProcessosAtivosCadastrados()
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
 
             IList<long> listaDeProcessos = new List<long>();
 
-            using (var leitor = DBHelper.obtenhaReader("SELECT PROCESSO FROM MP_PROCESSOMARCA ORDER BY PROCESSO"))
+            using (var leitor = DBHelper.obtenhaReader("SELECT PROCESSO FROM  MP_PROCESSOMARCA WHERE ATIVO = 1 ORDER BY PROCESSO"))
                 try
                 {
                     while (leitor.Read())

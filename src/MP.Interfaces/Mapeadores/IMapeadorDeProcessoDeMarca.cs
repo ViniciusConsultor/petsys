@@ -16,7 +16,7 @@ namespace MP.Interfaces.Mapeadores
         IProcessoDeMarca Obtenha(long ID);
         int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
         IProcessoDeMarca ObtenhaProcessoDeMarcaPeloNumero(long numeroDoProcesso);
-        IList<long> ObtenhaTodosNumerosDeProcessosCadastrados();
+        IList<long> ObtenhaTodosNumerosDeProcessosAtivosCadastrados();
         IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade,
                                                          IList<string> IDsDosDespachos);
 
