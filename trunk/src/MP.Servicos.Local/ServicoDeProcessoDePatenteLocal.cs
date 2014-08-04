@@ -226,7 +226,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado()
+        public IList<IProcessoDePatente> obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado()
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -234,7 +234,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaProcessosComPatenteQueContemRadicalCadastrado();
+                return mapeador.obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado();
             }
             finally
             {
@@ -242,14 +242,14 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IProcessoDePatente> ObtenhaTodosProcessosCadastrados()
+        public IList<IProcessoDePatente> ObtenhaTodosProcessosAtivos()
         {
             ServerUtils.setCredencial(_Credencial);
             var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
 
             try
             {
-                return mapeador.ObtenhaTodosProcessosCadastrados();
+                return mapeador.ObtenhaTodosProcessosAtivos();
             }
             finally
             {

@@ -20,7 +20,7 @@ namespace MP.Interfaces.Servicos
         void AtivaDesativaProcessoDePatente(long idProcessoDePatente, bool ativo);
         IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
         IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
-        IList<IProcessoDePatente> obtenhaProcessosComPatenteQueContemRadicalCadastrado();
-        IList<IProcessoDePatente> ObtenhaTodosProcessosCadastrados();
+        IList<IProcessoDePatente> obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado();
+        IList<IProcessoDePatente> ObtenhaTodosProcessosAtivos();
     }
 }

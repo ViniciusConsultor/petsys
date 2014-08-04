@@ -484,7 +484,7 @@ namespace MP.Servicos.Local
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                 {
-                    listaDeNumerosDeProcessosCadastrados = servico.ObtenhaTodosNumerosDeProcessosCadastrados();
+                    listaDeNumerosDeProcessosCadastrados = servico.ObtenhaTodosNumerosDeProcessosAtivosCadastrados();
 
                     foreach (var processo in listaDeProcessosDaRevistaDeMarcas)
                     {

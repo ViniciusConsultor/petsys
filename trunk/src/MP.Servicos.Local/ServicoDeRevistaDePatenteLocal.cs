@@ -90,7 +90,7 @@ namespace MP.Servicos.Local
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
                 {
-                    processosCadastrados = servico.ObtenhaTodosProcessosCadastrados();
+                    processosCadastrados = servico.ObtenhaTodosProcessosAtivos();
 
                     foreach (IRevistaDePatente processo in listaDeRevistasDePatentes)
                     {
