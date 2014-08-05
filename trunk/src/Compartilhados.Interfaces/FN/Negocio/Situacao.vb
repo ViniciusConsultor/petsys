@@ -10,8 +10,9 @@
         Public Shared Paga As Situacao = New Situacao(2S, "Paga")
         Public Shared Cancelada As Situacao = New Situacao(3S, "Cancelada")
         Public Shared AguardandoCobranca As Situacao = New Situacao(4S, "Aguardando cobrança")
+        Public Shared CobrancaGerada As Situacao = New Situacao(5S, "Cobrança gerada")
 
-        Private Shared Lista As Situacao() = {CobrancaEmAberto, Paga, Cancelada, AguardandoCobranca}
+        Private Shared Lista As Situacao() = {CobrancaEmAberto, Paga, Cancelada, AguardandoCobranca, CobrancaGerada}
 
         Private Sub New(ByVal ID As Short, _
                         ByVal Descricao As String)

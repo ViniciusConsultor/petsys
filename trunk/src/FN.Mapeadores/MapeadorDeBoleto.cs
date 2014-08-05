@@ -119,7 +119,7 @@ namespace FN.Mapeadores
 
             sql.Append(boletoGerado.Valor == 0
                            ? String.Concat(0, ", ")
-                           : String.Concat(boletoGerado.Valor.ToString().Replace(",", ".") + ", "));
+                           : String.Concat(UtilidadesDePersistencia.TPVd(boletoGerado.Valor), ", "));
 
             sql.Append(boletoGerado.DataGeracao.HasValue
                            ? String.Concat(boletoGerado.DataGeracao.Value.ToString("yyyyMMdd"), ", ")
@@ -377,7 +377,7 @@ namespace FN.Mapeadores
 
             sql.Append(String.Concat("IDCLIENTE = ", boletoGerado.Cliente.Pessoa.ID.Value, ", "));
 
-            sql.Append(String.Concat("VALOR = ", boletoGerado.Valor, ", "));
+            sql.Append(String.Concat("VALOR = ", UtilidadesDePersistencia.TPVd(boletoGerado.Valor), ", "));
 
             sql.Append(boletoGerado.DataGeracao.HasValue
                            ? String.Concat("DATAGERACAO = ", boletoGerado.DataGeracao.Value.ToString("yyyyMMdd"), ", ")

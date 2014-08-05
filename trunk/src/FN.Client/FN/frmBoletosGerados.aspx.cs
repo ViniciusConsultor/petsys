@@ -136,10 +136,7 @@ namespace FN.Client.FN
         {
             if (e.NewPageIndex >= 0)
             {
-                var offSet = 0;
-
-                if (e.NewPageIndex > 0)
-                    offSet = e.NewPageIndex * grdBoletosGerados.PageSize;
+                var offSet = UtilidadesWeb.ObtenhaOffSet(e, grdBoletosGerados.PageSize);
 
                 CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, offSet);
 
@@ -167,7 +164,12 @@ namespace FN.Client.FN
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                                 UtilidadesWeb.MostraMensagemDeInformacao(
                                                                     "Boleto excluído com sucesso."), false);
-                        ExibaTelaInicial();
+
+                        var grid = sender as RadGrid;
+
+                        var offset = UtilidadesWeb.ObtenhaOffSet(grid.CurrentPageIndex,  grid.PageSize, grid.VirtualItemCount - 1);
+                        CarregaBoletosGerados(FiltroAplicado, UtilidadesWeb.ObtenhaQuantidadeDeItensDaPagina(grid.Items.Count -1, grid.PageSize), offset);
+                        
                     }
                     catch (BussinesException ex)
                     {
