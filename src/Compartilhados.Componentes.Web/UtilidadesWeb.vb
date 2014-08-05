@@ -497,6 +497,30 @@ Public Class UtilidadesWeb
         Return strWeb
 
     End Function
+    
+    Public Shared Function ObtenhaOffSet(e As GridPageChangedEventArgs, quantidadeDeItensPorPagina As Integer) As Integer
 
+        If (e.NewPageIndex > 0) Then Return e.NewPageIndex * quantidadeDeItensPorPagina
+
+        Return 0
+    End Function
+
+    Public Shared Function ObtenhaOffSet(paginaAtual As Integer, quantidadeDeItensDaGrid As Integer, quantidadeDeItensPorPagina As Integer) As Integer
+        If paginaAtual = 0 Then Return 0
+
+        If quantidadeDeItensDaGrid = quantidadeDeItensPorPagina Then Return paginaAtual - 1
+
+        Dim restoDaDivisao = quantidadeDeItensPorPagina Mod quantidadeDeItensDaGrid
+
+        If restoDaDivisao = 0 Then Return paginaAtual - 1
+
+        Return CType(Math.Round(quantidadeDeItensPorPagina / quantidadeDeItensDaGrid), Integer)
+    End Function
+
+    Public Shared Function ObtenhaQuantidadeDeItensDaPagina(quantidadeDeItensDaPagina As Integer, quantidadeDeItensPorPagina As Integer) As Integer
+        If quantidadeDeItensDaPagina = 0 Then Return quantidadeDeItensPorPagina
+
+        Return quantidadeDeItensDaPagina
+    End Function
 
 End Class

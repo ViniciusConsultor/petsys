@@ -237,11 +237,7 @@ namespace FN.Client.FN
         {
             if (e.NewPageIndex >= 0)
             {
-                var offSet = 0;
-
-                if (e.NewPageIndex > 0)
-                    offSet = e.NewPageIndex * grdItensDeContasAReceber.PageSize;
-
+                var offSet = UtilidadesWeb.ObtenhaOffSet(e, grdItensDeContasAReceber.PageSize);
                 MostraItens(FiltroAplicado, grdItensDeContasAReceber.PageSize, offSet);
 
             }
@@ -271,7 +267,12 @@ namespace FN.Client.FN
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                                 UtilidadesWeb.MostraMensagemDeInformacao(
                                                                     "Item de lançamento de conta a receber cancelado com sucesso."), false);
-                        ExibaTelaInicial();
+
+                        var grid = sender as RadGrid;
+
+                        var offset = UtilidadesWeb.ObtenhaOffSet(grid.CurrentPageIndex, grid.PageSize, grid.VirtualItemCount - 1);
+                        MostraItens(FiltroAplicado, UtilidadesWeb.ObtenhaQuantidadeDeItensDaPagina(grid.Items.Count - 1, grid.PageSize), offset);
+
                     }
                     catch (BussinesException ex)
                     {

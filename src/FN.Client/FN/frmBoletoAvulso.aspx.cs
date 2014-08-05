@@ -223,7 +223,7 @@ namespace FN.Client.FN
         {
             ctrlCliente.ClienteSelecionado = itemLancamentoFinanceiroRecebimento.Cliente;
             PreenchaDadosDoClienteSelecionado(itemLancamentoFinanceiroRecebimento.Cliente);
-            txtValor.Text = itemLancamentoFinanceiroRecebimento.Valor.ToString();
+            txtValor.Value = itemLancamentoFinanceiroRecebimento.Valor;
             txtVencimento.SelectedDate = itemLancamentoFinanceiroRecebimento.DataDoVencimento;
 
             //ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = null;
@@ -350,7 +350,7 @@ namespace FN.Client.FN
             try
             {
                 var vencimento = txtVencimento.SelectedDate.Value.ToString("dd/MM/yyyy");
-                var valorBoleto = txtValor.Text;
+                var valorBoleto = txtValor.Value.Value;
 
                 IBoletosGeradosAux dadosAuxiliares = null;
 
@@ -534,7 +534,7 @@ namespace FN.Client.FN
                 var cedente = new Cedente(cedenteCpfCnpj, cedenteNome, cedenteAgencia, cedenteConta, cedenteDigitoConta) { Codigo = cedenteCodigo };
 
                 var boleto = new Boleto(Convert.ToDateTime(vencimento),
-                                        (decimal)Convert.ToDouble(valorBoleto), carteira, cedenteNossoNumeroBoleto.ToString(),
+                                        (decimal)valorBoleto, carteira, cedenteNossoNumeroBoleto.ToString(),
                                         cedente) { NumeroDocumento = txtNumeroDoBoleto.Text };
 
                 //sacado         
@@ -602,7 +602,7 @@ namespace FN.Client.FN
                 boletoGerado.NossoNumero = cedenteNossoNumeroBoleto;
                 boletoGerado.NumeroBoleto = txtNumeroDoBoleto.Text;
                 boletoGerado.Observacao = sacadoObservacao;
-                boletoGerado.Valor = Convert.ToDouble(valorBoleto);
+                boletoGerado.Valor = valorBoleto;
                 boletoGerado.Instrucoes = txtInstrucoes.Text;
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())

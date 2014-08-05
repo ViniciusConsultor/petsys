@@ -44,8 +44,7 @@
                                     <asp:Label ID="Label2" runat="server" Text="Valor"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Number"
-                                        DataType="System.Double">
+                                    <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" DataType="System.Currency">
                                     </telerik:RadNumericTextBox>
                                 </td>
                             </tr>
