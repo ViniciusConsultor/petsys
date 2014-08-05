@@ -104,7 +104,7 @@
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
                                                 HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Visible="False">
+                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column" Display="False">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Codigo" HeaderText="Código" UniqueName="column30">
                                             </telerik:GridBoundColumn>

@@ -15,7 +15,7 @@ namespace MP.Migrador
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMigradorDeVersoes());
+            Application.Run(new frmMigrador());
         }
     }
 }
