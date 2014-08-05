@@ -4,8 +4,6 @@ Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Diary.Interfaces.Negocio
 Imports Compartilhados
-Imports Compartilhados.Interfaces.Core.Negocio.Telefone
-Imports Compartilhados.Interfaces.Core.Negocio
 
 Partial Public Class frmSolicitacoesDeAudiencia
     Inherits SuperPagina
@@ -71,7 +69,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de audiência", 650, 450), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Nova solicitação de audiência", 800, 600, "Diary_cdSolicitacaoDeAudiencia_aspx"), False)
     End Sub
 
     Private Function ObtenhaURL() As String
@@ -115,7 +113,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeAudiencia.aspx", "?Id=", ID)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar solicitação de audiência", 650, 450), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastrar solicitação de audiência", 800, 600, "Diary_cdSolicitacaoDeAudiencia_aspx"), False)
 
         ElseIf e.CommandName = "Finalizar" Then
             Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
@@ -126,7 +124,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID, "&Tipo=", TipoDeSolicitacao.Audiencia.ID.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de audiência", 650, 450), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Despachar solicitação de audiência", 800, 600, "Diary_frmDespachoDeSolicitacao_aspx"), False)
         End If
     End Sub
 
@@ -216,7 +214,7 @@ Partial Public Class frmSolicitacoesDeAudiencia
             Exit Sub
         End If
 
-        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia) = New List(Of ISolicitacaoDeAudiencia)
+        Dim Solicitacoes As IList(Of ISolicitacaoDeAudiencia)
 
         Using Servico As IServicoDeSolicitacaoDeAudiencia = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeAudiencia)()
             Solicitacoes = Servico.ObtenhaSolicitacoesDeAudiencia(chkConsiderarSolicitacoesFinalizadas.Checked, ctrlContato1.ContatoSelecionado.Pessoa.ID.Value)

@@ -4,21 +4,19 @@ Imports Diary.Interfaces.Negocio
 Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Compartilhados
-Imports Compartilhados.Interfaces.Core.Negocio
-Imports Compartilhados.Interfaces.Core.Negocio.Telefone
 
 Partial Public Class frmSolicitacoesDeConvite
     Inherits SuperPagina
 
     Private Const CHAVE_SOLICITACOES As String = "CHAVE_SOLICITACOES_CONVITE"
 
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If
     End Sub
 
-    Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
+    Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar
         Return Me.rtbToolBar
     End Function
 
@@ -72,14 +70,14 @@ Partial Public Class frmSolicitacoesDeConvite
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de convite", 650, 450), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Nova solicitação de convite", 800, 600, "Diary_cdSolicitacaoDeConvite_aspx"), False)
     End Sub
 
     Private Function ObtenhaURL() As String
         Return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeConvite.aspx")
     End Function
 
-    Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
+    Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovo"
                 Call btnNovo_Click()
@@ -94,7 +92,7 @@ Partial Public Class frmSolicitacoesDeConvite
         CarregaSolicitacoesSemFiltro()
     End Sub
 
-    Private Sub grdItensLancados_ItemCommand(ByVal source As Object, ByVal e As Telerik.Web.UI.GridCommandEventArgs) Handles grdItensLancados.ItemCommand
+    Private Sub grdItensLancados_ItemCommand(ByVal source As Object, ByVal e As GridCommandEventArgs) Handles grdItensLancados.ItemCommand
         Dim ID As Long
         Dim IndiceSelecionado As Integer
 
@@ -116,7 +114,7 @@ Partial Public Class frmSolicitacoesDeConvite
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeConvite.aspx", "?Id=", ID)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar solicitação de convite", 650, 450), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastrar solicitação de convite", 800, 600, "Diary_cdSolicitacaoDeConvite_aspx"), False)
 
         ElseIf e.CommandName = "Finalizar" Then
             Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
@@ -127,7 +125,7 @@ Partial Public Class frmSolicitacoesDeConvite
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID, "&Tipo=", TipoDeSolicitacao.Convite.ID.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de convite", 650, 450), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Despachar solicitação de convite", 800, 600, "Diary_frmDespachoDeSolicitacao_aspx"), False)
         End If
     End Sub
 
@@ -150,7 +148,7 @@ Partial Public Class frmSolicitacoesDeConvite
 
     End Sub
 
-    Private Sub grdItensLancados_ItemCreated(ByVal sender As Object, ByVal e As Telerik.Web.UI.GridItemEventArgs) Handles grdItensLancados.ItemCreated
+    Private Sub grdItensLancados_ItemCreated(ByVal sender As Object, ByVal e As GridItemEventArgs) Handles grdItensLancados.ItemCreated
         If (TypeOf e.Item Is GridDataItem) Then
             Dim gridItem As GridDataItem = CType(e.Item, GridDataItem)
 
@@ -162,11 +160,11 @@ Partial Public Class frmSolicitacoesDeConvite
         End If
     End Sub
 
-    Private Sub grdItensLancados_PageIndexChanged(ByVal source As Object, ByVal e As Telerik.Web.UI.GridPageChangedEventArgs) Handles grdItensLancados.PageIndexChanged
+    Private Sub grdItensLancados_PageIndexChanged(ByVal source As Object, ByVal e As GridPageChangedEventArgs) Handles grdItensLancados.PageIndexChanged
         UtilidadesWeb.PaginacaoDataGrid(grdItensLancados, ViewState(CHAVE_SOLICITACOES), e)
     End Sub
 
-    Protected Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As System.Web.UI.ImageClickEventArgs) Handles btnPesquisar.Click
+    Protected Sub btnPesquisar_Click(ByVal sender As Object, ByVal e As ImageClickEventArgs) Handles btnPesquisar.Click
         If txtDataInicial.IsEmpty Then
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia("A data inicial da solicitação de convite deve ser informada."), False)
             Exit Sub
@@ -229,7 +227,7 @@ Partial Public Class frmSolicitacoesDeConvite
             Exit Sub
         End If
 
-        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite) = New List(Of ISolicitacaoDeConvite)
+        Dim Solicitacoes As IList(Of ISolicitacaoDeConvite)
 
         Using Servico As IServicoDeSolicitacaoDeConvite = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeConvite)()
             Solicitacoes = Servico.ObtenhaSolicitacoesDeConvite(chkConsiderarSolicitacoesFinalizadas.Checked, ctrlContato1.ContatoSelecionado.Pessoa.ID.Value)

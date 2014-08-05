@@ -4,21 +4,19 @@ Imports Diary.Interfaces.Servicos
 Imports Compartilhados.Fabricas
 Imports Diary.Interfaces.Negocio
 Imports Compartilhados
-Imports Compartilhados.Interfaces.Core.Negocio.Telefone
-Imports Compartilhados.Interfaces.Core.Negocio
 
 Partial Public Class frmSolicitacoesDeVisita
     Inherits SuperPagina
 
     Private Const CHAVE_SOLICITACOES As String = "CHAVE_SOLICITACOES_VISITA"
 
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         If Not IsPostBack Then
             ExibaTelaInicial()
         End If
     End Sub
 
-    Protected Overrides Function ObtenhaBarraDeFerramentas() As Telerik.Web.UI.RadToolBar
+    Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar
         Return Me.rtbToolBar
     End Function
 
@@ -71,14 +69,14 @@ Partial Public Class frmSolicitacoesDeVisita
         Dim URL As String
 
         URL = ObtenhaURL()
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Nova solicitação de visita", 650, 450), False)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Nova solicitação de visita", 800, 600, "Diary_cdSolicitacaoDeVisita_aspx"), False)
     End Sub
 
     Private Function ObtenhaURL() As String
         Return String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeVisita.aspx")
     End Function
 
-    Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As Telerik.Web.UI.RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
+    Private Sub rtbToolBar_ButtonClick(ByVal sender As Object, ByVal e As RadToolBarEventArgs) Handles rtbToolBar.ButtonClick
         Select Case CType(e.Item, RadToolBarButton).CommandName
             Case "btnNovo"
                 btnNovo_Click()
@@ -115,7 +113,7 @@ Partial Public Class frmSolicitacoesDeVisita
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/cdSolicitacaoDeVisita.aspx", "?Id=", ID)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Cadastrar solicitação de visita", 650, 450), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Cadastrar solicitação de visita", 800, 600, "Diary_cdSolicitacaoDeVisita_aspx"), False)
 
         ElseIf e.CommandName = "Finalizar" Then
             Using Servico As IServicoDeSolicitacaoDeVisita = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeSolicitacaoDeVisita)()
@@ -126,7 +124,7 @@ Partial Public Class frmSolicitacoesDeVisita
             Dim URL As String
 
             URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual, "Diary/frmDespachoDeSolicitacao.aspx", "?Id=", ID, "&Tipo=", TipoDeSolicitacao.Visita.ID.ToString)
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanelaModal(URL, "Despachar solicitação de visita", 650, 450), False)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.ExibeJanela(URL, "Despachar solicitação de visita", 800, 600, "Diary_frmDespachoDeSolicitacao_aspx"), False)
         End If
     End Sub
 
