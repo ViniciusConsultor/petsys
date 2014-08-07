@@ -412,21 +412,17 @@ namespace FN.Client.FN
         {
             if (e.Item is GridDataItem)
             {
+                var gridItem = (GridDataItem)e.Item;
 
-                var item = (GridDataItem)e.Item;
-
-                var data = ((IItemLancamentoFinanceiro) (((item)).DataItem)).DataDoVencimento;
-
-                if (Convert.ToInt32(data.ToString("yyyyMMdd")) < Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")))
-                {
-                    ((item)).BackColor = Color.Red;
-                    ((item)).ForeColor  = Color.White;                
+                var lancamento = ((IItemLancamentoFinanceiro) (((gridItem)).DataItem));
+                
+                if (lancamento.EstaVencido()) {
+                    gridItem.BackColor = Color.Red;
+                    gridItem.ForeColor = Color.White;                
                 }
 
 
-
-
-
+               
             }
         }
     }

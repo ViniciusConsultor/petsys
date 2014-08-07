@@ -46,6 +46,8 @@ Public MustInherit Class Filtro
             Return campo & " LIKE '%" & ValorDoFiltro & "%' "
         ElseIf Operacao.Equals(OperacaoDeFiltro.IgualA) Then
             Return campo & " = " & caracter & ValorDoFiltro & caracter & " "
+        ElseIf Operacao.Equals(OperacaoDeFiltro.Diferente) Then
+            Return campo & " <> " & caracter & ValorDoFiltro & caracter & " "
         ElseIf Operacao.Equals(OperacaoDeFiltro.MaiorIgualA) Then
             Return campo & " >= " & caracter & ValorDoFiltro & caracter & " "
         ElseIf Operacao.Equals(OperacaoDeFiltro.MaiorQue) Then

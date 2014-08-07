@@ -14,10 +14,13 @@
         Public Shared MenorIgualA As OperacaoDeFiltro = New OperacaoDeFiltro(6, "Menor igual a")
         Public Shared MenorQue As OperacaoDeFiltro = New OperacaoDeFiltro(7, "Menor que")
         Public Shared Intervalo As OperacaoDeFiltro = New OperacaoDeFiltro(8, "Intervalo")
+        Public Shared Diferente As OperacaoDeFiltro = New OperacaoDeFiltro(9, "Diferente")
+
 
         Private Shared Lista As OperacaoDeFiltro() = {ComecaCom, _
                                                       EmQualquerParte, _
                                                       IgualA, _
+                                                      Diferente, _
                                                       MaiorIgualA, _
                                                       MaiorQue, _
                                                       MenorIgualA, _

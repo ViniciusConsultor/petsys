@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -22,6 +23,7 @@ namespace FN.Client.FN
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_CONTAS_A_RECEBER";
         private const int NUMERO_CELULA_ID_CLIENTE = 9;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 7;
+        private const int NUMERO_CELULA_GERAR_BOLETO = 5;
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -506,6 +508,24 @@ namespace FN.Client.FN
                 var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +nomeDoArquivo;
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
+        }
+
+        protected void grdItensDeContasAReceber_OnItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                var lancamento = ((IItemLancamentoFinanceiro)(((gridItem)).DataItem));
+
+                if (lancamento.EstaVencido())
+                {
+                    ((gridItem)).BackColor = Color.Red;
+                    ((gridItem)).ForeColor = Color.White;
+                }
+
+                gridItem.Cells[NUMERO_CELULA_GERAR_BOLETO].Controls[0].Visible = (lancamento as IItemLancamentoFinanceiroRecebimento).FormaDeRecebimentoEhBoleto();
             }
         }
     }
