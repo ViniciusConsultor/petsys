@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
@@ -404,6 +405,28 @@ namespace FN.Client.FN
                 var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
                 var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+            }
+        }
+
+        protected void grdItensFinanceiros_OnItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+
+                var item = (GridDataItem)e.Item;
+
+                var data = ((IItemLancamentoFinanceiro) (((item)).DataItem)).DataDoVencimento;
+
+                if (Convert.ToInt32(data.ToString("yyyyMMdd")) < Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")))
+                {
+                    ((item)).BackColor = Color.Red;
+                    ((item)).ForeColor  = Color.White;                
+                }
+
+
+
+
+
             }
         }
     }
