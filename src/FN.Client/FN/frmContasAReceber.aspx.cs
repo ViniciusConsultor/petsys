@@ -24,6 +24,7 @@ namespace FN.Client.FN
         private const int NUMERO_CELULA_ID_CLIENTE = 9;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 7;
         private const int NUMERO_CELULA_GERAR_BOLETO = 5;
+        private const int NUMERO_CELULA_CANCELAR = 6;
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -525,7 +526,9 @@ namespace FN.Client.FN
                     ((gridItem)).ForeColor = Color.White;
                 }
 
-                gridItem.Cells[NUMERO_CELULA_GERAR_BOLETO].Controls[0].Visible = (lancamento as IItemLancamentoFinanceiroRecebimento).FormaDeRecebimentoEhBoleto();
+                gridItem.Cells[NUMERO_CELULA_GERAR_BOLETO].Controls[0].Visible = (lancamento as IItemLancamentoFinanceiroRecebimento).FormaDeRecebimentoEhBoleto() && !lancamento.LacamentoFoiCanceladoOuPago(); ;
+                gridItem.Cells[NUMERO_CELULA_CANCELAR].Controls[0].Visible = !lancamento.LacamentoFoiCanceladoOuPago();
+
             }
         }
     }

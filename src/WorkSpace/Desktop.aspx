@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <title>Workspace</title>
+    <link href="StyleSheetResponsivo.css" rel="stylesheet" />
     <link href="ext-all.css" rel="stylesheet" type="text/css" />
     <link href="desktop.css" rel="stylesheet" type="text/css" />
     
