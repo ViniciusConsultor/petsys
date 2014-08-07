@@ -9,7 +9,7 @@
     <title></title>
     <link href="ext-all.css" rel="stylesheet" type="text/css" />
     <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
-
+    <link href="StyleSheetResponsivo.css" rel="stylesheet" />
    
 </head>
 <body>
