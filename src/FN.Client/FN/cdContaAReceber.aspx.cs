@@ -37,7 +37,7 @@ namespace FN.Client.FN
             if (id == null)
                 ExibaTelaNovo();
             else
-                ExibaTelaDetalhes(id.Value);
+                ExibaDetalhes(id.Value);
         }
 
         private void MostreItemFinanceiro(IItemLancamentoFinanceiroRecebimento itemDeLacamento)
@@ -64,17 +64,32 @@ namespace FN.Client.FN
             txtDescricao.Text = itemDeLacamento.Descricao;
         }
 
-        private void ExibaTelaDetalhes(long id)
+        private void ExibaDetalhes(long id)
         {
-            ViewState[CHAVE_ESTADO] = Estado.Modifica;
             LimpaTela();
-
+            ViewState[CHAVE_ESTADO] = Estado.Modifica;
             IItemLancamentoFinanceiroRecebimento itemLancamento = null;
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
                 itemLancamento = servico.Obtenha(id);
 
             if (itemLancamento != null) MostreItemFinanceiro(itemLancamento);
+
+            if (itemLancamento.LacamentoFoiCanceladoOuPago())
+            {
+                ExibaTelaItemCanceladoOuPago();
+                return;
+            }
+                
+            ExibaTelaModificar();
+
+
+        }
+
+        private void ExibaTelaItemCanceladoOuPago()
+        {
+            var controle = pnlDadosDaConta as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controle, false);
         }
 
         private void ExibaTelaNovo()
@@ -82,6 +97,12 @@ namespace FN.Client.FN
             ViewState[CHAVE_ESTADO] = Estado.Novo;
             LimpaTela();
             txtDataDoLancamento.SelectedDate = DateTime.Now;
+
+            ctrlSituacao.SituacaoSelecionada = Situacao.CobrancaEmAberto;
+            ctrlSituacao.Codigo = Situacao.CobrancaEmAberto.ID.ToString();
+
+            var controle2 = ctrlSituacao as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controle2, false);
         }
 
         private void LimpaTela()
@@ -139,6 +160,16 @@ namespace FN.Client.FN
         private void ExibaTelaModificar()
         {
             ViewState[CHAVE_ESTADO] = Estado.Modifica;
+            txtDataDoLancamento.Enabled = false;
+
+            var controle = ctrlCliente as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controle, false);
+
+            var controle1 = ctrlTipoLacamentoFinanceiroRecebimento as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controle1, false);
+
+            var controle2 = ctrlSituacao as Control;
+            UtilidadesWeb.HabilitaComponentes(ref controle2, false);
         }
 
         protected void btnSalvar_Click()

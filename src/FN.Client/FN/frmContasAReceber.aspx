@@ -116,7 +116,7 @@
                                 <telerik:RadGrid ID="grdItensDeContasAReceber" runat="server" AutoGenerateColumns="False"
                                     AllowCustomPaging="true" AllowPaging="True" PageSize="50" GridLines="None" Skin="Vista"
                                     AllowFilteringByColumn="false" OnPageIndexChanged="grdItensDeContasAReceber_OnPageIndexChanged"
-                                    OnItemCommand="grdItensDeContasAReceber_OnItemCommand">
+                                    OnItemCommand="grdItensDeContasAReceber_OnItemCommand" OnItemDataBound="grdItensDeContasAReceber_OnItemDataBound">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView Width="100%">
                                         <GroupByExpressions>

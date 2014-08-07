@@ -8,6 +8,7 @@ Namespace FN.Negocio
         Property DataDoRecebimento As Nullable(Of Date)
         Property TipoLacamento As TipoLacamentoFinanceiroRecebimento
         Property FormaDeRecebimento As FormaDeRecebimento
+        Function FormaDeRecebimentoEhBoleto() As Boolean
 
     End Interface
 

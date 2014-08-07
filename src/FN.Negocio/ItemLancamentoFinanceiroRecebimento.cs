@@ -9,6 +9,14 @@ namespace FN.Negocio
     [Serializable]
     public class ItemLancamentoFinanceiroRecebimento : ItemLancamentoFinanceiro, IItemLancamentoFinanceiroRecebimento
     {
+        public bool FormaDeRecebimentoEhBoleto()
+        {
+            if (FormaDeRecebimento != null)
+                return FormaDeRecebimento.Equals(FormaDeRecebimento.Boleto);
+
+            return false;
+        }
+
         public DateTime? DataDoRecebimento { get; set; }
         public TipoLacamentoFinanceiroRecebimento TipoLacamento { get; set; }
 
@@ -18,5 +26,6 @@ namespace FN.Negocio
         {
             return TipoLacamentoFinanceiro.Recebimento;
         }
+
     }
 }

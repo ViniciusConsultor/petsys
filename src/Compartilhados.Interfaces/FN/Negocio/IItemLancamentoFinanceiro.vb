@@ -14,6 +14,8 @@ Namespace FN.Negocio
         Property Situacao As Situacao
         Property Descricao As String
         Property NumeroBoletoGerado As String
+        Function EstaVencido() As Boolean
+        Function LacamentoFoiCanceladoOuPago() As Boolean
 
     End Interface
 

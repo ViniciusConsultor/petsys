@@ -4,13 +4,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
     <title>Login</title>
     <link href="StyleSheetLogin.css" rel="stylesheet"  type="text/css" />
     <link href="ext-all.css" rel="stylesheet" type="text/css" />
      <link href="StyleSheetResponsivo.css" rel="stylesheet" />
     <script async language="javascript" src="js/ext-base.js" type="text/javascript"></script>
     <script async language="javascript" src="js/ext-all.js" type="text/javascript"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+    
 
    
     
