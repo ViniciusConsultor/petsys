@@ -71,11 +71,13 @@
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorIntervaloDeDataDeVencimento.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorSituacao.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberSemFiltro.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberVencidos.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoPorCliente.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoPorDescricao.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoPorID.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoPorIntervaloDAtaDeVencimento.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoSemFiltro.cs" />
+    <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoVencidos.cs" />
     <Compile Include="Negocio\IBoletosGerados.cs" />
     <Compile Include="Negocio\IBoletosGeradosAux.cs" />
     <Compile Include="Negocio\IConfiguracaoDeBoletoBancario.cs" />

@@ -20,7 +20,7 @@ namespace FN.Negocio.Filtros.ContasAReceber
             sql.Append("FROM FN_ITEMFINANREC ");
             sql.Append(" INNER JOIN NCL_PESSOA ON IDCLIENTE = NCL_PESSOA.ID");
             sql.Append(" WHERE " + ObtenhaFiltroMontado("FN_ITEMFINANREC.DESCRICAO", true));
-            sql.Append(" AND SITUACAO <> '" + Situacao.AguardandoCobranca.ID + "'");
+            sql.Append(" AND SITUACAO <> " + Situacao.AguardandoCobranca.ID);
 
             return sql.ToString();
         }

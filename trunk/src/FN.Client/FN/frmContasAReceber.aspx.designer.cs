@@ -76,6 +76,15 @@ namespace FN.Client.FN {
         protected global::Telerik.Web.UI.RadComboBox cboTipoDeFiltro;
         
         /// <summary>
+        /// pnlOpcaoDeFiltro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlOpcaoDeFiltro;
+        
+        /// <summary>
         /// Label10 control.
         /// </summary>
         /// <remarks>
@@ -290,6 +299,24 @@ namespace FN.Client.FN {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorDescricao;
+        
+        /// <summary>
+        /// pnlVencidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlVencidos;
+        
+        /// <summary>
+        /// btnVencidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnVencidos;
         
         /// <summary>
         /// rdkContasAReceber control.

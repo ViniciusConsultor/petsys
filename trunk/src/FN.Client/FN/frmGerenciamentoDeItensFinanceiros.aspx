@@ -37,7 +37,7 @@
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr runat="server" id="pnlOpcaoDeFiltro">
                                 <td class="th3">
                                     <asp:Label ID="Label10" runat="server" Text="Operação do filtro"></asp:Label>
                                 </td>
@@ -78,6 +78,15 @@
                                     </telerik:RadTextBox>
                                     <asp:ImageButton ID="btnPesquisarPorDescricao" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorDescricao_OnClick_" />
+                                </td>
+                            </tr>
+                             <tr runat="server" id="pnlVencidos">
+                                <td class="th3">
+                                
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnVencidos" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
+                                        OnClick="btnVencidos_OnClick" />
                                 </td>
                             </tr>
                         </table>
