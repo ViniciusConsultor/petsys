@@ -18,5 +18,6 @@ namespace FN.Interfaces.Negocio
         string Observacao { get; set; }
         ICedente Cedente { get; set; }
         string Instrucoes { get; set; }
+        string StatusBoleto { get; set; }
     }
 }

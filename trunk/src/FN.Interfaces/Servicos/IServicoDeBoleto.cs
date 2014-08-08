@@ -22,5 +22,6 @@ namespace FN.Interfaces.Servicos
         void AtualizarBoletoGerado(IBoletosGerados boletoGerado);
         IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet);
         int ObtenhaQuantidadeDeBoletos(IFiltro filtro);
+        void AtualizarStatusDoBoletoGerado(long numeroDoBoletoGerado, string statusDoBoleto);
     }
 }

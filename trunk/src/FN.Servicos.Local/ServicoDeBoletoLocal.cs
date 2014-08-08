@@ -256,6 +256,29 @@ namespace FN.Servicos.Local
             }
         }
 
+        public void AtualizarStatusDoBoletoGerado(long numeroDoBoletoGerado, string statusDoBoleto)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
+
+            try
+            {
+                ServerUtils.BeginTransaction();
+                mapeador.AtualizarStatusDoBoletoGerado(numeroDoBoletoGerado, statusDoBoleto);
+                ServerUtils.CommitTransaction();
+            }
+            catch
+            {
+                ServerUtils.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
         public void AtualizarBoletoGerado(IBoletosGerados boletoGerado)
         {
             ServerUtils.setCredencial(_Credencial);
