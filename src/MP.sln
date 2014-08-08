@@ -32,6 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Atualização", "Atualizaç
 	ProjectSection(SolutionItems) = preProject
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.0.0_PARA_1.0.1.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.0.0_PARA_1.0.1.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.1.0_PARA_1.0.2.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.1.0_PARA_1.0.2.0.sql
+		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.10.0_PARA_1.0.11.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.10.0_PARA_1.0.11.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.2.0_PARA_1.0.3.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.2.0_PARA_1.0.3.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.3.0_PARA_1.0.4.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.3.0_PARA_1.0.4.0.sql
 		..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.4.0_PARA_1.0.5.0.sql = ..\doc\Banco de dados\MP\SQL Server\Atualização\SCRIPT_ATUALIZACAO_SQLSERVER_1.0.4.0_PARA_1.0.5.0.sql

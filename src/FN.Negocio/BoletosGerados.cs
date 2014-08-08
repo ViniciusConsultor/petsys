@@ -29,5 +29,7 @@ namespace FN.Negocio
         public string Observacao { get; set; }
 
         public string Instrucoes { get; set; }
+
+        public string StatusBoleto { get; set; }
     }
 }

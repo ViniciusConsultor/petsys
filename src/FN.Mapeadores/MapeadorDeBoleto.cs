@@ -333,6 +333,19 @@ namespace FN.Mapeadores
             return listaDeBoletos;
         }
 
+        public void AtualizarStatusDoBoletoGerado(long numeroDoBoletoGerado, string statusDoBoleto)
+        {
+            var sql = new StringBuilder();
+
+            var dbHelper = ServerUtils.getDBHelper();
+
+            sql.Append("UPDATE FN_BOLETOS_GERADOS ");
+            sql.Append("SET STATUSBOLETO = '" + statusDoBoleto + "'");
+            sql.Append(" WHERE NOSSONUMERO = " + numeroDoBoletoGerado);
+
+            dbHelper.ExecuteNonQuery(sql.ToString());
+        }
+
         private IBoletosGerados obtenhaBoletoComFiltro(IDataReader leitor)
         {
             var boletoGerado = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGerados>();

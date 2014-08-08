@@ -28,5 +28,6 @@ namespace FN.Interfaces.Mapeadores
 
         int ObtenhaQuantidadeDeBoletos(IFiltro filtro);
         IList<IBoletosGerados> obtenhaBoletosGerados(IFiltro filtro, int quantidadeDeRegistros, int offSet);
+        void AtualizarStatusDoBoletoGerado(long numeroDoBoletoGerado, string statusDoBoleto);
     }
 }
