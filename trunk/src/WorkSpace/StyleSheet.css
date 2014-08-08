@@ -1,13 +1,14 @@
 ﻿body
 {
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size:11px;margin:0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    margin: 0;
 }
 
 .tabela
 {
     width: 100%;
-    font-size:10px;
+    font-size: 10px;
 }
 
 .td
@@ -42,7 +43,8 @@
 {
 }
 
-.imagemUpLoad {
+.imagemUpLoad
+{
     width: 200px;
     height: auto;
 }
@@ -158,9 +160,19 @@
 }
 
 .hidelink
+{
+    text-decoration: none;
+}
 
-       {
-
-           text-decoration:none;
-
-       }
+.pesquisar {
+   color: white; 
+   font-weight: bold; 
+   font-family: Arial;
+   font-size: small; 
+   display: inline-block; 
+   position: fixed; 
+   top: 0%; 
+   right: 3px; 
+   padding: 2px; 
+   width: 20%;
+}
