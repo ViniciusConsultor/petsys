@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <title>Workspace</title>
+    <link href="StyleSheet.css" rel="stylesheet" />
     <link href="StyleSheetResponsivo.css" rel="stylesheet" />
     <link href="ext-all.css" rel="stylesheet" type="text/css" />
     <link href="desktop.css" rel="stylesheet" type="text/css" />
@@ -38,8 +39,7 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Block">
         <ContentTemplate>
-            <div style="color: white; font-weight: bold; font-family: Arial;
-                font-size: small; display: inline; position: fixed; top: 0%; left: 80%; padding: 2px;">
+            <div class="pesquisar">
                 <telerik:RadComboBox ID="cboPesquisa" runat="server" EmptyMessage="Digite para fazer uma pesquisa..."
                     EnableLoadOnDemand="True" LoadingMessage="Carregando..." MarkFirstMatch="false"
                     ShowDropDownOnTextboxClick="False" AllowCustomText="True" HighlightTemplatedItems="True"
