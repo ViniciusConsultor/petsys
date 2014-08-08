@@ -21,11 +21,13 @@ namespace FN.Client.FN
     public partial class frmContasAReceber : SuperPagina
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_CONTAS_A_RECEBER";
-        private const int NUMERO_CELULA_ID_CLIENTE = 9;
-        private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 7;
+        private const int NUMERO_CELULA_FORMA_RECEBIMENTO = 16;
+        private const int NUMERO_CELULA_ID_CLIENTE = 10;
+        private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 8;
         private const int NUMERO_CELULA_GERAR_BOLETO = 5;
         private const int NUMERO_CELULA_CANCELAR = 6;
-        
+        private const int NUMERO_CELULA_RECEBER = 7;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -56,6 +58,7 @@ namespace FN.Client.FN
             pnlSituacao.Visible = false;
             pnlDescricao.Visible = false;
             pnlFormaDeRecebimento.Visible = false;
+            pnlVencidos.Visible = false;
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -66,6 +69,7 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Período de vencimento", "3"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Descrição", "4"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Forma de recebimento", "5"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Vencidos", "6"));
         }
 
         private void ExibaTelaInicial()
@@ -81,13 +85,15 @@ namespace FN.Client.FN
             pnlSituacao.Visible = true;
             cboTipoDeFiltro.SelectedValue = "1";
 
+            pnlOpcaoDeFiltro.Visible = true;
+
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
             var situacoesADesconsiderar = new List<Situacao>();
 
             situacoesADesconsiderar.Add(Situacao.AguardandoCobranca);
             ctrlSituacao.Inicializa(situacoesADesconsiderar);
-          
+
             ctrlFormaRecebimento.Inicializa();
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.IgualA.ID.ToString();
 
@@ -100,6 +106,8 @@ namespace FN.Client.FN
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible = false;
+
         }
 
         private string ObtenhaURLDeContaAReceber()
@@ -138,7 +146,34 @@ namespace FN.Client.FN
                 case "btnRelatorio":
                     GerarRelatorio();
                     break;
+                case "btnReceberContaColetivo":
+                    RecebaContasColetivamente();
+                    break;
+
             }
+        }
+
+        private void RecebaContasColetivamente()
+        {
+            try
+            {
+                foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
+                    if ((dataItem.FindControl("CheckBox1") as CheckBox).Checked)
+                        RecebaLancamento(Convert.ToInt64(dataItem.Cells[NUMERO_CELULA_ID_ITEM_FINANCEIRO].Text));
+
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                             UtilidadesWeb.MostraMensagemDeInformacao(
+                                                                 "Os Itens de lançamento de conta a receber foram recebidos com sucesso."), false);
+
+                ExibaTelaInicial();
+
+            }
+            catch (BussinesException ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+            }
+
         }
 
         private void PreparaEmissaoDeBoletoColetivamente()
@@ -173,6 +208,8 @@ namespace FN.Client.FN
         {
             EscondaTodosOsPanelsDeFiltro();
 
+            pnlOpcaoDeFiltro.Visible = true;
+
             switch (cboTipoDeFiltro.SelectedValue)
             {
                 case "1":
@@ -183,12 +220,17 @@ namespace FN.Client.FN
                     break;
                 case "3":
                     pnlPeriodoDeVencimento.Visible = true;
+                    pnlOpcaoDeFiltro.Visible = true;
                     break;
                 case "4":
                     pnlDescricao.Visible = true;
                     break;
                 case "5":
                     pnlFormaDeRecebimento.Visible = true;
+                    break;
+                case "6":
+                    pnlVencidos.Visible = true;
+                    pnlOpcaoDeFiltro.Visible = false;
                     break;
 
             }
@@ -302,6 +344,37 @@ namespace FN.Client.FN
                                                                                        800, 550, "FN_frmBoletoAvulso_aspx"), false);
 
                     break;
+                case "Receber":
+
+                    try
+                    {
+                        RecebaLancamento(id);
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                UtilidadesWeb.MostraMensagemDeInformacao(
+                                                                    "O Item de lançamento de conta a receber foi recebido com sucesso."), false);
+
+                        ExibaTelaInicial();
+
+                    }
+                    catch (BussinesException ex)
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                    }
+
+                    break;
+            }
+        }
+
+        private void RecebaLancamento(long idDoLancamento)
+        {
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+            {
+                var lancamento = servico.Obtenha(idDoLancamento);
+
+                lancamento.Situacao = Situacao.Paga;
+                lancamento.DataDoRecebimento = DateTime.Now;
+                servico.Modifique(lancamento);
             }
         }
 
@@ -455,7 +528,10 @@ namespace FN.Client.FN
         {
             ((sender as CheckBox).NamingContainer as GridItem).Selected = (sender as CheckBox).Checked;
             bool checkHeader = true;
-            var idsDeCliente = new Dictionary<string, int>();
+            var idsDeClientePorQuantidade = new Dictionary<string, int>();
+            var idsDeClientePorFormaDeRecebimento = new Dictionary<string, int>();
+            
+            int quantidadeDeItensSelecionados = 0;
 
             foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
             {
@@ -466,15 +542,27 @@ namespace FN.Client.FN
 
                 if ((dataItem.FindControl("CheckBox1") as CheckBox).Checked)
                 {
-                    if (!idsDeCliente.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
-                        idsDeCliente.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
+                    if (!idsDeClientePorFormaDeRecebimento.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                        idsDeClientePorFormaDeRecebimento.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
 
-                    idsDeCliente[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
+                    if (!idsDeClientePorQuantidade.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                        idsDeClientePorQuantidade.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
+
+                    idsDeClientePorQuantidade[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
+                    
+                    if (dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text.Equals(FormaDeRecebimento.Boleto.Descricao,StringComparison.InvariantCultureIgnoreCase))
+                        idsDeClientePorFormaDeRecebimento[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
+                    
+                    quantidadeDeItensSelecionados += 1;
                 }
             }
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
-                idsDeCliente.Count() == 1 && idsDeCliente.ElementAt(0).Value > 1;
+                idsDeClientePorQuantidade.Count() == 1 && idsDeClientePorQuantidade.ElementAt(0).Value > 1 && idsDeClientePorFormaDeRecebimento.ElementAt(0).Value == idsDeClientePorQuantidade.ElementAt(0).Value;
+
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible =
+                quantidadeDeItensSelecionados > 1;
+
             GridHeaderItem headerItem = grdItensDeContasAReceber.MasterTableView.GetItems(GridItemType.Header)[0] as GridHeaderItem;
             (headerItem.FindControl("headerChkbox") as CheckBox).Checked = checkHeader;
         }
@@ -484,6 +572,8 @@ namespace FN.Client.FN
             var headerCheckBox = (sender as CheckBox);
             var mostrarBotaoBoletoColetivo = true;
             string idDoClienteDaPrimeiraLinha = null;
+            string formaDeRecebimentoDaPrimeiraLinha = null;
+
             foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
             {
                 (dataItem.FindControl("CheckBox1") as CheckBox).Checked = headerCheckBox.Checked;
@@ -492,12 +582,18 @@ namespace FN.Client.FN
                 if (idDoClienteDaPrimeiraLinha == null)
                     idDoClienteDaPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text;
 
-                if (!idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
-                    mostrarBotaoBoletoColetivo = false;
+                if (formaDeRecebimentoDaPrimeiraLinha == null)
+                    formaDeRecebimentoDaPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text;
 
+                if (!idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text) || 
+                    !formaDeRecebimentoDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text))
+                    mostrarBotaoBoletoColetivo = false;
             }
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = mostrarBotaoBoletoColetivo;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible =
+                headerCheckBox.Checked;
+
         }
 
         private void GerarRelatorio()
@@ -507,8 +603,8 @@ namespace FN.Client.FN
                 var itensDeLancamento = servico.ObtenhaItensFinanceiros(FiltroAplicado, int.MaxValue, 0);
                 var geradorDeRelatorioGeral = new GeradorDeRelatorioDeContasAReceber(itensDeLancamento, true);
                 var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
-                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" +nomeDoArquivo;
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(),UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+                var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
             }
         }
 
@@ -528,8 +624,16 @@ namespace FN.Client.FN
 
                 gridItem.Cells[NUMERO_CELULA_GERAR_BOLETO].Controls[0].Visible = (lancamento as IItemLancamentoFinanceiroRecebimento).FormaDeRecebimentoEhBoleto() && !lancamento.LacamentoFoiCanceladoOuPago(); ;
                 gridItem.Cells[NUMERO_CELULA_CANCELAR].Controls[0].Visible = !lancamento.LacamentoFoiCanceladoOuPago();
+                gridItem.Cells[NUMERO_CELULA_RECEBER].Controls[0].Visible = !lancamento.LacamentoFoiCanceladoOuPago();
 
             }
+        }
+
+        protected void btnVencidos_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberVencidos>();
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
         }
     }
 }

@@ -14,15 +14,16 @@
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.001.0001" />
             <telerik:RadToolBarButton runat="server" Text="Gerar boleto coletivamente" ImageUrl="~/imagens/boleto.png"
                 CommandName="btnGerarBoletoColetivo" CausesValidation="False" />
+              <telerik:RadToolBarButton runat="server" Text="Receber conta coletivamente" ImageUrl="~/imagens/dinheiroGrande.gif"
+                CommandName="btnReceberContaColetivo" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
-                <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
-            CommandName="btnLimpar" CausesValidation="False" />
-                <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
-            CommandName="btnRelatorio" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
+                CommandName="btnLimpar" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
+                CommandName="btnRelatorio" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
-
     </telerik:RadToolBar>
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
@@ -40,7 +41,7 @@
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr runat="server" id="pnlOpcaoDeFiltro">
                                 <td class="th3">
                                     <asp:Label ID="Label10" runat="server" Text="Operação do filtro"></asp:Label>
                                 </td>
@@ -103,12 +104,20 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorDescricao_OnClick_" />
                                 </td>
                             </tr>
+                            <tr runat="server" id="pnlVencidos">
+                                <td class="th3">
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnVencidos" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
+                                        OnClick="btnVencidos_OnClick" />
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>
-            <telerik:RadDock ID="rdkContasAReceber" runat="server" Title="Contas a receber"
-                DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
+            <telerik:RadDock ID="rdkContasAReceber" runat="server" Title="Contas a receber" DefaultCommands="ExpandCollapse"
+                EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
                     <table class="tabela">
                         <tr>
@@ -126,7 +135,7 @@
                                                     <%-- <telerik:GridGroupByField FieldName="Valor" HeaderText="TOTAL"  Aggregate="Sum" />--%>
                                                 </SelectFields>
                                                 <GroupByFields>
-                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome"  />
+                                                    <telerik:GridGroupByField FieldName="Cliente.Pessoa.Nome" />
                                                 </GroupByFields>
                                             </telerik:GridGroupByExpression>
                                         </GroupByExpressions>
@@ -161,6 +170,11 @@
                                                 ConfirmTitle="Cancelar">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Receber" FilterImageToolTip="Receber"
+                                                HeaderTooltip="Receber" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column888"
+                                                ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo receber a conta?" ConfirmTitle="Receber">
+                                                <ItemStyle Width="2%"></ItemStyle>
+                                            </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column353">
@@ -192,7 +206,7 @@
                                             <telerik:GridBoundColumn DataField="FormaDeRecebimento.Descricao" HeaderText="Forma de recebimento"
                                                 UniqueName="column563">
                                                 <ItemStyle Width="8%"></ItemStyle>
-                                            </telerik:GridBoundColumn>                                           
+                                            </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Situacao.Descricao" HeaderText="Situação" UniqueName="column63">
                                                 <ItemStyle Width="10%"></ItemStyle>
                                             </telerik:GridBoundColumn>
@@ -200,7 +214,7 @@
                                                 UniqueName="column73">
                                                 <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                             <telerik:GridBoundColumn DataField="NumeroBoletoGerado" HeaderText="Boleto gerado"
+                                            <telerik:GridBoundColumn DataField="NumeroBoletoGerado" HeaderText="Boleto gerado"
                                                 UniqueName="column567">
                                                 <ItemStyle Width="15%"></ItemStyle>
                                             </telerik:GridBoundColumn>

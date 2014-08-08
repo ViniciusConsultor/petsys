@@ -20,9 +20,8 @@ namespace FN.Client.FN
     public partial class frmGerenciamentoDeItensFinanceiros : SuperPagina
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_GERENCIAMENTO_ITENS_FINANCEIROS";
-        //private const int NUMERO_CELULA_ID_CLIENTE = 9;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 6;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -51,6 +50,7 @@ namespace FN.Client.FN
             pnlCliente.Visible = false;
             pnlPeriodoDeVencimento.Visible = false;
             pnlDescricao.Visible = false;
+            pnlVencidos.Visible = false;
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -59,6 +59,7 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente", "1"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Período de vencimento", "2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Descrição", "3"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Vencidos","4"));
         }
 
         private void ExibaTelaInicial()
@@ -76,7 +77,9 @@ namespace FN.Client.FN
 
             ctrlOperacaoFiltro1.Inicializa();
             ctrlCliente1.Inicializa();
-            
+
+            pnlOpcaoDeFiltro.Visible = true;
+
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoSemFiltro>();
@@ -153,6 +156,8 @@ namespace FN.Client.FN
         {
             EscondaTodosOsPanelsDeFiltro();
 
+            pnlOpcaoDeFiltro.Visible = true;
+
             switch (cboTipoDeFiltro.SelectedValue)
             {
                 case "1":
@@ -163,6 +168,10 @@ namespace FN.Client.FN
                     break;
                 case "3":
                     pnlDescricao.Visible = true;
+                    break;
+                case "4" :
+                    pnlOpcaoDeFiltro.Visible = false;
+                    pnlVencidos.Visible = true;
                     break;
             }
         }
@@ -414,16 +423,21 @@ namespace FN.Client.FN
             {
                 var gridItem = (GridDataItem)e.Item;
 
-                var lancamento = ((IItemLancamentoFinanceiro) (((gridItem)).DataItem));
-                
-                if (lancamento.EstaVencido()) {
-                    gridItem.BackColor = Color.Red;
-                    gridItem.ForeColor = Color.White;                
+                var lancamento = ((IItemLancamentoFinanceiro)(((gridItem)).DataItem));
+
+                if (lancamento.EstaVencido())
+                {
+                    ((gridItem)).BackColor = Color.Red;
+                    ((gridItem)).ForeColor = Color.White;
                 }
-
-
-               
             }
+        }
+
+        protected void btnVencidos_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoVencidos>();
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
         }
     }
 }
