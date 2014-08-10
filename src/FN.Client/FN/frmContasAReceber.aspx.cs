@@ -124,6 +124,8 @@ namespace FN.Client.FN
 
         private void Recarregue()
         {
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
+            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible = false;
             MostraItens(FiltroAplicado, grdItensDeContasAReceber.PageSize, 0);
         }
 
