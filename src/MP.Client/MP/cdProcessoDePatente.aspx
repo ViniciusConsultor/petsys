@@ -55,7 +55,7 @@
                                             <asp:Label ID="Label1" runat="server" Text="Processo"></asp:Label>
                                         </td>
                                         <td class="td">
-                                            <telerik:RadTextBox ID="txtProcesso" runat="server" Rows="5" Width="20%" MaxLength="20">
+                                            <telerik:RadTextBox ID="txtProcesso" runat="server" Rows="5" Width="20%" MaxLength="11">
                                             </telerik:RadTextBox>
                                         </td>
                                     </tr>

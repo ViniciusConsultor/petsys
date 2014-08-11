@@ -34,7 +34,7 @@
         
     </div>
     <div class="containerCopyright">
-        CHM Sistemas ©&nbsp;2013 Todos os direitos reservados.
+        CHM Sistemas ©&nbsp;2014 Todos os direitos reservados.
     </div>
     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1"
         DisplayAfter="0">

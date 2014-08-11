@@ -32,11 +32,6 @@ MasterPageFile="~/WorkSpace.Master"%>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                <br />
-                            </td>
-                        </tr>
-                        <tr>
                             <td class="campodependente" colspan="2">
                                 <telerik:RadGrid ID="grdClientes" runat="server" AutoGenerateColumns="False" AllowPaging="True" Skin="Vista" PageSize="10" 
                                     GridLines="None" OnItemCommand="grdClientes_ItemCommand"
@@ -60,11 +55,6 @@ MasterPageFile="~/WorkSpace.Master"%>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                <br />
-                            </td>
-                        </tr>
-                        <tr>
                             <td class="th3">
                                 <asp:Label ID="lblInicio" runat="server" Text="Início" />
                             </td>
@@ -73,21 +63,11 @@ MasterPageFile="~/WorkSpace.Master"%>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                <br />
-                            </td>
-                        </tr>
-                        <tr>
                             <td class="th3">
                                 <asp:Label ID="lblTermino" runat="server" Text="Término" />
                             </td>
                             <td class="td">
                                 <telerik:RadDatePicker ID="rdpPeriodoTermino" runat="server" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <br />
                             </td>
                         </tr>
                         <tr>
