@@ -64,7 +64,7 @@ namespace MP.Client.Relatorios
 
         private void MonteDocumentoDoRelatorio()
         {
-            var corBackgroudHeader = Color.DARK_GRAY;
+            var corBackgroudHeader = Color.GRAY;
             var tabela = new PdfPTable(1);
             var dicionarioDeManutencoes = new Dictionary<long, InformacoesRelatorioDeManutencoes>();
             var dicionarioDePatentes = new Dictionary<long, IList<IProcessoDePatente>>();
@@ -152,7 +152,7 @@ namespace MP.Client.Relatorios
                     var celulaPatente = new PdfPCell(new Phrase("Patente(s)", _Fonte3));
                     celulaPatente.HorizontalAlignment = Cell.ALIGN_LEFT;
                     celulaPatente.Border = 0;
-                    celulaPatente.BackgroundColor = Color.GRAY;
+                    celulaPatente.BackgroundColor = Color.LIGHT_GRAY;
                     Patente.AddCell(celulaPatente);
                     tabela.AddCell(Patente);
 
@@ -170,7 +170,7 @@ namespace MP.Client.Relatorios
                     var celulaMarca = new PdfPCell(new Phrase("Marca(s)", _Fonte3));
                     celulaMarca.HorizontalAlignment = Cell.ALIGN_LEFT;
                     celulaMarca.Border = 0;
-                    celulaMarca.BackgroundColor = Color.GRAY;
+                    celulaMarca.BackgroundColor = Color.LIGHT_GRAY;
                     Marca.AddCell(celulaMarca);
                     tabela.AddCell(Marca);
 
@@ -186,7 +186,7 @@ namespace MP.Client.Relatorios
 
         private PdfPTable ObtenhaTabelaTituloColunaDePatente()
         {
-            var corCelula = Color.LIGHT_GRAY;
+            var corCelula = Color.BLUE;
             var tabelaTitulo = new PdfPTable(5);
             tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
 
@@ -259,7 +259,7 @@ namespace MP.Client.Relatorios
             celulaDataDoVencimento.Border = 0;
             tabelaCliente.AddCell(celulaDataDoVencimento);
 
-            var celulaValor = new PdfPCell(new Phrase(processoDePatente.Patente.Manutencao.ObtenhaValorRealEmEspecie().ToString(), _Fonte1));
+            var celulaValor = new PdfPCell(new Phrase(string.Format("{0:N2}", processoDePatente.Patente.Manutencao.ObtenhaValorRealEmEspecie()), _Fonte1));
             celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaValor.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaValor.Border = 0;
@@ -270,7 +270,7 @@ namespace MP.Client.Relatorios
 
         private PdfPTable ObtenhaTabelaTituloColunaDeMarca()
         {
-            var corCelula = Color.LIGHT_GRAY;
+            var corCelula = Color.BLUE;
             var tabelaTitulo = new PdfPTable(4);
             tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
 
@@ -329,7 +329,7 @@ namespace MP.Client.Relatorios
             celulaDataDoVencimento.Border = 0;
             tabelaCliente.AddCell(celulaDataDoVencimento);
 
-            var celulaValor = new PdfPCell(new Phrase(processoDeMarca.Marca.Manutencao.ObtenhaValorRealEmEspecie().ToString(), _Fonte1));
+            var celulaValor = new PdfPCell(new Phrase(string.Format("{0:N2}", processoDeMarca.Marca.Manutencao.ObtenhaValorRealEmEspecie()), _Fonte1));
             celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaValor.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaValor.Border = 0;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -357,6 +358,13 @@ namespace MP.Client.MP
                 inconsitencias.Add("É necessário informar pelo menos um inventor.");
 
             if (string.IsNullOrEmpty(txtProcesso.Text)) inconsitencias.Add("É necessário informar o número do processo da patente.");
+
+            if (!string.IsNullOrEmpty(txtProcesso.Text) && !VerifiqueFormatacaoDoNumeroDoProcesso())
+            {
+                inconsitencias.Add("Deve ser informado somente número no campo número do processo.");
+                inconsitencias.Add("EX: 1234567-8 -> Correto: 12345678");
+                inconsitencias.Add("BR 01 2000 123456-7 -> Correto: 20001234567");
+            }
 
             if (!txtDataDeCadastro.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de cadastro.");
 
@@ -1258,6 +1266,12 @@ namespace MP.Client.MP
         protected void rblFormaDeCobranca_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             FormataValorManutencao(FormaCobrancaManutencao.ObtenhaPorCodigo(rblFormaDeCobranca.SelectedValue));
+        }
+
+        private bool VerifiqueFormatacaoDoNumeroDoProcesso()
+        {
+            var expressao = new Regex(@"^\d*[0-9](|.\d*[0-9])?$");
+            return expressao.IsMatch(txtProcesso.Text);
         }
     }
 }
