@@ -74,6 +74,8 @@
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorSituacao.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberSemFiltro.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberVencidos.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroPorNumeroDoBoleto.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroTipoLacamentoFinanceiroRecebimento.cs" />
     <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorCliente.cs" />
     <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorDescricao.cs" />
     <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorID.cs" />

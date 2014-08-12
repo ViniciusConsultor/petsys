@@ -6,6 +6,7 @@
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc5" %>
 <%@ Register Src="ctrlSituacao.ascx" TagName="ctrlSituacao" TagPrefix="uc1" %>
 <%@ Register Src="ctrlFormaRecebimento.ascx" TagName="ctrlFormaRecebimento" TagPrefix="uc2" %>
+<%@ Register Src="ctrlTipoLacamentoFinanceiroRecebimento.ascx" TagName="ctrlTipoLacamentoFinanceiroRecebimento" TagPrefix="uc6" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
@@ -110,6 +111,26 @@
                                 <td class="td">
                                     <asp:ImageButton ID="btnVencidos" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
                                         OnClick="btnVencidos_OnClick" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlNumeroDoBoleto">
+                                <td class="th3">
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtNumeroDoBoleto" runat="server" Width="450px" MaxLength="255">
+                                    </telerik:RadTextBox>
+                                    <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorNumeroDoBoleto_OnClick" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlTipoDeLancamentoFinanceiroRecebimento">
+                                <td class="th3">
+                                    <asp:Label ID="lblTipoDeLancamentoFinanceiroRecebimento" runat="server" Text="Tipo de lançamento"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc6:ctrlTipoLacamentoFinanceiroRecebimento ID="ctrlTipoLacamentoFinanceiroRecebimento" runat="server" />
+                                    <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorTipoLacamentoFinanceiroRecebimento_OnClick" />
                                 </td>
                             </tr>
                         </table>
