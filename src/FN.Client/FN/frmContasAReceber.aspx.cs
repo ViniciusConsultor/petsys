@@ -59,6 +59,8 @@ namespace FN.Client.FN
             pnlDescricao.Visible = false;
             pnlFormaDeRecebimento.Visible = false;
             pnlVencidos.Visible = false;
+            pnlNumeroDoBoleto.Visible = false;
+            pnlTipoDeLancamentoFinanceiroRecebimento.Visible = false;
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -70,6 +72,8 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Descrição", "4"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Forma de recebimento", "5"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Vencidos", "6"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Número do boleto", "7"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Tipo de lançamento", "8"));
         }
 
         private void ExibaTelaInicial()
@@ -98,6 +102,8 @@ namespace FN.Client.FN
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.IgualA.ID.ToString();
 
             ctrlSituacao.Codigo = Situacao.CobrancaEmAberto.ID.ToString();
+
+            ctrlTipoLacamentoFinanceiroRecebimento.Inicializa(new List<TipoLacamentoFinanceiroRecebimento>());
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorSituacao>();
             filtro.Operacao = OperacaoDeFiltro.IgualA;
@@ -234,7 +240,12 @@ namespace FN.Client.FN
                     pnlVencidos.Visible = true;
                     pnlOpcaoDeFiltro.Visible = false;
                     break;
-
+                case "7":
+                    pnlNumeroDoBoleto.Visible = true;
+                    break;
+                case "8":
+                    pnlTipoDeLancamentoFinanceiroRecebimento.Visible = true;
+                    break;
             }
         }
 
@@ -634,6 +645,68 @@ namespace FN.Client.FN
         protected void btnVencidos_OnClick(object sender, ImageClickEventArgs e)
         {
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberVencidos>();
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+        }
+
+        protected void btnPesquisarPorNumeroDoBoleto_OnClick(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtNumeroDoBoleto.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Informe o número do boleto."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorNumeroDoBoleto>();
+            filtro.Operacao = operacao;
+            filtro.ValorDoFiltro = txtNumeroDoBoleto.Text;
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+        }
+
+        protected void btnPesquisarPorTipoLacamentoFinanceiroRecebimento_OnClick(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
+            if (ctrlTipoLacamentoFinanceiroRecebimento.TipoLacamentoSelecionado == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione um tipo de lançamento."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroTipoLacamentoFinanceiroRecebimento>();
+            filtro.Operacao = operacao;
+            filtro.ValorDoFiltro = ctrlTipoLacamentoFinanceiroRecebimento.Codigo;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
         }

@@ -319,6 +319,69 @@ namespace FN.Client.FN {
         protected global::System.Web.UI.WebControls.ImageButton btnVencidos;
         
         /// <summary>
+        /// pnlNumeroDoBoleto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlNumeroDoBoleto;
+        
+        /// <summary>
+        /// txtNumeroDoBoleto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNumeroDoBoleto;
+        
+        /// <summary>
+        /// ImageButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
+        
+        /// <summary>
+        /// pnlTipoDeLancamentoFinanceiroRecebimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlTipoDeLancamentoFinanceiroRecebimento;
+        
+        /// <summary>
+        /// lblTipoDeLancamentoFinanceiroRecebimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTipoDeLancamentoFinanceiroRecebimento;
+        
+        /// <summary>
+        /// ctrlTipoLacamentoFinanceiroRecebimento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FN.Client.FN.ctrlTipoLacamentoFinanceiroRecebimento ctrlTipoLacamentoFinanceiroRecebimento;
+        
+        /// <summary>
+        /// ImageButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ImageButton2;
+        
+        /// <summary>
         /// rdkContasAReceber control.
         /// </summary>
         /// <remarks>
