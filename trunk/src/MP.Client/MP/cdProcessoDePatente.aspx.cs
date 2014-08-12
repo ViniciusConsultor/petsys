@@ -344,6 +344,23 @@ namespace MP.Client.MP
             return processoDePatente;
         }
 
+        private IList<string> VerifiqueFormatoDosCampos() 
+        {
+
+            if (!string.IsNullOrEmpty(txtProcesso.Text) && !VerifiqueFormatacaoDoNumeroDoProcesso())
+            {
+                var inconsitencias = new List<string>();
+
+                inconsitencias.Add("Só é permitido números para a formação do número do processo. Ex: ");
+                inconsitencias.Add("1234567-8 -> Correto: 12345678");
+                inconsitencias.Add("BR 01 2000 123456-7 -> Correto: 20001234567");
+
+                return inconsitencias;
+            }
+
+            return new List<string>();
+        }
+
         private IList<string> VerifiqueCamposObrigatorios()
         {
             var inconsitencias = new List<string>();
@@ -358,14 +375,7 @@ namespace MP.Client.MP
                 inconsitencias.Add("É necessário informar pelo menos um inventor.");
 
             if (string.IsNullOrEmpty(txtProcesso.Text)) inconsitencias.Add("É necessário informar o número do processo da patente.");
-
-            if (!string.IsNullOrEmpty(txtProcesso.Text) && !VerifiqueFormatacaoDoNumeroDoProcesso())
-            {
-                inconsitencias.Add("Deve ser informado somente número no campo número do processo.");
-                inconsitencias.Add("EX: 1234567-8 -> Correto: 12345678");
-                inconsitencias.Add("BR 01 2000 123456-7 -> Correto: 20001234567");
-            }
-
+            
             if (!txtDataDeCadastro.SelectedDate.HasValue) inconsitencias.Add("É necessário informar a data de cadastro.");
 
             if (rblProcessoEhDeTerceiro.SelectedValue == "0" && ctrlProcurador.ProcuradorSelecionado == null) inconsitencias.Add("É necessário informar o procurador.");
@@ -402,6 +412,18 @@ namespace MP.Client.MP
                                                         false);
                 return;
             }
+
+
+            var inconsistenciasDeFormato = VerifiqueFormatoDosCampos();
+
+            if (inconsistenciasDeFormato.Count != 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsistencias(inconsistenciasDeFormato),
+                                                        false);
+                return;
+            }
+
 
             var processoDePatente = MontaObjeto();
             string mensagem;
