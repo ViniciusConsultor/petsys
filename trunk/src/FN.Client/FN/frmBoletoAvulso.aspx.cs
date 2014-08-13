@@ -702,12 +702,11 @@ namespace FN.Client.FN
                                         itemLancamento.DataDoVencimento = boletoGerado.DataVencimento.Value;
 
                                     itemLancamento.Valor = boletoGerado.Valor;
+                                    
                                     if (boletoGerado.NossoNumero != null)
                                         itemLancamento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
-                                    if (!string.IsNullOrEmpty(boletoGerado.NumeroBoleto))
-                                        itemLancamento.Descricao = boletoGerado.NumeroBoleto;
-
+                                    itemLancamento.BoletoFoiGeradoColetivamente = false;
                                     servicoFinanceiro.Modifique(itemLancamento);
                                 }
                             }
@@ -790,10 +789,10 @@ namespace FN.Client.FN
                                         using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
                                         {
                                             itemLancamentoFinanceiroRecebimento.Situacao = Situacao.CobrancaGerada;
-                                            itemLancamentoFinanceiroRecebimento.Descricao = boletoGerado.NumeroBoleto;
                                             itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado =
                                                 boletoGerado.NossoNumero.Value.ToString();
 
+                                            itemLancamentoFinanceiroRecebimento.BoletoFoiGeradoColetivamente = true;
                                             servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                         }
 
@@ -836,6 +835,7 @@ namespace FN.Client.FN
                                                 itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
                                             itemLancamentoFinanceiroRecebimento.Situacao = Situacao.CobrancaGerada;
+                                            itemLancamentoFinanceiroRecebimento.BoletoFoiGeradoColetivamente = false;
 
                                             servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                         }
@@ -863,6 +863,7 @@ namespace FN.Client.FN
                                                 itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
                                             itemLancamentoFinanceiroRecebimento.Situacao = Situacao.CobrancaGerada;
+                                            itemLancamentoFinanceiroRecebimento.BoletoFoiGeradoColetivamente = false;
 
                                             servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                         }

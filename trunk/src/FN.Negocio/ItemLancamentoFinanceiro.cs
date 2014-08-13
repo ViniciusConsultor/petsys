@@ -34,6 +34,7 @@ namespace FN.Negocio
         public DateTime DataDoVencimento { get; set;}
         public Situacao Situacao { get; set; }
         public string Descricao  { get; set; }
+        public bool BoletoFoiGeradoColetivamente { get; set; }
         public string NumeroBoletoGerado { get; set; }
     }
 }

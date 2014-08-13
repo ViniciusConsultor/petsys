@@ -9,6 +9,7 @@ Namespace FN.Negocio
         Property TipoLacamento As TipoLacamentoFinanceiroRecebimento
         Property FormaDeRecebimento As FormaDeRecebimento
         Function FormaDeRecebimentoEhBoleto() As Boolean
+       
 
     End Interface
 
