@@ -130,10 +130,15 @@ namespace FN.Servicos.Local
             itemLacamentoFinanceiro.Cliente = boletoGerado.Cliente;
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
             itemLacamentoFinanceiro.DataDoVencimento =  boletoGerado.DataVencimento.Value;
-            itemLacamentoFinanceiro.Situacao = Situacao.CobrancaEmAberto;
+            itemLacamentoFinanceiro.Situacao = Situacao.CobrancaGerada;
             itemLacamentoFinanceiro.TipoLacamento = tipoLacamento;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;
             itemLacamentoFinanceiro.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
+            itemLacamentoFinanceiro.FormaDeRecebimento = FormaDeRecebimento.Boleto;
+
+            if (!string.IsNullOrEmpty(boletoGerado.NumeroBoleto))
+                itemLacamentoFinanceiro.Descricao = boletoGerado.NumeroBoleto;
+
             //if (boletoGerado.ID != null) itemLacamentoFinanceiro.IDBOLETO = boletoGerado.ID.Value;
 
             try

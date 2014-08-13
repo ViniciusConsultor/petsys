@@ -49,6 +49,8 @@ namespace FN.Client.FN
             pnlNossoNumero.Visible = true;
             cboTipoDeFiltro.SelectedValue = "1";
 
+            pnlOpcaoDeFiltro.Visible = true;
+
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroBoletosGeradosSemFiltro>();
@@ -90,6 +92,7 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de geracao", "3"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de vencimento", "4"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cedente", "5"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Vencidos", "6"));
         }
 
         private IList<DTOBoletosGerados> ConvertaBoletosGeradosParaDTO(IList<IBoletosGerados> listaDeBoletosGerados)
@@ -125,6 +128,10 @@ namespace FN.Client.FN
                     boletosGerado.Cedente.Pessoa.Nome : null;
 
                 dto.Instrucoes = !string.IsNullOrEmpty(boletosGerado.Instrucoes) ? boletosGerado.Instrucoes : null;
+
+                dto.StatusBoleto = !string.IsNullOrEmpty(boletosGerado.StatusBoleto) ? boletosGerado.StatusBoleto : "Aberto";
+
+                dto.EhBoletoAvulso = boletosGerado.EhBoletoAvulso ? "SIM" : string.Empty;
 
                 listaDeBoletos.Add(dto);
             }
@@ -349,6 +356,8 @@ namespace FN.Client.FN
         {
             EscondaTodosOsPanelsDeFiltro();
 
+            pnlOpcaoDeFiltro.Visible = true;
+
             switch (cboTipoDeFiltro.SelectedValue)
             {
                 case "1":
@@ -365,6 +374,10 @@ namespace FN.Client.FN
                     break;
                 case "5":
                     pnlCedente.Visible = true;
+                    break;
+                case "6":
+                    pnlVencidos.Visible = true;
+                    pnlOpcaoDeFiltro.Visible = false;
                     break;
             }
         }
@@ -387,6 +400,7 @@ namespace FN.Client.FN
             pnlDataDeGeracao.Visible = false;
             pnlDataDeVencimento.Visible = false;
             pnlCedente.Visible = false;
+            pnlVencidos.Visible = false;
         }
 
         protected void btnPesquisarPorCedente_OnClick_(object sender, ImageClickEventArgs e)
@@ -467,6 +481,13 @@ namespace FN.Client.FN
             }
 
             set { ViewState[CHAVE_BOLETOS_GERADOS] = value; }
+        }
+
+        protected void btnVencidos_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroBoletosGeradosVencidos>();
+            FiltroAplicado = filtro;
+            CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, 0);
         }
     }
 }

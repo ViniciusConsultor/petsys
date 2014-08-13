@@ -42,6 +42,8 @@ Public Class UtilidadesWeb
 
         Dim Skin As String
 
+        If (FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil Is Nothing) Then Exit Sub
+
         Skin = FabricaDeContexto.GetInstancia.GetContextoAtual.Perfil.Skin
 
         For Each Componente As Control In Pagina.Controls

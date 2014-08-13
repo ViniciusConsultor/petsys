@@ -15,6 +15,7 @@ using Compartilhados.Interfaces.Core.Servicos;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
 using FN.ImagePDF;
+using FN.Interfaces;
 using FN.Interfaces.Negocio;
 using FN.Interfaces.Negocio.Filtros.BoletosGerados;
 using FN.Interfaces.Servicos;
@@ -74,7 +75,11 @@ namespace FN.Client.FN
                     if (itensFinanceiros == null)
                         ExibaTelaBoletoGerado(id.Value);
                     else
+                    {
                         ExibaItensFinanceiros(itensFinanceiros);
+                        return;
+                    }
+                        
 
                 CarregueInstrucoesDoBoleto();
             }
@@ -121,6 +126,40 @@ namespace FN.Client.FN
 
                 ViewState["CHAVE_ITEM_FINANCEIRO_SELECIONADO"] = itemLancamentoFinanceiro;
                 ViewState["CHAVE_LISTA_ITEM_FINANCEIRO"] = listaDeItensFinanceiros;
+
+                    foreach (var itemLancamentoFinanceiroRecebimento in listaDeItensFinanceiros)
+                    {
+                        long idboletoGerado;
+
+                        using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
+                        {
+                            idboletoGerado =
+                                servicoFinanceiroComBoleto.ObtenhaBoletoPorIdItemFinanRecebimento(
+                                    itemLancamentoFinanceiroRecebimento.ID.Value);
+                        }
+
+                        if (idboletoGerado > 0)
+                        {
+                            IBoletosGerados boletoGeradoParaItemFinanceiro;
+
+                            using (var servicoBoletoGeradoParaItemFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                            {
+                                boletoGeradoParaItemFinanceiro =
+                                    servicoBoletoGeradoParaItemFinanceiro.obtenhaBoletoPeloId(
+                                        idboletoGerado);
+                            }
+
+                            txtNumeroDoBoleto.Text = boletoGeradoParaItemFinanceiro.NumeroBoleto;
+                            txtInstrucoes.Text = boletoGeradoParaItemFinanceiro.Instrucoes;
+                            txtFinalidadeBoleto.Text = boletoGeradoParaItemFinanceiro.Observacao;
+                        }
+                        else
+                        {
+                            CarregueInstrucoesDoBoleto();
+                        }
+
+                        break;
+                    }
             }
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeCedente>())
@@ -178,7 +217,14 @@ namespace FN.Client.FN
 
                     PreenchaInformacoesDoBoleto(boleto);
 
-                    DesabilitaCamposParaEdicao();
+                    if(boleto.StatusBoleto.ToUpper() == StatusBoleto.Status.Pago.ToString().ToUpper())
+                    {
+                        DesabilitaCamposParaEdicaoBoletoPago();
+                    }
+                    else
+                    {
+                        DesabilitaCamposParaEdicao();
+                    }
                 }
             }
         }
@@ -194,6 +240,25 @@ namespace FN.Client.FN
             txtEstado.Enabled = false;
             txtNome.Enabled = false;
             txtBairro.Enabled = false;
+        }
+
+        private void DesabilitaCamposParaEdicaoBoletoPago()
+        {
+            this.ctrlCliente.DesabilitaComboParaEdicao();
+            this.ctrlCedente.DesabilitaComboParaEdicao();
+            txtCNPJCPF.Enabled = false;
+            txtCep.Enabled = false;
+            txtCidade.Enabled = false;
+            txtEndereco.Enabled = false;
+            txtEstado.Enabled = false;
+            txtNome.Enabled = false;
+            txtBairro.Enabled = false;
+            txtVencimento.Enabled = false;
+            txtNumeroDoBoleto.Enabled = false;
+            txtInstrucoes.Enabled = false;
+            txtFinalidadeBoleto.Enabled = false;
+            txtValor.Enabled = false;
+            btnGerarBoleto.Enabled = false;
         }
 
         private void ctrlCedente_CedenteFoiSelecionado(ICedente cedente)
@@ -376,7 +441,7 @@ namespace FN.Client.FN
                     var listaDeItensFinanceiros =
                                             (List<IItemLancamentoFinanceiroRecebimento>)ViewState["CHAVE_LISTA_ITEM_FINANCEIRO"];
 
-                    if (listaDeItensFinanceiros.Count == 1)
+                    if (listaDeItensFinanceiros.Count > 0)
                     {
                         foreach (var itemLancamentoFinanceiroRecebimento in listaDeItensFinanceiros)
                         {
@@ -412,15 +477,17 @@ namespace FN.Client.FN
 
                                  cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
                             }
+
+                            break;
                         }
                     }
-                    else
-                    {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-                            dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                    //else
+                    //{
+                    //    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                    //        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
 
-                        cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
-                    }
+                    //    cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
+                    //}
                 }
                 else
                 {
@@ -638,6 +705,9 @@ namespace FN.Client.FN
                                     if (boletoGerado.NossoNumero != null)
                                         itemLancamento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
+                                    if (!string.IsNullOrEmpty(boletoGerado.NumeroBoleto))
+                                        itemLancamento.Descricao = boletoGerado.NumeroBoleto;
+
                                     servicoFinanceiro.Modifique(itemLancamento);
                                 }
                             }
@@ -653,9 +723,10 @@ namespace FN.Client.FN
                             // mais de 1 item financeiro selecionado
                             if(listaDeItensFinanceiros.Count > 1)
                             {
+                                long idBoletoExistente = 0;
+
                                 foreach (var itemLancamentoFinanceiroRecebimento in listaDeItensFinanceiros)
                                 {
-                                    // remover historico de boletos gerados
                                     long idboleto = 0;
 
                                     using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
@@ -666,34 +737,73 @@ namespace FN.Client.FN
 
                                         if (idboleto > 0)
                                         {
-                                            servico.Excluir(idboleto);
-                                        }
-
-                                        servicoFinanceiroComBoleto.Excluir(itemLancamentoFinanceiroRecebimento.ID.Value);
+                                            idBoletoExistente = idboleto;
+                                            //servico.Excluir(idboleto);
+                                        }//servicoFinanceiroComBoleto.Excluir(itemLancamentoFinanceiroRecebimento.ID.Value);
                                     }
 
-                                    //TODO verificar se é melhor excluir ou atualizar o item para cancelado
-                                    // remover item de contas a receber
+                                    break;
                                     //using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
                                     //{
-                                    //    servicoFinanceiro.Excluir(itemLancamentoFinanceiroRecebimento.ID.Value);
+                                    //    itemLancamentoFinanceiroRecebimento.Situacao = Situacao.Cancelada;
+                                    //    itemLancamentoFinanceiroRecebimento.Observacao =
+                                    //        "Item de contas a receber foi cancelado, para a geração de um novo item.";
+
+                                    //    servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                     //}
-
-                                    //TODO caso seja melhor atualizar descomentar este trecho e comentar o acima
-                                    using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
-                                    {
-                                        itemLancamentoFinanceiroRecebimento.Situacao = Situacao.Cancelada;
-                                        itemLancamentoFinanceiroRecebimento.Observacao =
-                                            "Item de contas a receber foi cancelado, para a geração de um novo item.";
-
-                                        servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
-                                    }
                                 }
 
-                                servico.Inserir(boletoGerado, true, TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao);
-                                // incrementar o nosso numero e o numero do documento e atualizar no banco.
-                                dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
-                                servico.AtualizarProximasInformacoes(dadosAuxiliares);
+                                if (idBoletoExistente > 0)
+                                {
+                                    // Este caso vai acontecer quando existe boleto gerado(mesmo boleto) para as contas a receber
+                                    // ou seja, os dados do boleto vai atualizar
+
+                                    using (var servicoBoletoGeradoParaItemFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                                    {
+                                        var boletoGeradoParaItemFinanceiro =
+                                            servicoBoletoGeradoParaItemFinanceiro.obtenhaBoletoPeloId(
+                                                idBoletoExistente);
+
+                                        boletoGeradoParaItemFinanceiro.NumeroBoleto = boletoGerado.NumeroBoleto;
+                                        boletoGeradoParaItemFinanceiro.Valor = boletoGerado.Valor;
+                                        boletoGeradoParaItemFinanceiro.DataGeracao = boletoGerado.DataGeracao;
+                                        boletoGeradoParaItemFinanceiro.DataVencimento = boletoGerado.DataVencimento;
+                                        boletoGeradoParaItemFinanceiro.Observacao = boletoGerado.Observacao;
+                                        boletoGeradoParaItemFinanceiro.Instrucoes = boletoGerado.Instrucoes;
+
+                                        servico.AtualizarBoletoGerado(boletoGeradoParaItemFinanceiro);
+                                    }
+                                }
+                                else
+                                {
+                                    // Este caso vai acontecer quando existe mais de uma conta a receber, e está gerando um novo boleto,
+                                    // ou seja, não existe boleto gerado para as contas
+                                    boletoGerado.StatusBoleto = StatusBoleto.Status.Aberto.ToString();
+                                    boletoGerado.EhBoletoAvulso = false;
+                                    servico.Inserir(boletoGerado, false, TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao);
+                                    // incrementar o nosso numero e o numero do documento e atualizar no banco.
+                                    dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;
+                                    servico.AtualizarProximasInformacoes(dadosAuxiliares);
+
+                                    foreach (var itemLancamentoFinanceiroRecebimento in listaDeItensFinanceiros)
+                                    {
+                                        using (var servicoFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                                        {
+                                            itemLancamentoFinanceiroRecebimento.Situacao = Situacao.CobrancaGerada;
+                                            itemLancamentoFinanceiroRecebimento.Descricao = boletoGerado.NumeroBoleto;
+                                            itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado =
+                                                boletoGerado.NossoNumero.Value.ToString();
+
+                                            servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
+                                        }
+
+                                        using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
+                                        {
+                                            servicoFinanceiroComBoleto.Insira(itemLancamentoFinanceiroRecebimento.ID.Value, boletoGerado.ID.Value);
+                                        }
+                                    }
+                                }
+                                
                             }
                             else
                             {
@@ -725,11 +835,15 @@ namespace FN.Client.FN
                                             if (boletoGerado.NossoNumero != null)
                                                 itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
+                                            itemLancamentoFinanceiroRecebimento.Situacao = Situacao.CobrancaGerada;
+
                                             servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                         }
                                     }
                                     else
                                     {
+                                        boletoGerado.StatusBoleto = StatusBoleto.Status.Aberto.ToString();
+                                        boletoGerado.EhBoletoAvulso = false;
                                         servico.Inserir(boletoGerado, false, TipoLacamentoFinanceiroRecebimento.RecebimentoDeManutencao);
 
                                         // incrementar o nosso numero e o numero do documento e atualizar no banco.
@@ -748,6 +862,8 @@ namespace FN.Client.FN
                                             if (boletoGerado.NossoNumero != null)
                                                 itemLancamentoFinanceiroRecebimento.NumeroBoletoGerado = boletoGerado.NossoNumero.Value.ToString();
 
+                                            itemLancamentoFinanceiroRecebimento.Situacao = Situacao.CobrancaGerada;
+
                                             servicoFinanceiro.Modifique(itemLancamentoFinanceiroRecebimento);
                                         }
 
@@ -762,6 +878,8 @@ namespace FN.Client.FN
                     }
                     else
                     {
+                        boletoGerado.StatusBoleto = StatusBoleto.Status.Aberto.ToString();
+                        boletoGerado.EhBoletoAvulso = true;
                         servico.Inserir(boletoGerado, BoletoGeraItemFinanceiroDeRecebimento, TipoLacamentoFinanceiroRecebimento.BoletoAvulso);
                         // incrementar o nosso numero e o numero do documento e atualizar no banco.
                         dadosAuxiliares.ProximoNossoNumero = dadosAuxiliares.ProximoNossoNumero + 1;

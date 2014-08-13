@@ -66,6 +66,10 @@ namespace FN.Mapeadores
 
                     boletoGerado.Instrucoes = UtilidadesDePersistencia.GetValorString(leitor, "INSTRUCOES");
 
+                    boletoGerado.StatusBoleto = UtilidadesDePersistencia.GetValorString(leitor, "STATUSBOLETO");
+
+                    boletoGerado.EhBoletoAvulso = UtilidadesDePersistencia.GetValorBooleano(leitor, "EHBOLETOAVULSO");
+
                     listaDeBoletos.Add(boletoGerado);
                 }
             }
@@ -78,7 +82,7 @@ namespace FN.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append("SELECT ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, ");
-            sql.Append("DATAVENCIMENTO, OBSERVACAO, IDCEDENTE, INSTRUCOES ");
+            sql.Append("DATAVENCIMENTO, OBSERVACAO, IDCEDENTE, INSTRUCOES, STATUSBOLETO, EHBOLETOAVULSO ");
             sql.Append("FROM FN_BOLETOS_GERADOS ");
 
             return sql;
@@ -110,7 +114,7 @@ namespace FN.Mapeadores
 
             sql.Append("INSERT INTO FN_BOLETOS_GERADOS (");
             sql.Append("ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, DATAVENCIMENTO, ");
-            sql.Append("OBSERVACAO, IDCEDENTE, INSTRUCOES)");
+            sql.Append("OBSERVACAO, IDCEDENTE, INSTRUCOES, STATUSBOLETO, EHBOLETOAVULSO) ");
             sql.Append("VALUES (");
             sql.Append(String.Concat(boletoGerado.ID.Value, ", "));
             sql.Append(!string.IsNullOrEmpty(boletoGerado.NumeroBoleto) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ") : "NULL, ");
@@ -136,7 +140,11 @@ namespace FN.Mapeadores
             else
             sql.Append("NULL, ");
 
-            sql.Append(!string.IsNullOrEmpty(boletoGerado.Instrucoes) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Instrucoes), "') ") : "NULL) ");
+            sql.Append(!string.IsNullOrEmpty(boletoGerado.Instrucoes) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Instrucoes), "', ") : "NULL, ");
+
+            sql.Append(!string.IsNullOrEmpty(boletoGerado.StatusBoleto) ? String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.StatusBoleto), "', ") : "'Aberto', ");
+
+            sql.Append(boletoGerado.EhBoletoAvulso ? " '1') " : " '0') ");
 
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
@@ -371,7 +379,9 @@ namespace FN.Mapeadores
             boletoGerado.Cedente = cedente;
 
             boletoGerado.Instrucoes = UtilidadesDePersistencia.GetValorString(leitor, "INSTRUCOES");
+            boletoGerado.StatusBoleto = UtilidadesDePersistencia.GetValorString(leitor, "STATUSBOLETO");
 
+            boletoGerado.EhBoletoAvulso = UtilidadesDePersistencia.GetValorBooleano(leitor, "EHBOLETOAVULSO");
 
             return boletoGerado;
         }
@@ -388,7 +398,7 @@ namespace FN.Mapeadores
                          ? String.Concat("NUMEROBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.NumeroBoleto), "', ")
                          : "NUMEROBOLETO = NULL, ");
 
-            sql.Append(String.Concat("IDCLIENTE = ", boletoGerado.Cliente.Pessoa.ID.Value, ", "));
+            //sql.Append(String.Concat("IDCLIENTE = ", boletoGerado.Cliente.Pessoa.ID.Value, ", "));
 
             sql.Append(String.Concat("VALOR = ", UtilidadesDePersistencia.TPVd(boletoGerado.Valor), ", "));
 
@@ -404,11 +414,15 @@ namespace FN.Mapeadores
                          ? String.Concat("OBSERVACAO = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Observacao), "', ")
                          : "OBSERVACAO = NULL, ");
 
-            sql.Append(String.Concat("IDCEDENTE = ", boletoGerado.Cedente.Pessoa.ID.Value, ", "));
+            //sql.Append(String.Concat("IDCEDENTE = ", boletoGerado.Cedente.Pessoa.ID.Value, ", "));
 
             sql.Append(!String.IsNullOrEmpty(boletoGerado.Instrucoes)
                          ? String.Concat("INSTRUCOES = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.Instrucoes), "' ")
                          : "INSTRUCOES = NULL ");
+
+            //sql.Append(!String.IsNullOrEmpty(boletoGerado.Instrucoes)
+            //             ? String.Concat("STATUSBOLETO = '", UtilidadesDePersistencia.FiltraApostrofe(boletoGerado.StatusBoleto), "' ")
+            //             : "STATUSBOLETO = 'Aberto' ");
 
             sql.Append(" WHERE ID = " + boletoGerado.ID.Value);
 

@@ -104,7 +104,7 @@ namespace FN.Client.FN.Relatorios
         private PdfPTable ObtenhaTabelaTituloColuna()
         {
             var corCelula = Color.LIGHT_GRAY;
-            var tabelaTitulo = new PdfPTable(6);
+            var tabelaTitulo = new PdfPTable(8);
             tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
 
             var celulaCedente = new PdfPCell(new Phrase("Cedente", _Fonte2));
@@ -149,12 +149,26 @@ namespace FN.Client.FN.Relatorios
             celulaDataVencimento.BackgroundColor = corCelula;
             tabelaTitulo.AddCell(celulaDataVencimento);
 
+            var celulaStatus = new PdfPCell(new Phrase("Status", _Fonte2));
+            celulaStatus.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaStatus.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaStatus.Border = 0;
+            celulaStatus.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaStatus);
+
+            var celulaBoletoAvulso = new PdfPCell(new Phrase("Boleto Avulso", _Fonte2));
+            celulaBoletoAvulso.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaBoletoAvulso.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaBoletoAvulso.Border = 0;
+            celulaBoletoAvulso.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaBoletoAvulso);
+
             return tabelaTitulo;
         }
 
         private PdfPTable ObtenhaTabelaDadosDosLancamentos(IBoletosGerados boletoGerado)
         {
-            var tabelaBoleto = new PdfPTable(6);
+            var tabelaBoleto = new PdfPTable(8);
             tabelaBoleto.DefaultCell.Border = Rectangle.NO_BORDER;
 
             var celulaCedente = new PdfPCell(new Phrase(boletoGerado.Cedente.Pessoa.Nome, _Fonte1));
@@ -196,6 +210,23 @@ namespace FN.Client.FN.Relatorios
             celulaFormaDeRecebimento.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaFormaDeRecebimento.Border = 0;
             tabelaBoleto.AddCell(celulaFormaDeRecebimento);
+
+            var celulaStatus = new PdfPCell(new Phrase(boletoGerado.StatusBoleto, _Fonte1));
+            celulaStatus.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaStatus.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaStatus.Border = 0;
+            tabelaBoleto.AddCell(celulaStatus);
+
+            var boletoEhAvulso = string.Empty;
+
+            if(boletoGerado.EhBoletoAvulso)
+                boletoEhAvulso = "SIM";
+
+            var celulaBoletoAvulso = new PdfPCell(new Phrase(boletoEhAvulso, _Fonte1));
+            celulaBoletoAvulso.HorizontalAlignment = Cell.ALIGN_LEFT;
+            celulaBoletoAvulso.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaBoletoAvulso.Border = 0;
+            tabelaBoleto.AddCell(celulaBoletoAvulso);
 
             return tabelaBoleto;
         }

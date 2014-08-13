@@ -18,5 +18,7 @@ namespace FN.Client.FN
         public string Observacao { get; set; }
         public string Cedente { get; set; }
         public string Instrucoes { get; set; }
+        public string StatusBoleto { get; set; }
+        public string EhBoletoAvulso { get; set; }
     }
 }

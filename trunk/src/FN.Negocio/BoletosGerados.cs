@@ -31,5 +31,7 @@ namespace FN.Negocio
         public string Instrucoes { get; set; }
 
         public string StatusBoleto { get; set; }
+
+        public bool EhBoletoAvulso { get; set; }
     }
 }

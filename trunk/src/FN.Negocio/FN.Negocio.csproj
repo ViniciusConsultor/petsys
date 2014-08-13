@@ -66,6 +66,7 @@
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorIntervaloDeDataDeGeracao.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorIntervaloDeDataDeVencimento.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosSemFiltro.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosVencidos.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorCliente.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorDescricao.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorFormaDeRecebimento.cs" />
