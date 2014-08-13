@@ -564,7 +564,7 @@ namespace FN.Client.FN
                         idsDeClientePorQuantidade.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
 
                      if (!idsDeClientePorSituacao.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
-                        idsDeClientePorSituacao.Add(dataItem.Cells[NUMERO_CELULA_SITUACAO].Text, 0);
+                         idsDeClientePorSituacao.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
 
                     idsDeClientePorQuantidade[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
                     
