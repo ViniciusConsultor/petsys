@@ -22,6 +22,7 @@ namespace FN.Client.FN
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_CONTAS_A_RECEBER";
         private const int NUMERO_CELULA_FORMA_RECEBIMENTO = 16;
+        private const int NUMERO_CELULA_SITUACAO = 17;
         private const int NUMERO_CELULA_ID_CLIENTE = 10;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 8;
         private const int NUMERO_CELULA_GERAR_BOLETO = 5;
@@ -543,6 +544,7 @@ namespace FN.Client.FN
             bool checkHeader = true;
             var idsDeClientePorQuantidade = new Dictionary<string, int>();
             var idsDeClientePorFormaDeRecebimento = new Dictionary<string, int>();
+            var idsDeClientePorSituacao = new Dictionary<string, int>();
             
             int quantidadeDeItensSelecionados = 0;
 
@@ -561,17 +563,27 @@ namespace FN.Client.FN
                     if (!idsDeClientePorQuantidade.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
                         idsDeClientePorQuantidade.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
 
+                     if (!idsDeClientePorSituacao.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                        idsDeClientePorSituacao.Add(dataItem.Cells[NUMERO_CELULA_SITUACAO].Text, 0);
+
                     idsDeClientePorQuantidade[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
                     
                     if (dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text.Equals(FormaDeRecebimento.Boleto.Descricao,StringComparison.InvariantCultureIgnoreCase))
                         idsDeClientePorFormaDeRecebimento[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
+
+                    if (dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.CobrancaEmAberto.Descricao, StringComparison.InvariantCultureIgnoreCase) ||
+                        dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.CobrancaGerada.Descricao, StringComparison.InvariantCultureIgnoreCase))
+                        idsDeClientePorSituacao[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
+
                     
                     quantidadeDeItensSelecionados += 1;
                 }
             }
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
-                idsDeClientePorQuantidade.Count() == 1 && idsDeClientePorQuantidade.ElementAt(0).Value > 1 && idsDeClientePorFormaDeRecebimento.ElementAt(0).Value == idsDeClientePorQuantidade.ElementAt(0).Value;
+                idsDeClientePorQuantidade.Count() == 1 && idsDeClientePorQuantidade.ElementAt(0).Value > 1 && 
+                idsDeClientePorFormaDeRecebimento.ElementAt(0).Value == idsDeClientePorQuantidade.ElementAt(0).Value &&
+                idsDeClientePorSituacao.ElementAt(0).Value ==  idsDeClientePorQuantidade.ElementAt(0).Value;
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible =
                 quantidadeDeItensSelecionados > 1;
@@ -586,7 +598,8 @@ namespace FN.Client.FN
             var mostrarBotaoBoletoColetivo = true;
             string idDoClienteDaPrimeiraLinha = null;
             string formaDeRecebimentoDaPrimeiraLinha = null;
-
+            
+            
             foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
             {
                 (dataItem.FindControl("CheckBox1") as CheckBox).Checked = headerCheckBox.Checked;
@@ -599,7 +612,9 @@ namespace FN.Client.FN
                     formaDeRecebimentoDaPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text;
 
                 if (!idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text) || 
-                    !formaDeRecebimentoDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text))
+                    !formaDeRecebimentoDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text) ||
+                    dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.Cancelada.Descricao) || 
+                    dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.Paga.Descricao))
                     mostrarBotaoBoletoColetivo = false;
             }
 
@@ -635,7 +650,7 @@ namespace FN.Client.FN
                     ((gridItem)).ForeColor = Color.White;
                 }
 
-                gridItem.Cells[NUMERO_CELULA_GERAR_BOLETO].Controls[0].Visible = (lancamento as IItemLancamentoFinanceiroRecebimento).FormaDeRecebimentoEhBoleto() && !lancamento.LacamentoFoiCanceladoOuPago(); ;
+                gridItem.Cells[NUMERO_CELULA_GERAR_BOLETO].Controls[0].Visible = (lancamento as IItemLancamentoFinanceiroRecebimento).FormaDeRecebimentoEhBoleto() && !lancamento.LacamentoFoiCanceladoOuPago() && !lancamento.BoletoFoiGeradoColetivamente ; 
                 gridItem.Cells[NUMERO_CELULA_CANCELAR].Controls[0].Visible = !lancamento.LacamentoFoiCanceladoOuPago();
                 gridItem.Cells[NUMERO_CELULA_RECEBER].Controls[0].Visible = !lancamento.LacamentoFoiCanceladoOuPago();
 

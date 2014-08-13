@@ -13,9 +13,11 @@ Namespace FN.Negocio
         Function Tipo() As TipoLacamentoFinanceiro
         Property Situacao As Situacao
         Property Descricao As String
-        Property NumeroBoletoGerado As String
         Function EstaVencido() As Boolean
         Function LacamentoFoiCanceladoOuPago() As Boolean
+
+        Property BoletoFoiGeradoColetivamente As Boolean
+        Property NumeroBoletoGerado As String
 
     End Interface
 
