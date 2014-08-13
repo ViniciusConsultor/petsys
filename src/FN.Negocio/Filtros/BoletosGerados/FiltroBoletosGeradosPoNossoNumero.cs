@@ -15,7 +15,7 @@ namespace FN.Negocio.Filtros.BoletosGerados
             var sql = new StringBuilder();
 
             sql.Append(
-                "SELECT ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, DATAVENCIMENTO, OBSERVACAO, IDCEDENTE, INSTRUCOES ");
+                "SELECT ID, NUMEROBOLETO, NOSSONUMERO, IDCLIENTE, VALOR, DATAGERACAO, DATAVENCIMENTO, OBSERVACAO, IDCEDENTE, INSTRUCOES, STATUSBOLETO, EHBOLETOAVULSO ");
             sql.Append("FROM FN_BOLETOS_GERADOS ");
             sql.Append(" WHERE " + ObtenhaFiltroMontado("FN_BOLETOS_GERADOS.NOSSONUMERO", false));
 

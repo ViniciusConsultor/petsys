@@ -64,6 +64,7 @@
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorIntervaloDeDataDeGeracao.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorIntervaloDeDataDeVencimento.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosSemFiltro.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosVencidos.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorCliente.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorDescricao.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorFormaDeRecebimento.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Servicos\IServicoDeBoleto.cs" />
     <Compile Include="Servicos\IServicoDeItemFinanceiroRecebidoComBoleto.cs" />
     <Compile Include="Servicos\IServicoDeConfiguracaoGeralFinanceiro.cs" />
+    <Compile Include="StatusBoleto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FN.Interfaces.snk" />

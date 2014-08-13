@@ -35,7 +35,7 @@ CodeBehind="frmBoletosGerados.aspx.cs" Inherits="FN.Client.FN.frmBoletosGerados"
                                     </telerik:RadComboBox>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr runat="server" id="pnlOpcaoDeFiltro">
                                 <td class="th3">
                                     <asp:Label ID="Label10" runat="server" Text="Operação do filtro"></asp:Label>
                                 </td>
@@ -102,6 +102,14 @@ CodeBehind="frmBoletosGerados.aspx.cs" Inherits="FN.Client.FN.frmBoletosGerados"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorNossoNumero_OnClick" />
                                 </td>
                             </tr>
+                             <tr runat="server" id="pnlVencidos">
+                                <td class="th3">
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnVencidos" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
+                                        OnClick="btnVencidos_OnClick" />
+                                </td>
+                            </tr>
                          </table>
                     </asp:Panel>
                 </ContentTemplate>
@@ -157,7 +165,13 @@ CodeBehind="frmBoletosGerados.aspx.cs" Inherits="FN.Client.FN.frmBoletosGerados"
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataVencimento" HeaderText="Data Vencimento" UniqueName="column8">
                                                 <ItemStyle Width="5%"></ItemStyle>
-                                            </telerik:GridBoundColumn>                                            
+                                            </telerik:GridBoundColumn>                                               
+                                             <telerik:GridBoundColumn DataField="StatusBoleto" HeaderText="Status" UniqueName="column9">
+                                                <ItemStyle Width="5%"></ItemStyle>
+                                            </telerik:GridBoundColumn>     
+                                            <telerik:GridBoundColumn DataField="EhBoletoAvulso" HeaderText="Boleto Avulso" UniqueName="column10">
+                                                <ItemStyle Width="5%"></ItemStyle>
+                                            </telerik:GridBoundColumn>                                    
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
