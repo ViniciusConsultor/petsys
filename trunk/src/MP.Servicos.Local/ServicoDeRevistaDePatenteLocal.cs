@@ -156,7 +156,7 @@ namespace MP.Servicos.Local
                                     AtualizeDespachoNoProcesso(processo.CodigoDoDespacho, processoDePatenteExistente);
                                 }
 
-                                if (string.IsNullOrEmpty(processo.Titulo) && processoDePatenteExistente.Patente != null)
+                                if (!string.IsNullOrEmpty(processo.Titulo) && processoDePatenteExistente.Patente != null)
                                 {
                                     processoDePatenteExistente.Patente.TituloPatente = processo.Titulo;
                                     revistaASerSalva.Titulo = processo.Titulo;
