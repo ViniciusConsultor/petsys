@@ -23,6 +23,7 @@ namespace FN.Client.FN
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_CONTAS_A_RECEBER";
         private const int NUMERO_CELULA_FORMA_RECEBIMENTO = 16;
         private const int NUMERO_CELULA_SITUACAO = 17;
+        private const int NUMERO_CELULA_NUMERO_BOLETO = 19;
         private const int NUMERO_CELULA_ID_CLIENTE = 10;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 8;
         private const int NUMERO_CELULA_GERAR_BOLETO = 5;
@@ -106,9 +107,7 @@ namespace FN.Client.FN
 
             ctrlTipoLacamentoFinanceiroRecebimento.Inicializa(new List<TipoLacamentoFinanceiroRecebimento>());
 
-            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberPorSituacao>();
-            filtro.Operacao = OperacaoDeFiltro.IgualA;
-            filtro.ValorDoFiltro = ctrlSituacao.Codigo;
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberSemFiltro>();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
 
@@ -545,6 +544,8 @@ namespace FN.Client.FN
             var idsDeClientePorQuantidade = new Dictionary<string, int>();
             var idsDeClientePorFormaDeRecebimento = new Dictionary<string, int>();
             var idsDeClientePorSituacao = new Dictionary<string, int>();
+            var idsDeClientesPorQntNumeroDeBoletoNaoGerado = new Dictionary<string, int>();
+            var idsDeClientesPorNumerosDeBoletos = new Dictionary<string, Dictionary<string, int>>();
             
             int quantidadeDeItensSelecionados = 0;
 
@@ -566,6 +567,12 @@ namespace FN.Client.FN
                      if (!idsDeClientePorSituacao.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
                          idsDeClientePorSituacao.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
 
+                     if (!idsDeClientesPorQntNumeroDeBoletoNaoGerado.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                         idsDeClientesPorQntNumeroDeBoletoNaoGerado.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, 0);
+
+                    if (!idsDeClientesPorNumerosDeBoletos.ContainsKey(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text))
+                        idsDeClientesPorNumerosDeBoletos.Add(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text, new Dictionary<string, int>());
+
                     idsDeClientePorQuantidade[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
                     
                     if (dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text.Equals(FormaDeRecebimento.Boleto.Descricao,StringComparison.InvariantCultureIgnoreCase))
@@ -575,7 +582,17 @@ namespace FN.Client.FN
                         dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.CobrancaGerada.Descricao, StringComparison.InvariantCultureIgnoreCase))
                         idsDeClientePorSituacao[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
 
-                    
+                    if (string.IsNullOrEmpty(dataItem.Cells[NUMERO_CELULA_NUMERO_BOLETO].Text))
+                        idsDeClientesPorQntNumeroDeBoletoNaoGerado[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text] += 1;
+
+
+                    if (!idsDeClientesPorNumerosDeBoletos[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text].ContainsKey(dataItem.Cells[NUMERO_CELULA_NUMERO_BOLETO].Text))
+                        idsDeClientesPorNumerosDeBoletos[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text].Add(dataItem.Cells[NUMERO_CELULA_NUMERO_BOLETO].Text,0);
+
+                    idsDeClientesPorNumerosDeBoletos[dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text][
+                        dataItem.Cells[NUMERO_CELULA_NUMERO_BOLETO].Text] += 1;
+                     
+                   
                     quantidadeDeItensSelecionados += 1;
                 }
             }
@@ -583,7 +600,9 @@ namespace FN.Client.FN
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
                 idsDeClientePorQuantidade.Count() == 1 && idsDeClientePorQuantidade.ElementAt(0).Value > 1 && 
                 idsDeClientePorFormaDeRecebimento.ElementAt(0).Value == idsDeClientePorQuantidade.ElementAt(0).Value &&
-                idsDeClientePorSituacao.ElementAt(0).Value ==  idsDeClientePorQuantidade.ElementAt(0).Value;
+                idsDeClientePorSituacao.ElementAt(0).Value ==  idsDeClientePorQuantidade.ElementAt(0).Value &&
+                (idsDeClientesPorQntNumeroDeBoletoNaoGerado.ElementAt(0).Value ==0 && 
+                idsDeClientesPorNumerosDeBoletos.ElementAt(0).Value.Count ==1);
 
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible =
                 quantidadeDeItensSelecionados > 1;
