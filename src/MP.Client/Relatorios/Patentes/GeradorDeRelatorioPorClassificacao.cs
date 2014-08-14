@@ -208,7 +208,7 @@ namespace MP.Client.Relatorios.Patentes
                 tabelaNumeroDaRevista.Border = 0;
                 tabelaNumeroDaRevista.Width = 100;
 
-                var celulaNumeroDaRevista = new Cell(new Phrase("Relatório de Colidências Por Radicais: " + _numeroDaRevistaSelecionada + " " + _dataPublicacao, font3));
+                var celulaNumeroDaRevista = new Cell(new Phrase("Relatório de Classficação Por Radicais: " + _numeroDaRevistaSelecionada + " " + _dataPublicacao, font3));
                 celulaNumeroDaRevista.Border = 0;
                 celulaNumeroDaRevista.Width = 70;
                 celulaNumeroDaRevista.Colspan = 1;

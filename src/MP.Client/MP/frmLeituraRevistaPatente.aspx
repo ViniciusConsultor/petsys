@@ -194,6 +194,8 @@
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
                                                             </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn DataField="Despacho.Codigo" HeaderText="Despacho" UniqueName="column4">
+                                                            </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn DataField="DataDoCadastro" HeaderText="Data do cadastro"
                                                                 UniqueName="column6" DataFormatString="{0:dd/MM/yyyy}">
                                                                 <ItemStyle Width="15%"></ItemStyle>
