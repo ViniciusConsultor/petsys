@@ -173,8 +173,7 @@ namespace FN.Client.FN
                                                              UtilidadesWeb.MostraMensagemDeInformacao(
                                                                  "Os Itens de lançamento de conta a receber foram recebidos com sucesso."), false);
 
-                ExibaTelaInicial();
-
+                Recarregue();
             }
             catch (BussinesException ex)
             {
@@ -366,7 +365,7 @@ namespace FN.Client.FN
                                                                 UtilidadesWeb.MostraMensagemDeInformacao(
                                                                     "O Item de lançamento de conta a receber foi recebido com sucesso."), false);
 
-                        ExibaTelaInicial();
+                        Recarregue();
 
                     }
                     catch (BussinesException ex)
