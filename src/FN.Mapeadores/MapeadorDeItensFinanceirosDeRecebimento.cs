@@ -97,8 +97,6 @@ namespace FN.Mapeadores
 
             if (!string.IsNullOrEmpty(Item.NumeroBoletoGerado))
                 sql.Append("NUMEROBOLETOGERADO = '" + UtilidadesDePersistencia.FiltraApostrofe(Item.NumeroBoletoGerado) + "', ");
-            else
-                sql.Append("NUMEROBOLETOGERADO = NULL, ");
 
             sql.Append(Item.BoletoFoiGeradoColetivamente ? "BOLETOGERADOCOLETIVAMENTE = 'S', " : "BOLETOGERADOCOLETIVAMENTE = 'N', ");
 

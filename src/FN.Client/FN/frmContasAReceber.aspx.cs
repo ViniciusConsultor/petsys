@@ -13,7 +13,9 @@ using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.FN.Negocio;
 using Compartilhados.Interfaces.FN.Servicos;
 using FN.Client.FN.Relatorios;
+using FN.Interfaces;
 using FN.Interfaces.Negocio.Filtros.ContasAReceber;
+using FN.Interfaces.Servicos;
 using Telerik.Web.UI;
 
 namespace FN.Client.FN
@@ -110,9 +112,7 @@ namespace FN.Client.FN
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberSemFiltro>();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
-
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible = false;
+            EscondaBotoesColetivo();
 
         }
 
@@ -130,8 +130,7 @@ namespace FN.Client.FN
 
         private void Recarregue()
         {
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible = false;
+            EscondaBotoesColetivo();
             MostraItens(FiltroAplicado, grdItensDeContasAReceber.PageSize, 0);
         }
 
@@ -192,8 +191,7 @@ namespace FN.Client.FN
                                                                                "Gerar boleto coletivamente",
                                                                                800, 550, "FN_frmBoletoAvulso_aspx"), false);
 
-            //Esta parte garante que os itens serão recarregados desmarcando os itens selecionados e não exibindo o botão coletivo.
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
+            EscondaBotoesColetivo();
 
         }
 
@@ -288,6 +286,7 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = ctrlCliente1.ClienteSelecionado.Pessoa.ID.Value.ToString();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
         }
 
         protected void grdItensDeContasAReceber_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
@@ -329,6 +328,7 @@ namespace FN.Client.FN
 
                         var offset = UtilidadesWeb.ObtenhaOffSet(grid.CurrentPageIndex, grid.PageSize, grid.VirtualItemCount - 1);
                         MostraItens(FiltroAplicado, UtilidadesWeb.ObtenhaQuantidadeDeItensDaPagina(grid.Items.Count - 1, grid.PageSize), offset);
+                        EscondaBotoesColetivo();
 
                     }
                     catch (BussinesException ex)
@@ -380,14 +380,25 @@ namespace FN.Client.FN
 
         private void RecebaLancamento(long idDoLancamento)
         {
+
+            IItemLancamentoFinanceiroRecebimento lancamento;
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
             {
-                var lancamento = servico.Obtenha(idDoLancamento);
+                lancamento = servico.Obtenha(idDoLancamento);
 
                 lancamento.Situacao = Situacao.Paga;
                 lancamento.DataDoRecebimento = DateTime.Now;
                 servico.Modifique(lancamento);
             }
+
+
+            if (lancamento.FormaDeRecebimentoEhBoleto())
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
+                    servico.AtualizarStatusDoBoletoGerado(Convert.ToInt64(lancamento.NumeroBoletoGerado), StatusBoleto.Status.Pago.ToString());
+                
+            
+                
         }
 
         protected override string ObtenhaIdFuncao()
@@ -439,6 +450,7 @@ namespace FN.Client.FN
                                                     txtPeriodo2.SelectedDate.Value.ToString("yyyyMMdd"));
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
 
         }
 
@@ -471,6 +483,7 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = ctrlSituacao.Codigo;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
         }
 
         protected void btnPesquisarPorFormaDeRecebimento_OnClick_(object sender, ImageClickEventArgs e)
@@ -502,6 +515,7 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = ctrlFormaRecebimento.Codigo;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
         }
 
 
@@ -534,6 +548,7 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = txtDescricao.Text;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
         }
 
         protected void ToggleRowSelection(object sender, EventArgs e)
@@ -616,6 +631,7 @@ namespace FN.Client.FN
             var mostrarBotaoBoletoColetivo = true;
             string idDoClienteDaPrimeiraLinha = null;
             string formaDeRecebimentoDaPrimeiraLinha = null;
+            string numeroDoBoletoPrimeiraLinha = null;
             
             
             foreach (GridDataItem dataItem in grdItensDeContasAReceber.MasterTableView.Items)
@@ -629,17 +645,28 @@ namespace FN.Client.FN
                 if (formaDeRecebimentoDaPrimeiraLinha == null)
                     formaDeRecebimentoDaPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text;
 
+                if (numeroDoBoletoPrimeiraLinha == null)
+                    numeroDoBoletoPrimeiraLinha = dataItem.Cells[NUMERO_CELULA_NUMERO_BOLETO].Text;
+
                 if (!idDoClienteDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_ID_CLIENTE].Text) || 
                     !formaDeRecebimentoDaPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_FORMA_RECEBIMENTO].Text) ||
                     dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.Cancelada.Descricao) || 
-                    dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.Paga.Descricao))
+                    dataItem.Cells[NUMERO_CELULA_SITUACAO].Text.Equals(Situacao.Paga.Descricao) ||
+                    !numeroDoBoletoPrimeiraLinha.Equals(dataItem.Cells[NUMERO_CELULA_NUMERO_BOLETO].Text))
                     mostrarBotaoBoletoColetivo = false;
             }
 
-            ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = mostrarBotaoBoletoColetivo;
+            ((RadToolBarButton) rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
+                mostrarBotaoBoletoColetivo && headerCheckBox.Checked;
             ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible =
                 headerCheckBox.Checked;
 
+        }
+
+        private void EscondaBotoesColetivo()
+        {
+            ((RadToolBarButton) rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible = false;
+            ((RadToolBarButton) rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible = false;
         }
 
         private void GerarRelatorio()
@@ -680,6 +707,7 @@ namespace FN.Client.FN
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberVencidos>();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
         }
 
         protected void btnPesquisarPorNumeroDoBoleto_OnClick(object sender, ImageClickEventArgs e)
@@ -711,6 +739,7 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = txtNumeroDoBoleto.Text;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
         }
 
         protected void btnPesquisarPorTipoLacamentoFinanceiroRecebimento_OnClick(object sender, ImageClickEventArgs e)
@@ -742,6 +771,7 @@ namespace FN.Client.FN
             filtro.ValorDoFiltro = ctrlTipoLacamentoFinanceiroRecebimento.Codigo;
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
         }
     }
 }
