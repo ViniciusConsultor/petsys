@@ -259,7 +259,7 @@ namespace MP.Client.Relatorios
             celulaDataDoVencimento.Border = 0;
             tabelaCliente.AddCell(celulaDataDoVencimento);
 
-            var celulaValor = new PdfPCell(new Phrase(string.Format("{0:N2}", processoDePatente.Patente.Manutencao.ObtenhaValorRealEmEspecie()), _Fonte1));
+            var celulaValor = new PdfPCell(new Phrase("R$ " + string.Format("{0:N2}", processoDePatente.Patente.Manutencao.ObtenhaValorRealEmEspecie()), _Fonte1));
             celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaValor.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaValor.Border = 0;
@@ -329,7 +329,7 @@ namespace MP.Client.Relatorios
             celulaDataDoVencimento.Border = 0;
             tabelaCliente.AddCell(celulaDataDoVencimento);
 
-            var celulaValor = new PdfPCell(new Phrase(string.Format("{0:N2}", processoDeMarca.Marca.Manutencao.ObtenhaValorRealEmEspecie()), _Fonte1));
+            var celulaValor = new PdfPCell(new Phrase("R$ " + string.Format("{0:N2}", processoDeMarca.Marca.Manutencao.ObtenhaValorRealEmEspecie()), _Fonte1));
             celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaValor.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaValor.Border = 0;
