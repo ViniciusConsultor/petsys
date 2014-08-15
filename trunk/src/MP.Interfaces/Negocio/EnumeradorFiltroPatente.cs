@@ -35,6 +35,7 @@ namespace MP.Interfaces.Negocio
         public static EnumeradorFiltroPatente NumeroIdiomaDataDepositoInternacional = new EnumeradorFiltroPatente(21, "Nº Idioma e Dt. Dep. Int.");
         public static EnumeradorFiltroPatente NumeroIdiomaDataPublicacaoInternacional = new EnumeradorFiltroPatente(22, "Nº Idioma e Dt. Publ. Int.");
         public static EnumeradorFiltroPatente Rp = new EnumeradorFiltroPatente(23, "Rp");
+        public static EnumeradorFiltroPatente Estado = new EnumeradorFiltroPatente(24, "Estado");
 
         public EnumeradorFiltroPatente(int ID, string Descricao)
         {
@@ -66,7 +67,8 @@ namespace MP.Interfaces.Negocio
                                                                       DataDeInicioFaseNacional,
                                                                       NumeroIdiomaDataDepositoInternacional,
                                                                       NumeroIdiomaDataPublicacaoInternacional,
-                                                                      Rp
+                                                                      Rp,
+                                                                      Estado
                                                                   };
         public int Id { get { return _id; } }
         public string Descricao { get { return _descricao; } }

@@ -96,6 +96,8 @@ namespace MP.Servicos.Local
                     {
                         bool verificaSeProcessoExiste = false;
 
+                        processo.DataProcessamento = DateTime.Now;
+
                         if (processo != null && processo.NumeroDoProcesso != null)
                         {
                             processo.NumeroDoProcesso = processo.NumeroDoProcesso.Replace("-", string.Empty);
@@ -695,7 +697,7 @@ namespace MP.Servicos.Local
             foreach (IRevistaDePatente processo in todosProcessoDaRevista)
             {
                 bool deveAdicionarProcesso = false;
-
+                
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDoProcesso && processo.NumeroDoProcesso != null
                     && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
                     deveAdicionarProcesso = true;
@@ -786,6 +788,10 @@ namespace MP.Servicos.Local
 
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Rp && !string.IsNullOrEmpty(processo.ResponsavelPagamentoImpostoDeRenda)
                     && filtro.ValorFiltro.ToUpper().Equals(processo.ResponsavelPagamentoImpostoDeRenda.ToUpper()))
+                    deveAdicionarProcesso = true;
+
+                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Estado && !string.IsNullOrEmpty(processo.UFTitular)
+                    && filtro.ValorFiltro.ToUpper().Equals(processo.UFTitular.ToUpper()))
                     deveAdicionarProcesso = true;
 
                  if(deveAdicionarProcesso)
