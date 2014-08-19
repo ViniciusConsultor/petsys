@@ -519,7 +519,7 @@
             &lt;td class="w180 Ar"&gt;Autenticação mecânica&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr class="cpN h12"&gt;
-            &lt;td class="pL6"&gt;@INSTRUCOESRECIBOSACADO&lt;/td&gt;
+            &lt;td class="pL6" colspan="2"&gt;@INSTRUCOESRECIBOSACADO&lt;/td&gt;
             &lt;td class="pL6 Ar"&gt;@AUTENTICACAOMECANICA&lt;/td&gt;
         &lt;/tr&gt;
     &lt;/table&gt;</value>
