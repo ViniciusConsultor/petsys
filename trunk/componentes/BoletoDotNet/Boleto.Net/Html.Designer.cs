@@ -662,7 +662,7 @@ namespace BoletoNet {
         ///            &lt;td class=&quot;w180 Ar&quot;&gt;Autenticação mecânica&lt;/td&gt;
         ///        &lt;/tr&gt;
         ///        &lt;tr class=&quot;cpN h12&quot;&gt;
-        ///            &lt;td class=&quot;pL6&quot;&gt;@INSTRUCOESRECIBOSACADO&lt;/td&gt;
+        ///            &lt;td class=&quot;pL6&quot; colspan=&quot;2&quot;&gt;@INSTRUCOESRECIBOSACADO&lt;/td&gt;
         ///            &lt;td class=&quot;pL6 Ar&quot;&gt;@AUTENTICACAOMECANICA&lt;/td&gt;
         ///        &lt;/tr&gt;
         ///    &lt;/table&gt;.
