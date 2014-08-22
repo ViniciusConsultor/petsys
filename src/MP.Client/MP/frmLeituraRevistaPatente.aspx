@@ -2,8 +2,8 @@
     CodeBehind="frmLeituraRevistaPatente.aspx.cs" Inherits="MP.Client.MP.frmLeituraRevistaPatente" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="ctrlFiltroRevistaPatente.ascx" TagName="ctrlFitroRevistaPatente"
-    TagPrefix="uc3" %>
+<%@ Register Src="ctrlFiltroRevistaPatente.ascx" TagName="ctrlFitroRevistaPatente" TagPrefix="uc3" %>
+<%@ Register Src="~/ctrlUF.ascx" TagName="ctrlUF" TagPrefix="uc4" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadDockLayout ID="RadDockLayout1" runat="server" Skin="Vista">
         <telerik:RadDockZone ID="RadDockZone1" runat="server" Skin="Vista">
@@ -223,20 +223,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="th3">
-                                                <asp:Label ID="lblCampo" runat="server" Text="Campo:"></asp:Label>
-                                            </td>
-                                            <td class="td">
+                                            <td colspan="2">                                                
                                                 <uc3:ctrlFitroRevistaPatente ID="ctrlFitroRevistaPatente1" runat="server" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="th3">
-                                                <asp:Label ID="lblValor" runat="server" Text="Valor:"></asp:Label>
-                                            </td>
-                                            <td class="td">
-                                                <asp:TextBox ID="txtValor" runat="server" Width="80%" />
-                                            </td>
+                                            </td>                                        
                                         </tr>
                                         <tr>
                                             <td class="td">

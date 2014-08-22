@@ -13,6 +13,15 @@ namespace MP.Client.MP {
     public partial class ctrlFiltroRevistaPatente {
         
         /// <summary>
+        /// lblCampo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCampo;
+        
+        /// <summary>
         /// cboFiltroPatente control.
         /// </summary>
         /// <remarks>
@@ -20,5 +29,32 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cboFiltroPatente;
+        
+        /// <summary>
+        /// lblValor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValor;
+        
+        /// <summary>
+        /// ctrlUF control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WorkSpace.ctrlUF ctrlUF;
+        
+        /// <summary>
+        /// txtValor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtValor;
     }
 }

@@ -384,7 +384,7 @@ namespace MP.Client.MP
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Selecionado o campo que deseja filtrar."),
                                                          false);
             }
-            else if (string.IsNullOrEmpty(txtValor.Text))
+            else if (string.IsNullOrEmpty(ctrlFitroRevistaPatente1.ValorFiltro))
             {
                 // Nenhum filtro informado
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -398,7 +398,7 @@ namespace MP.Client.MP
                 var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
 
                 filtro.EnumeradorFiltro = EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo));
-                filtro.ValorFiltro = txtValor.Text;
+                filtro.ValorFiltro = ctrlFitroRevistaPatente1.ValorFiltro;
 
                 // leitura .xml
                 var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
@@ -432,7 +432,6 @@ namespace MP.Client.MP
         protected void btnLimpar_ButtonClick(object sender, EventArgs e)
         {
             ctrlFitroRevistaPatente1.Inicializa();
-            txtValor.Text = string.Empty;
         }
 
         protected override string ObtenhaIdFuncao()
