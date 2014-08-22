@@ -256,15 +256,6 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// lblCampo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCampo;
-        
-        /// <summary>
         /// ctrlFitroRevistaPatente1 control.
         /// </summary>
         /// <remarks>
@@ -272,24 +263,6 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MP.Client.MP.ctrlFiltroRevistaPatente ctrlFitroRevistaPatente1;
-        
-        /// <summary>
-        /// lblValor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblValor;
-        
-        /// <summary>
-        /// txtValor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtValor;
         
         /// <summary>
         /// btnFiltrar control.

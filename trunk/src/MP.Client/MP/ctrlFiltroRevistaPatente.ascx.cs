@@ -21,6 +21,7 @@ namespace MP.Client.MP
         {
             LimparControle();
             CarregueCombo();
+            ctrlUF.Inicializa();
         }
 
         private void LimparControle()
@@ -28,6 +29,7 @@ namespace MP.Client.MP
             var controleFiltroPatente = cboFiltroPatente as Control;
             UtilidadesWeb.LimparComponente(ref controleFiltroPatente);
             cboFiltroPatente.ClearSelection();
+            txtValor.Text = string.Empty;
         }
 
         private void CarregueCombo()
@@ -45,6 +47,23 @@ namespace MP.Client.MP
         {
             get { return cboFiltroPatente.SelectedValue; }
             set { cboFiltroPatente.SelectedValue = value; }
+        }
+
+        public string ValorFiltro
+        {
+            get
+            {
+                if (int.Parse(cboFiltroPatente.SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id))
+                    return ctrlUF.Sigla.Sigla;
+
+                return txtValor.Text;
+            }
+        }
+
+        protected void cboFiltroPatente_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            ctrlUF.Visible = int.Parse(((RadComboBox)sender).SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id);
+            txtValor.Visible = !int.Parse(((RadComboBox)sender).SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id); ;
         }
     }
 }
