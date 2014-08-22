@@ -15,7 +15,7 @@ namespace FN.Interfaces.Mapeadores
         void Inserir(IBoletosGerados boletoGerado);
         void Excluir(long idBoleto);
 
-        IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto();
+        IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto(long idCedente);
 
         void AtualizarProximasInformacoes(IBoletosGeradosAux dadosAuxBoleto);
 
