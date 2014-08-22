@@ -13,5 +13,7 @@ namespace FN.Negocio
         
         public long? ProximoNossoNumero
         { get; set; }
+
+        public long? IDCEDENTE { get; set; }
     }
 }

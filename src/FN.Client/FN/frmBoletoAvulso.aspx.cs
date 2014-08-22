@@ -152,11 +152,21 @@ namespace FN.Client.FN
                             txtNumeroDoBoleto.Text = boletoGeradoParaItemFinanceiro.NumeroBoleto;
                             txtInstrucoes.Text = boletoGeradoParaItemFinanceiro.Instrucoes;
                             txtFinalidadeBoleto.Text = boletoGeradoParaItemFinanceiro.Observacao;
+
+                            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeCedente>())
+                            {
+                                var cedenteDoBoleto = servico.Obtenha(boletoGeradoParaItemFinanceiro.Cedente.Pessoa.ID.Value);
+
+                                ctrlCedente.CedenteSelecionado = cedenteDoBoleto;
+                                PreenchaDadosDoCedente(cedenteDoBoleto);
+
+                                DesabilitaCamposParaEdicao();
+
+                                return;
+                            }
                         }
-                        else
-                        {
-                            CarregueInstrucoesDoBoleto();
-                        }
+
+                        CarregueInstrucoesDoBoleto();
 
                         break;
                     }
@@ -175,7 +185,7 @@ namespace FN.Client.FN
                 }
             }
 
-            DesabilitaCamposParaEdicao();
+            DesabilitaCamposParaEdicaoComCedenteHabilitado();
         }
 
         private void ExibaTelaBoletoGerado(long idBoleto)
@@ -191,12 +201,10 @@ namespace FN.Client.FN
                     ViewState.Add(CHAVE_CEDENTE_BOLETOGERADO, boleto);
                     //BoletoGerado = boleto;
 
-                    long idCedente = 0;
+                    long idCedente = boleto.Cedente.Pessoa.ID.Value;
 
                     using (var servicoCedente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeCedente>())
                     {
-                         idCedente = servicoCedente.ObtenhaCedentePadrao();
-
                         if (idCedente > 0)
                         {
                             var cedentePadrao = servicoCedente.Obtenha(idCedente);
@@ -233,6 +241,18 @@ namespace FN.Client.FN
         {
             this.ctrlCliente.DesabilitaComboParaEdicao();
             this.ctrlCedente.DesabilitaComboParaEdicao();
+            txtCNPJCPF.Enabled = false;
+            txtCep.Enabled = false;
+            txtCidade.Enabled = false;
+            txtEndereco.Enabled = false;
+            txtEstado.Enabled = false;
+            txtNome.Enabled = false;
+            txtBairro.Enabled = false;
+        }
+
+        private void DesabilitaCamposParaEdicaoComCedenteHabilitado()
+        {
+            this.ctrlCliente.DesabilitaComboParaEdicao();
             txtCNPJCPF.Enabled = false;
             txtCep.Enabled = false;
             txtCidade.Enabled = false;
@@ -473,7 +493,8 @@ namespace FN.Client.FN
                             else
                             {
                                  using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-                                     dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                                     dadosAuxiliares = 
+                                         servico.obtenhaProximasInformacoesParaGeracaoDoBoleto(ctrlCedente.CedenteSelecionado.Pessoa.ID.Value);
 
                                  cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
                             }
@@ -493,13 +514,14 @@ namespace FN.Client.FN
                 {
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
                     {
-                        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto(ctrlCedente.CedenteSelecionado.Pessoa.ID.Value);
 
                         if (!dadosAuxiliares.ID.HasValue)
                         {
                             var boletosGeradosAux = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
 
                             boletosGeradosAux.ID = GeradorDeID.getInstancia().getProximoID();
+                            
 
                             // verificar se o codigo do banco é da caixa e acrescentar o 82
                             if(ctrlCedente.CedenteSelecionado != null)
@@ -512,11 +534,16 @@ namespace FN.Client.FN
                                 {
                                     boletosGeradosAux.ProximoNossoNumero = 8210001001;
                                 }
+
+                                boletosGeradosAux.IDCEDENTE = ctrlCedente.CedenteSelecionado.Pessoa.ID;
                             }
 
                             servico.InserirPrimeiraVez(boletosGeradosAux);
 
-                            dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                            dadosAuxiliares.ID = boletosGeradosAux.ID;
+                            dadosAuxiliares.ProximoNossoNumero = boletosGeradosAux.ProximoNossoNumero;
+                            dadosAuxiliares.IDCEDENTE = boletosGeradosAux.IDCEDENTE;
+                            //dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
                         }
                     }
 

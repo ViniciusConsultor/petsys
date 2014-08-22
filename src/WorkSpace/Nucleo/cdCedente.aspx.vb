@@ -177,6 +177,22 @@ Public Class cdCedente
         Dim Cedente As ICedente = MontaObjetoCedente()
 
         Try
+            If (Cedente.Padrao) Then
+
+                Using servicoCedente As IServicoDeCedente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCedente)()
+
+                    Dim cedentePadrao = servicoCedente.ObtenhaCedentePadrao()
+
+                    If (cedentePadrao > 0) Then
+                        Mensagem = "Já existe um cedente padrão cadastrado na base de dados."
+                        ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(Mensagem), False)
+                        Return
+                    End If
+
+                End Using
+
+            End If
+
             Using Servico As IServicoDeCedente = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeCedente)()
                 If CByte(ViewState(CHAVE_ESTADO)) = Estado.Novo Then
                     Servico.Inserir(Cedente)

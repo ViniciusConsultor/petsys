@@ -20,7 +20,7 @@ namespace FN.Servicos.Local
         {
         }
 
-        public IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto()
+        public IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto(long idCedente)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -28,7 +28,7 @@ namespace FN.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaProximasInformacoesParaGeracaoDoBoleto();
+                return mapeador.obtenhaProximasInformacoesParaGeracaoDoBoleto(idCedente);
             }
             finally
             {

@@ -9,5 +9,6 @@ namespace FN.Interfaces.Negocio
     {
         long? ID { get; set; }
         long? ProximoNossoNumero { get; set; }
+        long? IDCEDENTE { get; set; }
     }
 }

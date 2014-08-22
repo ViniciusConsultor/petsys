@@ -160,12 +160,13 @@ namespace FN.Mapeadores
             dbHelper.ExecuteNonQuery(sql.ToString());
         }
 
-        public IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto()
+        public IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto(long idCedente)
         {
             var sql = new StringBuilder();
 
-            sql.Append("SELECT ID, PROXNOSSONUMERO ");
+            sql.Append("SELECT ID, PROXNOSSONUMERO, IDCEDENTE ");
             sql.Append("FROM FN_BOLETOS_GERADOS_AUX ");
+            sql.Append("WHERE IDCEDENTE = " + idCedente);
 
             var dadosAuxiliares = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
 
@@ -177,6 +178,7 @@ namespace FN.Mapeadores
                 {
                     dadosAuxiliares.ID = UtilidadesDePersistencia.GetValorLong(leitor, "ID");
                     dadosAuxiliares.ProximoNossoNumero = UtilidadesDePersistencia.GetValorLong(leitor, "PROXNOSSONUMERO");
+                    dadosAuxiliares.IDCEDENTE = UtilidadesDePersistencia.GetValorLong(leitor, "IDCEDENTE");
                 }
             }
 
@@ -202,10 +204,11 @@ namespace FN.Mapeadores
 
             var dbHelper = ServerUtils.getDBHelper();
 
-            sql.Append("INSERT INTO FN_BOLETOS_GERADOS_AUX(ID, PROXNOSSONUMERO) ");
+            sql.Append("INSERT INTO FN_BOLETOS_GERADOS_AUX(ID, PROXNOSSONUMERO, IDCEDENTE) ");
             sql.Append("VALUES( ");
             sql.Append(String.Concat(dadosAuxBoleto.ID.Value, ", "));
-            sql.Append(String.Concat(dadosAuxBoleto.ProximoNossoNumero.Value, ") "));
+            sql.Append(String.Concat(dadosAuxBoleto.ProximoNossoNumero.Value, ", "));
+            sql.Append(String.Concat(dadosAuxBoleto.IDCEDENTE.Value, ") "));
 
             dbHelper.ExecuteNonQuery(sql.ToString());
         }
