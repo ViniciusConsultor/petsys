@@ -19,5 +19,24 @@ namespace MP.Negocio
         public bool AgendarPagamento { get; set; }
         public string Descricao { get; set; }
         public ITemplateDeEmail TemplateDeEmail { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (IdDespachoDePatente.HasValue)
+            {
+                var objAComparar = obj as IDespachoDePatentes;
+
+                if (!objAComparar.IdDespachoDePatente.HasValue) return false;
+
+                return objAComparar.IdDespachoDePatente.Value.Equals(IdDespachoDePatente.Value);
+            }
+
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return IdDespachoDePatente.HasValue ? IdDespachoDePatente.Value.GetHashCode() : base.GetHashCode();
+        }
     }
 }
