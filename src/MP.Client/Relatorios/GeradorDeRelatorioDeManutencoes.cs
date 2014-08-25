@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,10 @@ using MP.Client.Relatorios.Patentes;
 using MP.Interfaces.Negocio;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Color = iTextSharp.text.Color;
+using Font = iTextSharp.text.Font;
+using Image = iTextSharp.text.Image;
+using Rectangle = iTextSharp.text.Rectangle;
 
 namespace MP.Client.Relatorios
 {
@@ -125,77 +130,42 @@ namespace MP.Client.Relatorios
                 }
             }
 
+            tabela.AddCell(ObtenhaTabelaTitulo());
+
             foreach (long chave in dicionarioDeManutencoes.Keys)
             {
                 string nomeDoCliente = string.Empty;
-                
-                if(dicionarioDeManutencoes[chave].ProcessoDeMarcas != null && dicionarioDeManutencoes[chave].ProcessoDeMarcas.Count > 0)
+
+                if (dicionarioDeManutencoes[chave].ProcessoDeMarcas != null && dicionarioDeManutencoes[chave].ProcessoDeMarcas.Count > 0)
                     nomeDoCliente = dicionarioDeManutencoes[chave].ProcessoDeMarcas[0].Marca.Cliente.Pessoa.Nome;
-                else if(dicionarioDeManutencoes[chave].ProcessoDePatentes != null && dicionarioDeManutencoes[chave].ProcessoDePatentes.Count > 0)
-                    nomeDoCliente =dicionarioDeManutencoes[chave].ProcessoDePatentes[0].Patente.Clientes[0].Pessoa.Nome;
-
-                var tabela1 = new PdfPTable(1);
-                tabela1.DefaultCell.Border = Rectangle.NO_BORDER;
-
-                var celulaCliente = new PdfPCell(new Phrase(nomeDoCliente, _Fonte3));
-                celulaCliente.HorizontalAlignment = Cell.ALIGN_LEFT;
-                celulaCliente.Border = 0;
-                celulaCliente.BackgroundColor = corBackgroudHeader;
-                tabela1.AddCell(celulaCliente);
-                tabela.AddCell(tabela1);
+                else if (dicionarioDeManutencoes[chave].ProcessoDePatentes != null && dicionarioDeManutencoes[chave].ProcessoDePatentes.Count > 0)
+                    nomeDoCliente = dicionarioDeManutencoes[chave].ProcessoDePatentes[0].Patente.Clientes[0].Pessoa.Nome;
 
                 if (dicionarioDeManutencoes[chave].ProcessoDePatentes != null)
-                {
-                    var Patente = new PdfPTable(1);
-                    Patente.DefaultCell.Border = Rectangle.NO_BORDER;
-
-                    var celulaPatente = new PdfPCell(new Phrase("Patente(s)", _Fonte3));
-                    celulaPatente.HorizontalAlignment = Cell.ALIGN_LEFT;
-                    celulaPatente.Border = 0;
-                    celulaPatente.BackgroundColor = Color.LIGHT_GRAY;
-                    Patente.AddCell(celulaPatente);
-                    tabela.AddCell(Patente);
-
-                    tabela.AddCell(ObtenhaTabelaTituloColunaDePatente());
-
                     foreach (IProcessoDePatente processoDePatente in dicionarioDeManutencoes[chave].ProcessoDePatentes)
-                        tabela.AddCell(ObtenhaTabelaDadosDaPatente(processoDePatente));
-                }
+                        tabela.AddCell(ObtenhaTabelaDadosDaPatente(processoDePatente, nomeDoCliente));
 
                 if (dicionarioDeManutencoes[chave].ProcessoDeMarcas != null)
-                {
-                    var Marca = new PdfPTable(1);
-                    Marca.DefaultCell.Border = Rectangle.NO_BORDER;
-
-                    var celulaMarca = new PdfPCell(new Phrase("Marca(s)", _Fonte3));
-                    celulaMarca.HorizontalAlignment = Cell.ALIGN_LEFT;
-                    celulaMarca.Border = 0;
-                    celulaMarca.BackgroundColor = Color.LIGHT_GRAY;
-                    Marca.AddCell(celulaMarca);
-                    tabela.AddCell(Marca);
-
-                    tabela.AddCell(ObtenhaTabelaTituloColunaDeMarca());
-
                     foreach (IProcessoDeMarca processoDeMarca in dicionarioDeManutencoes[chave].ProcessoDeMarcas)
-                        tabela.AddCell(ObtenhaTabelaDadosDaMarca(processoDeMarca));
-                }
+                        tabela.AddCell(ObtenhaTabelaDadosDaMarca(processoDeMarca, nomeDoCliente));
             }
 
             _documento.Add(tabela);
         }
 
-        private PdfPTable ObtenhaTabelaTituloColunaDePatente()
+        private PdfPTable ObtenhaTabelaTitulo()
         {
-            var corCelula = Color.BLUE;
-            var tabelaTitulo = new PdfPTable(5);
+            var corCelula = Color.LIGHT_GRAY;
+            float[] larguraColunas = { 30, 15, 25, 10, 10, 10 };
+            var tabelaTitulo = new PdfPTable(larguraColunas);
             tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
 
-            var celulaTipo = new PdfPCell(new Phrase("Tipo", _Fonte2));
-            celulaTipo.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaTipo.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaTipo.Border = 0;
-            celulaTipo.BackgroundColor = corCelula;
-            tabelaTitulo.AddCell(celulaTipo);
+            var celulaCliente = new PdfPCell(new Phrase("Cliente", _Fonte2));
+            celulaCliente.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.Border = 0;
+            celulaCliente.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaCliente);
 
             var celulaProcesso = new PdfPCell(new Phrase("Processo", _Fonte2));
             celulaProcesso.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -204,19 +174,26 @@ namespace MP.Client.Relatorios
             celulaProcesso.BackgroundColor = corCelula;
             tabelaTitulo.AddCell(celulaProcesso);
 
-            var celulaTituloPatente = new PdfPCell(new Phrase("Título da Patente", _Fonte2));
+            var celulaTituloPatente = new PdfPCell(new Phrase("Referência", _Fonte2));
             celulaTituloPatente.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaTituloPatente.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaTituloPatente.Border = 0;
             celulaTituloPatente.BackgroundColor = corCelula;
             tabelaTitulo.AddCell(celulaTituloPatente);
 
-            var celulaDataDoVencimento = new PdfPCell(new Phrase("Data do Vencimento", _Fonte2));
-            celulaDataDoVencimento.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaDataDoVencimento.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaDataDoVencimento.Border = 0;
-            celulaDataDoVencimento.BackgroundColor = corCelula;
-            tabelaTitulo.AddCell(celulaDataDoVencimento);
+            var celulaDeposito = new PdfPCell(new Phrase("Depósito", _Fonte2));
+            celulaDeposito.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.Border = 0;
+            celulaDeposito.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaDeposito);
+
+            var celulaVencimento = new PdfPCell(new Phrase("Vencimento", _Fonte2));
+            celulaVencimento.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaVencimento.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaVencimento.Border = 0;
+            celulaVencimento.BackgroundColor = corCelula;
+            tabelaTitulo.AddCell(celulaVencimento);
 
             var celulaValor = new PdfPCell(new Phrase("Valor", _Fonte2));
             celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -228,17 +205,17 @@ namespace MP.Client.Relatorios
             return tabelaTitulo;
         }
 
-        private PdfPTable ObtenhaTabelaDadosDaPatente(IProcessoDePatente processoDePatente)
+        private PdfPTable ObtenhaTabelaDadosDaPatente(IProcessoDePatente processoDePatente, string nomeDoCliente)
         {
-            var tabelaCliente = new PdfPTable(5);
+            float[] larguraColunas = { 30, 15, 25, 10, 10, 10 };
+            var tabelaCliente = new PdfPTable(larguraColunas);
             tabelaCliente.DefaultCell.Border = Rectangle.NO_BORDER;
             
-            var celulaTipo = new PdfPCell(new Phrase(processoDePatente.DataDaConcessao.HasValue && !processoDePatente.DataDaConcessao.Value.Equals(DateTime.MinValue) ? 
-                                                     "PATENTE" : "PEDIDO", _Fonte1));
-            celulaTipo.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaTipo.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaTipo.Border = 0;
-            tabelaCliente.AddCell(celulaTipo);
+            var celulaCliente = new PdfPCell(new Phrase(nomeDoCliente, _Fonte1));
+            celulaCliente.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.Border = 0;
+            tabelaCliente.AddCell(celulaCliente);
 
             var celulaProcesso = new PdfPCell(new Phrase(processoDePatente.NumeroDoProcessoFormatado, _Fonte1));
             celulaProcesso.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -246,13 +223,20 @@ namespace MP.Client.Relatorios
             celulaProcesso.Border = 0;
             tabelaCliente.AddCell(celulaProcesso);
 
-            var celulaTituloPatente = new PdfPCell(new Phrase(processoDePatente.Patente.TituloPatente, _Fonte1));
-            celulaTituloPatente.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaTituloPatente.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaTituloPatente.Border = 0;
-            tabelaCliente.AddCell(celulaTituloPatente);
+            var celulaReferencia = new PdfPCell(new Phrase(ObtenhaReferenciaFormatada(processoDePatente.Patente.TituloPatente), _Fonte1));
+            celulaReferencia.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaReferencia.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaReferencia.Border = 0;
+            tabelaCliente.AddCell(celulaReferencia);
 
-            var celulaDataDoVencimento = new PdfPCell(new Phrase(processoDePatente.Patente.Manutencao.DataDaProximaManutencao.HasValue ? 
+            var celulaDeposito = new PdfPCell(new Phrase(processoDePatente.DataDoDeposito.HasValue ? 
+                                                         processoDePatente.DataDoDeposito.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
+            celulaDeposito.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.Border = 0;
+            tabelaCliente.AddCell(celulaDeposito);
+
+            var celulaDataDoVencimento = new PdfPCell(new Phrase(processoDePatente.Patente.Manutencao.DataDaProximaManutencao.HasValue ?
                                                           processoDePatente.Patente.Manutencao.DataDaProximaManutencao.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
             celulaDataDoVencimento.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaDataDoVencimento.VerticalAlignment = Cell.ALIGN_CENTER;
@@ -268,47 +252,17 @@ namespace MP.Client.Relatorios
             return tabelaCliente;
         }
 
-        private PdfPTable ObtenhaTabelaTituloColunaDeMarca()
+        private PdfPTable ObtenhaTabelaDadosDaMarca(IProcessoDeMarca processoDeMarca, string nomeDoCliente)
         {
-            var corCelula = Color.BLUE;
-            var tabelaTitulo = new PdfPTable(4);
-            tabelaTitulo.DefaultCell.Border = Rectangle.NO_BORDER;
-
-            var celulaProcesso = new PdfPCell(new Phrase("Processo", _Fonte2));
-            celulaProcesso.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaProcesso.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaProcesso.Border = 0;
-            celulaProcesso.BackgroundColor = corCelula;
-            tabelaTitulo.AddCell(celulaProcesso);
-
-            var celulaDescricaoDaMarca = new PdfPCell(new Phrase("Marca", _Fonte2));
-            celulaDescricaoDaMarca.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaDescricaoDaMarca.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaDescricaoDaMarca.Border = 0;
-            celulaDescricaoDaMarca.BackgroundColor = corCelula;
-            tabelaTitulo.AddCell(celulaDescricaoDaMarca);
-
-            var celulaDataDoVencimento = new PdfPCell(new Phrase("Data do Vencimento", _Fonte2));
-            celulaDataDoVencimento.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaDataDoVencimento.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaDataDoVencimento.Border = 0;
-            celulaDataDoVencimento.BackgroundColor = corCelula;
-            tabelaTitulo.AddCell(celulaDataDoVencimento);
-
-            var celulaValor = new PdfPCell(new Phrase("Valor", _Fonte2));
-            celulaValor.HorizontalAlignment = Cell.ALIGN_CENTER;
-            celulaValor.VerticalAlignment = Cell.ALIGN_CENTER;
-            celulaValor.Border = 0;
-            celulaValor.BackgroundColor = corCelula;
-            tabelaTitulo.AddCell(celulaValor);
-
-            return tabelaTitulo;
-        }
-
-        private PdfPTable ObtenhaTabelaDadosDaMarca(IProcessoDeMarca processoDeMarca)
-        {
-            var tabelaCliente = new PdfPTable(4);
+            float[] larguraColunas = { 30, 15, 25, 10, 10, 10 };
+            var tabelaCliente = new PdfPTable(larguraColunas);
             tabelaCliente.DefaultCell.Border = Rectangle.NO_BORDER;
+
+            var celulaCliente = new PdfPCell(new Phrase(nomeDoCliente, _Fonte1));
+            celulaCliente.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaCliente.Border = 0;
+            tabelaCliente.AddCell(celulaCliente);
 
             var celulaProcesso = new PdfPCell(new Phrase(processoDeMarca.Processo.ToString(), _Fonte1));
             celulaProcesso.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -316,11 +270,17 @@ namespace MP.Client.Relatorios
             celulaProcesso.Border = 0;
             tabelaCliente.AddCell(celulaProcesso);
 
-            var celulaDescricaoDaMarca = new PdfPCell(new Phrase(processoDeMarca.Marca.DescricaoDaMarca, _Fonte1));
+            var celulaDescricaoDaMarca = new PdfPCell(new Phrase(ObtenhaReferenciaFormatada(processoDeMarca.Marca.DescricaoDaMarca), _Fonte1));
             celulaDescricaoDaMarca.HorizontalAlignment = Cell.ALIGN_CENTER;
             celulaDescricaoDaMarca.VerticalAlignment = Cell.ALIGN_CENTER;
             celulaDescricaoDaMarca.Border = 0;
             tabelaCliente.AddCell(celulaDescricaoDaMarca);
+
+            var celulaDeposito = new PdfPCell(new Phrase(processoDeMarca.DataDoDeposito.HasValue ? processoDeMarca.DataDoDeposito.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
+            celulaDeposito.HorizontalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.VerticalAlignment = Cell.ALIGN_CENTER;
+            celulaDeposito.Border = 0;
+            tabelaCliente.AddCell(celulaDeposito);
 
             var celulaDataDoVencimento = new PdfPCell(new Phrase(processoDeMarca.Marca.Manutencao.DataDaProximaManutencao.HasValue ?
                                                           processoDeMarca.Marca.Manutencao.DataDaProximaManutencao.Value.ToString("dd/MM/yyyy") : "", _Fonte1));
@@ -336,6 +296,29 @@ namespace MP.Client.Relatorios
             tabelaCliente.AddCell(celulaValor);
 
             return tabelaCliente;
+        }
+
+        private string ObtenhaReferenciaFormatada(string referencia)
+        {
+            string referenciaFormatada = string.Empty;
+            string[] referenciaSeparada = referencia.Split(Convert.ToChar(" "));
+
+            if (referenciaSeparada.Length > 3)
+            {
+                for (int i = 0; i < 3; i++)
+                    referenciaFormatada += referenciaSeparada[i] + " ";
+
+                referenciaFormatada = referenciaFormatada.Substring(0, referenciaFormatada.Length - 1) + "...";
+            }
+            else
+            {
+                for (int i = 0; i < referenciaSeparada.Length; i++)
+                    referenciaFormatada += referenciaSeparada[i] + " ";
+
+                referenciaFormatada = referenciaFormatada.Substring(0, referenciaFormatada.Length - 1);
+            }
+
+            return referenciaFormatada;
         }
 
         private class Ouvinte : IPdfPageEvent
@@ -355,16 +338,14 @@ namespace MP.Client.Relatorios
                 this.empresa = empresa;
             }
 
-            public void OnOpenDocument(PdfWriter writer, Document document) { }
-
-            public void OnStartPage(PdfWriter writer, Document document)
+            public void OnOpenDocument(PdfWriter writer, Document document)
             {
                 var pessoaJuridica = empresa.Pessoa as IPessoaJuridica;
                 Chunk imagem;
 
                 if (!string.IsNullOrEmpty(pessoaJuridica.Logomarca))
                 {
-                    var imghead = iTextSharp.text.Image.GetInstance(HttpContext.Current.Server.MapPath(pessoaJuridica.Logomarca));
+                    var imghead = Image.GetInstance(HttpContext.Current.Server.MapPath(pessoaJuridica.Logomarca));
                     imagem = new Chunk(imghead, 0, 0);
                 }
                 else
@@ -425,6 +406,11 @@ namespace MP.Client.Relatorios
 
                 tabelaTitulo.AddCell(linhaVaziaNumeroRevista);
                 document.Add(tabelaTitulo);
+            }
+
+            public void OnStartPage(PdfWriter writer, Document document)
+            {
+                
             }
 
             public void OnEndPage(PdfWriter writer, Document document)

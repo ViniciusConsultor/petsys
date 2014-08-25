@@ -87,6 +87,7 @@ namespace MP.Client.MP
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlNaturezaPatente.NaturezaPatenteFoiSelecionada += VerificaSeNaturezaEhDeDesenhoIndustrial;
+            ctrlDespachoDePatentes.DespachoDePatentesFoiSelecionada += MostreDespacho;
 
             if (IsPostBack) return;
 
@@ -167,10 +168,7 @@ namespace MP.Client.MP
             }
 
             if (processoDePatente.Despacho != null)
-            {
-                ctrlDespachoDePatentes.DespachoDePatentesSelecionada = processoDePatente.Despacho;
-                ctrlDespachoDePatentes.CodigoDespachoDePatentes = processoDePatente.Despacho.Codigo;
-            }
+                MostreDespacho(processoDePatente.Despacho);
 
             if (processoDePatente.PCT != null)
             {
@@ -1294,6 +1292,17 @@ namespace MP.Client.MP
         {
             var expressao = new Regex(@"^\d*[0-9](|.\d*[0-9])?$");
             return expressao.IsMatch(txtProcesso.Text);
+        }
+
+        private void MostreDespacho(IDespachoDePatentes despacho)
+        {
+            ctrlDespachoDePatentes.DespachoDePatentesSelecionada = despacho;
+            ctrlDespachoDePatentes.CodigoDespachoDePatentes = despacho.Codigo;
+
+            txtProvidencia.Text = despacho.TipoProvidencia;
+            txtPrazoParaProvidencia.Text = despacho.PrazoProvidencia.ToString();
+            txtSituacaoDoProcesso.Text = despacho.Situacao;
+            txtDescricaoDoDespacho.Text = despacho.Descricao;
         }
     }
 }
