@@ -790,7 +790,6 @@ namespace MP.Servicos.Local
                     && filtro.ValorFiltro.Equals(processo.ResponsavelPagamentoImpostoDeRenda, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Estado)
                 if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Estado && !string.IsNullOrEmpty(processo.UFTitular)
                     && filtro.ValorFiltro.Equals(processo.UFTitular, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
