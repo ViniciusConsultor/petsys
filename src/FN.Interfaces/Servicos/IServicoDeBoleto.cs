@@ -8,9 +8,8 @@ namespace FN.Interfaces.Servicos
 {
     public interface IServicoDeBoleto : IServico
     {
-        IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto(long idCedente);
+        IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto(ICedente cedente);
         void AtualizarProximasInformacoes(IBoletosGeradosAux dadosAuxBoleto);
-        void InserirPrimeiraVez(IBoletosGeradosAux dadosAuxBoleto);
         IBoletosGerados obtenhaBoletoPeloId(long idBoleto);
         IBoletosGerados obtenhaBoletoPeloNossoNumero(long numero);
         void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro, TipoLacamentoFinanceiroRecebimento tipoLacamento);
