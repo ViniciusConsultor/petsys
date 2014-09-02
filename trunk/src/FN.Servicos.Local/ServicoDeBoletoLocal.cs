@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces;
 using Compartilhados.Interfaces.Core.Negocio;
 using Compartilhados.Interfaces.FN.Mapeadores;
 using Compartilhados.Interfaces.FN.Negocio;
-using Compartilhados.Interfaces.FN.Servicos;
 using FN.Interfaces.Mapeadores;
 using FN.Interfaces.Negocio;
 using FN.Interfaces.Servicos;
@@ -16,11 +16,18 @@ namespace FN.Servicos.Local
 {
     public class ServicoDeBoletoLocal : Servico, IServicoDeBoleto
     {
-        public ServicoDeBoletoLocal(ICredencial Credencial) : base(Credencial)
+        public ServicoDeBoletoLocal(ICredencial Credencial)
+            : base(Credencial)
         {
         }
 
-        public IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto(long idCedente)
+
+        private void InserirPrimeiraVez(IBoletosGeradosAux dadosAuxBoleto)
+        {
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
+            mapeador.InserirPrimeiraVez(dadosAuxBoleto);
+        }
+        public IBoletosGeradosAux obtenhaProximasInformacoesParaGeracaoDoBoleto(ICedente cedente)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -28,7 +35,26 @@ namespace FN.Servicos.Local
 
             try
             {
-                return mapeador.obtenhaProximasInformacoesParaGeracaoDoBoleto(idCedente);
+                var proximasInformacoes = mapeador.obtenhaProximasInformacoesParaGeracaoDoBoleto(cedente.Pessoa.ID.Value);
+
+                if (!proximasInformacoes.ID.HasValue)
+                {
+                    var boletosGeradosAux = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
+                    boletosGeradosAux.ID = GeradorDeID.getInstancia().getProximoID();
+                    // verificar se o codigo do banco é da caixa e acrescentar o 82 (somente para caixa)
+                    boletosGeradosAux.ProximoNossoNumero = cedente.InicioNossoNumero > 0 ? Convert.ToInt64("82" + cedente.InicioNossoNumero) : 8210001001;
+                    boletosGeradosAux.IDCEDENTE = cedente.Pessoa.ID;
+
+                    InserirPrimeiraVez(boletosGeradosAux);
+
+                    proximasInformacoes.ID = boletosGeradosAux.ID;
+                    proximasInformacoes.ProximoNossoNumero = boletosGeradosAux.ProximoNossoNumero;
+                    proximasInformacoes.IDCEDENTE = boletosGeradosAux.IDCEDENTE;
+
+                }
+
+                return proximasInformacoes;
+
             }
             finally
             {
@@ -59,28 +85,7 @@ namespace FN.Servicos.Local
             }
         }
 
-        public void InserirPrimeiraVez(IBoletosGeradosAux dadosAuxBoleto)
-        {
-            ServerUtils.setCredencial(_Credencial);
 
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
-
-            try
-            {
-                ServerUtils.BeginTransaction();
-                mapeador.InserirPrimeiraVez(dadosAuxBoleto);
-                ServerUtils.CommitTransaction();
-            }
-            catch
-            {
-                ServerUtils.RollbackTransaction();
-                throw;
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }
-        }
 
         public IBoletosGerados obtenhaBoletoPeloId(long idBoleto)
         {
@@ -117,7 +122,7 @@ namespace FN.Servicos.Local
         public void Inserir(IBoletosGerados boletoGerado, bool gerarItemFinanceiro, TipoLacamentoFinanceiroRecebimento tipoLacamento)
         {
             ServerUtils.setCredencial(_Credencial);
-          
+
             var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeBoleto>();
             var mapeadorItemFinanceiroRecebimento =
                 FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeItensFinanceirosDeRecebimento>();
@@ -129,7 +134,7 @@ namespace FN.Servicos.Local
                 FabricaGenerica.GetInstancia().CrieObjeto<IItemLancamentoFinanceiroRecebimento>();
             itemLacamentoFinanceiro.Cliente = boletoGerado.Cliente;
             itemLacamentoFinanceiro.DataDoLancamento = DateTime.Now;
-            itemLacamentoFinanceiro.DataDoVencimento =  boletoGerado.DataVencimento.Value;
+            itemLacamentoFinanceiro.DataDoVencimento = boletoGerado.DataVencimento.Value;
             itemLacamentoFinanceiro.Situacao = Situacao.CobrancaGerada;
             itemLacamentoFinanceiro.TipoLacamento = tipoLacamento;
             itemLacamentoFinanceiro.Valor = boletoGerado.Valor;

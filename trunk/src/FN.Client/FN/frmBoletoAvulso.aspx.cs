@@ -468,33 +468,27 @@ namespace FN.Client.FN
                             long idboleto;
 
                             using (var servicoFinanceiroComBoleto = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItemFinanceiroRecebidoComBoleto>())
-                            {
                                 idboleto =
                                     servicoFinanceiroComBoleto.ObtenhaBoletoPorIdItemFinanRecebimento(
                                         itemLancamentoFinanceiroRecebimento.ID.Value);
-                            }
 
                             if (idboleto > 0)
                             {
                                 IBoletosGerados boletoGeradoParaItemFinanceiro;
 
                                 using (var servicoBoletoGeradoParaItemFinanceiro = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-                                {
                                     boletoGeradoParaItemFinanceiro =
                                         servicoBoletoGeradoParaItemFinanceiro.obtenhaBoletoPeloId(
                                             idboleto);
-                                }
 
                                 if (boletoGeradoParaItemFinanceiro != null)
-                                {
                                     cedenteNossoNumeroBoleto = boletoGeradoParaItemFinanceiro.NossoNumero.Value;
-                                }
                             }
                             else
                             {
                                  using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
                                      dadosAuxiliares = 
-                                         servico.obtenhaProximasInformacoesParaGeracaoDoBoleto(ctrlCedente.CedenteSelecionado.Pessoa.ID.Value);
+                                         servico.obtenhaProximasInformacoesParaGeracaoDoBoleto(ctrlCedente.CedenteSelecionado);
 
                                  cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
                             }
@@ -502,50 +496,11 @@ namespace FN.Client.FN
                             break;
                         }
                     }
-                    //else
-                    //{
-                    //    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-                    //        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
-
-                    //    cedenteNossoNumeroBoleto = dadosAuxiliares.ProximoNossoNumero.Value;
-                    //}
                 }
                 else
                 {
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeBoleto>())
-                    {
-                        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto(ctrlCedente.CedenteSelecionado.Pessoa.ID.Value);
-
-                        if (!dadosAuxiliares.ID.HasValue)
-                        {
-                            var boletosGeradosAux = FabricaGenerica.GetInstancia().CrieObjeto<IBoletosGeradosAux>();
-
-                            boletosGeradosAux.ID = GeradorDeID.getInstancia().getProximoID();
-                            
-
-                            // verificar se o codigo do banco é da caixa e acrescentar o 82
-                            if(ctrlCedente.CedenteSelecionado != null)
-                            {
-                                if (ctrlCedente.CedenteSelecionado.InicioNossoNumero > 0)
-                                {
-                                    boletosGeradosAux.ProximoNossoNumero = Convert.ToInt64("82" + ctrlCedente.CedenteSelecionado.InicioNossoNumero);
-                                }
-                                else
-                                {
-                                    boletosGeradosAux.ProximoNossoNumero = 8210001001;
-                                }
-
-                                boletosGeradosAux.IDCEDENTE = ctrlCedente.CedenteSelecionado.Pessoa.ID;
-                            }
-
-                            servico.InserirPrimeiraVez(boletosGeradosAux);
-
-                            dadosAuxiliares.ID = boletosGeradosAux.ID;
-                            dadosAuxiliares.ProximoNossoNumero = boletosGeradosAux.ProximoNossoNumero;
-                            dadosAuxiliares.IDCEDENTE = boletosGeradosAux.IDCEDENTE;
-                            //dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto();
-                        }
-                    }
+                        dadosAuxiliares = servico.obtenhaProximasInformacoesParaGeracaoDoBoleto(ctrlCedente.CedenteSelecionado);
 
                     // Numero do documento - numero de controle interno, não afeta o calculo da linha digitavel e nem o codigo de barras
                     // mais pode ser útil, exemplo: quando o cliente ligar, vc pode consultar por este número e ver 
