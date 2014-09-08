@@ -353,9 +353,9 @@ namespace MP.Client.MP
                 if (uplRevistaPatente.UploadedFiles.Count > 0)
                 {
                     var arquivo = uplRevistaPatente.UploadedFiles[0];
-                    var pastaDeDestino = Server.MapPath(Util.URL_REVISTA_PATENTE);
+                    var pastaDeDestino = Server.MapPath(UtilMP.URL_REVISTA_PATENTE);
 
-                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+                    Util.CrieDiretorio(pastaDeDestino);
 
                     IList<IRevistaDePatente> listaRevistasAProcessar = new List<IRevistaDePatente>();
                     var revistaDePatentes = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDePatente>();
@@ -364,7 +364,7 @@ namespace MP.Client.MP
                     revistaDePatentes.NumeroRevistaPatente = Convert.ToInt32(numeroRevista);
                     listaRevistasAProcessar.Add(revistaDePatentes);
 
-                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+                    Util.CrieDiretorio(pastaDeDestino);
                     ExtrairArquivoZip(arquivo, pastaDeDestino);
                 }
             }
@@ -453,9 +453,9 @@ namespace MP.Client.MP
 
         private void MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(IRevistaDePatente revistaDePatente)
         {
-            var pastaDeDestino = Server.MapPath(Util.URL_REVISTA_PATENTE);
+            var pastaDeDestino = Server.MapPath(UtilMP.URL_REVISTA_PATENTE);
 
-            UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+            Util.CrieDiretorio(pastaDeDestino);
 
             var caminhoArquivoTxt = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
             using (var arquivo = new StreamReader(caminhoArquivoTxt))
@@ -468,9 +468,9 @@ namespace MP.Client.MP
 
         private XmlDocument MontaXmlParaProcessamentoDaRevista(IRevistaDePatente revistaDePatente)
         {
-            var pastaDeDestino = Server.MapPath(Util.URL_REVISTA_PATENTE);
+            var pastaDeDestino = Server.MapPath(UtilMP.URL_REVISTA_PATENTE);
 
-            UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+            Util.CrieDiretorio(pastaDeDestino);
 
             CaminhoArquivo = Path.Combine(pastaDeDestino, revistaDePatente.NumeroRevistaPatente + revistaDePatente.ExtensaoArquivo);
             AdicioneNumeroDaRevistaSelecionada(revistaDePatente);
@@ -534,7 +534,7 @@ namespace MP.Client.MP
 
             revistaDePatente.NumeroRevistaPatente = Convert.ToInt32(numeroRevista.Substring(0, 1).ToUpper().Equals("P") ? numeroRevista.Substring(1, 4) : numeroRevista);
 
-            var pastaDeDestinoTemp = Server.MapPath(Util.URL_REVISTA_PATENTE + "/temp/");
+            var pastaDeDestinoTemp = Server.MapPath(UtilMP.URL_REVISTA_PATENTE + "/temp/");
 
             Directory.CreateDirectory(pastaDeDestinoTemp);
 
@@ -542,7 +542,7 @@ namespace MP.Client.MP
 
             arquivo.SaveAs(caminhoArquivoZip, true);
 
-            UtilidadesWeb.DescompacteArquivoZip(caminhoArquivoZip, pastaDeDestinoTemp);
+            Util.DescompacteArquivoZip(caminhoArquivoZip, pastaDeDestinoTemp);
 
             File.Delete(caminhoArquivoZip);
 

@@ -29,5 +29,11 @@ Public Class UtilidadesDeStream
         Return fs
     End Function
 
+    Public Shared Sub SalveArquivo(ByVal CaminhoENomeDoArquivo As String, ByVal arquivo As Stream)
+        Using streamSaida = File.Create(CaminhoENomeDoArquivo)
+            arquivo.CopyTo(streamSaida)
+        End Using
+    End Sub
+
 
 End Class

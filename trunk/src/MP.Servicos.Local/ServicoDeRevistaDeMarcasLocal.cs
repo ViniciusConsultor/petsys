@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -11,6 +12,7 @@ using MP.Interfaces.Mapeadores;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Servicos;
+using MP.Interfaces.Utilidades;
 
 namespace MP.Servicos.Local
 {
@@ -44,9 +46,14 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
+        public IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(string pastaDeArmazenamentoDasRevistas,IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
         {
             IList<IRevistaDeMarcas> listaDeProcessosExistentesNaRevista = new List<IRevistaDeMarcas>();
+
+            // arquivo txt para xml
+            if (revistaDeMarcas.ExtensaoArquivo.ToUpper().Equals(".TXT"))
+                revistaDeMarcas.ExtensaoArquivo = ".xml";
+        
             listaDeProcessosExistentesNaRevista = LerRevistaXMLParaProcessosExistentes(revistaDeMarcas, revistaXml);
             return listaDeProcessosExistentesNaRevista;
         }
@@ -136,34 +143,6 @@ namespace MP.Servicos.Local
             var objetoLeituraRevistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<ILeituraRevistaDeMarcas>();
             return listaObjetosLeituraRevistaDeMarcas;
         }
-
-        //public IList<ILeituraRevistaDeMarcas> ObtenhaListaDeMarcasDeClientes(XmlDocument revistaXml)
-        //{
-        //    IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevista = new List<ILeituraRevistaDeMarcas>();
-        //    IList<IProcessoDeMarca> listaDeProcessosComMarcaQueContemRadicalDadastrado = new List<IProcessoDeMarca>();
-
-        //    listaDeProcessosDaRevista = LerTodaRevistaXML(revistaXml);
-
-        //    listaDeProcessosComMarcaQueContemRadicalDadastrado = obtenhaProcessosComMarcaQueContemRadicalDadastrado();
-
-
-        //}
-
-        //private IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado()
-        //{
-        //    ServerUtils.setCredencial(_Credencial);
-
-        //    var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
-
-        //    try
-        //    {
-        //        return mapeador.obtenhaProcessosComMarcaQueContemRadicalDadastrado();
-        //    }
-        //    finally
-        //    {
-        //        ServerUtils.libereRecursos();
-        //    }
-        //}
 
         public IList<ILeituraRevistaDeMarcas> obtenhaTodosOsProcessosDaRevistaDeMarcasXML(XmlDocument revistaXml)
         {
@@ -667,6 +646,141 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }
+        }
+
+        public XmlDocument ObtenhaXmlDaRevistaParaProcessamento(string pastaDeArmazenamentoDasRevistas, IRevistaDeMarcas revistaDeMarcas)
+        {
+            Util.CrieDiretorio(pastaDeArmazenamentoDasRevistas);
+
+            // arquivo txt para xml
+            if (revistaDeMarcas.ExtensaoArquivo.ToUpper().Equals(".TXT"))
+            {
+                MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(pastaDeArmazenamentoDasRevistas, revistaDeMarcas);
+                revistaDeMarcas.ExtensaoArquivo = ".xml";
+            }
+
+
+            var caminhoArquivo = Path.Combine(pastaDeArmazenamentoDasRevistas, revistaDeMarcas.NumeroRevistaMarcas + revistaDeMarcas.ExtensaoArquivo);
+            var xmlRevista = new XmlDocument();
+            
+             xmlRevista.Load(caminhoArquivo);
+           
+            return xmlRevista;
+        
+        }
+
+        private void MontaXMLParaProcessamentoDaRevistaAtravesDoTXT(string pastaDeArmazenamentoDasRevistas, IRevistaDeMarcas revistaDeMarcas)
+        {
+            Util.CrieDiretorio(pastaDeArmazenamentoDasRevistas);
+
+            var caminhoArquivoTxt = Path.Combine(pastaDeArmazenamentoDasRevistas, revistaDeMarcas.NumeroRevistaMarcas +
+                revistaDeMarcas.ExtensaoArquivo);
+
+            using (var arquivo = new StreamReader(caminhoArquivoTxt))
+            {
+                TradutorDeRevistaTxtParaRevistaXml.TraduzaRevistaDeMarcas(DateTime.Now, revistaDeMarcas.NumeroRevistaMarcas.ToString(),
+                arquivo, pastaDeArmazenamentoDasRevistas);
+                arquivo.Close();
+            }
+
+            //Directory.Delete(caminhoArquivoTxt);
+
+        }
+
+        public IList<IRevistaDeMarcas> PreparaArquivoDaRevistaParaLeitura(string pastaDeDestinoDasRevistas, IDictionary<string, Stream> arquivosASeremProcessados)
+        {
+            IList<IRevistaDeMarcas> listaRevistasAProcessar = new List<IRevistaDeMarcas>();
+            
+            foreach (var arquivo in arquivosASeremProcessados)
+            {
+                var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
+                var numeroRevista = arquivo.Key;
+
+                if (numeroRevista.Substring(0, 2).ToLower().Equals("rm"))
+                    revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista.Substring(2, 4));
+                else
+                    revistaDeMarcas.NumeroRevistaMarcas = Convert.ToInt32(numeroRevista);
+
+                var pastaDeDestinoTemp = Path.Combine(pastaDeDestinoDasRevistas ,"temp");
+
+                Directory.CreateDirectory(pastaDeDestinoTemp);
+
+                var caminhoArquivoZip = Path.Combine(pastaDeDestinoTemp, revistaDeMarcas.NumeroRevistaMarcas +  arquivo.Key.Substring(arquivo.Key.LastIndexOf(".")));
+
+                UtilidadesDeStream.SalveArquivo(caminhoArquivoZip, arquivo.Value);
+                
+                Util.DescompacteArquivoZip(caminhoArquivoZip, pastaDeDestinoTemp);
+
+                File.Delete(caminhoArquivoZip);
+
+                var dirInfo = new DirectoryInfo(pastaDeDestinoTemp);
+
+                FileInfo[] arquivos = dirInfo.GetFiles();
+
+                foreach (var arquivoDaPasta in arquivos)
+                {
+                    var caminhoArquivoAntigo = Path.Combine(pastaDeDestinoTemp, arquivoDaPasta.Name);
+
+                    if (
+                        arquivoDaPasta.Name.ToLower().Equals("rm" + revistaDeMarcas.NumeroRevistaMarcas +
+                                                             arquivoDaPasta.Extension.ToLower()))
+                    {
+                        var arquivoNovo =
+                            arquivoDaPasta.Name.ToLower().Replace(
+                                "rm" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension.ToLower(),
+                                revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension);
+
+                        var caminhoArquivoNovo = Path.Combine(pastaDeDestinoDasRevistas, arquivoNovo);
+
+                        File.Delete(caminhoArquivoNovo);
+                        File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                        File.Delete(caminhoArquivoAntigo);
+
+                        revistaDeMarcas.ExtensaoArquivo = arquivoDaPasta.Extension;
+                        listaRevistasAProcessar.Add(revistaDeMarcas);
+                        continue;
+                    }
+
+                    if (
+                        arquivoDaPasta.Name.ToLower().Equals("rm_" + revistaDeMarcas.NumeroRevistaMarcas +
+                                                             arquivoDaPasta.Extension.ToLower()))
+                    {
+                        var arquivoNovo =
+                            arquivoDaPasta.Name.ToLower().Replace(
+                                "rm_" + revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension.ToLower(),
+                                revistaDeMarcas.NumeroRevistaMarcas + arquivoDaPasta.Extension);
+
+                        var caminhoArquivoNovo = Path.Combine(pastaDeDestinoDasRevistas, arquivoNovo);
+
+                        File.Delete(caminhoArquivoNovo);
+                        File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                        File.Delete(caminhoArquivoAntigo);
+
+                        revistaDeMarcas.ExtensaoArquivo = arquivoDaPasta.Extension;
+                        listaRevistasAProcessar.Add(revistaDeMarcas);
+                        continue;
+                    }
+                    if (arquivoDaPasta.Name.Replace(arquivoDaPasta.Extension, "").Equals(
+                            revistaDeMarcas.NumeroRevistaMarcas.ToString()))
+                    {
+                        var arquivoNovo = revistaDeMarcas.NumeroRevistaMarcas.ToString() + arquivoDaPasta.Extension;
+
+                        var caminhoArquivoNovo = Path.Combine(pastaDeDestinoDasRevistas, arquivoNovo);
+
+                        File.Delete(caminhoArquivoNovo);
+                        File.Move(caminhoArquivoAntigo, caminhoArquivoNovo);
+                        File.Delete(caminhoArquivoAntigo);
+
+                        revistaDeMarcas.ExtensaoArquivo = arquivoDaPasta.Extension;
+                        listaRevistasAProcessar.Add(revistaDeMarcas);
+
+                        continue;
+                    }
+                }
+
+            }
+
+            return listaRevistasAProcessar;
         }
     }
 }
