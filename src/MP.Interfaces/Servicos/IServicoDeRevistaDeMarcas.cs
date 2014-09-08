@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -14,7 +15,7 @@ namespace MP.Interfaces.Servicos
         void Inserir(IList<IRevistaDeMarcas> listaDeObjetoRevistaDeMarcas);
         IList<IRevistaDeMarcas> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDeMarcas> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
-        IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml);
+        IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(string pastaDeArmazenamentoDasRevistas, IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml);
         IList<ILeituraRevistaDeMarcas> ObtenhaResultadoDaConsultaPorFiltroXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDeMarcas filtro);
         IList<ILeituraRevistaDeMarcas> ObtenhaObjetoDeLeituraRevistaDeMarcas(
             IList<IRevistaDeMarcas> listaDeProcessosExistentes);
@@ -23,5 +24,11 @@ namespace MP.Interfaces.Servicos
         IDictionary<IList<ILeituraRevistaDeMarcas>, IList<ILeituraRevistaDeMarcas>> obtenhaListaDasMarcasColidentesEClientes(IList<ILeituraRevistaDeMarcas> listaDeProcessosDaRevistaComMarcaExistente, IList<IProcessoDeMarca> listaDeProcessosDeMarcasComRadicalCadastrado);
 
         void Excluir(int numeroDaRevistaDeMarcas);
+
+        XmlDocument ObtenhaXmlDaRevistaParaProcessamento(string pastaDeArmazenamentoDasRevistas, IRevistaDeMarcas revistaDeMarcas);
+
+        IList<IRevistaDeMarcas> PreparaArquivoDaRevistaParaLeitura(string pastaDeDestinoDasRevistas,
+                                                            IDictionary<string, Stream> arquivosASeremProcessados);
+
     }
 }

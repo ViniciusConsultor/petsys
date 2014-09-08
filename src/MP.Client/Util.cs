@@ -6,7 +6,7 @@ using MP.Interfaces.Negocio;
 
 namespace MP.Client
 {
-    public class Util
+    public class UtilMP
     {
 
         public const string URL_IMAGEM_MARCA = "~/Loads/Imagens/Marcas";

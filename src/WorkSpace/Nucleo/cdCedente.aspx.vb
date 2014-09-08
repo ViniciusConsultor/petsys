@@ -362,7 +362,7 @@ Public Class cdCedente
                 Dim arquivo = uplImagem.UploadedFiles(0)
                 Dim pastaDeDestino = Server.MapPath(UtilidadesWeb.URL_IMAGEM_CABECALHO_BOLETO)
 
-                UtilidadesWeb.CrieDiretorio(pastaDeDestino)
+                Util.CrieDiretorio(pastaDeDestino)
 
                 Dim caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension())
 

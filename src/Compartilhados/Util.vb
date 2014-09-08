@@ -3,6 +3,7 @@ Imports System.IO
 
 Imports System.Configuration
 Imports System.Xml
+Imports Ionic.Zip
 
 Public Class Util
 
@@ -23,7 +24,7 @@ Public Class Util
         Return Credencial
     End Function
 
-    Public Shared Function ConstruaCredencial(conexao As IConexao) As Credencial
+    Public Shared Function ConstruaCredencial(ByVal conexao As IConexao) As Credencial
         Dim Credencial As Credencial = New Credencial(conexao, _
                                                      Nothing, Nothing)
 
@@ -62,10 +63,10 @@ Public Class Util
     Public Shared Sub SalveConfiguracaoDeConexao(ByVal Conexao As IConexao)
         Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
         Dim Xml As XmlDocument
-        
+
         Xml = New XmlDocument
         Xml.Load(Path.Combine(Caminho, "Core.Servicos.Local.dll.config"))
-        End Sub
+    End Sub
 
     Public Shared Function ObtenhaCaminhoArquivoXMLDeGatilho() As String
         Return String.Concat(ObtenhaCaminhoDaPastaDoServidorDeAplicacao(), "gatilhos.xml")
@@ -128,5 +129,22 @@ Public Class Util
         Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("ImagemPadrao")
         Return Configuracao.Value
     End Function
+
+    Public Shared Sub DescompacteArquivoZip(ByVal nomeECaminhoArquivoZip As String, ByVal CaminhoDestino As String)
+        Using zip1 As ZipFile = ZipFile.Read(nomeECaminhoArquivoZip)
+
+            Dim e As ZipEntry
+
+            For Each e In zip1
+                e.Extract(CaminhoDestino, ExtractExistingFileAction.OverwriteSilently)
+            Next
+        End Using
+    End Sub
+
+    Public Shared Sub CrieDiretorio(ByVal nomeDiretorio As String)
+        If Not Directory.Exists(nomeDiretorio) Then Directory.CreateDirectory(nomeDiretorio)
+    End Sub
+
+  
 
 End Class

@@ -297,7 +297,7 @@ namespace MP.Client.MP
 
             //Tab da imagem do desenho industrial
             ExibaTabDeImagemDeDesenhoIndustrial(false);
-            imgImagem.ImageUrl = Util.URL_IMAGEM_SEM_FOTO_PATENTE;
+            imgImagem.ImageUrl = UtilMP.URL_IMAGEM_SEM_FOTO_PATENTE;
 
             LimpeCamposClassificacaoDePatentes();
         }
@@ -696,7 +696,7 @@ namespace MP.Client.MP
                 ExibaTabDeImagemDeDesenhoIndustrial(true);
                 
                 if (string.IsNullOrEmpty(patente.Imagem))
-                    imgImagem.ImageUrl = Util.URL_IMAGEM_SEM_FOTO_PATENTE;
+                    imgImagem.ImageUrl = UtilMP.URL_IMAGEM_SEM_FOTO_PATENTE;
                 else
                     imgImagem.ImageUrl = patente.Imagem;
             }
@@ -1255,14 +1255,14 @@ namespace MP.Client.MP
                 if (uplImagem.UploadedFiles.Count > 0)
                 {
                     var arquivo = uplImagem.UploadedFiles[0];
-                    var pastaDeDestino = Server.MapPath(Util.URL_IMAGEM_PATENTE);
+                    var pastaDeDestino = Server.MapPath(UtilMP.URL_IMAGEM_PATENTE);
 
-                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+                    Util.CrieDiretorio(pastaDeDestino);
 
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
 
                     arquivo.SaveAs(caminhoArquivo);
-                    imgImagem.ImageUrl = string.Concat(Util.URL_IMAGEM_PATENTE, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
+                    imgImagem.ImageUrl = string.Concat(UtilMP.URL_IMAGEM_PATENTE, "/", arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
                 }
             }
             catch (Exception ex)

@@ -472,21 +472,6 @@ Public Class UtilidadesWeb
 
     End Function
 
-    Public Shared Sub CrieDiretorio(nomeDiretorio As String)
-        If Not Directory.Exists(nomeDiretorio) Then Directory.CreateDirectory(nomeDiretorio)
-    End Sub
-
-    Public Shared Sub DescompacteArquivoZip(ByVal nomeECaminhoArquivoZip As String, ByVal CaminhoDestino As String)
-        Using zip1 As ZipFile = ZipFile.Read(nomeECaminhoArquivoZip)
-
-            Dim e As ZipEntry
-
-            For Each e In zip1
-                e.Extract(CaminhoDestino, ExtractExistingFileAction.OverwriteSilently)
-            Next
-        End Using
-    End Sub
-
     Public Shared Function ObtenhaListaDeStringComQuebraDeLinhaWeb(ByVal Lista As IList(Of String)) As String
         Dim strWeb As String = ""
 
