@@ -515,7 +515,7 @@ namespace MP.Servicos.Local
             IDespachoDePatentes despacho;
 
             using (var servicoDespacho = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-                despacho = servicoDespacho.ObtenhaDespachoPeloCodigo(codigoDoDespacho, int.MaxValue);
+                despacho = servicoDespacho.ObtenhaDespachoPeloCodigo(codigoDoDespacho);
 
             if (despacho != null)
                 processoDePatente.Despacho = despacho;

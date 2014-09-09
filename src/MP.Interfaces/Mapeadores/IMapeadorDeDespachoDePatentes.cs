@@ -9,10 +9,10 @@ namespace MP.Interfaces.Mapeadores
     public interface IMapeadorDeDespachoDePatentes
     {
         IDespachoDePatentes obtenhaDespachoDePatentesPeloId(long idDespachoDePatentes);
-        IList<IDespachoDePatentes> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros);
+        IList<IDespachoDePatentes> ObtenhaPorDescricao(string descricaoParcial, int quantidadeMaximaDeRegistros);
         void Inserir(IDespachoDePatentes despachoDePatentes);
         void Modificar(IDespachoDePatentes despachoDePatentes);
         void Excluir(long idDespachoDePatentes);
-        IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo, int quantidadeMaximaDeRegistros);
+        IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo);
     }
 }

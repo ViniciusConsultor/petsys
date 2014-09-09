@@ -210,11 +210,9 @@ namespace MP.Client.MP
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
-                        IList<IDespachoDeMarcas> listaDeDespachosCadastrados = new List<IDespachoDeMarcas>();
+                        var despachoCadastrado = verificaSeJaExisteDespachoCadastrado(despachoDeMarcas.CodigoDespacho, servico);
 
-                        listaDeDespachosCadastrados = verificaSeJaExisteDespachoCadastrado(despachoDeMarcas.CodigoDespacho, servico);
-
-                        if (listaDeDespachosCadastrados.Count > 0)
+                        if (despachoCadastrado != null)
                         {
                             mensagem = "Já existe um despacho de marcas cadastrado com este código";
 
@@ -245,11 +243,9 @@ namespace MP.Client.MP
 
         }
 
-        private IList<IDespachoDeMarcas> verificaSeJaExisteDespachoCadastrado(string codigoDespacho, IServicoDeDespachoDeMarcas servico)
+        private IDespachoDeMarcas verificaSeJaExisteDespachoCadastrado(string codigoDespacho, IServicoDeDespachoDeMarcas servico)
         {
-            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespacho, int.MaxValue);
-
-            return listaDeDespachos;
+            return servico.ObtenhaDespachoPorCodigo(codigoDespacho);
         }
 
         private void btnModificar_Click()

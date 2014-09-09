@@ -70,7 +70,7 @@ namespace MP.Client.MP
             IList<IDespachoDePatentes> listaDespachoDePatentes = new List<IDespachoDePatentes>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-                listaDespachoDePatentes = servico.ObtenhaPorCodigoDoDespachoComoFiltro(e.Text, 50);
+                listaDespachoDePatentes = servico.ObtenhaPorDescricao(e.Text, 50);
             
             if (listaDespachoDePatentes.Count <= 0) return;
 

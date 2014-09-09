@@ -215,11 +215,9 @@ namespace MP.Client.MP
                 {
                     if (ViewState[CHAVE_ESTADO].Equals(Estado.Novo))
                     {
-                        IList<IDespachoDePatentes> listaDeDespachosCadastrados = new List<IDespachoDePatentes>();
+                        var despachoCadastrados = verificaSeJaExisteDespachoCadastrado(despachoDePatentes.Codigo, servico);
 
-                        listaDeDespachosCadastrados = verificaSeJaExisteDespachoCadastrado(despachoDePatentes.Codigo, servico);
-
-                        if (listaDeDespachosCadastrados.Count > 0)
+                        if (despachoCadastrados != null)
                         {
                             mensagem = "Já existe um despacho de patente cadastrado com este código";
 
@@ -250,11 +248,9 @@ namespace MP.Client.MP
             }
         }
 
-        private IList<IDespachoDePatentes> verificaSeJaExisteDespachoCadastrado(string codigoDespachoDePatente, IServicoDeDespachoDePatentes servico)
+        private IDespachoDePatentes verificaSeJaExisteDespachoCadastrado(string codigoDespachoDePatente, IServicoDeDespachoDePatentes servico)
         {
-            var listaDeDespachos = servico.ObtenhaPorCodigoDoDespachoComoFiltro(codigoDespachoDePatente, int.MaxValue);
-
-            return listaDeDespachos;
+            return servico.ObtenhaDespachoPeloCodigo(codigoDespachoDePatente);
         }
 
         private void btnModificar_Click()

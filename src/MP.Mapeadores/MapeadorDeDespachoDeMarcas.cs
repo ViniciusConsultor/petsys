@@ -75,7 +75,7 @@ namespace MP.Mapeadores
             return listaDeDespachoDeMarcas;
         }
 
-        public IList<IDespachoDeMarcas> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros)
+        public IList<IDespachoDeMarcas> ObtenhaPorDescricao(string descricaoParcial, int quantidadeMaximaDeRegistros)
         {
             var sql = new StringBuilder();
 
@@ -83,8 +83,8 @@ namespace MP.Mapeadores
             sql.Append("SITUACAODOPROCESSO, PRAZOPROVIDENCIA, PROVIDENCIA, DESATIVAPROCESSO, DESATIVAPESQCOLIDENCIA, TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_MARCA ");
 
-            if (!String.IsNullOrEmpty(codigo))
-                sql.Append(string.Concat("WHERE CODIGO_DESPACHO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(codigo), "%'"));
+            if (!String.IsNullOrEmpty(descricaoParcial))
+                sql.Append(string.Concat("WHERE DESCRICAO_DESPACHO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoParcial.ToUpper()), "%'"));
 
             sql.Append(" ORDER BY CODIGO_DESPACHO");
 

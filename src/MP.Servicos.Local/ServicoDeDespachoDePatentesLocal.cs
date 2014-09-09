@@ -32,7 +32,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IDespachoDePatentes> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros)
+        public IList<IDespachoDePatentes> ObtenhaPorDescricao(string descricaoParcial, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -40,7 +40,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaPorCodigoDoDespachoComoFiltro(codigo, quantidadeMaximaDeRegistros);
+                return mapeador.ObtenhaPorDescricao(descricaoParcial, quantidadeMaximaDeRegistros);
             }
             finally
             {
@@ -118,7 +118,7 @@ namespace MP.Servicos.Local
         }
 
 
-        public IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo, int quantidadeMaximaDeRegistros)
+        public IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -126,7 +126,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaDespachoPeloCodigo(codigo, quantidadeMaximaDeRegistros);
+                return mapeador.ObtenhaDespachoPeloCodigo(codigo);
             }
             finally
             {
