@@ -32,7 +32,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IDespachoDeMarcas> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros)
+        public IList<IDespachoDeMarcas> ObtenhaPorDescricao(string descricaoParcial, int quantidadeMaximaDeRegistros)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -40,7 +40,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaPorCodigoDoDespachoComoFiltro(codigo, quantidadeMaximaDeRegistros);
+                return mapeador.ObtenhaPorDescricao(descricaoParcial, quantidadeMaximaDeRegistros);
             }
             finally
             {

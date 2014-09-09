@@ -10,7 +10,7 @@ namespace MP.Interfaces.Servicos
     public interface IServicoDeDespachoDeMarcas : IServico
     {
         IDespachoDeMarcas obtenhaDespachoDeMarcasPeloId(long idDespachoDeMarcas);
-        IList<IDespachoDeMarcas> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros);
+        IList<IDespachoDeMarcas> ObtenhaPorDescricao(string descricaoParcial, int quantidadeMaximaDeRegistros);
         IDespachoDeMarcas ObtenhaDespachoPorCodigo(string codigo);
         void Inserir(IDespachoDeMarcas despachoDeMarcas);
         void Modificar(IDespachoDeMarcas despachoDeMarcas);

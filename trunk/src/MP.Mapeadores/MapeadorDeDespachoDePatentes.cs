@@ -81,7 +81,7 @@ namespace MP.Mapeadores
             return listaDeDespachoDePatentes;
         }
 
-        public IList<IDespachoDePatentes> ObtenhaPorCodigoDoDespachoComoFiltro(string codigo, int quantidadeMaximaDeRegistros)
+        public IList<IDespachoDePatentes> ObtenhaPorDescricao(string descricaoParcial, int quantidadeMaximaDeRegistros)
         {
             var sql = new StringBuilder();
 
@@ -89,9 +89,9 @@ namespace MP.Mapeadores
             sql.Append("TITULO, DESCRICAO, SITUACAO, PRAZO, PROVIDENCIA, DESATIVAPROCESSO, AGENDAPAGAMENTO, TEMPLATEEMAIL ");
             sql.Append("FROM MP_DESPACHO_PATENTE ");
 
-            if (!string.IsNullOrEmpty(codigo))
+            if (!string.IsNullOrEmpty(descricaoParcial))
             {
-                sql.Append(string.Concat("WHERE CODIGO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(codigo), "%'"));
+                sql.Append(string.Concat("WHERE DESCRICAO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoParcial.ToUpper()), "%'"));
             }
 
             sql.Append(" ORDER BY CODIGO");
@@ -229,7 +229,7 @@ namespace MP.Mapeadores
         }
 
 
-        public IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo, int quantidadeMaximaDeRegistros)
+        public IDespachoDePatentes ObtenhaDespachoPeloCodigo(string codigo)
         {
             var sql = new StringBuilder();
 
@@ -241,7 +241,7 @@ namespace MP.Mapeadores
 
             IList<IDespachoDePatentes> listaDeDespachoDePatentes = new List<IDespachoDePatentes>();
 
-            listaDeDespachoDePatentes = obtenhaDespachoDePatentes(sql, quantidadeMaximaDeRegistros);
+            listaDeDespachoDePatentes = obtenhaDespachoDePatentes(sql, 1);
 
             if (listaDeDespachoDePatentes.Count == 0)
                 return null;

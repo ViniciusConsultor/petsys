@@ -337,7 +337,7 @@ namespace MP.Client.Relatorios.Patentes
                 var despacho = FabricaGenerica.GetInstancia().CrieObjeto<IDespachoDePatentes>();
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-                    despacho = servico.ObtenhaDespachoPeloCodigo(revista.CodigoDoDespacho, 1);
+                    despacho = servico.ObtenhaDespachoPeloCodigo(revista.CodigoDoDespacho);
 
                 if(despacho != null)
                 {

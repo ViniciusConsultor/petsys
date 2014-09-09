@@ -97,7 +97,7 @@ namespace MP.Client.Relatorios.Patentes
                     {
                         foreach (IRevistaDePatente revistaDePatente in revistaDePatentes)
                         {
-                            var despacho = servico.ObtenhaDespachoPeloCodigo(revistaDePatente.CodigoDoDespacho, 1);
+                            var despacho = servico.ObtenhaDespachoPeloCodigo(revistaDePatente.CodigoDoDespacho);
 
                             var tabela2 = new PdfPTable(3);
 
