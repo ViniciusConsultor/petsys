@@ -28,7 +28,7 @@ namespace MP.Interfaces.Utilidades
                 {
                     linha = linha.ToUpper();
 
-                    if (linha.StartsWith("NO"))
+                    if (linha.StartsWith("NO") && contador==0)
                         dataDaPublicacaoDaRevista = Convert.ToDateTime(linha.Substring(linha.Length - 10, 10));
 
                     if (contador == 0 || contador == 1 || contador == 2)
