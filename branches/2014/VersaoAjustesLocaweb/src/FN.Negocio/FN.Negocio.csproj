@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1420DDCB-2CF1-40D7-931E-421CF46C54CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FN.Negocio</RootNamespace>
+    <AssemblyName>FN.Negocio</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>FN.Negocio.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Compartilhados, Version=1.0.0.1, Culture=neutral, PublicKeyToken=1972c105628c14e0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Compartilhados.dll</HintPath>
+    </Reference>
+    <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Compartilhados.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Core.Negocio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fd092420b966ccff, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BoletosGerados.cs" />
+    <Compile Include="BoletosGeradosAux.cs" />
+    <Compile Include="ConfiguracaoDeBoletoBancario.cs" />
+    <Compile Include="ConfiguracaoDeIndicesFinanceiros.cs" />
+    <Compile Include="ConfiguracaoGeralFinanceiro.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPoNossoNumero.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorCedente.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorCliente.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorIntervaloDeDataDeGeracao.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorIntervaloDeDataDeVencimento.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosSemFiltro.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosVencidos.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorCliente.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorDescricao.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorFormaDeRecebimento.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorID.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorIntervaloDeDataDeVencimento.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorSituacao.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberSemFiltro.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberVencidos.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroPorNumeroDoBoleto.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroTipoLacamentoFinanceiroRecebimento.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorCliente.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorDescricao.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorID.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorIntervaloDAtaDeVencimento.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoSemFiltro.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoVencidos.cs" />
+    <Compile Include="ItemLancamentoFinanceiro.cs" />
+    <Compile Include="ItemLancamentoFinanceiroRecebimento.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FN.Negocio.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FN.Interfaces\FN.Interfaces.csproj">
+      <Project>{93923602-0938-4670-A277-018C68D34942}</Project>
+      <Name>FN.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

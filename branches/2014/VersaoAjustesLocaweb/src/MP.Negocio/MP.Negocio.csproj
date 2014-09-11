@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6A4FF960-4EDA-4C92-8FF7-96082501D76E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MP.Negocio</RootNamespace>
+    <AssemblyName>MP.Negocio</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MP.Negocio.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Compartilhados, Version=1.0.0.1, Culture=neutral, PublicKeyToken=1972c105628c14e0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Compartilhados.dll</HintPath>
+    </Reference>
+    <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Compartilhados.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Core.Negocio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fd092420b966ccff, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClasseNacional.cs" />
+    <Compile Include="ClasseViena.cs" />
+    <Compile Include="DespachoDeMarcas.cs" />
+    <Compile Include="DespachoDePatentes.cs" />
+    <Compile Include="Filtros\Marcas\FiltroLeituraDeRevistaDeMarcas.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorApresentacao.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorCliente.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorDataDeCadastro.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorID.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorMarca.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorNatureza.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorNCL.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaPorProcesso.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaSemFiltro.cs" />
+    <Compile Include="Filtros\Marcas\FiltroMarcaVencidaNoMes.cs" />
+    <Compile Include="Filtros\Marcas\FiltroRelatorioDeManutencoesDaMarca.cs" />
+    <Compile Include="Filtros\Patentes\FiltroLeituraDeRevistaDePatentes.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorCliente.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorDataDeCadastro.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorID.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorInventor.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorNatureza.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorProcesso.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorTitular.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatentePorTituloDaPatente.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatenteSemFiltro.cs" />
+    <Compile Include="Filtros\Patentes\FiltroPatenteVencidaNoMes.cs" />
+    <Compile Include="Filtros\Patentes\FiltroRelatorioDeManutencoesDaPatente.cs" />
+    <Compile Include="Filtros\Patentes\FiltroRelatorioGeralPatente.cs" />
+    <Compile Include="Inventor.cs" />
+    <Compile Include="LazyLoad\AnuidadePatenteLazyLoad.cs" />
+    <Compile Include="LazyLoad\ClassificacaoPatenteLazyLoad.cs" />
+    <Compile Include="LazyLoad\DespachoDeMarcasLazyLoad.cs" />
+    <Compile Include="LazyLoad\DespachoDePatentesLazyLoad.cs" />
+    <Compile Include="LazyLoad\InventorLazyLoad.cs" />
+    <Compile Include="LazyLoad\MarcasLazyLoad.cs" />
+    <Compile Include="LazyLoad\NaturezaPatenteLazyLoad.cs" />
+    <Compile Include="LazyLoad\PatenteLazyLoad.cs" />
+    <Compile Include="LazyLoad\PrioridadeUnionistaPatenteLazyLoad.cs" />
+    <Compile Include="LazyLoad\ProcuradorLazyLoad.cs" />
+    <Compile Include="LazyLoad\TitularLazyLoad.cs" />
+    <Compile Include="LeituraRevistaDeMarcas.cs" />
+    <Compile Include="Manutencao.cs" />
+    <Compile Include="Marcas.cs" />
+    <Compile Include="NaturezaPatente.cs" />
+    <Compile Include="Pasta.cs" />
+    <Compile Include="Patente.cs" />
+    <Compile Include="AnuidadePatente.cs" />
+    <Compile Include="ClassificacaoPatente.cs" />
+    <Compile Include="PCT.cs" />
+    <Compile Include="PrioridadeUnionistaPatente.cs" />
+    <Compile Include="ProcessoDePatente.cs" />
+    <Compile Include="RadicalMarcas.cs" />
+    <Compile Include="ProcessoDeMarca.cs" />
+    <Compile Include="Procurador.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadicalPatente.cs" />
+    <Compile Include="Repositorios\RepositorioDeAnuidadePatente.cs" />
+    <Compile Include="Repositorios\RepositorioDeClassificacaoPatente.cs" />
+    <Compile Include="Repositorios\RepositorioDeDespachodeMarcas.cs" />
+    <Compile Include="Repositorios\RepositorioDeDespachoDePatentes.cs" />
+    <Compile Include="Repositorios\RepositorioDeInventor.cs" />
+    <Compile Include="Repositorios\RepositorioDeMarcas.cs" />
+    <Compile Include="Repositorios\RepositorioDeNaturezaDePatente.cs" />
+    <Compile Include="Repositorios\RepositorioDePatente.cs" />
+    <Compile Include="Repositorios\RepositorioDeProcurador.cs" />
+    <Compile Include="Repositorios\RepositorioDeTitular.cs" />
+    <Compile Include="Repositorios\RepositorioPrioridadeUnionistaPatente.cs" />
+    <Compile Include="RevistaDeMarcas.cs" />
+    <Compile Include="RevistaDePatente.cs" />
+    <Compile Include="Schedules\ScheduleManutencaoDeMarcas.cs" />
+    <Compile Include="Schedules\ScheduleManutencaoDePatentes.cs" />
+    <Compile Include="TemplateDeEmail.cs" />
+    <Compile Include="TipoDeProcedimentoInterno.cs" />
+    <Compile Include="Titular.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MP.Negocio.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MP.Interfaces\MP.Interfaces.csproj">
+      <Project>{82E85F57-6B58-4F78-BB6C-1448810C1068}</Project>
+      <Name>MP.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

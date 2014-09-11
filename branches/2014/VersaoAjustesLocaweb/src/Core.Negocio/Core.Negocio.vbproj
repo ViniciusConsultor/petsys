@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{05E1946F-C06A-44C3-AE6C-804A9FE870CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Core.Negocio</RootNamespace>
+    <AssemblyName>Core.Negocio</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Core.Negocio.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>Core.Negocio.xml</DocumentationFile>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <WarningsAsErrors>41998,41999,42004,42016,42017,42018,42019,42020,42021,42022,42024,42025,42026,42029,42030,42031,42032,42036,42099,42104,42105,42106,42107,42108,42109</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>Full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>Core.Negocio.xml</DocumentationFile>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <WarningsAsErrors>41998,41999,42004,42016,42017,42018,42019,42020,42021,42022,42024,42025,42026,42029,42030,42031,42032,42036,42099,42104,42105,42106,42107,42108,42109</WarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Agencia.vb" />
+    <Compile Include="Agenda.vb" />
+    <Compile Include="Cedente.vb" />
+    <Compile Include="Cliente.vb" />
+    <Compile Include="Compromisso.vb" />
+    <Compile Include="Conexao.vb" />
+    <Compile Include="ConexaoMySQL.vb" />
+    <Compile Include="ConexaoODBC.vb" />
+    <Compile Include="ConexaoOLEDB.vb" />
+    <Compile Include="ConexaoOracle.vb" />
+    <Compile Include="ConexaoSQLite.vb" />
+    <Compile Include="ConexaoSQLServer.vb" />
+    <Compile Include="ConfiguracaoDeAgendaDoSistema.vb" />
+    <Compile Include="ConfiguracaoDeAgendaDoUsuario.vb" />
+    <Compile Include="ConfiguracaoDeEmailDoSistema.vb" />
+    <Compile Include="ConfiguracaoDoSistema.vb" />
+    <Compile Include="ContaBancaria.vb" />
+    <Compile Include="DadoBancario.vb" />
+    <Compile Include="DiretivaDeSeguranca.vb" />
+    <Compile Include="Documento\CNPJ.vb" />
+    <Compile Include="Documento\CPF.vb" />
+    <Compile Include="Documento\Documento.vb" />
+    <Compile Include="Documento\InscricaoEstadual.vb" />
+    <Compile Include="Documento\InscricaoMunicipal.vb" />
+    <Compile Include="Documento\RG.vb" />
+    <Compile Include="Empresa.vb" />
+    <Compile Include="Endereco.vb" />
+    <Compile Include="EventoDeContato.vb" />
+    <Compile Include="Filtro.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorAssunto.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorContexto.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorDataDeEnvio.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorDestinatario.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorID.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailPorMensagem.vb" />
+    <Compile Include="Filtros\HistoricoDeEmail\FiltroHistoricoDeEmailSemFiltro.vb" />
+    <Compile Include="Fornecedor.vb" />
+    <Compile Include="Funcao.vb" />
+    <Compile Include="Grupo.vb" />
+    <Compile Include="GrupoDeAtividade.vb" />
+    <Compile Include="HistoricoDeEmail.vb" />
+    <Compile Include="LazyLoad\CedenteLazyLoad.vb" />
+    <Compile Include="LazyLoad\ClienteLazyLoad.vb" />
+    <Compile Include="LazyLoad\CompromissoLazyLoad.vb" />
+    <Compile Include="LazyLoad\FornecedorLazyLoad.vb" />
+    <Compile Include="LazyLoad\LembreteLazyLoad.vb" />
+    <Compile Include="LazyLoad\PaisLazyLoad.vb" />
+    <Compile Include="LazyLoad\PessoaFisicaLazyLoad.vb" />
+    <Compile Include="LazyLoad\PessoaJuridicaLazyLoad.vb" />
+    <Compile Include="LazyLoad\TarefaLazyLoad.vb" />
+    <Compile Include="Lembrete.vb" />
+    <Compile Include="MenuAbstrato.vb" />
+    <Compile Include="MenuComposto.vb" />
+    <Compile Include="MenuFolha.vb" />
+    <Compile Include="Modulo.vb" />
+    <Compile Include="Municipio.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Operacao.vb" />
+    <Compile Include="Operador.vb" />
+    <Compile Include="Pais.vb" />
+    <Compile Include="PapelPessoa.vb" />
+    <Compile Include="Pessoa.vb" />
+    <Compile Include="PessoaFisica.vb" />
+    <Compile Include="PessoaJuridica.vb" />
+    <Compile Include="Repositorios\RepositorioDeCliente.vb" />
+    <Compile Include="Repositorios\RepositorioDePais.vb" />
+    <Compile Include="Repositorios\RepositorioDePessoa.vb" />
+    <Compile Include="Schedules\ScheduleLimpaLogs.vb" />
+    <Compile Include="Schedules\ScheduleLimpaPdfs.vb" />
+    <Compile Include="Senha.vb" />
+    <Compile Include="Tarefa.vb" />
+    <Compile Include="Telefone\Telefone.vb" />
+    <Compile Include="TipoDeEndereco.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core.Negocio.snk" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Compartilhados.Interfaces\Compartilhados.Interfaces.vbproj">
+      <Project>{FE5690EE-7C9F-40EA-A41A-C4137EEB58AB}</Project>
+      <Name>Compartilhados.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compartilhados\Compartilhados.vbproj">
+      <Project>{06F3AE73-7806-44D1-9DAD-7C227869B4B8}</Project>
+      <Name>Compartilhados</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Interfaces\Core.Interfaces.vbproj">
+      <Project>{27EDA738-8B31-4FF6-88C1-54E6290B4CFE}</Project>
+      <Name>Core.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
