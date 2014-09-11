@@ -1,0 +1,1 @@
+http://demos.telerik.com/aspnet-ajax/grid/examples/client/columnformatting/defaultcs.aspx

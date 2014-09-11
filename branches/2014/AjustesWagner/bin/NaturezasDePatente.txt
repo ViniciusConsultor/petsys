@@ -1,0 +1,21 @@
+﻿PI	Patente de Invenção	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+MU	Modelo de Utilidade	2	13	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	0
+MI	Modelo Industrial	2	13	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	0
+DI	Patente de Desenho Industrial	5	4	5	2	1	3	3	5	QUINQUÊNIO	PEDIDO DE PRORROGAÇÃO	0
+C1	Certificado de Adição - 1º 	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+C2	Certificado de Adição - 2º	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+CA	Certificado de Adição	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+10	Patente de Invenção dep nacionais e via CUP	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+11	Patente de Invenção divididos	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+12	Patente de Invenção divididos	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+13	Certificado de Adição	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+20	Modelo de Utilidade dep nacionais e via CUP	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+21	Modelo de Utilidade dep via PCT	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+22	Modelo de Utilidade divididos	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+30	Registro de Desenho Industrial	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+31	Reg de Desenho Industrial dep via Acordo de haia	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+32	Registro de Desenho Industrial dividido	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+40	Indicação Geográfica - Indicação de Procedência	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+41	Indicação Geográfica - Denominação de Origem	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+42	Indicação Geográfica dep via Acordo de Lisboa	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1
+43	Indicação Geográfica dividido	2	18	1	3	1	4	1	2	ANUIDADE	PEDIDO DE EXAME	1

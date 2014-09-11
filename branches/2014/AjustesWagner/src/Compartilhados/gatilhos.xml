@@ -1,0 +1,12 @@
+﻿<gatilhos>
+  <gatilho type="FN.Servicos.Local.ServicoDeItensFinanceirosDeRecebimentoLocal">
+    <metodo nome="Modifique">
+      <Depois>
+        <interessados>
+          <interessado fullname="MP.Interfaces.Mapeadores" type="IMapeadorDeInterfaceComModuloFinanceiro" metodo="ItemDeRecebimentoFoiModificado"></interessado>
+        </interessados>
+      </Depois>
+    </metodo>
+  </gatilho>
+</gatilhos>
+

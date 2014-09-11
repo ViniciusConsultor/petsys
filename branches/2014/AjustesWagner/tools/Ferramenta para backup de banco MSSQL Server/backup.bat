@@ -1,0 +1,1 @@
+osql -S .\sqlexpress -U sa -P sa -i "d:\Backup.SQL" 

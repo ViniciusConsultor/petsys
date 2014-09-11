@@ -1,0 +1,4 @@
+Acesso=Provider=OraOLEDB.Oracle.1;Password=tec;Persist Security Info=True;User ID=TEC_P_ORA10_OI1;Data Source=SRV-TS1470-10G
+ArquivoEntrada=D:\Publico\Gerador de inserts\tabelas.txt
+ArquivoInsert=D:\Publico\Gerador de inserts\portal.sql
+CaracterFinalizador=GO
