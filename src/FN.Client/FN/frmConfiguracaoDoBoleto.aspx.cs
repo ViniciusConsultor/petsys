@@ -109,7 +109,7 @@ namespace FN.Client.FN
                     var arquivo = uplImagem.UploadedFiles[0];
                     var pastaDeDestino = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO);
 
-                    UtilidadesWeb.CrieDiretorio(pastaDeDestino);
+                    Compartilhados.Util.CrieDiretorio(pastaDeDestino);
 
                     var caminhoArquivo = Path.Combine(pastaDeDestino, arquivo.GetNameWithoutExtension() + arquivo.GetExtension());
 
