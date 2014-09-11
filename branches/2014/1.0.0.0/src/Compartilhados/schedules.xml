@@ -1,3 +1,0 @@
-﻿<schedules>
-  <schedule fullname="Core.Interfaces.Negocio.Schedules" type="IScheduleLimpaLogs" segundos ="60" />
-</schedules>
