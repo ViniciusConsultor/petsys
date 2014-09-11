@@ -17,14 +17,14 @@ Public Class ServerUtils
     Private Shared Function GetInstancia() As ServerUtils
         Dim ServerUtils As ServerUtils
 
-        ServerUtils = CType(CallContext.GetData(SERVER_UTILS), ServerUtils)
+        ServerUtils = CType(ChamadaPorContexto.GetData(SERVER_UTILS), ServerUtils)
 
         If ServerUtils Is Nothing Then
             SyncLock lockInstancia
-                ServerUtils = CType(CallContext.GetData(SERVER_UTILS), ServerUtils)
+                ServerUtils = CType(ChamadaPorContexto.GetData(SERVER_UTILS), ServerUtils)
                 If ServerUtils Is Nothing Then
                     ServerUtils = New ServerUtils
-                    CallContext.SetData(SERVER_UTILS, ServerUtils)
+                    ChamadaPorContexto.SetData(SERVER_UTILS, ServerUtils)
                 End If
             End SyncLock
         End If
@@ -103,14 +103,14 @@ Public Class ServerUtils
         Dim LiberaRecurso = ServerUtils.GetInstancia.p_libereRecursos()
 
         SyncLock LockInstancia
-            If LiberaRecurso Then CallContext.SetData(SERVER_UTILS, Nothing)
+            If LiberaRecurso Then ChamadaPorContexto.FreeNamedDataSlot(SERVER_UTILS)
         End SyncLock
     End Sub
 
     Public Shared Function EstaIniciado() As Boolean
         Dim ServerUtils As ServerUtils
 
-        ServerUtils = CType(CallContext.GetData(SERVER_UTILS), ServerUtils)
+        ServerUtils = CType(ChamadaPorContexto.GetData(SERVER_UTILS), ServerUtils)
 
         If ServerUtils Is Nothing Then
             Return False

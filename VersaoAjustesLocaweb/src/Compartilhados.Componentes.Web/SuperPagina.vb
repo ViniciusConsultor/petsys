@@ -9,17 +9,17 @@ Imports System.Web.UI.WebControls
 Public MustInherit Class SuperPagina
     Inherits Page
 
-    Private Const CHAVE_VIEW_STATE_SESSAO As String = "###__SIMPLE_VSSESSION_SUPER_PAGINA__"
-    Private escritor As System.IO.StringWriter = Nothing
-    Private los As LosFormatter = Nothing
-    Private nomePagina As String = Nothing
+    'Private Const CHAVE_VIEW_STATE_SESSAO As String = "###__SIMPLE_VSSESSION_SUPER_PAGINA__"
+    'Private escritor As System.IO.StringWriter = Nothing
+    'Private los As LosFormatter = Nothing
+    'Private nomePagina As String = Nothing
 
     Public Sub New()
         AddHandler MyBase.PreInit, New EventHandler(AddressOf Me.Page_PreInit)
         AddHandler MyBase.Load, New EventHandler(AddressOf Me.SuperPagina_Load)
         AddHandler MyBase.PreRender, New EventHandler(AddressOf Me.SuperPagina_PreRender)
-        Me.nomePagina = Me.Page.GetType.FullName
-        Me.escritor = New System.IO.StringWriter
+        'Me.nomePagina = Me.Page.GetType.FullName
+        'Me.escritor = New System.IO.StringWriter
     End Sub
 
     Protected Sub Page_PreInit(ByVal sender As Object, ByVal e As EventArgs)
@@ -91,60 +91,60 @@ Public MustInherit Class SuperPagina
         End Set
     End Property
 
-    Protected Overrides Function LoadPageStateFromPersistenceMedium() As Object
-        Me.los = New LosFormatter
-        Dim hashtable As Hashtable = DirectCast(Me.Session.Item(CHAVE_VIEW_STATE_SESSAO), Hashtable)
-        If (hashtable Is Nothing) Then
-            Return Nothing
-        End If
-        If Not hashtable.Contains(Me.nomePagina) Then
-            Return Nothing
-        End If
-        Return Me.los.Deserialize(descompacte(CType(hashtable.Item(Me.nomePagina), Byte())))
-    End Function
+    'Protected Overrides Function LoadPageStateFromPersistenceMedium() As Object
+    '    Me.los = New LosFormatter
+    '    Dim hashtable As Hashtable = DirectCast(Me.Session.Item(CHAVE_VIEW_STATE_SESSAO), Hashtable)
+    '    If (hashtable Is Nothing) Then
+    '        Return Nothing
+    '    End If
+    '    If Not hashtable.Contains(Me.nomePagina) Then
+    '        Return Nothing
+    '    End If
+    '    Return Me.los.Deserialize(descompacte(CType(hashtable.Item(Me.nomePagina), Byte())))
+    'End Function
 
-    Protected Overrides Sub SavePageStateToPersistenceMedium(ByVal viewState As Object)
-        Try
-            Me.los = New LosFormatter
-            Me.los.Serialize(Me.escritor, viewState)
+    'Protected Overrides Sub SavePageStateToPersistenceMedium(ByVal viewState As Object)
+    '    Try
+    '        Me.los = New LosFormatter
+    '        Me.los.Serialize(Me.escritor, viewState)
 
-            Dim hashtable As Hashtable = DirectCast(Me.Session.Item(CHAVE_VIEW_STATE_SESSAO), Hashtable)
-            If hashtable Is Nothing Then hashtable = New Hashtable
+    '        Dim hashtable As Hashtable = DirectCast(Me.Session.Item(CHAVE_VIEW_STATE_SESSAO), Hashtable)
+    '        If hashtable Is Nothing Then hashtable = New Hashtable
 
-            hashtable(Me.nomePagina) = compacte(Me.escritor.ToString())
-            Me.Session.Item(CHAVE_VIEW_STATE_SESSAO) = hashtable
-        Finally
-            Me.los = Nothing
-            Me.escritor = Nothing
-        End Try
-    End Sub
+    '        hashtable(Me.nomePagina) = compacte(Me.escritor.ToString())
+    '        Me.Session.Item(CHAVE_VIEW_STATE_SESSAO) = hashtable
+    '    Finally
+    '        Me.los = Nothing
+    '        Me.escritor = Nothing
+    '    End Try
+    'End Sub
 
-    Private Function compacte(ByVal texto As String) As Byte()
-        Dim dados As Byte() = System.Text.Encoding.Unicode.GetBytes(texto)
-        Dim buffer As New System.IO.MemoryStream
-        Dim compactador As New DeflateStream(buffer, CompressionMode.Compress, True)
+    'Private Function compacte(ByVal texto As String) As Byte()
+    '    Dim dados As Byte() = System.Text.Encoding.Unicode.GetBytes(texto)
+    '    Dim buffer As New System.IO.MemoryStream
+    '    Dim compactador As New DeflateStream(buffer, CompressionMode.Compress, True)
 
-        compactador.Write(dados, 0, dados.Length)
-        compactador.Flush()
-        compactador.Dispose()
+    '    compactador.Write(dados, 0, dados.Length)
+    '    compactador.Flush()
+    '    compactador.Dispose()
 
-        Return buffer.GetBuffer()
-    End Function
+    '    Return buffer.GetBuffer()
+    'End Function
 
-    Private Function descompacte(ByVal texto As Byte()) As String
-        Dim retorno As New System.Text.StringBuilder
-        Dim buffer As New System.IO.MemoryStream(texto)
-        Dim descompactador As New DeflateStream(buffer, CompressionMode.Decompress, True)
-        Dim bufferDeLeitura As Byte()
-        ReDim bufferDeLeitura(1024 * 1024) '1024 KB
-        Dim totalLidos As Integer = descompactador.Read(bufferDeLeitura, 0, bufferDeLeitura.Length - 1)
+    'Private Function descompacte(ByVal texto As Byte()) As String
+    '    Dim retorno As New System.Text.StringBuilder
+    '    Dim buffer As New System.IO.MemoryStream(texto)
+    '    Dim descompactador As New DeflateStream(buffer, CompressionMode.Decompress, True)
+    '    Dim bufferDeLeitura As Byte()
+    '    ReDim bufferDeLeitura(1024 * 1024) '1024 KB
+    '    Dim totalLidos As Integer = descompactador.Read(bufferDeLeitura, 0, bufferDeLeitura.Length - 1)
 
-        While totalLidos > 0
-            retorno.Append(System.Text.Encoding.Unicode.GetString(bufferDeLeitura, 0, totalLidos))
-            totalLidos = descompactador.Read(bufferDeLeitura, 0, bufferDeLeitura.Length - 1)
-        End While
+    '    While totalLidos > 0
+    '        retorno.Append(System.Text.Encoding.Unicode.GetString(bufferDeLeitura, 0, totalLidos))
+    '        totalLidos = descompactador.Read(bufferDeLeitura, 0, bufferDeLeitura.Length - 1)
+    '    End While
 
-        Return retorno.ToString
-    End Function
+    '    Return retorno.ToString
+    'End Function
 
 End Class

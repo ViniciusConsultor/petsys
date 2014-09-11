@@ -410,12 +410,12 @@ Public Class UtilidadesWeb
                 'Carrega o novo arquivo temporario para poder deletar o antigo(pq ele ñ consegue deletar se estiver usando.
                 arquivo = System.Drawing.Image.FromFile(diretorio & "_" & nomeImagem)
                 'deleta o arquivo oringinal para poder salvar o redimensionado
-                Kill(diretorio & nomeImagem)
+                File.Delete(Path.Combine(diretorio, nomeImagem))
                 'Salva o arquivo com o nome original
                 arquivo.Save(diretorio & nomeImagem)
                 arquivo.Dispose()
                 'Deleta o arquivo temporário
-                Kill(diretorio & "_" & nomeImagem)
+                File.Delete(Path.Combine(diretorio, "_" & nomeImagem))
             End If
             arquivo.Dispose()
         End If

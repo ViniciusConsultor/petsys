@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
+using Compartilhados;
 using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
@@ -20,12 +21,12 @@ namespace MP.Negocio.Repositorios
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static RepositorioDeAnuidadePatente obtenhaInstancia()
         {
-            var instancia = (RepositorioDeAnuidadePatente)CallContext.GetData(NOME_CALLCONTEXT);
+            var instancia = (RepositorioDeAnuidadePatente)ChamadaPorContexto.GetData(NOME_CALLCONTEXT);
 
             if (instancia == null)
             {
                 instancia = new RepositorioDeAnuidadePatente();
-                CallContext.SetData(NOME_CALLCONTEXT, instancia);
+                ChamadaPorContexto.SetData(NOME_CALLCONTEXT, instancia);
             }
                 
             return instancia;

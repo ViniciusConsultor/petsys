@@ -34,4 +34,8 @@
         Return _Contexto
     End Function
 
+    Public Overrides Function SessaoEhWeb() As Boolean
+        Return False
+    End Function
+
 End Class

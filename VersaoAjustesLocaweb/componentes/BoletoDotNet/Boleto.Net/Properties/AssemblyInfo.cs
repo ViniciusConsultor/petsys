@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Web.UI;
 
 // General Information about an assembly is controlled through the following 
@@ -36,3 +37,4 @@ using System.Web.UI;
 [assembly: AssemblyFileVersion("2.0.0.0")]
 
 [assembly: TagPrefix("BoletoNet", "bn")]
+[assembly: AllowPartiallyTrustedCallers()]

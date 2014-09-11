@@ -39,4 +39,8 @@ Friend Class SessaoWeb
         Return CType(HttpContext.Session(SESSIONCONTEXTO), Principal)
     End Function
 
+    Public Overrides Function SessaoEhWeb() As Boolean
+        Return True
+    End Function
+
 End Class
