@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{25CCC205-3BD9-444C-BA93-96A7C3EFC2D8}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MP.Client</RootNamespace>
+    <AssemblyName>MP.Client</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MP.Client.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Boleto.Net">
+      <HintPath>..\..\lib\Boleto.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Compartilhados, Version=1.0.0.1, Culture=neutral, PublicKeyToken=1972c105628c14e0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Compartilhados.dll</HintPath>
+    </Reference>
+    <Reference Include="Compartilhados.Componentes.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ef9a14a1e9ced6a8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Compartilhados.Componentes.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Compartilhados.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad8227085b215e1f, processorArchitecture=MSIL" />
+    <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Telerik.Web.UI, Version=2010.1.309.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="WorkSpace, Version=1.0.0.0, Culture=neutral, PublicKeyToken=edfc2dbc3d03de90, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\WorkSpace.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MP\cdCadastroDeProcuradores.aspx.cs">
+      <DependentUpon>cdCadastroDeProcuradores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdCadastroDeProcuradores.aspx.designer.cs">
+      <DependentUpon>cdCadastroDeProcuradores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdDespachoDeMarcas.aspx.cs">
+      <DependentUpon>cdDespachoDeMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdDespachoDeMarcas.aspx.designer.cs">
+      <DependentUpon>cdDespachoDeMarcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdDespachoDePatentes.aspx.cs">
+      <DependentUpon>cdDespachoDePatentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdDespachoDePatentes.aspx.designer.cs">
+      <DependentUpon>cdDespachoDePatentes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdInventor.aspx.cs">
+      <DependentUpon>cdInventor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdInventor.aspx.designer.cs">
+      <DependentUpon>cdInventor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdNaturezaPatente.aspx.cs">
+      <DependentUpon>cdNaturezaPatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdNaturezaPatente.aspx.designer.cs">
+      <DependentUpon>cdNaturezaPatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdPastas.aspx.cs">
+      <DependentUpon>cdPastas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdPastas.aspx.designer.cs">
+      <DependentUpon>cdPastas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdProcessoDeMarca.aspx.cs">
+      <DependentUpon>cdProcessoDeMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdProcessoDeMarca.aspx.designer.cs">
+      <DependentUpon>cdProcessoDeMarca.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdProcessoDePatente.aspx.cs">
+      <DependentUpon>cdProcessoDePatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdProcessoDePatente.aspx.designer.cs">
+      <DependentUpon>cdProcessoDePatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.cs">
+      <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdTipoDeProcedimentoInterno.aspx.designer.cs">
+      <DependentUpon>cdTipoDeProcedimentoInterno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\cdTitular.aspx.cs">
+      <DependentUpon>cdTitular.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\cdTitular.aspx.designer.cs">
+      <DependentUpon>cdTitular.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlApresentacao.ascx.cs">
+      <DependentUpon>ctrlApresentacao.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlApresentacao.ascx.designer.cs">
+      <DependentUpon>ctrlApresentacao.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlDespachoDeMarcas.ascx.cs">
+      <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlDespachoDeMarcas.ascx.designer.cs">
+      <DependentUpon>ctrlDespachoDeMarcas.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlDespachoDePatentes.ascx.cs">
+      <DependentUpon>ctrlDespachoDePatentes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlDespachoDePatentes.ascx.designer.cs">
+      <DependentUpon>ctrlDespachoDePatentes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlFiltroRevistaPatente.ascx.cs">
+      <DependentUpon>ctrlFiltroRevistaPatente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlFiltroRevistaPatente.ascx.designer.cs">
+      <DependentUpon>ctrlFiltroRevistaPatente.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlInventor.ascx.cs">
+      <DependentUpon>ctrlInventor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlInventor.ascx.designer.cs">
+      <DependentUpon>ctrlInventor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlMarcas.ascx.cs">
+      <DependentUpon>ctrlMarcas.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlMarcas.ascx.designer.cs">
+      <DependentUpon>ctrlMarcas.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlMes.ascx.cs">
+      <DependentUpon>ctrlMes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlMes.ascx.designer.cs">
+      <DependentUpon>ctrlMes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlNaturezaDeMarca.ascx.cs">
+      <DependentUpon>ctrlNaturezaDeMarca.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlNaturezaDeMarca.ascx.designer.cs">
+      <DependentUpon>ctrlNaturezaDeMarca.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlNaturezaPatente.ascx.cs">
+      <DependentUpon>ctrlNaturezaPatente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlNaturezaPatente.ascx.designer.cs">
+      <DependentUpon>ctrlNaturezaPatente.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlNCL.ascx.cs">
+      <DependentUpon>ctrlNCL.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlNCL.ascx.designer.cs">
+      <DependentUpon>ctrlNCL.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlPasta.ascx.cs">
+      <DependentUpon>ctrlPasta.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlPasta.ascx.designer.cs">
+      <DependentUpon>ctrlPasta.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlPatente.ascx.cs">
+      <DependentUpon>ctrlPatente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlPatente.ascx.designer.cs">
+      <DependentUpon>ctrlPatente.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlPeriodo.ascx.cs">
+      <DependentUpon>ctrlPeriodo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlPeriodo.ascx.designer.cs">
+      <DependentUpon>ctrlPeriodo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlProcurador.ascx.cs">
+      <DependentUpon>ctrlProcurador.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlProcurador.ascx.designer.cs">
+      <DependentUpon>ctrlProcurador.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlTemplateDeEmail.ascx.cs">
+      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlTemplateDeEmail.ascx.designer.cs">
+      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.cs">
+      <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.designer.cs">
+      <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\ctrlTitular.ascx.cs">
+      <DependentUpon>ctrlTitular.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlTitular.ascx.designer.cs">
+      <DependentUpon>ctrlTitular.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\DTOProcessoDeMarca.cs" />
+    <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.cs">
+      <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.designer.cs">
+      <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmDetalhesLeituraDaRevistaPatente.aspx.cs">
+      <DependentUpon>frmDetalhesLeituraDaRevistaPatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmDetalhesLeituraDaRevistaPatente.aspx.designer.cs">
+      <DependentUpon>frmDetalhesLeituraDaRevistaPatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmEnviaEmail.aspx.cs">
+      <DependentUpon>frmEnviaEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmEnviaEmail.aspx.designer.cs">
+      <DependentUpon>frmEnviaEmail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmLeituraRevistaMarca.aspx.cs">
+      <DependentUpon>frmLeituraRevistaMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmLeituraRevistaMarca.aspx.designer.cs">
+      <DependentUpon>frmLeituraRevistaMarca.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmLeituraRevistaPatente.aspx.cs">
+      <DependentUpon>frmLeituraRevistaPatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmLeituraRevistaPatente.aspx.designer.cs">
+      <DependentUpon>frmLeituraRevistaPatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmProcessosDeMarcas.aspx.cs">
+      <DependentUpon>frmProcessosDeMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmProcessosDeMarcas.aspx.designer.cs">
+      <DependentUpon>frmProcessosDeMarcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmProcessosDePatentes.aspx.cs">
+      <DependentUpon>frmProcessosDePatentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmProcessosDePatentes.aspx.designer.cs">
+      <DependentUpon>frmProcessosDePatentes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmRelatorioDeManutencoes.aspx.cs">
+      <DependentUpon>frmRelatorioDeManutencoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmRelatorioDeManutencoes.aspx.designer.cs">
+      <DependentUpon>frmRelatorioDeManutencoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmRelatorioDeProcessosDeMarcas.aspx.cs">
+      <DependentUpon>frmRelatorioDeProcessosDeMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmRelatorioDeProcessosDeMarcas.aspx.designer.cs">
+      <DependentUpon>frmRelatorioDeProcessosDeMarcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx.cs">
+      <DependentUpon>frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx.designer.cs">
+      <DependentUpon>frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmRelatorioGeralPatentes.aspx.cs">
+      <DependentUpon>frmRelatorioGeralPatentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmRelatorioGeralPatentes.aspx.designer.cs">
+      <DependentUpon>frmRelatorioGeralPatentes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relatorios\GeradorDeRelatorioDeManutencoes.cs" />
+    <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcas.cs" />
+    <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
+    <Compile Include="Relatorios\Patentes\GeradorDeRelatorioDePublicacoesDasPatentes.cs.cs" />
+    <Compile Include="Relatorios\Patentes\GeradorDeRelatorioGeralDePatentes.cs" />
+    <Compile Include="Relatorios\Patentes\GeradorDeRelatorioPorClassificacao.cs" />
+    <Compile Include="Relatorios\Patentes\GeradorDeRelatorioPorColidencia.cs" />
+    <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MP.Interfaces\MP.Interfaces.csproj">
+      <Project>{82E85F57-6B58-4F78-BB6C-1448810C1068}</Project>
+      <Name>MP.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MP.Client.snk" />
+    <Content Include="MP\cdCadastroDeProcuradores.aspx" />
+    <Content Include="MP\cdDespachoDeMarcas.aspx" />
+    <Content Include="MP\cdDespachoDePatentes.aspx" />
+    <Content Include="MP\cdInventor.aspx" />
+    <Content Include="MP\cdNaturezaPatente.aspx" />
+    <Content Include="MP\cdPastas.aspx" />
+    <Content Include="MP\cdProcessoDeMarca.aspx" />
+    <Content Include="MP\cdProcessoDePatente.aspx" />
+    <Content Include="MP\cdTipoDeProcedimentoInterno.aspx" />
+    <Content Include="MP\cdTitular.aspx" />
+    <Content Include="MP\ctrlApresentacao.ascx" />
+    <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
+    <Content Include="MP\ctrlDespachoDePatentes.ascx" />
+    <Content Include="MP\ctrlFiltroRevistaPatente.ascx" />
+    <Content Include="MP\ctrlInventor.ascx" />
+    <Content Include="MP\ctrlMarcas.ascx" />
+    <Content Include="MP\ctrlMes.ascx" />
+    <Content Include="MP\ctrlNaturezaDeMarca.ascx" />
+    <Content Include="MP\ctrlNaturezaPatente.ascx" />
+    <Content Include="MP\ctrlNCL.ascx" />
+    <Content Include="MP\ctrlPasta.ascx" />
+    <Content Include="MP\ctrlPatente.ascx" />
+    <Content Include="MP\ctrlPeriodo.ascx" />
+    <Content Include="MP\ctrlProcurador.ascx" />
+    <Content Include="MP\ctrlTemplateDeEmail.ascx" />
+    <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
+    <Content Include="MP\ctrlTitular.ascx" />
+    <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
+    <Content Include="MP\frmDetalhesLeituraDaRevistaPatente.aspx" />
+    <Content Include="MP\frmEnviaEmail.aspx" />
+    <Content Include="MP\frmLeituraRevistaMarca.aspx" />
+    <Content Include="MP\frmLeituraRevistaPatente.aspx" />
+    <Content Include="MP\frmProcessosDeMarcas.aspx" />
+    <Content Include="MP\frmProcessosDePatentes.aspx" />
+    <Content Include="MP\frmRelatorioDeManutencoes.aspx" />
+    <Content Include="MP\frmRelatorioDeProcessosDeMarcas.aspx" />
+    <Content Include="MP\frmRelatorioDeProcessosDeMarcasComRegistroConcedido.aspx" />
+    <Content Include="MP\frmRelatorioGeralPatentes.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="WorkSpace.Master" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60376</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/MP.Client</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/MP.Client</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(SolutionDir)WorkSpace\js $(ProjectDir)js /S /I /F
+xcopy $(SolutionDir)WorkSpace\imagens $(ProjectDir)imagens /S /I /F
+xcopy $(SolutionDir)WorkSpace\Loads $(ProjectDir)Loads /S /I /F
+xcopy $(SolutionDir)WorkSpace\Nucleo $(ProjectDir)Nucleo /S /I /F
+xcopy $(SolutionDir)WorkSpace\RadEditor $(ProjectDir)RadEditor /S /I /F
+xcopy $(SolutionDir)FN.Client\FN $(ProjectDir)FN /S /I /F
+copy  $(SolutionDir)WorkSpace\*.aspx $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.asax $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.ascx $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.css $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.Master $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.html $(ProjectDir)
+copy  $(SolutionDir)WorkSpace\*.config $(ProjectDir)
+copy $(TargetDir)*.dll $(ProjectDir)bin\
+copy $(TargetDir)*.pdb $(ProjectDir)bin\
+copy $(TargetDir)*.config $(ProjectDir)bin\
+copy $(TargetDir)*.xml $(ProjectDir)bin\
+copy  $(SolutionDir)WorkSpace\*.ashx $(ProjectDir)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
