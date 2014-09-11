@@ -4,6 +4,7 @@ Friend MustInherit Class Sessao
     MustOverride Property Contexto() As Principal
     MustOverride Sub AtualizeContexto(ByVal ContextoAtual As Principal)
     MustOverride Function RecupereContexto() As Principal
+    MustOverride Function SessaoEhWeb() As Boolean
 
     Private Shared InstanciaSessao As Sessao
     Private Shared ObjLock As New Object

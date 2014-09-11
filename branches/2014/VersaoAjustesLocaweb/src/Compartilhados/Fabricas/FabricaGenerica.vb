@@ -1,9 +1,4 @@
 ﻿Imports System.Reflection
-Imports System.Runtime.Remoting.Activation
-Imports System.Runtime.Remoting
-Imports System.Net.Sockets
-Imports System.Runtime.Remoting.Channels.Tcp
-Imports System.Runtime.Remoting.Channels
 Imports System.Runtime.Remoting.Messaging
 
 Namespace Fabricas
@@ -13,24 +8,12 @@ Namespace Fabricas
         Private Shared DicionarioDeAssemblyTypes As IDictionary(Of String, Type())
         Private Shared InstanciaSolitaria As FabricaGenerica
         Private Shared ObjetoLock As New Object
-        Private Shared TipoDeDistribuicao As String
-        Private Shared ServidorDeAplicacao As String
-        Private Const PORTA_SRV_APP As String = "1235"
-        
+       
         Private Sub New()
             If DicionarioDeAssemblyTypes Is Nothing Then
                 DicionarioDeAssemblyTypes = New Dictionary(Of String, Type())
             End If
-
-            TipoDeDistribuicao = Util.ObtenhaTipoDeDistribuicao
-            ServidorDeAplicacao = Util.ObtenhaServidorDeAplicao
-
-            Dim CanalCliente As TcpClientChannel = New TcpClientChannel()
-
-            If ChannelServices.RegisteredChannels.Length = 0 Then
-                ChannelServices.RegisterChannel(CanalCliente, False)
-            End If
-
+            
         End Sub
 
         Public Shared Function GetInstancia() As FabricaGenerica
@@ -47,7 +30,7 @@ Namespace Fabricas
         End Function
 
         Public Sub InjeteCredencial(credencial As ICredencial)
-            CallContext.SetData("CREDENCIALINJETADA", credencial)
+            ChamadaPorContexto.SetData("CREDENCIALINJETADA", credencial)
         End Sub
 
         Private Sub CarregaAssembly(ByVal NomeDoAssembly As String)
@@ -124,31 +107,17 @@ Namespace Fabricas
             Dim Credencial As ICredencial
             Dim Instancia As Object = Nothing
 
-            If CallContext.GetData("CREDENCIALINJETADA") Is Nothing Then
+            If ChamadaPorContexto.GetData("CREDENCIALINJETADA") Is Nothing Then
                 Credencial = Util.ConstruaCredencial
             Else
-                Dim credencialInjetada As ICredencial = CType(CallContext.GetData("CREDENCIALINJETADA"), ICredencial)
+                Dim credencialInjetada As ICredencial = CType(ChamadaPorContexto.GetData("CREDENCIALINJETADA"), ICredencial)
 
                 Credencial = Util.ConstruaCredencial(credencialInjetada.Conexao)
             End If
 
+            Dim Parametro As Object() = New Object() {Credencial}
 
-                If TipoDeDistribuicao.Equals("Remoting") Then
-                    Dim NomeDoTipoConcretoOriginal As String
-
-                    NomeDoTipoConcretoOriginal = "I" & NomeDoTipoConcreto
-                    NomeDoTipoConcretoOriginal = NomeDoTipoConcretoOriginal.Remove(NomeDoTipoConcretoOriginal.IndexOf("Remoting"), 8)
-
-                    Instancia = Activator.GetObject(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcretoOriginal), "tcp://" & ServidorDeAplicacao & ":" & PORTA_SRV_APP & "/" & NomeDoTipoConcreto)
-                    CType(Instancia, IServicoRemoto).SetaCredencial(Credencial)
-                ElseIf TipoDeDistribuicao.Equals("Local") Then
-                    Dim Parametro As Object() = New Object() {Credencial}
-
-                    Instancia = Activator.CreateInstance(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcreto), Parametro)
-                Else
-                    Throw New ApplicationException("O Tipo de Distribuição configurado é desconhecido.")
-                End If
-           
+            Instancia = Activator.CreateInstance(ObtenhaTipoParaInstanciacao(NomeDoAssembly, NomeDoTipoConcreto), Parametro)
 
             Return Instancia
         End Function
@@ -187,10 +156,6 @@ Namespace Fabricas
 
             NomeDoAssemblyEmPartes = TipoDaInterface.Split(New Char() {"."c})
 
-            If TipoDaInterface.Contains("Servico") AndAlso TipoDeDistribuicao.Equals("Remoting", StringComparison.InvariantCultureIgnoreCase) Then
-                Return String.Concat(NomeDoAssemblyEmPartes(0), ".", NomeDoAssemblyEmPartes(1))
-            End If
-
             If TipoDaInterface.StartsWith("Compartilhados.Interfaces") Then
                 NomeDoAssembly = String.Concat(NomeDoAssemblyEmPartes(2), ".", NomeDoAssemblyEmPartes(3))
             Else
@@ -198,7 +163,7 @@ Namespace Fabricas
             End If
 
             If NomeDoAssembly.Contains("Servico") Then
-                NomeDoAssembly &= String.Concat(".", TipoDeDistribuicao)
+                NomeDoAssembly &= String.Concat(".", "Local")
             End If
 
             Return NomeDoAssembly
@@ -210,7 +175,7 @@ Namespace Fabricas
             NomeDoTipoConcreto = TipoDaInterface.Substring(1)
 
             If NomeDoTipoConcreto.StartsWith("Servico") Then
-                NomeDoTipoConcreto &= TipoDeDistribuicao
+                NomeDoTipoConcreto &= "Local"
             End If
 
             Return NomeDoTipoConcreto

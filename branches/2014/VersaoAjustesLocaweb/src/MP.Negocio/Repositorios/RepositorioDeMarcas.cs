@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using Compartilhados;
 using Compartilhados.Fabricas;
 using MP.Interfaces.Negocio;
 using MP.Interfaces.Servicos;
@@ -24,12 +25,12 @@ namespace MP.Negocio.Repositorios
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static RepositorioDeMarcas obtenhaInstancia()
         {
-            var instancia = (RepositorioDeMarcas)CallContext.GetData(NOME_CALLCONTEXT);
+            var instancia = (RepositorioDeMarcas)ChamadaPorContexto.GetData(NOME_CALLCONTEXT);
 
             if (instancia == null)
             {
                 instancia = new RepositorioDeMarcas();
-                CallContext.SetData(NOME_CALLCONTEXT, instancia);
+                ChamadaPorContexto.SetData(NOME_CALLCONTEXT, instancia);
             }
 
             return instancia;

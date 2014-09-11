@@ -48,7 +48,7 @@ Public Class ServicoDeConexaoLocal
     End Function
 
     Public Sub Configure(ByVal Conexao As IConexao) Implements IServicoDeConexao.Configure
-        Util.SalveConfiguracaoDeConexao(Conexao)
+
     End Sub
 
     Public Function ObtenhaConexao(ByVal Provider As TipoDeProviderConexao, ByVal StringDeConexao As String, ByVal UtilizaUppercase As Boolean) As IConexao Implements IServicoDeConexao.ObtenhaConexao

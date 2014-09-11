@@ -1,8 +1,6 @@
 ﻿Imports System.Web
 Imports System.IO
-
 Imports System.Configuration
-Imports System.Xml
 Imports Ionic.Zip
 
 Public Class Util
@@ -35,7 +33,6 @@ Public Class Util
         Dim Caminho As String
 
         If ExecutandoServidorWeb() Then
-            'Caminho = HttpContext.Current.Request.PhysicalApplicationPath & "bin" & Path.DirectorySeparatorChar
             Caminho = HttpRuntime.AppDomainAppPath & "bin" & Path.DirectorySeparatorChar
         Else
 
@@ -51,22 +48,8 @@ Public Class Util
     End Function
 
     Public Shared Function ObtenhaCaminhoDeConfiguracaoDoServicoDeConexao() As String
-        Dim Configuracao As KeyValueConfigurationElement
-        Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
-
-        Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("Provider")
-
-        If Configuracao Is Nothing Then Throw New Exception("O arquivo de configuração Core.Servicos.Local.config não foi encontrado.")
-        Return Configuracao.Value
+        Return ConfigurationManager.AppSettings("Provider")
     End Function
-
-    Public Shared Sub SalveConfiguracaoDeConexao(ByVal Conexao As IConexao)
-        Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
-        Dim Xml As XmlDocument
-
-        Xml = New XmlDocument
-        Xml.Load(Path.Combine(Caminho, "Core.Servicos.Local.dll.config"))
-    End Sub
 
     Public Shared Function ObtenhaCaminhoArquivoXMLDeGatilho() As String
         Return String.Concat(ObtenhaCaminhoDaPastaDoServidorDeAplicacao(), "gatilhos.xml")
@@ -77,33 +60,11 @@ Public Class Util
     End Function
 
     Public Shared Function SistemaUtilizaSQLUpperCase() As Boolean
-        Dim Configuracao As KeyValueConfigurationElement
-        Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
-
-        Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("SistemaUtilizaSQLUpperCase")
-        Return CBool(Configuracao.Value)
+        Return ConfigurationManager.AppSettings("SistemaUtilizaSQLUpperCase").ToLower().Equals("true")
     End Function
 
     Public Shared Function ObtenhaStringDeConexao() As String
-        Dim Configuracao As KeyValueConfigurationElement
-        Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
-
-        Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("Conexao")
-        Return Configuracao.Value
-    End Function
-
-    Public Shared Function ObtenhaServidorDeAplicao() As String
-        Dim Configuracao As String = System.Configuration.ConfigurationManager.AppSettings("ServidorDeAplicacao")
-
-        If String.IsNullOrEmpty(Configuracao) Then Configuracao = "localhost"
-        Return Configuracao
-    End Function
-
-    Public Shared Function ObtenhaTipoDeDistribuicao() As String
-        Dim Configuaracao As String = System.Configuration.ConfigurationManager.AppSettings("TipoDistribuicao")
-
-        If String.IsNullOrEmpty(Configuaracao) Then Configuaracao = "Local"
-        Return Configuaracao
+        Return ConfigurationManager.AppSettings("Conexao")
     End Function
 
     Public Shared Function GetDiretorioLog() As String
@@ -115,19 +76,11 @@ Public Class Util
     End Function
 
     Public Shared Function ObtenhaSkinPadrao() As String
-        Dim Configuracao As KeyValueConfigurationElement
-        Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
-
-        Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("SkinPadrao")
-        Return Configuracao.Value
+        Return ConfigurationManager.AppSettings("SkinPadrao")
     End Function
 
     Public Shared Function ObtenhaImagemPadrao() As String
-        Dim Configuracao As KeyValueConfigurationElement
-        Dim Caminho As String = ObtenhaCaminhoDaPastaDoServidorDeAplicacao()
-
-        Configuracao = ConfigurationManager.OpenExeConfiguration(Path.Combine(Caminho, "Core.Servicos.Local.dll")).AppSettings.Settings("ImagemPadrao")
-        Return Configuracao.Value
+        Return ConfigurationManager.AppSettings("ImagemPadrao")
     End Function
 
     Public Shared Sub DescompacteArquivoZip(ByVal nomeECaminhoArquivoZip As String, ByVal CaminhoDestino As String)
@@ -144,7 +97,4 @@ Public Class Util
     Public Shared Sub CrieDiretorio(ByVal nomeDiretorio As String)
         If Not Directory.Exists(nomeDiretorio) Then Directory.CreateDirectory(nomeDiretorio)
     End Sub
-
-  
-
 End Class

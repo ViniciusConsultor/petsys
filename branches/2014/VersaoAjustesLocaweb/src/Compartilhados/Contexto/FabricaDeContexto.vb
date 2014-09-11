@@ -1,4 +1,6 @@
-﻿Public Class FabricaDeContexto
+﻿Imports System.Net.Configuration
+
+Public Class FabricaDeContexto
 
     Private Shared InstanciaFabrica As FabricaDeContexto
     Private Shared ObjLock As New Object
@@ -17,6 +19,10 @@
 
     Public Function GetContextoAtual() As Principal
         Return Sessao.GetInstancia.RecupereContexto
+    End Function
+
+    Public Function SessaoDoContextoEhWeb() As Boolean
+        Return Sessao.GetInstancia().SessaoEhWeb()
     End Function
 
 End Class

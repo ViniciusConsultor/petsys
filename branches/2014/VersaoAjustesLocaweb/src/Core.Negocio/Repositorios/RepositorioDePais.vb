@@ -1,4 +1,5 @@
-﻿Imports Compartilhados.Interfaces.Core.Negocio
+﻿Imports Compartilhados
+Imports Compartilhados.Interfaces.Core.Negocio
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Remoting.Messaging
 Imports Compartilhados.Interfaces.Core.Servicos
@@ -17,11 +18,11 @@ Namespace Repositorios
 
         <MethodImpl(MethodImplOptions.Synchronized)> _
         Public Shared Function ObtenhaInstancia() As RepositorioDePais
-            Dim instancia = CType(CallContext.GetData(NOME_CALLCONTEXT), RepositorioDePais)
+            Dim instancia = CType(ChamadaPorContexto.GetData(NOME_CALLCONTEXT), RepositorioDePais)
 
             If instancia Is Nothing Then
                 instancia = New RepositorioDePais()
-                CallContext.SetData(NOME_CALLCONTEXT, instancia)
+                ChamadaPorContexto.SetData(NOME_CALLCONTEXT, instancia)
             End If
 
             Return instancia
