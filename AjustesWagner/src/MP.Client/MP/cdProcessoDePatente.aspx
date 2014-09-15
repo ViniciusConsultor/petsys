@@ -883,7 +883,8 @@
                                                             UniqueName="colunaDataVencimentoComMulta" DataFormatString="{0:dd/MM/yyyy}" />
                                                         <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Dt. Pagamento" UniqueName="colunaDataPagamento"
                                                             DataFormatString="{0:dd/MM/yyyy}" />
-                                                        <telerik:GridBoundColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" />
+                                                        <telerik:GridNumericColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" 
+                                                            FooterAggregateFormatString="{0:C}" NumericType="Currency"/>
                                                         <telerik:GridBoundColumn DataField="AnuidadePaga" HeaderText="Paga" UniqueName="colunaAnuidadePaga" />
                                                     </Columns>
                                                 </MasterTableView>
