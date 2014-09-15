@@ -21,7 +21,7 @@ Public Class UtilidadesDeStream
     End Function
 
     Public Shared Function TransformeArrayBytesEmStream(ByVal ArrayBytes As Byte(), ByVal nomeDoArquivo As String) As Stream
-        Dim fs As FileStream = New FileStream(Path.Combine(Path.GetTempPath(), nomeDoArquivo), FileMode.Create)
+        Dim fs As FileStream = New FileStream(Path.Combine(Util.ObtenhaPastaTemporaria, nomeDoArquivo), FileMode.Create)
 
         fs.Write(ArrayBytes, 0, ArrayBytes.Length)
         fs.Flush()

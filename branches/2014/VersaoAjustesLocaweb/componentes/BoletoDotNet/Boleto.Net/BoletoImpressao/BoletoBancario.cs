@@ -947,7 +947,7 @@ namespace BoletoNet
         public string MontaHtml(string fileName)
         {
             if (fileName == null)
-                fileName = System.IO.Path.GetTempPath();
+                fileName = Util.ObtenhaPastaTemporaria();
 
             this.OnLoad(EventArgs.Empty);
 

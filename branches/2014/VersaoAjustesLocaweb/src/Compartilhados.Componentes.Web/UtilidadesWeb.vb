@@ -100,7 +100,7 @@ Public Class UtilidadesWeb
 
         If Not Inconsistencias Is Nothing Then
             For Each Inconsistencia As String In Inconsistencias
-                Mensagem.Append(String.Concat(Inconsistencia, "</br>"))
+                Mensagem.Append(String.Concat(UtilidadesDePersistencia.FiltraApostrofe(Inconsistencia), "</br>"))
             Next
         End If
 
@@ -205,7 +205,7 @@ Public Class UtilidadesWeb
         Js.AppendLine("<script language='javascript' type='text/javascript'>")
         Js.AppendLine("Ext.MessageBox.show({ ")
         Js.AppendLine("title:'Inconsistências', ")
-        Js.AppendLine(String.Concat("msg:'", Mensagem, "', "))
+        Js.AppendLine(String.Concat("msg:'", UtilidadesDePersistencia.FiltraApostrofe(Mensagem), "', "))
         Js.AppendLine(String.Concat("buttons: Ext.MessageBox.OK,"))
         Js.AppendLine(String.Concat("icon: Ext.MessageBox.WARNING});"))
         Js.AppendLine("</script>")

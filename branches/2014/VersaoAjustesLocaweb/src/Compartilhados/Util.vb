@@ -55,6 +55,10 @@ Public Class Util
         Return String.Concat(ObtenhaCaminhoDaPastaDoServidorDeAplicacao(), "gatilhos.xml")
     End Function
 
+    Public Shared Function ObtenhaPastaTemporaria() As String
+        Return Path.Combine(GetDiretorioLoads, "Temp")
+    End Function
+
     Public Shared Function ObtenhaCaminhoArquivoXMLDeSchedule() As String
         Return String.Concat(ObtenhaCaminhoDaPastaDoServidorDeAplicacao(), "schedules.xml")
     End Function

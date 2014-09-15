@@ -948,7 +948,7 @@ namespace FN.Client.FN
             const int webBrowserWidth = 680;
             const int webBrowserHeight = 1096;
             var bmp = WebsiteThumbnailImageGenerator.GetWebSiteThumbnail(_boletoPathHtml, webBrowserWidth, webBrowserHeight, width, height);
-            var boletoPathBMP = Path.Combine(Path.GetTempPath(), "Boleto.bmp");
+            var boletoPathBMP = Path.Combine(Compartilhados.Util.ObtenhaPastaTemporaria(), "Boleto.bmp");
             bmp.Save(boletoPathBMP);
             return boletoPathBMP;
         }
