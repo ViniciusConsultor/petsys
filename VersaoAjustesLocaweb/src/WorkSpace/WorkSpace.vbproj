@@ -1607,6 +1607,7 @@
     <Folder Include="Loads\Fotos\Pessoas\" />
     <Folder Include="Loads\Imagens\Atalhos\" />
     <Folder Include="Loads\Imagens\PapeisDeParede\" />
+    <Folder Include="Loads\Temp\" />
     <Folder Include="LOG\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

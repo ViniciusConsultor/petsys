@@ -35,8 +35,9 @@ Partial Public Class Login
                 Operador = Servico.FacaLogon(Login, Senha)
             End Using
 
-        Catch ex As BussinesException
+        Catch ex As Exception
             ScriptManager.RegisterClientScriptBlock(Me, Me.GetType, New Guid().ToString, UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
+            Logger.GetInstancia.Erro(ex.ToString)
             Exit Sub
         End Try
 
