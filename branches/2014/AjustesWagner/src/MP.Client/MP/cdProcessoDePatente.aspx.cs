@@ -917,7 +917,7 @@ namespace MP.Client.MP
             txtPagamentoSemMulta.SelectedDate = anuidadePatente.DataVencimentoSemMulta;
             txtPagamentoComMulta.SelectedDate = anuidadePatente.DataVencimentoComMulta;
             txtDataPagamento.SelectedDate = anuidadePatente.DataPagamento;
-            txtValorPagamento.Text = anuidadePatente.ValorPagamento.ToString();
+            txtValorPagamento.Value = anuidadePatente.ValorPagamento;
             VisibilidadeBaixar(false);
         }
 
