@@ -318,7 +318,7 @@ namespace MP.Mapeadores
             sql.AppendLine("FROM MP_PROCESSOMARCA ");
             sql.AppendLine("INNER JOIN MP_MARCAS ON MP_MARCAS.IDMARCA = MP_PROCESSOMARCA.IDMARCA ");
             sql.AppendLine("INNER JOIN MP_RADICAL_MARCA ON MP_RADICAL_MARCA.IDMARCA = MP_MARCAS.IDMARCA ");
-            sql.AppendLine("LEFT JOIN mp_despacho_marca ON MP_PROCESSOMARCA.IDdespacho = mp_despacho_marca.IDDESPACHO ");
+            sql.AppendLine("LEFT JOIN MP_DESPACHO_MARCA ON MP_PROCESSOMARCA.IDdespacho = MP_DESPACHO_MARCA.IDDESPACHO ");
             sql.AppendLine("WHERE  MP_PROCESSOMARCA.ATIVO = 1 AND DESATIVAPESQCOLIDENCIA = 0");
             sql.AppendLine(" ORDER BY MP_MARCAS.DESCRICAO_MARCA");
 
