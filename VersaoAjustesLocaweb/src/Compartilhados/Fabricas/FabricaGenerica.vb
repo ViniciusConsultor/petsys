@@ -29,10 +29,6 @@ Namespace Fabricas
             Return InstanciaSolitaria
         End Function
 
-        Public Sub InjeteCredencial(credencial As ICredencial)
-            ChamadaPorContexto.SetData("CREDENCIALINJETADA", credencial)
-        End Sub
-
         Private Sub CarregaAssembly(ByVal NomeDoAssembly As String)
             SyncLock DicionarioDeAssemblyTypes
                 If Not DicionarioDeAssemblyTypes.ContainsKey(NomeDoAssembly) Then
@@ -56,9 +52,10 @@ Namespace Fabricas
             NomeTipoConcreto = ObtenhaNomeTipoConcreto(NomeDoTipo)
 
             CarregaAssembly(NomeDoAssembly)
-
+            
             If NomeDoAssembly.Contains("Servico") Then
-                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
+                Dim Credencial As Credencial = Util.ConstruaCredencial
+                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto, Credencial)
             Else
                 Instancia = CriaInstancia(NomeDoAssembly, NomeTipoConcreto)
             End If
@@ -76,8 +73,29 @@ Namespace Fabricas
 
             CarregaAssembly(NomeDoAssembly)
 
+
             If GetType(T).FullName.Contains("Servico") Then
-                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
+                Dim Credencial As Credencial = Util.ConstruaCredencial
+                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto, Credencial)
+            Else
+                Instancia = CriaInstancia(NomeDoAssembly, NomeTipoConcreto)
+            End If
+
+            Return CType(Instancia, T)
+        End Function
+
+        Public Function CrieObjeto(Of T)(ByVal Credencial As ICredencial) As T
+            Dim Instancia As Object = Nothing
+            Dim NomeDoAssembly As String
+            Dim NomeTipoConcreto As String
+
+            NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
+            NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
+
+            CarregaAssembly(NomeDoAssembly)
+
+            If GetType(T).FullName.Contains("Servico") Then
+                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto, Util.ConstruaCredencial(Credencial.Conexao))
             Else
                 Instancia = CriaInstancia(NomeDoAssembly, NomeTipoConcreto)
             End If
@@ -93,8 +111,10 @@ Namespace Fabricas
             NomeDoAssembly = ObtenhaNomeDoAssembly(GetType(T).FullName)
             NomeTipoConcreto = ObtenhaNomeTipoConcreto(GetType(T).Name)
 
+
             If NomeDoAssembly.Contains("Servico") Then
-                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto)
+                Dim Credencial As ICredencial = Util.ConstruaCredencial
+                Instancia = CriaInstanciaDeServico(NomeDoAssembly, NomeTipoConcreto, Credencial)
             Else
                 CarregaAssembly(NomeDoAssembly)
                 Instancia = CriaInstancia(NomeDoAssembly, NomeTipoConcreto, Parametros)
@@ -103,17 +123,8 @@ Namespace Fabricas
             Return CType(Instancia, T)
         End Function
 
-        Private Function CriaInstanciaDeServico(ByVal NomeDoAssembly As String, ByVal NomeDoTipoConcreto As String) As Object
-            Dim Credencial As ICredencial
+        Private Function CriaInstanciaDeServico(ByVal NomeDoAssembly As String, ByVal NomeDoTipoConcreto As String, ByVal Credencial As ICredencial) As Object
             Dim Instancia As Object = Nothing
-
-            If ChamadaPorContexto.GetData("CREDENCIALINJETADA") Is Nothing Then
-                Credencial = Util.ConstruaCredencial
-            Else
-                Dim credencialInjetada As ICredencial = CType(ChamadaPorContexto.GetData("CREDENCIALINJETADA"), ICredencial)
-
-                Credencial = Util.ConstruaCredencial(credencialInjetada.Conexao)
-            End If
 
             Dim Parametro As Object() = New Object() {Credencial}
 
