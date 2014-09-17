@@ -4,7 +4,7 @@ Imports System.Runtime.Remoting.Messaging
 Public Class ChamadaPorContexto
 
     Public Shared Function GetData(chave As String) As Object
-        If Util.ExecutandoServidorWeb() OrElse FabricaDeContexto.GetInstancia().SessaoDoContextoEhWeb() Then
+        If Util.ExecutandoServidorWeb() Then
             Return HttpContext.Current.Items(chave)
         End If
 
@@ -12,7 +12,7 @@ Public Class ChamadaPorContexto
     End Function
 
     Public Shared Sub SetData(chave As String, valor As Object)
-        If Util.ExecutandoServidorWeb() OrElse FabricaDeContexto.GetInstancia().SessaoDoContextoEhWeb() Then
+        If Util.ExecutandoServidorWeb() Then
 
             If HttpContext.Current.Items.Contains(chave) Then
                 HttpContext.Current.Items.Item(chave) = valor
@@ -27,7 +27,7 @@ Public Class ChamadaPorContexto
     End Sub
 
     Public Shared Sub FreeNamedDataSlot(chave As String)
-        If Util.ExecutandoServidorWeb() OrElse FabricaDeContexto.GetInstancia().SessaoDoContextoEhWeb() Then
+        If Util.ExecutandoServidorWeb() Then
             HttpContext.Current.Items.Remove(chave)
             Exit Sub
         End If

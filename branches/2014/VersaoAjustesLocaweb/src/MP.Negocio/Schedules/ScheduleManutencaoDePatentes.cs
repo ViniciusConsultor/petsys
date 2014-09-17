@@ -25,9 +25,8 @@ namespace MP.Negocio.Schedules
             try
             {
                 var fabrica = FabricaGenerica.GetInstancia();
-                fabrica.InjeteCredencial(_credencial);
-
-                using (var servico = fabrica.CrieObjeto<IServicoDeInterfaceComModuloFinanceiro>())
+                
+                using (var servico = fabrica.CrieObjeto<IServicoDeInterfaceComModuloFinanceiro>(_credencial))
                     servico.ProcureEAgendeItemDeRecebimentoDePatentesVencidasNoMes();
             }
             catch (Exception ex)
