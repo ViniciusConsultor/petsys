@@ -34,8 +34,22 @@ namespace FN.Client.FN
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.ctrlDataDePagamentoContaAReceber1.UsuarioPediuParaGravar += RecebaContaComADataInformada;
+
             if (!IsPostBack)
+            {
                 ExibaTelaInicial();
+                ctrlDataDePagamentoContaAReceber1.Visible = false;
+            }
+                
+        }
+
+        private void RecebaContaComADataInformada()
+        {
+            ctrlDataDePagamentoContaAReceber1.Visible = false;
+            var dataInformada = ctrlDataDePagamentoContaAReceber1.DataInformada();
+
+
         }
 
         private IFiltro FiltroAplicado
@@ -360,12 +374,29 @@ namespace FN.Client.FN
 
                     try
                     {
-                        RecebaLancamento(id);
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                                UtilidadesWeb.MostraMensagemDeInformacao(
-                                                                    "O Item de lançamento de conta a receber foi recebido com sucesso."), false);
+                        ctrlDataDePagamentoContaAReceber1.Visible = true;
+                        ExecutaScriptParaDataDeRecebimento(id);
 
-                        Recarregue();
+                        //var sb = new StringBuilder();
+                        ////this.ctrlDataDePagamentoContaAReceber.Visible = true;
+                        //sb.Append("<script>");
+                        ////sb.Append("$('#divJanelaParaConfirmarData').show();");
+                        //sb.Append("</script>");
+                        //ScriptManager.RegisterClientScriptBlock((Page)this, this.GetType(), "ddd", sb.ToString(), false);
+
+                        //RecebaLancamento(id);
+                        //ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                        //                                        UtilidadesWeb.MostraMensagemDeInformacao(
+                        //                                            "O Item de lançamento de conta a receber foi recebido com sucesso."), false);
+
+                        //Recarregue();
+
+                        //var urlDataRecebimento = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "FN/frmDataDeRecebimentoContaAReceber.aspx",
+                        //                   "?ItensFinanceiros=", id);
+                        //ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                        //                                    UtilidadesWeb.ExibeJanela(urlDataRecebimento,
+                        //                                                                   "Data de recebimento",
+                        //                                                                   800, 550, "FN_frmDataDeRecebimentoContaAReceber_aspx"), false);
 
                     }
                     catch (BussinesException ex)
@@ -376,6 +407,29 @@ namespace FN.Client.FN
 
                     break;
             }
+        }
+
+        private void ExecutaScriptParaDataDeRecebimento(long id)
+        {
+            var paginaChamadora = (Page)HttpContext.Current.Handler;
+            var contextRoot = Request.ApplicationPath;
+
+            paginaChamadora.ClientScript.RegisterStartupScript(typeof(GeradorDePopupsWeb), "cssDoJQueryUIDialog",
+                string.Format("<link href='{0}/FN/scripts/jquery/ui/jquery-ui.css' rel='stylesheet' type='text/css' media='all' />", contextRoot));
+
+            paginaChamadora.ClientScript.RegisterStartupScript(typeof(GeradorDePopupsWeb), "jQuery",
+                string.Format("<script src='{0}/FN/scripts/jquery/jquery.js'></script>", contextRoot));
+
+            paginaChamadora.ClientScript.RegisterStartupScript(typeof(GeradorDePopupsWeb), "jQueryUIDialog",
+                string.Format("<script src='{0}/FN/scripts/jquery/ui/jquery-ui.js'></script>", contextRoot));
+
+            var sb = new StringBuilder();
+            sb.Append("<script>");
+            sb.Append("$(document).ready(function() {");
+            sb.Append("$('#divJanelaParaConfirmarData').dialog({height: 200, width: 350 ,modal: true, closeOnEscape: false, title: 'Data de recebimento', open: function(event, ui) {  }});});");
+            sb.Append("</script>");
+
+            paginaChamadora.ClientScript.RegisterStartupScript(GetType(), "JQueryUIDialog", sb.ToString());
         }
 
         private void RecebaLancamento(long idDoLancamento)

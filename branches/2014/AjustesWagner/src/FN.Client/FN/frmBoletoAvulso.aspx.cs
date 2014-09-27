@@ -278,7 +278,7 @@ namespace FN.Client.FN
             txtInstrucoes.Enabled = false;
             txtFinalidadeBoleto.Enabled = false;
             txtValor.Enabled = false;
-            btnGerarBoleto.Enabled = false;
+            //btnGerarBoleto.Enabled = false;
         }
 
         private void ctrlCedente_CedenteFoiSelecionado(ICedente cedente)
@@ -660,6 +660,7 @@ namespace FN.Client.FN
                     if (BoletoGerado != null)
                     {
                         boletoGerado.ID = BoletoGerado.ID.Value;
+                        boletoGerado.StatusBoleto = BoletoGerado.StatusBoleto;
                         servico.AtualizarBoletoGerado(boletoGerado);
 
                         IItemLancamentoFinanceiroRecebimento itemLancamento;
@@ -895,6 +896,9 @@ namespace FN.Client.FN
             var html_st = html.ToString();
 
             //var boletoPathHTML = Path.Combine(Path.GetTempPath(), "Boleto.html");
+            var pastaDeDestino = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO);
+            Compartilhados.Util.CrieDiretorio(pastaDeDestino);
+
             var boletoPathHTML = Server.MapPath(Util.URL_IMAGEM_CABECALHO_BOLETO + "Boleto.html");
 
             var f = new FileStream(boletoPathHTML, FileMode.Create);
