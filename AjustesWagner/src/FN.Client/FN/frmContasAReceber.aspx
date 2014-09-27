@@ -7,6 +7,8 @@
 <%@ Register Src="ctrlSituacao.ascx" TagName="ctrlSituacao" TagPrefix="uc1" %>
 <%@ Register Src="ctrlFormaRecebimento.ascx" TagName="ctrlFormaRecebimento" TagPrefix="uc2" %>
 <%@ Register Src="ctrlTipoLacamentoFinanceiroRecebimento.ascx" TagName="ctrlTipoLacamentoFinanceiroRecebimento" TagPrefix="uc6" %>
+<%@ Register Src="ctrlDataDePagamentoContaAReceber.ascx" TagName="ctrlDataDePagamentoContaAReceber" TagPrefix="uc7" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
@@ -249,4 +251,9 @@
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
+  
+    <div id="divJanelaParaConfirmarData">
+        <uc7:ctrlDataDePagamentoContaAReceber ID="ctrlDataDePagamentoContaAReceber1" runat="server" />
+    </div>   
+  
 </asp:Content>

@@ -398,5 +398,14 @@ namespace FN.Client.FN {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid grdItensDeContasAReceber;
+        
+        /// <summary>
+        /// ctrlDataDePagamentoContaAReceber1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FN.Client.FN.ctrlDataDePagamentoContaAReceber ctrlDataDePagamentoContaAReceber1;
     }
 }
