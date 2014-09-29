@@ -128,7 +128,6 @@
       <DependentUpon>ctrlTipoLacamentoFinanceiroRecebimento.ascx</DependentUpon>
     </Compile>
     <Compile Include="FN\DTOBoletosGerados.cs" />
-    <Compile Include="FN\FabricaDeJScriptsWeb.cs" />
     <Compile Include="FN\frmBoletoAvulso.aspx.cs">
       <DependentUpon>frmBoletoAvulso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -192,16 +191,12 @@
     <Compile Include="FN\frmVisualizarBoletoGerado.aspx.designer.cs">
       <DependentUpon>frmVisualizarBoletoGerado.aspx</DependentUpon>
     </Compile>
-    <Compile Include="FN\GeradorDePopupsWeb.cs" />
     <Compile Include="FN\Relatorios\GeradorDeRelatorioDeBoletosGerados.cs" />
     <Compile Include="FN\Relatorios\GeradorDeRelatorioDeContasAReceber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Singleton.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FN\scripts\jquery\plugins\readonly\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\FN.ImagePDF\FN.ImagePDF.csproj">
       <Project>{F6F3E6D3-66E2-492E-A62B-6AB705D35BD2}</Project>
@@ -229,42 +224,6 @@
     <Content Include="FN\frmGerarContaAReceber.aspx" />
     <Content Include="FN\frmGerenciamentoDeItensFinanceiros.aspx" />
     <Content Include="FN\frmVisualizarBoletoGerado.aspx" />
-    <Content Include="FN\scripts\jquery\jquery-1.4.1-vsdoc.js" />
-    <Content Include="FN\scripts\jquery\jquery-1.4.1.js" />
-    <Content Include="FN\scripts\jquery\jquery-1.4.1.min.js" />
-    <Content Include="FN\scripts\jquery\jquery-extensions.js" />
-    <Content Include="FN\scripts\jquery\jquery.js" />
-    <Content Include="FN\scripts\jquery\jquery.readonly.css" />
-    <Content Include="FN\scripts\jquery\jquery.readonly.js" />
-    <Content Include="FN\scripts\jquery\plugins\BgIFrame\jquery_bgIFrame.js" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\blank.gif" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\close.gif" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\fechar.GIF" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\greybox.css" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\greybox.js" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\jquery.js" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\LGPL.txt" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\overlay.png" />
-    <Content Include="FN\scripts\jquery\plugins\greybox\test.html" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-icons_222222_256x240.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-icons_454545_256x240.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-icons_888888_256x240.png" />
-    <Content Include="FN\scripts\jquery\ui\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="FN\scripts\jquery\ui\jquery-ui.css" />
-    <Content Include="FN\scripts\jquery\ui\jquery-ui.js" />
-    <Content Include="FN\scripts\jquery\ui\jquery.ui.base.css" />
-    <Content Include="FN\scripts\jquery\ui\jquery.ui.core.css" />
-    <Content Include="FN\scripts\jquery\ui\jquery.ui.dialog.css" />
-    <Content Include="FN\scripts\jquery\ui\jquery.ui.theme.css" />
     <Content Include="Web.config" />
     <Content Include="WorkSpace.Master" />
     <Content Include="FN\Web.config">
