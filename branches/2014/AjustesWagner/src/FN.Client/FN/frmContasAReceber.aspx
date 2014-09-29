@@ -9,6 +9,7 @@
 <%@ Register Src="ctrlTipoLacamentoFinanceiroRecebimento.ascx" TagName="ctrlTipoLacamentoFinanceiroRecebimento" TagPrefix="uc6" %>
 <%@ Register Src="ctrlDataDePagamentoContaAReceber.ascx" TagName="ctrlDataDePagamentoContaAReceber" TagPrefix="uc7" %>
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
@@ -194,8 +195,7 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Receber" FilterImageToolTip="Receber"
-                                                HeaderTooltip="Receber" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column888"
-                                                ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo receber a conta?" ConfirmTitle="Receber">
+                                                HeaderTooltip="Receber" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column888">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
@@ -252,8 +252,12 @@
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
   
-    <div id="divJanelaParaConfirmarData">
+    <div id="divJanelaParaConfirmarData" class="janelaModal" runat="server" style="width: 300px; height:150px;">
         <uc7:ctrlDataDePagamentoContaAReceber ID="ctrlDataDePagamentoContaAReceber1" runat="server" />
+    </div>  
+    
+     <div id="divJanelaParaConfirmarDataColetivo" class="janelaModal" runat="server" style="width: 300px; height:150px;">
+        <uc7:ctrlDataDePagamentoContaAReceber ID="ctrlDataDePagamentoContaAReceber2" runat="server" />
     </div>   
   
 </asp:Content>

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Telerik.Web.UI;
+using Compartilhados.Componentes.Web;
 
 namespace FN.Client.FN
 {
@@ -15,17 +11,25 @@ namespace FN.Client.FN
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //btnReceber.Click += btnReceber_ButtonClick;
         }
 
         protected void btnReceber_ButtonClick(object sender, EventArgs e)
         {
+            if (DataInformada() == null )
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                                    "A data do recebimento deve ser informada."), false);
+                return;
+            }
+
+
             UsuarioPediuParaGravar();
         }
 
-        public DateTime DataInformada()
+        public DateTime? DataInformada()
         {
-            return this.txtDataDeRecebimento.SelectedDate.Value;
+            return txtDataDeRecebimento.SelectedDate;
         }
     }
 }
