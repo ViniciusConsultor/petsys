@@ -10,7 +10,7 @@
 namespace FN.Client.FN {
     
     
-    public partial class ctrlDataDePagamentoContaAReceber {
+    public partial class ctrlJustificativaCancelamentoContaAReceber {
         
         /// <summary>
         /// Label8 control.
@@ -22,22 +22,22 @@ namespace FN.Client.FN {
         protected global::System.Web.UI.WebControls.Label Label8;
         
         /// <summary>
-        /// txtDataDeRecebimento control.
+        /// txtJustificativa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtDataDeRecebimento;
+        protected global::Telerik.Web.UI.RadTextBox txtJustificativa;
         
         /// <summary>
-        /// btnReceber control.
+        /// btnCancelar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnReceber;
+        protected global::Telerik.Web.UI.RadButton btnCancelar;
         
         /// <summary>
         /// btnFechar control.

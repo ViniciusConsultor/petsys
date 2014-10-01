@@ -9,6 +9,9 @@ namespace FN.Client.FN
         public delegate void UsuarioPediuParaGravarEventHandler();
         public event UsuarioPediuParaGravarEventHandler UsuarioPediuParaGravar;
 
+        public delegate void UsuarioPediuParaFecharDataDePagamentoEventHandler();
+        public event UsuarioPediuParaFecharDataDePagamentoEventHandler UsuarioPediuParaFecharDataDePagamento;
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }
@@ -30,6 +33,16 @@ namespace FN.Client.FN
         public DateTime? DataInformada()
         {
             return txtDataDeRecebimento.SelectedDate;
+        }
+
+        public void LimparDataSelecionada()
+        {
+            txtDataDeRecebimento.Clear();
+        }
+
+        protected void btnFechar_ButtonClick(object sender, EventArgs e)
+        {
+            UsuarioPediuParaFecharDataDePagamento();
         }
     }
 }

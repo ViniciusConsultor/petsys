@@ -32,14 +32,72 @@ namespace FN.Client.FN
         private const int NUMERO_CELULA_CANCELAR = 6;
         private const int NUMERO_CELULA_RECEBER = 7;
         private const string CHAVE_ID_ITEM_SELECIONADO = "CHAVE_ID_ITEM_SELECIONADO";
+        private const string CHAVE_GRID = "CHAVE_GRID";
+        private const string CHAVE_CurrentPageIndex = "CHAVE_CurrentPageIndex";
+        private const string CHAVE_PageSize = "CHAVE_PageSize";
+        private const string CHAVE_VirtualItemCount = "CHAVE_VirtualItemCount";
+        private const string CHAVE_Count = "CHAVE_Count";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             ctrlDataDePagamentoContaAReceber1.UsuarioPediuParaGravar += RecebaContaComADataInformada;
+            ctrlDataDePagamentoContaAReceber1.UsuarioPediuParaFecharDataDePagamento += FecharDivDataDePagamento;
             ctrlDataDePagamentoContaAReceber2.UsuarioPediuParaGravar += RecebaContasColetivamente;
+            ctrlJustificativaCancelamentoContaAReceber1.UsuarioPediuParaCancelar += CancelaContaComJustificativa;
+            ctrlJustificativaCancelamentoContaAReceber1.UsuarioPediuParaFechar += FecharDivJustificativa;
 
             if (!IsPostBack)
                 ExibaTelaInicial();
+        }
+
+        private void FecharDivDataDePagamento()
+        {
+            divJanelaParaConfirmarData.Visible = false;
+            ctrlDataDePagamentoContaAReceber1.LimparDataSelecionada();
+        }
+
+        private void FecharDivJustificativa()
+        {
+            divJanelaParaJustificativaCancelamento.Visible = false;
+            ctrlJustificativaCancelamentoContaAReceber1.LimparJustificativa();
+        }
+
+        private void CancelaContaComJustificativa()
+        {
+            divJanelaParaJustificativaCancelamento.Visible = false;
+            var justificativa = ctrlJustificativaCancelamentoContaAReceber1.JustificativaInformada();
+            var id = (long) ViewState[CHAVE_ID_ITEM_SELECIONADO];
+
+            try
+            {
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
+                {
+                    var itemLancamento = servico.Obtenha(id);
+                    itemLancamento.Situacao = Situacao.Cancelada;
+                    itemLancamento.Observacao = justificativa;
+                    servico.Modifique(itemLancamento);
+                }
+
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInformacao(
+                                                            "Item de lançamento de conta a receber cancelado com sucesso."), false);
+
+                var currentPageIndex = (int) ViewState[CHAVE_CurrentPageIndex];
+                var pageSize = (int)ViewState[CHAVE_PageSize];
+                var virtualItemCount = (int)ViewState[CHAVE_VirtualItemCount];
+                var gridCount = (int)ViewState[CHAVE_Count];
+
+                var offset = UtilidadesWeb.ObtenhaOffSet(currentPageIndex, pageSize, virtualItemCount - 1);
+                MostraItens(FiltroAplicado, UtilidadesWeb.ObtenhaQuantidadeDeItensDaPagina(gridCount - 1, pageSize), offset);
+                EscondaBotoesColetivo();
+                ctrlJustificativaCancelamentoContaAReceber1.LimparJustificativa();
+
+            }
+            catch (BussinesException ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+            }
         }
 
         private void RecebaContaComADataInformada()
@@ -55,6 +113,7 @@ namespace FN.Client.FN
                                                                       "O Item de lançamento de conta a receber foi recebido com sucesso."), false);
 
                 Recarregue();
+                ctrlDataDePagamentoContaAReceber1.LimparDataSelecionada();
             }
             catch (BussinesException ex)
             {
@@ -136,6 +195,7 @@ namespace FN.Client.FN
 
             divJanelaParaConfirmarData.Visible = false;
             divJanelaParaConfirmarDataColetivo.Visible = false;
+            divJanelaParaJustificativaCancelamento.Visible = false;
 
             ctrlTipoLacamentoFinanceiroRecebimento.Inicializa(new List<TipoLacamentoFinanceiroRecebimento>());
 
@@ -343,34 +403,21 @@ namespace FN.Client.FN
             switch (e.CommandName)
             {
                 case "Cancelar":
+                    divJanelaParaJustificativaCancelamento.Visible = true;
+                    ViewState[CHAVE_ID_ITEM_SELECIONADO] = id;
 
-                    try
+                    var grid = sender as RadGrid;
+
+                    if (grid != null)
                     {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeItensFinanceirosDeRecebimento>())
-                        {
-                            var itemLancamento = servico.Obtenha(id);
-                            itemLancamento.Situacao = Situacao.Cancelada;
-                            servico.Modifique(itemLancamento);
-                        }
-
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                                UtilidadesWeb.MostraMensagemDeInformacao(
-                                                                    "Item de lançamento de conta a receber cancelado com sucesso."), false);
-
-                        var grid = sender as RadGrid;
-
-                        var offset = UtilidadesWeb.ObtenhaOffSet(grid.CurrentPageIndex, grid.PageSize, grid.VirtualItemCount - 1);
-                        MostraItens(FiltroAplicado, UtilidadesWeb.ObtenhaQuantidadeDeItensDaPagina(grid.Items.Count - 1, grid.PageSize), offset);
-                        EscondaBotoesColetivo();
-
-                    }
-                    catch (BussinesException ex)
-                    {
-                        ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                                UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), false);
+                        ViewState[CHAVE_CurrentPageIndex] = grid.CurrentPageIndex;
+                        ViewState[CHAVE_PageSize] = grid.PageSize;
+                        ViewState[CHAVE_VirtualItemCount] = grid.VirtualItemCount;
+                        ViewState[CHAVE_Count] = grid.Items.Count;
                     }
 
                     break;
+
                 case "Modificar":
                     var url = String.Concat(ObtenhaURLDeContaAReceber(),
                                             "?Id=", id);
