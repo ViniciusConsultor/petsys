@@ -8,7 +8,7 @@
 <%@ Register Src="ctrlFormaRecebimento.ascx" TagName="ctrlFormaRecebimento" TagPrefix="uc2" %>
 <%@ Register Src="ctrlTipoLacamentoFinanceiroRecebimento.ascx" TagName="ctrlTipoLacamentoFinanceiroRecebimento" TagPrefix="uc6" %>
 <%@ Register Src="ctrlDataDePagamentoContaAReceber.ascx" TagName="ctrlDataDePagamentoContaAReceber" TagPrefix="uc7" %>
-
+<%@ Register Src="ctrlJustificativaCancelamentoContaAReceber.ascx" TagName="ctrlJustificativaCancelamentoContaAReceber" TagPrefix="uc8" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
@@ -189,9 +189,7 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"
-                                                HeaderTooltip="Cancelar" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
-                                                ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo cancelar a conta a receber?"
-                                                ConfirmTitle="Cancelar">
+                                                HeaderTooltip="Cancelar" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Receber" FilterImageToolTip="Receber"
@@ -259,5 +257,9 @@
      <div id="divJanelaParaConfirmarDataColetivo" class="janelaModal" runat="server" style="width: 300px; height:150px;">
         <uc7:ctrlDataDePagamentoContaAReceber ID="ctrlDataDePagamentoContaAReceber2" runat="server" />
     </div>   
+
+    <div id="divJanelaParaJustificativaCancelamento" class="janelaModal" runat="server" style="width: 500px;">
+        <uc8:ctrlJustificativaCancelamentoContaAReceber ID="ctrlJustificativaCancelamentoContaAReceber1" runat="server" />
+    </div>
   
 </asp:Content>

@@ -13,7 +13,15 @@
     </tr>
     <tr>
         <td class="td" colspan="2">
-            <telerik:RadButton ID="btnReceber" runat="server" Text="Receber" Skin="Vista" OnClick="btnReceber_ButtonClick">
+             &nbsp;    
+        </td>
+    </tr>
+    <tr>
+        <td class="td" colspan="2">
+            <telerik:RadButton ID="btnReceber" runat="server" Text="Receber conta" Skin="Vista" OnClick="btnReceber_ButtonClick">
+            </telerik:RadButton>
+             &nbsp;            
+            <telerik:RadButton ID="btnFechar" runat="server" Text="Fechar" Skin="Vista" OnClick="btnFechar_ButtonClick">
             </telerik:RadButton>
         </td>
     </tr>
