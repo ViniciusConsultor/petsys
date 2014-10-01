@@ -12,6 +12,9 @@ namespace FN.Client.FN
         public delegate void UsuarioPediuParaFecharDataDePagamentoEventHandler();
         public event UsuarioPediuParaFecharDataDePagamentoEventHandler UsuarioPediuParaFecharDataDePagamento;
 
+        public delegate void UsuarioPediuParaFecharDataDePagamentoColetivoEventHandler();
+        public event UsuarioPediuParaFecharDataDePagamentoColetivoEventHandler UsuarioPediuParaFecharDataDePagamentoColetivo;
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }
@@ -42,7 +45,11 @@ namespace FN.Client.FN
 
         protected void btnFechar_ButtonClick(object sender, EventArgs e)
         {
-            UsuarioPediuParaFecharDataDePagamento();
+            if (UsuarioPediuParaFecharDataDePagamento != null)
+                UsuarioPediuParaFecharDataDePagamento();
+
+            if (UsuarioPediuParaFecharDataDePagamentoColetivo != null)
+            UsuarioPediuParaFecharDataDePagamentoColetivo();
         }
     }
 }
