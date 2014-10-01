@@ -43,11 +43,18 @@ namespace FN.Client.FN
             ctrlDataDePagamentoContaAReceber1.UsuarioPediuParaGravar += RecebaContaComADataInformada;
             ctrlDataDePagamentoContaAReceber1.UsuarioPediuParaFecharDataDePagamento += FecharDivDataDePagamento;
             ctrlDataDePagamentoContaAReceber2.UsuarioPediuParaGravar += RecebaContasColetivamente;
+            ctrlDataDePagamentoContaAReceber2.UsuarioPediuParaFecharDataDePagamentoColetivo += FecharDivDataDePagamentoColetivo;
             ctrlJustificativaCancelamentoContaAReceber1.UsuarioPediuParaCancelar += CancelaContaComJustificativa;
             ctrlJustificativaCancelamentoContaAReceber1.UsuarioPediuParaFechar += FecharDivJustificativa;
 
             if (!IsPostBack)
                 ExibaTelaInicial();
+        }
+
+        private void FecharDivDataDePagamentoColetivo()
+        {
+            divJanelaParaConfirmarDataColetivo.Visible = false;
+            ctrlDataDePagamentoContaAReceber2.LimparDataSelecionada();
         }
 
         private void FecharDivDataDePagamento()
@@ -266,6 +273,8 @@ namespace FN.Client.FN
                                                                  "Os Itens de lançamento de conta a receber foram recebidos com sucesso."), false);
 
                 Recarregue();
+
+                ctrlDataDePagamentoContaAReceber2.LimparDataSelecionada();
             }
             catch (BussinesException ex)
             {
