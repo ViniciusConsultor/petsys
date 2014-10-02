@@ -66,14 +66,15 @@ namespace MP.Client.MP
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaSemFiltro>();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
+            chkConsiderarNaoAtivas.Checked = false;
         }
 
         private void MostraProcessos(IFiltro filtro, int quantidadeDeProcessos, int offSet)
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
             {
-                grdProcessosDeMarcas.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
-                grdProcessosDeMarcas.DataSource = ConvertaProcessoParaDTO(servico.ObtenhaProcessosDeMarcas(filtro, quantidadeDeProcessos, offSet));
+                grdProcessosDeMarcas.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro, chkConsiderarNaoAtivas.Checked);
+                grdProcessosDeMarcas.DataSource = ConvertaProcessoParaDTO(servico.ObtenhaProcessosDeMarcas(filtro, quantidadeDeProcessos, offSet, chkConsiderarNaoAtivas.Checked));
                 grdProcessosDeMarcas.DataBind();
             }
 
@@ -141,8 +142,6 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Natureza", "5"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("NCL", "6"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo", "7"));
-
-
         }
 
 
