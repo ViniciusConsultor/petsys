@@ -1,13 +1,16 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmRelatorioDeManutencoes.aspx.cs" Inherits="MP.Client.MP.frmRelatorioDeManutencoes" 
-MasterPageFile="~/WorkSpace.Master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmRelatorioDeManutencoes.aspx.cs"
+    Inherits="MP.Client.MP.frmRelatorioDeManutencoes" MasterPageFile="~/WorkSpace.Master" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc5" TagName="ctrlCliente" Src="~/ctrlCliente.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista" Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
+        Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
-            <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png" CommandName="btnRelatorio" CausesValidation="False" />
-            <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif" CommandName="btnLimpar" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
+                CommandName="btnRelatorio" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
+                CommandName="btnLimpar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -27,14 +30,14 @@ MasterPageFile="~/WorkSpace.Master"%>
                         </tr>
                         <tr>
                             <td colspan="2" align="right">
-                                <telerik:RadButton ID="btnAdicionarCliente" runat="server" Text="Adicionar" ToolTip="Adicionar Inventor" 
+                                <telerik:RadButton ID="btnAdicionarCliente" runat="server" Text="Adicionar" ToolTip="Adicionar Inventor"
                                     OnClick="btnAdicionarCliente_ButtonClick" />
                             </td>
                         </tr>
                         <tr>
                             <td class="campodependente" colspan="2">
-                                <telerik:RadGrid ID="grdClientes" runat="server" AutoGenerateColumns="False" AllowPaging="True" Skin="Vista" PageSize="10" 
-                                    GridLines="None" OnItemCommand="grdClientes_ItemCommand"
+                                <telerik:RadGrid ID="grdClientes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                    Skin="Vista" PageSize="10" GridLines="None" OnItemCommand="grdClientes_ItemCommand"
                                     OnItemCreated="grdClientes_ItemCreated" OnPageIndexChanged="grdClientes_PageIndexChanged">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
@@ -59,7 +62,7 @@ MasterPageFile="~/WorkSpace.Master"%>
                                 <asp:Label ID="lblInicio" runat="server" Text="Início" />
                             </td>
                             <td class="td">
-                                <telerik:RadDatePicker ID="rdpPeriodoInicio" runat="server" />                                
+                                <telerik:RadDatePicker ID="rdpPeriodoInicio" runat="server" />
                             </td>
                         </tr>
                         <tr>
@@ -75,7 +78,7 @@ MasterPageFile="~/WorkSpace.Master"%>
                                 <asp:Label ID="lblMarcas" runat="server" Text="Marcas" />
                             </td>
                             <td class="td">
-                                <asp:CheckBox ID="chkMarcas" runat="server" Checked="true"/>                                
+                                <asp:CheckBox ID="chkMarcas" runat="server" Checked="true" />
                             </td>
                         </tr>
                         <tr>
@@ -86,7 +89,15 @@ MasterPageFile="~/WorkSpace.Master"%>
                                 <asp:CheckBox ID="chkPatentes" runat="server" Checked="true" />
                             </td>
                         </tr>
-                    </table>                    
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label9" runat="server" Text="Considerar processos não ativos?"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:CheckBox ID="chkConsiderarNaoAtivas" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>

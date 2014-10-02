@@ -94,6 +94,24 @@ namespace MP.Client.MP {
         protected global::WorkSpace.ctrlOperacaoFiltro ctrlOperacaoFiltro1;
         
         /// <summary>
+        /// Label9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label9;
+        
+        /// <summary>
+        /// chkConsiderarNaoAtivas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkConsiderarNaoAtivas;
+        
+        /// <summary>
         /// pnlApresentacao control.
         /// </summary>
         /// <remarks>

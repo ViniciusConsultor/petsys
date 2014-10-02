@@ -126,7 +126,7 @@ namespace MP.Servicos.Local
                 processo.Ativo = false;
         }
 
-        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet, bool considerarNaoAtivos)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -134,7 +134,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaProcessosDeMarcas(filtro, quantidadeDeRegistros, offSet);
+                return mapeador.ObtenhaProcessosDeMarcas(filtro, quantidadeDeRegistros, offSet, considerarNaoAtivos);
             }
 
             finally
@@ -160,7 +160,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
+        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro, bool considerarNaoAtivos)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -168,7 +168,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
+                return mapeador.ObtenhaQuantidadeDeProcessosCadastrados(filtro, considerarNaoAtivos);
             }
 
             finally

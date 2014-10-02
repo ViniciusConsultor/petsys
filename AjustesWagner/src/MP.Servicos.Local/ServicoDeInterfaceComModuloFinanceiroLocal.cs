@@ -90,7 +90,7 @@ namespace MP.Servicos.Local
             var mapeadorDeProcessoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
 
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaVencidaNoMes>();
-            var marcasVencidas = mapeadorDeProcessoDeMarca.ObtenhaProcessosDeMarcas(filtro, int.MaxValue, 0);
+            var marcasVencidas = mapeadorDeProcessoDeMarca.ObtenhaProcessosDeMarcas(filtro, int.MaxValue, 0, false);
             
             try
             {
