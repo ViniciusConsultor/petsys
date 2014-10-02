@@ -61,8 +61,8 @@ Public Class Global_asax
 
                 Try
                     GerenciadorDeEmail.EnviaEmail("Erro ocorrido no sistema.", _
-                                              ConfiguracaoDeEmail.EmailRemetente, _
                                               destinario, _
+                                              Nothing, _
                                               Nothing, _
                                               mensagemDoErro, Nothing, "ERRO_NO_SISTEMA", True)
                 Catch ex As Exception

@@ -6,9 +6,9 @@ Namespace Core.Servicos
     Public Interface IServicoDeEnvioDeEmail
         Inherits IServico
 
-        Sub EnviaEmail(Configuracao As IConfiguracaoDoSistema, _
+        Sub EnviaEmail(ByVal Configuracao As IConfiguracaoDoSistema, _
                        ByVal Assunto As String, _
-                       ByVal Remetente As String, _
+                       ByVal Destinatarios As IList(Of String), _
                        ByVal DestinatariosEmCopia As IList(Of String), _
                        ByVal DestinatariosEmCopiaOculta As IList(Of String), _
                        ByVal Mensagem As String,

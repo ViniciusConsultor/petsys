@@ -266,6 +266,24 @@ Partial Public Class frmPainelDeControle
     Protected WithEvents txtRemetente As Global.Telerik.Web.UI.RadTextBox
 
     '''<summary>
+    '''Label14 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label14 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtNomeRemetente control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtNomeRemetente As Global.Telerik.Web.UI.RadTextBox
+
+    '''<summary>
     '''btnTestarConfiguracaoEmail control.
     '''</summary>
     '''<remarks>

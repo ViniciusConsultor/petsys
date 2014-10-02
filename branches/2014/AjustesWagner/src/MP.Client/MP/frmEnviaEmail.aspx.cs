@@ -60,14 +60,18 @@ namespace MP.Client.MP
 
         private IList<string> Destinarios
         {
-
             get { return (IList<string>)ViewState["DESTINARIOSDEEMAIL"]; }
             set { ViewState["DESTINARIOSDEEMAIL"] = value; }
         }
 
+        private IList<string> DestinariosCC
+        {
+            get { return (IList<string>)ViewState["DESTINARIOSDEEMAILCC"]; }
+            set { ViewState["DESTINARIOSDEEMAILCC"] = value; }
+        }
+
         private IList<string> DestinariosCo
         {
-
             get { return (IList<string>)ViewState["DESTINARIOSDEEMAILCCO"]; }
             set { ViewState["DESTINARIOSDEEMAILCCO"] = value; }
         }
@@ -177,10 +181,14 @@ namespace MP.Client.MP
             UtilidadesWeb.LimparComponente(ref controle);
 
             Destinarios = new List<string>();
+            ExibaDestinarios();
             Anexos = new ConcurrentDictionary<string, Stream>();
+
+            DestinariosCC = new List<string>();
+            ExibaDestinariosCC();
+
             DestinariosCo = new List<string>();
             ExibaDestinariosCCo();
-            ExibaDestinariosCC();
             ExibaArquivosAnexados();
         }
 
@@ -222,8 +230,7 @@ namespace MP.Client.MP
             }
 
             GerenciadorDeEmail.EnviaEmail(txtAssunto.Text,
-                                          configuracaoDeEmail.EmailRemetente,
-                                          Destinarios, DestinariosCo, ctrlTemplateDeEmail.TextoDoTemplate, Anexos, ObtenhaContexto(), true);
+                                          Destinarios, DestinariosCC, DestinariosCo, ctrlTemplateDeEmail.TextoDoTemplate, Anexos, ObtenhaContexto(), true);
 
             LimpaTela();
 
@@ -302,7 +309,7 @@ namespace MP.Client.MP
                     Destinarios.Remove(enderecoDeEmail.ToString());
             }
 
-            ExibaDestinariosCC();
+            ExibaDestinarios();
         }
 
         private bool VerificaSeEmailFoiAdicionadoNaLista(string email)
@@ -319,10 +326,10 @@ namespace MP.Client.MP
             return false;
         }
 
-        private void ExibaDestinariosCC()
+        private void ExibaDestinarios()
         {
-            grdDestinatariosCC.DataSource = Destinarios;
-            grdDestinatariosCC.DataBind();
+            grdDestinatarios.DataSource = Destinarios;
+            grdDestinatarios.DataBind();
         }
 
         private void ExibaArquivosAnexados()
@@ -335,6 +342,12 @@ namespace MP.Client.MP
         {
             grdDestinatariosCCo.DataSource = DestinariosCo;
             grdDestinatariosCCo.DataBind();
+        }
+
+        private void ExibaDestinariosCC()
+        {
+            grdDestinariosCC.DataSource = DestinariosCC;
+            grdDestinariosCC.DataBind();
         }
 
 
@@ -373,7 +386,7 @@ namespace MP.Client.MP
                     Destinarios.Remove(enderecoDeEmail.ToString());    
             }
 
-            ExibaDestinariosCC();
+            ExibaDestinarios();
 
         }
 
@@ -411,7 +424,7 @@ namespace MP.Client.MP
                     Destinarios.Remove(enderecoDeEmail.ToString());    
             }
 
-            ExibaDestinariosCC();
+            ExibaDestinarios();
         }
 
         protected void chkClientesPatente_OnCheckedChanged(object sender, EventArgs e)
@@ -455,7 +468,7 @@ namespace MP.Client.MP
                     Destinarios.Remove(email);
             }
 
-            ExibaDestinariosCC();
+            ExibaDestinarios();
         }
 
         protected void chkInventoresPatente_OnCheckedChanged(object sender, EventArgs e)
@@ -498,7 +511,7 @@ namespace MP.Client.MP
                     Destinarios.Remove(email);
             }
 
-            ExibaDestinariosCC();
+            ExibaDestinarios();
         }
 
         protected void chkTitularesPatente_OnCheckedChanged(object sender, EventArgs e)
@@ -541,12 +554,12 @@ namespace MP.Client.MP
                     Destinarios.Remove(email);
             }
 
-            ExibaDestinariosCC();
+            ExibaDestinarios();
         }
 
-        protected void btnAdicionarDestinatarioCC_OnClick(object sender, EventArgs e)
+        protected void btnAdicionarDestinatario_OnClick(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtDestinarioCCManual.Text))
+            if (string.IsNullOrEmpty(txtDestinarioManual.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                            UtilidadesWeb.MostraMensagemDeInconsitencia(
@@ -556,7 +569,7 @@ namespace MP.Client.MP
             }
 
 
-            if (Destinarios.Contains(txtDestinarioCCManual.Text))
+            if (Destinarios.Contains(txtDestinarioManual.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                           UtilidadesWeb.MostraMensagemDeInconsitencia(
@@ -565,11 +578,11 @@ namespace MP.Client.MP
                 return;
             }
 
-            Destinarios.Add(txtDestinarioCCManual.Text);
-            ExibaDestinariosCC();
+            Destinarios.Add(txtDestinarioManual.Text);
+            ExibaDestinarios();
         }
 
-        protected void grdDestinatariosCC_OnItemCommand(object sender, GridCommandEventArgs e)
+        protected void grdDestinatarios_OnItemCommand(object sender, GridCommandEventArgs e)
         {
             var indiceSelecionado = 0;
 
@@ -580,14 +593,14 @@ namespace MP.Client.MP
             {
                 case "Excluir":
                     Destinarios.RemoveAt(indiceSelecionado);
-                    ExibaDestinariosCC();
+                    ExibaDestinarios();
                     break;
             }
         }
 
-        protected void grdDestinatariosCC_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        protected void grdDestinatarios_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            UtilidadesWeb.PaginacaoDataGrid(ref grdDestinatariosCC,Destinarios,e);
+            UtilidadesWeb.PaginacaoDataGrid(ref grdDestinatarios,Destinarios,e);
         }
 
         protected void grdAnexos_OnItemCommand(object sender, GridCommandEventArgs e)
@@ -656,6 +669,52 @@ namespace MP.Client.MP
         protected void grdDestinatariosCCo_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
             UtilidadesWeb.PaginacaoDataGrid(ref  grdDestinatariosCCo, DestinariosCo, e);
+        }
+
+        protected void btnAdicionarDestinarioCC_OnClick(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtEmailManualCC.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                           UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                               "Informe um e-mail."),
+                                                           false);
+                return;
+            }
+
+
+            if (DestinariosCo.Contains(txtEmailManualCC.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                          UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                              "E-mail já informado na lista de destinatários CC."),
+                                                          false);
+                return;
+            }
+
+            DestinariosCC.Add(txtEmailManualCC.Text);
+            ExibaDestinariosCC();
+        }
+
+        protected void grdDestinatariosCC_OnItemCommand(object sender, GridCommandEventArgs e)
+        {
+            var indiceSelecionado = 0;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                indiceSelecionado = e.Item.ItemIndex;
+
+            switch (e.CommandName)
+            {
+                case "Excluir":
+                    DestinariosCC.RemoveAt(indiceSelecionado);
+                    ExibaDestinariosCC();
+                    break;
+            }
+        }
+
+        protected void grdDestinatariosCC_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref  grdDestinariosCC, DestinariosCo, e);
         }
     }
 }

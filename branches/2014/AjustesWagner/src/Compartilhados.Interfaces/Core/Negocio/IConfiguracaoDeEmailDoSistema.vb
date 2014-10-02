@@ -12,6 +12,7 @@ Namespace Core.Negocio
         Property UsuarioDeAutenticacaoDoServidorDeSaida() As String
         Property SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida() As String
         Property EmailRemetente() As String
+        Property NomeRemetente() As String
 
     End Interface
 

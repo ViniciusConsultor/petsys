@@ -15,7 +15,7 @@ Public Class MapeadorDeConfiguracoesDoSistema
         Dim ConfiguracaoDeEmail As IConfiguracaoDeEmailDoSistema = Nothing
         Dim ConfiguracaoDeAgenda As IConfiguracaoDeAgendaDoSistema = Nothing
 
-        Sql.Append("SELECT NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, HABILITARSSL, ")
+        Sql.Append("SELECT NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, NOMEREMETENTE, HABILITARSSL, ")
         Sql.Append("PORTA, REQUERAUTENTICACAO, SHNUSUSERVSAIDA, USUSERVSAIDA, ")
         Sql.Append("SERVSAIDA, TIPOSERVSAIDA, TXTCOMPRO, TXTCOMPROENTRELNH, TXTLEMBRE, ")
         Sql.Append("TXTLEMBREENTRELNH, TXTTARE, TXTTAREENTRELNH, TXTCABAGEN, APRELNHCABAGEN, APRELNHRODAGEN")
@@ -41,6 +41,10 @@ Public Class MapeadorDeConfiguracoesDoSistema
                         ConfiguracaoDeEmail.Porta = UtilidadesDePersistencia.getValorInteger(Leitor, "PORTA")
                         ConfiguracaoDeEmail.RequerAutenticacao = UtilidadesDePersistencia.GetValorBooleano(Leitor, "REQUERAUTENTICACAO")
 
+                        If Not UtilidadesDePersistencia.EhNulo(Leitor, "NOMEREMETENTE") Then
+                            ConfiguracaoDeEmail.NomeRemetente = UtilidadesDePersistencia.GetValorString(Leitor, "NOMEREMETENTE")
+                        End If
+                        
                         If ConfiguracaoDeEmail.RequerAutenticacao Then
                             ConfiguracaoDeEmail.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida = UtilidadesDePersistencia.GetValorString(Leitor, "SHNUSUSERVSAIDA")
                             ConfiguracaoDeEmail.UsuarioDeAutenticacaoDoServidorDeSaida = UtilidadesDePersistencia.GetValorString(Leitor, "USUSERVSAIDA")
@@ -83,7 +87,7 @@ Public Class MapeadorDeConfiguracoesDoSistema
         DBHelper.ExecuteNonQuery("DELETE FROM NCL_CNFGERAL")
 
         Sql.Append("INSERT INTO NCL_CNFGERAL (")
-        Sql.Append("NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, HABILITARSSL, ")
+        Sql.Append("NOTIFERROSREMAIL, EMAILREMETNOTIFERROS, REMETENTEPADRAO, NOMEREMETENTE, HABILITARSSL, ")
         Sql.Append("PORTA, REQUERAUTENTICACAO, SHNUSUSERVSAIDA, USUSERVSAIDA, ")
         Sql.Append("SERVSAIDA, TIPOSERVSAIDA, TXTCOMPRO, TXTCOMPROENTRELNH, TXTLEMBRE, ")
         Sql.Append("TXTLEMBREENTRELNH, TXTTARE, TXTTAREENTRELNH, TXTCABAGEN, APRELNHCABAGEN, APRELNHRODAGEN)")
@@ -98,6 +102,9 @@ Public Class MapeadorDeConfiguracoesDoSistema
 
         If Not Configuracao.ConfiguracaoDeEmailDoSistema Is Nothing Then
             Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente), "', "))
+
+            Sql.Append(IIf(String.IsNullOrEmpty(Configuracao.ConfiguracaoDeEmailDoSistema.NomeRemetente), "NULL, ", "'" & Configuracao.ConfiguracaoDeEmailDoSistema.NomeRemetente & "', "))
+
             Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeEmailDoSistema.HabilitarSSL, "S", "N"), "', "))
             Sql.Append(String.Concat(Configuracao.ConfiguracaoDeEmailDoSistema.Porta.ToString, ", "))
             Sql.Append(String.Concat("'", IIf(Configuracao.ConfiguracaoDeEmailDoSistema.RequerAutenticacao, "S", "N"), "', "))
@@ -112,7 +119,7 @@ Public Class MapeadorDeConfiguracoesDoSistema
             Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeEmailDoSistema.ServidorDeSaidaDeEmail), "', "))
             Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeEmailDoSistema.TipoDoServidor.ID.ToString), "',"))
         Else
-            Sql.Append("NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,")
+            Sql.Append("NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,")
         End If
 
         Sql.Append(String.Concat("'", UtilidadesDePersistencia.FiltraApostrofe(Configuracao.ConfiguracaoDeAgendaDoSistema.TextoCompromissos), "', "))
