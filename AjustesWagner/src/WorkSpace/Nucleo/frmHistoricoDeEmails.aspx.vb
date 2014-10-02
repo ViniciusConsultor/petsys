@@ -273,6 +273,10 @@ Public Class frmHistoricoDeEmails
     End Function
 
     Protected Function MontaListaDeDestinatarios(ByVal Historico As IHistoricoDeEmail) As String
+        Return UtilidadesWeb.ObtenhaListaDeStringComQuebraDeLinhaWeb(Historico.Destinatarios)
+    End Function
+
+    Protected Function MontaListaDeDestinatariosCC(ByVal Historico As IHistoricoDeEmail) As String
         Return UtilidadesWeb.ObtenhaListaDeStringComQuebraDeLinhaWeb(Historico.DestinatariosEmCopia)
     End Function
 

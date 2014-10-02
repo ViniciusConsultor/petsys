@@ -68,7 +68,7 @@ Public Class MapeadorDeHistoricoDeEmail
         DBHelper = ServerUtils.getDBHelper
         Historico.ID = GeradorDeID.ProximoID()
 
-        Sql.Append("INSERT INTO NCL_HISTORICOEMAIL (ID, DATA, POSSUIANEXO, ASSUNTO, REMETENTE, MENSAGEM, DESTINATARIOSCC, DESTINATARIOSCCO, CONTEXTO) ")
+        Sql.Append("INSERT INTO NCL_HISTORICOEMAIL (ID, DATA, POSSUIANEXO, ASSUNTO, REMETENTE, MENSAGEM, DESTINATARIOS, DESTINATARIOSCC, DESTINATARIOSCCO, CONTEXTO) ")
         Sql.Append("VALUES (")
         Sql.Append(Historico.ID.Value.ToString() & ", ")
         Sql.Append("'" & Historico.Data.ToString("yyyyMMddHHmmss") & "', ")
@@ -88,7 +88,13 @@ Public Class MapeadorDeHistoricoDeEmail
             Sql.Append("'" & UtilidadesDePersistencia.FiltraApostrofe(Historico.Mensagem) & "', ")
         End If
 
-        Sql.Append("'" & UtilidadesDePersistencia.ObtenhaStringMapeadaDeListaDeString(Historico.DestinatariosEmCopia, "|"c) & "', ")
+        Sql.Append("'" & UtilidadesDePersistencia.ObtenhaStringMapeadaDeListaDeString(Historico.Destinatarios, "|"c) & "', ")
+
+        If Historico.DestinatariosEmCopia Is Nothing OrElse Historico.DestinatariosEmCopia.Count = 0 Then
+            Sql.Append("NULL , ")
+        Else
+            Sql.Append("'" & UtilidadesDePersistencia.ObtenhaStringMapeadaDeListaDeString(Historico.DestinatariosEmCopia, "|"c) & "', ")
+        End If
 
         If Historico.DestinatariosEmCopiaOculta Is Nothing OrElse Historico.DestinatariosEmCopiaOculta.Count = 0 Then
             Sql.Append("NULL , ")
@@ -218,8 +224,12 @@ Public Class MapeadorDeHistoricoDeEmail
                 .Mensagem = UtilidadesDePersistencia.GetValorString(Leitor, "MENSAGEM")
             End If
 
-            .DestinatariosEmCopia = UtilidadesDePersistencia.MapeieStringParaListaDeString(UtilidadesDePersistencia.GetValorString(Leitor, "DESTINATARIOSCC"), "|"c)
+            .Destinatarios = UtilidadesDePersistencia.MapeieStringParaListaDeString(UtilidadesDePersistencia.GetValorString(Leitor, "DESTINATARIOS"), "|"c)
 
+            If Not UtilidadesDePersistencia.EhNulo(Leitor, "DESTINATARIOSCC") Then
+                .DestinatariosEmCopia = UtilidadesDePersistencia.MapeieStringParaListaDeString(UtilidadesDePersistencia.GetValorString(Leitor, "DESTINATARIOSCC"), "|"c)
+            End If
+            
             If Not UtilidadesDePersistencia.EhNulo(Leitor, "DESTINATARIOSCCO") Then
                 .DestinatariosEmCopiaOculta = UtilidadesDePersistencia.MapeieStringParaListaDeString(UtilidadesDePersistencia.GetValorString(Leitor, "DESTINATARIOSCCO"), "|"c)
             End If

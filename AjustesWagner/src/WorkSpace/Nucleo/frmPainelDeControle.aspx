@@ -128,6 +128,16 @@
                                     </td>
                                 </tr>
                                  <tr>
+                                    <td class="th3">
+                                        <asp:Label ID="Label14" runat="server" Text="Nome do remetente"></asp:Label>
+                                    </td>
+                                    <td class="td">
+                                        <telerik:RadTextBox ID="txtNomeRemetente" runat="server" MaxLength="255" SelectionOnFocus="CaretToBeginning"
+                                            Skin="Vista" Width="300px">
+                                        </telerik:RadTextBox>
+                                    </td>
+                                </tr>
+                                 <tr>
                                     <td class="td" colspan="2">
                                         <asp:Button ID="btnTestarConfiguracaoEmail" runat="server" Text="Testar configuração de e-mail" />
                                     </td>

@@ -9,7 +9,7 @@ Public Class HistoricoDeEmail
         Get
             Return _Data
         End Get
-        Set (ByVal value As Date)
+        Set(ByVal value As Date)
             _Data = value
         End Set
     End Property
@@ -39,7 +39,7 @@ Public Class HistoricoDeEmail
         Get
             Return _PossuiAnexo
         End Get
-        Set (ByVal value As Boolean)
+        Set(ByVal value As Boolean)
             _PossuiAnexo = value
         End Set
     End Property
@@ -91,6 +91,16 @@ Public Class HistoricoDeEmail
         End Get
         Set(value As String)
             _Remetente = value
+        End Set
+    End Property
+
+    Private _Destinatarios As IList(Of String)
+    Public Property Destinatarios As IList(Of String) Implements IHistoricoDeEmail.Destinatarios
+        Get
+            Return _Destinatarios
+        End Get
+        Set(value As IList(Of String))
+            _Destinatarios = value
         End Set
     End Property
 
