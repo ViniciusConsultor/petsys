@@ -63,6 +63,8 @@ namespace MP.Client.MP
 
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
+            chkConsiderarNaoAtivas.Checked = false;
+
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatenteSemFiltro>();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -72,8 +74,8 @@ namespace MP.Client.MP
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
-                grdProcessosDePatentes.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
-                grdProcessosDePatentes.DataSource = servico.ObtenhaProcessosDePatentes(filtro, quantidadeDeProcessos, offSet);
+                grdProcessosDePatentes.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro, chkConsiderarNaoAtivas.Checked);
+                grdProcessosDePatentes.DataSource = servico.ObtenhaProcessosDePatentes(filtro, quantidadeDeProcessos, offSet, chkConsiderarNaoAtivas.Checked);
                 grdProcessosDePatentes.DataBind();
             }
         }

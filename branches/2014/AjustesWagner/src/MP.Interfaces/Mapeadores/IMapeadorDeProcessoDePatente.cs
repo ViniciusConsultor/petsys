@@ -12,10 +12,9 @@ namespace MP.Interfaces.Mapeadores
         void Inserir(IProcessoDePatente processoDePatente);
         void Modificar(IProcessoDePatente processoDePatente);
         void Excluir(long ID);
-        IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet);
+        IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet, bool considerarNaoAtivos);
         IProcessoDePatente Obtenha(long ID);
-        int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
-        IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
+        int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro, bool considerarNaoAtivos);
         DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente);
         IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
         IList<IProcessoDePatente> obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado();

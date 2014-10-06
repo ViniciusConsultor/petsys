@@ -172,7 +172,7 @@ namespace MP.Mapeadores
             DBHelper.ExecuteNonQuery("DELETE FROM MP_PROCESSOPATENTE WHERE IDPROCESSOPATENTE=" + ID.ToString());
         }
 
-        public IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        public IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet, bool considerarNaoAtivos)
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
@@ -180,6 +180,9 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append(filtro.ObtenhaQuery());
+
+            if (!considerarNaoAtivos)
+                sql.Append(" AND MP_PROCESSOPATENTE.ATIVO = 1");
 
             sql.AppendLine(" ORDER BY DATADECADASTRO DESC");
 
@@ -268,8 +271,6 @@ namespace MP.Mapeadores
             filtro.Operacao = OperacaoDeFiltro.IgualA;
             filtro.ValorDoFiltro = ID.ToString();
 
-            var processos = new List<IProcessoDePatente>();
-
             using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQuery()))
             {
                 try
@@ -287,12 +288,20 @@ namespace MP.Mapeadores
             return null;
         }
 
-        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
+        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro, bool considerarNaoAtivos)
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
 
-            using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQueryParaQuantidade()))
+            var sql = new StringBuilder();
+
+            sql.Append(filtro.ObtenhaQueryParaQuantidade());
+
+            if (!considerarNaoAtivos)
+                sql.Append(" AND MP_PROCESSOPATENTE.ATIVO = 1");
+
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
                 try
                 {
@@ -306,28 +315,6 @@ namespace MP.Mapeadores
             }
 
             return 0;
-        }
-
-
-        public IList<string> ObtenhaTodosNumerosDeProcessosCadastrados()
-        {
-            IDBHelper DBHelper;
-            DBHelper = ServerUtils.criarNovoDbHelper();
-
-            IList<string> listaDeNumerosDosProcessos = new List<string>();
-
-            using (var leitor = DBHelper.obtenhaReader("SELECT PROCESSO FROM MP_PROCESSOPATENTE ORDER BY PROCESSO"))
-                try
-                {
-                    while (leitor.Read())
-                        listaDeNumerosDosProcessos.Add(UtilidadesDePersistencia.GetValorString(leitor, "PROCESSO"));
-                }
-                finally
-                {
-                    leitor.Close();
-                }
-
-            return listaDeNumerosDosProcessos;
         }
 
         public DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente)

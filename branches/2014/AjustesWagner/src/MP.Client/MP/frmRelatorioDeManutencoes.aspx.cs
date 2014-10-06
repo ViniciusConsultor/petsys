@@ -59,7 +59,7 @@ namespace MP.Client.MP
 
             if (chkPatentes.Checked)
                 using (var servicoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
-                    processoDePatentes = servicoDePatente.ObtenhaProcessosDePatentes(ObtenhaFiltroDePatentes(), int.MaxValue, 0);
+                    processoDePatentes = servicoDePatente.ObtenhaProcessosDePatentes(ObtenhaFiltroDePatentes(), int.MaxValue, 0, chkConsiderarNaoAtivas.Checked);
 
             if(chkMarcas.Checked)
                 using (var servicoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
