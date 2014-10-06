@@ -46,6 +46,14 @@
                                     <uc1:ctrlOperacaoFiltro ID="ctrlOperacaoFiltro1" runat="server" />
                                 </td>
                             </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="Considerar não ativos?"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:CheckBox ID="chkConsiderarNaoAtivas" runat="server" />
+                                </td>
+                            </tr>
                             <tr runat="server" id="pnlDataDeCadastro">
                                 <td class="th3">
                                     <asp:Label ID="Label4" runat="server" Text="Data de cadastro"></asp:Label>

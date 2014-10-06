@@ -124,7 +124,7 @@ namespace MP.Servicos.Local
             var mapeadorDeProcessoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
             
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatenteVencidaNoMes>();
-            var patentesVencidas = mapeadorDeProcessoDePatente.ObtenhaProcessosDePatentes(filtro, int.MaxValue, 0);
+            var patentesVencidas = mapeadorDeProcessoDePatente.ObtenhaProcessosDePatentes(filtro, int.MaxValue, 0,false);
 
             try
             {
