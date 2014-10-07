@@ -1062,16 +1062,40 @@ namespace MP.Client.MP
 
         private void CalculeAnuidadesPatentesDeNatureza(DateTime dataDeDeposito)
         {
+            IList<IAnuidadePatente> listaDeAnuidades = ListaDeAnuidadeDaPatente.ToList().FindAll(anuidade => anuidade.AnuidadePaga);
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
                 ListaDeAnuidadeDaPatente = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDeDeposito);
+
+            foreach (IAnuidadePatente anuidadeComBaixa in listaDeAnuidades)
+                foreach (IAnuidadePatente anuidade in ListaDeAnuidadeDaPatente)
+                    if(anuidadeComBaixa.DescricaoAnuidade.Equals((anuidade.DescricaoAnuidade)))
+                    {
+                        anuidade.DataPagamento = anuidadeComBaixa.DataPagamento;
+                        anuidade.ValorPagamento = anuidadeComBaixa.ValorPagamento;
+                        anuidade.AnuidadePaga = anuidadeComBaixa.AnuidadePaga;
+                        break;
+                    }
 
             MostrarListaDeAnuidadeDaPatente();
         }
 
         private void CalculeAnuidadesPatentesDeNaturezaDI(DateTime dataDeDeposito)
         {
+            IList<IAnuidadePatente> listaDeAnuidades = ListaDeAnuidadeDaPatente.ToList().FindAll(anuidade => anuidade.AnuidadePaga);
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
                 ListaDeAnuidadeDaPatente = servico.CalculeAnuidadesPatentesDeNaturezaDI(dataDeDeposito);
+
+            foreach (IAnuidadePatente anuidadeComBaixa in listaDeAnuidades)
+                foreach (IAnuidadePatente anuidade in ListaDeAnuidadeDaPatente)
+                    if (anuidadeComBaixa.DescricaoAnuidade.Equals((anuidade.DescricaoAnuidade)))
+                    {
+                        anuidade.DataPagamento = anuidadeComBaixa.DataPagamento;
+                        anuidade.ValorPagamento = anuidadeComBaixa.ValorPagamento;
+                        anuidade.AnuidadePaga = anuidadeComBaixa.AnuidadePaga;
+                        break;
+                    }
 
             MostrarListaDeAnuidadeDaPatente();
         }
