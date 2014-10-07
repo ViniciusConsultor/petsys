@@ -8,6 +8,8 @@ using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using MP.Client.Relatorios.Patentes;
+using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Negocio.Filtros.Patentes;
 using MP.Interfaces.Servicos;
@@ -319,7 +321,9 @@ namespace MP.Client.MP
                 case "btnLimpar":
                     ExibaTelaInicial();
                     break;
-
+                case "btnGerarRelatorio":
+                    GerarRelatorio();
+                    break;
             }
         }
 
@@ -497,6 +501,19 @@ namespace MP.Client.MP
                 grdProcessosDePatentes.Columns[2].Visible = principal.EstaAutorizado("OPE.MP.009.0005");
 
             base.OnPreRender(e);
+        }
+
+        private void GerarRelatorio()
+        {
+            IList<IProcessoDePatente> processosDePatentes = new List<IProcessoDePatente>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+                processosDePatentes = servico.ObtenhaProcessosDePatentes(FiltroAplicado, int.MaxValue, int.MaxValue, chkConsiderarNaoAtivas.Checked);
+
+            var geradorDeRelatorioGeral = new GeradorDeRelatorioDePatentes(processosDePatentes);
+            var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
         }
     }
 }

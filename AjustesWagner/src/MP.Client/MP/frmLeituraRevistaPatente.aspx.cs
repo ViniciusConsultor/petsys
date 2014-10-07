@@ -728,7 +728,6 @@ namespace MP.Client.MP
 
                 if (listaDeProcessosDePatentesComRadicalCadastrado.Count > 0)
                 {
-                    pnlRelatoriosRadical.Visible = true;
                     foreach (var processoDaRevista in listaDeTodosProcessosDaRevistaXML.Where(processoDaRevista => !string.IsNullOrEmpty(processoDaRevista.Titulo)))
                         listaDeProcessosDaRevistaComPatenteExistente.Add(processoDaRevista);
 
@@ -910,6 +909,8 @@ namespace MP.Client.MP
 
                 LimpaRadicais();
             }
+
+            pnlRelatoriosRadical.Visible = dicionarioDePatentesDeColidentes.Count > 0 && dicionarioDePatentesDeClientes.Count > 0;
         }
 
         protected void btnRelPublicPropriasAnalitico_OnClick(object sender, ImageClickEventArgs e)
