@@ -9,6 +9,7 @@
 <%@ Register Src="ctrlNaturezaDeMarca.ascx" TagName="ctrlNaturezaDeMarca" TagPrefix="uc6" %>
 <%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc7" %>
 <%@ Register Src="ctrlPeriodo.ascx" TagName="ctrlPeriodo" TagPrefix="uc8" %>
+<%@ Register Src="ctrlEventos.ascx" TagName="ctrlEventos" TagPrefix="uc9" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
@@ -36,6 +37,8 @@
                             <telerik:RadTab Text="Radicais">
                             </telerik:RadTab>
                             <telerik:RadTab Text="Manutenção">
+                            </telerik:RadTab>
+                            <telerik:RadTab Text="Eventos">
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
@@ -482,6 +485,9 @@
                                     </asp:Panel>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
+                        </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView6" runat="server" SkinID="Vista">
+                           <uc9:ctrlEventos ID="ctrlEventos" runat="server" />
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
                 </ContentTemplate>

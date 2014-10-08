@@ -42,5 +42,10 @@ namespace MP.Negocio
                 return Processo;    
             }
         }
+
+        public IList<IEvento> Eventos
+        {
+            get; set; 
+        }
     }
 }

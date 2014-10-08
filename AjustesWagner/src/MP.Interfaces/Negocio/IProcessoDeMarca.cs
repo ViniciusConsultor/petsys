@@ -20,6 +20,7 @@ namespace MP.Interfaces.Negocio
         IProcurador Procurador { get; set; }
         string Apostila { get; set; }
         bool Ativo { get; set; }
+        IList<IEvento> Eventos { get; set; } 
 
     }
 }
