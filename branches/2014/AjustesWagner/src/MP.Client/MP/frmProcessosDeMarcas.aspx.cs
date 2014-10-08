@@ -12,6 +12,7 @@ using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Servicos;
 using Telerik.Web.UI;
+using MP.Client.Relatorios;
 
 namespace MP.Client.MP
 {
@@ -469,6 +470,9 @@ namespace MP.Client.MP
                 case "btnLimpar":
                     ExibaTelaInicial();
                     break;
+                case "btnGerarRelatorio":
+                    GerarRelatorio();
+                    break;
             }
         }
 
@@ -571,6 +575,26 @@ namespace MP.Client.MP
                 ((System.Web.UI.WebControls.LinkButton) (item["cliente"].Controls[0])).CommandArgument = item["idCliente"].Text;
                 ((System.Web.UI.WebControls.LinkButton)(item["cliente"].Controls[0])).CssClass = "hidelink";
             }
+        }
+
+        private void GerarRelatorio()
+        {
+            IList<IProcessoDeMarca> processoDeMarcas = new List<IProcessoDeMarca>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+            {
+                int quantidadeMaxima = servico.ObtenhaQuantidadeDeProcessosCadastrados(FiltroAplicado, chkConsiderarNaoAtivas.Checked);
+                processoDeMarcas = servico.ObtenhaProcessosDeMarcas(FiltroAplicado, quantidadeMaxima, 0, chkConsiderarNaoAtivas.Checked);
+
+            }
+
+            if (processoDeMarcas.Count == 0)
+                return;
+
+            var geradorDeRelatorioDeMarcas = new GeradorDeRelatorioDeMarcas(processoDeMarcas);
+            var nomeDoArquivo = geradorDeRelatorioDeMarcas.GereRelatorio();
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
         }
     }
 }

@@ -508,7 +508,14 @@ namespace MP.Client.MP
             IList<IProcessoDePatente> processosDePatentes = new List<IProcessoDePatente>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
-                processosDePatentes = servico.ObtenhaProcessosDePatentes(FiltroAplicado, int.MaxValue, int.MaxValue, chkConsiderarNaoAtivas.Checked);
+            {
+                int quantidadeMaxima = servico.ObtenhaQuantidadeDeProcessosCadastrados(FiltroAplicado, chkConsiderarNaoAtivas.Checked);
+                processosDePatentes = servico.ObtenhaProcessosDePatentes(FiltroAplicado, quantidadeMaxima, 0, chkConsiderarNaoAtivas.Checked);
+
+            }
+
+            if(processosDePatentes.Count == 0)
+                return;
 
             var geradorDeRelatorioGeral = new GeradorDeRelatorioDePatentes(processosDePatentes);
             var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
