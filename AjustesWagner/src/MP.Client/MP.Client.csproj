@@ -354,6 +354,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeManutencoes.cs" />
+    <Compile Include="Relatorios\GeradorDeRelatorioDeMarcas.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcas.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioDePatentes.cs" />

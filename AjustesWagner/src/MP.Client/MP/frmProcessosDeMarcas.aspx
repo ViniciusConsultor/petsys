@@ -16,6 +16,8 @@
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.007.0001" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
+                CommandName="btnGerarRelatorio" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
                 CommandName="btnLimpar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ler revista" ImageUrl="~/imagens/processarRevista.gif"
