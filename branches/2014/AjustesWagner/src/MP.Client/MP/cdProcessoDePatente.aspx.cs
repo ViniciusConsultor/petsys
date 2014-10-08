@@ -181,6 +181,8 @@ namespace MP.Client.MP
 
             ctrlPaisProcesso.PaisSelecionado = processoDePatente.Pais;
             ctrlPaisProcesso.CarreguePaisSelecionado();
+            ctrlEventos.SetaEventos(processoDePatente.Eventos);
+   
             ExibaPatenteSelecionada(processoDePatente.Patente);
         }
 
@@ -300,6 +302,8 @@ namespace MP.Client.MP
             imgImagem.ImageUrl = UtilMP.URL_IMAGEM_SEM_FOTO_PATENTE;
 
             LimpeCamposClassificacaoDePatentes();
+            
+            ctrlEventos.Inicializa();
         }
 
         private void MostraPCT(bool mostra)
@@ -338,6 +342,8 @@ namespace MP.Client.MP
                 pct.DataDaPublicacao = txtDataDaPublicacaoPCT.SelectedDate;
                 pct.DataDoDeposito = txtDataDoDepositoPCT.SelectedDate;
             }
+
+            processoDePatente.Eventos = ctrlEventos.Eventos();
 
             return processoDePatente;
         }

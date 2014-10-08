@@ -11,6 +11,7 @@
 <%@ Register Src="ctrlTitular.ascx" TagName="ctrlTitular" TagPrefix="uc8" %>
 <%@ Register Src="~/ctrlPais.ascx" TagName="ctrlPais" TagPrefix="uc9" %>
 <%@ Register Src="ctrlPeriodo.ascx" TagName="ctrlPeriodo" TagPrefix="uc10" %>
+<%@ Register Src="ctrlEventos.ascx" TagName="ctrlEventos" TagPrefix="uc11" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -43,6 +44,8 @@
                             <telerik:RadTab Text="Desenho">
                             </telerik:RadTab>
                             <telerik:RadTab Text="Manutenção">
+                            </telerik:RadTab>
+                            <telerik:RadTab Text="Eventos">
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
@@ -434,7 +437,7 @@
                                                 </table>
                                             </fieldset>
                                         </td>
-                                    </tr>                                    
+                                    </tr>
                                     <tr>
                                         <td class="th3">
                                             <asp:Label ID="Label3" runat="server" Text="Processo é estrangeiro?"></asp:Label>
@@ -883,8 +886,8 @@
                                                             UniqueName="colunaDataVencimentoComMulta" DataFormatString="{0:dd/MM/yyyy}" />
                                                         <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Dt. Pagamento" UniqueName="colunaDataPagamento"
                                                             DataFormatString="{0:dd/MM/yyyy}" />
-                                                        <telerik:GridNumericColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" 
-                                                            FooterAggregateFormatString="{0:C}" NumericType="Currency"/>
+                                                        <telerik:GridNumericColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento"
+                                                            FooterAggregateFormatString="{0:C}" NumericType="Currency" />
                                                         <telerik:GridBoundColumn DataField="AnuidadePaga" HeaderText="Paga" UniqueName="colunaAnuidadePaga" />
                                                     </Columns>
                                                 </MasterTableView>
@@ -968,8 +971,8 @@
                                                 <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="True"
-                                                    RepeatDirection="Horizontal" OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
+                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="True" RepeatDirection="Horizontal"
+                                                    OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
                                                 </asp:RadioButtonList>
                                             </td>
                                         </tr>
@@ -987,6 +990,10 @@
                                 </asp:Panel>
                             </asp:Panel>
                         </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView6" runat="server" SkinID="Vista">
+                            <uc11:ctrlEventos ID="ctrlEventos" runat="server" />
+                        </telerik:RadPageView>
+                    </telerik:RadMultiPage>
                     </telerik:RadMultiPage>
                 </ContentTemplate>
             </telerik:RadDock>

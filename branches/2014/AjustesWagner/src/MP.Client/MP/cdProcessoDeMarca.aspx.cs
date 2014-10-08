@@ -248,6 +248,8 @@ namespace MP.Client.MP
             }
 
             txtApostila.Text = processoDeMarca.Apostila;
+
+            ctrlEventos.SetaEventos(processoDeMarca.Eventos);
         }
 
         private void LimpaTela()
@@ -290,6 +292,7 @@ namespace MP.Client.MP
             ctrlCliente.Inicializa();
             ctrlNCLRadical.Inicializa();
             ctrlPeriodo.Inicializa();
+            ctrlEventos.Inicializa();
             
             MostraRadicalMarcas(new List<IRadicalMarcas>());
             CarregueComponentes();
@@ -320,6 +323,7 @@ namespace MP.Client.MP
             processoDeMarca.Apostila = txtApostila.Text;
 
             processoDeMarca.Marca = MontaObjetoMarca();
+            processoDeMarca.Eventos = ctrlEventos.Eventos();
 
             return processoDeMarca;
         }

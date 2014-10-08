@@ -104,6 +104,7 @@
     <Compile Include="Negocio\IClasseViena.cs" />
     <Compile Include="Negocio\IDespachoDeMarcas.cs" />
     <Compile Include="Negocio\IDespachoDePatentes.cs" />
+    <Compile Include="Negocio\IEvento.cs" />
     <Compile Include="Negocio\IInventor.cs" />
     <Compile Include="Negocio\ILeituraRevistaDeMarcas.cs" />
     <Compile Include="Negocio\IManutencao.cs" />
