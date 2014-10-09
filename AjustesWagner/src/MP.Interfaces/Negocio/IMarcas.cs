@@ -25,5 +25,6 @@ namespace MP.Interfaces.Negocio
         IManutencao Manutencao { get; set; }
         void AdicioneRadicalMarcas(IRadicalMarcas radicalMarcas);
         void AdicioneRadicaisMarcas(IList<IRadicalMarcas> listaRadicalMarcas);
+        IList<IEvento> Eventos { get; set; } 
     }
 }

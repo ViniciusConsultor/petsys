@@ -43,6 +43,12 @@ namespace MP.Negocio
             ((List<IRadicalMarcas>)RadicalMarcas).AddRange(listaRadicalMarcas);
         }
 
+        public IList<IEvento> Eventos
+        {
+            get;
+            set;
+        }
+
         public Marcas()
         {
             RadicalMarcas = new List<IRadicalMarcas>();

@@ -28,7 +28,7 @@ namespace MP.Mapeadores
                 
                 sql.Append("INSERT INTO MP_REVISTA_MARCAS (");
                 sql.Append("IDREVISTAMARCAS, NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, NUMEROPROCESSODEMARCA, ");
-                sql.Append("CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO, ");
+                sql.Append("CODIGODESPACHO, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO, ");
                 sql.Append("DATADODEPOSITO, DATACONCESSAO) ");
                 sql.Append("VALUES (");
                 sql.Append(String.Concat(processoDaRevistaDeMarca.IdRevistaMarcas.Value.ToString(), ", "));
@@ -45,12 +45,8 @@ namespace MP.Mapeadores
                 sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroProcessoDeMarca, ", "));
                           
 
-                sql.Append(processoDaRevistaDeMarca.CodigoDespachoAnterior != null
-                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAnterior, "', ")
-                           : "NULL, ");
-
-                sql.Append(processoDaRevistaDeMarca.CodigoDespachoAtual != null
-                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAtual, "', ")
+                sql.Append(processoDaRevistaDeMarca.CodigoDespacho != null
+                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespacho, "', ")
                            : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDeMarca.Apostila)
@@ -114,9 +110,7 @@ namespace MP.Mapeadores
         private IRevistaDeMarcas MontaRevistaDeMarcas(IDataReader leitor)
         {
             var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
-
-            //revistaDeMarcas.IdRevistaMarcas = UtilidadesDePersistencia.GetValorLong(leitor, "IdRevistaMarcas");
-
+            
             revistaDeMarcas.NumeroRevistaMarcas = UtilidadesDePersistencia.getValorInteger(leitor, "NumeroRevistaMarcas");
 
             if (UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").HasValue)

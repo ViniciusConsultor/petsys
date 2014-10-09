@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeDespachoDeMarcas.cs" />
     <Compile Include="Mapeadores\IMapeadorDeDespachoDePatentes.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeEventosDeMarca.cs" />
+    <Compile Include="Mapeadores\IMapeadorDeEventosDePatente.cs" />
     <Compile Include="Mapeadores\IMapeadorDeInterfaceComModuloFinanceiro.cs" />
     <Compile Include="Mapeadores\IMapeadorDeInventor.cs" />
     <Compile Include="Mapeadores\IMapeadorDeMarcas.cs" />
@@ -148,6 +150,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDeMarcas.cs" />
     <Compile Include="Servicos\IServicoDeDespachoDePatentes.cs" />
+    <Compile Include="Servicos\IServicoDeEventosDeMarca.cs" />
+    <Compile Include="Servicos\IServicoDeEventosDePatente.cs" />
     <Compile Include="Servicos\IServicoDeInterfaceComModuloFinanceiro.cs" />
     <Compile Include="Servicos\IServicoDeInventor.cs" />
     <Compile Include="Servicos\IServicoDeMarcas.cs" />

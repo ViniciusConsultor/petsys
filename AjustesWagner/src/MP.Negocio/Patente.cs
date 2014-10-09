@@ -79,5 +79,11 @@ namespace MP.Negocio
         }
 
         public string Imagem { get; set; }
+
+        public IList<IEvento> Eventos
+        {
+            get;
+            set;
+        }
     }
 }

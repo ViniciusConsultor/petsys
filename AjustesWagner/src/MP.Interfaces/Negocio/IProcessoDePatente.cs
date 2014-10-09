@@ -26,6 +26,5 @@ namespace MP.Interfaces.Negocio
         IPasta Pasta { get; set; }
         IPais Pais { get; set; }
         string NumeroDoProcessoFormatado { get; }
-        IList<IEvento> Eventos { get; set; } 
     }
 }
