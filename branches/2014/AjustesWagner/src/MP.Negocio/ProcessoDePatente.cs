@@ -43,9 +43,5 @@ namespace MP.Negocio
             }
         }
 
-        public IList<IEvento> Eventos
-        {
-            get; set; 
-        }
     }
 }

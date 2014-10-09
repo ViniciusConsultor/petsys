@@ -196,14 +196,6 @@
                             </tr>
                             <tr>
                                 <td class="th3">
-                                    <asp:Label ID="lblCodigoDoDespachoAnterior" runat="server" Text="Código do despacho anterior:" />
-                                </td>
-                                <td class="td">
-                                    <telerik:RadTextBox ID="txtCodigoDoDespachoAnterior" runat="server" Width="87px" Enabled="false" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="th3">
                                     <asp:Label ID="lblResponsavelPagamentoImpostoDeRenda" runat="server" Text="Responsável pelo pagamento do IR (Imposto de Renda):" />
                                 </td>
                                 <td class="td">

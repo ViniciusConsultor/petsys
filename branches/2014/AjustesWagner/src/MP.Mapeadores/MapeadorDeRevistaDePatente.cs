@@ -30,7 +30,7 @@ namespace MP.Mapeadores
                 sql.Append("DATADODEPOSITO, NUMEROPROCESSOPATENTE, NUMERODOPEDIDO, DATAPUBLICPEDIDO, DATACONCESSAO, PRIORIDADEUNIONISTA, ");
                 sql.Append("CLASSIFICACAOINTER, TITULO, RESUMO, DADOSPEDIDOPATENTE, DADOSPATENTEORIGINAL, PRIORIDADEINTERNA, DEPOSITANTE, ");
                 sql.Append("INVENTOR, TITULAR, UFTITULAR, PAISTITULAR, PROCURADOR, PAISESDESIGNADOS, DATAINICIOFASENAC, DADOSDEPOSINTER, ");
-                sql.Append("DADOSPUBLICINTER, CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, RESPPGTOIMPRENDA, COMPLEMENTO, DECISAO, RECORRENTE, ");
+                sql.Append("DADOSPUBLICINTER, CODIGODESPACHOATUAL, RESPPGTOIMPRENDA, COMPLEMENTO, DECISAO, RECORRENTE, ");
                 sql.Append("NUMERODOPROCESSO, CEDENTE, CESSIONARIA, OBSERVACAO, ULTIMAINFORMACAO, CERTIFAVERBACAO, PAISCEDENTE, PAISCESSIONARIA, ");
                 sql.Append("SETOR, ENDERECOCESSIONARIA, NATUREZADOCUMENTO, MOEDADEPAGAMENTO, VALOR, PAGAMENTO, PRAZO, SERVISENTOSDEAVERBACAO, ");
                 sql.Append("CRIADOR, LINGUAGEM, CAMPOAPLICACAO, TIPODEPROGRAMA, DATADACRIACAO, REGIMEDEGUARDA, REQUERENTE, REDACAO, DATAPRORROGACAO, ");
@@ -116,9 +116,6 @@ namespace MP.Mapeadores
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDePatente.DadosPublicacaoInternacional)
                            ? String.Concat("'" + UtilidadesDePersistencia.FiltraApostrofe(processoDaRevistaDePatente.DadosPublicacaoInternacional), "', ") : "NULL, ");
-
-                sql.Append(processoDaRevistaDePatente.CodigoDoDespachoAnterior != null ? String.Concat("'" + processoDaRevistaDePatente.CodigoDoDespachoAnterior, "', ")
-                           : "NULL, ");
 
                 sql.Append(processoDaRevistaDePatente.CodigoDoDespacho != null ? String.Concat("'" + processoDaRevistaDePatente.CodigoDoDespacho, "', ")
                            : "NULL, ");
@@ -324,7 +321,7 @@ namespace MP.Mapeadores
             sql.Append("	IDREVISTAPATENTE, NUMEROREVISTAPATENTE, DATAPUBLICACAO, DATAPROCESSAMENTO, PROCESSADA, EXTENSAOARQUIVO, DATADODEPOSITO, NUMEROPROCESSOPATENTE,");
             sql.Append("	NUMERODOPEDIDO, DATAPUBLICPEDIDO, DATACONCESSAO, PRIORIDADEUNIONISTA, CLASSIFICACAOINTER, TITULO, RESUMO, DADOSPEDIDOPATENTE, DADOSPATENTEORIGINAL,");
             sql.Append("	PRIORIDADEINTERNA, DEPOSITANTE, INVENTOR, TITULAR, UFTITULAR, PAISTITULAR, PROCURADOR, PAISESDESIGNADOS, DATAINICIOFASENAC, DADOSDEPOSINTER,");
-            sql.Append("	DADOSPUBLICINTER, CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, RESPPGTOIMPRENDA, COMPLEMENTO, DECISAO, RECORRENTE, NUMERODOPROCESSO, CEDENTE,");
+            sql.Append("	DADOSPUBLICINTER, CODIGODESPACHOATUAL, RESPPGTOIMPRENDA, COMPLEMENTO, DECISAO, RECORRENTE, NUMERODOPROCESSO, CEDENTE,");
             sql.Append("	CESSIONARIA, OBSERVACAO, ULTIMAINFORMACAO, CERTIFAVERBACAO, PAISCEDENTE, PAISCESSIONARIA, SETOR, ENDERECOCESSIONARIA ,NATUREZADOCUMENTO,");
             sql.Append("	MOEDADEPAGAMENTO, VALOR, PAGAMENTO, PRAZO, SERVISENTOSDEAVERBACAO, CRIADOR, LINGUAGEM ,CAMPOAPLICACAO, TIPODEPROGRAMA ,DATADACRIACAO ,REGIMEDEGUARDA,");
             sql.Append("	REQUERENTE ,REDACAO ,DATAPRORROGACAO ,CLASSIFICACAONACIONAL, NUMPROCESSOFORMATADO ");
@@ -381,7 +378,6 @@ namespace MP.Mapeadores
             revistaDePatente.DataInicioFaseNacional = UtilidadesDePersistencia.getValorDate(leitor, "DATAINICIOFASENAC");
             revistaDePatente.DadosDepositoInternacional = UtilidadesDePersistencia.GetValorString(leitor, "DADOSDEPOSINTER");
             revistaDePatente.DadosPublicacaoInternacional = UtilidadesDePersistencia.GetValorString(leitor, "DADOSPUBLICINTER");
-            revistaDePatente.CodigoDoDespachoAnterior = UtilidadesDePersistencia.GetValorString(leitor, "CODIGODESPACHOANTERIOR");
             revistaDePatente.CodigoDoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CODIGODESPACHOATUAL");
             revistaDePatente.ResponsavelPagamentoImpostoDeRenda = UtilidadesDePersistencia.GetValorString(leitor, "RESPPGTOIMPRENDA");
             revistaDePatente.Complemento = UtilidadesDePersistencia.GetValorString(leitor, "COMPLEMENTO");

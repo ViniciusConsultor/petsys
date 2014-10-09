@@ -87,6 +87,7 @@ namespace MP.Client.MP
             }
 
             marca.AdicioneRadicaisMarcas((IList<IRadicalMarcas>)ViewState[CHAVE_RADICAIS]);
+            marca.Eventos = ctrlEventos.Eventos();
 
             return marca;
         }
@@ -184,6 +185,9 @@ namespace MP.Client.MP
 
             if (listaDeRadicalMarcas.Count > 0)
                 MostraRadicalMarcas(listaDeRadicalMarcas);
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeEventosDeMarca>())
+                ctrlEventos.SetaEventos(servico.ObtenhaEventos(marca.IdMarca.Value));
         }
 
         private void ExibaTelaNovo()
@@ -249,7 +253,7 @@ namespace MP.Client.MP
 
             txtApostila.Text = processoDeMarca.Apostila;
 
-            ctrlEventos.SetaEventos(processoDeMarca.Eventos);
+           
         }
 
         private void LimpaTela()
@@ -323,8 +327,7 @@ namespace MP.Client.MP
             processoDeMarca.Apostila = txtApostila.Text;
 
             processoDeMarca.Marca = MontaObjetoMarca();
-            processoDeMarca.Eventos = ctrlEventos.Eventos();
-
+            
             return processoDeMarca;
         }
 

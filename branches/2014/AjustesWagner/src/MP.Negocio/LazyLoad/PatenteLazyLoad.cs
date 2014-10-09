@@ -282,5 +282,19 @@ namespace MP.Negocio.LazyLoad
                 _objetoReal.Imagem = value;
             }
         }
+
+        public IList<IEvento> Eventos
+        {
+            get
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                return _objetoReal.Eventos;
+            }
+            set
+            {
+                if (_objetoReal == null) CarregueObjetoReal();
+                _objetoReal.Eventos = value;
+            }
+        }
     }
 }

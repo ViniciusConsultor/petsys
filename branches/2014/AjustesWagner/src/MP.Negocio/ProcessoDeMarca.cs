@@ -31,10 +31,5 @@ namespace MP.Negocio
         public IProcurador Procurador {get; set; }
         public string Apostila { get; set; }
         public bool Ativo {get; set; }
-
-        public IList<IEvento> Eventos
-        {
-            get; set; 
-        }
     }
 }

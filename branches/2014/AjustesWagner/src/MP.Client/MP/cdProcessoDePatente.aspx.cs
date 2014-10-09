@@ -181,8 +181,6 @@ namespace MP.Client.MP
 
             ctrlPaisProcesso.PaisSelecionado = processoDePatente.Pais;
             ctrlPaisProcesso.CarreguePaisSelecionado();
-            ctrlEventos.SetaEventos(processoDePatente.Eventos);
-   
             ExibaPatenteSelecionada(processoDePatente.Patente);
         }
 
@@ -343,8 +341,7 @@ namespace MP.Client.MP
                 pct.DataDoDeposito = txtDataDoDepositoPCT.SelectedDate;
             }
 
-            processoDePatente.Eventos = ctrlEventos.Eventos();
-
+            
             return processoDePatente;
         }
 
@@ -706,7 +703,9 @@ namespace MP.Client.MP
                 else
                     imgImagem.ImageUrl = patente.Imagem;
             }
-                
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeEventosDePatente>())
+                ctrlEventos.SetaEventos(servico.ObtenhaEventos(patente.Identificador));
         }
 
         private void ExibaTabDeImagemDeDesenhoIndustrial( bool exiba)
@@ -1056,6 +1055,8 @@ namespace MP.Client.MP
                 manutencao.ValorDeCobranca = txtValor.Value.Value;
                 patente.Manutencao = manutencao;
             }
+
+            patente.Eventos = ctrlEventos.Eventos();
 
             return patente;
         }
