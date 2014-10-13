@@ -995,38 +995,38 @@
                         <telerik:RadPageView ID="RadPageView6" runat="server" SkinID="Vista">
                             <uc11:ctrlEventos ID="ctrlEventos" runat="server" />
                         </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView7" runat="server" SkinID="Vista">
+                            <asp:Panel ID="pnlPublicacoes" runat="server">
+                                <telerik:RadGrid ID="grdPublicacoes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                    PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged">
+                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                    <MasterTableView GridLines="Both">
+                                        <RowIndicatorColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </RowIndicatorColumn>
+                                        <ExpandCollapseColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="RPI" UniqueName="column">
+                                                <ItemStyle Width="5%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="DataPublicacao" HeaderText="Data RPI" UniqueName="column1"
+                                                DataFormatString="{0:dd/MM/yyyy}">
+                                                <ItemStyle Width="10%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column2">
+                                                <ItemStyle Width="10%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Complemento" HeaderText="Complemento do despacho"
+                                                UniqueName="column3">
+                                            </telerik:GridBoundColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </asp:Panel>
+                        </telerik:RadPageView>
                     </telerik:RadMultiPage>
-                    <telerik:RadPageView ID="RadPageView7" runat="server" SkinID="Vista">
-                        <asp:Panel ID="pnlPublicacoes" runat="server">
-                            <telerik:RadGrid ID="grdPublicacoes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                                PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged">
-                                <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                <MasterTableView GridLines="Both">
-                                    <RowIndicatorColumn>
-                                        <HeaderStyle Width="20px" />
-                                    </RowIndicatorColumn>
-                                    <ExpandCollapseColumn>
-                                        <HeaderStyle Width="20px" />
-                                    </ExpandCollapseColumn>
-                                    <Columns>
-                                        <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="RPI" UniqueName="column">
-                                            <ItemStyle Width="5%"></ItemStyle>
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn DataField="DataPublicacao" HeaderText="Data RPI" UniqueName="column1"
-                                            DataFormatString="{0:dd/MM/yyyy}">
-                                            <ItemStyle Width="10%"></ItemStyle>
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column2">
-                                            <ItemStyle Width="10%"></ItemStyle>
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn DataField="Complemento" HeaderText="Complemento do despacho"
-                                            UniqueName="column3">
-                                        </telerik:GridBoundColumn>
-                                    </Columns>
-                                </MasterTableView>
-                            </telerik:RadGrid>
-                        </asp:Panel>
-                    </telerik:RadPageView>
                 </ContentTemplate>
             </telerik:RadDock>
         </telerik:RadDockZone>

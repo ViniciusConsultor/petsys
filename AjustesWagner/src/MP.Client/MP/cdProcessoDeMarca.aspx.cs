@@ -316,6 +316,7 @@ namespace MP.Client.MP
             RadPageView1.Selected = true;
 
             imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
+
         }
 
         private IProcessoDeMarca MontaObjeto()
@@ -592,7 +593,7 @@ namespace MP.Client.MP
 
         protected void grdPublicacoes_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            
+            UtilidadesWeb.PaginacaoDataGrid(ref grdPublicacoes,Publicacoes,e);
         }
 
 
