@@ -30,5 +30,6 @@ namespace MP.Interfaces.Servicos
         IList<IRevistaDeMarcas> PreparaArquivoDaRevistaParaLeitura(string pastaDeDestinoDasRevistas,
                                                             IDictionary<string, Stream> arquivosASeremProcessados);
 
+        IList<IRevistaDeMarcas> ObtenhaPublicoesDoProcesso(int numeroProcesso);
     }
 }

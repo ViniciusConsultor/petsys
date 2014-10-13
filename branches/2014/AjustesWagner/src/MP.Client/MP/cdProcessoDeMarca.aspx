@@ -10,7 +10,6 @@
 <%@ Register Src="ctrlNCL.ascx" TagName="ctrlNCL" TagPrefix="uc7" %>
 <%@ Register Src="ctrlPeriodo.ascx" TagName="ctrlPeriodo" TagPrefix="uc8" %>
 <%@ Register Src="ctrlEventos.ascx" TagName="ctrlEventos" TagPrefix="uc9" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -25,7 +24,7 @@
             <telerik:RadDock ID="RadDock2" runat="server" Title="Dados do processo de marca"
                 DefaultCommands="ExpandCollapse" EnableAnimation="True" Skin="Vista" DockMode="Docked">
                 <ContentTemplate>
-                    <telerik:RadTabStrip ID="RadTabStrip1" runat="server" SelectedIndex="0" Skin="Vista"
+                    <telerik:RadTabStrip ID="tbsMarcas" runat="server" SelectedIndex="0" Skin="Vista"
                         MultiPageID="RadMultiPage1" CausesValidation="False">
                         <Tabs>
                             <telerik:RadTab Text="Marca" Selected="True">
@@ -39,6 +38,8 @@
                             <telerik:RadTab Text="Manutenção">
                             </telerik:RadTab>
                             <telerik:RadTab Text="Eventos">
+                            </telerik:RadTab>
+                            <telerik:RadTab Text="Publicações">
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
@@ -467,7 +468,8 @@
                                                         <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
                                                     </td>
                                                     <td class="td">
-                                                        <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" RepeatDirection="Horizontal"  AutoPostBack="True" OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged" >
+                                                        <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" RepeatDirection="Horizontal"
+                                                            AutoPostBack="True" OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
                                                         </asp:RadioButtonList>
                                                     </td>
                                                 </tr>
@@ -476,7 +478,7 @@
                                                         <asp:Label ID="lblValor" runat="server" Text="Valor"></asp:Label>
                                                     </td>
                                                     <td class="td">
-                                                        <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Currency" >
+                                                        <telerik:RadNumericTextBox ID="txtValor" runat="server" Width="87px" Type="Currency">
                                                         </telerik:RadNumericTextBox>
                                                     </td>
                                                 </tr>
@@ -487,7 +489,38 @@
                             </asp:UpdatePanel>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="RadPageView6" runat="server" SkinID="Vista">
-                           <uc9:ctrlEventos ID="ctrlEventos" runat="server" />
+                            <uc9:ctrlEventos ID="ctrlEventos" runat="server" />
+                        </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView7" runat="server" SkinID="Vista">
+                            <asp:Panel ID="pnlPublicacoes" runat="server">
+                                <telerik:RadGrid ID="grdPublicacoes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                    PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged">
+                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                    <MasterTableView GridLines="Both">
+                                        <RowIndicatorColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </RowIndicatorColumn>
+                                        <ExpandCollapseColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="RPI" UniqueName="column">
+                                                <ItemStyle Width="5%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="DataPublicacao" HeaderText="Data RPI" UniqueName="column1"
+                                                DataFormatString="{0:dd/MM/yyyy}">
+                                                <ItemStyle Width="10%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CodigoDespacho" HeaderText="Despacho" UniqueName="column2">
+                                                <ItemStyle Width="10%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="TextoDoDespacho" HeaderText="Complemento do despacho"
+                                                UniqueName="column3">
+                                            </telerik:GridBoundColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
                 </ContentTemplate>

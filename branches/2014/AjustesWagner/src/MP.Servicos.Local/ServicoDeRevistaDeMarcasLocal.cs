@@ -746,5 +746,21 @@ namespace MP.Servicos.Local
 
             return listaRevistasAProcessar;
         }
+
+        public IList<IRevistaDeMarcas> ObtenhaPublicoesDoProcesso(int numeroProcesso)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDeMarcas>();
+
+            try
+            {
+                return mapeador.ObtenhaPublicoesDoProcesso(numeroProcesso);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }
