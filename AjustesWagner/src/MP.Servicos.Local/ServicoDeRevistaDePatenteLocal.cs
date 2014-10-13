@@ -809,5 +809,20 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }            
         }
+
+        public IList<IRevistaDePatente> ObtenhaPublicacoes(string numeroDoProcesso)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorDeRevistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                return mapeadorDeRevistaDePatente.ObtenhaPublicacoes(numeroDoProcesso);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }    
+        }
     }
 }

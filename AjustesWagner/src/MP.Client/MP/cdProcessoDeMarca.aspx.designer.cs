@@ -49,13 +49,13 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadDock RadDock2;
         
         /// <summary>
-        /// RadTabStrip1 control.
+        /// tbsMarcas control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTabStrip RadTabStrip1;
+        protected global::Telerik.Web.UI.RadTabStrip tbsMarcas;
         
         /// <summary>
         /// RadMultiPage1 control.
@@ -848,5 +848,32 @@ namespace MP.Client.MP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MP.Client.MP.ctrlEventos ctrlEventos;
+        
+        /// <summary>
+        /// RadPageView7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadPageView RadPageView7;
+        
+        /// <summary>
+        /// pnlPublicacoes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPublicacoes;
+        
+        /// <summary>
+        /// grdPublicacoes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid grdPublicacoes;
     }
 }

@@ -13,5 +13,6 @@ namespace MP.Interfaces.Mapeadores
         IList<IRevistaDePatente> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
         void Excluir(int numeroDaRevistaDePatente);
         IList<IRevistaDePatente> ObtenhaRevistasProcessadas(int numeroDaRevistaDePatente);
+        IList<IRevistaDePatente> ObtenhaPublicacoes(string numeroDoProcesso);
     }
 }

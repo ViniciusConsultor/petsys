@@ -1335,5 +1335,10 @@ namespace MP.Client.MP
             txtSituacaoDoProcesso.Text = despacho.Situacao;
             txtDescricaoDoDespacho.Text = despacho.Descricao;
         }
+
+        protected void grdPublicacoes_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
