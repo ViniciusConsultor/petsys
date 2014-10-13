@@ -30,6 +30,7 @@ namespace MP.Client.MP
         private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
         private const string CHAVE_TITULARES = "CHAVE_TITULARES";
         private const string CHAVE_INDICE_BAIXA_ANUIDADE = "CHAVE_INDICE_BAIXA_ANUIDADE";
+        private const string CHAVE_PUBLICACOES_PATENTE = "CHAVE_PUBLICACOES_PATENTE";
 
         private IList<ICliente> ListaDeClientes
         {
@@ -206,6 +207,9 @@ namespace MP.Client.MP
 
             var controle5 = pnlRadicais as Control;
             UtilidadesWeb.LimparComponente(ref controle5);
+
+            var controle6 = pnlPublicacoes as Control;
+            UtilidadesWeb.LimparComponente(ref controle6);
 
             ctrlProcurador.Inicializa();
             ctrlDespachoDePatentes.Inicializa();
@@ -706,6 +710,14 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeEventosDePatente>())
                 ctrlEventos.SetaEventos(servico.ObtenhaEventos(patente.Identificador));
+
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+            {
+                Publicacoes = servico.ObtenhaPublicacoes(txtProcesso.Text);
+                grdPublicacoes.DataSource = Publicacoes;
+                grdPublicacoes.DataBind();
+            }
         }
 
         private void ExibaTabDeImagemDeDesenhoIndustrial( bool exiba)
@@ -1338,7 +1350,14 @@ namespace MP.Client.MP
 
         protected void grdPublicacoes_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            UtilidadesWeb.PaginacaoDataGrid(ref grdPublicacoes,Publicacoes,e);
         }
+
+
+        private IList<IRevistaDePatente> Publicacoes
+        {
+            get { return (IList<IRevistaDePatente>)ViewState[CHAVE_PUBLICACOES_PATENTE]; }
+            set { ViewState[CHAVE_PUBLICACOES_PATENTE] = value; }
+        } 
     }
 }
