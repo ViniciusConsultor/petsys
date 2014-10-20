@@ -59,11 +59,5 @@ namespace MP.Client.MP
                 return txtValor.Text;
             }
         }
-
-        protected void cboFiltroPatente_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            ctrlUF.Visible = int.Parse(((RadComboBox)sender).SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id);
-            txtValor.Visible = !int.Parse(((RadComboBox)sender).SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id); ;
-        }
     }
 }

@@ -7,7 +7,6 @@ namespace MP.Interfaces.Negocio.Filtros.Patentes
 {
     public interface IFiltroLeituraDeRevistaDePatentes
     {
-        EnumeradorFiltroPatente EnumeradorFiltro { get; set; }
-        string ValorFiltro { get; set; }
+        IDictionary<EnumeradorFiltroPatente, string> ValoresDoFiltro { get; set; }
     }
 }

@@ -397,8 +397,9 @@ namespace MP.Client.MP
                 var revistaSelecionada = (IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA];
                 var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
 
-                filtro.EnumeradorFiltro = EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo));
-                filtro.ValorFiltro = ctrlFitroRevistaPatente1.ValorFiltro;
+                filtro.ValoresDoFiltro = new Dictionary<EnumeradorFiltroPatente, string>();
+
+                filtro.ValoresDoFiltro.Add(EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo)), ctrlFitroRevistaPatente1.ValorFiltro);
 
                 // leitura .xml
                 var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);

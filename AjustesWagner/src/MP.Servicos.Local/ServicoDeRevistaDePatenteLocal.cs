@@ -669,100 +669,100 @@ namespace MP.Servicos.Local
             {
                 bool deveAdicionarProcesso = false;
                 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDoProcesso && processo.NumeroDoProcesso != null
-                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDoProcesso) && processo.NumeroDoProcesso != null
+                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoProcesso].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.CodigoDoRegistro && !string.IsNullOrEmpty(processo.CodigoDoDespacho)
-                    && filtro.ValorFiltro.Equals(processo.CodigoDoDespacho, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && !string.IsNullOrEmpty(processo.CodigoDoDespacho)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.CodigoDoRegistro].Equals(processo.CodigoDoDespacho, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDaPatente && !string.IsNullOrEmpty(processo.NumeroProcessoDaPatente)
-                    && filtro.ValorFiltro.Equals(processo.NumeroProcessoDaPatente, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDaPatente) && !string.IsNullOrEmpty(processo.NumeroProcessoDaPatente)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDaPatente].Equals(processo.NumeroProcessoDaPatente, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDoPedido && !string.IsNullOrEmpty(processo.NumeroDoPedido)
-                    && filtro.ValorFiltro.Equals(processo.NumeroDoPedido, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDoPedido) && !string.IsNullOrEmpty(processo.NumeroDoPedido)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoPedido].Equals(processo.NumeroDoPedido, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDoDeposito && processo.DataDeDeposito.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataDeDeposito.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDoDeposito) && processo.DataDeDeposito.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDoDeposito].Equals(processo.DataDeDeposito.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PrioridadeUnionista && !string.IsNullOrEmpty(processo.PrioridadeUnionista)
-                    && filtro.ValorFiltro.Equals(processo.PrioridadeUnionista, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PrioridadeUnionista) && !string.IsNullOrEmpty(processo.PrioridadeUnionista)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PrioridadeUnionista].Equals(processo.PrioridadeUnionista, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDaPublicacao && processo.DataPublicacao.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataPublicacao.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDaPublicacao) && processo.DataPublicacao.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDaPublicacao].Equals(processo.DataPublicacao.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeConcenssao && processo.DataDeConcessao.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataDeConcessao.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDeConcenssao) && processo.DataDeConcessao.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDeConcenssao].Equals(processo.DataDeConcessao.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.ClassificacaoInternacional && !string.IsNullOrEmpty(processo.ClassificacaoInternacional)
-                    && filtro.ValorFiltro.Equals(processo.ClassificacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.ClassificacaoInternacional) && !string.IsNullOrEmpty(processo.ClassificacaoInternacional)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.ClassificacaoInternacional].Equals(processo.ClassificacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Titulo && !string.IsNullOrEmpty(processo.Titulo)
-                    && filtro.ValorFiltro.Equals(processo.Titulo, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Titulo) && !string.IsNullOrEmpty(processo.Titulo)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Titulo].Equals(processo.Titulo, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Resumo && !string.IsNullOrEmpty(processo.Resumo)
-                    && filtro.ValorFiltro.Equals(processo.Resumo, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Resumo) && !string.IsNullOrEmpty(processo.Resumo)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Resumo].Equals(processo.Resumo, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PatentePrincipalAdicao && processo.NumeroDoProcesso != null
-                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PatentePrincipalAdicao) && processo.NumeroDoProcesso != null
+                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PatentePrincipalAdicao].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PatentePrincipalDivisao && processo.NumeroDoProcesso != null
-                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PatentePrincipalDivisao) && processo.NumeroDoProcesso != null
+                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PatentePrincipalDivisao].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PrioridadeInterna && !string.IsNullOrEmpty(processo.PrioridadeInterna)
-                    && filtro.ValorFiltro.Equals(processo.PrioridadeInterna, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PrioridadeInterna) && !string.IsNullOrEmpty(processo.PrioridadeInterna)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PrioridadeInterna].Equals(processo.PrioridadeInterna, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoDepositante && !string.IsNullOrEmpty(processo.Depositante)
-                    && processo.Depositante.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoDepositante) && !string.IsNullOrEmpty(processo.Depositante)
+                    && processo.Depositante.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoDepositante].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoInventor && !string.IsNullOrEmpty(processo.Inventor)
-                    && processo.Inventor.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoInventor) && !string.IsNullOrEmpty(processo.Inventor)
+                    && processo.Inventor.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoInventor].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoTitular && !string.IsNullOrEmpty(processo.Titular)
-                    && processo.Titular.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoTitular) && !string.IsNullOrEmpty(processo.Titular)
+                    && processo.Titular.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoTitular].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoProcurador && !string.IsNullOrEmpty(processo.Procurador)
-                    && processo.Procurador.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && !string.IsNullOrEmpty(processo.Procurador)
+                    && processo.Procurador.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoProcurador].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PaisesDesignados && !string.IsNullOrEmpty(processo.PaisesDesignados)
-                    && filtro.ValorFiltro.Equals(processo.PaisesDesignados, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PaisesDesignados) && !string.IsNullOrEmpty(processo.PaisesDesignados)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PaisesDesignados].Equals(processo.PaisesDesignados, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeInicioFaseNacional && processo.DataInicioFaseNacional.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataInicioFaseNacional.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDeInicioFaseNacional) && processo.DataInicioFaseNacional.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDeInicioFaseNacional].Equals(processo.DataInicioFaseNacional.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional && !string.IsNullOrEmpty(processo.DadosDepositoInternacional)
-                    && filtro.ValorFiltro.Equals(processo.DadosDepositoInternacional, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional) && !string.IsNullOrEmpty(processo.DadosDepositoInternacional)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional].Equals(processo.DadosDepositoInternacional, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroIdiomaDataPublicacaoInternacional && !string.IsNullOrEmpty(processo.DadosPublicacaoInternacional)
-                    && filtro.ValorFiltro.Equals(processo.DadosPublicacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroIdiomaDataPublicacaoInternacional) && !string.IsNullOrEmpty(processo.DadosPublicacaoInternacional)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroIdiomaDataPublicacaoInternacional].Equals(processo.DadosPublicacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Rp && !string.IsNullOrEmpty(processo.ResponsavelPagamentoImpostoDeRenda)
-                    && filtro.ValorFiltro.Equals(processo.ResponsavelPagamentoImpostoDeRenda, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Rp) && !string.IsNullOrEmpty(processo.ResponsavelPagamentoImpostoDeRenda)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Rp].Equals(processo.ResponsavelPagamentoImpostoDeRenda, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Estado && !string.IsNullOrEmpty(processo.UFTitular)
-                    && filtro.ValorFiltro.Equals(processo.UFTitular, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && !string.IsNullOrEmpty(processo.UFTitular)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Estado].Equals(processo.UFTitular, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
                  if(deveAdicionarProcesso)
