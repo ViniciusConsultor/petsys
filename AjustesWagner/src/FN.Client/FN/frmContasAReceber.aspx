@@ -16,9 +16,9 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.001.0001" />
-            <telerik:RadToolBarButton runat="server" Text="Gerar boleto coletivamente" ImageUrl="~/imagens/boleto.png"
+            <telerik:RadToolBarButton runat="server" Text="Gerar boleto coletivamente" ImageUrl="~/imagens/boletopequeno.png"
                 CommandName="btnGerarBoletoColetivo" CausesValidation="False" />
-              <telerik:RadToolBarButton runat="server" Text="Receber conta coletivamente" ImageUrl="~/imagens/dinheiroGrande.gif"
+              <telerik:RadToolBarButton runat="server" Text="Receber conta coletivamente" ImageUrl="~/imagens/Cash_register_Icon_16.png"
                 CommandName="btnReceberContaColetivo" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
@@ -189,11 +189,11 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"
-                                                HeaderTooltip="Cancelar" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                HeaderTooltip="Cancelar" ImageUrl="~/imagens/cancel.gif" UniqueName="column8">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Receber" FilterImageToolTip="Receber"
-                                                HeaderTooltip="Receber" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column888">
+                                                HeaderTooltip="Receber" ImageUrl="~/imagens/Cash_register_Icon_16.png" UniqueName="column888">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">

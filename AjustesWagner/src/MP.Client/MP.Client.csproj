@@ -260,13 +260,6 @@
     <Compile Include="MP\ctrlProcurador.ascx.designer.cs">
       <DependentUpon>ctrlProcurador.ascx</DependentUpon>
     </Compile>
-    <Compile Include="MP\ctrlTemplateDeEmail.ascx.cs">
-      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\ctrlTemplateDeEmail.ascx.designer.cs">
-      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
-    </Compile>
     <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.cs">
       <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -404,7 +397,6 @@
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlPeriodo.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
-    <Content Include="MP\ctrlTemplateDeEmail.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\ctrlTitular.ascx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />
