@@ -27,7 +27,26 @@ Public Class frmDetalheEmail
     End Sub
 
     Private Sub PreparaTela()
+        UtilidadesWeb.LimparComponente((CType(pnlDadosDoEmail, Control)))
         ctrlTemplateDeEmail.Inicializa()
+        MostraDestinarios(New List(Of String))
+        MostraDestinariosCC(New List(Of String))
+        MostraDestinariosCCo(New List(Of String))
+    End Sub
+
+    Private Sub MostraDestinarios(destinarios As IList(Of String))
+        grdDestinatarios.DataSource = destinarios
+        grdDestinatarios.DataBind()
+    End Sub
+
+    Private Sub MostraDestinariosCC(destinarios As IList(Of String))
+        grdDestinariosCC.DataSource = destinarios
+        grdDestinariosCC.DataBind()
+    End Sub
+
+    Private Sub MostraDestinariosCCo(destinarios As IList(Of String))
+        grdDestinatariosCCo.DataSource = destinarios
+        grdDestinatariosCCo.DataBind()
     End Sub
 
     Private Sub MostreEmail(id As Nullable(Of Long))
@@ -41,15 +60,26 @@ Public Class frmDetalheEmail
             historico = Servico.ObtenhaHistoricos(filtro, 1, 0).Item(0)
         End Using
 
-        'ctrlTemplateDeEmail.a historico
+        txtAssunto.Text = historico.Assunto
+        ctrlTemplateDeEmail.TextoDoTemplate = historico.Mensagem
+        
     End Sub
 
-    Protected Sub grdDestinatarios_OnPageIndexChanged(ByVal sender As Object, ByVal e As GridPageChangedEventArgs)
+    Private Property Historico As IHistoricoDeEmail
+        Get
+            Return CType(ViewState("HISTORICO_DO_CONTEXTO"), IHistoricoDeEmail)
+        End Get
+        Set(value As IHistoricoDeEmail)
+            ViewState("HISTORICO_DO_CONTEXTO") = value
+        End Set
+    End Property
 
+    Protected Sub grdDestinatarios_OnPageIndexChanged(ByVal sender As Object, ByVal e As GridPageChangedEventArgs)
+        UtilidadesWeb.PaginacaoDataGrid(grdDestinatarios, Historico.Destinatarios, e)
     End Sub
 
     Protected Sub grdDestinatariosCC_OnPageIndexChanged(ByVal sender As Object, ByVal e As GridPageChangedEventArgs)
-
+        UtilidadesWeb.PaginacaoDataGrid(grdDestinariosCC, Historico.Destinatarios, e)
     End Sub
 
     Protected Sub grdAnexos_OnPageIndexChanged(ByVal sender As Object, ByVal e As GridPageChangedEventArgs)
@@ -63,5 +93,9 @@ Public Class frmDetalheEmail
     Protected Overrides Function ObtenhaBarraDeFerramentas() As RadToolBar
         Return Nothing
     End Function
+
+    Protected Sub grdDestinatariosCCo_OnPageIndexChanged(ByVal sender As Object, ByVal e As GridPageChangedEventArgs)
+        UtilidadesWeb.PaginacaoDataGrid(grdDestinatariosCCo, Historico.Destinatarios, e)
+    End Sub
 
 End Class
