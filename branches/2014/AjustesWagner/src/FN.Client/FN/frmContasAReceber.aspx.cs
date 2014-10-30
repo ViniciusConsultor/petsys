@@ -28,9 +28,16 @@ namespace FN.Client.FN
         private const int NUMERO_CELULA_NUMERO_BOLETO = 19;
         private const int NUMERO_CELULA_ID_CLIENTE = 10;
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 8;
+
         private const int NUMERO_CELULA_GERAR_BOLETO = 5;
         private const int NUMERO_CELULA_CANCELAR = 6;
         private const int NUMERO_CELULA_RECEBER = 7;
+
+        private const int NUMERO_COLUNA_MODIFICAR = 1;
+        private const int NUMERO_COLUNA_GERAR_BOLETO = 2;
+        private const int NUMERO_COLUNA_CANCELAR = 3;
+        private const int NUMERO_COLUNA_RECEBER = 4;
+
         private const string CHAVE_ID_ITEM_SELECIONADO = "CHAVE_ID_ITEM_SELECIONADO";
         private const string CHAVE_GRID = "CHAVE_GRID";
         private const string CHAVE_CurrentPageIndex = "CHAVE_CurrentPageIndex";
@@ -49,6 +56,37 @@ namespace FN.Client.FN
 
             if (!IsPostBack)
                 ExibaTelaInicial();
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
+
+            if (grdItensDeContasAReceber.Columns[NUMERO_COLUNA_MODIFICAR].Visible)
+                grdItensDeContasAReceber.Columns[NUMERO_COLUNA_MODIFICAR].Visible = principal.EstaAutorizado("OPE.FN.001.0002");
+
+            if (grdItensDeContasAReceber.Columns[NUMERO_COLUNA_CANCELAR].Visible)
+                grdItensDeContasAReceber.Columns[NUMERO_COLUNA_CANCELAR].Visible = principal.EstaAutorizado("OPE.FN.001.0003");
+
+            if (grdItensDeContasAReceber.Columns[NUMERO_COLUNA_RECEBER].Visible)
+                grdItensDeContasAReceber.Columns[NUMERO_COLUNA_RECEBER].Visible = principal.EstaAutorizado("OPE.FN.001.0004");
+
+            if (((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible)
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnReceberContaColetivo")).Visible =
+                    principal.EstaAutorizado("OPE.FN.001.0005");
+
+            if (grdItensDeContasAReceber.Columns[NUMERO_COLUNA_GERAR_BOLETO].Visible)
+                grdItensDeContasAReceber.Columns[NUMERO_COLUNA_GERAR_BOLETO].Visible = principal.EstaAutorizado("OPE.FN.001.0006");
+
+            if (((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible)
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarBoletoColetivo")).Visible =
+                    principal.EstaAutorizado("OPE.FN.001.0007");
+
+              if (((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible)
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible =
+                    principal.EstaAutorizado("OPE.FN.001.0008");
+            
+            base.OnPreRender(e);
         }
 
         private void FecharDivDataDePagamentoColetivo()
