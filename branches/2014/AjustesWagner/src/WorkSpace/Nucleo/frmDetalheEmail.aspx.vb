@@ -35,23 +35,34 @@ Public Class frmDetalheEmail
     End Sub
 
     Private Sub MostraDestinarios(destinarios As IList(Of String))
+        If destinarios Is Nothing Then
+            destinarios = New List(Of String)()
+        End If
+
         grdDestinatarios.DataSource = destinarios
         grdDestinatarios.DataBind()
     End Sub
 
     Private Sub MostraDestinariosCC(destinarios As IList(Of String))
+        If destinarios Is Nothing Then
+            destinarios = New List(Of String)()
+        End If
+
         grdDestinariosCC.DataSource = destinarios
         grdDestinariosCC.DataBind()
     End Sub
 
     Private Sub MostraDestinariosCCo(destinarios As IList(Of String))
+        If destinarios Is Nothing Then
+            destinarios = New List(Of String)()
+        End If
+
         grdDestinatariosCCo.DataSource = destinarios
         grdDestinatariosCCo.DataBind()
     End Sub
 
     Private Sub MostreEmail(id As Nullable(Of Long))
         Dim filtro As IFiltroHistoricoDeEmailPorID = FabricaGenerica.GetInstancia().CrieObjeto(Of IFiltroHistoricoDeEmailPorID)()
-        Dim historico As IHistoricoDeEmail
 
         filtro.Operacao = OperacaoDeFiltro.IgualA
         filtro.ValorDoFiltro = id.Value.ToString()
@@ -60,9 +71,15 @@ Public Class frmDetalheEmail
             historico = Servico.ObtenhaHistoricos(filtro, 1, 0).Item(0)
         End Using
 
+        txtData.SelectedDate = historico.Data
+        txtContexto.Text = historico.Contexto
+        txtRemetente.Text = historico.Remetente
         txtAssunto.Text = historico.Assunto
         ctrlTemplateDeEmail.TextoDoTemplate = historico.Mensagem
-        
+        MostraDestinarios(historico.Destinatarios)
+        MostraDestinariosCC(historico.DestinatariosEmCopia)
+        MostraDestinariosCCo(historico.DestinatariosEmCopiaOculta)
+
     End Sub
 
     Private Property Historico As IHistoricoDeEmail

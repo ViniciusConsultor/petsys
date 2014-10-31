@@ -13,6 +13,33 @@
                         <table class="tabela">
                             <tr>
                                 <td class="th3">
+                                    <asp:Label ID="Label1" runat="server" Text="Data"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadDateInput ID="txtData" runat="server">
+                                    </telerik:RadDateInput>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label4" runat="server" Text="Contexto"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtContexto" runat="server" MaxLength="255" Width="200px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label5" runat="server" Text="Remetente"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <telerik:RadTextBox ID="txtRemetente" runat="server" MaxLength="255" Width="450px">
+                                    </telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
                                     <asp:Label ID="Label6" runat="server" Text="Assunto"></asp:Label>
                                 </td>
                                 <td class="td">
