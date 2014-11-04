@@ -88,7 +88,6 @@ namespace MP.Mapeadores
             sql.Append("TEXTODODESPACHO, DATADODEPOSITO, DATACONCESSAO ");
             sql.Append("FROM MP_REVISTA_MARCAS ");
             sql.Append("WHERE PROCESSADA = 0 ");
-            sql.Append("AND NUMEROPROCESSODEMARCA");
             sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
 
             IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
@@ -98,7 +97,7 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                        revistas.Add(MontaRevistaDeMarcas(leitor));
+                        revistas.Add(MontaRevistaDeMarcas(leitor, true));
                 }
                 finally
                 {
@@ -109,9 +108,8 @@ namespace MP.Mapeadores
             return revistas;
         }
 
-        private IRevistaDeMarcas MontaRevistaDeMarcas(IDataReader leitor)
+        private IRevistaDeMarcas MontaRevistaDeMarcas(IDataReader leitor, bool carregaCompleto)
         {
-
             var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
 
             revistaDeMarcas.NumeroRevistaMarcas = UtilidadesDePersistencia.getValorInteger(leitor, "NUMEROREVISTAMARCAS");
@@ -119,31 +117,41 @@ namespace MP.Mapeadores
             if (UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAO").HasValue)
                 revistaDeMarcas.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAO").Value;
 
-            if (UtilidadesDePersistencia.getValorDate(leitor, "DATAPROCESSAMENTO").HasValue)
-                revistaDeMarcas.DataProcessamento = UtilidadesDePersistencia.getValorDate(leitor, "DATAPROCESSAMENTO").Value;
-
             revistaDeMarcas.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSADA");
-
-            revistaDeMarcas.NumeroProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "NUMEROPROCESSODEMARCA");
-
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "CODIGODESPACHO"))
-                revistaDeMarcas.CodigoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CODIGODESPACHO");
-
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "APOSTILA"))
-                revistaDeMarcas.Apostila = UtilidadesDePersistencia.GetValorString(leitor, "APOSTILA");
 
             if (!UtilidadesDePersistencia.EhNulo(leitor, "EXTENSAOARQUIVO"))
                 revistaDeMarcas.ExtensaoArquivo = UtilidadesDePersistencia.GetValorString(leitor, "EXTENSAOARQUIVO");
 
-            if (!UtilidadesDePersistencia.EhNulo(leitor, "TEXTODODESPACHO"))
-                revistaDeMarcas.TextoDoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "TEXTODODESPACHO");
 
-            if (UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO").HasValue)
-                revistaDeMarcas.DataDeConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO").Value;
+            if (carregaCompleto)
+            {
+                revistaDeMarcas.NumeroProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor,
+                                                                                              "NUMEROPROCESSODEMARCA");
 
-            if (UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO").HasValue)
-                revistaDeMarcas.DataDeDeposito = UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO").Value;
-            
+                if (UtilidadesDePersistencia.getValorDate(leitor, "DATAPROCESSAMENTO").HasValue)
+                    revistaDeMarcas.DataProcessamento =
+                        UtilidadesDePersistencia.getValorDate(leitor, "DATAPROCESSAMENTO").Value;
+
+
+                if (!UtilidadesDePersistencia.EhNulo(leitor, "CODIGODESPACHO"))
+                    revistaDeMarcas.CodigoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CODIGODESPACHO");
+
+                if (!UtilidadesDePersistencia.EhNulo(leitor, "APOSTILA"))
+                    revistaDeMarcas.Apostila = UtilidadesDePersistencia.GetValorString(leitor, "APOSTILA");
+
+
+                if (!UtilidadesDePersistencia.EhNulo(leitor, "TEXTODODESPACHO"))
+                    revistaDeMarcas.TextoDoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "TEXTODODESPACHO");
+
+                if (UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO").HasValue)
+                    revistaDeMarcas.DataDeConcessao =
+                        UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO").Value;
+
+                if (UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO").HasValue)
+                    revistaDeMarcas.DataDeDeposito =
+                        UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO").Value;
+            }
+
             return revistaDeMarcas;
         }
 
@@ -154,11 +162,10 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, ");
-            sql.Append("PROCESSADA, NUMEROPROCESSODEMARCA, CODIGODESPACHO, APOSTILA, EXTENSAOARQUIVO, ");
-            sql.Append("TEXTODODESPACHO, DATADODEPOSITO, DATACONCESSAO ");
+            sql.Append("SELECT distinct(NUMEROREVISTAMARCAS), DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
             sql.Append("FROM MP_REVISTA_MARCAS ");
-            sql.Append("WHERE PROCESSADA = 1 ");
+            sql.Append("WHERE PROCESSADA = 1");
             sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
 
             IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
@@ -168,7 +175,7 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                        revistas.Add(MontaRevistaDeMarcas(leitor));
+                        revistas.Add(MontaRevistaDeMarcas(leitor, false));
                 }
                 finally
                 {
@@ -214,7 +221,7 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                        revistas.Add(MontaRevistaDeMarcas(leitor));
+                        revistas.Add(MontaRevistaDeMarcas(leitor, true));
                 }
                 finally
                 {
