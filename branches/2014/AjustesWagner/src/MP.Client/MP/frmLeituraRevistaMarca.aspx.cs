@@ -218,6 +218,9 @@ namespace MP.Client.MP
         {
             try
             {
+                if (revistaAProcessar.Processada && !EhReprocessamento)
+                    return;
+
                 revistaAProcessar.Processada = true;
                 AdicioneNumeroDaRevistaSelecionada(revistaAProcessar);
 
@@ -234,9 +237,19 @@ namespace MP.Client.MP
 
                 if (listaDeProcessosExistentes.Count > 0)
                 {
+                    if (revistaAProcessar.Processada)
+                    {
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                            servico.Excluir(revistaAProcessar.NumeroRevistaMarcas);
 
-                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
-                        servico.Inserir(listaDeProcessosExistentes);
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                            servico.Inserir(listaDeProcessosExistentes); 
+                    }
+                    else
+                    {
+                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                            servico.Inserir(listaDeProcessosExistentes); 
+                    } 
 
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                 UtilidadesWeb.MostraMensagemDeInformacao("Processamento da revista realizado com sucesso."),
