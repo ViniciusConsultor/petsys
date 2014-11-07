@@ -377,49 +377,42 @@ namespace MP.Client.MP
 
         protected void btnFiltrar_ButtonClick(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ctrlFitroRevistaPatente1.Codigo))
+            IList<IRevistaDePatente> listaDeProcessosDaRevista = new List<IRevistaDePatente>();
+            var revistaSelecionada = (IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA];
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
+
+            filtro.ValoresDoFiltro = new Dictionary<EnumeradorFiltroPatente, string>();
+
+            if (!string.IsNullOrEmpty(ctrlFitroRevistaPatente1.Codigo) && !string.IsNullOrEmpty(ctrlFitroRevistaPatente1.ValorFiltro))
+                filtro.ValoresDoFiltro.Add(EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo)), ctrlFitroRevistaPatente1.ValorFiltro);
+
+            if(!string.IsNullOrEmpty(ctrlFitroRevistaPatente1.EstadoSelecionado))
+                filtro.ValoresDoFiltro.Add(EnumeradorFiltroPatente.Estado, ctrlFitroRevistaPatente1.EstadoSelecionado);
+
+            if (!string.IsNullOrEmpty(ctrlFitroRevistaPatente1.NomeDoProcurador))
+                filtro.ValoresDoFiltro.Add(EnumeradorFiltroPatente.NomeDoProcurador, ctrlFitroRevistaPatente1.NomeDoProcurador);
+
+            if (!string.IsNullOrEmpty(ctrlFitroRevistaPatente1.Despacho))
+                filtro.ValoresDoFiltro.Add(EnumeradorFiltroPatente.CodigoDoRegistro, ctrlFitroRevistaPatente1.Despacho);
+
+            // leitura .xml
+            var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+                listaDeProcessosDaRevista = servico.ObtenhaTodosOsProcessosDaRevistaXML(xmlRevista, filtro);
+
+            if (listaDeProcessosDaRevista.Count > 0)
             {
-                // Nenhum filtro informado
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Selecionado o campo que deseja filtrar."),
-                                                         false);
-            }
-            else if (string.IsNullOrEmpty(ctrlFitroRevistaPatente1.ValorFiltro))
-            {
-                // Nenhum filtro informado
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Informe o valor do filtro a ser pesquisado."),
-                                                         false);
+                // adicionar viewstate para filtro CHAVE_PROCESSOS_REUSLTADO_FILTRO
+                CarregaGridFiltros(listaDeProcessosDaRevista);
+                txtQuantdadeDeProcessos.Text = listaDeProcessosDaRevista.Count.ToString();
             }
             else
             {
-                IList<IRevistaDePatente> listaDeProcessosDaRevista = new List<IRevistaDePatente>();
-                var revistaSelecionada = (IRevistaDePatente)ViewState[CHAVE_REVISTA_SELECIONADA];
-                var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroLeituraDeRevistaDePatentes>();
-
-                filtro.ValoresDoFiltro = new Dictionary<EnumeradorFiltroPatente, string>();
-
-                filtro.ValoresDoFiltro.Add(EnumeradorFiltroPatente.Obtenha(int.Parse(ctrlFitroRevistaPatente1.Codigo)), ctrlFitroRevistaPatente1.ValorFiltro);
-
-                // leitura .xml
-                var xmlRevista = MontaXmlParaProcessamentoDaRevista(revistaSelecionada);
-
-                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                    listaDeProcessosDaRevista = servico.ObtenhaTodosOsProcessosDaRevistaXML(xmlRevista, filtro);
-
-                if (listaDeProcessosDaRevista.Count > 0)
-                {
-                    // adicionar viewstate para filtro CHAVE_PROCESSOS_REUSLTADO_FILTRO
-                    CarregaGridFiltros(listaDeProcessosDaRevista);
-                    txtQuantdadeDeProcessos.Text = listaDeProcessosDaRevista.Count.ToString();
-                }
-                else
-                {
-                    CarregaGridFiltros(new List<IRevistaDePatente>());
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
-                                                         UtilidadesWeb.MostraMensagemDeInformacao("Não existe resultados para o filtro informado."),
-                                                         false);
-                }
+                CarregaGridFiltros(new List<IRevistaDePatente>());
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInformacao("Não existe resultados para o filtro informado."),
+                                                        false);
             }
         }
 

@@ -246,7 +246,7 @@ namespace MP.Servicos.Local
             try
             {
                 if(xmlNode.Attributes.GetNamedItem(tagDoNo) == null)
-                    return DateTime.MinValue;
+                    return null;
 
                 string valorTag = xmlNode.Attributes.GetNamedItem(tagDoNo).Value;
                 DateTime dataDaTag;
