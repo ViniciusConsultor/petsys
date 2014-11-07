@@ -169,6 +169,15 @@ namespace MP.Interfaces.Utilidades
             if (VerifiqueTagAtualEPreenchaObjeto(linha.Substring(0, 4), LayoutRevistaPatente.Layout71.IdentificadorCampo, ultimaTagPreenchida))
             {
                 dtoLayoutLeituraRevistaPatente.Depositante += valorDaLinha.TrimStart().TrimEnd();
+
+                string paisEEstado = valorDaLinha.Substring(valorDaLinha.IndexOf('(') + 1, (valorDaLinha.IndexOf(')') - 1) - valorDaLinha.IndexOf('(')).Trim();
+                var paisEstadosSeparados = paisEEstado.Split('/');
+
+                dtoLayoutLeituraRevistaPatente.PaisTitular = paisEstadosSeparados[0].Trim();
+
+                if (paisEstadosSeparados.Count() > 1)
+                    dtoLayoutLeituraRevistaPatente.UFTitular = paisEstadosSeparados[1].Trim();
+
                 ultimaTagPreenchida = LayoutRevistaPatente.Layout71.IdentificadorCampo;
                 return;
             }

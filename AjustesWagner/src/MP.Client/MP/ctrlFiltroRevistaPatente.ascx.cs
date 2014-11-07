@@ -12,10 +12,7 @@ namespace MP.Client.MP
 {
     public partial class ctrlFiltroRevistaPatente : UserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
+        protected void Page_Load(object sender, EventArgs e) { }
 
         public void Inicializa()
         {
@@ -51,13 +48,28 @@ namespace MP.Client.MP
 
         public string ValorFiltro
         {
+            get { return txtValor.Text; }
+        }
+
+        public string EstadoSelecionado
+        {
             get
             {
-                if (int.Parse(cboFiltroPatente.SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id))
-                    return ctrlUF.Sigla.Sigla;
+                if (ctrlUF.Sigla == null)
+                    return string.Empty;
 
-                return txtValor.Text;
+                return ctrlUF.Sigla.Sigla;
             }
+        }
+
+        public string NomeDoProcurador
+        {
+            get { return ctrlProcurador.Nome; }
+        }
+
+        public string Despacho
+        {
+            get { return ctrlDespachoDePatentes.CodigoDespachoDePatentes; }
         }
     }
 }
