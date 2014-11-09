@@ -46,7 +46,8 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(string pastaDeArmazenamentoDasRevistas, IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
+        public IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(string pastaDeArmazenamentoDasRevistas, 
+            IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml, bool ehLeitura)
         {
             IList<IRevistaDeMarcas> listaDeProcessosExistentesNaRevista = new List<IRevistaDeMarcas>();
 
@@ -54,7 +55,7 @@ namespace MP.Servicos.Local
             if (revistaDeMarcas.ExtensaoArquivo.ToUpper().Equals(".TXT"))
                 revistaDeMarcas.ExtensaoArquivo = ".xml";
 
-            listaDeProcessosExistentesNaRevista = LerRevistaXMLParaProcessosExistentes(revistaDeMarcas, revistaXml);
+            listaDeProcessosExistentesNaRevista = LerRevistaXMLParaProcessosExistentes(revistaDeMarcas, revistaXml, ehLeitura);
             return listaDeProcessosExistentesNaRevista;
         }
 
@@ -394,9 +395,9 @@ namespace MP.Servicos.Local
                 processoDeMarca.Despacho = despacho;
         }
 
-        private IList<IRevistaDeMarcas> LerRevistaXMLParaProcessosExistentes(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml)
+        private IList<IRevistaDeMarcas> LerRevistaXMLParaProcessosExistentes(IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml, 
+            bool ehLeitura)
         {
-
             var numeroRevista = string.Empty;
             var dataRevista = string.Empty;
 
@@ -452,6 +453,7 @@ namespace MP.Servicos.Local
 
             IList<IRevistaDeMarcas> listaDeDadosDaRevistaASerSalvo = new List<IRevistaDeMarcas>();
 
+            // Atualizar processos apos a leitura
             if (listaDeProcessosDaRevistaDeMarcas.Count > 0)
             {
                 // verifica se o processo está cadastrado na base
@@ -488,6 +490,7 @@ namespace MP.Servicos.Local
 
                             listaDeDadosDaRevistaASerSalvo.Add(processoDaRevista);
 
+                            if (!ehLeitura)
                             servico.AtualizeProcessoAposLeituraDaRevista(processoDeMarca);
                         }
 
@@ -756,6 +759,22 @@ namespace MP.Servicos.Local
             try
             {
                 return mapeador.ObtenhaPublicoesDoProcesso(numeroProcesso);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
+        public bool ExisteRevistaNoBanco(int numeroDaRevista)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDeMarcas>();
+
+            try
+            {
+                return mapeador.ExisteRevistaNoBanco(numeroDaRevista);
             }
             finally
             {

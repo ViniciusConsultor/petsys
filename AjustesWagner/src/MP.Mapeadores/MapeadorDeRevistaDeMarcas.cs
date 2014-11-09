@@ -83,11 +83,17 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, ");
-            sql.Append("PROCESSADA, NUMEROPROCESSODEMARCA, CODIGODESPACHO, APOSTILA, EXTENSAOARQUIVO, ");
-            sql.Append("TEXTODODESPACHO, DATADODEPOSITO, DATACONCESSAO ");
+            //sql.Append("SELECT NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, ");
+            //sql.Append("PROCESSADA, NUMEROPROCESSODEMARCA, CODIGODESPACHO, APOSTILA, EXTENSAOARQUIVO, ");
+            //sql.Append("TEXTODODESPACHO, DATADODEPOSITO, DATACONCESSAO ");
+            //sql.Append("FROM MP_REVISTA_MARCAS ");
+            //sql.Append("WHERE PROCESSADA = 0 ");
+            //sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
+
+            sql.Append("SELECT distinct(NUMEROREVISTAMARCAS), DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
             sql.Append("FROM MP_REVISTA_MARCAS ");
-            sql.Append("WHERE PROCESSADA = 0 ");
+            sql.Append("WHERE PROCESSADA = 0");
             sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
 
             IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
@@ -97,7 +103,8 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                        revistas.Add(MontaRevistaDeMarcas(leitor, true));
+                        revistas.Add(MontaRevistaDeMarcas(leitor, false));
+                        //revistas.Add(MontaRevistaDeMarcas(leitor, true));
                 }
                 finally
                 {
@@ -230,6 +237,35 @@ namespace MP.Mapeadores
             }
 
             return revistas;
+        }
+
+        public bool ExisteRevistaNoBanco(int numeroDaRevista)
+        {
+            var DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT NUMEROREVISTAMARCAS, DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
+            sql.Append("FROM MP_REVISTA_MARCAS ");
+            sql.Append("WHERE NUMEROREVISTAMARCAS = " + numeroDaRevista);
+
+            IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                try
+                {
+                    while (leitor.Read())
+                        revistas.Add(MontaRevistaDeMarcas(leitor, false));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return revistas.Count > 0;
         }
     }
 }
