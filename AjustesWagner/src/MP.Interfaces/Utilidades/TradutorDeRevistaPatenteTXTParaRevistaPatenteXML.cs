@@ -693,7 +693,15 @@ namespace MP.Interfaces.Utilidades
             if (string.IsNullOrEmpty(dadosDaRevistaPatente.Depositante)) return;
 
             revistaPatenteXml.WriteStartElement("depositante");
+
+            if (!string.IsNullOrEmpty(dadosDaRevistaPatente.PaisTitular))
+                revistaPatenteXml.WriteAttributeString("pais", dadosDaRevistaPatente.PaisTitular);
+
+            if (!string.IsNullOrEmpty(dadosDaRevistaPatente.UFTitular))
+                revistaPatenteXml.WriteAttributeString("uf", dadosDaRevistaPatente.UFTitular);
+
             revistaPatenteXml.WriteString(dadosDaRevistaPatente.Depositante);
+
             revistaPatenteXml.WriteEndElement();
         }
 

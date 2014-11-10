@@ -336,6 +336,12 @@ namespace MP.Servicos.Local
             if (xmlNode["depositante"] == null) return;
 
             revistaDePatente.Depositante = xmlNode["depositante"].InnerText;
+
+            if (xmlNode["depositante"].Attributes.GetNamedItem("pais") != null)
+                revistaDePatente.PaisTitular = xmlNode["depositante"].Attributes.GetNamedItem("pais").Value;
+
+            if (xmlNode["depositante"].Attributes.GetNamedItem("uf") != null)
+                revistaDePatente.UFTitular = xmlNode["depositante"].Attributes.GetNamedItem("uf").Value;
         }
 
         private void PreenchaProcurador(XmlNode xmlNode, IRevistaDePatente revistaDePatente)

@@ -58,13 +58,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// ctrlUF control.
+        /// txtUF control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WorkSpace.ctrlUF ctrlUF;
+        protected global::System.Web.UI.WebControls.TextBox txtUF;
         
         /// <summary>
         /// Label4 control.
@@ -76,13 +76,13 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// ctrlProcurador control.
+        /// txtProcurador control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlProcurador ctrlProcurador;
+        protected global::System.Web.UI.WebControls.TextBox txtProcurador;
         
         /// <summary>
         /// Label5 control.
@@ -94,12 +94,12 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// ctrlDespachoDePatentes control.
+        /// txtDespachoDePatentes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlDespachoDePatentes ctrlDespachoDePatentes;
+        protected global::System.Web.UI.WebControls.TextBox txtDespachoDePatentes;
     }
 }
