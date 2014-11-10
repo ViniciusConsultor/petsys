@@ -217,8 +217,7 @@ namespace MP.Mapeadores
             sql.Append("PROCESSADA, NUMEROPROCESSODEMARCA, CODIGODESPACHO, APOSTILA, EXTENSAOARQUIVO, ");
             sql.Append("TEXTODODESPACHO, DATADODEPOSITO, DATACONCESSAO ");
             sql.Append("FROM MP_REVISTA_MARCAS ");
-            sql.Append("WHERE PROCESSADA = 1 ");
-            sql.Append("AND NUMEROPROCESSODEMARCA = " + numeroProcesso);
+            sql.Append("WHERE NUMEROPROCESSODEMARCA = " + numeroProcesso);
             sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
 
             IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
