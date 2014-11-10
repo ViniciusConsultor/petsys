@@ -18,7 +18,6 @@ namespace MP.Client.MP
         {
             LimparControle();
             CarregueCombo();
-            ctrlUF.Inicializa();
         }
 
         private void LimparControle()
@@ -53,23 +52,17 @@ namespace MP.Client.MP
 
         public string EstadoSelecionado
         {
-            get
-            {
-                if (ctrlUF.Sigla == null)
-                    return string.Empty;
-
-                return ctrlUF.Sigla.Sigla;
-            }
+            get { return txtUF.Text; }
         }
 
         public string NomeDoProcurador
         {
-            get { return ctrlProcurador.Nome; }
+            get { return txtProcurador.Text; }
         }
 
         public string Despacho
         {
-            get { return ctrlDespachoDePatentes.CodigoDespachoDePatentes; }
+            get { return txtDespachoDePatentes.Text; }
         }
     }
 }

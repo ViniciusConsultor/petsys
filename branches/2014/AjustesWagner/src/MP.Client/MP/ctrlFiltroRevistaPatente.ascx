@@ -1,8 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlFiltroRevistaPatente.ascx.cs" Inherits="MP.Client.MP.ctrlFiltroRevistaPatente" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Src="~/ctrlUF.ascx" TagName="ctrlUF" TagPrefix="uc4" %>
-<%@ Register TagPrefix="uc1" TagName="ctrlProcurador" Src="~/MP/ctrlProcurador.ascx" %>
-<%@ Register TagPrefix="uc2" TagName="ctrlDespachoDePatentes" Src="~/MP/ctrlDespachoDePatentes.ascx" %>
 <table>
     <tr>
         <td class="th3">
@@ -51,7 +48,7 @@
             <asp:Label ID="Label3" runat="server" Text="Estado:"></asp:Label>
         </td>
         <td class="td">
-            <uc4:ctrlUF ID="ctrlUF" runat="server" />
+            <asp:TextBox ID="txtUF" runat="server" Width="80%" />
         </td>
     </tr>
     <tr>
@@ -59,7 +56,7 @@
             <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
         </td>
         <td class="td">
-            <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
+            <asp:TextBox ID="txtProcurador" runat="server" Width="80%" />
         </td>
     </tr>
     <tr>
@@ -67,7 +64,7 @@
             <asp:Label ID="Label5" runat="server" Text="Despacho:"></asp:Label>
         </td>
         <td class="td">
-            <uc2:ctrlDespachoDePatentes ID="ctrlDespachoDePatentes" runat="server" />
+            <asp:TextBox ID="txtDespachoDePatentes" runat="server" Width="80%" />
         </td>
     </tr>
 </table>
