@@ -9,7 +9,7 @@ namespace MP.Interfaces.Negocio.Filtros.Marcas
     {
         string NumeroDoProcesso { get; set; }
         string UF { get; set; }
-        IProcurador Procurador { get; set; }
+        string Procurador { get; set; }
         IDespachoDeMarcas Despacho { get; set; }
     }
 }

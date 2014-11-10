@@ -116,7 +116,7 @@ namespace MP.Client.MP
         {
             this.RadTabStrip1.Tabs[1].Enabled = true;
             ctrlUF.Inicializa();
-            ctrlProcurador.Inicializa();
+            //ctrlProcurador.Inicializa();
             ctrlDespachoDeMarcas.Inicializa();
 
             var controleGrid = this.grdFiltros as Control;
@@ -777,7 +777,7 @@ namespace MP.Client.MP
         protected void btnFiltrar_ButtonClick(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtProcesso.Text) && string.IsNullOrEmpty(ctrlUF.Codigo) &&
-                ctrlProcurador.ProcuradorSelecionado == null && ctrlDespachoDeMarcas.DespachoDeMarcasSelecionada == null)
+                string.IsNullOrEmpty(txtProcurador.Text) && ctrlDespachoDeMarcas.DespachoDeMarcasSelecionada == null)
             {
                 // Nenhum filtro
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -792,7 +792,7 @@ namespace MP.Client.MP
 
                 filtro.NumeroDoProcesso = txtProcesso.Text;
                 filtro.UF = ctrlUF.Sigla != null ? ctrlUF.Sigla.Sigla : null;
-                filtro.Procurador = ctrlProcurador.ProcuradorSelecionado;
+                filtro.Procurador = txtProcurador.Text;
                 filtro.Despacho = ctrlDespachoDeMarcas.DespachoDeMarcasSelecionada;
 
                 XmlDocument xmlRevista;
@@ -826,6 +826,8 @@ namespace MP.Client.MP
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
                                                          UtilidadesWeb.MostraMensagemDeInformacao("Não existe resultados para o filtro informado."),
                                                          false);
+
+                    CarregaGridFiltros(new List<ILeituraRevistaDeMarcas>());
                 }
             }
         }
@@ -834,7 +836,7 @@ namespace MP.Client.MP
         {
             txtProcesso.Text = string.Empty;
             ctrlUF.Inicializa();
-            ctrlProcurador.Inicializa();
+            txtProcurador.Text = string.Empty;
             ctrlDespachoDeMarcas.Inicializa();
         }
 

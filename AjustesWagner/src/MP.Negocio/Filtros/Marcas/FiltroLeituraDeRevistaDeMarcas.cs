@@ -15,7 +15,7 @@ namespace MP.Negocio.Filtros.Marcas
         public string UF
         { get; set; }
 
-        public IProcurador Procurador
+        public string Procurador
         { get; set; }
 
         public IDespachoDeMarcas Despacho
