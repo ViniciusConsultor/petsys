@@ -261,7 +261,7 @@
                                                 <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
+                                                <asp:TextBox ID="txtProcurador" runat="server" Width="89%" />
                                             </td>
                                         </tr>
                                         <tr>

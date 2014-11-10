@@ -76,52 +76,54 @@ namespace MP.Servicos.Local
                             return listaResultadoPorFiltro;
                         }
                     }
-                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho == null)
+                    else if (!string.IsNullOrEmpty(filtro.UF) && string.IsNullOrEmpty(filtro.Procurador) && filtro.Despacho == null)
                     {
                         // filtro por estado
                         if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper())
                             listaResultadoPorFiltro.Add(processoDaRevista);
                     }
-                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
+                    else if (!string.IsNullOrEmpty(filtro.UF) && !string.IsNullOrEmpty(filtro.Procurador) && filtro.Despacho == null)
                     {
                         // filtro por estado, procurador
                         if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
-                            && processoDaRevista.Procurador != null && UtilidadesDeString.RemoveAcentos(filtro.Procurador.Pessoa.Nome.ToUpper()).Equals(
-                            UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper())))
+                            && !string.IsNullOrEmpty(processoDaRevista.Procurador) && UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper())
+                            .Contains(UtilidadesDeString.RemoveAcentos(filtro.Procurador.ToUpper())))
                             listaResultadoPorFiltro.Add(processoDaRevista);
                     }
-                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
+                    else if (!string.IsNullOrEmpty(filtro.UF) && string.IsNullOrEmpty(filtro.Procurador) && filtro.Despacho != null)
                     {
                         // filtro por estado, despacho
                         if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
                             && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
                             listaResultadoPorFiltro.Add(processoDaRevista);
                     }
-                    else if (!string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
+                    else if (!string.IsNullOrEmpty(filtro.UF) && !string.IsNullOrEmpty(filtro.Procurador) && filtro.Despacho != null)
                     {
                         // filtro por estado, procurador , despacho
                         if (processoDaRevista.Uf != null && processoDaRevista.Uf.ToUpper() == filtro.UF.ToUpper()
-                            && processoDaRevista.Procurador != null && UtilidadesDeString.RemoveAcentos(filtro.Procurador.Pessoa.Nome.ToUpper()).Equals(
-                            UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper()))
+                            && !string.IsNullOrEmpty(processoDaRevista.Procurador) && UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper())
+                            .Contains(UtilidadesDeString.RemoveAcentos(filtro.Procurador.ToUpper()))
                             && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
                             listaResultadoPorFiltro.Add(processoDaRevista);
                     }
-                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho == null)
+                    else if (string.IsNullOrEmpty(filtro.UF) && !string.IsNullOrEmpty(filtro.Procurador) && filtro.Despacho == null)
                     {
                         // filtro por procurador
-                        if (processoDaRevista.Procurador != null && UtilidadesDeString.RemoveAcentos(filtro.Procurador.Pessoa.Nome.ToUpper()).Equals(
-                            UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper())))
+                        if (!string.IsNullOrEmpty(processoDaRevista.Procurador) &&
+                            UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper())
+                            .Contains(UtilidadesDeString.RemoveAcentos(filtro.Procurador.ToUpper())))
+
                             listaResultadoPorFiltro.Add(processoDaRevista);
                     }
-                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador != null && filtro.Despacho != null)
+                    else if (string.IsNullOrEmpty(filtro.UF) && !string.IsNullOrEmpty(filtro.Procurador) && filtro.Despacho != null)
                     {
                         // filtro por procurador, despacho
-                        if (processoDaRevista.Procurador != null && UtilidadesDeString.RemoveAcentos(filtro.Procurador.Pessoa.Nome.ToUpper()).Equals(
-                            UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper()))
+                        if (!string.IsNullOrEmpty(processoDaRevista.Procurador) && UtilidadesDeString.RemoveAcentos(processoDaRevista.Procurador.ToUpper())
+                            .Contains(UtilidadesDeString.RemoveAcentos(filtro.Procurador.ToUpper()))
                             && filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
                             listaResultadoPorFiltro.Add(processoDaRevista);
                     }
-                    else if (string.IsNullOrEmpty(filtro.UF) && filtro.Procurador == null && filtro.Despacho != null)
+                    else if (string.IsNullOrEmpty(filtro.UF) && string.IsNullOrEmpty(filtro.Procurador) && filtro.Despacho != null)
                     {
                         // filtro por despacho
                         if (filtro.Despacho.CodigoDespacho == processoDaRevista.CodigoDoDespacho)
