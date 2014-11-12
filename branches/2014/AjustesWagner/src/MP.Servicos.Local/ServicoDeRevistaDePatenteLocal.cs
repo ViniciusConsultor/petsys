@@ -74,12 +74,13 @@ namespace MP.Servicos.Local
         }
 
 
-        public IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml, bool lerRevista)
+        public IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml, bool lerRevista,
+            bool reprocessamento)
         {
-            return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaXml, lerRevista);
+        return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaXml, lerRevista, reprocessamento);
         }
 
-        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(XmlDocument revistaXml, bool lerRevista)
+        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(XmlDocument revistaXml, bool lerRevista, bool reprocessamento)
         {
             IList<IRevistaDePatente> listaDeRevistasDePatentes = CarregueDadosDeTodaRevistaXML(revistaXml);
             var listaDeRevistasASeremSalvas = new List<IRevistaDePatente>();
@@ -206,7 +207,9 @@ namespace MP.Servicos.Local
 
                                 processoDePatente.ProcessoEhEstrangeiro = string.IsNullOrEmpty(processoDaRevista.ClassificacaoInternacional);
 
-                                processoDaRevista.Processada = !lerRevista;
+                                if(!reprocessamento)
+                                    processoDaRevista.Processada = !lerRevista;
+
                                 processoDaRevista.ExtensaoArquivo = ".XML";
                                 listaDeRevistasASeremSalvas.Add(processoDaRevista);
                                 Excluir(processoDaRevista.NumeroRevistaPatente);
