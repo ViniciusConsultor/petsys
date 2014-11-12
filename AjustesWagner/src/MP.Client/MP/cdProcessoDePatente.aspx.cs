@@ -182,6 +182,14 @@ namespace MP.Client.MP
 
             ctrlPaisProcesso.PaisSelecionado = processoDePatente.Pais;
             ctrlPaisProcesso.CarreguePaisSelecionado();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+            {
+                Publicacoes = servico.ObtenhaPublicacoes(processoDePatente.NumeroDoProcessoFormatado);
+                grdPublicacoes.DataSource = Publicacoes;
+                grdPublicacoes.DataBind();
+            }
+
             ExibaPatenteSelecionada(processoDePatente.Patente);
         }
 
@@ -710,14 +718,7 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeEventosDePatente>())
                 ctrlEventos.SetaEventos(servico.ObtenhaEventos(patente.Identificador));
-
-
-            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-            {
-                Publicacoes = servico.ObtenhaPublicacoes(txtProcesso.Text);
-                grdPublicacoes.DataSource = Publicacoes;
-                grdPublicacoes.DataBind();
-            }
+            
         }
 
         private void ExibaTabDeImagemDeDesenhoIndustrial( bool exiba)
