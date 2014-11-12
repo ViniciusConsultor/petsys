@@ -98,9 +98,10 @@ namespace MP.Client.MP
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
                 indiceSelecionado = e.Item.DataSetIndex;
 
-            if (e.CommandName == "ProcessarRevista")
+            if (e.CommandName == "ProcessarRevista" || e.CommandName == "LerRevista")
             {
                 var revistasAProcessar = (IList<IRevistaDePatente>)ViewState[CHAVE_REVISTAS_A_PROCESSAR];
+                var lerRevista = e.CommandName == "LerRevista";
 
                 try
                 {
@@ -118,7 +119,7 @@ namespace MP.Client.MP
                     IList<IRevistaDePatente> listaDeProcessosExistentes = new List<IRevistaDePatente>();
 
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasAProcessar[indiceSelecionado], xmlRevista);
+                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasAProcessar[indiceSelecionado], xmlRevista, lerRevista);
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
@@ -198,9 +199,10 @@ namespace MP.Client.MP
             if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
                 indiceSelecionado = e.Item.DataSetIndex;
 
-            if (e.CommandName == "ReprocessarRevista")
+            if (e.CommandName == "ReprocessarRevista" || e.CommandName == "LerRevista")
             {
                 var revistasProcessadas = (IList<IRevistaDePatente>)ViewState[CHAVE_REVISTAS_PROCESSADAS];
+                var lerRevista = e.CommandName == "LerRevista";
 
                 try
                 {
@@ -211,7 +213,7 @@ namespace MP.Client.MP
                     IList<IRevistaDePatente> listaDeProcessosExistentes = new List<IRevistaDePatente>();
 
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasProcessadas[indiceSelecionado], xmlRevista);
+                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasProcessadas[indiceSelecionado], xmlRevista, lerRevista);
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
