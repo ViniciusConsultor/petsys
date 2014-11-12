@@ -183,22 +183,4 @@ Partial Public Class frmDetalheEmail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents grdDestinatariosCCo As Global.Telerik.Web.UI.RadGrid
-
-    '''<summary>
-    '''Label3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''grdAnexos control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents grdAnexos As Global.Telerik.Web.UI.RadGrid
 End Class

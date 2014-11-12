@@ -63,7 +63,7 @@ Public Class MapeadorDeHistoricoDeEmail
         Dim DBHelper As IDBHelper = Nothing
         Dim PossuiAnexo As Boolean = False
 
-        If Not Anexos Is Nothing AndAlso Not Anexos.Count = 0 Then PossuiAnexo = True
+        'If Not Anexos Is Nothing AndAlso Not Anexos.Count = 0 Then PossuiAnexo = True
 
         DBHelper = ServerUtils.getDBHelper
         Historico.ID = GeradorDeID.ProximoID()

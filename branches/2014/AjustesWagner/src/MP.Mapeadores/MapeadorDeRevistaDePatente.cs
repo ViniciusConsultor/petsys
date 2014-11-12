@@ -361,7 +361,8 @@ namespace MP.Mapeadores
             sql.Append("	MOEDADEPAGAMENTO, VALOR, PAGAMENTO, PRAZO, SERVISENTOSDEAVERBACAO, CRIADOR, LINGUAGEM ,CAMPOAPLICACAO, TIPODEPROGRAMA ,DATADACRIACAO ,REGIMEDEGUARDA,");
             sql.Append("	REQUERENTE ,REDACAO ,DATAPRORROGACAO ,CLASSIFICACAONACIONAL, NUMPROCESSOFORMATADO ");
             sql.Append("FROM MP_REVISTA_PATENTE ");
-            sql.Append("WHERE PROCESSADA = 1 AND NUMEROPROCESSOPATENTE = '" + numeroDoProcesso + "'");
+            sql.Append("WHERE NUMPROCESSOFORMATADO LIKE '" + numeroDoProcesso + "%' ");
+            sql.Append("ORDER BY NUMEROREVISTAPATENTE DESC");
 
             IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
 

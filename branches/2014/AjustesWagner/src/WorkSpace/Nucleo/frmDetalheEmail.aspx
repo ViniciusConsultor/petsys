@@ -144,7 +144,7 @@
                                     <br />
                                 </td>
                             </tr>
-                            <tr>
+                            <%--<tr>
                                 <td class="th3">
                                     <asp:Label ID="Label3" runat="server" Text="Arquivos anexados"></asp:Label>
                                 </td>
@@ -166,7 +166,7 @@
                                         </MasterTableView>
                                     </telerik:RadGrid>
                                 </td>
-                            </tr>
+                            </tr>--%>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>
