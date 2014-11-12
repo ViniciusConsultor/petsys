@@ -119,7 +119,8 @@ namespace MP.Client.MP
                     IList<IRevistaDePatente> listaDeProcessosExistentes = new List<IRevistaDePatente>();
 
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasAProcessar[indiceSelecionado], xmlRevista, lerRevista);
+                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasAProcessar[indiceSelecionado], xmlRevista, lerRevista,
+                            false);
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
@@ -213,7 +214,8 @@ namespace MP.Client.MP
                     IList<IRevistaDePatente> listaDeProcessosExistentes = new List<IRevistaDePatente>();
 
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasProcessadas[indiceSelecionado], xmlRevista, lerRevista);
+                        listaDeProcessosExistentes = servico.ObtenhaProcessosExistentesDeAcordoComARevistaXml(revistasProcessadas[indiceSelecionado], xmlRevista, lerRevista,
+                            true);
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
