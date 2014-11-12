@@ -13,7 +13,7 @@ namespace MP.Interfaces.Servicos
         void Inserir(IList<IRevistaDePatente> listaDeObjetoRevistaDeMarcas);
         IList<IRevistaDePatente> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDePatente> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
-        IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml);
+        IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml, bool lerRevista);
         IList<IRevistaDePatente> ObtenhaTodosOsProcessosDaRevistaXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDePatentes filtro);
         IList<IRevistaDePatente> CarregueDadosDeTodaRevistaXML(XmlDocument revistaXml);
         void Excluir(int numeroDaRevistaDePatente);

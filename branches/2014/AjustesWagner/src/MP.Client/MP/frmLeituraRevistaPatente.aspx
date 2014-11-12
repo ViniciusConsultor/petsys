@@ -62,6 +62,11 @@
                                                     UniqueName="column4">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="LerRevista"
+                                                    FilterImageToolTip="LerRevista" HeaderTooltip="Ler Revista" ImageUrl="~/imagens/lerRevista.gif"
+                                                    UniqueName="column5">
+                                                    <ItemStyle Width="4%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
                                                 <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="Revista(s) a processar"
                                                     UniqueName="colunaNumeroRevista" />
                                             </Columns>
@@ -88,6 +93,11 @@
                                                 <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ReprocessarRevista"
                                                     FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
                                                     UniqueName="column4">
+                                                    <ItemStyle Width="4%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="LerRevista"
+                                                    FilterImageToolTip="LerRevista" HeaderTooltip="Ler Revista" ImageUrl="~/imagens/lerRevista.gif"
+                                                    UniqueName="column5">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
                                                 <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="Revista(s) já processada(s)"

@@ -74,12 +74,12 @@ namespace MP.Servicos.Local
         }
 
 
-        public IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml)
+        public IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml, bool lerRevista)
         {
-            return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaXml);
+            return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaXml, lerRevista);
         }
 
-        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(XmlDocument revistaXml)
+        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(XmlDocument revistaXml, bool lerRevista)
         {
             IList<IRevistaDePatente> listaDeRevistasDePatentes = CarregueDadosDeTodaRevistaXML(revistaXml);
             var listaDeRevistasASeremSalvas = new List<IRevistaDePatente>();
@@ -206,11 +206,13 @@ namespace MP.Servicos.Local
 
                                 processoDePatente.ProcessoEhEstrangeiro = string.IsNullOrEmpty(processoDaRevista.ClassificacaoInternacional);
 
-                                processoDaRevista.Processada = true;
+                                processoDaRevista.Processada = !lerRevista;
                                 processoDaRevista.ExtensaoArquivo = ".XML";
                                 listaDeRevistasASeremSalvas.Add(processoDaRevista);
                                 Excluir(processoDaRevista.NumeroRevistaPatente);
-                                servico.AtualizeProcessoAposLeituraDaRevista(processoDePatente);
+
+                                if(!lerRevista)
+                                    servico.AtualizeProcessoAposLeituraDaRevista(processoDePatente);
                             }
                         }
                     }
@@ -674,14 +676,18 @@ namespace MP.Servicos.Local
             foreach (IRevistaDePatente processo in todosProcessoDaRevista)
             {
                 bool deveAdicionarProcesso = false;
+                bool deveAdicionarProcessoEstado = false;
+                bool deveAdicionarProcessoProcurador = false;
+                bool deveAdicionarProcessoDespacho = false;
                 
                 if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDoProcesso) && processo.NumeroDoProcesso != null
-                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoProcesso].ToUpper()))
+                    && (processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoProcesso].ToUpper()) ||
+                        processo.NumeroDoProcessoFormatado.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoProcesso].ToUpper())))
                     deveAdicionarProcesso = true;
 
                 if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && !string.IsNullOrEmpty(processo.CodigoDoDespacho)
                     && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.CodigoDoRegistro].Equals(processo.CodigoDoDespacho, StringComparison.InvariantCultureIgnoreCase))
-                    deveAdicionarProcesso = true;
+                    deveAdicionarProcessoDespacho = true;
 
                 if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDaPatente) && !string.IsNullOrEmpty(processo.NumeroProcessoDaPatente)
                     && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDaPatente].Equals(processo.NumeroProcessoDaPatente, StringComparison.InvariantCultureIgnoreCase))
@@ -745,7 +751,7 @@ namespace MP.Servicos.Local
 
                 if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && !string.IsNullOrEmpty(processo.Procurador)
                     && processo.Procurador.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoProcurador].ToUpper()))
-                    deveAdicionarProcesso = true;
+                    deveAdicionarProcessoProcurador = true;
 
                 if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PaisesDesignados) && !string.IsNullOrEmpty(processo.PaisesDesignados)
                     && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PaisesDesignados].Equals(processo.PaisesDesignados, StringComparison.InvariantCultureIgnoreCase))
@@ -769,9 +775,34 @@ namespace MP.Servicos.Local
 
                 if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && !string.IsNullOrEmpty(processo.UFTitular)
                     && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Estado].Equals(processo.UFTitular, StringComparison.InvariantCultureIgnoreCase))
-                    deveAdicionarProcesso = true;
+                    deveAdicionarProcessoEstado = true;
 
-                 if(deveAdicionarProcesso)
+                
+                if (deveAdicionarProcesso && filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro)  && deveAdicionarProcessoDespacho)
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso && (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado))
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso && (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador))
+                    revistasFiltradas.Add(processo);
+                else if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho &&
+                         filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado)
+                    revistasFiltradas.Add(processo);
+                else if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho &&
+                         filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)
+                    revistasFiltradas.Add(processo);
+                else if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado &&
+                         filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso &&
+                        ((filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho) &&
+                        (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado) &&
+                        (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)))
+                    revistasFiltradas.Add(processo);
+                if (filtro.ValoresDoFiltro.Keys.Count == 1 && ((filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho) ||
+                    (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado) ||
+                    (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)))
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso)
                     revistasFiltradas.Add(processo);
             }
 
