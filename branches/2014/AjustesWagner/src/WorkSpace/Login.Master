@@ -34,7 +34,7 @@
         
     </div>
     <div class="containerCopyright">
-        CHM Sistemas ©&nbsp;2014 Todos os direitos reservados.
+        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="http://www.chmtecnologia.com.br">CHM Tecnologia ©&nbsp;2014 Todos os direitos reservados.</asp:HyperLink>
     </div>
     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1"
         DisplayAfter="0">
