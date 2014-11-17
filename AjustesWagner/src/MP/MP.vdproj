@@ -6706,13 +6706,7 @@
         "Entry"
         {
         "MsmKey" = "8:_D6999BE8E7FD7DA1B1CA3542ABA1A1F6"
-        "OwnerKey" = "8:_A999E0EB674246B988B85EC213CE5E89"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D6999BE8E7FD7DA1B1CA3542ABA1A1F6"
-        "OwnerKey" = "8:_A0D53469D11E431FAE33A843BFF6ABBD"
+        "OwnerKey" = "8:_B50BE2C5273A4DFD95DDC9AE7846B460"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -6725,6 +6719,18 @@
         {
         "MsmKey" = "8:_D6999BE8E7FD7DA1B1CA3542ABA1A1F6"
         "OwnerKey" = "8:_AB7244705E58A005EA490F2A976D168A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D6999BE8E7FD7DA1B1CA3542ABA1A1F6"
+        "OwnerKey" = "8:_A999E0EB674246B988B85EC213CE5E89"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D6999BE8E7FD7DA1B1CA3542ABA1A1F6"
+        "OwnerKey" = "8:_A0D53469D11E431FAE33A843BFF6ABBD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -7966,6 +7972,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D6999BE8E7FD7DA1B1CA3542ABA1A1F6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_BE503889B69F39E9DC588AC3EFD7421D"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -7985,6 +7997,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_BCD10A19C6254DDF902C420C62AACBEE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B50BE2C5273A4DFD95DDC9AE7846B460"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -8111,12 +8129,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6881C67C0A4E45BE9C6F8B29C894846D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D6999BE8E7FD7DA1B1CA3542ABA1A1F6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -26300,6 +26312,11 @@
             "AssemblyAsmDisplayName" = "8:Telerik.Web.UI.Skins, Version=2014.2.618.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B50BE2C5273A4DFD95DDC9AE7846B460"
+                    {
+                    "Name" = "8:Telerik.Web.UI.Skins.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\..\\bin\\Telerik.Web.UI.Skins.dll"
             "TargetName" = "8:"
@@ -35341,7 +35358,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MP"
         "ProductCode" = "8:{A7FE57A3-6E78-4015-B4DC-189F2ED23A13}"
-        "PackageCode" = "8:{F6111AB1-86EC-4927-91A1-01B09BD877A9}"
+        "PackageCode" = "8:{34CAACBA-5553-4BE7-A0C4-3B9A0C9B64CF}"
         "UpgradeCode" = "8:{E87E30DB-1BB8-4667-B49F-CCB876BE8588}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:TRUE"
