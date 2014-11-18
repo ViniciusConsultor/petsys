@@ -5,7 +5,7 @@ Imports Compartilhados.Interfaces.Core.Negocio
 <Serializable()> _
 Public Class ConfiguracaoDeEmailDoSistema
     Implements IConfiguracaoDeEmailDoSistema
-
+    
     Private _EmailRemetente As String
     Public Property EmailRemetente() As String Implements IConfiguracaoDeEmailDoSistema.EmailRemetente
         Get
@@ -71,7 +71,7 @@ Public Class ConfiguracaoDeEmailDoSistema
         Get
             Return _TipoDoServidor
         End Get
-        Set(ByVal value As Compartilhados.TipoDeServidorDeEmail)
+        Set(ByVal value As TipoDeServidorDeEmail)
             _TipoDoServidor = value
         End Set
     End Property
@@ -83,6 +83,16 @@ Public Class ConfiguracaoDeEmailDoSistema
         End Get
         Set(ByVal value As String)
             _UsuarioDeAutenticacaoDoServidorDeSaida = value
+        End Set
+    End Property
+
+    Private _NomeRemetente As String
+    Public Property NomeRemetente As String Implements IConfiguracaoDeEmailDoSistema.NomeRemetente
+        Get
+            Return _NomeRemetente
+        End Get
+        Set(value As String)
+            _NomeRemetente = value
         End Set
     End Property
 

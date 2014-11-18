@@ -15,7 +15,7 @@ namespace MP.Interfaces.Servicos
         void Inserir(IList<IRevistaDeMarcas> listaDeObjetoRevistaDeMarcas);
         IList<IRevistaDeMarcas> ObtenhaRevistasAProcessar(int quantidadeDeRegistros);
         IList<IRevistaDeMarcas> ObtenhaRevistasJaProcessadas(int quantidadeDeRegistros);
-        IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(string pastaDeArmazenamentoDasRevistas, IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml);
+        IList<IRevistaDeMarcas> ObtenhaProcessosExistentesDeAcordoComARevistaXml(string pastaDeArmazenamentoDasRevistas, IRevistaDeMarcas revistaDeMarcas, XmlDocument revistaXml, bool ehLeitura);
         IList<ILeituraRevistaDeMarcas> ObtenhaResultadoDaConsultaPorFiltroXML(XmlDocument revistaXml, IFiltroLeituraDeRevistaDeMarcas filtro);
         IList<ILeituraRevistaDeMarcas> ObtenhaObjetoDeLeituraRevistaDeMarcas(
             IList<IRevistaDeMarcas> listaDeProcessosExistentes);
@@ -30,5 +30,8 @@ namespace MP.Interfaces.Servicos
         IList<IRevistaDeMarcas> PreparaArquivoDaRevistaParaLeitura(string pastaDeDestinoDasRevistas,
                                                             IDictionary<string, Stream> arquivosASeremProcessados);
 
+        IList<IRevistaDeMarcas> ObtenhaPublicoesDoProcesso(int numeroProcesso);
+
+        bool ExisteRevistaNoBanco(int numeroRevista);
     }
 }

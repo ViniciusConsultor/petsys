@@ -133,9 +133,14 @@
                                             </telerik:GridBoundColumn>
                                            <%-- <telerik:GridBoundColumn DataField="Mensagem" HeaderText="Mensagem" UniqueName="column11">
                                             </telerik:GridBoundColumn>--%>
-                                            <telerik:GridTemplateColumn HeaderText="Destinatários CC">
+                                            <telerik:GridTemplateColumn HeaderText="Destinatários">
                                                 <ItemTemplate>
                                                     <%#MontaListaDeDestinatarios(CType(Container.DataItem, IHistoricoDeEmail))%>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Destinatários CC">
+                                                <ItemTemplate>
+                                                    <%#MontaListaDeDestinatariosCC(CType(Container.DataItem, IHistoricoDeEmail))%>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
                                             <telerik:GridTemplateColumn HeaderText="Destinatários CCo">

@@ -125,7 +125,7 @@ namespace MP.Servicos.Local
             }
         }
         
-        public IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        public IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet, bool considerarNaoAtivos)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -133,7 +133,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaProcessosDePatentes(filtro,quantidadeDeRegistros, offSet);
+                return mapeador.ObtenhaProcessosDePatentes(filtro,quantidadeDeRegistros, offSet, considerarNaoAtivos);
             }
             finally
             {
@@ -158,7 +158,7 @@ namespace MP.Servicos.Local
          
         }
 
-        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
+        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro, bool consideraNaoAtivos)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -166,7 +166,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
+                return mapeador.ObtenhaQuantidadeDeProcessosCadastrados(filtro, consideraNaoAtivos);
             }
             finally
             {
@@ -177,21 +177,6 @@ namespace MP.Servicos.Local
         public void AtivaDesativaProcessoDePatente(long idProcessoDePatente, bool ativo)
         {
             throw new NotImplementedException();
-        }
-
-        public IList<string> ObtenhaTodosNumerosDeProcessosCadastrados()
-        {
-            ServerUtils.setCredencial(_Credencial);
-            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDePatente>();
-
-            try
-            {
-                return mapeador.ObtenhaTodosNumerosDeProcessosCadastrados();
-            }
-            finally
-            {
-                ServerUtils.libereRecursos();
-            }            
         }
 
         public DateTime? ObtenhaDataDepositoDoProcessoVinvuladoAPatente(long idPatente)

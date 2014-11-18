@@ -15,7 +15,7 @@
                                     <asp:Label ID="lblNumeroDoProcesso" runat="server" Text="Número do processo:"/>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNumeroDoProcesso" runat="server" Width="120px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtNumeroDoProcesso" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>    
                             <tr>
@@ -23,7 +23,7 @@
                                     <asp:Label ID="lblNumeroDaRevista" runat="server" Text="Número da revista:"/>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNumeroDaRevista" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtNumeroDaRevista" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>                            
                             <tr>
@@ -31,7 +31,7 @@
                                     <asp:Label ID="lblDataPublicacao" runat="server" Text="Data de publicação:"/>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDataPublicacao" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtDataPublicacao" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>                            
                             <tr>
@@ -39,7 +39,7 @@
                                     <asp:Label ID="lblDataProcessamento" runat="server" Text="Data de processamento:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDataProcessamento" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtDataProcessamento" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -47,7 +47,7 @@
                                     <asp:Label ID="lblDataDeDeposito" runat="server" Text="Data de depósito:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDataDeDeposito" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtDataDeDeposito" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -55,7 +55,7 @@
                                     <asp:Label ID="lblNumeroProcessoDaPatente" runat="server" Text="Número do processo da patente:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNumeroProcessoDaPatente" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtNumeroProcessoDaPatente" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -63,7 +63,7 @@
                                     <asp:Label ID="lblNumeroDoPedido" runat="server" Text="Número do pedido:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNumeroDoPedido" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtNumeroDoPedido" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -71,7 +71,7 @@
                                     <asp:Label ID="lblDataDaPublicacaoDoPedido" runat="server" Text="Data de publicação do pedido:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDataDaPublicacaoDoPedido" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtDataDaPublicacaoDoPedido" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -79,7 +79,7 @@
                                     <asp:Label ID="lblDataDeConcessao" runat="server" Text="Data de concessão:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDataDeConcessao" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtDataDeConcessao" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -87,7 +87,7 @@
                                     <asp:Label ID="lblPrioridadeUnionista" runat="server" Text="Prioridade unionista:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtPrioridadeUnionista" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtPrioridadeUnionista" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -95,7 +95,7 @@
                                     <asp:Label ID="lblClassificacaoInternacional" runat="server" Text="Classificação interncional:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtClassificacaoInternacional" runat="server" Width="120px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtClassificacaoInternacional" runat="server" Width="50%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -191,15 +191,7 @@
                                     <asp:Label ID="lblCodigoDoDespacho" runat="server" Text="Código do despacho:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtCodigoDoDespacho" runat="server" Width="87px" Enabled="false" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="th3">
-                                    <asp:Label ID="lblCodigoDoDespachoAnterior" runat="server" Text="Código do despacho anterior:" />
-                                </td>
-                                <td class="td">
-                                    <telerik:RadTextBox ID="txtCodigoDoDespachoAnterior" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtCodigoDoDespacho" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -303,7 +295,7 @@
                                     <asp:Label ID="lblNaturezaDoDocumento" runat="server" Text="Natureza do documento:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtNaturezaDoDocumento" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtNaturezaDoDocumento" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -311,7 +303,7 @@
                                     <asp:Label ID="lblMoedaDePagamento" runat="server" Text="Moeda de pagamento:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtMoedaDePagamento" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtMoedaDePagamento" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -319,7 +311,7 @@
                                     <asp:Label ID="lblValor" runat="server" Text="Valor:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtValor" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtValor" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -327,7 +319,7 @@
                                     <asp:Label ID="lblPagamento" runat="server" Text="Pagamento:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtPagamento" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtPagamento" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -335,7 +327,7 @@
                                     <asp:Label ID="lblPrazo" runat="server" Text="Prazo:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtPrazo" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtPrazo" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -343,7 +335,7 @@
                                     <asp:Label ID="lblServicosIsentosDeAverbacao" runat="server" Text="Serviços isentos de averbação:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtServicosIsentosDeAverbacao" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtServicosIsentosDeAverbacao" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -383,7 +375,7 @@
                                     <asp:Label ID="lblDataDaCriacao" runat="server" Text="Data de criação:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDataDaCriacao" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtDataDaCriacao" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>
@@ -415,7 +407,7 @@
                                     <asp:Label ID="lblDataDaProrrogacao" runat="server" Text="Data da prorrogação:" />
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtDataDaProrrogacao" runat="server" Width="87px" Enabled="false" />
+                                    <telerik:RadTextBox ID="txtDataDaProrrogacao" runat="server" Width="30%" Enabled="false" />
                                 </td>
                             </tr>
                             <tr>

@@ -128,8 +128,6 @@ namespace MP.Negocio
 
         public string ClassificacaoNacional { get; set; }
 
-        public string CodigoDoDespachoAnterior { get; set; }
-
         public long? IdDoProcessoDaRevista { get; set; }
 
         public string Classificacao

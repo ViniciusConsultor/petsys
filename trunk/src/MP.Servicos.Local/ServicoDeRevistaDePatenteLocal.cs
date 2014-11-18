@@ -74,12 +74,13 @@ namespace MP.Servicos.Local
         }
 
 
-        public IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml)
+        public IList<IRevistaDePatente> ObtenhaProcessosExistentesDeAcordoComARevistaXml(IRevistaDePatente revistaDePatentes, XmlDocument revistaXml, bool lerRevista,
+            bool reprocessamento)
         {
-            return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaXml);
+        return LeiaRevistaXMLEPreenchaProcessosExistentes(revistaXml, lerRevista, reprocessamento);
         }
 
-        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(XmlDocument revistaXml)
+        private IList<IRevistaDePatente> LeiaRevistaXMLEPreenchaProcessosExistentes(XmlDocument revistaXml, bool lerRevista, bool reprocessamento)
         {
             IList<IRevistaDePatente> listaDeRevistasDePatentes = CarregueDadosDeTodaRevistaXML(revistaXml);
             var listaDeRevistasASeremSalvas = new List<IRevistaDePatente>();
@@ -92,154 +93,129 @@ namespace MP.Servicos.Local
                 {
                     processosCadastrados = servico.ObtenhaTodosProcessosAtivos();
 
-                    foreach (IRevistaDePatente processo in listaDeRevistasDePatentes)
+                    foreach (IRevistaDePatente processoDaRevista in listaDeRevistasDePatentes)
                     {
                         bool verificaSeProcessoExiste = false;
 
-                        processo.DataProcessamento = DateTime.Now;
+                        processoDaRevista.DataProcessamento = DateTime.Now;
 
-                        if (processo != null && processo.NumeroDoProcesso != null)
+                        if (processoDaRevista != null && processoDaRevista.NumeroDoProcesso != null)
                         {
-                            processo.NumeroDoProcesso = processo.NumeroDoProcesso.Replace("-", string.Empty);
+                            processoDaRevista.NumeroDoProcesso = processoDaRevista.NumeroDoProcesso.Replace("-", string.Empty);
 
-                            if(processo.NumeroDoProcesso.Length == 15)
+                            if (processoDaRevista.NumeroDoProcesso.Length == 15)
                                 verificaSeProcessoExiste = processosCadastrados.ToList().Find(processoDePatente => processoDePatente.Pais != null && processoDePatente.Patente != null &&
-                                    (processoDePatente.Pais.Sigla + processoDePatente.Patente.NaturezaPatente.SiglaNatureza + processoDePatente.Processo) == processo.NumeroDoProcesso) != null;
+                                    (processoDePatente.Pais.Sigla + processoDePatente.Patente.NaturezaPatente.SiglaNatureza + processoDePatente.Processo) == processoDaRevista.NumeroDoProcesso) != null;
                             else
-                                verificaSeProcessoExiste = processosCadastrados.ToList().Find(processoDePatente => processoDePatente.Processo == processo.NumeroDoProcesso) != null;
+                                verificaSeProcessoExiste = processosCadastrados.ToList().Find(processoDePatente => processoDePatente.Processo == processoDaRevista.NumeroDoProcesso) != null;
                         }
 
                         if (verificaSeProcessoExiste)
                         {
-                            var revistaASerSalva = processo;
-                            var processoDePatenteExistente = processo.NumeroDoProcesso.Length == 15 ? 
-                                servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso.Remove(0, 4)) :
-                                servico.ObtenhaPeloNumeroDoProcesso(processo.NumeroDoProcesso);
+                            var processoDePatente = processoDaRevista.NumeroDoProcesso.Length == 15 ?
+                                servico.ObtenhaPeloNumeroDoProcesso(processoDaRevista.NumeroDoProcesso.Remove(0, 4)) :
+                                servico.ObtenhaPeloNumeroDoProcesso(processoDaRevista.NumeroDoProcesso);
 
-                            if(processoDePatenteExistente != null && processoDePatenteExistente.IdProcessoDePatente != null)
+                            if(processoDePatente != null && processoDePatente.IdProcessoDePatente != null)
                             {
-                                revistaASerSalva.IdRevistaPatente = GeradorDeID.getInstancia().getProximoID();
+                                processoDaRevista.IdRevistaPatente = GeradorDeID.getInstancia().getProximoID();
 
-                                if (processo.DataDeConcessao != null)
+                                if (processoDaRevista.DataDeConcessao != null)
+                                    processoDePatente.DataDaConcessao = processoDaRevista.DataDeConcessao;
+
+                                if (processoDaRevista.DataPublicacao != null)
+                                    processoDePatente.DataDaPublicacao = processoDaRevista.DataPublicacao;
+
+                                if (processoDaRevista.DataDaCriacao != null)
+                                    processoDePatente.DataDaVigencia = processoDaRevista.DataDaCriacao;
+
+                                if (processoDaRevista.DataDeDeposito != null)
+                                    processoDePatente.DataDoDeposito = processoDaRevista.DataDeDeposito;
+
+                                if (processoDaRevista.DataProcessamento != null)
+                                    processoDePatente.DataDoExame = processoDaRevista.DataProcessamento;
+
+                                if (processoDaRevista.CodigoDoDespacho != null)
+                                    AtualizeDespachoNoProcesso(processoDaRevista.CodigoDoDespacho, processoDePatente);
+
+                                if (!string.IsNullOrEmpty(processoDaRevista.Titulo))
+                                    processoDePatente.Patente.TituloPatente = processoDaRevista.Titulo;
+
+                                if (!string.IsNullOrEmpty(processoDaRevista.Classificacao))
                                 {
-                                    processoDePatenteExistente.DataDaConcessao = processo.DataDeConcessao;
-                                    revistaASerSalva.DataDeConcessao = processo.DataDeConcessao;
-                                }
-
-                                if (processo.DataPublicacao != null)
-                                {
-                                    processoDePatenteExistente.DataDaPublicacao = processo.DataPublicacao;
-                                    revistaASerSalva.DataPublicacao = processo.DataPublicacao;
-                                }
-
-                                if (processo.DataDaCriacao != null)
-                                {
-                                    processoDePatenteExistente.DataDaVigencia = processo.DataDaCriacao;
-                                    revistaASerSalva.DataDaCriacao = processo.DataDaCriacao;
-                                }
-
-                                if (processo.DataDeDeposito != null)
-                                {
-                                    processoDePatenteExistente.DataDoDeposito = processo.DataDeDeposito;
-                                    revistaASerSalva.DataDeDeposito = processo.DataDeDeposito;
-                                }
-
-                                if (processo.DataProcessamento != null)
-                                {
-                                    processoDePatenteExistente.DataDoExame = processo.DataProcessamento;
-                                    revistaASerSalva.DataProcessamento = processo.DataProcessamento;
-                                }
-
-                                if (processo.CodigoDoDespacho != null)
-                                {
-                                    revistaASerSalva.CodigoDoDespachoAnterior = processoDePatenteExistente.Despacho == null
-                                                                                    ? null : processoDePatenteExistente.Despacho.Codigo;
-
-                                    AtualizeDespachoNoProcesso(processo.CodigoDoDespacho, processoDePatenteExistente);
-                                }
-
-                                if (!string.IsNullOrEmpty(processo.Titulo) && processoDePatenteExistente.Patente != null)
-                                {
-                                    processoDePatenteExistente.Patente.TituloPatente = processo.Titulo;
-                                    revistaASerSalva.Titulo = processo.Titulo;
-                                }
-
-                                if(!string.IsNullOrEmpty(processo.Classificacao))
-                                {
-                                    bool jaExisteGravacao = processoDePatenteExistente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processo.Classificacao));
+                                    bool jaExisteGravacao = processoDePatente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processoDaRevista.Classificacao));
 
                                     if(!jaExisteGravacao)
                                     {
-                                        if(processoDePatenteExistente.Patente.Classificacoes == null)
-                                        processoDePatenteExistente.Patente.Classificacoes = new List<IClassificacaoPatente>();
+                                        if(processoDePatente.Patente.Classificacoes == null)
+                                        processoDePatente.Patente.Classificacoes = new List<IClassificacaoPatente>();
 
                                         var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
-                                        classificacao.Classificacao = processo.Classificacao;
+                                        classificacao.Classificacao = processoDaRevista.Classificacao;
                                         classificacao.TipoClassificacao = TipoClassificacaoPatente.Nacional;
-                                        processoDePatenteExistente.Patente.Classificacoes.Add(classificacao);
+                                        processoDePatente.Patente.Classificacoes.Add(classificacao);
                                     }
                                 }
 
-                                if (!string.IsNullOrEmpty(processo.ClassificacaoNacional))
+                                if (!string.IsNullOrEmpty(processoDaRevista.ClassificacaoNacional))
                                 {
-                                    bool jaExisteGravacao = processoDePatenteExistente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processo.ClassificacaoNacional));
+                                    bool jaExisteGravacao = processoDePatente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processoDaRevista.ClassificacaoNacional));
 
                                     if(!jaExisteGravacao)
                                     {
-                                        if (processoDePatenteExistente.Patente.Classificacoes == null)
-                                        processoDePatenteExistente.Patente.Classificacoes = new List<IClassificacaoPatente>();
+                                        if (processoDePatente.Patente.Classificacoes == null)
+                                        processoDePatente.Patente.Classificacoes = new List<IClassificacaoPatente>();
 
                                         var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
-                                        classificacao.Classificacao = processo.ClassificacaoNacional;
+                                        classificacao.Classificacao = processoDaRevista.ClassificacaoNacional;
                                         classificacao.TipoClassificacao = TipoClassificacaoPatente.Nacional;
-                                        processoDePatenteExistente.Patente.Classificacoes.Add(classificacao);
+                                        processoDePatente.Patente.Classificacoes.Add(classificacao);
                                     }
                                 }
 
-                                if (!string.IsNullOrEmpty(processo.ClassificacaoInternacional))
+                                if (!string.IsNullOrEmpty(processoDaRevista.ClassificacaoInternacional))
                                 {
-                                    bool jaExisteGravacao = processoDePatenteExistente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processo.ClassificacaoInternacional));
+                                    bool jaExisteGravacao = processoDePatente.Patente.Classificacoes.Any(classificacaoPatente => classificacaoPatente.Classificacao.Equals(processoDaRevista.ClassificacaoInternacional));
 
                                     if(!jaExisteGravacao)
                                     {
-                                        if (processoDePatenteExistente.Patente.Classificacoes == null)
-                                        processoDePatenteExistente.Patente.Classificacoes = new List<IClassificacaoPatente>();
+                                        if (processoDePatente.Patente.Classificacoes == null)
+                                        processoDePatente.Patente.Classificacoes = new List<IClassificacaoPatente>();
 
                                         var classificacao = FabricaGenerica.GetInstancia().CrieObjeto<IClassificacaoPatente>();
-                                        classificacao.Classificacao = processo.ClassificacaoInternacional;
+                                        classificacao.Classificacao = processoDaRevista.ClassificacaoInternacional;
                                         classificacao.TipoClassificacao = TipoClassificacaoPatente.Internacional;
-                                        processoDePatenteExistente.Patente.Classificacoes.Add(classificacao);
+                                        processoDePatente.Patente.Classificacoes.Add(classificacao);
                                     }
                                 }
 
-                                if(!string.IsNullOrEmpty(processo.Observacao))
+                                if (!string.IsNullOrEmpty(processoDaRevista.Observacao))
+                                    processoDePatente.Patente.Observacao += processoDaRevista.Observacao;
+
+                                if (!string.IsNullOrEmpty(processoDaRevista.Observacao))
+                                    processoDePatente.Patente.Resumo += processoDaRevista.Resumo;
+
+
+                                if (!string.IsNullOrEmpty(processoDaRevista.ClassificacaoInternacional))
                                 {
-                                    processoDePatenteExistente.Patente.Observacao += processo.Observacao;
-                                    revistaASerSalva.Observacao = processo.Observacao;
+                                    processoDePatente.PCT = FabricaGenerica.GetInstancia().CrieObjeto<IPCT>();
+                                    processoDePatente.PCT.DataDaPublicacao = processoDaRevista.DataPublicacao;
+                                    processoDePatente.PCT.DataDoDeposito = processoDaRevista.DataDeDeposito;
+                                    processoDePatente.PCT.Numero = processoDaRevista.NumeroDoProcesso;
+                                    processoDePatente.PCT.NumeroWO = processoDaRevista.DadosPublicacaoInternacional;
                                 }
 
-                                if(!string.IsNullOrEmpty(processo.Observacao))
-                                {
-                                    processoDePatenteExistente.Patente.Resumo += processo.Resumo;
-                                    revistaASerSalva.Resumo = processo.Resumo;
-                                }
+                                processoDePatente.ProcessoEhEstrangeiro = string.IsNullOrEmpty(processoDaRevista.ClassificacaoInternacional);
 
-                                if (!string.IsNullOrEmpty(processo.ClassificacaoInternacional))
-                                {
-                                    processoDePatenteExistente.PCT = FabricaGenerica.GetInstancia().CrieObjeto<IPCT>();
-                                    processoDePatenteExistente.PCT.DataDaPublicacao = processo.DataPublicacao;
-                                    processoDePatenteExistente.PCT.DataDoDeposito = processo.DataDeDeposito;
-                                    processoDePatenteExistente.PCT.Numero = processo.NumeroDoProcesso;
-                                    processoDePatenteExistente.PCT.NumeroWO = processo.DadosPublicacaoInternacional;
-                                }
+                                if(!reprocessamento)
+                                    processoDaRevista.Processada = !lerRevista;
 
-                                processoDePatenteExistente.ProcessoEhEstrangeiro = string.IsNullOrEmpty(processo.ClassificacaoInternacional);
+                                processoDaRevista.ExtensaoArquivo = ".XML";
+                                listaDeRevistasASeremSalvas.Add(processoDaRevista);
+                                Excluir(processoDaRevista.NumeroRevistaPatente);
 
-                                revistaASerSalva.Processada = true;
-                                revistaASerSalva.ExtensaoArquivo = ".XML";
-                                listaDeRevistasASeremSalvas.Add(revistaASerSalva);
-                                Excluir(revistaASerSalva.NumeroRevistaPatente);
-                                servico.AtualizeProcessoAposLeituraDaRevista(processoDePatenteExistente);
+                                if(!lerRevista)
+                                    servico.AtualizeProcessoAposLeituraDaRevista(processoDePatente);
                             }
                         }
                     }
@@ -275,7 +251,7 @@ namespace MP.Servicos.Local
             try
             {
                 if(xmlNode.Attributes.GetNamedItem(tagDoNo) == null)
-                    return DateTime.MinValue;
+                    return null;
 
                 string valorTag = xmlNode.Attributes.GetNamedItem(tagDoNo).Value;
                 DateTime dataDaTag;
@@ -365,6 +341,12 @@ namespace MP.Servicos.Local
             if (xmlNode["depositante"] == null) return;
 
             revistaDePatente.Depositante = xmlNode["depositante"].InnerText;
+
+            if (xmlNode["depositante"].Attributes.GetNamedItem("pais") != null)
+                revistaDePatente.PaisTitular = xmlNode["depositante"].Attributes.GetNamedItem("pais").Value;
+
+            if (xmlNode["depositante"].Attributes.GetNamedItem("uf") != null)
+                revistaDePatente.UFTitular = xmlNode["depositante"].Attributes.GetNamedItem("uf").Value;
         }
 
         private void PreenchaProcurador(XmlNode xmlNode, IRevistaDePatente revistaDePatente)
@@ -697,104 +679,133 @@ namespace MP.Servicos.Local
             foreach (IRevistaDePatente processo in todosProcessoDaRevista)
             {
                 bool deveAdicionarProcesso = false;
+                bool deveAdicionarProcessoEstado = false;
+                bool deveAdicionarProcessoProcurador = false;
+                bool deveAdicionarProcessoDespacho = false;
                 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDoProcesso && processo.NumeroDoProcesso != null
-                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDoProcesso) && processo.NumeroDoProcesso != null
+                    && (processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoProcesso].ToUpper()) ||
+                        processo.NumeroDoProcessoFormatado.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoProcesso].ToUpper())))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.CodigoDoRegistro && !string.IsNullOrEmpty(processo.CodigoDoDespacho)
-                    && filtro.ValorFiltro.Equals(processo.CodigoDoDespacho, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && !string.IsNullOrEmpty(processo.CodigoDoDespacho)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.CodigoDoRegistro].Equals(processo.CodigoDoDespacho, StringComparison.InvariantCultureIgnoreCase))
+                    deveAdicionarProcessoDespacho = true;
+
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDaPatente) && !string.IsNullOrEmpty(processo.NumeroProcessoDaPatente)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDaPatente].Equals(processo.NumeroProcessoDaPatente, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDaPatente && !string.IsNullOrEmpty(processo.NumeroProcessoDaPatente)
-                    && filtro.ValorFiltro.Equals(processo.NumeroProcessoDaPatente, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroDoPedido) && !string.IsNullOrEmpty(processo.NumeroDoPedido)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroDoPedido].Equals(processo.NumeroDoPedido, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroDoPedido && !string.IsNullOrEmpty(processo.NumeroDoPedido)
-                    && filtro.ValorFiltro.Equals(processo.NumeroDoPedido, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDoDeposito) && processo.DataDeDeposito.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDoDeposito].Equals(processo.DataDeDeposito.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDoDeposito && processo.DataDeDeposito.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataDeDeposito.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PrioridadeUnionista) && !string.IsNullOrEmpty(processo.PrioridadeUnionista)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PrioridadeUnionista].Equals(processo.PrioridadeUnionista, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PrioridadeUnionista && !string.IsNullOrEmpty(processo.PrioridadeUnionista)
-                    && filtro.ValorFiltro.Equals(processo.PrioridadeUnionista, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDaPublicacao) && processo.DataPublicacao.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDaPublicacao].Equals(processo.DataPublicacao.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDaPublicacao && processo.DataPublicacao.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataPublicacao.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDeConcenssao) && processo.DataDeConcessao.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDeConcenssao].Equals(processo.DataDeConcessao.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeConcenssao && processo.DataDeConcessao.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataDeConcessao.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.ClassificacaoInternacional) && !string.IsNullOrEmpty(processo.ClassificacaoInternacional)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.ClassificacaoInternacional].Equals(processo.ClassificacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.ClassificacaoInternacional && !string.IsNullOrEmpty(processo.ClassificacaoInternacional)
-                    && filtro.ValorFiltro.Equals(processo.ClassificacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Titulo) && !string.IsNullOrEmpty(processo.Titulo)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Titulo].Equals(processo.Titulo, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Titulo && !string.IsNullOrEmpty(processo.Titulo)
-                    && filtro.ValorFiltro.Equals(processo.Titulo, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Resumo) && !string.IsNullOrEmpty(processo.Resumo)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Resumo].Equals(processo.Resumo, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Resumo && !string.IsNullOrEmpty(processo.Resumo)
-                    && filtro.ValorFiltro.Equals(processo.Resumo, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PatentePrincipalAdicao) && processo.NumeroDoProcesso != null
+                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PatentePrincipalAdicao].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PatentePrincipalAdicao && processo.NumeroDoProcesso != null
-                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PatentePrincipalDivisao) && processo.NumeroDoProcesso != null
+                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PatentePrincipalDivisao].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PatentePrincipalDivisao && processo.NumeroDoProcesso != null
-                    && processo.NumeroDoProcesso.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PrioridadeInterna) && !string.IsNullOrEmpty(processo.PrioridadeInterna)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PrioridadeInterna].Equals(processo.PrioridadeInterna, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PrioridadeInterna && !string.IsNullOrEmpty(processo.PrioridadeInterna)
-                    && filtro.ValorFiltro.Equals(processo.PrioridadeInterna, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoDepositante) && !string.IsNullOrEmpty(processo.Depositante)
+                    && processo.Depositante.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoDepositante].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoDepositante && !string.IsNullOrEmpty(processo.Depositante)
-                    && processo.Depositante.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoInventor) && !string.IsNullOrEmpty(processo.Inventor)
+                    && processo.Inventor.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoInventor].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoInventor && !string.IsNullOrEmpty(processo.Inventor)
-                    && processo.Inventor.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoTitular) && !string.IsNullOrEmpty(processo.Titular)
+                    && processo.Titular.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoTitular].ToUpper()))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoTitular && !string.IsNullOrEmpty(processo.Titular)
-                    && processo.Titular.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && !string.IsNullOrEmpty(processo.Procurador)
+                    && processo.Procurador.ToUpper().Contains(filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NomeDoProcurador].ToUpper()))
+                    deveAdicionarProcessoProcurador = true;
+
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.PaisesDesignados) && !string.IsNullOrEmpty(processo.PaisesDesignados)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.PaisesDesignados].Equals(processo.PaisesDesignados, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NomeDoProcurador && !string.IsNullOrEmpty(processo.Procurador)
-                    && processo.Procurador.ToUpper().Contains(filtro.ValorFiltro.ToUpper()))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.DataDeInicioFaseNacional) && processo.DataInicioFaseNacional.HasValue
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.DataDeInicioFaseNacional].Equals(processo.DataInicioFaseNacional.Value.ToString("dd/MM/yyyy")))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.PaisesDesignados && !string.IsNullOrEmpty(processo.PaisesDesignados)
-                    && filtro.ValorFiltro.Equals(processo.PaisesDesignados, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional) && !string.IsNullOrEmpty(processo.DadosDepositoInternacional)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional].Equals(processo.DadosDepositoInternacional, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.DataDeInicioFaseNacional && processo.DataInicioFaseNacional.HasValue
-                    && filtro.ValorFiltro.Equals(processo.DataInicioFaseNacional.Value.ToString("dd/MM/yyyy")))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NumeroIdiomaDataPublicacaoInternacional) && !string.IsNullOrEmpty(processo.DadosPublicacaoInternacional)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.NumeroIdiomaDataPublicacaoInternacional].Equals(processo.DadosPublicacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroIdiomaDataDepositoInternacional && !string.IsNullOrEmpty(processo.DadosDepositoInternacional)
-                    && filtro.ValorFiltro.Equals(processo.DadosDepositoInternacional, StringComparison.InvariantCultureIgnoreCase))
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Rp) && !string.IsNullOrEmpty(processo.ResponsavelPagamentoImpostoDeRenda)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Rp].Equals(processo.ResponsavelPagamentoImpostoDeRenda, StringComparison.InvariantCultureIgnoreCase))
                     deveAdicionarProcesso = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.NumeroIdiomaDataPublicacaoInternacional && !string.IsNullOrEmpty(processo.DadosPublicacaoInternacional)
-                    && filtro.ValorFiltro.Equals(processo.DadosPublicacaoInternacional, StringComparison.InvariantCultureIgnoreCase))
-                    deveAdicionarProcesso = true;
+                if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && !string.IsNullOrEmpty(processo.UFTitular)
+                    && filtro.ValoresDoFiltro[EnumeradorFiltroPatente.Estado].Equals(processo.UFTitular, StringComparison.InvariantCultureIgnoreCase))
+                    deveAdicionarProcessoEstado = true;
 
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Rp && !string.IsNullOrEmpty(processo.ResponsavelPagamentoImpostoDeRenda)
-                    && filtro.ValorFiltro.Equals(processo.ResponsavelPagamentoImpostoDeRenda, StringComparison.InvariantCultureIgnoreCase))
-                    deveAdicionarProcesso = true;
-
-                if (filtro.EnumeradorFiltro == EnumeradorFiltroPatente.Estado && !string.IsNullOrEmpty(processo.UFTitular)
-                    && filtro.ValorFiltro.Equals(processo.UFTitular, StringComparison.InvariantCultureIgnoreCase))
-                    deveAdicionarProcesso = true;
-
-                 if(deveAdicionarProcesso)
+                
+                if (deveAdicionarProcesso && filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro)  && deveAdicionarProcessoDespacho)
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso && (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado))
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso && (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador))
+                    revistasFiltradas.Add(processo);
+                else if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho &&
+                         filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado)
+                    revistasFiltradas.Add(processo);
+                else if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho &&
+                         filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)
+                    revistasFiltradas.Add(processo);
+                else if (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado &&
+                         filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso &&
+                        ((filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho) &&
+                        (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado) &&
+                        (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)))
+                    revistasFiltradas.Add(processo);
+                if (filtro.ValoresDoFiltro.Keys.Count == 1 && ((filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.CodigoDoRegistro) && deveAdicionarProcessoDespacho) ||
+                    (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.Estado) && deveAdicionarProcessoEstado) ||
+                    (filtro.ValoresDoFiltro.Keys.Contains(EnumeradorFiltroPatente.NomeDoProcurador) && deveAdicionarProcessoProcurador)))
+                    revistasFiltradas.Add(processo);
+                else if (deveAdicionarProcesso)
                     revistasFiltradas.Add(processo);
             }
 
@@ -837,6 +848,21 @@ namespace MP.Servicos.Local
             {
                 ServerUtils.libereRecursos();
             }            
+        }
+
+        public IList<IRevistaDePatente> ObtenhaPublicacoes(string numeroDoProcesso)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorDeRevistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                return mapeadorDeRevistaDePatente.ObtenhaPublicacoes(numeroDoProcesso);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }    
         }
     }
 }

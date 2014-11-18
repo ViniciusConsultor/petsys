@@ -37,7 +37,7 @@ namespace MP.Client.MP
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
-                var processosDePatentes = servico.ObtenhaProcessosDePatentes(ObtenhaFiltroRelatorio(), int.MaxValue, 0);
+                var processosDePatentes = servico.ObtenhaProcessosDePatentes(ObtenhaFiltroRelatorio(), int.MaxValue, 0, true);
 
                 if(processosDePatentes == null || processosDePatentes.Count == 0)
                 {

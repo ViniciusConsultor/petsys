@@ -10,14 +10,14 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.007.0001" />
-            <telerik:RadToolBarButton runat="server" Text="Gerar conta a receber coletivamente" ImageUrl="~/imagens/dinheiroGrande.gif"
+            <telerik:RadToolBarButton runat="server" Text="Gerar conta a receber coletivamente" ImageUrl="~/imagens/dinheiro.gif"
                 CommandName="btnGerarContaAReceberColetivo" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
                 CommandName="btnLimpar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
-                CommandName="btnRelatorio" CausesValidation="False" />
+                CommandName="btnRelatorio" CausesValidation="False"/>
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -131,21 +131,16 @@
                                                     <asp:CheckBox ID="headerChkbox" runat="server" OnCheckedChanged="ToggleSelectedState"
                                                         AutoPostBack="True" />
                                                 </HeaderTemplate>
+                                                <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridTemplateColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Modificar" FilterImageToolTip="Modificar"
                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="GerarContaAReceber" FilterImageToolTip="Gerar conta a receber"
-                                                HeaderTooltip="Gerar boleto" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column108">
+                                                HeaderTooltip="Gerar conta a receber" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column108">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                           <%-- <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"
-                                                HeaderTooltip="Cancelar" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
-                                                ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo cancelar a conta a receber?"
-                                                ConfirmTitle="Cancelar">
-                                                <ItemStyle Width="2%"></ItemStyle>
-                                            </telerik:GridButtonColumn>--%>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="Descricao" HeaderText="Descrição" UniqueName="column353">

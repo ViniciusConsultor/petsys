@@ -58,6 +58,7 @@ Partial Public Class frmPainelDeControle
                 End If
 
                 txtRemetente.Text = Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente
+                txtNomeRemetente.Text = Configuracao.ConfiguracaoDeEmailDoSistema.NomeRemetente
             End If
 
             Dim ConfiguracaoDeAgendaDoSistema As IConfiguracaoDeAgendaDoSistema
@@ -157,10 +158,11 @@ Partial Public Class frmPainelDeControle
             ConfiguracaoDeEmail = FabricaGenerica.GetInstancia.CrieObjeto(Of IConfiguracaoDeEmailDoSistema)()
 
             ConfiguracaoDeEmail.EmailRemetente = txtRemetente.Text
+            ConfiguracaoDeEmail.NomeRemetente = txtNomeRemetente.Text
             ConfiguracaoDeEmail.HabilitarSSL = chkSSL.Checked
             ConfiguracaoDeEmail.Porta = CInt(txtPorta.Value)
             ConfiguracaoDeEmail.RequerAutenticacao = chkRequerAutenticacao.Checked
-
+            
             If chkRequerAutenticacao.Checked Then
                 ConfiguracaoDeEmail.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida = AjudanteDeCriptografia.Criptografe(txtSenhaUsuarioAutenticacaoServidorDeSaida.Text)
                 ConfiguracaoDeEmail.UsuarioDeAutenticacaoDoServidorDeSaida = txtUsuarioAutenticacaoServidorDeSaida.Text
@@ -211,8 +213,8 @@ Partial Public Class frmPainelDeControle
 
                 Try
                     GerenciadorDeEmail.EnviaEmail("Teste de envio de e-mail.", _
-                                              ConfiguracaoDeEmail.EmailRemetente, _
                                               destinarios, _
+                                              Nothing, _
                                               Nothing, _
                                               "Teste de envio de e-mail.", _
                                               Nothing, "TESTE_ENVIO_EMAIL", True)

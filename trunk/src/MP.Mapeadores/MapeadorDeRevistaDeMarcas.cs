@@ -28,7 +28,7 @@ namespace MP.Mapeadores
                 
                 sql.Append("INSERT INTO MP_REVISTA_MARCAS (");
                 sql.Append("IDREVISTAMARCAS, NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, NUMEROPROCESSODEMARCA, ");
-                sql.Append("CODIGODESPACHOANTERIOR, CODIGODESPACHOATUAL, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO, ");
+                sql.Append("CODIGODESPACHO, APOSTILA, TEXTODODESPACHO, PROCESSADA, EXTENSAOARQUIVO, ");
                 sql.Append("DATADODEPOSITO, DATACONCESSAO) ");
                 sql.Append("VALUES (");
                 sql.Append(String.Concat(processoDaRevistaDeMarca.IdRevistaMarcas.Value.ToString(), ", "));
@@ -45,12 +45,8 @@ namespace MP.Mapeadores
                 sql.Append(String.Concat(processoDaRevistaDeMarca.NumeroProcessoDeMarca, ", "));
                           
 
-                sql.Append(processoDaRevistaDeMarca.CodigoDespachoAnterior != null
-                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAnterior, "', ")
-                           : "NULL, ");
-
-                sql.Append(processoDaRevistaDeMarca.CodigoDespachoAtual != null
-                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespachoAtual, "', ")
+                sql.Append(processoDaRevistaDeMarca.CodigoDespacho != null
+                           ? String.Concat("'" + processoDaRevistaDeMarca.CodigoDespacho, "', ")
                            : "NULL, ");
 
                 sql.Append(!string.IsNullOrEmpty(processoDaRevistaDeMarca.Apostila)
@@ -87,8 +83,15 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT IDREVISTAMARCAS IdRevistaMarcas, NUMEROREVISTAMARCAS NumeroRevistaMarcas, DATAPUBLICACAO DataPublicacao, ");
-            sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
+            //sql.Append("SELECT NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, ");
+            //sql.Append("PROCESSADA, NUMEROPROCESSODEMARCA, CODIGODESPACHO, APOSTILA, EXTENSAOARQUIVO, ");
+            //sql.Append("TEXTODODESPACHO, DATADODEPOSITO, DATACONCESSAO ");
+            //sql.Append("FROM MP_REVISTA_MARCAS ");
+            //sql.Append("WHERE PROCESSADA = 0 ");
+            //sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
+
+            sql.Append("SELECT distinct(NUMEROREVISTAMARCAS), DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
             sql.Append("FROM MP_REVISTA_MARCAS ");
             sql.Append("WHERE PROCESSADA = 0");
             sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
@@ -100,7 +103,8 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                        revistas.Add(MontaRevistaDeMarcas(leitor));
+                        revistas.Add(MontaRevistaDeMarcas(leitor, false));
+                        //revistas.Add(MontaRevistaDeMarcas(leitor, true));
                 }
                 finally
                 {
@@ -111,23 +115,49 @@ namespace MP.Mapeadores
             return revistas;
         }
 
-        private IRevistaDeMarcas MontaRevistaDeMarcas(IDataReader leitor)
+        private IRevistaDeMarcas MontaRevistaDeMarcas(IDataReader leitor, bool carregaCompleto)
         {
             var revistaDeMarcas = FabricaGenerica.GetInstancia().CrieObjeto<IRevistaDeMarcas>();
 
-            //revistaDeMarcas.IdRevistaMarcas = UtilidadesDePersistencia.GetValorLong(leitor, "IdRevistaMarcas");
+            revistaDeMarcas.NumeroRevistaMarcas = UtilidadesDePersistencia.getValorInteger(leitor, "NUMEROREVISTAMARCAS");
 
-            revistaDeMarcas.NumeroRevistaMarcas = UtilidadesDePersistencia.getValorInteger(leitor, "NumeroRevistaMarcas");
+            if (UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAO").HasValue)
+                revistaDeMarcas.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAO").Value;
 
-            if (UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").HasValue)
+            revistaDeMarcas.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSADA");
+
+            if (!UtilidadesDePersistencia.EhNulo(leitor, "EXTENSAOARQUIVO"))
+                revistaDeMarcas.ExtensaoArquivo = UtilidadesDePersistencia.GetValorString(leitor, "EXTENSAOARQUIVO");
+
+
+            if (carregaCompleto)
             {
-                revistaDeMarcas.DataPublicacao = UtilidadesDePersistencia.getValorDate(leitor, "DataPublicacao").Value;
-            }
-            
-            revistaDeMarcas.Processada = UtilidadesDePersistencia.GetValorBooleano(leitor, "Processada");
+                revistaDeMarcas.NumeroProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor,
+                                                                                              "NUMEROPROCESSODEMARCA");
 
-             if (!UtilidadesDePersistencia.EhNulo(leitor, "ExtensaoArquivo"))
-                 revistaDeMarcas.ExtensaoArquivo = UtilidadesDePersistencia.GetValorString(leitor, "ExtensaoArquivo");
+                if (UtilidadesDePersistencia.getValorDate(leitor, "DATAPROCESSAMENTO").HasValue)
+                    revistaDeMarcas.DataProcessamento =
+                        UtilidadesDePersistencia.getValorDate(leitor, "DATAPROCESSAMENTO").Value;
+
+
+                if (!UtilidadesDePersistencia.EhNulo(leitor, "CODIGODESPACHO"))
+                    revistaDeMarcas.CodigoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "CODIGODESPACHO");
+
+                if (!UtilidadesDePersistencia.EhNulo(leitor, "APOSTILA"))
+                    revistaDeMarcas.Apostila = UtilidadesDePersistencia.GetValorString(leitor, "APOSTILA");
+
+
+                if (!UtilidadesDePersistencia.EhNulo(leitor, "TEXTODODESPACHO"))
+                    revistaDeMarcas.TextoDoDespacho = UtilidadesDePersistencia.GetValorString(leitor, "TEXTODODESPACHO");
+
+                if (UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO").HasValue)
+                    revistaDeMarcas.DataDeConcessao =
+                        UtilidadesDePersistencia.getValorDate(leitor, "DATACONCESSAO").Value;
+
+                if (UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO").HasValue)
+                    revistaDeMarcas.DataDeDeposito =
+                        UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO").Value;
+            }
 
             return revistaDeMarcas;
         }
@@ -139,8 +169,8 @@ namespace MP.Mapeadores
 
             var sql = new StringBuilder();
 
-            sql.Append("SELECT distinct(NUMEROREVISTAMARCAS) NumeroRevistaMarcas, DATAPUBLICACAO DataPublicacao, ");
-            sql.Append("PROCESSADA Processada, EXTENSAOARQUIVO ExtensaoArquivo ");
+            sql.Append("SELECT distinct(NUMEROREVISTAMARCAS), DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
             sql.Append("FROM MP_REVISTA_MARCAS ");
             sql.Append("WHERE PROCESSADA = 1");
             sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
@@ -152,7 +182,7 @@ namespace MP.Mapeadores
                 try
                 {
                     while (leitor.Read())
-                        revistas.Add(MontaRevistaDeMarcas(leitor));
+                        revistas.Add(MontaRevistaDeMarcas(leitor, false));
                 }
                 finally
                 {
@@ -174,6 +204,67 @@ namespace MP.Mapeadores
             sql.Append(String.Concat("WHERE NUMEROREVISTAMARCAS = ", numeroDaRevistaDeMarcas, " "));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
+        }
+
+        public IList<IRevistaDeMarcas> ObtenhaPublicoesDoProcesso(int numeroProcesso)
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT NUMEROREVISTAMARCAS, DATAPUBLICACAO, DATAPROCESSAMENTO, ");
+            sql.Append("PROCESSADA, NUMEROPROCESSODEMARCA, CODIGODESPACHO, APOSTILA, EXTENSAOARQUIVO, ");
+            sql.Append("TEXTODODESPACHO, DATADODEPOSITO, DATACONCESSAO ");
+            sql.Append("FROM MP_REVISTA_MARCAS ");
+            sql.Append("WHERE NUMEROPROCESSODEMARCA = " + numeroProcesso);
+            sql.AppendLine(" ORDER BY NUMEROREVISTAMARCAS DESC");
+
+            IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                try
+                {
+                    while (leitor.Read())
+                        revistas.Add(MontaRevistaDeMarcas(leitor, true));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return revistas;
+        }
+
+        public bool ExisteRevistaNoBanco(int numeroDaRevista)
+        {
+            var DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT NUMEROREVISTAMARCAS, DATAPUBLICACAO, ");
+            sql.Append("PROCESSADA, EXTENSAOARQUIVO ");
+            sql.Append("FROM MP_REVISTA_MARCAS ");
+            sql.Append("WHERE NUMEROREVISTAMARCAS = " + numeroDaRevista);
+
+            IList<IRevistaDeMarcas> revistas = new List<IRevistaDeMarcas>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                try
+                {
+                    while (leitor.Read())
+                        revistas.Add(MontaRevistaDeMarcas(leitor, false));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return revistas.Count > 0;
         }
     }
 }

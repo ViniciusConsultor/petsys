@@ -182,6 +182,9 @@ namespace MP.Mapeadores
 
             if (marca.RadicalMarcas.Count > 0)
                 InserirRadicalMarcas(marca);
+
+            var mapeadorDeEventos = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeEventosDeMarca>();
+            mapeadorDeEventos.AtualizeEventos(marca);
         }
 
         public void Modificar(IMarcas marca)
@@ -246,6 +249,9 @@ namespace MP.Mapeadores
             DBHelper.ExecuteNonQuery(sql.ToString());
 
             ModificarRadicaisMarca(marca);
+
+            var mapeadorDeEventos = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeEventosDeMarca>();
+            mapeadorDeEventos.AtualizeEventos(marca);
         }
 
         private void ModificarRadicaisMarca(IMarcas marca)
@@ -272,6 +278,9 @@ namespace MP.Mapeadores
         public void Excluir(long idMarca)
         {
             RemovaRadicaisDaMarca(idMarca);
+
+            var mapeadorDeEventos = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeEventosDeMarca>();
+            mapeadorDeEventos.RemovaEventos(idMarca);
             
             var sql = new StringBuilder();
             IDBHelper DBHelper;
@@ -281,7 +290,6 @@ namespace MP.Mapeadores
             sql.Append(string.Concat(" WHERE IDMARCA = ", idMarca.ToString()));
 
             DBHelper.ExecuteNonQuery(sql.ToString());
-
         }
 
         private void InserirRadicalMarcas(IMarcas marca)

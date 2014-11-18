@@ -1,5 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ctrlTemplateDeEmail.ascx.cs"
-    Inherits="MP.Client.MP.ctrlTemplateDeEmail" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ctrlTemplateDeEmail.ascx.vb" Inherits="WorkSpace.ctrlTemplateDeEmail" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <table class="tabela">
     <tr>

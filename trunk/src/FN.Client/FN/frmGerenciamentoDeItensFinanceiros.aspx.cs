@@ -21,11 +21,35 @@ namespace FN.Client.FN
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_GERENCIAMENTO_ITENS_FINANCEIROS";
         private const int NUMERO_CELULA_ID_ITEM_FINANCEIRO = 6;
+        private const int NUMERO_COLUNA_MODIFICAR = 1;
+        private const int NUMERO_COLUNA_GERAR_CONTA = 2;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
                 ExibaTelaInicial();
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
+
+            if (grdItensFinanceiros.Columns[NUMERO_COLUNA_MODIFICAR].Visible)
+                grdItensFinanceiros.Columns[NUMERO_COLUNA_MODIFICAR].Visible = principal.EstaAutorizado("OPE.FN.007.0002");
+
+            if (grdItensFinanceiros.Columns[NUMERO_COLUNA_GERAR_CONTA].Visible)
+                grdItensFinanceiros.Columns[NUMERO_COLUNA_GERAR_CONTA].Visible = principal.EstaAutorizado("OPE.FN.007.0003");
+            
+            if (((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible)
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnGerarContaAReceberColetivo")).Visible =
+                    principal.EstaAutorizado("OPE.FN.007.0004");
+
+            if (((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible)
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible =
+                    principal.EstaAutorizado("OPE.FN.007.0005");
+
+            base.OnPreRender(e);
         }
 
         private IFiltro FiltroAplicado

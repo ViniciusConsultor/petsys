@@ -398,5 +398,59 @@ namespace FN.Client.FN {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid grdItensDeContasAReceber;
+        
+        /// <summary>
+        /// divJanelaParaConfirmarData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJanelaParaConfirmarData;
+        
+        /// <summary>
+        /// ctrlDataDePagamentoContaAReceber1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FN.Client.FN.ctrlDataDePagamentoContaAReceber ctrlDataDePagamentoContaAReceber1;
+        
+        /// <summary>
+        /// divJanelaParaConfirmarDataColetivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJanelaParaConfirmarDataColetivo;
+        
+        /// <summary>
+        /// ctrlDataDePagamentoContaAReceber2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FN.Client.FN.ctrlDataDePagamentoContaAReceber ctrlDataDePagamentoContaAReceber2;
+        
+        /// <summary>
+        /// divJanelaParaJustificativaCancelamento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJanelaParaJustificativaCancelamento;
+        
+        /// <summary>
+        /// ctrlJustificativaCancelamentoContaAReceber1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FN.Client.FN.ctrlJustificativaCancelamentoContaAReceber ctrlJustificativaCancelamentoContaAReceber1;
     }
 }

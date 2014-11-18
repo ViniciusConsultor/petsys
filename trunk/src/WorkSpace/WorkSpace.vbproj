@@ -111,6 +111,7 @@
     <Content Include="ctrlCliente.ascx" />
     <Content Include="ctrlOperacaoFiltro.ascx" />
     <Content Include="ctrlPais.ascx" />
+    <Content Include="ctrlTemplateDeEmail.ascx" />
     <Content Include="ctrlTipoDeCarteira.ascx" />
     <Content Include="ctrlTipoEndereco.ascx" />
     <Content Include="ctrlEmpresa.ascx" />
@@ -715,6 +716,7 @@
     <Content Include="imagens\left-corners.png" />
     <Content Include="imagens\left-right.gif" />
     <Content Include="imagens\left-right.png" />
+    <Content Include="imagens\lerRevista.gif" />
     <Content Include="imagens\light-hd.gif" />
     <Content Include="imagens\limpar.gif" />
     <Content Include="imagens\loading-balls.gif" />
@@ -1102,6 +1104,7 @@
     <Content Include="Nucleo\cdGrupoDeAtividade.aspx" />
     <Content Include="Nucleo\cdPaises.aspx" />
     <Content Include="Nucleo\cdTipoDeEndereco.aspx" />
+    <Content Include="Nucleo\frmDetalheEmail.aspx" />
     <Content Include="Nucleo\frmHistoricoDeEmails.aspx" />
     <Content Include="Nucleo\frmVisibilidadePorEmpresa.aspx" />
     <Content Include="StyleSheetResponsivo.css" />
@@ -1139,6 +1142,13 @@
     </Compile>
     <Compile Include="ctrlPais.ascx.vb">
       <DependentUpon>ctrlPais.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ctrlTemplateDeEmail.ascx.designer.vb">
+      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ctrlTemplateDeEmail.ascx.vb">
+      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ctrlTipoDeCarteira.ascx.designer.vb">
@@ -1300,6 +1310,13 @@
     </Compile>
     <Compile Include="Nucleo\frmConfiguracoesPessoais.aspx.vb">
       <DependentUpon>frmConfiguracoesPessoais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nucleo\frmDetalheEmail.aspx.designer.vb">
+      <DependentUpon>frmDetalheEmail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Nucleo\frmDetalheEmail.aspx.vb">
+      <DependentUpon>frmDetalheEmail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Nucleo\frmHistoricoDeEmails.aspx.designer.vb">

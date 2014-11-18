@@ -21,11 +21,30 @@ namespace FN.Client.FN
     {
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_BOLETOS_GERADOS";
         private const string CHAVE_BOLETOS_GERADOS = "CHAVE_BOLETOS_GERADOS";
+        private const int NUMERO_COLUNA_MODIFICAR = 0;
+        private const int NUMERO_COLUNA_EXCLUIR = 1;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
                 ExibaTelaInicial();
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            var principal = FabricaDeContexto.GetInstancia().GetContextoAtual();
+
+            if (((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible)
+                ((RadToolBarButton)rtbToolBar.FindButtonByCommandName("btnRelatorio")).Visible =
+                    principal.EstaAutorizado("OPE.FN.005.0001");
+
+            if (grdBoletosGerados.Columns[NUMERO_COLUNA_MODIFICAR].Visible)
+                grdBoletosGerados.Columns[NUMERO_COLUNA_MODIFICAR].Visible = principal.EstaAutorizado("OPE.FN.005.0002");
+
+            if (grdBoletosGerados.Columns[NUMERO_COLUNA_EXCLUIR].Visible)
+                grdBoletosGerados.Columns[NUMERO_COLUNA_EXCLUIR].Visible = principal.EstaAutorizado("OPE.FN.005.0003");
+
+            base.OnPreRender(e);
         }
 
         private IFiltro FiltroAplicado

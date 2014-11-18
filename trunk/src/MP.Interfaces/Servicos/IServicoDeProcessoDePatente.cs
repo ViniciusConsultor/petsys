@@ -14,11 +14,10 @@ namespace MP.Interfaces.Servicos
         void Modificar(IProcessoDePatente processoDePatente);
         void AtualizeProcessoAposLeituraDaRevista(IProcessoDePatente processoDePatente);
         void Excluir(IProcessoDePatente processoDePatente);
-        IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet);
+        IList<IProcessoDePatente> ObtenhaProcessosDePatentes(IFiltro filtro, int quantidadeDeRegistros, int offSet, bool considerarNaoAtivos);
         IProcessoDePatente Obtenha(long ID);
-        int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
+        int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro, bool considerarNaoAtivos);
         void AtivaDesativaProcessoDePatente(long idProcessoDePatente, bool ativo);
-        IList<string> ObtenhaTodosNumerosDeProcessosCadastrados();
         IProcessoDePatente ObtenhaPeloNumeroDoProcesso(string numeroDoProcesso);
         IList<IProcessoDePatente> obtenhaProcessosAtivosComPatenteQueContemRadicalCadastrado();
         IList<IProcessoDePatente> ObtenhaTodosProcessosAtivos();

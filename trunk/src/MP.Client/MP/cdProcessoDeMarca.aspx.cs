@@ -21,6 +21,7 @@ namespace MP.Client.MP
         private const string CHAVE_ID_PROCESSO_DE_MARCA = "CHAVE_ID_PROCESSO_DE_MARCA";
         private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
         private const string CHAVE_ID_MARCA = "CHAVE_ID_MARCA";
+        private const string CHAVE_PUBLICACOES_MARCA = "CHAVE_PUBLICACOES_MARCA";
 
         private enum Estado : byte
         {
@@ -87,6 +88,7 @@ namespace MP.Client.MP
             }
 
             marca.AdicioneRadicaisMarcas((IList<IRadicalMarcas>)ViewState[CHAVE_RADICAIS]);
+            marca.Eventos = ctrlEventos.Eventos();
 
             return marca;
         }
@@ -184,6 +186,17 @@ namespace MP.Client.MP
 
             if (listaDeRadicalMarcas.Count > 0)
                 MostraRadicalMarcas(listaDeRadicalMarcas);
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeEventosDeMarca>())
+                ctrlEventos.SetaEventos(servico.ObtenhaEventos(marca.IdMarca.Value));
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+            {
+                Publicacoes = servico.ObtenhaPublicoesDoProcesso(Convert.ToInt32(txtProcesso.Text));
+                grdPublicacoes.DataSource = Publicacoes;
+                grdPublicacoes.DataBind();
+            }
+                
         }
 
         private void ExibaTelaNovo()
@@ -226,7 +239,6 @@ namespace MP.Client.MP
 
         private void MostreProcessoDeMarca(IProcessoDeMarca processoDeMarca)
         {
-            MostreMarcas(processoDeMarca.Marca);
             ViewState[CHAVE_ID_PROCESSO_DE_MARCA] = processoDeMarca.IdProcessoDeMarca;
             txtProcesso.Text = processoDeMarca.Processo.ToString();
             rblEstaAtivo.SelectedValue = processoDeMarca.Ativo ? "1" : "0";
@@ -248,6 +260,8 @@ namespace MP.Client.MP
             }
 
             txtApostila.Text = processoDeMarca.Apostila;
+
+            MostreMarcas(processoDeMarca.Marca);
         }
 
         private void LimpaTela()
@@ -270,6 +284,9 @@ namespace MP.Client.MP
             var controle4 = pnlRadicais as Control;
             UtilidadesWeb.LimparComponente(ref controle4);
 
+            var controle5 = pnlPublicacoes as Control;
+            UtilidadesWeb.LimparComponente(ref controle5);
+
             ctrlDespacho.Inicializa();
             ctrlProcurador.Inicializa();
             rblProcessoEhDeTerceiro.Items.Clear();
@@ -290,14 +307,16 @@ namespace MP.Client.MP
             ctrlCliente.Inicializa();
             ctrlNCLRadical.Inicializa();
             ctrlPeriodo.Inicializa();
+            ctrlEventos.Inicializa();
             
             MostraRadicalMarcas(new List<IRadicalMarcas>());
             CarregueComponentes();
 
-            this.RadTabStrip1.Tabs[0].Selected = true;
-            this.RadPageView1.Selected = true;
+            tbsMarcas.Tabs[0].Selected = true;
+            RadPageView1.Selected = true;
 
             imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
+
         }
 
         private IProcessoDeMarca MontaObjeto()
@@ -320,7 +339,7 @@ namespace MP.Client.MP
             processoDeMarca.Apostila = txtApostila.Text;
 
             processoDeMarca.Marca = MontaObjetoMarca();
-
+            
             return processoDeMarca;
         }
 
@@ -571,5 +590,19 @@ namespace MP.Client.MP
 
             txtValor.Type = NumericType.Percent;
         }
+
+        protected void grdPublicacoes_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdPublicacoes,Publicacoes,e);
+        }
+
+
+        private IList<IRevistaDeMarcas> Publicacoes {
+            get { return (IList<IRevistaDeMarcas>)ViewState[CHAVE_PUBLICACOES_MARCA]; }
+            set { ViewState[CHAVE_PUBLICACOES_MARCA] = value; }
+        } 
+
+       
+        
     }
 }

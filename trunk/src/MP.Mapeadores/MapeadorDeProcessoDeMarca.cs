@@ -109,7 +109,7 @@ namespace MP.Mapeadores
             DBHelper.ExecuteNonQuery("DELETE FROM MP_PROCESSOMARCA WHERE IDPROCESSO=" + ID.ToString());
         }
 
-        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet, bool considerarNaoAtivos)
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
@@ -117,6 +117,9 @@ namespace MP.Mapeadores
             var sql = new StringBuilder();
 
             sql.Append(filtro.ObtenhaQuery());
+
+            if (!considerarNaoAtivos)
+                sql.Append(" AND MP_PROCESSOMARCA.ATIVO = 1");
 
             sql.AppendLine(" ORDER BY DATADECADASTRO DESC");
 
@@ -187,12 +190,20 @@ namespace MP.Mapeadores
             return null;
         }
 
-        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro)
+        public int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro, bool considerarNaoAtivos)
         {
             IDBHelper DBHelper;
             DBHelper = ServerUtils.criarNovoDbHelper();
 
-            using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQueryParaQuantidade()))
+            var sql = new StringBuilder();
+
+            sql.Append(filtro.ObtenhaQueryParaQuantidade());
+
+            if (!considerarNaoAtivos)
+                sql.Append(" AND MP_PROCESSOMARCA.ATIVO = 1");
+
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
             {
                 try
                 {
