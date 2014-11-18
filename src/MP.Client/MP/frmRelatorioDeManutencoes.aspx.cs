@@ -59,11 +59,11 @@ namespace MP.Client.MP
 
             if (chkPatentes.Checked)
                 using (var servicoDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
-                    processoDePatentes = servicoDePatente.ObtenhaProcessosDePatentes(ObtenhaFiltroDePatentes(), int.MaxValue, 0);
+                    processoDePatentes = servicoDePatente.ObtenhaProcessosDePatentes(ObtenhaFiltroDePatentes(), int.MaxValue, 0, chkConsiderarNaoAtivas.Checked);
 
             if(chkMarcas.Checked)
                 using (var servicoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
-                    processoDeMarcas = servicoDeMarca.ObtenhaProcessosDeMarcas(ObtenhaFiltroDeMarcas(), int.MaxValue, 0);
+                    processoDeMarcas = servicoDeMarca.ObtenhaProcessosDeMarcas(ObtenhaFiltroDeMarcas(), int.MaxValue, 0, chkConsiderarNaoAtivas.Checked);
 
             if(processoDePatentes == null && processoDeMarcas == null)
             {
@@ -216,6 +216,7 @@ namespace MP.Client.MP
             chkPatentes.Checked = true;
             rdpPeriodoInicio.DbSelectedDate = null;
             rdpPeriodoTermino.DbSelectedDate = null;
+            chkConsiderarNaoAtivas.Checked = false;
 
         }
     }

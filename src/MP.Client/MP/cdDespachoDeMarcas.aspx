@@ -3,7 +3,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc1" %>
-<%@ Register Src="ctrlTemplateDeEmail.ascx" TagName="ctrlTemplateDeEmail" TagPrefix="uc2" %>
+<%@ Register Src="~/ctrlTemplateDeEmail.ascx" TagName="ctrlTemplateDeEmail" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">

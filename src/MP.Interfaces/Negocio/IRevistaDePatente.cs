@@ -36,7 +36,6 @@ namespace MP.Interfaces.Negocio
         string DadosDepositoInternacional { get; set; }
         string DadosPublicacaoInternacional { get; set; }
         string CodigoDoDespacho { get; set; }
-        string CodigoDoDespachoAnterior { get; set; }
         string ResponsavelPagamentoImpostoDeRenda { get; set; }
         string Complemento { get; set; }
         string Decisao { get; set; }

@@ -133,8 +133,8 @@ Public Class ServicoDeSenhaLocal
                 Next
 
                 GerenciadorDeEmail.EnviaEmail("Redefinição de senha.", _
-                                              ConfiguracaoDeEmail.EmailRemetente, _
                                               destinarios, _
+                                              Nothing,
                                               Nothing,
                                               CorpoDoEmail,
                                               Nothing, _

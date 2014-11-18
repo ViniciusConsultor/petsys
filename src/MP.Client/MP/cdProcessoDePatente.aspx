@@ -11,6 +11,7 @@
 <%@ Register Src="ctrlTitular.ascx" TagName="ctrlTitular" TagPrefix="uc8" %>
 <%@ Register Src="~/ctrlPais.ascx" TagName="ctrlPais" TagPrefix="uc9" %>
 <%@ Register Src="ctrlPeriodo.ascx" TagName="ctrlPeriodo" TagPrefix="uc10" %>
+<%@ Register Src="ctrlEventos.ascx" TagName="ctrlEventos" TagPrefix="uc11" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" Skin="Vista" Style="width: 100%;"
         OnButtonClick="rtbToolBar_ButtonClick">
@@ -43,6 +44,10 @@
                             <telerik:RadTab Text="Desenho">
                             </telerik:RadTab>
                             <telerik:RadTab Text="Manutenção">
+                            </telerik:RadTab>
+                            <telerik:RadTab Text="Eventos">
+                            </telerik:RadTab>
+                            <telerik:RadTab Text="Publicações">
                             </telerik:RadTab>
                         </Tabs>
                     </telerik:RadTabStrip>
@@ -434,7 +439,7 @@
                                                 </table>
                                             </fieldset>
                                         </td>
-                                    </tr>                                    
+                                    </tr>
                                     <tr>
                                         <td class="th3">
                                             <asp:Label ID="Label3" runat="server" Text="Processo é estrangeiro?"></asp:Label>
@@ -883,7 +888,8 @@
                                                             UniqueName="colunaDataVencimentoComMulta" DataFormatString="{0:dd/MM/yyyy}" />
                                                         <telerik:GridBoundColumn DataField="DataPagamento" HeaderText="Dt. Pagamento" UniqueName="colunaDataPagamento"
                                                             DataFormatString="{0:dd/MM/yyyy}" />
-                                                        <telerik:GridBoundColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento" />
+                                                        <telerik:GridNumericColumn DataField="ValorPagamento" HeaderText="Valor" UniqueName="colunaValorPagamento"
+                                                            FooterAggregateFormatString="{0:C}" NumericType="Currency" />
                                                         <telerik:GridBoundColumn DataField="AnuidadePaga" HeaderText="Paga" UniqueName="colunaAnuidadePaga" />
                                                     </Columns>
                                                 </MasterTableView>
@@ -967,8 +973,8 @@
                                                 <asp:Label ID="Label31" runat="server" Text="Forma de cobrança"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="True"
-                                                    RepeatDirection="Horizontal" OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
+                                                <asp:RadioButtonList ID="rblFormaDeCobranca" runat="server" AutoPostBack="True" RepeatDirection="Horizontal"
+                                                    OnSelectedIndexChanged="rblFormaDeCobranca_OnSelectedIndexChanged">
                                                 </asp:RadioButtonList>
                                             </td>
                                         </tr>
@@ -984,6 +990,40 @@
                                         </tr>
                                     </table>
                                 </asp:Panel>
+                            </asp:Panel>
+                        </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView6" runat="server" SkinID="Vista">
+                            <uc11:ctrlEventos ID="ctrlEventos" runat="server" />
+                        </telerik:RadPageView>
+                        <telerik:RadPageView ID="RadPageView7" runat="server" SkinID="Vista">
+                            <asp:Panel ID="pnlPublicacoes" runat="server">
+                                <telerik:RadGrid ID="grdPublicacoes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                    PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged">
+                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                    <MasterTableView GridLines="Both">
+                                        <RowIndicatorColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </RowIndicatorColumn>
+                                        <ExpandCollapseColumn>
+                                            <HeaderStyle Width="20px" />
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="NumeroRevistaPatente" HeaderText="RPI" UniqueName="column">
+                                                <ItemStyle Width="5%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="DataPublicacao" HeaderText="Data RPI" UniqueName="column1"
+                                                DataFormatString="{0:dd/MM/yyyy}">
+                                                <ItemStyle Width="10%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column2">
+                                                <ItemStyle Width="10%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Complemento" HeaderText="Complemento do despacho"
+                                                UniqueName="column3">
+                                            </telerik:GridBoundColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
                             </asp:Panel>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>

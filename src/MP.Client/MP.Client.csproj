@@ -176,6 +176,13 @@
     <Compile Include="MP\ctrlDespachoDePatentes.ascx.designer.cs">
       <DependentUpon>ctrlDespachoDePatentes.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MP\ctrlEventos.ascx.cs">
+      <DependentUpon>ctrlEventos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\ctrlEventos.ascx.designer.cs">
+      <DependentUpon>ctrlEventos.ascx</DependentUpon>
+    </Compile>
     <Compile Include="MP\ctrlFiltroRevistaPatente.ascx.cs">
       <DependentUpon>ctrlFiltroRevistaPatente.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -252,13 +259,6 @@
     </Compile>
     <Compile Include="MP\ctrlProcurador.ascx.designer.cs">
       <DependentUpon>ctrlProcurador.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="MP\ctrlTemplateDeEmail.ascx.cs">
-      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MP\ctrlTemplateDeEmail.ascx.designer.cs">
-      <DependentUpon>ctrlTemplateDeEmail.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\ctrlTipoProcedimentoInterno.ascx.cs">
       <DependentUpon>ctrlTipoProcedimentoInterno.ascx</DependentUpon>
@@ -354,8 +354,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeManutencoes.cs" />
+    <Compile Include="Relatorios\GeradorDeRelatorioDeMarcas.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcas.cs" />
     <Compile Include="Relatorios\GeradorDeRelatorioDeProcessosDeMarcasPublicacoesProprias.cs" />
+    <Compile Include="Relatorios\Patentes\GeradorDeRelatorioDePatentes.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioDePublicacoesDasPatentes.cs.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioGeralDePatentes.cs" />
     <Compile Include="Relatorios\Patentes\GeradorDeRelatorioPorClassificacao.cs" />
@@ -383,6 +385,7 @@
     <Content Include="MP\ctrlApresentacao.ascx" />
     <Content Include="MP\ctrlDespachoDeMarcas.ascx" />
     <Content Include="MP\ctrlDespachoDePatentes.ascx" />
+    <Content Include="MP\ctrlEventos.ascx" />
     <Content Include="MP\ctrlFiltroRevistaPatente.ascx" />
     <Content Include="MP\ctrlInventor.ascx" />
     <Content Include="MP\ctrlMarcas.ascx" />
@@ -394,7 +397,6 @@
     <Content Include="MP\ctrlPatente.ascx" />
     <Content Include="MP\ctrlPeriodo.ascx" />
     <Content Include="MP\ctrlProcurador.ascx" />
-    <Content Include="MP\ctrlTemplateDeEmail.ascx" />
     <Content Include="MP\ctrlTipoProcedimentoInterno.ascx" />
     <Content Include="MP\ctrlTitular.ascx" />
     <Content Include="MP\frmDetalhesLeituraDaRevista.aspx" />

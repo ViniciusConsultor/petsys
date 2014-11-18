@@ -10,7 +10,7 @@ Namespace Filtros.HistoricoDeEmail
         Public Overrides Function ObtenhaQuery() As String
             Dim Sql As StringBuilder = New StringBuilder()
 
-            Sql.Append("SELECT ID, DATA, ASSUNTO, REMETENTE, MENSAGEM, DESTINATARIOSCC, DESTINATARIOSCCO, CONTEXTO, POSSUIANEXO ")
+            Sql.Append("SELECT ID, DATA, ASSUNTO, REMETENTE, MENSAGEM, DESTINATARIOS, DESTINATARIOSCC, DESTINATARIOSCCO, CONTEXTO, POSSUIANEXO ")
             Sql.Append("FROM NCL_HISTORICOEMAIL ")
             Sql.AppendLine(" WHERE " & ObtenhaFiltroMontado("MENSAGEM", True))
             Return Sql.ToString()

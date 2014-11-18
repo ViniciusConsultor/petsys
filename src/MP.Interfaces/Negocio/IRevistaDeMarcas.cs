@@ -12,8 +12,7 @@ namespace MP.Interfaces.Negocio
         Nullable<DateTime> DataPublicacao { get; set; }
         Nullable<DateTime> DataProcessamento { get; set; }
         long NumeroProcessoDeMarca { get; set; }
-        string CodigoDespachoAnterior { get; set; }
-        string CodigoDespachoAtual { get; set; }
+        string CodigoDespacho { get; set; }
         string Apostila { get; set; }
         string TextoDoDespacho { get; set; }
         bool Processada { get; set; }

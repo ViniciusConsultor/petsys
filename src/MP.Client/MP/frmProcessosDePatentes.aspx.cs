@@ -8,6 +8,8 @@ using Compartilhados;
 using Compartilhados.Componentes.Web;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using MP.Client.Relatorios.Patentes;
+using MP.Interfaces.Negocio;
 using MP.Interfaces.Negocio.Filtros.Marcas;
 using MP.Interfaces.Negocio.Filtros.Patentes;
 using MP.Interfaces.Servicos;
@@ -63,6 +65,8 @@ namespace MP.Client.MP
 
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
+            chkConsiderarNaoAtivas.Checked = false;
+
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatenteSemFiltro>();
             FiltroAplicado = filtro;
             MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
@@ -72,8 +76,8 @@ namespace MP.Client.MP
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
-                grdProcessosDePatentes.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro);
-                grdProcessosDePatentes.DataSource = servico.ObtenhaProcessosDePatentes(filtro, quantidadeDeProcessos, offSet);
+                grdProcessosDePatentes.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro, chkConsiderarNaoAtivas.Checked);
+                grdProcessosDePatentes.DataSource = servico.ObtenhaProcessosDePatentes(filtro, quantidadeDeProcessos, offSet, chkConsiderarNaoAtivas.Checked);
                 grdProcessosDePatentes.DataBind();
             }
         }
@@ -317,7 +321,9 @@ namespace MP.Client.MP
                 case "btnLimpar":
                     ExibaTelaInicial();
                     break;
-
+                case "btnGerarRelatorio":
+                    GerarRelatorio();
+                    break;
             }
         }
 
@@ -495,6 +501,26 @@ namespace MP.Client.MP
                 grdProcessosDePatentes.Columns[2].Visible = principal.EstaAutorizado("OPE.MP.009.0005");
 
             base.OnPreRender(e);
+        }
+
+        private void GerarRelatorio()
+        {
+            IList<IProcessoDePatente> processosDePatentes = new List<IProcessoDePatente>();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
+            {
+                int quantidadeMaxima = servico.ObtenhaQuantidadeDeProcessosCadastrados(FiltroAplicado, chkConsiderarNaoAtivas.Checked);
+                processosDePatentes = servico.ObtenhaProcessosDePatentes(FiltroAplicado, quantidadeMaxima, 0, chkConsiderarNaoAtivas.Checked);
+
+            }
+
+            if(processosDePatentes.Count == 0)
+                return;
+
+            var geradorDeRelatorioGeral = new GeradorDeRelatorioDePatentes(processosDePatentes);
+            var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
+            var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
         }
     }
 }

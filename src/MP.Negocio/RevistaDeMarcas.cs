@@ -23,12 +23,9 @@ namespace MP.Negocio
         public long NumeroProcessoDeMarca
         { get; set; }
 
-        public string CodigoDespachoAnterior
+        public string CodigoDespacho
         { get; set; }
-
-        public string CodigoDespachoAtual
-        { get; set; }
-
+        
         public string Apostila
         { get; set; }
 

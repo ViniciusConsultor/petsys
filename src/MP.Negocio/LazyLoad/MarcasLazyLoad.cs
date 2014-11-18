@@ -226,5 +226,18 @@ namespace MP.Negocio.LazyLoad
             _marcasReal.AdicioneRadicaisMarcas(listaRadicalMarcas);
         }
 
+        public IList<IEvento> Eventos
+        {
+            get
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                return _marcasReal.Eventos;
+            }
+            set
+            {
+                if (_marcasReal == null) CarregueObjetoReal();
+                _marcasReal.Eventos = value;
+            }
+        }
     }
 }

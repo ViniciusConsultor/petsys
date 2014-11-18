@@ -15,8 +15,10 @@
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.MP.009.0001" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
-                 <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
-            CommandName="btnLimpar" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
+                CommandName="btnGerarRelatorio" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
+                CommandName="btnLimpar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ler revista" CommandArgument="FUN.MP.016"
                 ImageUrl="~/imagens/processarRevista.gif" CommandName="btnLerRevista" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
@@ -44,6 +46,14 @@
                                 </td>
                                 <td class="td">
                                     <uc1:ctrlOperacaoFiltro ID="ctrlOperacaoFiltro1" runat="server" />
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label8" runat="server" Text="Considerar não ativos?"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:CheckBox ID="chkConsiderarNaoAtivas" runat="server" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlDataDeCadastro">

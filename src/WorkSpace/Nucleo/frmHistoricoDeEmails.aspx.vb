@@ -259,7 +259,12 @@ Public Class frmHistoricoDeEmails
                     ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), Guid.NewGuid().ToString(),
                                                                 UtilidadesWeb.MostraMensagemDeInconsitencia(ex.Message), False)
                 End Try
-             
+
+            Case "Detalhar"
+                Dim URL = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "Nucleo/frmDetalheEmail.aspx", "?Id=", id)
+                ScriptManager.RegisterStartupScript(Me, Me.GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.ExibeJanela(URL, "Detalhar histórico de e-mail", 800, 550, "Nucleo_frmDetalheEmail_aspx"), False)
+
         End Select
 
     End Sub
@@ -273,6 +278,10 @@ Public Class frmHistoricoDeEmails
     End Function
 
     Protected Function MontaListaDeDestinatarios(ByVal Historico As IHistoricoDeEmail) As String
+        Return UtilidadesWeb.ObtenhaListaDeStringComQuebraDeLinhaWeb(Historico.Destinatarios)
+    End Function
+
+    Protected Function MontaListaDeDestinatariosCC(ByVal Historico As IHistoricoDeEmail) As String
         Return UtilidadesWeb.ObtenhaListaDeStringComQuebraDeLinhaWeb(Historico.DestinatariosEmCopia)
     End Function
 

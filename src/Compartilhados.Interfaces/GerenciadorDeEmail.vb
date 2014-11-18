@@ -8,7 +8,7 @@ Imports System.IO
 Public Class GerenciadorDeEmail
 
     Public Shared Sub EnviaEmail(ByVal Assunto As String, _
-                                 ByVal Remetente As String, _
+                                 ByVal Destinatarios As IList(Of String), _
                                  ByVal DestinatariosEmCopia As IList(Of String), _
                                  ByVal DestinatariosEmCopiaOculta As IList(Of String), _
                                  ByVal Mensagem As String,
@@ -22,7 +22,7 @@ Public Class GerenciadorDeEmail
         End Using
 
         Using Servico As IServicoDeEnvioDeEmail = FabricaGenerica.GetInstancia.CrieObjeto(Of IServicoDeEnvioDeEmail)()
-            Servico.EnviaEmail(Configuracao, Assunto, Remetente, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Anexos, Contexto, GravaHistorico)
+            Servico.EnviaEmail(Configuracao, Assunto, Destinatarios, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Anexos, Contexto, GravaHistorico)
         End Using
     End Sub
 

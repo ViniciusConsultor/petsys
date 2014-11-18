@@ -7,15 +7,18 @@
 <%@ Register Src="ctrlSituacao.ascx" TagName="ctrlSituacao" TagPrefix="uc1" %>
 <%@ Register Src="ctrlFormaRecebimento.ascx" TagName="ctrlFormaRecebimento" TagPrefix="uc2" %>
 <%@ Register Src="ctrlTipoLacamentoFinanceiroRecebimento.ascx" TagName="ctrlTipoLacamentoFinanceiroRecebimento" TagPrefix="uc6" %>
+<%@ Register Src="ctrlDataDePagamentoContaAReceber.ascx" TagName="ctrlDataDePagamentoContaAReceber" TagPrefix="uc7" %>
+<%@ Register Src="ctrlJustificativaCancelamentoContaAReceber.ascx" TagName="ctrlJustificativaCancelamentoContaAReceber" TagPrefix="uc8" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.001.0001" />
-            <telerik:RadToolBarButton runat="server" Text="Gerar boleto coletivamente" ImageUrl="~/imagens/boleto.png"
+            <telerik:RadToolBarButton runat="server" Text="Gerar boleto coletivamente" ImageUrl="~/imagens/boletopequeno.png"
                 CommandName="btnGerarBoletoColetivo" CausesValidation="False" />
-              <telerik:RadToolBarButton runat="server" Text="Receber conta coletivamente" ImageUrl="~/imagens/dinheiroGrande.gif"
+              <telerik:RadToolBarButton runat="server" Text="Receber conta coletivamente" ImageUrl="~/imagens/Cash_register_Icon_16.png"
                 CommandName="btnReceberContaColetivo" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
@@ -186,14 +189,11 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Cancelar" FilterImageToolTip="Cancelar"
-                                                HeaderTooltip="Cancelar" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
-                                                ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo cancelar a conta a receber?"
-                                                ConfirmTitle="Cancelar">
+                                                HeaderTooltip="Cancelar" ImageUrl="~/imagens/cancel.gif" UniqueName="column8">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Receber" FilterImageToolTip="Receber"
-                                                HeaderTooltip="Receber" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column888"
-                                                ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo receber a conta?" ConfirmTitle="Receber">
+                                                HeaderTooltip="Receber" ImageUrl="~/imagens/Cash_register_Icon_16.png" UniqueName="column888">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">
@@ -249,4 +249,17 @@
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
+  
+    <div id="divJanelaParaConfirmarData" class="janelaModal" runat="server" style="width: 300px; height:150px;">
+        <uc7:ctrlDataDePagamentoContaAReceber ID="ctrlDataDePagamentoContaAReceber1" runat="server" />
+    </div>  
+    
+     <div id="divJanelaParaConfirmarDataColetivo" class="janelaModal" runat="server" style="width: 300px; height:150px;">
+        <uc7:ctrlDataDePagamentoContaAReceber ID="ctrlDataDePagamentoContaAReceber2" runat="server" />
+    </div>   
+
+    <div id="divJanelaParaJustificativaCancelamento" class="janelaModal" runat="server" style="width: 500px;">
+        <uc8:ctrlJustificativaCancelamentoContaAReceber ID="ctrlJustificativaCancelamentoContaAReceber1" runat="server" />
+    </div>
+  
 </asp:Content>

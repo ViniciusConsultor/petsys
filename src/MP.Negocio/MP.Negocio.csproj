@@ -59,6 +59,7 @@
     <Compile Include="ClasseViena.cs" />
     <Compile Include="DespachoDeMarcas.cs" />
     <Compile Include="DespachoDePatentes.cs" />
+    <Compile Include="Evento.cs" />
     <Compile Include="Filtros\Marcas\FiltroLeituraDeRevistaDeMarcas.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorApresentacao.cs" />
     <Compile Include="Filtros\Marcas\FiltroMarcaPorCliente.cs" />

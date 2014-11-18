@@ -30,6 +30,7 @@ namespace MP.Client.MP
         private const string CHAVE_RADICAIS = "CHAVE_RADICAIS";
         private const string CHAVE_TITULARES = "CHAVE_TITULARES";
         private const string CHAVE_INDICE_BAIXA_ANUIDADE = "CHAVE_INDICE_BAIXA_ANUIDADE";
+        private const string CHAVE_PUBLICACOES_PATENTE = "CHAVE_PUBLICACOES_PATENTE";
 
         private IList<ICliente> ListaDeClientes
         {
@@ -181,6 +182,14 @@ namespace MP.Client.MP
 
             ctrlPaisProcesso.PaisSelecionado = processoDePatente.Pais;
             ctrlPaisProcesso.CarreguePaisSelecionado();
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
+            {
+                Publicacoes = servico.ObtenhaPublicacoes(processoDePatente.NumeroDoProcessoFormatado);
+                grdPublicacoes.DataSource = Publicacoes;
+                grdPublicacoes.DataBind();
+            }
+
             ExibaPatenteSelecionada(processoDePatente.Patente);
         }
 
@@ -206,6 +215,9 @@ namespace MP.Client.MP
 
             var controle5 = pnlRadicais as Control;
             UtilidadesWeb.LimparComponente(ref controle5);
+
+            var controle6 = pnlPublicacoes as Control;
+            UtilidadesWeb.LimparComponente(ref controle6);
 
             ctrlProcurador.Inicializa();
             ctrlDespachoDePatentes.Inicializa();
@@ -300,6 +312,8 @@ namespace MP.Client.MP
             imgImagem.ImageUrl = UtilMP.URL_IMAGEM_SEM_FOTO_PATENTE;
 
             LimpeCamposClassificacaoDePatentes();
+            
+            ctrlEventos.Inicializa();
         }
 
         private void MostraPCT(bool mostra)
@@ -339,6 +353,7 @@ namespace MP.Client.MP
                 pct.DataDoDeposito = txtDataDoDepositoPCT.SelectedDate;
             }
 
+            
             return processoDePatente;
         }
 
@@ -700,7 +715,10 @@ namespace MP.Client.MP
                 else
                     imgImagem.ImageUrl = patente.Imagem;
             }
-                
+
+            using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeEventosDePatente>())
+                ctrlEventos.SetaEventos(servico.ObtenhaEventos(patente.Identificador));
+            
         }
 
         private void ExibaTabDeImagemDeDesenhoIndustrial( bool exiba)
@@ -917,7 +935,7 @@ namespace MP.Client.MP
             txtPagamentoSemMulta.SelectedDate = anuidadePatente.DataVencimentoSemMulta;
             txtPagamentoComMulta.SelectedDate = anuidadePatente.DataVencimentoComMulta;
             txtDataPagamento.SelectedDate = anuidadePatente.DataPagamento;
-            txtValorPagamento.Text = anuidadePatente.ValorPagamento.ToString();
+            txtValorPagamento.Value = anuidadePatente.ValorPagamento;
             VisibilidadeBaixar(false);
         }
 
@@ -1051,6 +1069,8 @@ namespace MP.Client.MP
                 patente.Manutencao = manutencao;
             }
 
+            patente.Eventos = ctrlEventos.Eventos();
+
             return patente;
         }
 
@@ -1062,16 +1082,40 @@ namespace MP.Client.MP
 
         private void CalculeAnuidadesPatentesDeNatureza(DateTime dataDeDeposito)
         {
+            IList<IAnuidadePatente> listaDeAnuidades = ListaDeAnuidadeDaPatente.ToList().FindAll(anuidade => anuidade.AnuidadePaga);
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
                 ListaDeAnuidadeDaPatente = servico.CalculeAnuidadesPatentesDeNaturezaPIeMU(dataDeDeposito);
+
+            foreach (IAnuidadePatente anuidadeComBaixa in listaDeAnuidades)
+                foreach (IAnuidadePatente anuidade in ListaDeAnuidadeDaPatente)
+                    if(anuidadeComBaixa.DescricaoAnuidade.Equals((anuidade.DescricaoAnuidade)))
+                    {
+                        anuidade.DataPagamento = anuidadeComBaixa.DataPagamento;
+                        anuidade.ValorPagamento = anuidadeComBaixa.ValorPagamento;
+                        anuidade.AnuidadePaga = anuidadeComBaixa.AnuidadePaga;
+                        break;
+                    }
 
             MostrarListaDeAnuidadeDaPatente();
         }
 
         private void CalculeAnuidadesPatentesDeNaturezaDI(DateTime dataDeDeposito)
         {
+            IList<IAnuidadePatente> listaDeAnuidades = ListaDeAnuidadeDaPatente.ToList().FindAll(anuidade => anuidade.AnuidadePaga);
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDePatente>())
                 ListaDeAnuidadeDaPatente = servico.CalculeAnuidadesPatentesDeNaturezaDI(dataDeDeposito);
+
+            foreach (IAnuidadePatente anuidadeComBaixa in listaDeAnuidades)
+                foreach (IAnuidadePatente anuidade in ListaDeAnuidadeDaPatente)
+                    if (anuidadeComBaixa.DescricaoAnuidade.Equals((anuidade.DescricaoAnuidade)))
+                    {
+                        anuidade.DataPagamento = anuidadeComBaixa.DataPagamento;
+                        anuidade.ValorPagamento = anuidadeComBaixa.ValorPagamento;
+                        anuidade.AnuidadePaga = anuidadeComBaixa.AnuidadePaga;
+                        break;
+                    }
 
             MostrarListaDeAnuidadeDaPatente();
         }
@@ -1304,5 +1348,17 @@ namespace MP.Client.MP
             txtSituacaoDoProcesso.Text = despacho.Situacao;
             txtDescricaoDoDespacho.Text = despacho.Descricao;
         }
+
+        protected void grdPublicacoes_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            UtilidadesWeb.PaginacaoDataGrid(ref grdPublicacoes,Publicacoes,e);
+        }
+
+
+        private IList<IRevistaDePatente> Publicacoes
+        {
+            get { return (IList<IRevistaDePatente>)ViewState[CHAVE_PUBLICACOES_PATENTE]; }
+            set { ViewState[CHAVE_PUBLICACOES_PATENTE] = value; }
+        } 
     }
 }

@@ -12,9 +12,9 @@ namespace MP.Interfaces.Mapeadores
         void Inserir(IProcessoDeMarca processoDeMarca);
         void Modificar(IProcessoDeMarca processoDeMarca);
         void Excluir(long ID);
-        IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet);
+        IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(IFiltro filtro, int quantidadeDeRegistros, int offSet, bool considerarNaoAtivos);
         IProcessoDeMarca Obtenha(long ID);
-        int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro);
+        int ObtenhaQuantidadeDeProcessosCadastrados(IFiltro filtro, bool considerarNaoAtivos);
         IProcessoDeMarca ObtenhaProcessoDeMarcaPeloNumero(long numeroDoProcesso);
         IList<long> ObtenhaTodosNumerosDeProcessosAtivosCadastrados();
         IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade,

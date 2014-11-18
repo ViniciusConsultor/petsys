@@ -68,6 +68,11 @@
                                                     UniqueName="column4">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="LerRevista"
+                                                    FilterImageToolTip="LerRevista" HeaderTooltip="Ler Revista" ImageUrl="~/imagens/lerRevista.gif"
+                                                    UniqueName="column5">
+                                                    <ItemStyle Width="4%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
                                                 <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista(s) a processar"
                                                     UniqueName="column1">
                                                 </telerik:GridBoundColumn>
@@ -93,8 +98,13 @@
                                                     <ItemStyle Width="2%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
                                                 <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="ReprocessarRevista"
-                                                    FilterImageToolTip="ProcessarRevista" HeaderTooltip="Processar Revista" ImageUrl="~/imagens/processarRevista.gif"
+                                                    FilterImageToolTip="ProcessarRevista" HeaderTooltip="Reprocessar Revista" ImageUrl="~/imagens/processarRevista.gif"
                                                     UniqueName="column4">
+                                                    <ItemStyle Width="4%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="LerRevista"
+                                                    FilterImageToolTip="LerRevista" HeaderTooltip="Ler Revista" ImageUrl="~/imagens/lerRevista.gif"
+                                                    UniqueName="column5">
                                                     <ItemStyle Width="4%"></ItemStyle>
                                                 </telerik:GridButtonColumn>
                                                 <telerik:GridBoundColumn DataField="NumeroRevistaMarcas" HeaderText="Revista(s) já processada(s)"
@@ -251,7 +261,7 @@
                                                 <asp:Label ID="Label4" runat="server" Text="Procurador:"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <uc1:ctrlProcurador ID="ctrlProcurador" runat="server" />
+                                                <asp:TextBox ID="txtProcurador" runat="server" Width="89%" />
                                             </td>
                                         </tr>
                                         <tr>

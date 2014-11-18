@@ -12,16 +12,12 @@ namespace MP.Client.MP
 {
     public partial class ctrlFiltroRevistaPatente : UserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
+        protected void Page_Load(object sender, EventArgs e) { }
 
         public void Inicializa()
         {
             LimparControle();
             CarregueCombo();
-            ctrlUF.Inicializa();
         }
 
         private void LimparControle()
@@ -51,19 +47,22 @@ namespace MP.Client.MP
 
         public string ValorFiltro
         {
-            get
-            {
-                if (int.Parse(cboFiltroPatente.SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id))
-                    return ctrlUF.Sigla.Sigla;
-
-                return txtValor.Text;
-            }
+            get { return txtValor.Text; }
         }
 
-        protected void cboFiltroPatente_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        public string EstadoSelecionado
         {
-            ctrlUF.Visible = int.Parse(((RadComboBox)sender).SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id);
-            txtValor.Visible = !int.Parse(((RadComboBox)sender).SelectedValue).Equals(EnumeradorFiltroPatente.Estado.Id); ;
+            get { return txtUF.Text; }
+        }
+
+        public string NomeDoProcurador
+        {
+            get { return txtProcurador.Text; }
+        }
+
+        public string Despacho
+        {
+            get { return txtDespachoDePatentes.Text; }
         }
     }
 }

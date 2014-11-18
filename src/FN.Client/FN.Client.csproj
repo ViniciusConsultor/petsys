@@ -99,12 +99,26 @@
     <Compile Include="FN\cdLancamentoFinanceiroRecebimento.aspx.designer.cs">
       <DependentUpon>cdLancamentoFinanceiroRecebimento.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FN\ctrlDataDePagamentoContaAReceber.ascx.cs">
+      <DependentUpon>ctrlDataDePagamentoContaAReceber.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\ctrlDataDePagamentoContaAReceber.ascx.designer.cs">
+      <DependentUpon>ctrlDataDePagamentoContaAReceber.ascx</DependentUpon>
+    </Compile>
     <Compile Include="FN\ctrlFormaRecebimento.ascx.cs">
       <DependentUpon>ctrlFormaRecebimento.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FN\ctrlFormaRecebimento.ascx.designer.cs">
       <DependentUpon>ctrlFormaRecebimento.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FN\ctrlJustificativaCancelamentoContaAReceber.ascx.cs">
+      <DependentUpon>ctrlJustificativaCancelamentoContaAReceber.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FN\ctrlJustificativaCancelamentoContaAReceber.ascx.designer.cs">
+      <DependentUpon>ctrlJustificativaCancelamentoContaAReceber.ascx</DependentUpon>
     </Compile>
     <Compile Include="FN\ctrlSituacao.ascx.cs">
       <DependentUpon>ctrlSituacao.ascx</DependentUpon>
@@ -204,7 +218,9 @@
     <None Include="FN.Client.snk" />
     <Content Include="FN\cdContaAReceber.aspx" />
     <Content Include="FN\cdLancamentoFinanceiroRecebimento.aspx" />
+    <Content Include="FN\ctrlDataDePagamentoContaAReceber.ascx" />
     <Content Include="FN\ctrlFormaRecebimento.ascx" />
+    <Content Include="FN\ctrlJustificativaCancelamentoContaAReceber.ascx" />
     <Content Include="FN\ctrlSituacao.ascx" />
     <Content Include="FN\ctrlTipoLacamentoFinanceiroRecebimento.ascx" />
     <Content Include="FN\frmBoletoAvulso.aspx" />

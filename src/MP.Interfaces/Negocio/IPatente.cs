@@ -27,6 +27,7 @@ namespace MP.Interfaces.Negocio
         IManutencao Manutencao { get; set; }
         bool PatenteEhDeDesenhoIndutrial();
         string Imagem { get; set; }
+        IList<IEvento> Eventos { get; set; } 
     
     }
 }

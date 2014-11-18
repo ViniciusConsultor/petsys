@@ -82,7 +82,7 @@ namespace MP.Client.MP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MP.Client.MP.ctrlTemplateDeEmail ctrlTemplateDeEmail;
+        protected global::WorkSpace.ctrlTemplateDeEmail ctrlTemplateDeEmail;
         
         /// <summary>
         /// pnlEscolhaDeDestinariosDeMarca control.
@@ -184,22 +184,22 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
-        /// txtDestinarioCCManual control.
+        /// txtDestinarioManual control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtDestinarioCCManual;
+        protected global::Telerik.Web.UI.RadTextBox txtDestinarioManual;
         
         /// <summary>
-        /// btnAdicionarDestinatarioCC control.
+        /// btnAdicionarDestinatario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnAdicionarDestinatarioCC;
+        protected global::Telerik.Web.UI.RadButton btnAdicionarDestinatario;
         
         /// <summary>
         /// Label2 control.
@@ -211,13 +211,58 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// grdDestinatariosCC control.
+        /// grdDestinatarios control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid grdDestinatariosCC;
+        protected global::Telerik.Web.UI.RadGrid grdDestinatarios;
+        
+        /// <summary>
+        /// Label10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label10;
+        
+        /// <summary>
+        /// txtEmailManualCC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtEmailManualCC;
+        
+        /// <summary>
+        /// btnAdicionarDestinarioCC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnAdicionarDestinarioCC;
+        
+        /// <summary>
+        /// Label11 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label11;
+        
+        /// <summary>
+        /// grdDestinariosCC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid grdDestinariosCC;
         
         /// <summary>
         /// Label9 control.

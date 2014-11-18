@@ -48,7 +48,6 @@ namespace MP.Client.MP
             txtDadosDepositoInternacional.Text = revistaDePatente.DadosDepositoInternacional;
             txtDadosPublicacaoInternacional.Text = revistaDePatente.DadosPublicacaoInternacional;
             txtCodigoDoDespacho.Text = revistaDePatente.CodigoDoDespacho;
-            txtCodigoDoDespachoAnterior.Text = revistaDePatente.CodigoDoDespachoAnterior;
             txtResponsavelPagamentoImpostoDeRenda.Text = revistaDePatente.ResponsavelPagamentoImpostoDeRenda;
             txtComplemento.Text = revistaDePatente.Complemento;
             txtDecisao.Text = revistaDePatente.Decisao;

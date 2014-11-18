@@ -83,6 +83,9 @@ namespace MP.Mapeadores
             if (patente.Titulares != null)
                 foreach (ITitular titular in patente.Titulares)
                     InserirTitularPatente(titular, patente.Identificador);
+
+            var mapeadorDeEventos = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeEventosDePatente>();
+            mapeadorDeEventos.AtualizeEventos(patente);
         }
 
         public void Modificar(IPatente patente)
@@ -161,6 +164,9 @@ namespace MP.Mapeadores
             if (patente.Titulares != null)
                 foreach (ITitular titular in patente.Titulares)
                     InserirTitularPatente(titular, patente.Identificador);
+
+            var mapeadorDeEventos = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeEventosDePatente>();
+            mapeadorDeEventos.AtualizeEventos(patente);
         }
 
         public void Exluir(long codigoPatente)
@@ -175,6 +181,9 @@ namespace MP.Mapeadores
             ExcluirCliente(codigoPatente);
             ExcluirRadicais(codigoPatente);
             ExcluirTitulares(codigoPatente);
+
+            var mapeadorDeEventos = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeEventosDePatente>();
+            mapeadorDeEventos.RemovaEventos(codigoPatente);
 
             comandoSQL.Append("DELETE FROM MP_PATENTE WHERE IDPATENTE = " + codigoPatente);
             DBHelper.ExecuteNonQuery(comandoSQL.ToString());
