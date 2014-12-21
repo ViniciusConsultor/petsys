@@ -8,5 +8,6 @@ namespace FN.Interfaces.Negocio
     public interface IConfiguracaoGeralFinanceiro
     {
         string InstrucoesDoBoleto { get; set; }
+        bool HabilitarBotaoImprimir { get; set; }
     }
 }

@@ -24,8 +24,9 @@ namespace FN.Mapeadores
 
             if (configuracaoGeral == null) return;
 
-            sql.Append("INSERT INTO FN_CONFIGGERAL(INSTRUCOESDOBOLETO) VALUES (");
-            sql.Append(string.IsNullOrEmpty(configuracaoGeral.InstrucoesDoBoleto) ? "NULL)" : "'" + configuracaoGeral.InstrucoesDoBoleto + "')");
+            sql.Append("INSERT INTO FN_CONFIGGERAL(INSTRUCOESDOBOLETO, HABILITARBOTAOIMPRIMIR) VALUES (");
+            sql.Append(string.IsNullOrEmpty(configuracaoGeral.InstrucoesDoBoleto) ? "NULL," : "'" + configuracaoGeral.InstrucoesDoBoleto + "',");
+            sql.Append(configuracaoGeral.HabilitarBotaoImprimir ? " '1') " : " '0') ");
             DBHelper.ExecuteNonQuery(sql.ToString());
         }
 
@@ -36,7 +37,7 @@ namespace FN.Mapeadores
             IConfiguracaoGeralFinanceiro configuracaoGeral = null;
             DBHelper = ServerUtils.criarNovoDbHelper();
 
-            sql.Append("SELECT INSTRUCOESDOBOLETO ");
+            sql.Append("SELECT INSTRUCOESDOBOLETO, HABILITARBOTAOIMPRIMIR ");
             sql.Append("FROM FN_CONFIGGERAL ");
 
             using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
@@ -49,6 +50,8 @@ namespace FN.Mapeadores
 
                         if (!UtilidadesDePersistencia.EhNulo(leitor, "INSTRUCOESDOBOLETO"))
                             configuracaoGeral.InstrucoesDoBoleto = UtilidadesDePersistencia.GetValorString(leitor, "INSTRUCOESDOBOLETO");
+
+                        configuracaoGeral.HabilitarBotaoImprimir = UtilidadesDePersistencia.GetValorBooleano(leitor, "HABILITARBOTAOIMPRIMIR");
                     }
                 }
                 finally

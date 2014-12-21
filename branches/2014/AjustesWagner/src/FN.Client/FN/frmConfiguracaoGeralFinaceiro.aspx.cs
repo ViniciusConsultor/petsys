@@ -35,6 +35,8 @@ namespace FN.Client.FN
 
             if (!string.IsNullOrEmpty(configuracaoGeral.InstrucoesDoBoleto))
                 txtInstrucoesDoBoleto.Text = configuracaoGeral.InstrucoesDoBoleto;
+
+            chkHabilitarBotaoImprimir.Checked = configuracaoGeral.HabilitarBotaoImprimir;
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)
@@ -64,6 +66,7 @@ namespace FN.Client.FN
             var configuracao = FabricaGenerica.GetInstancia().CrieObjeto<IConfiguracaoGeralFinanceiro>();
 
             configuracao.InstrucoesDoBoleto = txtInstrucoesDoBoleto.Text;
+            configuracao.HabilitarBotaoImprimir = chkHabilitarBotaoImprimir.Checked;
             return configuracao;
         }
 
