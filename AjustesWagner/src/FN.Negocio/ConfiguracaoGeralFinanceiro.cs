@@ -9,5 +9,8 @@ namespace FN.Negocio
     public class ConfiguracaoGeralFinanceiro : IConfiguracaoGeralFinanceiro
     {
         public string InstrucoesDoBoleto { get; set; }
+
+        public bool HabilitarBotaoImprimir
+        { get; set; }
     }
 }

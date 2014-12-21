@@ -10,8 +10,10 @@
     <script type="text/javascript">
         function imprimir() {
             document.getElementById("btnImprimir").style.display = "none";
+            document.getElementById("btnPdf").style.display = "none";
             window.print();
-            document.getElementById("btnImprimir").style.display = "inline";
+            document.getElementById("btnImprimir").style.display = "inline-block";
+            document.getElementById("btnPdf").style.display = "inline-block";
         }
     
     </script>
@@ -21,8 +23,19 @@
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
     <div id="pnlBoletoGerado" runat="server">
-    </div>    
-    <%--<input id="btnImprimir" type="button" value="Imprimir" style="display: inline" onclick="imprimir()" /> --%>
+    </div>
+    <%
+        var deveHabilitarBotaoImprimir = (bool)Session["HabilitarBotaoImprimir"];
+        var displayBtnImprimir = "display: none";
+        
+        if(deveHabilitarBotaoImprimir)
+        {
+            displayBtnImprimir = "display: inline-block";
+        }
+
+    %>
+        
+    <input id="btnImprimir" type="button" value="Imprimir" style="<%= displayBtnImprimir %>" onclick="imprimir()" /> 
     <asp:Button runat="server" ID="btnPdf" Text="Salvar PDF" OnClick="btnPdf_click"/>
     </form>
 </body>

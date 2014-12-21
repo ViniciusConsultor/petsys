@@ -629,6 +629,15 @@ namespace FN.Client.FN
                 var chaveDoBoleto = Guid.NewGuid().ToString();
 
                 Session.Add(chaveDoBoleto, boletoBancario);
+                Session.Add("HabilitarBotaoImprimir", true);
+
+                using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeConfiguracaoGeralFinanceiro>())
+                {
+                    var configuracaoGeral = servico.Obtenha();
+
+                    if (configuracaoGeral != null)
+                        Session.Add("HabilitarBotaoImprimir", configuracaoGeral.HabilitarBotaoImprimir);
+                }
 
                 MostraBoleto(boletoBancario);
 

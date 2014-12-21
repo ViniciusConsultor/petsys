@@ -33,6 +33,14 @@
                                             <telerik:RadTextBox ID="txtInstrucoesDoBoleto" runat="server" TextMode="MultiLine" Rows="5" Width="100%" MaxLength="4000" />
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="th3">
+                                            <asp:Label ID="lblHabilitarBotaoImprimir" runat="server" Text="Habilitar botão de impressão" />
+                                        </td>
+                                        <td class="td">
+                                        <asp:CheckBox ID="chkHabilitarBotaoImprimir" runat="server" AutoPostBack="true" />
+                                    </td>
+                                    </tr>
                                 </table>
                             </asp:Panel>
                         </telerik:RadPageView>
