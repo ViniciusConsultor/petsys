@@ -245,6 +245,23 @@ namespace MP.Servicos.Local
             }
         }
 
+        public IProcessoDeMarca MontarProcessosDaRevistaParaListagem(IRevistaDeMarcas processo)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoDeMarca>();
+
+            try
+            {
+                return mapeador.MontarProcessosDaRevistaParaListagem(processo);
+            }
+
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
+
         public IList<IMarcas> ObtenhaMarcasComManutencaoAVencerNoMes()
         {
             ServerUtils.setCredencial(_Credencial);

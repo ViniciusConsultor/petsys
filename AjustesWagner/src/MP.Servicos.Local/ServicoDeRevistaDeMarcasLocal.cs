@@ -473,6 +473,12 @@ namespace MP.Servicos.Local
                             var processoDeMarca = servico.ObtenhaProcessoDeMarcaPeloNumero(processoDaRevista.NumeroProcessoDeMarca);
 
                             processoDaRevista.IdRevistaMarcas = GeradorDeID.getInstancia().getProximoID();
+
+                            if(ehLeitura)
+                            {
+                                listaDeDadosDaRevistaASerSalvo.Add(processoDaRevista);
+                                continue;
+                            }
                             
                             if (!string.IsNullOrEmpty(processoDaRevista.CodigoDespacho))
                                 if (processoDeMarca.Despacho != null && !processoDeMarca.Despacho.CodigoDespacho.Equals(processoDaRevista.CodigoDespacho))
@@ -491,8 +497,7 @@ namespace MP.Servicos.Local
                                 processoDeMarca.TextoComplementarDoDespacho = processoDaRevista.TextoDoDespacho;
 
                             listaDeDadosDaRevistaASerSalvo.Add(processoDaRevista);
-
-                            if (!ehLeitura)
+                            
                             servico.AtualizeProcessoAposLeituraDaRevista(processoDeMarca);
                         }
 

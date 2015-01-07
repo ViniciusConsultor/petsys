@@ -474,5 +474,56 @@ namespace MP.Mapeadores
         {
             throw new NotImplementedException();
         }
+
+        public IProcessoDeMarca MontarProcessosDaRevistaParaListagem(IRevistaDeMarcas processo)
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroMarcaPorProcesso>();
+            filtro.Operacao = OperacaoDeFiltro.IgualA;
+            filtro.ValorDoFiltro = processo.NumeroProcessoDeMarca.ToString();
+
+            var processoDeMarca = FabricaGenerica.GetInstancia().CrieObjeto<IProcessoDeMarca>();
+
+            using (var leitor = DBHelper.obtenhaReader(filtro.ObtenhaQuery()))
+                try
+                {
+                    if (leitor.Read())
+                    {
+                        processoDeMarca.Marca = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDMARCA"));
+                        processoDeMarca.IdProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCESSO");
+                        processoDeMarca.Processo = UtilidadesDePersistencia.GetValorLong(leitor, "PROCESSO");
+
+                        var valorDataDeCadastro = UtilidadesDePersistencia.getValorDate(leitor, "DATADECADASTRO");
+                        if(valorDataDeCadastro != null)
+                            processoDeMarca.DataDoCadastro = valorDataDeCadastro.Value;
+
+                        processoDeMarca.DataDoDeposito = processo.DataDeDeposito;
+                        processoDeMarca.DataDeConcessao = processo.DataDeConcessao;
+                        processoDeMarca.ProcessoEhDeTerceiro = UtilidadesDePersistencia.GetValorBooleano(leitor, "PROCESSOEHTERCEIRO");
+
+                        if(!UtilidadesDePersistencia.EhNulo(leitor, "IDPROCURADOR"))
+                            processoDeMarca.Procurador = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IProcuradorLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDPROCURADOR"));
+
+                        if(!UtilidadesDePersistencia.EhNulo(leitor, "IDDESPACHO"))
+                            processoDeMarca.Despacho = FabricaDeObjetoLazyLoad.CrieObjetoLazyLoad<IDespachoDeMarcasLazyLoad>(UtilidadesDePersistencia.GetValorLong(leitor, "IDDESPACHO"));
+
+                        if(!string.IsNullOrEmpty(processo.TextoDoDespacho))
+                            processoDeMarca.TextoComplementarDoDespacho = processo.TextoDoDespacho;
+
+                        if(!string.IsNullOrEmpty(processo.Apostila))
+                            processoDeMarca.Apostila = processo.Apostila;
+
+                        processoDeMarca.Ativo = UtilidadesDePersistencia.GetValorBooleano(leitor, "ATIVO");
+                    }
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+           
+            return processoDeMarca;
+        }
     }
 }
