@@ -299,10 +299,19 @@ namespace MP.Client.MP
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
-                        ExibaTelaInicial();
+                        LimpaCampos();
+                        CarregueGridRevistasJaProcessadas();
+                        CarregaGridComProcessosExistentesNaBase(new List<IRevistaDeMarcas>());
+                        DesabilitaAbaFiltros();
+                        DesabilitaAbaRadicais();
+
                         RadPageView1.Selected = true;
                         RadTabStrip1.Tabs[0].Selected = true;
-                        CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+
+                        //CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+
+                        CarregaGridComProcessosDaRevistaExistentesNaBase(listaDeProcessosExistentes);
+
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -348,13 +357,23 @@ namespace MP.Client.MP
 
                     if (listaDeProcessosExistentes.Count > 0)
                     {
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                        using(var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
                             servico.Inserir(listaDeProcessosExistentes);
 
-                        ExibaTelaInicial();
+                        //ExibaTelaInicial();
+
+                        LimpaCampos();
+                        CarregueGridRevistasJaProcessadas();
+                        CarregaGridComProcessosExistentesNaBase(new List<IRevistaDeMarcas>());
+                        DesabilitaAbaFiltros();
+                        DesabilitaAbaRadicais();
+
                         RadPageView1.Selected = true;
                         RadTabStrip1.Tabs[0].Selected = true;
-                        CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        //CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+
+                        CarregaGridComProcessosDaRevistaExistentesNaBase(listaDeProcessosExistentes);
+
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -380,7 +399,7 @@ namespace MP.Client.MP
 
                         listaDeProcessosExistentes.Add(revistaDeMarcasParaHistorico);
 
-                        using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
+                        using(var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDeMarcas>())
                             servico.Inserir(listaDeProcessosExistentes);
 
                         this.ExibaTelaInicial();
@@ -653,6 +672,41 @@ namespace MP.Client.MP
                 foreach (var processo in listaDeProcessosExistentes)
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
                         listaDeProcessos.Add(servico.ObtenhaProcessoDeMarcaPeloNumero(processo.NumeroProcessoDeMarca));
+
+                MostraProcessosDaRevista(listaDeProcessos);
+
+                pnlRelatorios.Visible = true;
+            }
+            else
+            {
+                var controleGrid = gridRevistaProcessos as Control;
+                UtilidadesWeb.LimparComponente(ref controleGrid);
+                MostraProcessosDaRevista(new List<IProcessoDeMarca>());
+            }
+        }
+
+        private void CarregaGridComProcessosDaRevistaExistentesNaBase(IList<IRevistaDeMarcas> listaDeProcessosExistentes)
+        {
+            IList<IProcessoDeMarca> listaDeProcessos = new List<IProcessoDeMarca>();
+
+            if(listaDeProcessosExistentes.Count > 0)
+            {
+                foreach(var processo in listaDeProcessosExistentes)
+                {
+                    IProcessoDeMarca processoDeMarca;
+
+                    using(var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
+                    {
+                        processoDeMarca = servico.MontarProcessosDaRevistaParaListagem(processo);
+                    }
+
+                    using(var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                    {
+                        processoDeMarca.Despacho = servico.ObtenhaDespachoPorCodigo(processo.CodigoDespacho);
+                    } 
+
+                    listaDeProcessos.Add(processoDeMarca);
+                }
 
                 MostraProcessosDaRevista(listaDeProcessos);
 

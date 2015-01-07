@@ -27,5 +27,6 @@ namespace MP.Interfaces.Mapeadores
                                                                              IList<string> IDsDosDespachos);
 
         IList<IMarcas> ObtenhaMarcasComManutencaoAVencerNoMes();
+        IProcessoDeMarca MontarProcessosDaRevistaParaListagem(IRevistaDeMarcas processo);
     }
 }
