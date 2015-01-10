@@ -84,7 +84,10 @@ namespace MP.Mapeadores
             sql.Append("FROM MP_DESPACHO_MARCA ");
 
             if (!String.IsNullOrEmpty(descricaoParcial))
+            {
                 sql.Append(string.Concat("WHERE DESCRICAO_DESPACHO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoParcial.ToUpper()), "%'"));
+                sql.Append(string.Concat(" OR CODIGO_DESPACHO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoParcial.ToUpper()), "%'"));
+            }
 
             sql.Append(" ORDER BY CODIGO_DESPACHO");
 
