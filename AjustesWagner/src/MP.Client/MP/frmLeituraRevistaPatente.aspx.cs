@@ -922,7 +922,7 @@ namespace MP.Client.MP
                 listaDeProcessos = ((IList<IProcessoDePatente>)ViewState[CHAVE_PROCESSOS_DA_REVISTA]);
 
                 using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeRevistaDePatente>())
-                    revistaDePatentes = servico.ObtenhaRevistasProcessadas(int.Parse(numeroDaRevistaSelecionada));
+                    revistaDePatentes = servico.ObtenhaRevistasRelatorio(int.Parse(numeroDaRevistaSelecionada));
 
                 var gerador = new GeradorDeRelatorioDePublicacoesDasPatentes(listaDeProcessos, revistaDePatentes);
                 var nomeDoArquivo = gerador.GereRelatorioAnalitico(numeroDaRevistaSelecionada);

@@ -383,6 +383,40 @@ namespace MP.Mapeadores
         
         }
 
+        public IList<IRevistaDePatente> ObtenhaRevistasRelatorio(int numeroDaRevistaDePatente)
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+            var sql = new StringBuilder();
+
+            sql.Append("SELECT ");
+            sql.Append("	IDREVISTAPATENTE, NUMEROREVISTAPATENTE, DATAPUBLICACAO, DATAPROCESSAMENTO, PROCESSADA, EXTENSAOARQUIVO, DATADODEPOSITO, NUMEROPROCESSOPATENTE,");
+            sql.Append("	NUMERODOPEDIDO, DATAPUBLICPEDIDO, DATACONCESSAO, PRIORIDADEUNIONISTA, CLASSIFICACAOINTER, TITULO, RESUMO, DADOSPEDIDOPATENTE, DADOSPATENTEORIGINAL,");
+            sql.Append("	PRIORIDADEINTERNA, DEPOSITANTE, INVENTOR, TITULAR, UFTITULAR, PAISTITULAR, PROCURADOR, PAISESDESIGNADOS, DATAINICIOFASENAC, DADOSDEPOSINTER,");
+            sql.Append("	DADOSPUBLICINTER, CODIGODESPACHOATUAL, RESPPGTOIMPRENDA, COMPLEMENTO, DECISAO, RECORRENTE, NUMERODOPROCESSO, CEDENTE,");
+            sql.Append("	CESSIONARIA, OBSERVACAO, ULTIMAINFORMACAO, CERTIFAVERBACAO, PAISCEDENTE, PAISCESSIONARIA, SETOR, ENDERECOCESSIONARIA ,NATUREZADOCUMENTO,");
+            sql.Append("	MOEDADEPAGAMENTO, VALOR, PAGAMENTO, PRAZO, SERVISENTOSDEAVERBACAO, CRIADOR, LINGUAGEM ,CAMPOAPLICACAO, TIPODEPROGRAMA ,DATADACRIACAO ,REGIMEDEGUARDA,");
+            sql.Append("	REQUERENTE ,REDACAO ,DATAPRORROGACAO ,CLASSIFICACAONACIONAL, NUMPROCESSOFORMATADO ");
+            sql.Append("FROM MP_REVISTA_PATENTE ");
+            sql.Append("WHERE NUMEROREVISTAPATENTE = " + numeroDaRevistaDePatente);
+
+            IList<IRevistaDePatente> revistas = new List<IRevistaDePatente>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                try
+                {
+                    while (leitor.Read())
+                        revistas.Add(MapeieRevistaPatente(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return revistas;
+        }
 
         private IRevistaDePatente MapeieRevistaPatente(IDataReader leitor)
         {
