@@ -864,5 +864,20 @@ namespace MP.Servicos.Local
                 ServerUtils.libereRecursos();
             }    
         }
+
+        public IList<IRevistaDePatente> ObtenhaRevistasRelatorio(int numeroDaRevistaDePatente)
+        {
+            ServerUtils.setCredencial(_Credencial);
+            var mapeadorDeRevistaDePatente = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeRevistaDePatente>();
+
+            try
+            {
+                return mapeadorDeRevistaDePatente.ObtenhaRevistasRelatorio(numeroDaRevistaDePatente);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace MP.Negocio
                            Processo.Substring(10, 1);
                 
                 if (Processo.Length == 8)
-                    return Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 7) + "-" + " " + Processo.Substring(7, 1);
+                    return Patente.NaturezaPatente.SiglaNatureza + " " + Processo.Substring(0, 7) + "-" + Processo.Substring(7, 1);
 
                 return Processo;    
             }
