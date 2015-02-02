@@ -6,11 +6,11 @@
 <%@ Register Src="~/ctrlGrupoDeAtividade.ascx" TagName="ctrlGrupoDeAtividade" TagPrefix="uc2" %>
 <%@ Register Src="ctrlDespachoDeMarcas.ascx" TagName="ctrlDespachoDeMarcas" TagPrefix="uc3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-      <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
+    <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
         <Items>
             <telerik:RadToolBarButton runat="server" Text="Gerar" ImageUrl="~/imagens/imprimir.png"
-                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.MP.012.0001"  />
+                CommandName="btnImprimir" CausesValidation="False" CommandArgument="OPE.MP.012.0001" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -42,36 +42,53 @@
                                     <asp:Label ID="Label2" runat="server" Text="Despachos"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <uc3:ctrlDespachoDeMarcas ID="ctrlDespacho" runat="server" /><asp:ImageButton ID="btnAdicionarDespacho"                                       
-                                    runat="server" ImageUrl="~/imagens/add.gif" ToolTip="Adicionar despacho na lista" OnClick="btnAdicionarDespacho_OnClick" />
+                                    <uc3:ctrlDespachoDeMarcas ID="ctrlDespacho" runat="server" /><asp:ImageButton ID="btnAdicionarDespacho"
+                                        runat="server" ImageUrl="~/imagens/add.gif" ToolTip="Adicionar despacho na lista"
+                                        OnClick="btnAdicionarDespacho_OnClick" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="td" colspan="2">
-                                 <telerik:RadGrid ID="grdDespachos" runat="server" AutoGenerateColumns="False"
-                                    AllowPaging="True" PageSize="5" GridLines="None" Skin="Vista"
-                                    AllowFilteringByColumn="false" OnPageIndexChanged="grdDespachos_OnPageIndexChanged" OnItemCommand="grdDespachos_OnItemCommand" >
-                                    
-                                    <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
-                                    <MasterTableView GridLines="Both">
-                                        <RowIndicatorColumn>
-                                            <HeaderStyle Width="20px" />
-                                        </RowIndicatorColumn>
-                                        <ExpandCollapseColumn>
-                                            <HeaderStyle Width="20px" />
-                                        </ExpandCollapseColumn>
-                                        <Columns>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
-                                                <ItemStyle Width="2%"></ItemStyle>
-                                            </telerik:GridButtonColumn>
-                                            <telerik:GridBoundColumn DataField="IdDespacho" HeaderText="ID" UniqueName="column1" Display="false">
-                                            </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="CodigoDespacho" HeaderText="Código do despacho" UniqueName="column5">
-                                            </telerik:GridBoundColumn>
-                                        </Columns>
-                                    </MasterTableView>
-                                </telerik:RadGrid>
+                                    <telerik:RadGrid ID="grdDespachos" runat="server" AutoGenerateColumns="False" AllowPaging="True"
+                                        PageSize="5" GridLines="None" Skin="Vista" AllowFilteringByColumn="false" OnPageIndexChanged="grdDespachos_OnPageIndexChanged"
+                                        OnItemCommand="grdDespachos_OnItemCommand">
+                                        <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
+                                        <MasterTableView GridLines="Both">
+                                            <RowIndicatorColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </RowIndicatorColumn>
+                                            <ExpandCollapseColumn>
+                                                <HeaderStyle Width="20px" />
+                                            </ExpandCollapseColumn>
+                                            <Columns>
+                                                <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
+                                                    HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8">
+                                                    <ItemStyle Width="2%"></ItemStyle>
+                                                </telerik:GridButtonColumn>
+                                                <telerik:GridBoundColumn DataField="IdDespacho" HeaderText="ID" UniqueName="column1"
+                                                    Display="false">
+                                                </telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="CodigoDespacho" HeaderText="Código do despacho"
+                                                    UniqueName="column5">
+                                                </telerik:GridBoundColumn>
+                                            </Columns>
+                                        </MasterTableView>
+                                    </telerik:RadGrid>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="lblStatusDoProcesso" runat="server" Text="Status do Processo:"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rdlStatusDoProcesso" runat="server" RepeatDirection="Horizontal"
+                                        CellSpacing="10">
+                                        <Items>
+                                            <asp:ListItem Selected="true" runat="server" Value="Todos" />
+                                            <asp:ListItem runat="server" Value="Ativos" />
+                                            <asp:ListItem runat="server" Value="Inativos" />
+                                        </Items>
+                                    </asp:RadioButtonList>
                                 </td>
                             </tr>
                         </table>
