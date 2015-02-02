@@ -40,21 +40,21 @@ Public Class ServicoDeEnvioDeEmailLocal
                 Gerenciador.EnableSsl = .HabilitarSSL
 
                 Dim MensagemDeEmail As MailMessage = New MailMessage
-                MensagemDeEmail.From = New MailAddress(Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente, Configuracao.ConfiguracaoDeEmailDoSistema.NomeRemetente)
+                MensagemDeEmail.From = New MailAddress(Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente.ToLower(), UtilidadesDeString.TransformeStringParaStringApresentavel(Configuracao.ConfiguracaoDeEmailDoSistema.NomeRemetente))
                 
                 For Each Destinatario As String In Destinatarios
-                    MensagemDeEmail.To.Add(New MailAddress(Destinatario))
+                    MensagemDeEmail.To.Add(New MailAddress(Destinatario.ToLower()))
                 Next
 
                 If Not DestinatariosEmCopia Is Nothing AndAlso DestinatariosEmCopia.Count > 0 Then
                     For Each DestinatarioEmCopia As String In DestinatariosEmCopia
-                        MensagemDeEmail.CC.Add(New MailAddress(DestinatarioEmCopia))
+                        MensagemDeEmail.CC.Add(New MailAddress(DestinatarioEmCopia.ToLower()))
                     Next
                 End If
 
                 If Not DestinatariosEmCopiaOculta Is Nothing AndAlso DestinatariosEmCopiaOculta.Count > 0 Then
                     For Each DestinatarioOculto As String In DestinatariosEmCopiaOculta
-                        MensagemDeEmail.Bcc.Add(New MailAddress(DestinatarioOculto))
+                        MensagemDeEmail.Bcc.Add(New MailAddress(DestinatarioOculto.ToLower()))
                     Next
                 End If
 

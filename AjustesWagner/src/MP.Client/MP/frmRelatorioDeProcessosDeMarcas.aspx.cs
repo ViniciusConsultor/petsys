@@ -112,7 +112,7 @@ namespace MP.Client.MP
             
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarca>())
             {
-                var processos = servico.ObtenhaProcessosDeMarcas(IDCliente, IDGrupoDeAtividade, IDsDosDespachos);
+                var processos = servico.ObtenhaProcessosDeMarcas(IDCliente, IDGrupoDeAtividade, IDsDosDespachos, ObtenhaModoDePesquisaSelecionado());
 
                 var gerador = new GeradorDeRelatorioDeProcessosDeMarcas(processos);
                 var nomeDoArquivo = gerador.GereRelatorio();
@@ -123,6 +123,20 @@ namespace MP.Client.MP
             }
 
             
+        }
+
+        private ModoDePesquisaPorStatus ObtenhaModoDePesquisaSelecionado()
+        {
+            switch (rdlStatusDoProcesso.SelectedValue)
+            {
+                case "Ativos" :
+                    return ModoDePesquisaPorStatus.Ativos;
+                    
+                case "Inativos" :
+                    return ModoDePesquisaPorStatus.Inativos;
+            }
+
+            return ModoDePesquisaPorStatus.Todos;
         }
 
         protected void rtbToolBar_ButtonClick(object sender, RadToolBarEventArgs e)

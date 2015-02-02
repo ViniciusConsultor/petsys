@@ -8,6 +8,31 @@ Imports System.Text.RegularExpressions
 Imports System.Net
 
 Public Class UtilidadesDeString
+
+    Public Shared Function TransformeStringParaStringApresentavel(stringDesformatada As String) As String
+        Dim transformaEmMaiusculo = True
+        Dim stringFormatada = New StringBuilder
+
+        For Each caracter In stringDesformatada
+            If Char.IsWhiteSpace(caracter) Then
+                transformaEmMaiusculo = True
+                stringFormatada.Append(caracter)
+                Continue For
+            End If
+
+            If transformaEmMaiusculo Then
+                caracter = Char.ToUpper(caracter)
+                transformaEmMaiusculo = False
+            Else
+                caracter = Char.ToLower(caracter)
+            End If
+
+            stringFormatada.Append(caracter)
+        Next
+
+        Return stringFormatada.ToString()
+    End Function
+
     Public Shared Function RemoveAcentos(Valor As String) As String
         'If Not String.IsNullOrEmpty(Valor) Then
         '    Return HttpUtility.UrlEncode(Valor, Encoding.GetEncoding(28597)).Replace("+", " ")

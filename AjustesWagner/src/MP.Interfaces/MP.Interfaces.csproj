@@ -141,6 +141,7 @@
     <Compile Include="Negocio\LazyLoad\IProcuradorLazyLoad.cs" />
     <Compile Include="Negocio\LazyLoad\ITitularLazyLoad.cs" />
     <Compile Include="Negocio\Mes.cs" />
+    <Compile Include="Negocio\ModoPesquisaStatus.cs" />
     <Compile Include="Negocio\NaturezaDeMarca.cs" />
     <Compile Include="Negocio\NCL.cs" />
     <Compile Include="Negocio\Periodo.cs" />

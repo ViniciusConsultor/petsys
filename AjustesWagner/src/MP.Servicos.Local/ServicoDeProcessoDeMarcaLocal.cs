@@ -211,7 +211,7 @@ namespace MP.Servicos.Local
             }
         }
 
-        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade, IList<string> IDsDosDespachos)
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade, IList<string> IDsDosDespachos, ModoDePesquisaPorStatus modoDePesquisaPorStatus)
         {
             ServerUtils.setCredencial(_Credencial);
 
@@ -219,7 +219,7 @@ namespace MP.Servicos.Local
 
             try
             {
-                return mapeador.ObtenhaProcessosDeMarcas(IDCliente, IDGrupoDeAtividade, IDsDosDespachos);
+                return mapeador.ObtenhaProcessosDeMarcas(IDCliente, IDGrupoDeAtividade, IDsDosDespachos, modoDePesquisaPorStatus);
             }
 
             finally

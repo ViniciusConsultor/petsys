@@ -266,7 +266,7 @@ namespace MP.Mapeadores
             return listaDeProcessos;
         }
 
-        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade, IList<string> IDsDosDespachos)
+        public IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade, IList<string> IDsDosDespachos, ModoDePesquisaPorStatus modoDePesquisaPorStatus)
         {
             var sql = new StringBuilder();
 
@@ -279,13 +279,29 @@ namespace MP.Mapeadores
             sql.AppendLine(" INNER JOIN MP_MARCAS ON MP_PROCESSOMARCA.IDMARCA = MP_MARCAS.IDMARCA");
             sql.AppendLine(" INNER JOIN NCL_cliente ON NCL_CLIENTE.IDPESSOA = MP_MARCAS.IDCLIENTE");
             sql.AppendLine(" LEFT JOIN NCL_GRUPO_DE_ATIVIDADE ON NCL_GRUPO_DE_ATIVIDADE.ID = NCL_CLIENTE.IDGRPATIVIDADE");
-            
+
+            sql.AppendLine(" WHERE ");
+
+
+            switch (modoDePesquisaPorStatus)
+            {
+                case ModoDePesquisaPorStatus.Ativos :
+                    sql.Append(" ATIVO = 1 ");
+                    break;
+                case ModoDePesquisaPorStatus.Inativos :
+                    sql.Append(" ATIVO = 0");
+                    break;
+                case ModoDePesquisaPorStatus.Todos :
+                    sql.Append("(ATIVO = 1 OR ATIVO = 0)");
+                    break;
+            }
+
             if (IDCliente.HasValue)
-                sql.AppendLine( " WHERE "  +  " MP_MARCAS.IDCLIENTE = " + IDCliente.Value +  " ");
+                sql.AppendLine( " AND "  +  " MP_MARCAS.IDCLIENTE = " + IDCliente.Value +  " ");
 
             if (IDsDosDespachos != null && IDsDosDespachos.Count > 0)
             {
-                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE " );
+                sql.AppendLine("AND ");
                 sql.AppendLine(
                     UtilidadesDePersistencia.MontaFiltro<string>("MP_PROCESSOMARCA.IDDESPACHO", IDsDosDespachos, "OR",
                                                                  false) + " ");
@@ -293,8 +309,7 @@ namespace MP.Mapeadores
 
             if (IDGrupoDeAtividade.HasValue)
             {
-                sql.AppendLine(sql.ToString().Contains("WHERE") ? " AND " : " WHERE ");
-                sql.AppendLine(" NCL_GRUPO_DE_ATIVIDADE.ID = " + IDGrupoDeAtividade.Value + " ");
+                sql.AppendLine(" AND NCL_GRUPO_DE_ATIVIDADE.ID = " + IDGrupoDeAtividade.Value + " ");
             }
             
             sql.AppendLine(" ORDER BY DATADECADASTRO, PROCESSO");

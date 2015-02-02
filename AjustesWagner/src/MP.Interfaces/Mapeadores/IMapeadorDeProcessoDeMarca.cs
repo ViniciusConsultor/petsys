@@ -18,7 +18,7 @@ namespace MP.Interfaces.Mapeadores
         IProcessoDeMarca ObtenhaProcessoDeMarcaPeloNumero(long numeroDoProcesso);
         IList<long> ObtenhaTodosNumerosDeProcessosAtivosCadastrados();
         IList<IProcessoDeMarca> ObtenhaProcessosDeMarcas(long? IDCliente, long? IDGrupoDeAtividade,
-                                                         IList<string> IDsDosDespachos);
+                                                         IList<string> IDsDosDespachos, ModoDePesquisaPorStatus modoDePesquisaPorStatus);
 
         IList<IProcessoDeMarca> obtenhaProcessosComMarcaQueContemRadicalDadastrado();
         IList<IProcessoDeMarca> ObtenhaProcessoComRadicailAdicionadoNaMarca(IList<IProcessoDeMarca> processos);
