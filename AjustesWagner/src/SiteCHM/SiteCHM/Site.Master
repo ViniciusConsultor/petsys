@@ -1,0 +1,50 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SiteCHM.Site" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="pt-BR" xml:lang="pt-BR">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>CHM Tecnologia</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]>
+		<link rel="stylesheet" href="css/ie.css" type="text/css" charset="utf-8">
+	<![endif]-->
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="page">
+        <div id="header">
+            <a href="index.aspx" id="logo">
+                <img src="images/logo.png" alt="LOGO"></a>
+            <ul id="navigation">
+                <li runat="server" id="liIndex"><a href="index.aspx" title="Principal"></a></li>
+                <li runat="server" id="liSobre"><a href="sobre.aspx">Sobre</a> </li>
+                <li runat="server" id="liProdutos"><a href="produtos.aspx">Produtos</a> </li>
+                <li runat="server" id="liServicos"><a href="servicos.aspx">Serviços</a> </li>
+                <li runat="server" id="liSolucoes"><a href="solucoes.aspx">Soluções</a> </li>
+                <li runat="server" id="liNoticias"><a href="noticias.aspx">Notícias</a> </li>
+                <li runat="server" id="liContato" class="last-child"><a href="contato.aspx">Contato</a> </li>
+            </ul>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+        </asp:ContentPlaceHolder>
+        <div id="footer">
+            <div class="connect">
+                <a href="http://freewebsitetemplates.com/go/facebook/" target="_blank" class="facebook">
+                </a><a href="http://freewebsitetemplates.com/go/twitter/" target="_blank" class="twitter">
+                </a><a href="http://freewebsitetemplates.com/go/googleplus/" target="_blank" class="googleplus">
+                </a>
+            </div>
+            <p>
+                Copyright &copy; 2014. Todos os direitos reservados.
+            </p>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
