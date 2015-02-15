@@ -117,6 +117,14 @@
                             </tr>
                             <tr>
                                 <td class="th3">
+                                    <asp:Label ID="Label2" runat="server" Text="Revista:"></asp:Label>
+                                </td>
+                                <td class="td" style="font-family: 'Segoe UI','Arial','Helvetica','sans-serif'; font-size: 12px; font-style: normal">
+                                    <asp:Label ID="lblNumRevista" runat="server" Text=""></asp:Label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th3">
                                     <asp:Label ID="Label11" runat="server" Text="Publicações próprias"></asp:Label>
                                 </td>
                                 <td class="td">

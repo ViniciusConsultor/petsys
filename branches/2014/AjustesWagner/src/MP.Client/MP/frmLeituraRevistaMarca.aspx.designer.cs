@@ -103,6 +103,24 @@ namespace MP.Client.MP {
         protected global::Telerik.Web.UI.RadGrid grdRevistasJaProcessadas;
         
         /// <summary>
+        /// Label13 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label13;
+        
+        /// <summary>
+        /// lblNumRevista control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumRevista;
+        
+        /// <summary>
         /// Label11 control.
         /// </summary>
         /// <remarks>

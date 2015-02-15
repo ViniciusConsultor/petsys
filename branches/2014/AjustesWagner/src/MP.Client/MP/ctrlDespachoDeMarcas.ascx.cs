@@ -70,7 +70,17 @@ namespace MP.Client.MP
             IList<IDespachoDeMarcas> listaDespachoDeMarcas = new List<IDespachoDeMarcas>();
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
-                listaDespachoDeMarcas = servico.ObtenhaPorDescricao(e.Text, 50);
+            {
+                if (!string.IsNullOrEmpty(e.Text))
+                {
+                    listaDespachoDeMarcas = servico.ObtenhaPorDescricao(e.Text.Trim(), 50);
+                }
+                else
+                {
+                    listaDespachoDeMarcas = servico.ObtenhaPorDescricao(e.Text, 50);
+                }
+            }
+                
             
             if (listaDespachoDeMarcas.Count > 0)
             {
