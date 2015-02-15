@@ -134,6 +134,7 @@ namespace MP.Client.MP
                         RadPageView1.Selected = true;
                         RadTabStrip1.Tabs[0].Selected = true;
                         CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        lblNumRevista.Text = revistasAProcessar[indiceSelecionado].NumeroRevistaPatente.ToString();
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
@@ -163,6 +164,7 @@ namespace MP.Client.MP
                         CarregueRevistasProcessadas();
                         CarregueRevistasAProcessar();
                         RadPageView1.Selected = true;
+                        lblNumRevista.Text = revistasAProcessar[indiceSelecionado].NumeroRevistaPatente.ToString();
                         txtPublicacoesProprias.Text = "0";
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
@@ -229,6 +231,7 @@ namespace MP.Client.MP
                         RadPageView1.Selected = true;
                         RadTabStrip1.Tabs[0].Selected = true;
                         CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        lblNumRevista.Text = revistasProcessadas[indiceSelecionado].NumeroRevistaPatente.ToString();
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
@@ -242,6 +245,7 @@ namespace MP.Client.MP
 
                         CarreguePaginaInicial();
                         RadPageView1.Selected = true;
+                        lblNumRevista.Text = revistasProcessadas[indiceSelecionado].NumeroRevistaPatente.ToString();
                         txtPublicacoesProprias.Text = "0";
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();

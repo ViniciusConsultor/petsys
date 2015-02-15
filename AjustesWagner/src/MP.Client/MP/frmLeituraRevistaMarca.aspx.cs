@@ -235,6 +235,7 @@ namespace MP.Client.MP
                     RadPageView1.Selected = true;
                     RadTabStrip1.Tabs[0].Selected = true;
                     CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                    lblNumRevista.Text = revistaALer.NumeroRevistaMarcas.ToString();
                     txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                     txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                     HabilitaAbaFiltros();
@@ -256,6 +257,7 @@ namespace MP.Client.MP
                     RadTabStrip1.Tabs[0].Selected = true;
                     CarregueGridRevistasAProcessar();
                     CarregueGridRevistasJaProcessadas();
+                    lblNumRevista.Text = revistaALer.NumeroRevistaMarcas.ToString();
                     txtPublicacoesProprias.Text = "0";
                     txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                     HabilitaAbaFiltros();
@@ -312,6 +314,7 @@ namespace MP.Client.MP
 
                         CarregaGridComProcessosDaRevistaExistentesNaBase(listaDeProcessosExistentes);
 
+                        lblNumRevista.Text = revistaALer.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -332,6 +335,7 @@ namespace MP.Client.MP
                         RadTabStrip1.Tabs[0].Selected = true;
                         CarregueGridRevistasAProcessar();
                         CarregueGridRevistasJaProcessadas();
+                        lblNumRevista.Text = revistaALer.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = "0";
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -374,6 +378,7 @@ namespace MP.Client.MP
 
                         CarregaGridComProcessosDaRevistaExistentesNaBase(listaDeProcessosExistentes);
 
+                        lblNumRevista.Text = revistaALer.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -407,6 +412,7 @@ namespace MP.Client.MP
                         RadTabStrip1.Tabs[0].Selected = true;
                         CarregueGridRevistasAProcessar();
                         CarregueGridRevistasJaProcessadas();
+                        lblNumRevista.Text = revistaALer.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = "0";
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -451,6 +457,7 @@ namespace MP.Client.MP
                     RadPageView1.Selected = true;
                     RadTabStrip1.Tabs[0].Selected = true;
                     CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                    lblNumRevista.Text = revistaAProcessar.NumeroRevistaMarcas.ToString();
                     txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                     txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                     HabilitaAbaFiltros();
@@ -470,6 +477,7 @@ namespace MP.Client.MP
                     RadPageView1.Selected = true;
                     HabilitaAbaRadicais();
                     HabilitaAbaFiltros();
+                    lblNumRevista.Text = revistaAProcessar.NumeroRevistaMarcas.ToString();
                     txtPublicacoesProprias.Text = "0";
                     txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                     RadTabStrip1.Tabs[0].SelectParents();
@@ -525,6 +533,7 @@ namespace MP.Client.MP
                         RadPageView1.Selected = true;
                         RadTabStrip1.Tabs[0].Selected = true;
                         CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        lblNumRevista.Text = revistaAProcessar.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -544,6 +553,7 @@ namespace MP.Client.MP
                         RadPageView1.Selected = true;
                         HabilitaAbaRadicais();
                         HabilitaAbaFiltros();
+                        lblNumRevista.Text = revistaAProcessar.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = "0";
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         RadTabStrip1.Tabs[0].SelectParents();
@@ -562,6 +572,7 @@ namespace MP.Client.MP
                         RadPageView1.Selected = true;
                         RadTabStrip1.Tabs[0].Selected = true;
                         CarregaGridComProcessosExistentesNaBase(listaDeProcessosExistentes);
+                        lblNumRevista.Text = revistaAProcessar.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = listaDeProcessosExistentes.Count.ToString();
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
@@ -594,6 +605,7 @@ namespace MP.Client.MP
                         RadTabStrip1.Tabs[0].Selected = true;
                         CarregueGridRevistasAProcessar();
                         CarregueGridRevistasJaProcessadas();
+                        lblNumRevista.Text = revistaAProcessar.NumeroRevistaMarcas.ToString();
                         txtPublicacoesProprias.Text = "0";
                         txtQuantdadeDeProcessos.Text = xmlRevista.GetElementsByTagName("processo").Count.ToString();
                         HabilitaAbaFiltros();
