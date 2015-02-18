@@ -12,8 +12,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SiteCHM</RootNamespace>
     <AssemblyName>SiteCHM</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,6 +142,7 @@
     <Compile Include="solucoes.aspx.designer.cs">
       <DependentUpon>solucoes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Utilidades\EnviadorDeEmail.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
