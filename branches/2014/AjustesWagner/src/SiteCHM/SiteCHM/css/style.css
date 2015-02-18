@@ -95,7 +95,7 @@ img {
 #adbox div.details {
 	background: url(../images/bg-headliner.png) repeat left top;
 	color: #fff;
-	font-family: "Times New Roman", Times, serif;
+	font-family: inherit;
 	height: 88px;
 	width: 900px;
 	padding-right: 58px;
@@ -182,7 +182,7 @@ img {
 #headline div.body p {
 	color: #a08a6b;
 	display: inline-block;
-	font-family: "Times New Roman", Times, serif;
+	font-family: inherit;
 	font-size: 22px;
 	letter-spacing: 1px;
 	line-height: 36px;
@@ -217,7 +217,7 @@ img {
 	text-align: center;
 }
 #main p {
-	font-family: "Times New Roman", Times, serif;
+	font-family: inherit;
 	line-height: 30px;
 	padding-bottom: 18px;
 }
@@ -298,7 +298,7 @@ img {
 #solutions > div div h2 {
 	color: #fff;
 	display: inline-block;
-	font-family: "Times New Roman", Times, serif;
+	font-family: inherit;
 	text-transform: uppercase;
 }
 #solutions > div div p {

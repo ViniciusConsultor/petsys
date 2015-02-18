@@ -27,57 +27,59 @@ Public Class ServicoDeEnvioDeEmailLocal
                            ByVal GravaHistorico As Boolean) Implements IServicoDeEnvioDeEmail.EnviaEmail
 
         If Not Configuracao Is Nothing AndAlso Not Configuracao.ConfiguracaoDeEmailDoSistema Is Nothing Then
-            Dim Gerenciador As SmtpClient
+            Using Gerenciador As New SmtpClient()
 
-            With Configuracao.ConfiguracaoDeEmailDoSistema
-                Gerenciador = New SmtpClient(.ServidorDeSaidaDeEmail, .Porta)
+                With Configuracao.ConfiguracaoDeEmailDoSistema
+                    Gerenciador.Host = .ServidorDeSaidaDeEmail
+                    Gerenciador.Port = .Porta
 
-                If .RequerAutenticacao Then
-                    Gerenciador.Credentials = New NetworkCredential(.UsuarioDeAutenticacaoDoServidorDeSaida, _
-                                                                    AjudanteDeCriptografia.Descriptografe(.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida))
-                End If
+                    If .RequerAutenticacao Then
+                        Gerenciador.Credentials = New NetworkCredential(.UsuarioDeAutenticacaoDoServidorDeSaida, _
+                                                                        AjudanteDeCriptografia.Descriptografe(.SenhaDoUsuarioDeAutenticacaoDoServidorDeSaida))
+                    End If
 
-                Gerenciador.EnableSsl = .HabilitarSSL
+                    Gerenciador.EnableSsl = .HabilitarSSL
 
-                Dim MensagemDeEmail As MailMessage = New MailMessage
-                MensagemDeEmail.From = New MailAddress(Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente.ToLower(), UtilidadesDeString.TransformeStringParaStringApresentavel(Configuracao.ConfiguracaoDeEmailDoSistema.NomeRemetente))
+                    Dim MensagemDeEmail As MailMessage = New MailMessage
+                    MensagemDeEmail.From = New MailAddress(Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente.ToLower(), UtilidadesDeString.TransformeStringParaStringApresentavel(Configuracao.ConfiguracaoDeEmailDoSistema.NomeRemetente))
                 
-                For Each Destinatario As String In Destinatarios
-                    MensagemDeEmail.To.Add(New MailAddress(Destinatario.ToLower()))
-                Next
+                    For Each Destinatario As String In Destinatarios
+                        MensagemDeEmail.To.Add(New MailAddress(Destinatario.ToLower()))
+                    Next
 
-                If Not DestinatariosEmCopia Is Nothing AndAlso DestinatariosEmCopia.Count > 0 Then
-                    For Each DestinatarioEmCopia As String In DestinatariosEmCopia
+                    If Not DestinatariosEmCopia Is Nothing AndAlso DestinatariosEmCopia.Count > 0 Then
+                        For Each DestinatarioEmCopia As String In DestinatariosEmCopia
                         MensagemDeEmail.CC.Add(New MailAddress(DestinatarioEmCopia.ToLower()))
-                    Next
-                End If
+                        Next
+                    End If
 
-                If Not DestinatariosEmCopiaOculta Is Nothing AndAlso DestinatariosEmCopiaOculta.Count > 0 Then
-                    For Each DestinatarioOculto As String In DestinatariosEmCopiaOculta
-                        MensagemDeEmail.Bcc.Add(New MailAddress(DestinatarioOculto.ToLower()))
-                    Next
-                End If
+                    If Not DestinatariosEmCopiaOculta Is Nothing AndAlso DestinatariosEmCopiaOculta.Count > 0 Then
+                        For Each DestinatarioOculto As String In DestinatariosEmCopiaOculta
+                            MensagemDeEmail.Bcc.Add(New MailAddress(DestinatarioOculto.ToLower()))
+                        Next
+                    End If
 
-                MensagemDeEmail.IsBodyHtml = True
-                MensagemDeEmail.Subject = Assunto
-                MensagemDeEmail.Body = Mensagem
+                    MensagemDeEmail.IsBodyHtml = True
+                    MensagemDeEmail.Subject = Assunto
+                    MensagemDeEmail.Body = Mensagem
 
-                If Not Anexos Is Nothing AndAlso Anexos.Count > 0 Then
-                    For Each item As KeyValuePair(Of String, Stream) In Anexos
-                        Dim anexo = New Attachment(item.Value, item.Key)
+                    If Not Anexos Is Nothing AndAlso Anexos.Count > 0 Then
+                        For Each item As KeyValuePair(Of String, Stream) In Anexos
+                            Dim anexo = New Attachment(item.Value, item.Key)
 
-                        MensagemDeEmail.Attachments.Add(anexo)
-                    Next
-                End If
+                            MensagemDeEmail.Attachments.Add(anexo)
+                        Next
+                    End If
 
-                Try
-                    Gerenciador.Send(MensagemDeEmail)
-                    If GravaHistorico Then GraveHistorico(Assunto, Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente, Destinatarios, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Anexos, Contexto, Now)
-                Catch ex As Exception
-                    Logger.GetInstancia().Erro("Ocorreu um erro ao tentar enviar um e-mail", ex)
-                    Throw
-                End Try
-            End With
+                    Try
+                        Gerenciador.Send(MensagemDeEmail)
+                        If GravaHistorico Then GraveHistorico(Assunto, Configuracao.ConfiguracaoDeEmailDoSistema.EmailRemetente, Destinatarios, DestinatariosEmCopia, DestinatariosEmCopiaOculta, Mensagem, Anexos, Contexto, Now)
+                    Catch ex As Exception
+                        Logger.GetInstancia().Erro("Ocorreu um erro ao tentar enviar um e-mail", ex)
+                        Throw
+                    End Try
+                End With
+            End Using
         End If
     End Sub
 
