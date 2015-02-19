@@ -275,6 +275,7 @@
       <DependentUpon>ctrlTitular.ascx</DependentUpon>
     </Compile>
     <Compile Include="MP\DTOProcessoDeMarca.cs" />
+    <Compile Include="MP\DTOProcessoDePatente.cs" />
     <Compile Include="MP\frmDetalhesLeituraDaRevista.aspx.cs">
       <DependentUpon>frmDetalhesLeituraDaRevista.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -309,6 +310,13 @@
     </Compile>
     <Compile Include="MP\frmLeituraRevistaPatente.aspx.designer.cs">
       <DependentUpon>frmLeituraRevistaPatente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MP\frmMarcasPatentesDeCliente.aspx.cs">
+      <DependentUpon>frmMarcasPatentesDeCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MP\frmMarcasPatentesDeCliente.aspx.designer.cs">
+      <DependentUpon>frmMarcasPatentesDeCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="MP\frmProcessosDeMarcas.aspx.cs">
       <DependentUpon>frmProcessosDeMarcas.aspx</DependentUpon>
@@ -404,6 +412,7 @@
     <Content Include="MP\frmEnviaEmail.aspx" />
     <Content Include="MP\frmLeituraRevistaMarca.aspx" />
     <Content Include="MP\frmLeituraRevistaPatente.aspx" />
+    <Content Include="MP\frmMarcasPatentesDeCliente.aspx" />
     <Content Include="MP\frmProcessosDeMarcas.aspx" />
     <Content Include="MP\frmProcessosDePatentes.aspx" />
     <Content Include="MP\frmRelatorioDeManutencoes.aspx" />
