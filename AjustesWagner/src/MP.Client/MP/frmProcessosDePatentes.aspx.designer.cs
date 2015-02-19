@@ -364,6 +364,42 @@ namespace MP.Client.MP {
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorTitular;
         
         /// <summary>
+        /// pnlDespacho control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlDespacho;
+        
+        /// <summary>
+        /// Label11 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label11;
+        
+        /// <summary>
+        /// ctrlDespachoDePatentes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::MP.Client.MP.ctrlDespachoDePatentes ctrlDespachoDePatentes;
+        
+        /// <summary>
+        /// btnPesquisarPorDespacho control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorDespacho;
+        
+        /// <summary>
         /// rdkProcessosDePatentes control.
         /// </summary>
         /// <remarks>

@@ -7,6 +7,8 @@
 <%@ Register Src="~/ctrlCliente.ascx" TagName="ctrlCliente" TagPrefix="uc3" %>
 <%@ Register Src="ctrlInventor.ascx" TagName="ctrlInventor" TagPrefix="uc4" %>
 <%@ Register Src="ctrlTitular.ascx" TagName="ctrlTitular" TagPrefix="uc5" %>
+<%@ Register Src="ctrlDespachoDePatentes.ascx" TagName="ctrlDespachoDePatentes" TagPrefix="uc6" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <telerik:RadToolBar ID="rtbToolBar" runat="server" AutoPostBack="True" Skin="Vista"
         Style="width: 100%;" OnButtonClick="rtbToolBar_ButtonClick">
@@ -129,7 +131,20 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorTitular_OnClick_" />
                                 </td>
                             </tr>
+                            <tr runat="server" id="pnlDespacho">
+                                <td class="th3">
+                                    <asp:Label ID="Label11" runat="server" Text="Despacho"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <uc6:ctrlDespachoDePatentes ID="ctrlDespachoDePatentes" runat="server" />
+                                    <asp:ImageButton ID="btnPesquisarPorDespacho" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorDespacho_OnClick" />
+                                </td>
+                            </tr>
                         </table>
+
+                         
+
                     </asp:Panel>
                 </ContentTemplate>
             </telerik:RadDock>

@@ -80,6 +80,7 @@
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorApresentacao.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorCliente.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorDataDeCadastro.cs" />
+    <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorDespacho.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorID.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorMarca.cs" />
     <Compile Include="Negocio\Filtros\Marcas\IFiltroMarcaPorNatureza.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Negocio\Filtros\Patentes\IFiltroLeituraDeRevistaDePatentes.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorCliente.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorDataDeCadastro.cs" />
+    <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorDespacho.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorID.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorInventor.cs" />
     <Compile Include="Negocio\Filtros\Patentes\IFiltroPatentePorNatureza.cs" />

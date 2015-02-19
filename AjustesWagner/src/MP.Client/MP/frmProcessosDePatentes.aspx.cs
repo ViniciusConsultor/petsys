@@ -62,6 +62,7 @@ namespace MP.Client.MP
             ctrlCliente1.Inicializa();
             ctrlInventor.Inicializa();
             ctrlTitular.Inicializa();
+            ctrlDespachoDePatentes.Inicializa();
 
             ctrlOperacaoFiltro1.Codigo = OperacaoDeFiltro.EmQualquerParte.ID.ToString();
 
@@ -154,6 +155,7 @@ namespace MP.Client.MP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cliente","5"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Inventor", "6"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Titular", "7"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Despacho", "8"));
         }
 
 
@@ -184,6 +186,9 @@ namespace MP.Client.MP
                 case "7":
                     pnlTitular.Visible = true;
                     break;
+                case "8":
+                    pnlDespacho.Visible = true;
+                    break;
             }
         }
 
@@ -197,6 +202,7 @@ namespace MP.Client.MP
             pnlCliente.Visible = false;
             pnlInventor.Visible = false;
             pnlTitular.Visible = false;
+            pnlDespacho.Visible = false;
         }
         
         protected void btnPesquisarPorDataDeCadastro_OnClick(object sender, ImageClickEventArgs e)
@@ -521,6 +527,38 @@ namespace MP.Client.MP
             var nomeDoArquivo = geradorDeRelatorioGeral.GereRelatorio();
             var url = UtilidadesWeb.ObtenhaURLHostDiretorioVirtual() + UtilidadesWeb.PASTA_LOADS + "/" + nomeDoArquivo;
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), Guid.NewGuid().ToString(), UtilidadesWeb.MostraArquivoParaDownload(url, "Imprimir"), false);
+        }
+
+        protected void btnPesquisarPorDespacho_OnClick(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
+            if (ctrlDespachoDePatentes.DespachoDePatentesSelecionada == null)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Selecione um despacho."), false);
+                return;
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPatentePorDespacho>();
+            filtro.Operacao = operacao;
+            filtro.ValorDoFiltro =
+                ctrlDespachoDePatentes.DespachoDePatentesSelecionada.IdDespachoDePatente.Value.ToString();
+            FiltroAplicado = filtro;
+            MostraProcessos(filtro, grdProcessosDePatentes.PageSize, 0);
         }
     }
 }
