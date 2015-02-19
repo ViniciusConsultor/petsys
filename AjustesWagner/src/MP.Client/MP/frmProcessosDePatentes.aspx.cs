@@ -77,7 +77,7 @@ namespace MP.Client.MP
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDePatente>())
             {
                 grdProcessosDePatentes.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro, chkConsiderarNaoAtivas.Checked);
-                grdProcessosDePatentes.DataSource = servico.ObtenhaProcessosDePatentes(filtro, quantidadeDeProcessos, offSet, chkConsiderarNaoAtivas.Checked);
+                grdProcessosDePatentes.DataSource = DTOProcessoDePatente.ConvertaProcessoParaDTO(servico.ObtenhaProcessosDePatentes(filtro, quantidadeDeProcessos, offSet, chkConsiderarNaoAtivas.Checked));
                 grdProcessosDePatentes.DataBind();
             }
         }

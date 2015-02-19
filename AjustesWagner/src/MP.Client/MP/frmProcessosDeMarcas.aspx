@@ -200,6 +200,9 @@
                                             <telerik:GridBoundColumn DataField="CPFCNPJ" HeaderText="CPF/CNPJ" UniqueName="column14">
                                                 <ItemStyle Width="12%"></ItemStyle>
                                             </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Status" HeaderText="Status" UniqueName="column15">
+                                                <ItemStyle Width="7%"></ItemStyle>
+                                            </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>

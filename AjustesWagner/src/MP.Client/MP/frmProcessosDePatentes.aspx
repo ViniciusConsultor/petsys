@@ -48,7 +48,7 @@
                                     <uc1:ctrlOperacaoFiltro ID="ctrlOperacaoFiltro1" runat="server" />
                                 </td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td class="th3">
                                     <asp:Label ID="Label8" runat="server" Text="Considerar não ativos?"></asp:Label>
                                 </td>
@@ -157,7 +157,7 @@
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Excluir" FilterImageToolTip="Excluir"
-                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8" 
+                                                HeaderTooltip="Excluir" ImageUrl="~/imagens/delete.gif" UniqueName="column8"
                                                 ConfirmDialogType="RadWindow" ConfirmText="Deseja mesmo excluir o processo?"
                                                 ConfirmTitle="Apagar processo">
                                                 <ItemStyle Width="2%"></ItemStyle>
@@ -169,17 +169,19 @@
                                             <telerik:GridBoundColumn DataField="IdProcessoDePatente" HeaderText="ID" UniqueName="column1"
                                                 Display="false">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo" UniqueName="column5">
+                                            <telerik:GridBoundColumn DataField="NumeroDoProcessoFormatado" HeaderText="Processo"
+                                                UniqueName="column5">
+                                                <ItemStyle Width="20%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Patente.NaturezaPatente.SiglaNatureza" HeaderText="Natureza"
-                                                UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="SiglaNatureza" HeaderText="Natureza" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Patente.TituloPatente" HeaderText="Patente" UniqueName="column2">
+                                            <telerik:GridBoundColumn DataField="TituloPatente" HeaderText="Patente" UniqueName="column2">
                                                 <ItemStyle Width="50%"></ItemStyle>
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="DataDoDeposito" HeaderText="Data do depósito"
-                                                UniqueName="column6" DataFormatString="{0:dd/MM/yyyy}">
-                                                <ItemStyle Width="15%"></ItemStyle>
+                                                UniqueName="column6">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Status" HeaderText="Status" UniqueName="column7">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
