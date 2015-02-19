@@ -69,15 +69,20 @@ namespace MP.Client.MP
         {
             IList<IDespachoDePatentes> listaDespachoDePatentes = new List<IDespachoDePatentes>();
 
+            string textoDigitado = e.Text;
+
+            if (!string.IsNullOrEmpty(textoDigitado))
+                textoDigitado = textoDigitado.Trim();
+
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
-                listaDespachoDePatentes = servico.ObtenhaPorDescricao(e.Text, 50);
-            
+                listaDespachoDePatentes = servico.ObtenhaPorDescricao(textoDigitado, 50);
+
             if (listaDespachoDePatentes.Count <= 0) return;
 
             foreach (var despachoDePatentes in listaDespachoDePatentes)
             {
                 var item = new RadComboBoxItem(despachoDePatentes.Codigo, despachoDePatentes.IdDespachoDePatente.Value.ToString());
-                    
+
                 item.Attributes.Add("Titulo", despachoDePatentes.Titulo);
                 cboDespachoDePatentes.Items.Add(item);
                 item.DataBind();
@@ -98,12 +103,12 @@ namespace MP.Client.MP
 
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
                 despachoDePatentes = servico.obtenhaDespachoDePatentesPeloId(Convert.ToInt64(((RadComboBox)o).SelectedValue));
-            
+
             DespachoDePatentesSelecionada = despachoDePatentes;
 
             if (DespachoDePatentesFoiSelecionada != null)
                 DespachoDePatentesFoiSelecionada(despachoDePatentes);
-            
+
         }
 
         public bool AutoPostBack
@@ -112,9 +117,9 @@ namespace MP.Client.MP
         }
 
         public ctrlDespachoDePatentes()
-	    {
-		    Load += Page_Load;
-	    }
+        {
+            Load += Page_Load;
+        }
 
 
         public bool BotaoNovoEhVisivel

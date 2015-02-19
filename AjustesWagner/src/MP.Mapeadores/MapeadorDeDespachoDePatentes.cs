@@ -92,6 +92,8 @@ namespace MP.Mapeadores
             if (!string.IsNullOrEmpty(descricaoParcial))
             {
                 sql.Append(string.Concat("WHERE DESCRICAO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoParcial.ToUpper()), "%'"));
+                sql.Append(string.Concat(" OR CODIGO LIKE '%", UtilidadesDePersistencia.FiltraApostrofe(descricaoParcial.ToUpper()), "%'"));
+
             }
 
             sql.Append(" ORDER BY CODIGO");
