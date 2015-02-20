@@ -494,7 +494,7 @@
                         <telerik:RadPageView ID="RadPageView7" runat="server" SkinID="Vista">
                             <asp:Panel ID="pnlPublicacoes" runat="server">
                                 <telerik:RadGrid ID="grdPublicacoes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                                    PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged">
+                                    PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged" OnItemDataBound="grdPublicacoes_OnItemDataBound" OnItemCommand="grdPublicacoes_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
@@ -511,9 +511,10 @@
                                                 DataFormatString="{0:dd/MM/yyyy}">
                                                 <ItemStyle Width="10%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="CodigoDespacho" HeaderText="Despacho" UniqueName="column2">
-                                                <ItemStyle Width="10%"></ItemStyle>
-                                            </telerik:GridBoundColumn>
+                                            <telerik:GridButtonColumn ButtonType="LinkButton" CommandName="MostrarDespacho" DataTextField="CodigoDespacho"
+                                                HeaderText="Despacho" UniqueName="Despacho">
+                                                <ItemStyle Width="30%" CssClass="hidelink"></ItemStyle>
+                                            </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="TextoDoDespacho" HeaderText="Complemento do despacho"
                                                 UniqueName="column3">
                                             </telerik:GridBoundColumn>
