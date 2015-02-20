@@ -600,9 +600,33 @@ namespace MP.Client.MP
         private IList<IRevistaDeMarcas> Publicacoes {
             get { return (IList<IRevistaDeMarcas>)ViewState[CHAVE_PUBLICACOES_MARCA]; }
             set { ViewState[CHAVE_PUBLICACOES_MARCA] = value; }
-        } 
+        }
 
-       
-        
+
+        protected void grdPublicacoes_OnItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (!(e.Item is GridDataItem)) return;
+
+            var item = (GridDataItem)e.Item;
+
+            ((LinkButton)(item["Despacho"].Controls[0])).CommandArgument = ((IRevistaDeMarcas)((((GridTableCell)(item["Despacho"])).Item).DataItem)).CodigoDespacho;
+            ((LinkButton)(item["Despacho"].Controls[0])).CssClass = "hidelink";
+        }
+
+        protected void grdPublicacoes_OnItemCommand(object sender, GridCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "MostrarDespacho":
+                    //var url3 = String.Concat("", "?Id=", e.CommandArgument);
+                    //ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                    //                                    UtilidadesWeb.ExibeJanela(url3,
+                    //                                                                   "Cadastro de cliente",
+                    //                                                                   800, 550, "Nucleo_cdCliente_aspx"), false);
+
+
+                    break;
+            }
+        }
     }
 }
