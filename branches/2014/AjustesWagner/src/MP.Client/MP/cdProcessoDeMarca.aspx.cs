@@ -317,6 +317,9 @@ namespace MP.Client.MP
 
             imgImagemMarca.ImageUrl = UtilidadesWeb.URL_IMAGEM_SEM_FOTO;
 
+            lblTextoDoDespacho.Text = "";
+            divJanelaParaExibirTextoDoDespacho.Visible = false;
+
         }
 
         private IProcessoDeMarca MontaObjeto()
@@ -618,15 +621,23 @@ namespace MP.Client.MP
             switch (e.CommandName)
             {
                 case "MostrarDespacho":
-                    //var url3 = String.Concat("", "?Id=", e.CommandArgument);
-                    //ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
-                    //                                    UtilidadesWeb.ExibeJanela(url3,
-                    //                                                                   "Cadastro de cliente",
-                    //                                                                   800, 550, "Nucleo_cdCliente_aspx"), false);
+                    divJanelaParaExibirTextoDoDespacho.Visible = true;
 
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDeMarcas>())
+                    {
+                        var despacho = servico.ObtenhaDespachoPorCodigo(e.CommandArgument.ToString());
+
+                        lblTextoDoDespacho.Text = string.IsNullOrEmpty(despacho.DescricaoDespacho) ? "Despacho sem descrição" : despacho.DescricaoDespacho;
+                    }
 
                     break;
             }
+        }
+
+        protected void btnFecharDetalheDespacho_OnClick(object sender, ImageClickEventArgs e)
+        {
+            lblTextoDoDespacho.Text = "";
+            divJanelaParaExibirTextoDoDespacho.Visible = false;
         }
     }
 }

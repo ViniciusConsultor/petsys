@@ -998,7 +998,7 @@
                         <telerik:RadPageView ID="RadPageView7" runat="server" SkinID="Vista">
                             <asp:Panel ID="pnlPublicacoes" runat="server">
                                 <telerik:RadGrid ID="grdPublicacoes" runat="server" AutoGenerateColumns="False" AllowPaging="True"
-                                    PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged">
+                                    PageSize="10" GridLines="None" Width="98%" OnPageIndexChanged="grdPublicacoes_OnPageIndexChanged"  OnItemDataBound="grdPublicacoes_OnItemDataBound" OnItemCommand="grdPublicacoes_OnItemCommand">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView GridLines="Both">
                                         <RowIndicatorColumn>
@@ -1015,9 +1015,10 @@
                                                 DataFormatString="{0:dd/MM/yyyy}">
                                                 <ItemStyle Width="10%"></ItemStyle>
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Despacho" UniqueName="column2">
-                                                <ItemStyle Width="10%"></ItemStyle>
-                                            </telerik:GridBoundColumn>
+                                              <telerik:GridButtonColumn ButtonType="LinkButton" CommandName="MostrarDespacho" DataTextField="CodigoDoDespacho"
+                                                HeaderText="Despacho" UniqueName="Despacho">
+                                                <ItemStyle Width="30%" CssClass="hidelink"></ItemStyle>
+                                            </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="Complemento" HeaderText="Complemento do despacho"
                                                 UniqueName="column3">
                                             </telerik:GridBoundColumn>
@@ -1031,4 +1032,14 @@
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
+
+    <div id="divJanelaParaExibirTextoDoDespacho" class="janelaModal" runat="server" style="width: 70%; height:70%; position:relative; top: 15%; left: 30%">
+         <asp:ImageButton ID="btnFecharDetalheDespacho"   runat="server" ImageUrl="~/imagens/close.gif" ToolTip="Fechar"
+                                        OnClick="btnFecharDetalheDespacho_OnClick" ImageAlign="Right"   />
+         <br/>
+         <br/>
+         
+         <asp:Label ID="lblTextoDoDespacho" runat="server" Text=""></asp:Label>
+
+    </div>  
 </asp:Content>

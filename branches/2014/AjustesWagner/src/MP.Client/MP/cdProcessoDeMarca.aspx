@@ -528,4 +528,14 @@
             </telerik:RadDock>
         </telerik:RadDockZone>
     </telerik:RadDockLayout>
+
+       <div id="divJanelaParaExibirTextoDoDespacho" class="janelaModal" runat="server" style="width: 70%; height:70%; position:relative; top: 15%; left: 30%">
+         <asp:ImageButton ID="btnFecharDetalheDespacho"   runat="server" ImageUrl="~/imagens/close.gif" ToolTip="Fechar"
+                                        OnClick="btnFecharDetalheDespacho_OnClick" ImageAlign="Right"   />
+         <br/>
+         <br/>
+         
+         <asp:Label ID="lblTextoDoDespacho" runat="server" Text=""></asp:Label>
+
+    </div> 
 </asp:Content>
