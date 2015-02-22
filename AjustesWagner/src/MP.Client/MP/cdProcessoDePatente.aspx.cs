@@ -314,6 +314,8 @@ namespace MP.Client.MP
             LimpeCamposClassificacaoDePatentes();
             
             ctrlEventos.Inicializa();
+
+            divJanelaParaExibirTextoDoDespacho.Visible = false;
         }
 
         private void MostraPCT(bool mostra)
@@ -1359,6 +1361,40 @@ namespace MP.Client.MP
         {
             get { return (IList<IRevistaDePatente>)ViewState[CHAVE_PUBLICACOES_PATENTE]; }
             set { ViewState[CHAVE_PUBLICACOES_PATENTE] = value; }
-        } 
+        }
+
+        protected void btnFecharDetalheDespacho_OnClick(object sender, ImageClickEventArgs e)
+        {
+            lblTextoDoDespacho.Text = "";
+            divJanelaParaExibirTextoDoDespacho.Visible = false;
+        }
+
+        protected void grdPublicacoes_OnItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (!(e.Item is GridDataItem)) return;
+
+            var item = (GridDataItem)e.Item;
+
+            ((LinkButton)(item["Despacho"].Controls[0])).CommandArgument = ((IRevistaDePatente)((((GridTableCell)(item["Despacho"])).Item).DataItem)).CodigoDoDespacho;
+            ((LinkButton)(item["Despacho"].Controls[0])).CssClass = "hidelink";
+        }
+
+        protected void grdPublicacoes_OnItemCommand(object sender, GridCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "MostrarDespacho":
+                    divJanelaParaExibirTextoDoDespacho.Visible = true;
+
+                    using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeDespachoDePatentes>())
+                    {
+                        var despacho = servico.ObtenhaDespachoPeloCodigo(e.CommandArgument.ToString());
+
+                        lblTextoDoDespacho.Text = string.IsNullOrEmpty(despacho.Descricao) ? "Despacho sem descrição" :  despacho.Descricao;
+                    }
+
+                    break;
+            }
+        }
     }
 }
