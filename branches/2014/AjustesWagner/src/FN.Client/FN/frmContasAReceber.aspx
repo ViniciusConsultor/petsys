@@ -126,6 +126,15 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorNumeroDoBoleto_OnClick" />
                                 </td>
                             </tr>
+                            <tr runat="server" id="pnlAVencer">
+                                <td class="th3">
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnAVencer" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
+                                        OnClick="btnAVencer_OnClick" />
+                                </td>
+                            </tr>
+                           
                             <tr runat="server" id="pnlTipoDeLancamentoFinanceiroRecebimento">
                                 <td class="th3">
                                     <asp:Label ID="lblTipoDeLancamentoFinanceiroRecebimento" runat="server" Text="Tipo de lançamento"></asp:Label>

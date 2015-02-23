@@ -247,6 +247,24 @@ namespace FN.Client.FN {
         protected global::System.Web.UI.WebControls.ImageButton btnVencidos;
         
         /// <summary>
+        /// pnlAVencer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlAVencer;
+        
+        /// <summary>
+        /// btnAVencer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnAVencer;
+        
+        /// <summary>
         /// rdkItensFinanceirosDeRecebimento control.
         /// </summary>
         /// <remarks>

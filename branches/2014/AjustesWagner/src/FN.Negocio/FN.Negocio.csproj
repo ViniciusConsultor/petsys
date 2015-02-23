@@ -60,6 +60,7 @@
     <Compile Include="ConfiguracaoDeBoletoBancario.cs" />
     <Compile Include="ConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="ConfiguracaoGeralFinanceiro.cs" />
+    <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosAVencer.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPoNossoNumero.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorCedente.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorCliente.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosPorIntervaloDeDataDeVencimento.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosSemFiltro.cs" />
     <Compile Include="Filtros\BoletosGerados\FiltroBoletosGeradosVencidos.cs" />
+    <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberAVencer.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorCliente.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorDescricao.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberPorFormaDeRecebimento.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Filtros\ContasAReceber\FiltroContaAReceberVencidos.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroPorNumeroDoBoleto.cs" />
     <Compile Include="Filtros\ContasAReceber\FiltroTipoLacamentoFinanceiroRecebimento.cs" />
+    <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoAVencer.cs" />
     <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorCliente.cs" />
     <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorDescricao.cs" />
     <Compile Include="Filtros\GerenciamentoDeItensFinanceiros\FiltroItemFinanceiroRecebimentoPorID.cs" />

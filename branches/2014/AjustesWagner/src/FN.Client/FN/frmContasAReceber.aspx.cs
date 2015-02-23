@@ -196,6 +196,7 @@ namespace FN.Client.FN
             pnlVencidos.Visible = false;
             pnlNumeroDoBoleto.Visible = false;
             pnlTipoDeLancamentoFinanceiroRecebimento.Visible = false;
+            pnlAVencer.Visible = false;
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -209,6 +210,7 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Vencidos", "6"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Número do boleto", "7"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Tipo de lançamento", "8"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("A vencer", "9" ));
         }
 
         private void ExibaTelaInicial()
@@ -382,6 +384,9 @@ namespace FN.Client.FN
                     break;
                 case "8":
                     pnlTipoDeLancamentoFinanceiroRecebimento.Visible = true;
+                    break;
+                case "9":
+                    pnlAVencer.Visible = true;
                     break;
             }
         }
@@ -879,6 +884,14 @@ namespace FN.Client.FN
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroTipoLacamentoFinanceiroRecebimento>();
             filtro.Operacao = operacao;
             filtro.ValorDoFiltro = ctrlTipoLacamentoFinanceiroRecebimento.Codigo;
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
+            EscondaBotoesColetivo();
+        }
+
+        protected void btnAVencer_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroContaAReceberAVencer>();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensDeContasAReceber.PageSize, 0);
             EscondaBotoesColetivo();

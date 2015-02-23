@@ -58,6 +58,7 @@
     <Compile Include="Mapeadores\IMapeadorConfiguracaoDeIndicesFinanceiros.cs" />
     <Compile Include="Mapeadores\IMapeadorDeBoleto.cs" />
     <Compile Include="Mapeadores\IMapeadorDeConfiguracaoGeralFinanceiro.cs" />
+    <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosAVencer.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPoNossoNumero.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorCedente.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorCliente.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosPorIntervaloDeDataDeVencimento.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosSemFiltro.cs" />
     <Compile Include="Negocio\Filtros\BoletosGerados\IFiltroBoletosGeradosVencidos.cs" />
+    <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberAVencer.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorCliente.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorDescricao.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberPorFormaDeRecebimento.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroContaAReceberVencidos.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroPorNumeroDoBoleto.cs" />
     <Compile Include="Negocio\Filtros\ContasAReceber\IFiltroTipoLacamentoFinanceiroRecebimento.cs" />
+    <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoAVencer.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoPorCliente.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoPorDescricao.cs" />
     <Compile Include="Negocio\Filtros\GerenciamentoDeItensFinanceiros\IFiltroItemFinanceiroRecebimentoPorID.cs" />
