@@ -75,6 +75,7 @@ namespace FN.Client.FN
             pnlPeriodoDeVencimento.Visible = false;
             pnlDescricao.Visible = false;
             pnlVencidos.Visible = false;
+            pnlAVencer.Visible = false;
         }
 
         private void CarregaOpcoesDeFiltro()
@@ -84,6 +85,7 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Período de vencimento", "2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Descrição", "3"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Vencidos","4"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("A vencer", "5"));
         }
 
         private void ExibaTelaInicial()
@@ -196,6 +198,10 @@ namespace FN.Client.FN
                 case "4" :
                     pnlOpcaoDeFiltro.Visible = false;
                     pnlVencidos.Visible = true;
+                    break;
+                case "5":
+                    pnlOpcaoDeFiltro.Visible = false;
+                    pnlAVencer.Visible = true;
                     break;
             }
         }
@@ -460,6 +466,13 @@ namespace FN.Client.FN
         protected void btnVencidos_OnClick(object sender, ImageClickEventArgs e)
         {
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoVencidos>();
+            FiltroAplicado = filtro;
+            MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
+        }
+
+        protected void btnAVencer_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroItemFinanceiroRecebimentoAVencer>();
             FiltroAplicado = filtro;
             MostraItens(filtro, grdItensFinanceiros.PageSize, 0);
         }

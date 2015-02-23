@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -112,6 +113,7 @@ namespace FN.Client.FN
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Data de vencimento", "4"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Cedente", "5"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Vencidos", "6"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("A vencer", "7"));
         }
 
         private IList<DTOBoletosGerados> ConvertaBoletosGeradosParaDTO(IList<IBoletosGerados> listaDeBoletosGerados)
@@ -151,6 +153,8 @@ namespace FN.Client.FN
                 dto.StatusBoleto = !string.IsNullOrEmpty(boletosGerado.StatusBoleto) ? boletosGerado.StatusBoleto : "Aberto";
 
                 dto.EhBoletoAvulso = boletosGerado.EhBoletoAvulso ? "SIM" : string.Empty;
+
+                dto.EstaVencido = boletosGerado.EstaVencido();
 
                 listaDeBoletos.Add(dto);
             }
@@ -398,6 +402,10 @@ namespace FN.Client.FN
                     pnlVencidos.Visible = true;
                     pnlOpcaoDeFiltro.Visible = false;
                     break;
+                case "7":
+                    pnlAVencer.Visible = true;
+                    pnlOpcaoDeFiltro.Visible = false;
+                    break;
             }
         }
 
@@ -420,6 +428,7 @@ namespace FN.Client.FN
             pnlDataDeVencimento.Visible = false;
             pnlCedente.Visible = false;
             pnlVencidos.Visible = false;
+            pnlAVencer.Visible = false;
         }
 
         protected void btnPesquisarPorCedente_OnClick_(object sender, ImageClickEventArgs e)
@@ -507,6 +516,29 @@ namespace FN.Client.FN
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroBoletosGeradosVencidos>();
             FiltroAplicado = filtro;
             CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, 0);
+        }
+
+        protected void btnAVencer_OnClick(object sender, ImageClickEventArgs e)
+        {
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroBoletosGeradosAVencer>();
+            FiltroAplicado = filtro;
+            CarregaBoletosGerados(FiltroAplicado, grdBoletosGerados.PageSize, 0);
+        }
+
+        protected void grdBoletosGerados_OnItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+                var gridItem = (GridDataItem)e.Item;
+
+                var boleto = ((DTOBoletosGerados)(((gridItem)).DataItem));
+
+                if (boleto.EstaVencido)
+                {
+                    ((gridItem)).BackColor = Color.Red;
+                    ((gridItem)).ForeColor = Color.White;
+                }
+            }
         }
     }
 }

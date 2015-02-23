@@ -20,5 +20,6 @@ namespace FN.Interfaces.Negocio
         string Instrucoes { get; set; }
         string StatusBoleto { get; set; }
         bool EhBoletoAvulso { get; set; }
+        bool EstaVencido();
     }
 }

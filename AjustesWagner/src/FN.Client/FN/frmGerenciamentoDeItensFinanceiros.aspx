@@ -10,14 +10,15 @@
         <Items>
             <telerik:RadToolBarButton runat="server" ImageUrl="~/imagens/new.gif" Text="Novo"
                 CommandName="btnNovo" CausesValidation="False" CommandArgument="OPE.FN.007.0001" />
-            <telerik:RadToolBarButton runat="server" Text="Gerar conta a receber coletivamente" ImageUrl="~/imagens/dinheiro.gif"
-                CommandName="btnGerarContaAReceberColetivo" CausesValidation="False" />
+            <telerik:RadToolBarButton runat="server" Text="Gerar conta a receber coletivamente"
+                ImageUrl="~/imagens/dinheiro.gif" CommandName="btnGerarContaAReceberColetivo"
+                CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Recarregar" ImageUrl="~/imagens/refresh.gif"
                 CommandName="btnRecarregar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Limpar" ImageUrl="~/imagens/limpar.gif"
                 CommandName="btnLimpar" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Gerar Relatório" ImageUrl="~/imagens/imprimir.png"
-                CommandName="btnRelatorio" CausesValidation="False"/>
+                CommandName="btnRelatorio" CausesValidation="False" />
             <telerik:RadToolBarButton runat="server" Text="Ajuda" ImageUrl="~/imagens/help.gif" />
         </Items>
     </telerik:RadToolBar>
@@ -80,13 +81,20 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorDescricao_OnClick_" />
                                 </td>
                             </tr>
-                             <tr runat="server" id="pnlVencidos">
+                            <tr runat="server" id="pnlVencidos">
                                 <td class="th3">
-                                
                                 </td>
                                 <td class="td">
                                     <asp:ImageButton ID="btnVencidos" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
                                         OnClick="btnVencidos_OnClick" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="pnlAVencer">
+                                <td class="th3">
+                                </td>
+                                <td class="td">
+                                    <asp:ImageButton ID="btnAVencer" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
+                                        OnClick="btnAVencer_OnClick" />
                                 </td>
                             </tr>
                         </table>
@@ -137,8 +145,9 @@
                                                 HeaderTooltip="Modificar" ImageUrl="~/imagens/edit.gif" UniqueName="column10">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
-                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="GerarContaAReceber" FilterImageToolTip="Gerar conta a receber"
-                                                HeaderTooltip="Gerar conta a receber" ImageUrl="~/imagens/dinheiro.gif" UniqueName="column108">
+                                            <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="GerarContaAReceber"
+                                                FilterImageToolTip="Gerar conta a receber" HeaderTooltip="Gerar conta a receber"
+                                                ImageUrl="~/imagens/dinheiro.gif" UniqueName="column108">
                                                 <ItemStyle Width="2%"></ItemStyle>
                                             </telerik:GridButtonColumn>
                                             <telerik:GridBoundColumn DataField="ID" HeaderText="ID" UniqueName="column1" Display="false">

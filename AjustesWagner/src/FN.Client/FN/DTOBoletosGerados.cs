@@ -20,5 +20,6 @@ namespace FN.Client.FN
         public string Instrucoes { get; set; }
         public string StatusBoleto { get; set; }
         public string EhBoletoAvulso { get; set; }
+        public bool EstaVencido { get; set; }
     }
 }

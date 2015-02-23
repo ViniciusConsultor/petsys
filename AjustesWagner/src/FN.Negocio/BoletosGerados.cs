@@ -33,5 +33,15 @@ namespace FN.Negocio
         public string StatusBoleto { get; set; }
 
         public bool EhBoletoAvulso { get; set; }
+
+        public bool EstaVencido()
+        {
+            if (StatusBoleto.ToUpper().Equals("ABERTO"))
+                if (DataVencimento.HasValue)
+                    return Convert.ToInt64(DataVencimento.Value.ToString("yyyyMMdd")) <
+                           Convert.ToInt64(DateTime.Now.ToString("yyyyMMdd"));
+
+            return false;
+        }
     }
 }
