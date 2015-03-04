@@ -48,12 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapeadores\IMapeadorDeProcessoMarcaRevista.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeProcessoDeMarcaDeRevista.cs" />
     <Compile Include="Utilidades\DTOProcessoMarcaRevista.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mapeadores\" />
     <Folder Include="Negocio\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
