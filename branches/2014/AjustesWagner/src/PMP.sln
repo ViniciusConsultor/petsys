@@ -16,6 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9C3F
 		..\doc\Banco de dados\PMP\INSERT_PMP.SQL = ..\doc\Banco de dados\PMP\INSERT_PMP.SQL
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{53762C6F-56DC-4C4B-B212-658EC81C7D9D}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\Banco de dados\PMP\SQL Server\CREATE_PMP_SQLServer.sql = ..\doc\Banco de dados\PMP\SQL Server\CREATE_PMP_SQLServer.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,5 +50,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{53762C6F-56DC-4C4B-B212-658EC81C7D9D} = {9C3FCF5E-900A-461D-9515-3A772FC803C2}
 	EndGlobalSection
 EndGlobal
