@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Compartilhados.Interfaces.Core.Negocio;
 using PMP.Interfaces.Utilidades;
 
 namespace PMP.Interfaces.Mapeadores
@@ -19,5 +20,6 @@ namespace PMP.Interfaces.Mapeadores
     public interface IMapeadorDeProcessoMarcaRevista
     {
         void GraveEmLote(IDictionary<int, IList<DTOProcessoMarcaRevista>> listaDeProcessoMarcaRevista);
+        IList<DTOProcessoMarcaRevista> ObtenhaResultadoDaPesquisa(IFiltro filtro, int quantidadeDeRegistros, int offSet);
     }
 }

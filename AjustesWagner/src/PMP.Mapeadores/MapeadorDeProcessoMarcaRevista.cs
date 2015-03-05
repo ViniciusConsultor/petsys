@@ -4,8 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Data;
 using Compartilhados;
 using Compartilhados.DBHelper;
+using Compartilhados.Interfaces.Core.Negocio;
 using PMP.Interfaces.Mapeadores;
 using PMP.Interfaces.Utilidades;
 
@@ -134,6 +136,64 @@ namespace PMP.Mapeadores
 
                 }
             }
+        }
+
+        public IList<DTOProcessoMarcaRevista> ObtenhaResultadoDaPesquisa(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append(filtro.ObtenhaQuery());
+
+            sql.AppendLine(" ORDER BY DATAPUBLICACAOREVISTA DESC");
+
+            var processos = new List<DTOProcessoMarcaRevista>();
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString(), quantidadeDeRegistros, offSet))
+                try
+                {
+                    while (leitor.Read())
+                        processos.Add(MontaProcesso(leitor));
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+
+            return processos;
+        }
+
+        private DTOProcessoMarcaRevista MontaProcesso(IDataReader leitor)
+        {
+            var processo = new DTOProcessoMarcaRevista();
+
+            processo.NumeroDaRevista = UtilidadesDePersistencia.getValorInteger(leitor, "NUMERODAREVISTA");
+            processo.DataDePublicacaoDaRevista = UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAOREVISTA").Value;
+            processo.NumeroProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "NUMEROPROCESSODEMARCA");
+            processo.DataDoDeposito = UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO");
+            processo.DataDaConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DATADACONCESSAO");
+            processo.DataDaVigencia = UtilidadesDePersistencia.getValorDate(leitor, "DATADAVIGENCIA");
+            processo.CodigoDoDespacho = UtilidadesDePersistencia.EhNulo(leitor, "CODIGODODESPACHO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGODODESPACHO");
+            processo.NomeDoDespacho = UtilidadesDePersistencia.EhNulo(leitor, "NOMEDODESPACHO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "NOMEDODESPACHO");
+            processo.TextoComplementarDoDespacho = UtilidadesDePersistencia.EhNulo(leitor, "TEXTOCOMPLEMENTARDESPACHO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "TEXTOCOMPLEMENTARDESPACHO");
+            processo.Titular = UtilidadesDePersistencia.EhNulo(leitor, "TITULAR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "TITULAR");
+            processo.PaisTitular = UtilidadesDePersistencia.EhNulo(leitor, "PAISTITULAR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "PAISTITULAR");
+            processo.UFTitular = UtilidadesDePersistencia.EhNulo(leitor, "UFTITULAR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "UFTITULAR");
+            processo.Marca = UtilidadesDePersistencia.EhNulo(leitor, "MARCA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "MARCA");
+            processo.Apresentacao = UtilidadesDePersistencia.EhNulo(leitor, "APRESENTACAO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "APRESENTACAO");
+            processo.Natureza = UtilidadesDePersistencia.EhNulo(leitor, "NATUREZA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "NATUREZA");
+            processo.EdicaoClasseViena = UtilidadesDePersistencia.EhNulo(leitor, "EDICAOCLASSEVIENA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "EDICAOCLASSEVIENA");
+            processo.CodigoClasseViena = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSEVIENA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSEVIENA");
+            processo.CodigoClasseNacional = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSENACIONAL") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSENACIONAL");
+            processo.CodigoSubClasseNacional = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOSUBCLASSENACIONAL") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOSUBCLASSENACIONAL");
+            processo.CodigoClasseNice = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSENICE") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSENICE");
+            processo.EspecificacaoClasseNice = UtilidadesDePersistencia.EhNulo(leitor, "ESPECIFICACAOCLASSENICE") ? null : UtilidadesDePersistencia.GetValorString(leitor, "ESPECIFICACAOCLASSENICE");
+            processo.Procurador = UtilidadesDePersistencia.EhNulo(leitor, "PROCURADOR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "PROCURADOR");
+            processo.Apostila = UtilidadesDePersistencia.EhNulo(leitor, "APOSTILA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "APOSTILA");
+
+            return processo;
         }
     }
 }

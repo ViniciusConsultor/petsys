@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Compartilhados;
 using Compartilhados.Fabricas;
+using Compartilhados.Interfaces.Core.Negocio;
 using PMP.Interfaces.Mapeadores;
 using PMP.Interfaces.Servicos;
 using System.IO;
@@ -31,6 +32,23 @@ namespace PMP.Servicos.Local
                 listaDeProcessosDeMarcasDeRevista.Add(ExtraiaProcessoDeMarcasDeRevistaDoArquivo(arquivo.FullName));
 
            GraveEmLote(listaDeProcessosDeMarcasDeRevista);
+        }
+
+        public IList<DTOProcessoMarcaRevista> ObtenhaResultadoDaPesquisa(IFiltro filtro, int quantidadeDeRegistros, int offSet)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoMarcaRevista>();
+
+            try
+            {
+                return mapeador.ObtenhaResultadoDaPesquisa(filtro, quantidadeDeRegistros, offSet);
+                
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            } 
         }
 
         private void GraveEmLote(IDictionary<int, IList<DTOProcessoMarcaRevista>> listaDeProcessosDeMarcasDeRevista)
@@ -75,16 +93,16 @@ namespace PMP.Servicos.Local
                     DataDaVigencia = conteudoProcesso.Attribute("data-vigencia") == null ? (DateTime?) null : DateTime.Parse(conteudoProcesso.Attribute("data-vigencia").Value),
                     DataDoDeposito = conteudoProcesso.Attribute("data-deposito") == null ? (DateTime?) null : DateTime.Parse(conteudoProcesso.Attribute("data-deposito").Value),
                     CodigoDoDespacho = conteudoProcesso.Element("despachos").Element("despacho").Attribute("codigo").Value,
-                    NomeDoDespacho =  conteudoProcesso.Element("despachos").Element("despacho").Attribute("nome")== null ? null : conteudoProcesso.Element("despachos").Element("despacho").Attribute("nome").Value,
-                    TextoComplementarDoDespacho =  conteudoProcesso.Element("despachos").Element("despacho").Element("texto-complementar") == null ? null :  conteudoProcesso.Element("despachos").Element("despacho").Element("texto-complementar").Value,
-                    Titular = conteudoProcesso.Element("titulares") == null ? null : conteudoProcesso.Element("titulares").Element("titular") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("nome-razao-social") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("nome-razao-social").Value,
+                    NomeDoDespacho =  conteudoProcesso.Element("despachos").Element("despacho").Attribute("nome")== null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("despachos").Element("despacho").Attribute("nome").Value),
+                    TextoComplementarDoDespacho = conteudoProcesso.Element("despachos").Element("despacho").Element("texto-complementar") == null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("despachos").Element("despacho").Element("texto-complementar").Value),
+                    Titular = conteudoProcesso.Element("titulares") == null ? null : conteudoProcesso.Element("titulares").Element("titular") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("nome-razao-social") == null ? null :UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("titulares").Element("titular").Attribute("nome-razao-social").Value),
                     UFTitular = conteudoProcesso.Element("titulares") == null ? null : conteudoProcesso.Element("titulares").Element("titular") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("uf") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("uf").Value,
                     PaisTitular = conteudoProcesso.Element("titulares") == null ? null : conteudoProcesso.Element("titulares").Element("titular") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("pais") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("pais").Value,
-                    Procurador = conteudoProcesso.Element("procurador") == null ? null : conteudoProcesso.Element("procurador").Value,
-                    Marca = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Element("nome") == null ? null : conteudoProcesso.Element("marca").Element("nome").Value,
+                    Procurador = conteudoProcesso.Element("procurador") == null ? null :  UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("procurador").Value),
+                    Marca = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Element("nome") == null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("marca").Element("nome").Value),
                     Apresentacao = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Attribute("apresentacao") == null ? null : conteudoProcesso.Element("marca").Attribute("apresentacao").Value,
                     Natureza = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Attribute("natureza") == null ? null : conteudoProcesso.Element("marca").Attribute("natureza").Value,
-                    Apostila = conteudoProcesso.Element("apostila") == null ? null : conteudoProcesso.Element("apostila").Value,
+                    Apostila = conteudoProcesso.Element("apostila") == null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("apostila").Value),
                 
                 }).ToList();
 
