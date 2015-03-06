@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filtros\Marca\FiltroPorNumeroDeProcesso.cs" />
+    <Compile Include="Filtros\Marca\FiltroPorTitular.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

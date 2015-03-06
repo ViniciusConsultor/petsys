@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="FiltroPorNumeroDeProcesso.cs" company="Microsoft">
+// <copyright file="FiltroPorTitular.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -18,7 +18,7 @@ namespace PMP.Negocio.Filtros.Marca
     /// TODO: Update summary.
     /// </summary>
     [Serializable]
-    public class FiltroPorNumeroDeProcesso : Filtro, IFiltroPorNumeroDeProcesso
+    public class FiltroPorTitular : Filtro, IFiltroPorTitular
     {
         public override string ObtenhaQuery()
         {
@@ -30,14 +30,19 @@ namespace PMP.Negocio.Filtros.Marca
             sql.Append("MARCA, APRESENTACAO, NATUREZA, EDICAOCLASSEVIENA, ");
             sql.Append("CODIGOCLASSEVIENA, CODIGOCLASSENACIONAL, CODIGOSUBCLASSENACIONAL, CODIGOCLASSENICE, ");
             sql.Append("ESPECIFICACAOCLASSENICE, PROCURADOR, APOSTILA FROM PMP_PROCESSOSMARCAREVISTA WHERE ");
-            sql.Append(ObtenhaFiltroMontado("NUMEROPROCESSODEMARCA", true));
+            sql.Append(ObtenhaFiltroMontado("TITULAR", true));
 
-            if (NumeroDaRevista != null)
-                sql.Append(" AND NUMERODAREVISTA = " + NumeroDaRevista.Value);
+            if (!string.IsNullOrEmpty(UF))
+                sql.Append(" AND UFTITULAR = '" + UF.ToUpper() + "'");
+
+            if (!string.IsNullOrEmpty(Pais))
+                sql.Append(" AND PAISTITULAR = '" + Pais.ToUpper() + "'");
+        
 
             return sql.ToString();
         }
 
-        public int? NumeroDaRevista { get; set; }
+        public string UF { get; set; }
+        public string Pais { get; set; }
     }
 }

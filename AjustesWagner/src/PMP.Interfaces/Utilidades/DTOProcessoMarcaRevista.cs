@@ -10,7 +10,7 @@ namespace PMP.Interfaces.Utilidades
     {
         public int NumeroDaRevista { get; set; }
         public DateTime DataDePublicacaoDaRevista { get; set; }
-        public long NumeroProcessoDeMarca { get; set; }
+        public string NumeroProcessoDeMarca { get; set; }
         public Nullable<DateTime> DataDoDeposito { get; set; }
         public Nullable<DateTime> DataDaConcessao { get; set; }
         public Nullable<DateTime> DataDaVigencia { get; set; }

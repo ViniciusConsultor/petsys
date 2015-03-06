@@ -80,7 +80,7 @@ namespace PMP.Servicos.Local
 
             var arquivoDaRevista = XDocument.Load(caminhoCompletoDoArquivo);
             var conteudoDaRevista = arquivoDaRevista.Element("revista");
-            var numeroDaRevista =  int.Parse(conteudoDaRevista.Attribute("numero").Value);
+            var numeroDaRevista = int.Parse(conteudoDaRevista.Attribute("numero").Value);
             var dataDaPublicacaoDaRevista = DateTime.Parse(conteudoDaRevista.Attribute("data").Value);
 
             var listaDeProcessosNaRevista = (from conteudoProcesso in conteudoDaRevista.Elements("processo")
@@ -88,7 +88,7 @@ namespace PMP.Servicos.Local
                 {
                     NumeroDaRevista = numeroDaRevista,
                     DataDePublicacaoDaRevista = dataDaPublicacaoDaRevista,
-                    NumeroProcessoDeMarca = long.Parse(conteudoProcesso.Attribute("numero").Value),
+                    NumeroProcessoDeMarca = conteudoProcesso.Attribute("numero").Value,
                     DataDaConcessao = conteudoProcesso.Attribute("data-concessao") == null ? (DateTime?) null : DateTime.Parse(conteudoProcesso.Attribute("data-concessao").Value),
                     DataDaVigencia = conteudoProcesso.Attribute("data-vigencia") == null ? (DateTime?) null : DateTime.Parse(conteudoProcesso.Attribute("data-vigencia").Value),
                     DataDoDeposito = conteudoProcesso.Attribute("data-deposito") == null ? (DateTime?) null : DateTime.Parse(conteudoProcesso.Attribute("data-deposito").Value),
