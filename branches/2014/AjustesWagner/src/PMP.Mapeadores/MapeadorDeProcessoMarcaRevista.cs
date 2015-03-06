@@ -33,7 +33,7 @@ namespace PMP.Mapeadores
 
             foreach (var item in listaDeProcessoMarcaRevista)
             {
-                DBHelper.ExecuteNonQuery("DELETE FROM  PMP_PROCESSOSMARCAREVISTA WHERE NUMERODAREVISTA = " +
+                DBHelper.ExecuteNonQuery("DELETE FROM PMP_PROCESSOSMARCAREVISTA WHERE NUMERODAREVISTA = " +
                                          item.Key.ToString());
 
                 foreach (var processoMarcaRevista in item.Value)
@@ -51,7 +51,7 @@ namespace PMP.Mapeadores
 
                     sql.Append(processoMarcaRevista.NumeroDaRevista + ", ");
                     sql.Append(processoMarcaRevista.DataDePublicacaoDaRevista.ToString("yyyyMMdd") + ", ");
-                    sql.Append(processoMarcaRevista.NumeroProcessoDeMarca + ", ");
+                    sql.Append("'" +  UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.NumeroProcessoDeMarca) + "', ");
                     sql.Append(processoMarcaRevista.DataDoDeposito == null
                                    ? "NULL, "
                                    : processoMarcaRevista.DataDoDeposito.Value.ToString("yyyyMMdd") + ", ");
@@ -171,7 +171,7 @@ namespace PMP.Mapeadores
 
             processo.NumeroDaRevista = UtilidadesDePersistencia.getValorInteger(leitor, "NUMERODAREVISTA");
             processo.DataDePublicacaoDaRevista = UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAOREVISTA").Value;
-            processo.NumeroProcessoDeMarca = UtilidadesDePersistencia.GetValorLong(leitor, "NUMEROPROCESSODEMARCA");
+            processo.NumeroProcessoDeMarca = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROPROCESSODEMARCA");
             processo.DataDoDeposito = UtilidadesDePersistencia.getValorDate(leitor, "DATADODEPOSITO");
             processo.DataDaConcessao = UtilidadesDePersistencia.getValorDate(leitor, "DATADACONCESSAO");
             processo.DataDaVigencia = UtilidadesDePersistencia.getValorDate(leitor, "DATADAVIGENCIA");

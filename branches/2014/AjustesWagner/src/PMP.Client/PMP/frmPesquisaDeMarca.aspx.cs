@@ -71,7 +71,18 @@ namespace PMP.Client.PMP
 
         protected void btnPesquisarPorTitular_OnClick_(object sender, ImageClickEventArgs e)
         {
-            
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorTitular>();
+            filtro.ValorDoFiltro = txtTitular.Text;
+            filtro.UF = txtUF.Text;
+            filtro.Pais = txtPais.Text;
+            filtro.Operacao = operacao;
+
+            FiltroAplicado = filtro;
+            //Tratar o esquema da revista
+
+            MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
 
         protected void btnPesquisarPorMarca_OnClick(object sender, ImageClickEventArgs e)
