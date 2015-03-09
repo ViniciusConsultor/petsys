@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="FiltroPorNumeroDeProcesso.cs" company="Microsoft">
+// <copyright file="FiltroPorProcurador.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -18,7 +18,7 @@ namespace PMP.Negocio.Filtros.Marca
     /// TODO: Update summary.
     /// </summary>
     [Serializable]
-    public class FiltroPorNumeroDeProcesso : Filtro, IFiltroPorNumeroDeProcesso
+    public class FiltroPorProcurador : Filtro, IFiltroPorProcurador
     {
         public override string ObtenhaQuery()
         {
@@ -30,8 +30,8 @@ namespace PMP.Negocio.Filtros.Marca
             sql.Append("MARCA, APRESENTACAO, NATUREZA, EDICAOCLASSEVIENA, ");
             sql.Append("CODIGOCLASSEVIENA, CODIGOCLASSENACIONAL, CODIGOSUBCLASSENACIONAL, CODIGOCLASSENICE, ");
             sql.Append("ESPECIFICACAOCLASSENICE, PROCURADOR, APOSTILA FROM PMP_PROCESSOSMARCAREVISTA WHERE ");
-            sql.Append(ObtenhaFiltroMontado("NUMEROPROCESSODEMARCA", true));
-
+            sql.Append(ObtenhaFiltroMontado("PROCURADOR", true));
+            
             if (NumeroDaRevista.HasValue)
                 sql.Append(" AND NUMERODAREVISTA = " + NumeroDaRevista.Value);
 

@@ -12,8 +12,8 @@ namespace PMP.Interfaces.Negocio.Filtros.Marca
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IFiltroPorNumeroDeProcesso : IFiltro
+    public interface IFiltroPorNumeroDeProcesso : IFiltroPMP
     {
-        int? NumeroDaRevista { get; set; }
+     
     }
 }
