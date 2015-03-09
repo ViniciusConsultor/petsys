@@ -51,6 +51,22 @@ namespace PMP.Servicos.Local
             } 
         }
 
+        public int ObtenhaQuantidadeDeResultadoDaPesquisa(IFiltro filtro)
+        {
+            ServerUtils.setCredencial(_Credencial);
+
+            var mapeador = FabricaGenerica.GetInstancia().CrieObjeto<IMapeadorDeProcessoMarcaRevista>();
+
+            try
+            {
+                return mapeador.ObtenhaQuantidadeDeResultadoDaPesquisa(filtro);
+            }
+            finally
+            {
+                ServerUtils.libereRecursos();
+            } 
+        }
+
         private void GraveEmLote(IDictionary<int, IList<DTOProcessoMarcaRevista>> listaDeProcessosDeMarcasDeRevista)
         {
             ServerUtils.setCredencial(_Credencial);

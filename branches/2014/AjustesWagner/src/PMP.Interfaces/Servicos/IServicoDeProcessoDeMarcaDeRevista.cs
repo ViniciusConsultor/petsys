@@ -12,5 +12,6 @@ namespace PMP.Interfaces.Servicos
     {
         void ProcesseEmLote(string pastaDeArmazenamentoDasRevistas);
         IList<DTOProcessoMarcaRevista> ObtenhaResultadoDaPesquisa(IFiltro filtro, int quantidadeDeRegistros, int offSet);
+        int ObtenhaQuantidadeDeResultadoDaPesquisa(IFiltro filtro);
     }
 }

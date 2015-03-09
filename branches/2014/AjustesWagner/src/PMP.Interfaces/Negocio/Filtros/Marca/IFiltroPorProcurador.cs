@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IFiltroPorTitular.cs" company="Microsoft">
+// <copyright file="IFiltroPorProcurador.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -16,9 +16,7 @@ namespace PMP.Interfaces.Negocio.Filtros.Marca
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IFiltroPorTitular : IFiltroPMP
+    public interface IFiltroPorProcurador : IFiltroPMP
     {
-        string UF { get; set; }
-        string Pais { get; set; }
     }
 }

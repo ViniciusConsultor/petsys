@@ -28,39 +28,43 @@
                                     <uc1:ctrlOperacaoFiltro ID="ctrlOperacaoFiltro1" runat="server" />
                                 </td>
                             </tr>
-                            <tr runat="server" id="pnlApresentacao">
-                                <td class="th3">
-                                    <asp:Label ID="Label7" runat="server" Text="Apresentação"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <asp:ImageButton ID="btnPesquisarPorApresentacao" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorApresentacao_OnClick" />
-                                </td>
-                            </tr>
                             <tr runat="server" id="pnlTitular">
                                 <td class="th3">
-                                    <asp:Label ID="Label1" runat="server" Text="Titular"></asp:Label>
+                                     <asp:Label ID="Label7" runat="server" Text="Titular"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <telerik:RadTextBox ID="txtTitular" runat="server">
-                                    </telerik:RadTextBox>
+                                    <table>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label1" runat="server" Text="Nome"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadTextBox ID="txtTitular" runat="server">
+                                                </telerik:RadTextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label4" runat="server" Text="UF"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadTextBox ID="txtUF" runat="server">
+                                                </telerik:RadTextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label9" runat="server" Text="Pais"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadTextBox ID="txtPais" runat="server">
+                                                </telerik:RadTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
-                                <td class="td">
-                                    <asp:Label ID="Label4" runat="server" Text="UF"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <telerik:RadTextBox ID="txtUF" runat="server">
-                                    </telerik:RadTextBox>
-                                </td>
-                                <td class="td">
-                                    <asp:Label ID="Label9" runat="server" Text="Pais"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <telerik:RadTextBox ID="txtPais" runat="server">
-                                    </telerik:RadTextBox>
-                                </td>
-                                <td colspan="2">
-                                    <asp:ImageButton ID="btnPesquisarPorCliente" runat="server" ImageUrl="~/imagens/find.gif"
+                                <td colspan="2" style="alignment-adjust: central">
+                                    <asp:ImageButton ID="btnPesquisarPorTitular" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorTitular_OnClick_" />
                                 </td>
                             </tr>
@@ -69,26 +73,12 @@
                                     <asp:Label ID="Label5" runat="server" Text="Marca"></asp:Label>
                                 </td>
                                 <td class="td">
+                                    <telerik:RadTextBox ID="txtMarca" runat="server">
+                                    </telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="txtNCL" runat="server">
+                                    </telerik:RadTextBox>
                                     <asp:ImageButton ID="btnPesquisarPorMarca" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorMarca_OnClick" />
-                                </td>
-                            </tr>
-                            <tr runat="server" id="pnlNatureza">
-                                <td class="th3">
-                                    <asp:Label ID="Label6" runat="server" Text="Natureza"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <asp:ImageButton ID="btnPesquisarPorNatureza" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorNatureza_OnClick" />
-                                </td>
-                            </tr>
-                            <tr runat="server" id="pnlNCL">
-                                <td class="th3">
-                                    <asp:Label ID="Label8" runat="server" Text="NCL"></asp:Label>
-                                </td>
-                                <td class="td">
-                                    <asp:ImageButton ID="btnPesquisarPorNCL" runat="server" ImageUrl="~/imagens/find.gif"
-                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorNCL_OnClick" />
                                 </td>
                             </tr>
                             <tr runat="server" id="pnlProcesso">
@@ -102,13 +92,15 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorProcesso_OnClick" />
                                 </td>
                             </tr>
-                            <tr runat="server" id="pnlDespacho">
+                            <tr runat="server" id="pnlProcurador">
                                 <td class="th3">
-                                    <asp:Label ID="Label11" runat="server" Text="Despacho"></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="Procurador"></asp:Label>
                                 </td>
                                 <td class="td">
-                                    <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagens/find.gif" ToolTip="Pesquisar"
-                                        OnClick="btnPesquisarPorDespacho_OnClick" />
+                                    <telerik:RadTextBox ID="txtProcurador" runat="server">
+                                    </telerik:RadTextBox>
+                                    <asp:ImageButton ID="btnPesquisarPorProcurador" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorProcurador_OnClick" />
                                 </td>
                             </tr>
                         </table>

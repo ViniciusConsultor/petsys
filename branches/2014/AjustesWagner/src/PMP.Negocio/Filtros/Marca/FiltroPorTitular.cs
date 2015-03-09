@@ -37,12 +37,16 @@ namespace PMP.Negocio.Filtros.Marca
 
             if (!string.IsNullOrEmpty(Pais))
                 sql.Append(" AND PAISTITULAR = '" + Pais.ToUpper() + "'");
-        
+
+            if (NumeroDaRevista.HasValue)
+                sql.Append(" AND NUMERODAREVISTA = " + NumeroDaRevista.Value);
 
             return sql.ToString();
         }
 
         public string UF { get; set; }
         public string Pais { get; set; }
+
+        public int? NumeroDaRevista { get; set; }
     }
 }

@@ -85,13 +85,13 @@ namespace PMP.Client.PMP {
         protected global::WorkSpace.ctrlOperacaoFiltro ctrlOperacaoFiltro1;
         
         /// <summary>
-        /// pnlApresentacao control.
+        /// pnlTitular control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlApresentacao;
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlTitular;
         
         /// <summary>
         /// Label7 control.
@@ -101,24 +101,6 @@ namespace PMP.Client.PMP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label7;
-        
-        /// <summary>
-        /// btnPesquisarPorApresentacao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorApresentacao;
-        
-        /// <summary>
-        /// pnlTitular control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlTitular;
         
         /// <summary>
         /// Label1 control.
@@ -175,13 +157,13 @@ namespace PMP.Client.PMP {
         protected global::Telerik.Web.UI.RadTextBox txtPais;
         
         /// <summary>
-        /// btnPesquisarPorCliente control.
+        /// btnPesquisarPorTitular control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorCliente;
+        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorTitular;
         
         /// <summary>
         /// pnlMarca control.
@@ -202,6 +184,24 @@ namespace PMP.Client.PMP {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
+        /// txtMarca control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtMarca;
+        
+        /// <summary>
+        /// txtNCL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtNCL;
+        
+        /// <summary>
         /// btnPesquisarPorMarca control.
         /// </summary>
         /// <remarks>
@@ -209,60 +209,6 @@ namespace PMP.Client.PMP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorMarca;
-        
-        /// <summary>
-        /// pnlNatureza control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlNatureza;
-        
-        /// <summary>
-        /// Label6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
-        
-        /// <summary>
-        /// btnPesquisarPorNatureza control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorNatureza;
-        
-        /// <summary>
-        /// pnlNCL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlNCL;
-        
-        /// <summary>
-        /// Label8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
-        
-        /// <summary>
-        /// btnPesquisarPorNCL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorNCL;
         
         /// <summary>
         /// pnlProcesso control.
@@ -301,31 +247,40 @@ namespace PMP.Client.PMP {
         protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorProcesso;
         
         /// <summary>
-        /// pnlDespacho control.
+        /// pnlProcurador control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlDespacho;
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlProcurador;
         
         /// <summary>
-        /// Label11 control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// ImageButton1 control.
+        /// txtProcurador control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
+        protected global::Telerik.Web.UI.RadTextBox txtProcurador;
+        
+        /// <summary>
+        /// btnPesquisarPorProcurador control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnPesquisarPorProcurador;
         
         /// <summary>
         /// rdkProcessosDeMarcas control.

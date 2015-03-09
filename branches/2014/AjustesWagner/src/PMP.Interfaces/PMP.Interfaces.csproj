@@ -49,7 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeProcessoMarcaRevista.cs" />
+    <Compile Include="Negocio\Filtros\IFiltroPMP.cs" />
+    <Compile Include="Negocio\Filtros\Marca\IFiltroPorMarca.cs" />
     <Compile Include="Negocio\Filtros\Marca\IFiltroPorNumeroDeProcesso.cs" />
+    <Compile Include="Negocio\Filtros\Marca\IFiltroPorProcurador.cs" />
     <Compile Include="Negocio\Filtros\Marca\IFiltroPorTitular.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeProcessoDeMarcaDeRevista.cs" />

@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="MapeadorDeProcessoMarcaRevista.cs" company="Microsoft">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using System.Data;
+﻿using System.Data;
 using Compartilhados;
 using Compartilhados.DBHelper;
 using Compartilhados.Interfaces.Core.Negocio;
@@ -18,9 +12,7 @@ namespace PMP.Mapeadores
     using System.Linq;
     using System.Text;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+   
     public class MapeadorDeProcessoMarcaRevista : IMapeadorDeProcessoMarcaRevista
     {
         public void GraveEmLote(IDictionary<int, IList<DTOProcessoMarcaRevista>> listaDeProcessoMarcaRevista)
@@ -163,6 +155,33 @@ namespace PMP.Mapeadores
                 }
 
             return processos;
+        }
+
+        public int ObtenhaQuantidadeDeResultadoDaPesquisa(IFiltro filtro)
+        {
+            IDBHelper DBHelper;
+            DBHelper = ServerUtils.criarNovoDbHelper();
+
+            var sql = new StringBuilder();
+
+            sql.Append(filtro.ObtenhaQueryParaQuantidade());
+            
+
+            using (var leitor = DBHelper.obtenhaReader(sql.ToString()))
+            {
+                try
+                {
+                    if (leitor.Read())
+                        return UtilidadesDePersistencia.getValorInteger(leitor, "QUANTIDADE");
+                }
+                finally
+                {
+                    leitor.Close();
+                }
+            }
+
+            return 0;
+        
         }
 
         private DTOProcessoMarcaRevista MontaProcesso(IDataReader leitor)

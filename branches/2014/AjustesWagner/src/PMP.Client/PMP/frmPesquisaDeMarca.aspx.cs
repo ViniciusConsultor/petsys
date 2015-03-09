@@ -51,18 +51,14 @@ namespace PMP.Client.PMP
         {
             using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarcaDeRevista>())
             {
-                //grdProcessosDeMarcas.VirtualItemCount = servico.ObtenhaQuantidadeDeProcessosCadastrados(filtro, chkConsiderarNaoAtivas.Checked);
+                grdProcessosDeMarcas.VirtualItemCount = servico.ObtenhaQuantidadeDeResultadoDaPesquisa(filtro);
                 grdProcessosDeMarcas.DataSource = servico.ObtenhaResultadoDaPesquisa(filtro, quantidadeDeProcessos,
                                                                                      offSet);
                 grdProcessosDeMarcas.DataBind();
             }
 
         }
-
-        protected void btnPesquisarPorApresentacao_OnClick(object sender, ImageClickEventArgs e)
-        {
-         
-        }
+        
 
         protected void cboTipoDeFiltro_OnSelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
@@ -87,17 +83,16 @@ namespace PMP.Client.PMP
 
         protected void btnPesquisarPorMarca_OnClick(object sender, ImageClickEventArgs e)
         {
-            
-        }
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
 
-        protected void btnPesquisarPorNatureza_OnClick(object sender, ImageClickEventArgs e)
-        {
-            
-        }
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorMarca>();
+            filtro.ValorDoFiltro = txtMarca.Text;
+            filtro.NCL = txtNCL.Text;
+            filtro.Operacao = operacao;
+            FiltroAplicado = filtro;
+            //Tratar o esquema da revista
 
-        protected void btnPesquisarPorNCL_OnClick(object sender, ImageClickEventArgs e)
-        {
-            
+            MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
 
         protected void btnPesquisarPorProcesso_OnClick(object sender, ImageClickEventArgs e)
@@ -114,9 +109,17 @@ namespace PMP.Client.PMP
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
 
-        protected void btnPesquisarPorDespacho_OnClick(object sender, ImageClickEventArgs e)
+        protected void btnPesquisarPorProcurador_OnClick(object sender, ImageClickEventArgs e)
         {
-            
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorProcurador>();
+            filtro.ValorDoFiltro = txtProcurador.Text;
+            filtro.Operacao = operacao;
+            FiltroAplicado = filtro;
+            //Tratar o esquema da revista
+
+            MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
 
         protected void grdProcessosDeMarcas_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
@@ -142,5 +145,7 @@ namespace PMP.Client.PMP
         {
             
         }
+
+        
     }
 }

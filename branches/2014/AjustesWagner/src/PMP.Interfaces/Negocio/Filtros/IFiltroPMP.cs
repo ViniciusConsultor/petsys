@@ -1,12 +1,12 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IFiltroPorTitular.cs" company="Microsoft">
+// <copyright file="IFiltroPMP.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using Compartilhados.Interfaces.Core.Negocio;
 
-namespace PMP.Interfaces.Negocio.Filtros.Marca
+namespace PMP.Interfaces.Negocio.Filtros
 {
     using System;
     using System.Collections.Generic;
@@ -16,9 +16,8 @@ namespace PMP.Interfaces.Negocio.Filtros.Marca
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface IFiltroPorTitular : IFiltroPMP
+    public interface IFiltroPMP : IFiltro
     {
-        string UF { get; set; }
-        string Pais { get; set; }
+        int? NumeroDaRevista { get; set; }
     }
 }
