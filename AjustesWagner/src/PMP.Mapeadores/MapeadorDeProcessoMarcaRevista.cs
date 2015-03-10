@@ -36,10 +36,10 @@ namespace PMP.Mapeadores
                     sql.Append(
                         "INSERT INTO PMP_PROCESSOSMARCAREVISTA (NUMERODAREVISTA, DATAPUBLICACAOREVISTA, NUMEROPROCESSODEMARCA, DATADODEPOSITO, ");
                     sql.Append("DATADACONCESSAO, DATADAVIGENCIA, CODIGODODESPACHO, NOMEDODESPACHO, ");
-                    sql.Append("TEXTOCOMPLEMENTARDESPACHO, TITULAR, PAISTITULAR, UFTITULAR, ");
+                    sql.Append("TITULAR, PAISTITULAR, UFTITULAR, ");
                     sql.Append("MARCA, APRESENTACAO, NATUREZA, EDICAOCLASSEVIENA, ");
                     sql.Append("CODIGOCLASSEVIENA, CODIGOCLASSENACIONAL, CODIGOSUBCLASSENACIONAL, CODIGOCLASSENICE, ");
-                    sql.Append("ESPECIFICACAOCLASSENICE, PROCURADOR, APOSTILA) VALUES (");
+                    sql.Append("PROCURADOR) VALUES (");
 
                     sql.Append(processoMarcaRevista.NumeroDaRevista + ", ");
                     sql.Append(processoMarcaRevista.DataDePublicacaoDaRevista.ToString("yyyyMMdd") + ", ");
@@ -63,11 +63,7 @@ namespace PMP.Mapeadores
                     sql.Append(string.IsNullOrEmpty(processoMarcaRevista.NomeDoDespacho)
                                    ? "NULL, "
                                    : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.NomeDoDespacho) + "', ");
-
-                    sql.Append(string.IsNullOrEmpty(processoMarcaRevista.TextoComplementarDoDespacho)
-                                 ? "NULL, "
-                                 : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.TextoComplementarDoDespacho) + "', ");
-
+                    
                     sql.Append(string.IsNullOrEmpty(processoMarcaRevista.Titular)
                                  ? "NULL, "
                                  : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.Titular) + "', ");
@@ -111,19 +107,12 @@ namespace PMP.Mapeadores
                     sql.Append(string.IsNullOrEmpty(processoMarcaRevista.CodigoClasseNice)
                                ? "NULL, "
                                : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.CodigoClasseNice) + "', ");
-
-                    sql.Append(string.IsNullOrEmpty(processoMarcaRevista.EspecificacaoClasseNice)
-                               ? "NULL, "
-                               : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.EspecificacaoClasseNice) + "', ");
-
+                    
                     sql.Append(string.IsNullOrEmpty(processoMarcaRevista.Procurador)
-                               ? "NULL, "
-                               : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.Procurador) + "', ");
+                               ? "NULL) "
+                               : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.Procurador) + "') ");
 
-                    sql.Append(string.IsNullOrEmpty(processoMarcaRevista.Apostila)
-                               ? "NULL)"
-                               : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.Apostila) + "')");
-
+                    
                     DBHelper.ExecuteNonQuery(sql.ToString());
 
                 }
@@ -139,7 +128,7 @@ namespace PMP.Mapeadores
 
             sql.Append(filtro.ObtenhaQuery());
 
-            sql.AppendLine(" ORDER BY DATAPUBLICACAOREVISTA DESC");
+            sql.AppendLine(" ORDER BY DATAPUBLICACAOREVISTA ");
 
             var processos = new List<DTOProcessoMarcaRevista>();
 
@@ -196,7 +185,6 @@ namespace PMP.Mapeadores
             processo.DataDaVigencia = UtilidadesDePersistencia.getValorDate(leitor, "DATADAVIGENCIA");
             processo.CodigoDoDespacho = UtilidadesDePersistencia.EhNulo(leitor, "CODIGODODESPACHO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGODODESPACHO");
             processo.NomeDoDespacho = UtilidadesDePersistencia.EhNulo(leitor, "NOMEDODESPACHO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "NOMEDODESPACHO");
-            processo.TextoComplementarDoDespacho = UtilidadesDePersistencia.EhNulo(leitor, "TEXTOCOMPLEMENTARDESPACHO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "TEXTOCOMPLEMENTARDESPACHO");
             processo.Titular = UtilidadesDePersistencia.EhNulo(leitor, "TITULAR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "TITULAR");
             processo.PaisTitular = UtilidadesDePersistencia.EhNulo(leitor, "PAISTITULAR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "PAISTITULAR");
             processo.UFTitular = UtilidadesDePersistencia.EhNulo(leitor, "UFTITULAR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "UFTITULAR");
@@ -208,10 +196,8 @@ namespace PMP.Mapeadores
             processo.CodigoClasseNacional = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSENACIONAL") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSENACIONAL");
             processo.CodigoSubClasseNacional = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOSUBCLASSENACIONAL") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOSUBCLASSENACIONAL");
             processo.CodigoClasseNice = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSENICE") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSENICE");
-            processo.EspecificacaoClasseNice = UtilidadesDePersistencia.EhNulo(leitor, "ESPECIFICACAOCLASSENICE") ? null : UtilidadesDePersistencia.GetValorString(leitor, "ESPECIFICACAOCLASSENICE");
             processo.Procurador = UtilidadesDePersistencia.EhNulo(leitor, "PROCURADOR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "PROCURADOR");
-            processo.Apostila = UtilidadesDePersistencia.EhNulo(leitor, "APOSTILA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "APOSTILA");
-
+            
             return processo;
         }
     }

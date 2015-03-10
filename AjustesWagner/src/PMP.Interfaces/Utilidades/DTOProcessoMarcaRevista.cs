@@ -16,7 +16,6 @@ namespace PMP.Interfaces.Utilidades
         public Nullable<DateTime> DataDaVigencia { get; set; }
         public string CodigoDoDespacho { get; set; }
         public string NomeDoDespacho { get; set; }
-        public string TextoComplementarDoDespacho { get; set; }
         public string Titular { get; set; }
         public string PaisTitular { get; set; }
         public string UFTitular { get; set; }
@@ -26,10 +25,8 @@ namespace PMP.Interfaces.Utilidades
         public string EdicaoClasseViena { get; set; }
         public string CodigoClasseViena { get; set; }
         public string CodigoClasseNacional { get; set; }
-        public  string CodigoSubClasseNacional { get; set; }
+        public string CodigoSubClasseNacional { get; set; }
         public string Procurador { get; set; }
         public string CodigoClasseNice { get; set; }
-        public string EspecificacaoClasseNice { get; set; }
-        public string Apostila { get; set; }
     }
 }

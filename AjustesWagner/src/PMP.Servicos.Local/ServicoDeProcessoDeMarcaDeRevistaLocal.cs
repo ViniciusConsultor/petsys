@@ -110,7 +110,6 @@ namespace PMP.Servicos.Local
                     DataDoDeposito = conteudoProcesso.Attribute("data-deposito") == null ? (DateTime?) null : DateTime.Parse(conteudoProcesso.Attribute("data-deposito").Value),
                     CodigoDoDespacho = conteudoProcesso.Element("despachos").Element("despacho").Attribute("codigo").Value,
                     NomeDoDespacho =  conteudoProcesso.Element("despachos").Element("despacho").Attribute("nome")== null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("despachos").Element("despacho").Attribute("nome").Value),
-                    TextoComplementarDoDespacho = conteudoProcesso.Element("despachos").Element("despacho").Element("texto-complementar") == null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("despachos").Element("despacho").Element("texto-complementar").Value),
                     Titular = conteudoProcesso.Element("titulares") == null ? null : conteudoProcesso.Element("titulares").Element("titular") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("nome-razao-social") == null ? null :UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("titulares").Element("titular").Attribute("nome-razao-social").Value),
                     UFTitular = conteudoProcesso.Element("titulares") == null ? null : conteudoProcesso.Element("titulares").Element("titular") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("uf") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("uf").Value,
                     PaisTitular = conteudoProcesso.Element("titulares") == null ? null : conteudoProcesso.Element("titulares").Element("titular") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("pais") == null ? null : conteudoProcesso.Element("titulares").Element("titular").Attribute("pais").Value,
@@ -118,8 +117,8 @@ namespace PMP.Servicos.Local
                     Marca = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Element("nome") == null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("marca").Element("nome").Value),
                     Apresentacao = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Attribute("apresentacao") == null ? null : conteudoProcesso.Element("marca").Attribute("apresentacao").Value,
                     Natureza = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Attribute("natureza") == null ? null : conteudoProcesso.Element("marca").Attribute("natureza").Value,
-                    Apostila = conteudoProcesso.Element("apostila") == null ? null : UtilidadesDeString.RemoveAcentos(conteudoProcesso.Element("apostila").Value),
-                
+                    CodigoClasseNice =  conteudoProcesso.Element("classe-nice") == null ? null : conteudoProcesso.Element("classe-nice").Attribute("codigo").Value,
+
                 }).ToList();
 
             return  new KeyValuePair<int, IList<DTOProcessoMarcaRevista>>(numeroDaRevista, listaDeProcessosNaRevista);
