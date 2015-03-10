@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Compartilhados.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="MP.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ec11ed29a462ef9f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\MP.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
