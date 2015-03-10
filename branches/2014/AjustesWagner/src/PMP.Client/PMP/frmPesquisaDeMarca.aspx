@@ -32,8 +32,8 @@
                                 <td class="th3">
                                      <asp:Label ID="Label7" runat="server" Text="Titular"></asp:Label>
                                 </td>
-                                <td class="td">
-                                    <table>
+                                <td style="width: 30%">
+                                    <table >
                                         <tr>
                                             <td class="th3">
                                                 <asp:Label ID="Label1" runat="server" Text="Nome"></asp:Label>
@@ -63,7 +63,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td colspan="2" style="alignment-adjust: central">
+                                <td colspan="2" style="text-align : left">
                                     <asp:ImageButton ID="btnPesquisarPorTitular" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorTitular_OnClick_" />
                                 </td>
