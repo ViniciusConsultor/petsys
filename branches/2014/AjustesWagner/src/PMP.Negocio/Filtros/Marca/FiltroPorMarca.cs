@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Compartilhados;
 using Core.Negocio;
 using PMP.Interfaces.Negocio.Filtros.Marca;
 using System;
@@ -32,7 +33,7 @@ namespace PMP.Negocio.Filtros.Marca
             sql.Append(ObtenhaFiltroMontado("MARCA", true));
 
             if (!string.IsNullOrEmpty(NCL))
-                sql.Append(" AND CODIGOCLASSENICE = '" + NCL.ToUpper() + "'");
+                sql.Append(" AND CODIGOCLASSENICE = '" + UtilidadesDeString.RemoveAcentos(UtilidadesDePersistencia.FiltraApostrofe(NCL.ToUpper())) + "'");
 
             if (NumeroDaRevista.HasValue)
                 sql.Append(" AND NUMERODAREVISTA = " + NumeroDaRevista.Value);

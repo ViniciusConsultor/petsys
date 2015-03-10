@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Compartilhados;
 using Core.Negocio;
 using PMP.Interfaces.Negocio.Filtros.Marca;
 
@@ -30,13 +31,19 @@ namespace PMP.Negocio.Filtros.Marca
             sql.Append("MARCA, APRESENTACAO, NATUREZA, EDICAOCLASSEVIENA, ");
             sql.Append("CODIGOCLASSEVIENA, CODIGOCLASSENACIONAL, CODIGOSUBCLASSENACIONAL, CODIGOCLASSENICE, ");
             sql.Append("ESPECIFICACAOCLASSENICE, PROCURADOR, APOSTILA FROM PMP_PROCESSOSMARCAREVISTA WHERE ");
-            sql.Append(ObtenhaFiltroMontado("TITULAR", true));
+            
+            if (!string.IsNullOrEmpty(ValorDoFiltro))
+                sql.Append(ObtenhaFiltroMontado("TITULAR", true));
 
             if (!string.IsNullOrEmpty(UF))
-                sql.Append(" AND UFTITULAR = '" + UF.ToUpper() + "'");
+                sql.Append(!string.IsNullOrEmpty(ValorDoFiltro)
+                               ? " AND UFTITULAR = '" + UtilidadesDeString.RemoveAcentos(UtilidadesDePersistencia.FiltraApostrofe(UF.ToUpper())) + "'"
+                               : (" UFTITULAR = '" + UtilidadesDeString.RemoveAcentos(UtilidadesDePersistencia.FiltraApostrofe(UF.ToUpper())) + "'"));
 
             if (!string.IsNullOrEmpty(Pais))
-                sql.Append(" AND PAISTITULAR = '" + Pais.ToUpper() + "'");
+                sql.Append(!string.IsNullOrEmpty(ValorDoFiltro) || !string.IsNullOrEmpty(UF)
+                             ? " AND PAISTITULAR = '" + UtilidadesDeString.RemoveAcentos(UtilidadesDePersistencia.FiltraApostrofe(Pais.ToUpper())) + "'"
+                             : (" PAISTITULAR = '" + UtilidadesDeString.RemoveAcentos(UtilidadesDePersistencia.FiltraApostrofe(Pais.ToUpper())) + "'"));
 
             if (NumeroDaRevista.HasValue)
                 sql.Append(" AND NUMERODAREVISTA = " + NumeroDaRevista.Value);

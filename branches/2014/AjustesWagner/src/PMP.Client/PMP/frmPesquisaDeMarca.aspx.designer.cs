@@ -85,6 +85,33 @@ namespace PMP.Client.PMP {
         protected global::WorkSpace.ctrlOperacaoFiltro ctrlOperacaoFiltro1;
         
         /// <summary>
+        /// Label12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label12;
+        
+        /// <summary>
+        /// rblOpcaoDeRevista control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rblOpcaoDeRevista;
+        
+        /// <summary>
+        /// txtNumeroRevista control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox txtNumeroRevista;
+        
+        /// <summary>
         /// pnlTitular control.
         /// </summary>
         /// <remarks>
@@ -184,6 +211,15 @@ namespace PMP.Client.PMP {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
+        /// Label8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label8;
+        
+        /// <summary>
         /// txtMarca control.
         /// </summary>
         /// <remarks>
@@ -191,6 +227,15 @@ namespace PMP.Client.PMP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtMarca;
+        
+        /// <summary>
+        /// Label11 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label11;
         
         /// <summary>
         /// txtNCL control.

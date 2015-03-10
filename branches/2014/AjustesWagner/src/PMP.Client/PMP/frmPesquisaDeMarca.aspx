@@ -28,18 +28,30 @@
                                     <uc1:ctrlOperacaoFiltro ID="ctrlOperacaoFiltro1" runat="server" />
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="th3">
+                                    <asp:Label ID="Label12" runat="server" Text="Revista"></asp:Label>
+                                </td>
+                                <td class="td">
+                                    <asp:RadioButtonList ID="rblOpcaoDeRevista" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rblOpcaoDeRevista_OnSelectedIndexChanged">
+                                    </asp:RadioButtonList>
+                                    <telerik:RadNumericTextBox ID="txtNumeroRevista" runat="server" Type="Number" EmptyMessage="Número da revista" DataType="System.Uint32">
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>> 
+                                    </telerik:RadNumericTextBox>
+                                </td>
+                            </tr>
                             <tr runat="server" id="pnlTitular">
                                 <td class="th3">
-                                     <asp:Label ID="Label7" runat="server" Text="Titular"></asp:Label>
+                                    <asp:Label ID="Label7" runat="server" Text="Titular"></asp:Label>
                                 </td>
-                                <td style="width: 30%">
-                                    <table >
+                                <td width="25%">
+                                    <table>
                                         <tr>
                                             <td class="th3">
                                                 <asp:Label ID="Label1" runat="server" Text="Nome"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <telerik:RadTextBox ID="txtTitular" runat="server">
+                                                <telerik:RadTextBox ID="txtTitular" runat="server" Width="100%">
                                                 </telerik:RadTextBox>
                                             </td>
                                         </tr>
@@ -48,7 +60,7 @@
                                                 <asp:Label ID="Label4" runat="server" Text="UF"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <telerik:RadTextBox ID="txtUF" runat="server">
+                                                <telerik:RadTextBox ID="txtUF" runat="server" Width="30px">
                                                 </telerik:RadTextBox>
                                             </td>
                                         </tr>
@@ -57,13 +69,13 @@
                                                 <asp:Label ID="Label9" runat="server" Text="Pais"></asp:Label>
                                             </td>
                                             <td class="td">
-                                                <telerik:RadTextBox ID="txtPais" runat="server">
+                                                <telerik:RadTextBox ID="txtPais" runat="server" Width="30px">
                                                 </telerik:RadTextBox>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
-                                <td colspan="2" style="text-align : left">
+                                <td colspan="2" style="text-align: left">
                                     <asp:ImageButton ID="btnPesquisarPorTitular" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorTitular_OnClick_" />
                                 </td>
@@ -72,11 +84,29 @@
                                 <td class="th3">
                                     <asp:Label ID="Label5" runat="server" Text="Marca"></asp:Label>
                                 </td>
-                                <td class="td">
-                                    <telerik:RadTextBox ID="txtMarca" runat="server">
-                                    </telerik:RadTextBox>
-                                    <telerik:RadTextBox ID="txtNCL" runat="server">
-                                    </telerik:RadTextBox>
+                                <td width="25%">
+                                    <table>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label8" runat="server" Text="Nome"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadTextBox ID="txtMarca" runat="server">
+                                                </telerik:RadTextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label11" runat="server" Text="NCL"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadTextBox ID="txtNCL" runat="server">
+                                                </telerik:RadTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td colspan="2" style="text-align: left">
                                     <asp:ImageButton ID="btnPesquisarPorMarca" runat="server" ImageUrl="~/imagens/find.gif"
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorMarca_OnClick" />
                                 </td>
@@ -119,19 +149,16 @@
                                     OnItemCommand="grdProcessosDeMarcas_OnItemCommand" OnItemDataBound="grdProcessosDeMarcas_OnItemDataBound">
                                     <PagerStyle AlwaysVisible="True" Mode="NumericPages" />
                                     <MasterTableView Width="100%">
-                                        <%--  <GroupByExpressions>
+                                        <GroupByExpressions>
                                             <telerik:GridGroupByExpression>
                                                 <SelectFields>
                                                     <telerik:GridGroupByField FieldName="NumeroProcessoDeMarca" HeaderText="Processo" />
-                                                     <telerik:GridGroupByField FieldName="Marca" HeaderText="Marca" />
-                                                  
                                                 </SelectFields>
                                                 <GroupByFields>
                                                     <telerik:GridGroupByField FieldName="NumeroProcessoDeMarca" />
-                                                  
                                                 </GroupByFields>
                                             </telerik:GridGroupByExpression>
-                                        </GroupByExpressions>--%>
+                                        </GroupByExpressions>
                                         <RowIndicatorColumn>
                                             <HeaderStyle Width="20px" />
                                         </RowIndicatorColumn>
@@ -139,16 +166,27 @@
                                             <HeaderStyle Width="20px" />
                                         </ExpandCollapseColumn>
                                         <Columns>
+                                            <telerik:GridBoundColumn DataField="NumeroDaRevista" HeaderText="RPI" UniqueName="column0">
+                                            </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="NumeroProcessoDeMarca" HeaderText="Processo"
-                                                UniqueName="column0">
+                                                UniqueName="column1" Display="false">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Apresentacao" HeaderText="Apresentação" UniqueName="column1">
+                                            <telerik:GridBoundColumn DataField="Natureza" HeaderText="Natureza" UniqueName="column2">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Marca" HeaderText="Marca" UniqueName="column2">
+                                            <telerik:GridBoundColumn DataField="Apresentacao" HeaderText="Apresentação" UniqueName="column3">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="Titular" HeaderText="Titular" UniqueName="column3">
+                                            <telerik:GridBoundColumn DataField="Marca" HeaderText="Marca" UniqueName="column4">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn DataField="CodigoClasseNice" HeaderText="Classe" UniqueName="column4">
+                                            <telerik:GridBoundColumn DataField="Titular" HeaderText="Titular" UniqueName="column5">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Procurador" HeaderText="Procurador" UniqueName="column6">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CodigoDoDespacho" HeaderText="Código despacho"
+                                                UniqueName="column7">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="NomeDoDespacho" HeaderText="Despacho" UniqueName="column8">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="CodigoClasseNice" HeaderText="Classe" UniqueName="column9">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
