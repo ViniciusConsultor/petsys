@@ -36,7 +36,7 @@
                                     <asp:RadioButtonList ID="rblOpcaoDeRevista" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rblOpcaoDeRevista_OnSelectedIndexChanged">
                                     </asp:RadioButtonList>
                                     <telerik:RadNumericTextBox ID="txtNumeroRevista" runat="server" Type="Number" EmptyMessage="Número da revista" DataType="System.Uint32">
-                                        <NumberFormat DecimalDigits="0"></NumberFormat>> 
+                                        <NumberFormat DecimalDigits="0"></NumberFormat>
                                     </telerik:RadNumericTextBox>
                                 </td>
                             </tr>

@@ -40,6 +40,7 @@ namespace PMP.Client.PMP
             EscondaTodosOsPanelsDeFiltro();
 
             CarregaOpcoesRevista();
+            rblOpcaoDeRevista.SelectedValue = "T";
             txtNumeroRevista.Visible = false;
             txtNumeroRevista.Text = string.Empty;
             txtNumeroRevista.Value = null;
@@ -299,12 +300,12 @@ namespace PMP.Client.PMP
 
         protected void rblOpcaoDeRevista_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            var opcao = sender as ListItem;
+            var opcao = sender as RadioButtonList;
 
             txtNumeroRevista.Text = string.Empty;
             txtNumeroRevista.Value = null;
 
-            switch (opcao.Value)
+            switch (opcao.SelectedValue)
             {
                 case "T" :
                     txtNumeroRevista.Visible = false;
