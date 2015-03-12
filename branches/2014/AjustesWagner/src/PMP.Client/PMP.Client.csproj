@@ -101,6 +101,7 @@
       <DependentUpon>Servicos.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PMP\UtilPMP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Compartilhados;
 using Compartilhados.Fabricas;
 using Compartilhados.Interfaces.Core.Negocio;
+using MP.Interfaces.Utilidades;
 using PMP.Interfaces.Mapeadores;
 using PMP.Interfaces.Servicos;
 using System.IO;
@@ -24,14 +25,29 @@ namespace PMP.Servicos.Local
             if (!Directory.Exists(pastaDeArmazenamentoDasRevistas))
                 throw new ApplicationException("Pasta informada não existe!");
             
-            var informacoesDoDiretorio = new DirectoryInfo(pastaDeArmazenamentoDasRevistas);
-            var arquivosAProcessar = informacoesDoDiretorio.GetFiles();
+            var pastaDeDestinoDaDescompactacao = Path.Combine(pastaDeArmazenamentoDasRevistas, "ArquivosDescompactados");
+
+            DescompacteArquivos(pastaDeArmazenamentoDasRevistas, pastaDeDestinoDaDescompactacao);
+
+            var informacoesDoDiretorio = new DirectoryInfo(pastaDeDestinoDaDescompactacao);
+            var arquivosDesompactados = informacoesDoDiretorio.GetFiles();
+
             IDictionary<int, IList<DTOProcessoMarcaRevista>> listaDeProcessosDeMarcasDeRevista = new Dictionary<int, IList<DTOProcessoMarcaRevista>>();
-            
-            foreach (var arquivo in arquivosAProcessar)
-                listaDeProcessosDeMarcasDeRevista.Add(ExtraiaProcessoDeMarcasDeRevistaDoArquivo(arquivo.FullName));
+
+            foreach (var arquivo in arquivosDesompactados)
+                listaDeProcessosDeMarcasDeRevista.Add(ExtraiaProcessoDeMarcasDeRevistaDoArquivo(arquivo));
 
            GraveEmLote(listaDeProcessosDeMarcasDeRevista);
+        }
+
+        private void DescompacteArquivos(string pastaDeArmazenamentoDasRevistas, string pastaDeDestino)
+        {
+            var informacoesDoDiretorio = new DirectoryInfo(pastaDeArmazenamentoDasRevistas);
+            var arquivosCompactados = informacoesDoDiretorio.GetFiles();
+
+            foreach (var arquivoCompactado in arquivosCompactados)
+                Util.DescompacteArquivoZip(arquivoCompactado.FullName, pastaDeDestino);
+                
         }
 
         public IList<DTOProcessoMarcaRevista> ObtenhaResultadoDaPesquisa(IFiltro filtro, int quantidadeDeRegistros, int offSet)
@@ -90,11 +106,25 @@ namespace PMP.Servicos.Local
             } 
         }
 
-        private KeyValuePair<int, IList<DTOProcessoMarcaRevista>> ExtraiaProcessoDeMarcasDeRevistaDoArquivo(string caminhoCompletoDoArquivo)
+
+        private string TransformeTXTParaXml(FileInfo arquivoTxt)
+        {
+            var numeroDaRevista = arquivoTxt.Name.Substring(2,4);
+            var dataRevista = arquivoTxt.LastWriteTime;
+
+            using (var arquivo = new StreamReader(arquivoTxt.FullName))
+            {
+                TradutorDeRevistaTxtParaRevistaXml.TraduzaRevistaDeMarcas(dataRevista, numeroDaRevista, arquivo, arquivoTxt.Directory.FullName + "\\");
+                arquivo.Close();
+            }
+
+            return Path.Combine(arquivoTxt.Directory.FullName, numeroDaRevista + ".xml");
+        }
+
+        private KeyValuePair<int, IList<DTOProcessoMarcaRevista>> ExtraiaProcessoDeMarcasDeRevistaDoArquivo(FileInfo arquivo)
         {
             //Verificar se arquivo é um txt, se for converter primeiro
-
-            var arquivoDaRevista = XDocument.Load(caminhoCompletoDoArquivo);
+            var arquivoDaRevista = XDocument.Load(arquivo.Extension.ToUpper().Equals(".TXT") ? TransformeTXTParaXml(arquivo) : arquivo.FullName);
             var conteudoDaRevista = arquivoDaRevista.Element("revista");
             var numeroDaRevista = int.Parse(conteudoDaRevista.Attribute("numero").Value);
             var dataDaPublicacaoDaRevista = DateTime.Parse(conteudoDaRevista.Attribute("data").Value);
@@ -102,6 +132,7 @@ namespace PMP.Servicos.Local
             var listaDeProcessosNaRevista = (from conteudoProcesso in conteudoDaRevista.Elements("processo")
                 select new DTOProcessoMarcaRevista
                 {
+                    ID = Guid.NewGuid().ToString(),
                     NumeroDaRevista = numeroDaRevista,
                     DataDePublicacaoDaRevista = dataDaPublicacaoDaRevista,
                     NumeroProcessoDeMarca = conteudoProcesso.Attribute("numero").Value,
