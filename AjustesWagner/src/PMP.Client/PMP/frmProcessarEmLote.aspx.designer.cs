@@ -13,21 +13,66 @@ namespace PMP.Client.PMP {
     public partial class frmProcessarEmLote {
         
         /// <summary>
-        /// TextBox1 control.
+        /// RadDockLayout1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::Telerik.Web.UI.RadDockLayout RadDockLayout1;
         
         /// <summary>
-        /// btnProcessar control.
+        /// RadDockZone1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnProcessar;
+        protected global::Telerik.Web.UI.RadDockZone RadDockZone1;
+        
+        /// <summary>
+        /// RadDock2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDock RadDock2;
+        
+        /// <summary>
+        /// Label253 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label253;
+        
+        /// <summary>
+        /// RadScriptBlock2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadScriptBlock RadScriptBlock2;
+        
+        /// <summary>
+        /// uplRevista control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAsyncUpload uplRevista;
+        
+        /// <summary>
+        /// ButtonSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonSubmit;
     }
 }

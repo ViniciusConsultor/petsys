@@ -253,7 +253,7 @@ namespace MP.Interfaces.Utilidades
             var linhaSemMarcadorDeTitular = linha.Remove(0, 4);
             dadosDaRevista.Titular = linhaSemMarcadorDeTitular.Substring(0, linhaSemMarcadorDeTitular.IndexOf('(') - 1).Trim();
             var linhaPaisUf =
-                linhaSemMarcadorDeTitular.Substring(linhaSemMarcadorDeTitular.IndexOf('(') + 1, (linhaSemMarcadorDeTitular.IndexOf(')') - 1) - linhaSemMarcadorDeTitular.IndexOf('(')).Trim();
+                linhaSemMarcadorDeTitular.Substring(linhaSemMarcadorDeTitular.LastIndexOf('(') + 1, (linhaSemMarcadorDeTitular.LastIndexOf(')') - 1) - linhaSemMarcadorDeTitular.LastIndexOf('(')).Trim();
 
             var partesPaisUF = linhaPaisUf.Split('/');
             dadosDaRevista.PaisTitular = partesPaisUF[0].Trim();

@@ -34,13 +34,14 @@ namespace PMP.Mapeadores
                     sql.Clear();
 
                     sql.Append(
-                        "INSERT INTO PMP_PROCESSOSMARCAREVISTA (NUMERODAREVISTA, DATAPUBLICACAOREVISTA, NUMEROPROCESSODEMARCA, DATADODEPOSITO, ");
+                        "INSERT INTO PMP_PROCESSOSMARCAREVISTA (ID, NUMERODAREVISTA, DATAPUBLICACAOREVISTA, NUMEROPROCESSODEMARCA, DATADODEPOSITO, ");
                     sql.Append("DATADACONCESSAO, DATADAVIGENCIA, CODIGODODESPACHO, NOMEDODESPACHO, ");
                     sql.Append("TITULAR, PAISTITULAR, UFTITULAR, ");
                     sql.Append("MARCA, APRESENTACAO, NATUREZA, EDICAOCLASSEVIENA, ");
                     sql.Append("CODIGOCLASSEVIENA, CODIGOCLASSENACIONAL, CODIGOSUBCLASSENACIONAL, CODIGOCLASSENICE, ");
                     sql.Append("PROCURADOR) VALUES (");
 
+                    sql.Append("'" + processoMarcaRevista.ID + "', ");
                     sql.Append(processoMarcaRevista.NumeroDaRevista + ", ");
                     sql.Append(processoMarcaRevista.DataDePublicacaoDaRevista.ToString("yyyyMMdd") + ", ");
                     sql.Append("'" +  UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.NumeroProcessoDeMarca) + "', ");
@@ -177,6 +178,7 @@ namespace PMP.Mapeadores
         {
             var processo = new DTOProcessoMarcaRevista();
 
+            processo.ID = UtilidadesDePersistencia.GetValorString(leitor, "ID");
             processo.NumeroDaRevista = UtilidadesDePersistencia.getValorInteger(leitor, "NUMERODAREVISTA");
             processo.DataDePublicacaoDaRevista = UtilidadesDePersistencia.getValorDate(leitor, "DATAPUBLICACAOREVISTA").Value;
             processo.NumeroProcessoDeMarca = UtilidadesDePersistencia.GetValorString(leitor, "NUMEROPROCESSODEMARCA");

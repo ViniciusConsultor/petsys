@@ -8,6 +8,7 @@ namespace PMP.Interfaces.Utilidades
     [Serializable]
     public class DTOProcessoMarcaRevista
     {
+        public string ID { get; set; }
         public int NumeroDaRevista { get; set; }
         public DateTime DataDePublicacaoDaRevista { get; set; }
         public string NumeroProcessoDeMarca { get; set; }

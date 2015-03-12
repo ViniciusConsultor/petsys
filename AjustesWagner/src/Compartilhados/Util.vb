@@ -145,6 +145,11 @@ Public Class Util
         If Not Directory.Exists(nomeDiretorio) Then Directory.CreateDirectory(nomeDiretorio)
     End Sub
 
-  
+    Public Shared Sub ApagueDiretorio(nomeDiretorio As String, apagarRecursivamente As Boolean)
+        If Directory.Exists(nomeDiretorio) Then Directory.Delete(nomeDiretorio, apagarRecursivamente)
+    End Sub
+
+
+
 
 End Class

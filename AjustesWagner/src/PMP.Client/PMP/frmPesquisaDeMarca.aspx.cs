@@ -14,7 +14,7 @@ using Telerik.Web.UI;
 
 namespace PMP.Client.PMP
 {
-    public partial class frmPesquisaDeMarca : System.Web.UI.Page
+    public partial class frmPesquisaDeMarca : SuperPagina
     {
 
         private const string CHAVE_FILTRO_APLICADO = "CHAVE_FILTRO_APLICADO_PESQUISA_DE_MARCA";
@@ -315,6 +315,16 @@ namespace PMP.Client.PMP
                     break;
             }
             
+        }
+
+        protected override string ObtenhaIdFuncao()
+        {
+            return "FUN.PMP.002";
+        }
+
+        protected override RadToolBar ObtenhaBarraDeFerramentas()
+        {
+            return null;
         }
     }
 }
