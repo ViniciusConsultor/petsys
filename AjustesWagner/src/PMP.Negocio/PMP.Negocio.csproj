@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filtros\Marca\FiltroPorId.cs" />
     <Compile Include="Filtros\Marca\FiltroPorMarca.cs" />
     <Compile Include="Filtros\Marca\FiltroPorNumeroDeProcesso.cs" />
     <Compile Include="Filtros\Marca\FiltroPorProcurador.cs" />
