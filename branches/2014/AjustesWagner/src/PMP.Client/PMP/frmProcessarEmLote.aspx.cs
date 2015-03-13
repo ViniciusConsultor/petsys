@@ -37,11 +37,18 @@ namespace PMP.Client.PMP
                     
                     using (var servico = FabricaGenerica.GetInstancia().CrieObjeto<IServicoDeProcessoDeMarcaDeRevista>())
                         servico.ProcesseEmLote(pastaDeDestino);
+
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb.MostraMensagemDeInformacao("Processamento realizado com sucesso."), false);
+                    
                 }
             }
             catch (Exception ex)
             {
-                throw;
+                Logger.GetInstancia().Erro("Erro ao processar dados para o banco de dados de pesquisa de marcas.", ex);
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                   UtilidadesWeb. MostraMensagemDeInconsitencia("Erro ao processar dados para o banco de dados de pesquisa de marcas. Consulte o log para detalhar o problema."), false);
+                
             }
             finally
             {

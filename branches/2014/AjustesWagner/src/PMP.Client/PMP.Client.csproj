@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PMP\frmDetalharPesquisaDeMarca.aspx" />
     <Content Include="PMP\frmPesquisaDeMarca.aspx" />
     <Content Include="PMP\frmProcessarEmLote.aspx" />
     <Content Include="PMP\Servicos.asmx" />
@@ -83,6 +84,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PMP\frmDetalharPesquisaDeMarca.aspx.cs">
+      <DependentUpon>frmDetalharPesquisaDeMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PMP\frmDetalharPesquisaDeMarca.aspx.designer.cs">
+      <DependentUpon>frmDetalharPesquisaDeMarca.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PMP\frmPesquisaDeMarca.aspx.cs">
       <DependentUpon>frmPesquisaDeMarca.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
