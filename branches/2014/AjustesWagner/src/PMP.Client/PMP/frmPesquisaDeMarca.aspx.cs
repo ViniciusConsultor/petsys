@@ -44,7 +44,7 @@ namespace PMP.Client.PMP
             txtNumeroRevista.Visible = false;
             txtNumeroRevista.Text = string.Empty;
             txtNumeroRevista.Value = null;
-            
+
             pnlProcesso.Visible = true;
             cboTipoDeFiltro.SelectedValue = "3";
 
@@ -55,7 +55,7 @@ namespace PMP.Client.PMP
         private void CarregaOpcoesRevista()
         {
             rblOpcaoDeRevista.Items.Clear();
-            rblOpcaoDeRevista.Items.Add(new ListItem("Todas","T"));
+            rblOpcaoDeRevista.Items.Add(new ListItem("Todas", "T"));
             rblOpcaoDeRevista.Items.Add(new ListItem("Especifica", "E"));
         }
 
@@ -66,6 +66,7 @@ namespace PMP.Client.PMP
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Marca", "2"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Processo", "3"));
             cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Procurador", "4"));
+            cboTipoDeFiltro.Items.Add(new RadComboBoxItem("Código da figura","5"));
         }
 
         private void EscondaTodosOsPanelsDeFiltro()
@@ -74,6 +75,7 @@ namespace PMP.Client.PMP
             pnlMarca.Visible = false;
             pnlProcesso.Visible = false;
             pnlProcurador.Visible = false;
+            pnlCodigoFigura.Visible = false;
         }
 
         private IFiltro FiltroAplicado
@@ -112,6 +114,9 @@ namespace PMP.Client.PMP
                 case "4":
                     pnlProcurador.Visible = true;
                     break;
+                case "5" :
+                    pnlCodigoFigura.Visible = true;
+                    break;
             }
         }
 
@@ -142,7 +147,7 @@ namespace PMP.Client.PMP
                                                     UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
                 return;
             }
-            
+
             if (string.IsNullOrEmpty(txtTitular.Text) && string.IsNullOrEmpty(txtUF.Text) && string.IsNullOrEmpty(txtPais.Text))
             {
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
@@ -151,7 +156,7 @@ namespace PMP.Client.PMP
                 return;
 
             }
-            
+
             var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorTitular>();
             filtro.ValorDoFiltro = txtTitular.Text;
             filtro.UF = txtUF.Text;
@@ -160,7 +165,7 @@ namespace PMP.Client.PMP
             filtro.NumeroDaRevista = (int?)txtNumeroRevista.Value;
 
             FiltroAplicado = filtro;
-            
+
 
             MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
@@ -289,12 +294,30 @@ namespace PMP.Client.PMP
 
         protected void grdProcessosDeMarcas_OnItemDataBound(object sender, GridItemEventArgs e)
         {
-            
+
         }
 
         protected void grdProcessosDeMarcas_OnItemCommand(object sender, GridCommandEventArgs e)
         {
-            
+            string id = null;
+
+            if (e.CommandName != "Page" && e.CommandName != "ChangePageSize")
+                id = e.Item.Cells[4].Text;
+
+            switch (e.CommandName)
+            {
+                case "Detalhar":
+                    var url = String.Concat(UtilidadesWeb.ObtenhaURLHostDiretorioVirtual(), "PMP/frmDetalharPesquisaDeMarca.aspx",
+                                            "?Id=", id);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.ExibeJanela(url,
+                                                                                       "Detalhar processo de marca",
+                                                                                       800, 550, "PMP_frmDetalharPesquisaDeMarca_aspx"), false);
+
+                    break;
+            }
+
+
         }
 
 
@@ -307,14 +330,14 @@ namespace PMP.Client.PMP
 
             switch (opcao.SelectedValue)
             {
-                case "T" :
+                case "T":
                     txtNumeroRevista.Visible = false;
                     break;
-                case "E" :
+                case "E":
                     txtNumeroRevista.Visible = true;
                     break;
             }
-            
+
         }
 
         protected override string ObtenhaIdFuncao()
@@ -325,6 +348,42 @@ namespace PMP.Client.PMP
         protected override RadToolBar ObtenhaBarraDeFerramentas()
         {
             return null;
+        }
+
+        protected void btnPesquisarPorCodigoDaFigura_OnClick(object sender, ImageClickEventArgs e)
+        {
+            if (!OpcaoDeOperacaodeFiltroEstaSelecionada())
+            {
+                ExibaMensagemDeFaltaDeSelecaoDaOpcaoDeFiltro();
+                return;
+            }
+
+            var operacao = OperacaoDeFiltro.Obtenha(Convert.ToByte(ctrlOperacaoFiltro1.Codigo));
+
+            if (operacao.Equals(OperacaoDeFiltro.Intervalo))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                    UtilidadesWeb.MostraMensagemDeInconsitencia("Para o filtro selecionado essa opção de filtro não está disponível."), false);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtCodigosViena.Text))
+            {
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(),
+                                                        UtilidadesWeb.MostraMensagemDeInconsitencia(
+                                                            "É necessário informar o código da classe viena."), false);
+                return;
+
+            }
+
+            var filtro = FabricaGenerica.GetInstancia().CrieObjeto<IFiltroPorCodigoFigura>();
+            filtro.ValorDoFiltro = txtCodigosViena.Text;
+            filtro.NCL = txtNCLCodigoViena.Text;
+            filtro.Operacao = operacao;
+            FiltroAplicado = filtro;
+            filtro.NumeroDaRevista = (int?)txtNumeroRevista.Value;
+
+            MostraProcessos(filtro, grdProcessosDeMarcas.PageSize, 0);
         }
     }
 }

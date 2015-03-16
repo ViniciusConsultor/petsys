@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Mapeadores\IMapeadorDeProcessoMarcaRevista.cs" />
     <Compile Include="Negocio\Filtros\IFiltroPMP.cs" />
+    <Compile Include="Negocio\Filtros\Marca\IFiltroPorCodigoFigura.cs" />
     <Compile Include="Negocio\Filtros\Marca\IFiltroPorId.cs" />
     <Compile Include="Negocio\Filtros\Marca\IFiltroPorMarca.cs" />
     <Compile Include="Negocio\Filtros\Marca\IFiltroPorNumeroDeProcesso.cs" />
