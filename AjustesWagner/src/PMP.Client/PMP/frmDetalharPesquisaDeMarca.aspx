@@ -65,6 +65,62 @@
                         </tr>
                         <tr>
                             <td class="th3">
+                                <asp:Label ID="Label14" runat="server" Text="Apresentação"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblApresentacao" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label15" runat="server" Text="Natureza"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblNatureza" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label16" runat="server" Text="Classe nice"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblClasseNice" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label18" runat="server" Text="Edição classe viena"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblEdicaoClasseViena" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label17" runat="server" Text="Classe viena"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblClasseViena" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label19" runat="server" Text="Código classe nacional"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblCodigoClasseNacional" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label21" runat="server" Text="Sub classe nacional"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblSubClasseNacional" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
                                 <asp:Label ID="Label7" runat="server" Text="Código de despacho"></asp:Label>
                             </td>
                             <td class="td">
@@ -103,12 +159,20 @@
                                 <asp:Label ID="lblUFTitular" runat="server"></asp:Label>
                             </td>
                         </tr>
-                          <tr>
+                        <tr>
                             <td class="th3">
                                 <asp:Label ID="Label12" runat="server" Text="Marca"></asp:Label>
                             </td>
                             <td class="td">
                                 <asp:Label ID="lblMarca" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th3">
+                                <asp:Label ID="Label13" runat="server" Text="Procurador"></asp:Label>
+                            </td>
+                            <td class="td">
+                                <asp:Label ID="lblProcurador" runat="server"></asp:Label>
                             </td>
                         </tr>
                     </table>

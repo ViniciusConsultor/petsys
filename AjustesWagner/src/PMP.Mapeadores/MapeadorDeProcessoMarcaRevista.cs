@@ -93,17 +93,17 @@ namespace PMP.Mapeadores
                                  ? "NULL, "
                                  : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.EdicaoClasseViena) + "', ");
 
-                    sql.Append(string.IsNullOrEmpty(processoMarcaRevista.CodigoClasseViena)
+                    sql.Append(processoMarcaRevista.CodigosClasseViena == null
                                  ? "NULL, "
-                                 : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.CodigoClasseViena) + "', ");
+                                 : "'" + UtilidadesDePersistencia.ObtenhaStringMapeadaDeListaDeString(processoMarcaRevista.CodigosClasseViena,'|') + "', ");
 
                     sql.Append(string.IsNullOrEmpty(processoMarcaRevista.CodigoClasseNacional)
                                 ? "NULL, "
                                 : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.CodigoClasseNacional) + "', ");
 
-                    sql.Append(string.IsNullOrEmpty(processoMarcaRevista.CodigoSubClasseNacional)
+                    sql.Append(processoMarcaRevista.CodigosSubClasseNacional == null
                                 ? "NULL, "
-                                : "'" + UtilidadesDePersistencia.FiltraApostrofe(processoMarcaRevista.CodigoSubClasseNacional) + "', ");
+                                : "'" + UtilidadesDePersistencia.ObtenhaStringMapeadaDeListaDeString(processoMarcaRevista.CodigosSubClasseNacional, '|') + "', ");
 
                     sql.Append(string.IsNullOrEmpty(processoMarcaRevista.CodigoClasseNice)
                                ? "NULL, "
@@ -194,9 +194,9 @@ namespace PMP.Mapeadores
             processo.Apresentacao = UtilidadesDePersistencia.EhNulo(leitor, "APRESENTACAO") ? null : UtilidadesDePersistencia.GetValorString(leitor, "APRESENTACAO");
             processo.Natureza = UtilidadesDePersistencia.EhNulo(leitor, "NATUREZA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "NATUREZA");
             processo.EdicaoClasseViena = UtilidadesDePersistencia.EhNulo(leitor, "EDICAOCLASSEVIENA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "EDICAOCLASSEVIENA");
-            processo.CodigoClasseViena = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSEVIENA") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSEVIENA");
+            processo.CodigosClasseViena = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSEVIENA") ? null : UtilidadesDePersistencia.MapeieStringParaListaDeString(UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSEVIENA"),'|');
             processo.CodigoClasseNacional = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSENACIONAL") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSENACIONAL");
-            processo.CodigoSubClasseNacional = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOSUBCLASSENACIONAL") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOSUBCLASSENACIONAL");
+            processo.CodigosSubClasseNacional = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOSUBCLASSENACIONAL") ? null : UtilidadesDePersistencia.MapeieStringParaListaDeString(UtilidadesDePersistencia.GetValorString(leitor, "CODIGOSUBCLASSENACIONAL"),'|');
             processo.CodigoClasseNice = UtilidadesDePersistencia.EhNulo(leitor, "CODIGOCLASSENICE") ? null : UtilidadesDePersistencia.GetValorString(leitor, "CODIGOCLASSENICE");
             processo.Procurador = UtilidadesDePersistencia.EhNulo(leitor, "PROCURADOR") ? null : UtilidadesDePersistencia.GetValorString(leitor, "PROCURADOR");
             

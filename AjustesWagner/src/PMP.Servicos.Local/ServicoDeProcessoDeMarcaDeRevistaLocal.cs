@@ -103,6 +103,7 @@ namespace PMP.Servicos.Local
             finally
             {
                 ServerUtils.libereRecursos();
+                GC.Collect();
             } 
         }
 
@@ -149,10 +150,23 @@ namespace PMP.Servicos.Local
                     Apresentacao = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Attribute("apresentacao") == null ? null : conteudoProcesso.Element("marca").Attribute("apresentacao").Value,
                     Natureza = conteudoProcesso.Element("marca") == null ? null : conteudoProcesso.Element("marca").Attribute("natureza") == null ? null : conteudoProcesso.Element("marca").Attribute("natureza").Value,
                     CodigoClasseNice =  conteudoProcesso.Element("classe-nice") == null ? null : conteudoProcesso.Element("classe-nice").Attribute("codigo").Value,
+                    EdicaoClasseViena = conteudoProcesso.Element("classes-vienna") == null ? null : conteudoProcesso.Element("classes-vienna").Attribute("edicao").Value,
+                    CodigosClasseViena = conteudoProcesso.Element("classes-vienna") == null ? null : 
+                        (from conteudoClasseViena in conteudoProcesso.Element("classes-vienna").Elements("classe-vienna")
+                         let xAttribute = conteudoClasseViena.Attribute("codigo")
+                         where xAttribute != null
+                         select xAttribute.Value).ToList(),
+                    CodigoClasseNacional = conteudoProcesso.Element("classe-nacional") == null ? null : conteudoProcesso.Element("classe-nacional").Attribute("codigo").Value,
+                    CodigosSubClasseNacional = conteudoProcesso.Element("classe-nacional") == null ? null :
+                          conteudoProcesso.Element("classe-nacional").Elements("sub-classes-nacional") == null ? null :
+                        (from conteudoClasseNacional in conteudoProcesso.Element("classe-nacional").Elements("sub-classes-nacional").Elements("sub-classe-nacional")
+                         let xAttribute = conteudoClasseNacional.Attribute("codigo")
+                         where xAttribute != null
+                         select xAttribute.Value).ToList(),                                                                                                                                                               
 
                 }).ToList();
 
-            return  new KeyValuePair<int, IList<DTOProcessoMarcaRevista>>(numeroDaRevista, listaDeProcessosNaRevista);
+            return new KeyValuePair<int, IList<DTOProcessoMarcaRevista>>(numeroDaRevista, listaDeProcessosNaRevista);
         }
     }
 }

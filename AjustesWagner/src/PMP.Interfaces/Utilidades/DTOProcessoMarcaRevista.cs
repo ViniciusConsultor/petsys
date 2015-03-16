@@ -24,9 +24,9 @@ namespace PMP.Interfaces.Utilidades
         public string Apresentacao { get; set; }
         public string Natureza { get; set; }
         public string EdicaoClasseViena { get; set; }
-        public string CodigoClasseViena { get; set; }
+        public IList<string> CodigosClasseViena { get; set; }
         public string CodigoClasseNacional { get; set; }
-        public string CodigoSubClasseNacional { get; set; }
+        public IList<string> CodigosSubClasseNacional { get; set; }
         public string Procurador { get; set; }
         public string CodigoClasseNice { get; set; }
     }

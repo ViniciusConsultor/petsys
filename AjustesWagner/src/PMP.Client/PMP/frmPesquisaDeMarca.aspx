@@ -133,6 +133,38 @@
                                         ToolTip="Pesquisar" OnClick="btnPesquisarPorProcurador_OnClick" />
                                 </td>
                             </tr>
+                              <tr runat="server" id="pnlCodigoFigura">
+                                <td class="th3">
+                                    <asp:Label ID="Label13" runat="server" Text="Código figura"></asp:Label>
+                                </td>
+                                <td width="25%">
+                                    <table>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label14" runat="server" Text="Classificação de Viena"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadTextBox ID="txtCodigosViena" runat="server">
+                                                </telerik:RadTextBox>
+                                                <asp:Label ID="Label16" runat="server" Text="Ex: 1.3.1|25.5.5"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="th3">
+                                                <asp:Label ID="Label15" runat="server" Text="NCL"></asp:Label>
+                                            </td>
+                                            <td class="td">
+                                                <telerik:RadTextBox ID="txtNCLCodigoViena" runat="server">
+                                                </telerik:RadTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td colspan="2" style="text-align: left">
+                                    <asp:ImageButton ID="btnPesquisarPorCodigoDaFigura" runat="server" ImageUrl="~/imagens/find.gif"
+                                        ToolTip="Pesquisar" OnClick="btnPesquisarPorCodigoDaFigura_OnClick" />
+                                </td>
+                            </tr>
                         </table>
                     </asp:Panel>
                 </ContentTemplate>
@@ -166,6 +198,13 @@
                                             <HeaderStyle Width="20px" />
                                         </ExpandCollapseColumn>
                                         <Columns>
+                                         <telerik:GridButtonColumn ButtonType="ImageButton" CommandName="Detalhar" FilterImageToolTip="Detalhar"
+                                                HeaderTooltip="Detalhar" ImageUrl="~/imagens/edit.gif" UniqueName="column000">
+                                                <ItemStyle Width="2%"></ItemStyle>
+                                            </telerik:GridButtonColumn>
+                                            <telerik:GridBoundColumn DataField="ID" HeaderText="ID"
+                                                UniqueName="column00" Display="false">
+                                            </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="NumeroDaRevista" HeaderText="RPI" UniqueName="column0">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn DataField="NumeroProcessoDeMarca" HeaderText="Processo"
