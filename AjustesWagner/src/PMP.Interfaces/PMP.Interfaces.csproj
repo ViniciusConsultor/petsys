@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapeadores\IMapeadorDeProcessoDePatenteRevista.cs" />
     <Compile Include="Mapeadores\IMapeadorDeProcessoMarcaRevista.cs" />
     <Compile Include="Negocio\Filtros\IFiltroPMP.cs" />
     <Compile Include="Negocio\Filtros\Marca\IFiltroPorCodigoFigura.cs" />
@@ -58,7 +59,9 @@
     <Compile Include="Negocio\Filtros\Marca\IFiltroPorTitular.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\IServicoDeProcessoDeMarcaDeRevista.cs" />
+    <Compile Include="Servicos\IServicoDeProcessoDePatenteDeRevista.cs" />
     <Compile Include="Utilidades\DTOProcessoMarcaRevista.cs" />
+    <Compile Include="Utilidades\DTOProcessoPatenteRevista.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

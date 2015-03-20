@@ -73,6 +73,7 @@
   <ItemGroup>
     <Content Include="PMP\frmDetalharPesquisaDeMarca.aspx" />
     <Content Include="PMP\frmPesquisaDeMarca.aspx" />
+    <Content Include="PMP\frmPesquisaDePatente.aspx" />
     <Content Include="PMP\frmProcessarEmLote.aspx" />
     <Content Include="PMP\Servicos.asmx" />
     <Content Include="Web.config" />
@@ -97,6 +98,13 @@
     </Compile>
     <Compile Include="PMP\frmPesquisaDeMarca.aspx.designer.cs">
       <DependentUpon>frmPesquisaDeMarca.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PMP\frmPesquisaDePatente.aspx.cs">
+      <DependentUpon>frmPesquisaDePatente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PMP\frmPesquisaDePatente.aspx.designer.cs">
+      <DependentUpon>frmPesquisaDePatente.aspx</DependentUpon>
     </Compile>
     <Compile Include="PMP\frmProcessarEmLote.aspx.cs">
       <DependentUpon>frmProcessarEmLote.aspx</DependentUpon>
